@@ -27,7 +27,6 @@ const { useState, useEffect, createContext } = React;
 
 export const AppContext = createContext<IContext>(defaultContext);
 
-console.log('lolens molens');
 
 const Step = daggy.taggedSum('UI', {
   Start: [],
