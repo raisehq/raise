@@ -6,6 +6,16 @@
 | [Onboarding](https://bitbucket.org/herodevteam/raise/src/master/packages/onboarding/) | SignUp / SignIn flow component | 0.0.1   |     |     |
 | [Components](https://bitbucket.org/herodevteam/raise/src/master/packages/components/) | Storybook UI repository        | 0.0.1   |     |     |
 
+## Preinstall
+
+You will need:
+
+1. Typescript
+2. Yarn
+3. Lerna
+
+All installed in **global**
+
 ## Install
 
 The project uses Lerna to handle the cross-dependency and the code shared around all projects (you can find them at packages folder). It's **very important to NOT run npm i within them**, Lerna will handle this at the root of the project. So, first step:
