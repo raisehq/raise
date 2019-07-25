@@ -1,0 +1,24 @@
+{
+  "name": "@raise/onboarding",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Raul Vallespin <raul@herotoken.io>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "transpile": "tsc --watch"
+  },
+  "dependencies": {
+    "typescript": "^3.5.3"
+  }
+}
