@@ -1,10 +1,10 @@
 # Raise Web monorepo
 
-|            | Purpose                        | Version |     |     |
-| ---------- | ------------------------------ | ------- | --- | --- |
-| Client     | Our main app                   | 0.0.1   |     |     |
-| Onboarding | SignUp / SignIn flow component | 0.0.1   |     |     |
-| Components | Storybook UI repository        | 0.0.1   |     |     |
+|                                                                                       | Purpose                        | Version |     |     |
+| ------------------------------------------------------------------------------------- | ------------------------------ | ------- | --- | --- |
+| [Client](https://bitbucket.org/herodevteam/raise/src/master/packages/client/)         | Our main app                   | 0.0.1   |     |     |
+| [Onboarding](https://bitbucket.org/herodevteam/raise/src/master/packages/onboarding/) | SignUp / SignIn flow component | 0.0.1   |     |     |
+| [Components](https://bitbucket.org/herodevteam/raise/src/master/packages/components/) | Storybook UI repository        | 0.0.1   |     |     |
 
 ## Install
 
