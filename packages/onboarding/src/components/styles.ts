@@ -3,7 +3,7 @@ import { Form } from 'semantic-ui-react';
 import theme from '../theme';
 
 const commonModal = {
-  minHeight: '507px',
+  /*minHeight: '507px',*/
   borderRadius: '4px',
   boxShadow: '0 10px 26px 0 rgba(6, 52, 40, 0.1)',
   margin: '0 !important',
@@ -11,9 +11,22 @@ const commonModal = {
   overflow: 'hidden'
 };
 
+
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px'
+}
+
+export const device = {
+  mobileS: `(min-width: ${size.mobileS})`,
+  mobileM: `(min-width: ${size.mobileM})`,
+  mobileL: `(min-width: ${size.mobileL})`
+};
+
 export const OnePanelModal = {
   ...commonModal,
-  width: '500px'
+  width: '425px'
 };
 
 export const TwoPanelModal = {
@@ -32,15 +45,15 @@ export const OnboardingWrapper = styled.div`
   }
 
   .visuals {
-    flex: 0 1 450px;
-    background: ${theme.gradient};
+    flex: 0 1 100%;
+    background: ${theme.gradient.blue};
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .process {
-    flex: 0 1 500px;
+    flex: 0 1 100%;
     background: #fff;
     padding: 50px;
     box-sizing: border-box;
@@ -60,16 +73,21 @@ export const OnboardSubHeader = styled.h3`
 
 export const OnboardInput = styled.div`
   position: relative;
-  margin: 55px 0 55px 0;
+  margin: 50px 0 50px 0;
+  width: 100%;
+
+  .ui.input {
+    width: 100%;
+  }
 
   input {
-    height: 53px;
-    width: 400px;
+    height: 48px;
+    width: 100%;
     border: 1px solid #dfe3e9;
     border-radius: 4px;
-    padding: 20px;
     box-sizing: border-box;
     color: ${theme.colors.darkgray}
+    padding: 20px;
     padding-left: 54px;
     text-indent: 42px;
   }
@@ -80,11 +98,14 @@ export const OnboardInput = styled.div`
     left: 14px;
     color: #cacbcd !important;
   }
+  i.big.icon{
+    font-size: 20px;
+  }
 
   .errorText {
     color: ${theme.colors.error};
     position: absolute;
-    bottom: -20px;
+    top: 55px;
     left: 0;
   }
 `;
@@ -92,11 +113,11 @@ export const OnboardInput = styled.div`
 export const OnboardButton = styled.button`
   width: 100%;
   height: auto;
-  padding: 25px;
+  padding: 15px 0px;
   border-radius: 4px;
   border: none;
-  background: ${theme.gradient};
-  font-size: 18px;
+  background: ${theme.gradient.green};
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   color: #fff;
@@ -110,7 +131,7 @@ export const OnboardButton = styled.button`
 export const CallToSignIn = styled.div`
   width: 100%;
   text-align: center;
-  padding-top: 30px;
+  padding-top: 20px;
 
   .callToSignIn {
     background: none;
@@ -122,8 +143,8 @@ export const CallToSignIn = styled.div`
 
 export const OnboardDisclaimer = styled.div`
   margin-top: 60px;
-  padding-bottom: 30px;
-  border-bottom: 1px solid #5a5a5a;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dfe3e9;
 
   .disclaimerBTN {
     border: none;
@@ -142,7 +163,7 @@ export const OnboardCountries: any = styled(Form.Field)`
 
   .search {
     height: 53px !important;
-    width: 420px !important;
+    width: 100% !important;
     padding: 20px !important;
     border: 1px solid #dfe3e9;
     box-sizing: border-box !important;
@@ -183,6 +204,6 @@ export const MainImage = styled.img`
 export const Separator = styled.div`
   width: 100%;
   height: 1px;
-  background: #1aa79f;
-  margin-top: 40px;
+  background: #dfe3e9;
+  margin-top: 20px;
 `;

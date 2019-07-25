@@ -16,9 +16,13 @@ import validations from '../validations';
 import { checkUsername } from '../../services';
 
 const Register = () => {
-  const { credentials, onSetStep, onSetCredentials, onSendCredentials, referralCode } = useContext<IContext>(
-    AppContext
-  );
+  const {
+    credentials,
+    onSetStep,
+    onSetCredentials,
+    onSendCredentials,
+    referralCode
+  } = useContext<IContext>(AppContext);
   const [errors, setErrors] = useState<{
     password: boolean;
     country: boolean;
@@ -59,7 +63,9 @@ const Register = () => {
     );
   }, 800);
 
-  const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
+  const header = !!referralCode
+    ? 'True friends invited you to Raise'
+    : 'Get started';
 
   return (
     <Fragment>
@@ -76,17 +82,36 @@ const Register = () => {
         <Icon size="big" name="globe" />
       </OnboardInput>
       <OnboardInput>
-        <Input placeholder="Username" onChange={onChangeUsername} error={errors.username} />
-        {errors.username && <div className="errorText">Username already exist</div>}
+        <Input
+          placeholder="Username"
+          onChange={onChangeUsername}
+          error={errors.username}
+        />
+        {errors.username && (
+          <div className="errorText">Username already exist</div>
+        )}
         <Icon size="big" name="user" />
       </OnboardInput>
       <OnboardInput>
-        <Input placeholder="Create a password" onChange={onSetPassword} error={errors.password} type="password" />
-        {errors.password && <div className="errorText">Password at least must have 8 characters 1 capital letter.</div>}
+        <Input
+          placeholder="Create a password"
+          onChange={onSetPassword}
+          error={errors.password}
+          type="password"
+        />
+        {errors.password && (
+          <div className="errorText">
+            Password at least must have 8 characters 1 capital letter.
+          </div>
+        )}
         <Icon size="big" name="key" />
       </OnboardInput>
       <OnboardButton
-        disabled={credentials.username === '' || credentials.password === '' || credentials.country_id === ''}
+        disabled={
+          credentials.username === '' ||
+          credentials.password === '' ||
+          credentials.country_id === ''
+        }
         onClick={onSendCredentials}
       >
         Get Started

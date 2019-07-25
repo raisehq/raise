@@ -7,14 +7,23 @@ const styled_components_1 = __importDefault(require("styled-components"));
 const semantic_ui_react_1 = require("semantic-ui-react");
 const theme_1 = __importDefault(require("../theme"));
 const commonModal = {
-    minHeight: '507px',
     borderRadius: '4px',
     boxShadow: '0 10px 26px 0 rgba(6, 52, 40, 0.1)',
     margin: '0 !important',
     padding: '0 !important',
     overflow: 'hidden'
 };
-exports.OnePanelModal = Object.assign({}, commonModal, { width: '500px' });
+const size = {
+    mobileS: '320px',
+    mobileM: '375px',
+    mobileL: '425px'
+};
+exports.device = {
+    mobileS: `(min-width: ${size.mobileS})`,
+    mobileM: `(min-width: ${size.mobileM})`,
+    mobileL: `(min-width: ${size.mobileL})`
+};
+exports.OnePanelModal = Object.assign({}, commonModal, { width: '425px' });
 exports.TwoPanelModal = Object.assign({}, commonModal, { width: '950px' });
 exports.OnboardingWrapper = styled_components_1.default.div `
   width: 100%;
@@ -27,15 +36,15 @@ exports.OnboardingWrapper = styled_components_1.default.div `
   }
 
   .visuals {
-    flex: 0 1 450px;
-    background: ${theme_1.default.gradient};
+    flex: 0 1 100%;
+    background: ${theme_1.default.gradient.blue};
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .process {
-    flex: 0 1 500px;
+    flex: 0 1 100%;
     background: #fff;
     padding: 50px;
     box-sizing: border-box;
@@ -52,16 +61,21 @@ exports.OnboardSubHeader = styled_components_1.default.h3 `
 `;
 exports.OnboardInput = styled_components_1.default.div `
   position: relative;
-  margin: 55px 0 55px 0;
+  margin: 50px 0 50px 0;
+  width: 100%;
+
+  .ui.input {
+    width: 100%;
+  }
 
   input {
-    height: 53px;
-    width: 400px;
+    height: 48px;
+    width: 100%;
     border: 1px solid #dfe3e9;
     border-radius: 4px;
-    padding: 20px;
     box-sizing: border-box;
     color: ${theme_1.default.colors.darkgray}
+    padding: 20px;
     padding-left: 54px;
     text-indent: 42px;
   }
@@ -72,22 +86,25 @@ exports.OnboardInput = styled_components_1.default.div `
     left: 14px;
     color: #cacbcd !important;
   }
+  i.big.icon{
+    font-size: 20px;
+  }
 
   .errorText {
     color: ${theme_1.default.colors.error};
     position: absolute;
-    bottom: -20px;
+    top: 55px;
     left: 0;
   }
 `;
 exports.OnboardButton = styled_components_1.default.button `
   width: 100%;
   height: auto;
-  padding: 25px;
+  padding: 15px 0px;
   border-radius: 4px;
   border: none;
-  background: ${theme_1.default.gradient};
-  font-size: 18px;
+  background: ${theme_1.default.gradient.green};
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   color: #fff;
@@ -100,7 +117,7 @@ exports.OnboardButton = styled_components_1.default.button `
 exports.CallToSignIn = styled_components_1.default.div `
   width: 100%;
   text-align: center;
-  padding-top: 30px;
+  padding-top: 20px;
 
   .callToSignIn {
     background: none;
@@ -111,8 +128,8 @@ exports.CallToSignIn = styled_components_1.default.div `
 `;
 exports.OnboardDisclaimer = styled_components_1.default.div `
   margin-top: 60px;
-  padding-bottom: 30px;
-  border-bottom: 1px solid #5a5a5a;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dfe3e9;
 
   .disclaimerBTN {
     border: none;
@@ -130,7 +147,7 @@ exports.OnboardCountries = styled_components_1.default(semantic_ui_react_1.Form.
 
   .search {
     height: 53px !important;
-    width: 420px !important;
+    width: 100% !important;
     padding: 20px !important;
     border: 1px solid #dfe3e9;
     box-sizing: border-box !important;
@@ -167,7 +184,7 @@ exports.MainImage = styled_components_1.default.img `
 exports.Separator = styled_components_1.default.div `
   width: 100%;
   height: 1px;
-  background: #1aa79f;
-  margin-top: 40px;
+  background: #dfe3e9;
+  margin-top: 20px;
 `;
 //# sourceMappingURL=styles.js.map

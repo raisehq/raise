@@ -1,6 +1,10 @@
+export declare const device: {
+    mobileS: string;
+    mobileM: string;
+    mobileL: string;
+};
 export declare const OnePanelModal: {
     width: string;
-    minHeight: string;
     borderRadius: string;
     boxShadow: string;
     margin: string;
@@ -9,7 +13,6 @@ export declare const OnePanelModal: {
 };
 export declare const TwoPanelModal: {
     width: string;
-    minHeight: string;
     borderRadius: string;
     boxShadow: string;
     margin: string;

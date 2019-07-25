@@ -9,6 +9,9 @@ declare const _default: {
     };
     shadow: string;
     padding: string;
-    gradient: string;
+    gradient: {
+        green: string;
+        blue: string;
+    };
 };
 export default _default;

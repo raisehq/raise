@@ -51,7 +51,9 @@ const Register = () => {
             onSetCredentials('password', value);
         });
     }, 800);
-    const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
+    const header = !!referralCode
+        ? 'True friends invited you to Raise'
+        : 'Get started';
     return (react_1.default.createElement(react_1.Fragment, null,
         react_1.default.createElement(styles_1.OnboardHeader, null, header),
         react_1.default.createElement(styles_1.OnboardSubHeader, null, "Create an account"),
@@ -60,13 +62,15 @@ const Register = () => {
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "globe" })),
         react_1.default.createElement(styles_1.OnboardInput, null,
             react_1.default.createElement(semantic_ui_react_1.Input, { placeholder: "Username", onChange: onChangeUsername, error: errors.username }),
-            errors.username && react_1.default.createElement("div", { className: "errorText" }, "Username already exist"),
+            errors.username && (react_1.default.createElement("div", { className: "errorText" }, "Username already exist")),
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "user" })),
         react_1.default.createElement(styles_1.OnboardInput, null,
             react_1.default.createElement(semantic_ui_react_1.Input, { placeholder: "Create a password", onChange: onSetPassword, error: errors.password, type: "password" }),
-            errors.password && react_1.default.createElement("div", { className: "errorText" }, "Password at least must have 8 characters 1 capital letter."),
+            errors.password && (react_1.default.createElement("div", { className: "errorText" }, "Password at least must have 8 characters 1 capital letter.")),
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "key" })),
-        react_1.default.createElement(styles_1.OnboardButton, { disabled: credentials.username === '' || credentials.password === '' || credentials.country_id === '', onClick: onSendCredentials }, "Get Started"),
+        react_1.default.createElement(styles_1.OnboardButton, { disabled: credentials.username === '' ||
+                credentials.password === '' ||
+                credentials.country_id === '', onClick: onSendCredentials }, "Get Started"),
         react_1.default.createElement(styles_1.CallToSignIn, null,
             "Already have an account? Press here to",
             react_1.default.createElement("button", { className: "callToSignIn", onClick: onSetStep('SignIn') }, "Sign In"))));

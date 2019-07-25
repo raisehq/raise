@@ -27,6 +27,8 @@ const { useState, useEffect, createContext } = React;
 
 export const AppContext = createContext<IContext>(defaultContext);
 
+console.log('lolens molens');
+
 const Step = daggy.taggedSum('UI', {
   Start: [],
   Register: [],
@@ -50,10 +52,10 @@ interface IProps {
 const App = ({ history, open }: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
-  const [credentials, setCredentials] = useState<ICredentials>(defaultContext.credentials);
+  const [credentials, setCredentials] = useState<ICredentials>(
+    defaultContext.credentials
+  );
   const [referralCode, setRefCode] = useState<string>('');
-
-  console.log('JANDER KLANDER');
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
@@ -70,7 +72,10 @@ const App = ({ history, open }: IProps) => {
         })
       );
 
-      verifying.fold(() => setStep(Step.VerifiedError(token)), () => setStep(Step.Verified));
+      verifying.fold(
+        () => setStep(Step.VerifiedError(token)),
+        () => setStep(Step.Verified)
+      );
     }
 
     if (pathname.includes('password/reset')) {
@@ -83,7 +88,8 @@ const App = ({ history, open }: IProps) => {
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
 
-  const onSetCredentials = (input, value) => setCredentials({ ...credentials, [input]: value });
+  const onSetCredentials = (input, value) =>
+    setCredentials({ ...credentials, [input]: value });
 
   const onSendCredentials = async () => {
     const signup = await services.signUp({
@@ -91,19 +97,28 @@ const App = ({ history, open }: IProps) => {
       ...(!!referralCode ? { referrer_code: referralCode } : {})
     });
 
-    signup.fold(() => console.log('something went wrong'), () => setStep(Step.Confirm));
+    signup.fold(
+      () => console.log('something went wrong'),
+      () => setStep(Step.Confirm)
+    );
   };
 
   const onResetPassword = async (token, password) => {
     const resetPassword = await services.changePassword(token, password);
 
-    resetPassword.fold(() => setStep(Step.ResetError), () => setStep(Step.ResetOK));
+    resetPassword.fold(
+      () => setStep(Step.ResetError),
+      () => setStep(Step.ResetOK)
+    );
   };
 
   const onRecover = async email => {
     const request = await services.recovery(email);
 
-    request.fold(() => console.log('Something went wrong'), () => setStep(Step.ResetConfirm));
+    request.fold(
+      () => console.log('Something went wrong'),
+      () => setStep(Step.ResetConfirm)
+    );
   };
 
   const onLogin = async () => {

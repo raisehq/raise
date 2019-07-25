@@ -43,6 +43,7 @@ const localData_1 = __importDefault(require("./localData"));
 const services = __importStar(require("../services"));
 const { useState, useEffect, createContext } = React;
 exports.AppContext = createContext(defaults_1.defaultContext);
+console.log('lolens molens');
 const Step = daggy_1.default.taggedSum('UI', {
     Start: [],
     Register: [],
@@ -62,7 +63,6 @@ const App = ({ history, open }) => {
     const [loginError, setLoginError] = useState(false);
     const [credentials, setCredentials] = useState(defaults_1.defaultContext.credentials);
     const [referralCode, setRefCode] = useState('');
-    console.log('JANDER KLANDER');
     useAsyncEffect_1.default(() => __awaiter(this, void 0, void 0, function* () {
         const { pathname } = history.location;
         if (pathname.includes('verify/token')) {
