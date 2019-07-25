@@ -15,6 +15,7 @@ pipeline {
       steps{
         nodejs(nodeJSInstallationName: 'node_11') {
           sh 'echo "- LERNA BOOTSTRAP"'
+          sh 'npm install -g yarn'
           sh 'npx lerna bootstrap'
         }
       }
