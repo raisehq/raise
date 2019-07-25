@@ -43,7 +43,6 @@ const localData_1 = __importDefault(require("./localData"));
 const services = __importStar(require("../services"));
 const { useState, useEffect, createContext } = React;
 exports.AppContext = createContext(defaults_1.defaultContext);
-console.log('lolens molens');
 const Step = daggy_1.default.taggedSum('UI', {
     Start: [],
     Register: [],
