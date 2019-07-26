@@ -23,6 +23,7 @@ pipeline {
     stage('BUILD'){  
        
       steps {
+        sh 'echo "- LERNA BUILD"' 
         sh 'npm run client:${BUILD_SH}'
       }
     }
