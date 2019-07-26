@@ -23,7 +23,7 @@ pipeline {
     stage('BUILD'){  
        
       steps {
-        sh 'npx yarn run client:${BUILD_SH}'
+        sh 'npm run client:${BUILD_SH}'
       }
     }
   

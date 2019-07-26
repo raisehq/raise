@@ -21,7 +21,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --use-workspaces",
-    "client:build:integration": "cd ./packages/client &&  yarn run build:integration",
+    "client:build:integration": "cd ./packages/client &&  npm run build:integration",
     "client:build:production": "cd ./packages/client &&   yarn run build:production"
   }
 }
