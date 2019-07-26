@@ -41,7 +41,7 @@ const Signin = () => {
 
   return (
     <Fragment>
-      <OnboardHeader>Welcome to Hero</OnboardHeader>
+      <OnboardHeader>Welcome to Raise</OnboardHeader>
       <OnboardInput>
         <Input
           data-testid="loginEmail"
@@ -51,7 +51,7 @@ const Signin = () => {
         />
         {errors.email && (
           <div className="errorText">
-            That format doesn't look right. Make sure there aren't any typos.
+            This format doesn't look right. Make sure there aren't any typos.
           </div>
         )}
         <Icon size="big" name="globe" />
@@ -65,7 +65,7 @@ const Signin = () => {
           error={error}
         />
         {error && (
-          <div className="errorText">The email or password is incorrect</div>
+          <div className="errorText">Sorry, I can't find anyone with these details.</div>
         )}
         <Icon size="big" name="user" />
       </OnboardInput>
