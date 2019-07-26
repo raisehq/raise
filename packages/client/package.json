@@ -57,7 +57,7 @@
     "start": "NODE_ENV=production node index.js",
     "dev": "react-scripts start ",
     "int": "env-cmd .env.integration npm run dev",
-    "fix-memory-limit": "LIMIT=4096 npx increase-memory-limit",
+    "fix-memory-limit": "LIMIT=1024 npx increase-memory-limit",
     "build": " yarn run fix-memory-limit && react-scripts build ",
     "build:integration": "env-cmd .env.integration yarn run build",
     "build:production": "env-cmd .env.production yarn run build ",
