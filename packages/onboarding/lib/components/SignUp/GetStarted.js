@@ -54,15 +54,15 @@ const GetStarted = () => {
             react_1.default.createElement(semantic_ui_react_1.Input, { placeholder: "Email address", onChange: onChangeEmail, error: error.validation || error.exist }),
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "mail outline" }),
             error.validation && (react_1.default.createElement("div", { className: "errorText" }, "That format doesn't look right. Make sure there aren't any typos.")),
-            error.exist && (react_1.default.createElement("div", { className: "errorText" }, "The email already exist."))),
+            error.exist && (react_1.default.createElement("div", { className: "errorText" }, "This email already exists."))),
         react_1.default.createElement(styles_1.OnboardButton, { disabled: credentials.email === '' || error.validation || error.exist, onClick: onSetStep('Register') }, "Next"),
         react_1.default.createElement(styles_1.OnboardDisclaimer, null,
-            "By signing up, I agree to Hero",
+            "By signing up, I agree to Raise",
             react_1.default.createElement("button", { className: "disclaimerBTN" }, "Terms of Service"),
             " and",
             react_1.default.createElement("button", { className: "disclaimerBTN" }, "Privacy Policy")),
         react_1.default.createElement(styles_1.CallToSignIn, null,
-            "Already have an account? Press here to",
+            "Do you have an account already? Press here to",
             react_1.default.createElement("button", { className: "callToSignIn", onClick: onSetStep('SignIn') }, "Sign In"))));
 };
 exports.default = GetStarted;

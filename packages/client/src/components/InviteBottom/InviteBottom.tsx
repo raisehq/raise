@@ -30,10 +30,10 @@ const InviteBottom = () => {
               Soon you will be able to access the market place and start
               investing in the loans that fit your preferences.
             </p>
-            <p>We are working to give you an awesome experience and service.</p>
+            <p>We are working to give you an awesome experience and service,</p>
             <p>See you soon.</p>
             <p>
-              <strong>Hero Team.</strong>
+              <strong>The Raise Team</strong>
             </p>
           </Soon>
         </div>

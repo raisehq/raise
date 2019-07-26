@@ -23,7 +23,7 @@ const LayoutV2 = ({ children }) => {
             {children}
             { logged && (
               <FooterRow centered>
-                <Credits>Copyright © HeroFintech Inc. All Rights Reserved</Credits>
+                <Credits>Copyright ©2019 Hero Fintech Technologies. All Rights Reserved</Credits>
               </FooterRow>
             )}
           </Grid>

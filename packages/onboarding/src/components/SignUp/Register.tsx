@@ -88,7 +88,7 @@ const Register = () => {
           error={errors.username}
         />
         {errors.username && (
-          <div className="errorText">Username already exist</div>
+          <div className="errorText">This username already exist.</div>
         )}
         <Icon size="big" name="user" />
       </OnboardInput>
@@ -101,7 +101,7 @@ const Register = () => {
         />
         {errors.password && (
           <div className="errorText">
-            Password at least must have 8 characters 1 capital letter.
+            Passwords must have at least 8 characters and 1 capital letter.
           </div>
         )}
         <Icon size="big" name="key" />
@@ -117,7 +117,7 @@ const Register = () => {
         Get Started
       </OnboardButton>
       <CallToSignIn>
-        Already have an account? Press here to
+        Do you have an account already? Press here to
         <button className="callToSignIn" onClick={onSetStep('SignIn')}>
           Sign In
         </button>
