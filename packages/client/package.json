@@ -58,7 +58,7 @@
     "dev": "react-scripts start",
     "int": "env-cmd .env.integration npm run dev",
     "build": "react-scripts build",
-    "build:integration": "env-cmd .env.integration npm run build --max-old-space-size=512 ",
+    "build:integration": "env-cmd .env.integration node ../../node_modules/react-scripts/bin/react-scripts.js build --max-old-space-size=512 ",
     "build:production": "env-cmd .env.production npm run build --max-old-space-size=512 ",
     "lint": "eslint src/**/*.js --fix",
     "test": "jest --coverage --coverageDirectory=output/coverage/jest",
