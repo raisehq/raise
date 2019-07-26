@@ -82,7 +82,7 @@ const App = ({ history, open }) => {
     const onSetStep = (step) => () => setStep(Step[step]);
     const onSetCredentials = (input, value) => setCredentials(Object.assign({}, credentials, { [input]: value }));
     const onSendCredentials = () => __awaiter(this, void 0, void 0, function* () {
-        const signup = yield services.signUp(Object.assign({}, credentials, (!!referralCode ? { referrer_code: referralCode } : {})));
+        const signup = yield services.signUp(Object.assign({}, credentials, (!!referralCode ? { referrer_code: referralCode } : {}), { accounttype_id: 1 }));
         signup.fold(() => console.log('something went wrong'), () => setStep(Step.Confirm));
     });
     const onResetPassword = (token, password) => __awaiter(this, void 0, void 0, function* () {
