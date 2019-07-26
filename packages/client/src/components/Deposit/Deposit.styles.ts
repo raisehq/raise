@@ -1,5 +1,15 @@
 import styled from 'styled-components';
-import { Card, Grid, Button, Image } from 'semantic-ui-react';
+import {
+  Card,
+  Grid,
+  Button,
+  Image,
+  Loader,
+  Segment,
+  Label,
+  List,
+  Icon
+} from 'semantic-ui-react';
 import Web3Address from '../Web3Address';
 
 export const StyledAddress = styled(Web3Address)`
@@ -10,12 +20,57 @@ const backgroundImage =
   'https://static.herodev.es/images/pattern-fdesk-dark.svg';
 
 export const ContainerStyled = styled.div`
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   padding: 1em;
   background: #d4e5e8 url(${backgroundImage}) no-repeat fixed bottom/100%;
 `;
 
+export const ListItemPadding = styled(List.Item)`
+  &&& {
+    font-size: 18px;
+  }
+  &&&:first-child {
+    margin-bottom: 25px;
+  }
+`;
+
+export const LabelPadding = styled(Label)`
+  &&& {
+    font-size: 14px !important;
+    margin-right: 8px !important;
+  }
+`;
+export const IconSuccess = styled(Icon)`
+  &&& {
+    margin: 0 !important;
+  }
+`;
+export const LabelPaddingLoader = styled(LabelPadding)`
+  &&& {
+    position: relative;
+    margin-bottom: -7px;
+  }
+`;
+export const MicroLoader = styled(Loader)`
+  &&& {
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.78571429em;
+  }
+  &&&:before,
+  &&&:after {
+    width: 10px;
+    height: 10px;
+    margin: 2px 0 0 -0.35rem;
+  }
+`;
+export const SegmentPadded = styled(Segment)`
+  &&& {
+    padding: 7em 7em !important;
+    margin-top: 15% !important;
+  }
+`;
 export const Message = styled.p`
   font-size: 20px;
   color: #767676;
@@ -70,7 +125,7 @@ export const CardCenteredText = styled.div`
   }
 `;
 export const CardTitle = styled.div`
-  color: #188e9b;
+  color: #3c4251;
   font: 26px bold;
   line-height: 36px;
   text-align: center;

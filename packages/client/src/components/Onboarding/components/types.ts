@@ -29,6 +29,8 @@ export interface ISignin {
 
 export interface IContext {
   credentials: ICredentials;
+  isLoading: boolean;
+  setLoading: (bool: boolean) => null | void | Promise<any>;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
   onSetCredentials: (
     input: string,
