@@ -67,7 +67,7 @@ const GetStarted = () => {
           </div>
         )}
         {error.exist && (
-          <div className="errorText">The email already exist.</div>
+          <div className="errorText">This email already exists.</div>
         )}
       </OnboardInput>
       <OnboardButton
@@ -77,12 +77,12 @@ const GetStarted = () => {
         Next
       </OnboardButton>
       <OnboardDisclaimer>
-        By signing up, I agree to Hero
+        By signing up, I agree to Raise
         <button className="disclaimerBTN">Terms of Service</button> and
         <button className="disclaimerBTN">Privacy Policy</button>
       </OnboardDisclaimer>
       <CallToSignIn>
-        Already have an account? Press here to
+        Do you have an account already? Press here to
         <button className="callToSignIn" onClick={onSetStep('SignIn')}>
           Sign In
         </button>

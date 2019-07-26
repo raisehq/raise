@@ -62,17 +62,17 @@ const Register = () => {
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "globe" })),
         react_1.default.createElement(styles_1.OnboardInput, null,
             react_1.default.createElement(semantic_ui_react_1.Input, { placeholder: "Username", onChange: onChangeUsername, error: errors.username }),
-            errors.username && (react_1.default.createElement("div", { className: "errorText" }, "Username already exist")),
+            errors.username && (react_1.default.createElement("div", { className: "errorText" }, "This username already exist.")),
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "user" })),
         react_1.default.createElement(styles_1.OnboardInput, null,
             react_1.default.createElement(semantic_ui_react_1.Input, { placeholder: "Create a password", onChange: onSetPassword, error: errors.password, type: "password" }),
-            errors.password && (react_1.default.createElement("div", { className: "errorText" }, "Password at least must have 8 characters 1 capital letter.")),
+            errors.password && (react_1.default.createElement("div", { className: "errorText" }, "Passwords must have at least 8 characters and 1 capital letter.")),
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "key" })),
         react_1.default.createElement(styles_1.OnboardButton, { disabled: credentials.username === '' ||
                 credentials.password === '' ||
                 credentials.country_id === '', onClick: onSendCredentials }, "Get Started"),
         react_1.default.createElement(styles_1.CallToSignIn, null,
-            "Already have an account? Press here to",
+            "Do you have an account already? Press here to",
             react_1.default.createElement("button", { className: "callToSignIn", onClick: onSetStep('SignIn') }, "Sign In"))));
 };
 exports.default = Register;

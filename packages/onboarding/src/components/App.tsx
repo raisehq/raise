@@ -27,7 +27,6 @@ const { useState, useEffect, createContext } = React;
 
 export const AppContext = createContext<IContext>(defaultContext);
 
-
 const Step = daggy.taggedSum('UI', {
   Start: [],
   Register: [],
@@ -42,7 +41,6 @@ const Step = daggy.taggedSum('UI', {
   ResetError: [],
   ResetPasswordInput: [{}]
 });
-
 interface IProps {
   history: any;
   open: boolean;

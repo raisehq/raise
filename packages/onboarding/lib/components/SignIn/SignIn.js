@@ -32,14 +32,14 @@ const Signin = () => {
     }, 800);
     const onSetPassword = e => onSetCredentials('password', e.target.value);
     return (react_1.default.createElement(react_1.Fragment, null,
-        react_1.default.createElement(styles_1.OnboardHeader, null, "Welcome to Hero"),
+        react_1.default.createElement(styles_1.OnboardHeader, null, "Welcome to Raise"),
         react_1.default.createElement(styles_1.OnboardInput, null,
             react_1.default.createElement(semantic_ui_react_1.Input, { "data-testid": "loginEmail", placeholder: "Please enter you email address", onChange: onSetEmail, error: errors.email || error }),
-            errors.email && (react_1.default.createElement("div", { className: "errorText" }, "That format doesn't look right. Make sure there aren't any typos.")),
+            errors.email && (react_1.default.createElement("div", { className: "errorText" }, "This format doesn't look right. Make sure there aren't any typos.")),
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "globe" })),
         react_1.default.createElement(styles_1.OnboardInput, null,
             react_1.default.createElement(semantic_ui_react_1.Input, { "data-testid": "loginPassword", placeholder: "Please enter your password", type: "password", onChange: onSetPassword, error: error }),
-            error && (react_1.default.createElement("div", { className: "errorText" }, "The email or password is incorrect")),
+            error && (react_1.default.createElement("div", { className: "errorText" }, "Sorry, I can't find anyone with these details.")),
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "user" })),
         react_1.default.createElement(styles_1.OnboardButton, { onClick: onLogin }, "Log In"),
         react_1.default.createElement(styles_1.CallToSignIn, null,
