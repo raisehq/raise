@@ -15,7 +15,7 @@ pipeline {
       steps{
         nodejs(nodeJSInstallationName: 'node_11') {
           sh 'echo "- LERNA BOOTSTRAP"' 
-          sh 'lerna bootstrap'
+          sh 'node /var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/node_11/bin/lerna bootstrap'
         }
       }
     }
@@ -24,7 +24,7 @@ pipeline {
        
       steps {
          sh 'export NODE_OPTIONS=--max_old_space_size=512'
-         sh 'yarn run client:${BUILD_SH}'
+         sh 'node /var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/node_11/bin/yarn run client:${BUILD_SH}'
       }
     }
   
