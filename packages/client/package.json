@@ -58,7 +58,7 @@
     "dev": "react-scripts start ",
     "int": "env-cmd .env.integration npm run dev",
     "fix-memory-limit": "LIMIT=4096 npx increase-memory-limit",
-    "build": "react-scripts build ",
+    "build": " yarn run fix-memory-limit && react-scripts build ",
     "build:integration": "env-cmd .env.integration yarn run build",
     "build:production": "env-cmd .env.production yarn run build ",
     "lint": "eslint src/**/*.js --fix",
