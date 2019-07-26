@@ -24,7 +24,7 @@ pipeline {
     stage('BUILD'){  
        
       steps {
-         sh 'npx lerna run ${BUILD_SH}'
+         sh 'npm run client:${BUILD_SH}'
       }
     }
   
