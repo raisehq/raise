@@ -104,6 +104,7 @@ const App = ({ children, history }: any) => {
             <Route exact path="/join" component={Join} />
             <Route exact path="/referral" component={Referral} />
             <Route exact path="/join/verify/token/:token" component={Join} />
+            <Route exact path="/join/password/reset/:token" component={Join} />
           </LayoutV2>
           <Layout>
             <Route exact path="/kyc" component={Kyc} />
