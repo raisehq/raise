@@ -9,7 +9,7 @@ const Web3Check = () => (
     <Web3Card>
       <Card.Content>
         <NoticeHeader>
-          Connect to Raise
+          Logging you in
         </NoticeHeader>
         <Web3CheckList />
       </Card.Content>

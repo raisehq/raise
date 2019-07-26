@@ -101,6 +101,7 @@ const App = ({ children, history }: any) => {
     match(conditions,
       { isLoading: true },
         () => {},
+        /*
       { logged: true, web3Pass: false },
         () => history.push('/verify-web3'),
       { logged: true, web3Pass: true, deposited: false },
@@ -110,7 +111,7 @@ const App = ({ children, history }: any) => {
       { logged: true, web3Pass: true, deposited: true, refMode: false },
         () => {},
       { logged: false, isJoin: false },
-        () => history.push('/join'),
+        () => history.push('/join'),*/
       _,
         () => {}
     );
@@ -133,10 +134,10 @@ const App = ({ children, history }: any) => {
         })}
        >
 
-          <LayoutV2 exact path="/deposit" component={Deposit} />
+          { web3Pass && <LayoutV2 exact path="/deposit" component={Deposit} /> }
           <LayoutV2 exact path="/verify-web3" component={Web3Check} />
           <LayoutV2 exact path="/join" component={Join} />
-          <LayoutV2 exact path="/referral" component={Referral} />
+          { web3Pass && <LayoutV2 exact path="/referral" component={Referral} /> } 
           <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
           <Layout exact path="/kyc" component={Kyc} />
           <Layout exact path="/kyc/validation" component={KycValidation} />

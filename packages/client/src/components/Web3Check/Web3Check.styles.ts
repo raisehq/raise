@@ -39,7 +39,8 @@ export const Web3Card = styled(Card)`
     }
   }
   &&&&&&&&&&  .description {
-    padding: 40px 50px 50px;
+    min-height: 210px;
+    padding: 27px 50px;
     background-color: #ECEDEE;
     border-top: none;
     font-size: 16px;

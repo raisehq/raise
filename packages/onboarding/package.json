@@ -19,6 +19,7 @@
     "transpile": "tsc --watch"
   },
   "dependencies": {
+    "bowser": "^2.5.2",
     "typescript": "^3.5.3"
   }
 }

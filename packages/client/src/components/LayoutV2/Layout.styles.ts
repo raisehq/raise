@@ -84,6 +84,11 @@ export const ButtonGreen = styled(Button)`
   }
 `;
 
+export const Href = styled.a`
+  color: #00A76F;
+  font-family: Lato;
+  font-size: 14px;
+`;
 export const ImageSized = styled(Image)`
   &&& {
     height: 268px;
