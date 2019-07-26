@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Card, Grid, Button, Image } from 'semantic-ui-react';
 import { match, ANY } from 'pampy';
-
+import { device } from './breakpoints';
 interface PropsPathname {
   pathname: string;
 }
@@ -10,34 +10,65 @@ const depositWidth = pathname =>
   match(
     pathname,
     '/deposit',
-    () => '512px',
+    () => '425px',
     '/verify-web3',
-    () => '512px',
+    () => '425px',
     ANY,
     () => '1200px'
   );
 
+const backgroundImage =
+  'https://static.herodev.es/images/pattern-fdesk-dark.svg';
+
 export const ContainerWrapper = styled.div`
   min-height: 100%;
   width: 100%;
-  padding: 2em 8em;
+  background: white;
+  box-shadow: none;
+  @media ${device.mobileL} {
+    background: #d4e5e8 url(${backgroundImage}) no-repeat fixed bottom/100%;
+    padding: 2em 8em;
+  }
+`;
+
+export const CardContent = styled(Card.Content)`
+  &&& {
+    border-top: none !important;
+    margin: 0px;
+    @media ${device.mobileL} {
+      margin: ${({ bottom_spacing }) =>
+        bottom_spacing
+          ? '0 2.5em 2.5em 2.5em !important;'
+          : '0 2.5em 0em 2.5em !important;'};
+    }
+  }
 `;
 
 export const CardSized = styled(Card)`
   &&& {
-    height: 570px;
-    width: 512px;
+    height: 100%;
+    width: 100%;
+    box-shadow: none;
+    @media ${device.mobileL} {
+      height: 570px;
+      width: 425px;
+    }
   }
 `;
 export const GridSized = styled(Grid)`
   &&& {
     height: 100vh;
+    margin: 0px;
+    @media ${device.mobileL} {
+    }
   }
 `;
 export const CenteredContainerStyled = styled('div')<PropsPathname>`
-  margin-left: auto;
-  margin-right: auto;
-  max-width: ${({ pathname }) => depositWidth(pathname)};
+  @media ${device.mobileL} {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: ${({ pathname }) => depositWidth(pathname)};
+  }
 `;
 export const Title = styled.div`
   color: #104a50;

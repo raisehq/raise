@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import {
-  Card,
   Grid,
   Button,
   Image,
@@ -82,20 +81,9 @@ export const AutoConfirmStyled = styled.div`
     position: fixed;
     bottom: 200px;
     left: 33px;
-  }
+  }ç
 `;
 
-export const CardSized = styled(Card)`
-  &&& {
-    height: 570px;
-    width: 512px;
-  }
-`;
-export const GridSized = styled(Grid)`
-  &&& {
-    height: 100vh;
-  }
-`;
 export const CenteredContainerStyled = styled.div`
   margin-left: auto;
   margin-right: auto;
@@ -140,15 +128,7 @@ export const CardSubtitle = styled.div`
     margin: 19px;
   }
 `;
-export const CardContent = styled(Card.Content)`
-  &&& {
-    border-top: none !important;
-    margin: ${({ bottom_spacing }) =>
-      bottom_spacing
-        ? '0 2.5em 2.5em 2.5em !important;'
-        : '0 2.5em 0em 2.5em !important;'};
-  }
-`;
+
 export const Amount = styled.p`
   &&& {
     color: #5c5d5d;
