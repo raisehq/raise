@@ -21,7 +21,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --use-workspaces",
-    "client:build:integration": "cd ./packages/client && npm run build:integration",
-    "client:build:production": "cd ./packages/client && npm run build:production"
+    "client:build:integration": "cd ./packages/client && NODE_OPTIONS='–max-old-space-size=2048' npm run build:integration",
+    "client:build:production": "cd ./packages/client &&  NODE_OPTIONS='–max-old-space-size=2048' npm run build:production"
   }
 }
