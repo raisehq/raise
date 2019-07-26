@@ -14,8 +14,7 @@ pipeline {
     stage('PREPARE'){
       steps{
         nodejs(nodeJSInstallationName: 'node_11') {
-          sh 'echo "- LERNA BOOTSTRAP"'
-          sh 'sudo npm install -g yarn'
+          sh 'echo "- LERNA BOOTSTRAP"' 
           sh 'npx lerna bootstrap'
         }
       }
@@ -24,7 +23,7 @@ pipeline {
     stage('BUILD'){  
        
       steps {
-         sh 'npx lerna run ${BUILD_SH}'
+         sh 'npm run client:${BUILD_SH}'
       }
     }
   

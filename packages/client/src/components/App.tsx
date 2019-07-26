@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, createContext, useState } from 'react';
-import { withRouter, Switch, Route } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { AnimatedSwitch, spring } from 'react-router-transition';
+import { match, _ } from 'pampy';
+import { Dimmer, Loader } from 'semantic-ui-react';
 import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
 import Dashboard from './Dashboard';
@@ -14,7 +17,25 @@ import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
-import { match, _ } from 'pampy';
+
+function glide(val) {
+  return spring(val, {
+    stiffness: 174,
+    damping: 24
+  });
+}
+
+const pageTransitions = {
+  atEnter: {
+    offset: 100
+  },
+  atLeave: {
+    offset: glide(-100)
+  },
+  atActive: {
+    offset: glide(0)
+  }
+};
 
 export const AppContext = createContext({
   store: {},
@@ -75,47 +96,49 @@ const App = ({ children, history }: any) => {
       isJoin,
       isLoading
     };
-    match(
-      conditions,
+    // prettier-ignore
+    match(conditions,
       { isLoading: true },
-      () => {},
+        () => {},
       { logged: true, web3Pass: false },
-      () => history.push('/verify-web3'),
+        () => history.push('/verify-web3'),
       { logged: true, web3Pass: true, deposited: false },
-      () => setTimeout(() => history.push('/deposit'), 3000),
+        () => setTimeout(() => history.push('/deposit'), 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: true },
-      () => setTimeout(() => history.push('/referral'), 3000),
+        () => setTimeout(() => history.push('/referral'), 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
-      () => {},
+        () => {},
       { logged: false, isJoin: false },
-      () => history.push('/join'),
+        () => history.push('/join'),
       _,
-      () => {}
+        () => {}
     );
   }, [isLoading, logged, web3Pass, deposited]);
 
   return (
     <AppContext.Provider value={{ store, actions, history, web3Status }}>
-      {!isLoading && (
-        <Switch>
-          <LayoutV2>
-            <Route exact path="/deposit" component={Deposit} />
-            <Route exact path="/verify-web3" component={Web3Check} />
-            <Route exact path="/join" component={Join} />
-            <Route exact path="/referral" component={Referral} />
-            <Route exact path="/join/verify/token/:token" component={Join} />
-            <Route exact path="/join/password/reset/:token" component={Join} />
-          </LayoutV2>
-          <Layout>
-            <Route exact path="/kyc" component={Kyc} />
-            <Route exact path="/kyc/validation" component={KycValidation} />
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/create-loan" component={CreateLoan} />
-            <Route exact path="/marketplace" component={Marketplace} />
-            {children}
-          </Layout>
-        </Switch>
-      )}
+      <Dimmer active={isLoading} inverted>
+        <Loader>Loading app</Loader>
+      </Dimmer>
+      <AnimatedSwitch
+        className="switch-wrapper"
+        {...pageTransitions}
+        mapStyles={styles => ({
+          transform: `translateX(${styles.offset}%)`
+        })}
+      >
+        <LayoutV2 exact path="/deposit" component={Deposit} />
+        <LayoutV2 exact path="/verify-web3" component={Web3Check} />
+        <LayoutV2 exact path="/join" component={Join} />
+        <LayoutV2 exact path="/referral" component={Referral} />
+        <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
+        <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+        <Layout exact path="/kyc" component={Kyc} />
+        <Layout exact path="/kyc/validation" component={KycValidation} />
+        <Layout exact path="/dashboard" component={Dashboard} />
+        <Layout exact path="/create-loan" component={CreateLoan} />
+        <Layout exact path="/marketplace" component={Marketplace} />
+      </AnimatedSwitch>
     </AppContext.Provider>
   );
 };

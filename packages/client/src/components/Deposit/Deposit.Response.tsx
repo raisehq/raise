@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
-import { Loader, Segment, Divider, Image } from 'semantic-ui-react';
+import { Loader, Segment, Divider, Image, List } from 'semantic-ui-react';
 import {
   ButtonGreen,
   ButtonRetry,
@@ -9,14 +9,20 @@ import {
   CardTitle,
   CardCenteredText,
   Amount,
+  LabelPadding,
+  LabelPaddingLoader,
+  MicroLoader,
   BlockAmount,
   EquivalencyTitle,
   EquivalencyAmount,
   EquivalencyExtra,
-  ImageSized
+  ImageSized,
+  SegmentPadded,
+  ListItemPadding,
+  IconSuccess
 } from './Deposit.styles';
 
-const AlmostImg = 'https://static.herodev.es/images/img_almost.png';
+//const AlmostImg = 'https://static.herodev.es/images/img_almost.png';
 const ErrorImg = 'https://static.herodev.es/images/img_error.png';
 const SuccessImg = 'https://static.herodev.es/images/img_awesome.png';
 
@@ -24,9 +30,37 @@ const UI = daggy.taggedSum('UI', {
   Success: [{}],
   Check: [],
   Deposit: [],
-  Waiting: [],
+  Waiting: ['steps'],
   Error: []
 });
+
+const UISteps = daggy.taggedSum('UISteps', {
+  Approve: [],
+  Transaction: []
+});
+
+const StepNumber = props => {
+  switch (props.type) {
+    case 'success':
+      return (
+        <LabelPaddingLoader circular color={'green'}>
+          <IconSuccess name="check" />
+        </LabelPaddingLoader>
+      );
+    case 'loading':
+      return (
+        <LabelPaddingLoader circular color="grey" key="black-01">
+          <MicroLoader active inverted />
+        </LabelPaddingLoader>
+      );
+    default:
+      return (
+        <LabelPadding circular color="black" key="black-02">
+          {props.number}
+        </LabelPadding>
+      );
+  }
+};
 
 const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
   ui.cata({
@@ -83,24 +117,45 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
         </CardContent>
       </Fragment>
     ),
-    Waiting: () => (
+    Waiting: steps => (
       <Fragment>
         <CardContent>
           <CardCenteredText>
-            <CardTitle>Almost done</CardTitle>
-            <CardSubtitle>
-              Approve and accept the deposit in your MetaMask wallet
-            </CardSubtitle>
+            <CardTitle>Processing deposit </CardTitle>
+            <CardSubtitle>Check your MetaMask wallet to proceed</CardSubtitle>
           </CardCenteredText>
           <CardCenteredText>
-            <ImageSized src={AlmostImg} />
+            <SegmentPadded textAlign="left">
+              {steps.cata({
+                Approve: () => (
+                  <List>
+                    <ListItemPadding>
+                      <StepNumber type="loading" />
+                      Approve deposit
+                    </ListItemPadding>
+                    <ListItemPadding>
+                      <StepNumber number={2} />
+                      Transaction completed
+                    </ListItemPadding>
+                  </List>
+                ),
+                Transaction: () => (
+                  <List>
+                    <ListItemPadding>
+                      <StepNumber type="success" />
+                      Approve deposit
+                    </ListItemPadding>
+                    <ListItemPadding>
+                      <StepNumber type="loading" />
+                      Transaction completed
+                    </ListItemPadding>
+                  </List>
+                )
+              })}
+            </SegmentPadded>
           </CardCenteredText>
         </CardContent>
-        <CardContent bottom_spacing={'true'}>
-          <ButtonGreen blocked={'true'} loading>
-            Deposit
-          </ButtonGreen>
-        </CardContent>
+        <CardContent bottom_spacing={'true'} />
       </Fragment>
     ),
     Error: () => (
@@ -121,4 +176,4 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
     )
   });
 
-export { getViewResponse, UI };
+export { getViewResponse, UI, UISteps };

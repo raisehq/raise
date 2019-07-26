@@ -4,10 +4,11 @@ html {
 }
 
 body {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: #eceff4;
+  /*background: #eceff4;*/
+  height: 100%;
+  width: 100%;
+  padding: 2em 8em;
+  background: #d4e5e8 url('https://static.herodev.es/images/pattern-fdesk-dark.svg') no-repeat fixed bottom/100%;
 }
 *:not(.icon) {
   font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
@@ -19,7 +20,6 @@ body {
   font-size: 14px;
   line-height: 1.4285em;
   color: rgba(0, 0, 0, 0.6) !important;
-  background: #f7f7f7 !important;
 }
 
 .Toastify__toast {
@@ -46,4 +46,13 @@ body {
 #root .ui.toggle.checkbox input:checked ~ .box:before,
 #root .ui.toggle.checkbox input:checked ~ label:before {
   background-color: #6851d8 !important;
+}
+
+.switch-wrapper {
+  position: relative;
+}
+
+.switch-wrapper > div {
+  position: absolute;
+  width: 100%;
 }

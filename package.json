@@ -20,6 +20,8 @@
     "validator": "^11.1.0"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap --use-workspaces"
+    "bootstrap": "lerna bootstrap --use-workspaces",
+    "client:build:integration": "cd ./packages/client && npm run build:integration",
+    "client:build:production": "cd ./packages/client && npm run build:production"
   }
 }
