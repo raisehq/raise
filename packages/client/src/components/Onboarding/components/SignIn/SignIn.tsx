@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useState } from 'react';
-import { Icon, Input } from 'semantic-ui-react';
+import { Icon, Input, Dimmer, Loader } from 'semantic-ui-react';
 import * as _ from 'lodash';
 import {
   OnboardHeader,
@@ -12,7 +12,7 @@ import validations from '../validations';
 import { AppContext } from '../App';
 
 const Signin = () => {
-  const { onSetStep, onSetCredentials, onLogin, error }: any = useContext(
+  const { onSetStep, onSetCredentials, onLogin, error, isLoading }: any = useContext(
     AppContext
   );
 
@@ -69,7 +69,9 @@ const Signin = () => {
         )}
         <Icon size="big" name="user" />
       </OnboardInput>
-      <OnboardButton onClick={onLogin}>Log In</OnboardButton>
+      <OnboardButton onClick={onLogin}>
+        Log In
+      </OnboardButton>
       <CallToSignIn>
         <button className="callToSignIn" onClick={onSetStep('Reset')}>
           Forgot password?
@@ -82,6 +84,9 @@ const Signin = () => {
           Get Started
         </button>
       </CallToSignIn>
+      <Dimmer inverted active={isLoading}>
+        <Loader inverted />
+      </Dimmer>
     </Fragment>
   );
 };

@@ -1,13 +1,22 @@
 import React, { useContext } from 'react';
+import { Route } from "react-router-dom";
+
 import { Grid, Image }from 'semantic-ui-react';
 import Logout from '../Logout';
 import { AppContext } from '../App';
 import { ContainerWrapper, CenteredContainerStyled as CenteredContainer, HeaderRow, FooterRow, Credits} from './Layout.styles';
 
-const LayoutV2 = ({ children }) => {
+interface IDefaultProps {
+  component: any
+  path?: string;
+  exact?: boolean;
+}
+
+const LayoutV2: React.SFC<IDefaultProps> = (props) => {
+  const { component: Component, ...rest } = props;
   const { store: { auth: { login: { logged } } }, history: { location: { pathname }} } : any = useContext(AppContext);
 
-  return (
+  return <Route {...rest} render={matchProps => (
     <ContainerWrapper>
       <Grid verticalAlign="middle" style={{minHeight: '100%'}}>
         <CenteredContainer  pathname={pathname}>
@@ -20,7 +29,7 @@ const LayoutV2 = ({ children }) => {
                 </Logout>
               </HeaderRow>
             )}
-            {children}
+            <Component {...matchProps} />
             { logged && (
               <FooterRow centered>
                 <Credits>Copyright © HeroFintech Inc. All Rights Reserved</Credits>
@@ -30,7 +39,7 @@ const LayoutV2 = ({ children }) => {
         </CenteredContainer>
         </Grid>
     </ContainerWrapper>
-  );
+  )} />
 }
 
 export default LayoutV2;

@@ -50,6 +50,7 @@ interface IProps {
 const App = ({ history, open }: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(
     defaultContext.credentials
   );
@@ -91,6 +92,7 @@ const App = ({ history, open }: IProps) => {
 
   const onSendCredentials = async () => {
     const signup = await services.signUp({
+      accounttype_id: 1,
       ...credentials,
       ...(!!referralCode ? { referrer_code: referralCode } : {})
     });
@@ -120,35 +122,44 @@ const App = ({ history, open }: IProps) => {
   };
 
   const onLogin = async () => {
-    const request = await services.signIn({
-      email: credentials.email,
-      password: credentials.password
-    });
+    setLoading(true);
+    try {
+      const request = await services.signIn({
+        email: credentials.email,
+        password: credentials.password
+      });
 
-    request.fold(
-      () => setLoginError(true),
-      response => {
-        const {
-          data: {
+      request.fold(
+        () => {
+          setLoading(false);
+          setLoginError(true);
+        },
+        response => {
+          const {
             data: {
-              JwtToken,
-              user,
-              user: { id, status, accounttype_id }
+              data: {
+                JwtToken,
+                user,
+                user: { id, status, accounttype_id }
+              }
             }
-          }
-        } = response;
+          } = response;
 
-        LocalData.setObj('auth', {
-          id,
-          status,
-          token: JwtToken,
-          type: accounttype_id
-        });
+          LocalData.setObj('auth', {
+            id,
+            status,
+            token: JwtToken,
+            type: accounttype_id
+          });
 
-        LocalData.setObj('user', user);
-        window.location.href = getHost('APP');
-      }
-    );
+          LocalData.setObj('user', user);
+          window.location.href = getHost('APP');
+        }
+      );
+    } catch(err) {
+      setLoading(false);
+      setLoginError(true);
+    }
   };
 
   useEffect(() => {
@@ -235,6 +246,8 @@ const App = ({ history, open }: IProps) => {
         onLogin,
         credentials,
         referralCode,
+        isLoading,
+        setLoading,
         error: loginError
       }}
     >

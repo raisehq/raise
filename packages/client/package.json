@@ -1,9 +1,8 @@
 {
-  "name": "client",
+  "name": "hero-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@raise/onboarding": "*",
     "@types/hero-ui": "git+https://herolending:N5dMwpevvwyEe5BQBKqk@bitbucket.org/herodevteam/hero-ui.git#integration",
     "@types/jest": "24.0.15",
     "@types/lodash": "^4.14.135",
@@ -36,7 +35,9 @@
     "react-countdown-now": "^2.1.1",
     "react-dom": "^16.8.6",
     "react-dropzone": "^10.1.5",
-    "react-router-dom": "^4.4.0-beta.6",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-router-transition": "^1.3.0",
     "react-scripts": "3.0.1",
     "react-share": "^3.0.0",
     "react-toastify": "^5.3.1",

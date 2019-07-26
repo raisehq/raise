@@ -79,7 +79,6 @@ export default (dispatch: any, state: any) => {
   const onSignout = () => {
     LocalData.remove('user');
     LocalData.remove('auth');
-    dispatch({ type: 'SIGNOUT_SUCCESS' });
     window.location.href = `${getHost('APP')}/join`;
   };
 

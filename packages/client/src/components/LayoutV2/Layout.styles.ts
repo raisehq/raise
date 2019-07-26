@@ -6,22 +6,22 @@ interface PropsPathname {
   pathname: string;
 }
 
-const depositWidth = (pathname) => match(pathname,
-    '/deposit', () => '512px',
-    '/verify-web3', () => '512px',
-    ANY, () => '1200px'
-);
-
-const backgroundImage =
-  'https://static.herodev.es/images/pattern-fdesk-dark.svg';
+const depositWidth = pathname =>
+  match(
+    pathname,
+    '/deposit',
+    () => '512px',
+    '/verify-web3',
+    () => '512px',
+    ANY,
+    () => '1200px'
+  );
 
 export const ContainerWrapper = styled.div`
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   padding: 2em 8em;
-  background: #d4e5e8 url(${backgroundImage}) no-repeat fixed bottom/100%;
 `;
-
 
 export const CardSized = styled(Card)`
   &&& {
@@ -37,7 +37,7 @@ export const GridSized = styled(Grid)`
 export const CenteredContainerStyled = styled('div')<PropsPathname>`
   margin-left: auto;
   margin-right: auto;
-  max-width: ${({pathname}) => depositWidth(pathname)}
+  max-width: ${({ pathname }) => depositWidth(pathname)};
 `;
 export const Title = styled.div`
   color: #104a50;
@@ -53,7 +53,6 @@ export const HeaderRow = styled(Grid.Row)`
     justify-content: space-between;
   }
 `;
-
 
 export const FooterRow = styled(Grid.Row)`
   &&& {
