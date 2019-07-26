@@ -23,6 +23,7 @@ pipeline {
     stage('BUILD'){  
        
       steps {
+         sh 'export NODE_OPTIONS=--max_old_space_size=1024'
          sh 'npm run client:${BUILD_SH}'
       }
     }
