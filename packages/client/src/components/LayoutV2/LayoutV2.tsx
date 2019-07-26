@@ -32,7 +32,7 @@ const LayoutV2: React.SFC<IDefaultProps> = (props) => {
             <Component {...matchProps} />
             { logged && (
               <FooterRow centered>
-                <Credits>Copyright © HeroFintech Inc. All Rights Reserved</Credits>
+                <Credits>Copyright ©2019 Hero Fintech Technologies. All Rights Reserved</Credits>
               </FooterRow>
             )}
           </Grid>
