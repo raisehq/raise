@@ -26,7 +26,7 @@ const getView = friends => {
       {friends.map((friend, i) => (
         <FriendsListItem key={i}>
           <List.Icon name="check" color="green" />
-          <List.Content>{friend.name ? friend.name : friend}</List.Content>
+          <List.Content>{friend.name ? friend.name : `${friend.substring(0, 6)}...${friend.substring(friend.length - 4)}`}</List.Content>
         </FriendsListItem>
       ))}
     </List>

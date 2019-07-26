@@ -93,9 +93,9 @@ const App = ({ history, open }: IProps) => {
   const onSendCredentials = async () => {
     const signup = await services.signUp({
       ...credentials,
-      ...(!!referralCode ? { referrer_code: referralCode } : {})
+      ...(!!referralCode ? { referrer_code: referralCode } : {}),
+      accounttype_id: 1
     });
-
     signup.fold(
       () => console.log('something went wrong'),
       () => setStep(Step.Confirm)
