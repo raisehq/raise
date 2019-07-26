@@ -15,7 +15,7 @@ pipeline {
       steps{
         nodejs(nodeJSInstallationName: 'node_11') {
           sh 'echo "- LERNA BOOTSTRAP"' 
-          sh 'npx lerna bootstrap'
+          sh 'lerna bootstrap'
         }
       }
     }
@@ -24,7 +24,7 @@ pipeline {
        
       steps {
          sh 'export NODE_OPTIONS=--max_old_space_size=512'
-         sh 'npm run client:${BUILD_SH}'
+         sh 'yarn run client:${BUILD_SH}'
       }
     }
   
