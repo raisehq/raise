@@ -81,7 +81,7 @@ export const AutoConfirmStyled = styled.div`
     position: fixed;
     bottom: 200px;
     left: 33px;
-  }ç
+  }
 `;
 
 export const CenteredContainerStyled = styled.div`
