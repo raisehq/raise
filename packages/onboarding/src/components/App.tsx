@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import isUUID from 'validator/lib/isUUID';
 import daggy from 'daggy';
 import GetStarted from './SignUp/GetStarted';
