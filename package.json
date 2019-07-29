@@ -21,6 +21,11 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --use-workspaces",
+    "dev": "lerna run dev --stream --scope client",
+    "dev:int": "lerna run dev:int --stream --scope client",
+    "dev-all": "lerna run dev --stream --parallel",
+    "dev-all:int": "lerna run dev:int --stream --parallel",
+    "clean": "lerna exec -- rm -rf ./node_modules /lib /build ",
     "client:build:integration": "cd ./packages/client &&  npm run build:integration",
     "client:build:production": "cd ./packages/client &&   yarn run build:production"
   }
