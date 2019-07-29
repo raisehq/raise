@@ -40,6 +40,7 @@ export interface IContext {
     password: string
   ) => null | void | Promise<any>;
   onLogin: () => null | void | Promise<any>;
+  setLoginError: (x: boolean) => null | void | Promise<any>;
   error: boolean;
   referralCode: string | null;
   onRecover: (email: string) => null | void | Promise<any>;
