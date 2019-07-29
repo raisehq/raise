@@ -149,13 +149,13 @@ export const Amount = styled.p`
 `;
 
 export const HowToGetHeroToken = styled.a`
-	height: 21px;
-	width: 147px;
-	color: #00A76F;
-	font-size: 14px;
-	line-height: 45px;
+  height: 21px;
+  width: 147px;
+  color: #00a76f;
+  font-size: 14px;
+  line-height: 45px;
   text-align: center;
-  text-decoration:underline;
+  text-decoration: underline;
 `;
 
 export const BlockAmount = styled.div`
