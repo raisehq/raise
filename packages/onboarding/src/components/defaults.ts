@@ -7,6 +7,7 @@ export const defaultContext = {
   error: false,
   referralCode: null,
   onRecover: () => null,
+  setLoginError: () => null,
   credentials: {
     email: '',
     password: '',
