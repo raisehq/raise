@@ -1,45 +1,68 @@
 import React, { useContext } from 'react';
-import { Route } from "react-router-dom";
+import { Route } from 'react-router-dom';
 
-import { Grid, Image }from 'semantic-ui-react';
+import { Grid, Image } from 'semantic-ui-react';
 import Logout from '../Logout';
 import { AppContext } from '../App';
-import { ContainerWrapper, CenteredContainerStyled as CenteredContainer, HeaderRow, FooterRow, Credits} from './Layout.styles';
+import {
+  ContainerWrapper,
+  CenteredContainerStyled as CenteredContainer,
+  HeaderRow,
+  FooterRow,
+  Credits
+} from './Layout.styles';
 
 interface IDefaultProps {
-  component: any
+  component: any;
   path?: string;
   exact?: boolean;
 }
 
-const LayoutV2: React.SFC<IDefaultProps> = (props) => {
+const LayoutV2: React.SFC<IDefaultProps> = props => {
   const { component: Component, ...rest } = props;
-  const { store: { auth: { login: { logged } } }, history: { location: { pathname }} } : any = useContext(AppContext);
+  const {
+    store: {
+      auth: {
+        login: { logged }
+      }
+    },
+    history: {
+      location: { pathname }
+    }
+  }: any = useContext(AppContext);
 
-  return <Route {...rest} render={matchProps => (
-    <ContainerWrapper>
-      <Grid verticalAlign="middle" style={{minHeight: '100%'}}>
-        <CenteredContainer  pathname={pathname}>
-          <Grid>
-            { logged && (
-              <HeaderRow>
-                <Image src='http://raise.it/logo.svg'/>
-                <Logout basic floated="right">
-                  Logout
-                </Logout>
-              </HeaderRow>
-            )}
-            <Component {...matchProps} />
-            { logged && (
-              <FooterRow centered>
-                <Credits>Copyright ©2019 Hero Fintech Technologies. All Rights Reserved</Credits>
-              </FooterRow>
-            )}
+  return (
+    <Route
+      {...rest}
+      render={matchProps => (
+        <ContainerWrapper>
+          <Grid verticalAlign="middle" padded style={{ minHeight: '100%' }}>
+            <CenteredContainer pathname={pathname}>
+              <Grid>
+                {logged && (
+                  <HeaderRow>
+                    <Image src="http://raise.it/logo.svg" />
+                    <Logout basic floated="right">
+                      Logout
+                    </Logout>
+                  </HeaderRow>
+                )}
+                <Component {...matchProps} />
+                {logged && (
+                  <FooterRow centered>
+                    <Credits>
+                      Copyright ©2019 Hero Fintech Technologies. All Rights
+                      Reserved
+                    </Credits>
+                  </FooterRow>
+                )}
+              </Grid>
+            </CenteredContainer>
           </Grid>
-        </CenteredContainer>
-        </Grid>
-    </ContainerWrapper>
-  )} />
-}
+        </ContainerWrapper>
+      )}
+    />
+  );
+};
 
 export default LayoutV2;

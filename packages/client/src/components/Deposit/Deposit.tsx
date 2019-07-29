@@ -1,18 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { getReferralAddress } from '../../services/user';
-import {
-  CardSized,
-  CardContent,
-  StyledAddress as Web3Address
-} from './Deposit.styles';
-
+import { StyledAddress as Web3Address } from './Deposit.styles';
+import { CardSized } from '../LayoutV2/Layout.styles';
 import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
 import { AppContext } from '../App';
 import { toWei } from 'web3-utils';
-
+import { CardContent } from '../LayoutV2/Layout.styles';
 const switchDepositMethod = async (depositContract, account, referrer_code) => {
   const defaultMethod = {
     depositMethod: depositContract.deposit,
