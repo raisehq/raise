@@ -32,8 +32,9 @@ export const ContainerWrapper = styled.div`
 `;
 
 export const CardContent = styled(Card.Content)`
-  &&& {
-    border-top: none !important;
+  &&&& {
+    border: none !important;
+    border-top: 0 !important;
     margin: 0px;
     @media ${device.mobileL} {
       margin: ${({ bottom_spacing }) =>
@@ -79,9 +80,13 @@ export const Title = styled.div`
 export const HeaderRow = styled(Grid.Row)`
   &&&&& {
     margin: 20px 0px 0px;
+    padding: 0px 14px 0px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media ${device.mobileL} {
+      padding: 0px;
+    }
   }
 `;
 
@@ -116,7 +121,7 @@ export const ButtonGreen = styled(Button)`
 `;
 
 export const Href = styled.a`
-  color: #00A76F;
+  color: #00a76f;
   font-family: Lato;
   font-size: 14px;
 `;

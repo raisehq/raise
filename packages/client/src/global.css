@@ -7,8 +7,7 @@ body {
   /*background: #eceff4;*/
   height: 100%;
   width: 100%;
-  padding: 2em 8em;
-  background: #d4e5e8 url('https://static.herodev.es/images/pattern-fdesk-dark.svg') no-repeat fixed bottom/100%;
+  background: white;
 }
 *:not(.icon) {
   font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
@@ -55,4 +54,5 @@ body {
 .switch-wrapper > div {
   position: absolute;
   width: 100%;
+  height: 100vh;
 }
