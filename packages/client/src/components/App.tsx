@@ -21,22 +21,21 @@ import useWeb3Checker from '../hooks/useWeb3Checker';
 function glide(val) {
   return spring(val, {
     stiffness: 174,
-    damping: 24,
+    damping: 24
   });
 }
 
 const pageTransitions = {
   atEnter: {
-    offset: 100,
+    offset: 100
   },
   atLeave: {
-    offset: glide(-100),
+    offset: glide(-100)
   },
   atActive: {
-    offset: glide(0),
-  },
+    offset: glide(0)
+  }
 };
-
 
 export const AppContext = createContext({
   store: {},
@@ -116,28 +115,25 @@ const App = ({ children, history }: any) => {
     );
   }, [isLoading, logged, web3Pass, deposited]);
 
-  
   return (
     <AppContext.Provider value={{ store, actions, history, web3Status }}>
       <Dimmer active={isLoading} inverted>
-        <Loader>
-          Loading app
-        </Loader>
+        <Loader>Loading app</Loader>
       </Dimmer>
       <AnimatedSwitch
         className="switch-wrapper"
         {...pageTransitions}
-
         mapStyles={styles => ({
-          transform: `translateX(${styles.offset}%)`,
+          transform: `translateX(${styles.offset}%)`
         })}
        >
 
           { web3Pass && <LayoutV2 exact path="/deposit" component={Deposit} /> }
+          { web3Pass && <LayoutV2 exact path="/referral" component={Referral} /> } 
           <LayoutV2 exact path="/verify-web3" component={Web3Check} />
           <LayoutV2 exact path="/join" component={Join} />
-          { web3Pass && <LayoutV2 exact path="/referral" component={Referral} /> } 
           <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
+          <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
           <Layout exact path="/kyc" component={Kyc} />
           <Layout exact path="/kyc/validation" component={KycValidation} />
           <Layout exact path="/dashboard" component={Dashboard} />
