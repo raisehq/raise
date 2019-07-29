@@ -6,9 +6,10 @@ import useWeb3 from '../../hooks/useWeb3';
 import { satisfiesBrowser } from './Web3Checklist';
 import { Href } from '../LayoutV2/Layout.styles';
 import { ButtonGreen } from '../Referral/Referral.styles';
+import { StyledAddress } from './Web3Check.styles';
 
 const NeedHelp = ({href}) => (
-  <div style={{position: 'absolute', bottom: 0, left: 0, right: 0, textAlign: 'center'}}>
+  <div style={{position: 'absolute', bottom: 10, left: 0, right: 0, textAlign: 'center'}}>
     <Href target='_blank' href={href}>
      Need help?
    </Href> 
@@ -53,9 +54,11 @@ const AccountNotVerified = ({currentAddress, uploadSignature}) => (
   <Card.Description>
     <p>Check MetaMask and sign a message to bind this address to your Raise account. You will be able to operate only with this address.</p>
     <div>
-      <Web3Address account={currentAddress} />
     </div>
-    <ButtonGreen onClick={uploadSignature} content='Sign message' />
+    <ButtonGreen onClick={uploadSignature} >
+      Sign message with
+      <StyledAddress account={currentAddress} />
+    </ButtonGreen>
     <NeedHelp href='/faq' />
   </Card.Description>
 )
@@ -63,7 +66,7 @@ const AccountNotVerified = ({currentAddress, uploadSignature}) => (
 const AccountNotMatchNotice = ({verifiedAddress}) => (
   <Card.Description>
     <h6>Address does not match</h6>
-    <p>Change your current address to your Raise address below.</p>
+    <p>Change your current address to your binded Raise address below.</p>
     <div>
       <Web3Address account={verifiedAddress} />
     </div>
@@ -90,13 +93,14 @@ const CurrentNotice = () => {
       networkMatches,
       network,
       targetNetwork,
-      address
+      account
     },
     actions: {
       blockchain: { uploadSignature }
     },
     store: { user: { cryptoAddress: { address: verifiedAddress } } }
   }: any = useContext(AppContext);
+  
 
   if (!satisfiesBrowser()) {
     return <BrowserErrorNotice />;
@@ -111,7 +115,7 @@ const CurrentNotice = () => {
     return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={network} />
   }
   if (!verifiedAddress) {
-    return <AccountNotVerified currentAddress={address} uploadSignature={uploadSignature} />
+    return <AccountNotVerified currentAddress={account} uploadSignature={uploadSignature} />
   }
   if (!accountMatches) {
     return <AccountNotMatchNotice verifiedAddress={verifiedAddress} />

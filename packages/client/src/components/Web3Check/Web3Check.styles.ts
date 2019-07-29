@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import { Card, Segment } from 'semantic-ui-react';
 import { OnlyActive } from '../../commons/OnlyActive';
+import Web3Address from './Web3Address';
 
+export const StyledAddress = styled(Web3Address)`
+  font-size: 14px;
+  margin: 0px 0px 0px 10px;
+`;
 
 export const NoticeHeader = styled(Card.Header)`
 &&&&&&&&& {
@@ -15,7 +20,7 @@ export const NoticeHeader = styled(Card.Header)`
 export const Web3Card = styled(Card)`
 &&& {
   width: 100%;
-  max-height: 490px;
+  min-height: 490px;
   max-width: 512px;
   margin: 0 auto;
   color: #5C5D5D;
@@ -40,7 +45,7 @@ export const Web3Card = styled(Card)`
   }
   &&&&&&&&&&  .description {
     min-height: 210px;
-    padding: 27px 50px;
+    padding: 36px 50px 46px;
     background-color: #ECEDEE;
     border-top: none;
     font-size: 16px;

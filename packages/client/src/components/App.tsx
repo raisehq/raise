@@ -101,7 +101,6 @@ const App = ({ children, history }: any) => {
     match(conditions,
       { isLoading: true },
         () => {},
-        /*
       { logged: true, web3Pass: false },
         () => history.push('/verify-web3'),
       { logged: true, web3Pass: true, deposited: false },
@@ -111,7 +110,7 @@ const App = ({ children, history }: any) => {
       { logged: true, web3Pass: true, deposited: true, refMode: false },
         () => {},
       { logged: false, isJoin: false },
-        () => history.push('/join'),*/
+        () => history.push('/join'),
       _,
         () => {}
     );
