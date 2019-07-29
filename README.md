@@ -34,12 +34,12 @@ The commands below should be run at the root of the monorepo.
 
 Start `@raise/client` in development pointing to integration
 ```bash
-yarn run dev-client:int
+yarn run dev:int
 ```
 
 Start `@raise/client` in development pointing to localhost
 ```bash
-yarn run dev-client
+yarn run dev
 ```
 ### Watch all packages and run @raise/client
 (Experimental: The first screen will be blank, refresh and all should work)
