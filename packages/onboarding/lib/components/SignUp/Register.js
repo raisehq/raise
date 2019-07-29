@@ -26,6 +26,7 @@ const App_1 = require("../App");
 const countries_1 = require("../../commons/countries");
 const validations_1 = __importDefault(require("../validations"));
 const services_1 = require("../../services");
+const services_2 = require("../../services");
 const Register = () => {
     const { credentials, onSetStep, onSetCredentials, onSendCredentials, referralCode } = react_1.useContext(App_1.AppContext);
     const [errors, setErrors] = react_1.useState({
@@ -34,7 +35,14 @@ const Register = () => {
         username: false,
         accounttype_id: 1
     });
-    const onSetCountry = (e, data) => onSetCredentials('country_id', data.value);
+    const onSetCountry = debounce_1.default((e, data) => __awaiter(this, void 0, void 0, function* () {
+        const { value } = data;
+        const validateCountry = yield services_2.checkBlockedCountry(value);
+        validateCountry.fold(() => setErrors(Object.assign({}, errors, { country: true })), () => {
+            setErrors(Object.assign({}, errors, { country: false }));
+            onSetCredentials('country_id', data.value);
+        });
+    }), 800);
     const onChangeUsername = debounce_1.default((e, data) => __awaiter(this, void 0, void 0, function* () {
         const { value } = data;
         const usernameExist = yield services_1.checkUsername(value);
@@ -58,7 +66,8 @@ const Register = () => {
         react_1.default.createElement(styles_1.OnboardHeader, null, header),
         react_1.default.createElement(styles_1.OnboardSubHeader, null, "Create an account"),
         react_1.default.createElement(styles_1.OnboardInput, null,
-            react_1.default.createElement(styles_1.OnboardCountries, { control: semantic_ui_react_1.Select, options: countries_1.countryOptions, search: true, placeholder: "Country of residence", onChange: onSetCountry }),
+            react_1.default.createElement(styles_1.OnboardCountries, { control: semantic_ui_react_1.Select, options: countries_1.countryOptions, search: true, placeholder: "Country of residence", onChange: onSetCountry, error: errors.country }),
+            errors.country && (react_1.default.createElement("div", { className: "errorTextSelect" }, "Sorry we don\u2019t accept registrations from this country")),
             react_1.default.createElement(semantic_ui_react_1.Icon, { size: "big", name: "globe" })),
         react_1.default.createElement(styles_1.OnboardInput, null,
             react_1.default.createElement(semantic_ui_react_1.Input, { placeholder: "Username", onChange: onChangeUsername, error: errors.username }),

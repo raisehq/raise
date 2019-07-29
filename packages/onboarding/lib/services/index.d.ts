@@ -6,3 +6,4 @@ export declare const validateToken: (token: any) => Promise<any>;
 export declare const updateToken: (token: any) => Promise<any>;
 export declare const checkUsername: (username: any) => Promise<any>;
 export declare const checkEmail: (email: any) => Promise<any>;
+export declare const checkBlockedCountry: (countryid: any) => Promise<any>;

@@ -29,7 +29,8 @@ const URL = {
     USER: `${index_1.getHost('CORE')}/users`,
     REFRESH: `${index_1.getHost('AUTH')}/jwt/refresh`,
     CHECK_USERNAME: `${index_1.getHost('AUTH')}/users/username/exists?username=`,
-    CHECK_EMAIL: `${index_1.getHost('AUTH')}/users/email/exists`
+    CHECK_EMAIL: `${index_1.getHost('AUTH')}/users/email/exists`,
+    CHECK_COUNTRYBLOCKED: `${index_1.getHost('AUTH')}/users/country/blocked?country_id=`
 };
 exports.signUp = (data) => __awaiter(this, void 0, void 0, function* () {
     const config = Object.assign({ url: URL.REGISTER, method: 'POST' }, COMMON_HEADERS, { data });
@@ -80,5 +81,16 @@ exports.checkEmail = (email) => __awaiter(this, void 0, void 0, function* () {
     };
     const request = yield index_1.to(axios_1.default(config));
     return request.fold(() => index_1.Right('Not Exist'), () => index_1.Left('Exist'));
+});
+exports.checkBlockedCountry = (countryid) => __awaiter(this, void 0, void 0, function* () {
+    const config = {
+        url: `${URL.CHECK_COUNTRYBLOCKED}${countryid}`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    const request = yield index_1.to(axios_1.default(config));
+    return request.fold(() => index_1.Left(null), request => index_1.Either.either(request.data.exist === 0));
 });
 //# sourceMappingURL=index.js.map

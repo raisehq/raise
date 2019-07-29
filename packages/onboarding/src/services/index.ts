@@ -18,7 +18,8 @@ const URL = {
   USER: `${getHost('CORE')}/users`,
   REFRESH: `${getHost('AUTH')}/jwt/refresh`,
   CHECK_USERNAME: `${getHost('AUTH')}/users/username/exists?username=`,
-  CHECK_EMAIL: `${getHost('AUTH')}/users/email/exists`
+  CHECK_EMAIL: `${getHost('AUTH')}/users/email/exists`,
+  CHECK_COUNTRYBLOCKED: `${getHost('AUTH')}/users/country/blocked?country_id=`
 };
 
 export const signUp = async data => {
@@ -113,4 +114,21 @@ export const checkEmail = async email => {
   const request = await to(axios(config));
 
   return request.fold(() => Right('Not Exist'), () => Left('Exist'));
+};
+
+export const checkBlockedCountry = async countryid => {
+  const config: any = {
+    url: `${URL.CHECK_COUNTRYBLOCKED}${countryid}`,
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const request = await to(axios(config));
+
+  return request.fold(
+    () => Left(null),
+    request => Either.either(request.data.exist === 0)
+  );
 };
