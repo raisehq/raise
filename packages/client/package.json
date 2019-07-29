@@ -57,9 +57,10 @@
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "dev": "react-scripts start ",
+    "dev:int": "env-cmd .env.local npm run dev",
     "int": "env-cmd .env.integration npm run dev",
     "build": "NODE_OPTIONS='--max-old-space-size=2048' react-scripts build",
-    "build:integration": "env-cmd .env.integration npm run build",
+    "build:integration": "env-cmd .env.integration yarn run build",
     "build:production": "env-cmd .env.production yarn run build ",
     "lint": "eslint src/**/*.js --fix",
     "test": "jest --coverage --coverageDirectory=output/coverage/jest",
