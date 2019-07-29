@@ -78,6 +78,9 @@ const App = ({ history, open }) => {
             const token = path[path.length - 1];
             setStep(Step.ResetPasswordInput(token));
         }
+        if (pathname.includes('login')) {
+            setStep(Step.SignIn);
+        }
     }), [history]);
     const onSetStep = (step) => () => setStep(Step[step]);
     const onSetCredentials = (input, value) => setCredentials(Object.assign({}, credentials, { [input]: value }));
