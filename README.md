@@ -45,7 +45,7 @@ yarn run dev-client
 (Experimental: The first screen will be blank, refresh and all should work)
 
 In case you need to work in a dependency and need to check the client at the same time, you can watch all packages with the next command. 
-.
+
 ```bash
 yarn run dev-all
 ```
