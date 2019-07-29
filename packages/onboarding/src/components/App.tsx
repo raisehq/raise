@@ -81,6 +81,9 @@ const App = ({ history, open }: IProps) => {
 
       setStep(Step.ResetPasswordInput(token));
     }
+    if (pathname.includes('login')) {
+      setStep(Step.SignIn);
+    }
   }, [history]);
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
