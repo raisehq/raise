@@ -30,8 +30,5 @@
     "@types/storybook__react": "^4.0.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6"
-  },
-  "dependencies": {
-    "bowser": "^2.5.2"
   }
 }
