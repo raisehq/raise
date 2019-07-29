@@ -87,7 +87,7 @@ const App = ({ children, history }: any) => {
 
   useEffect(() => {
     const refMode = Boolean(process.env.REACT_APP_REFERAL);
-    const isJoin = history.location.pathname.includes('/join');
+    const isJoin = history.location.pathname.includes('/join') || history.location.pathname.includes('/login') ;
     const conditions = {
       logged,
       deposited: !!deposited,
