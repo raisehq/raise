@@ -52,10 +52,10 @@ exports.OnboardingWrapper = styled_components_1.default.div `
 
   .error.field {
     .ui.search {
-      background-color: #fff6f6 !important;
-      border-color: #e0b4b4 !important;
+      background-color: #fff6f6;
+      border-color: #e0b4b4;
+      box-shadow: none;
       color: #9f3a38 !important;
-      box-shadow: none !important;
     }
   }
 `;
