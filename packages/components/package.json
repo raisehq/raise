@@ -20,8 +20,8 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@raise/onboarding": "*",
     "@babel/core": "^7.5.5",
+    "@raise/onboarding": "*",
     "@storybook/addon-actions": "^5.1.9",
     "@storybook/addon-info": "^5.1.9",
     "@storybook/addon-links": "^5.1.9",
