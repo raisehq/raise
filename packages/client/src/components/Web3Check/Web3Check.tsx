@@ -1,21 +1,19 @@
-import React  from 'react';
+import React from 'react';
 import StepDescription from './StepDescription';
-import { Web3Card, NoticeHeader } from './Web3Check.styles';
+import { NoticeHeader, CardContent } from './Web3Check.styles';
 import Web3CheckList from './Web3Checklist';
-import { Card, Grid } from 'semantic-ui-react';
-
+import { Grid } from 'semantic-ui-react';
+import { CardSized } from '../LayoutV2/Layout.styles';
 const Web3Check = () => (
   <Grid.Row>
-    <Web3Card>
-      <Card.Content>
-        <NoticeHeader>
-          Logging you in
-        </NoticeHeader>
+    <CardSized>
+      <CardContent>
+        <NoticeHeader>Logging you in</NoticeHeader>
         <Web3CheckList />
-      </Card.Content>
-      <StepDescription  />
-    </Web3Card>
+      </CardContent>
+      <StepDescription />
+    </CardSized>
   </Grid.Row>
-)
+);
 
 export default Web3Check;
