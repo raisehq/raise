@@ -4,7 +4,6 @@ import { Loader, Segment, Divider, Image, List } from 'semantic-ui-react';
 import {
   ButtonGreen,
   ButtonRetry,
-  CardContent,
   CardSubtitle,
   CardTitle,
   CardCenteredText,
@@ -21,7 +20,7 @@ import {
   ListItemPadding,
   IconSuccess
 } from './Deposit.styles';
-
+import { CardContent } from '../LayoutV2/Layout.styles';
 //const AlmostImg = 'https://static.herodev.es/images/img_almost.png';
 const ErrorImg = 'https://static.herodev.es/images/img_error.png';
 const SuccessImg = 'https://static.herodev.es/images/img_awesome.png';
