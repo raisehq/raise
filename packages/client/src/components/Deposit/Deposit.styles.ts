@@ -15,16 +15,6 @@ export const StyledAddress = styled(Web3Address)`
   float: right;
 `;
 
-const backgroundImage =
-  'https://static.herodev.es/images/pattern-fdesk-dark.svg';
-
-export const ContainerStyled = styled.div`
-  min-height: 100%;
-  width: 100%;
-  padding: 1em;
-  background: #d4e5e8 url(${backgroundImage}) no-repeat fixed bottom/100%;
-`;
-
 export const ListItemPadding = styled(List.Item)`
   &&& {
     font-size: 18px;

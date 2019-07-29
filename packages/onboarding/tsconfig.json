@@ -6,11 +6,12 @@
     "noImplicitAny": false,
     "removeComments": true,
     "noLib": false,
+    "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es6",
     "sourceMap": true,
-    "lib": ["es6"],
+    "lib": ["es6", "dom"],
     "esModuleInterop": true,
     "jsx": "react"
   },

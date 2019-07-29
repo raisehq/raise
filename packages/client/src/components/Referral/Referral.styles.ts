@@ -2,16 +2,6 @@ import styled from 'styled-components';
 
 import { Grid, Segment, Button, List } from 'semantic-ui-react';
 
-const backgroundImage =
-  'https://static.herodev.es/images/pattern-fdesk-dark.svg';
-
-export const ContainerWrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  padding: 1em;
-  background: #d4e5e8 url(${backgroundImage}) no-repeat fixed bottom/100%;
-`;
-
 export const CenteredContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
