@@ -14,6 +14,7 @@ import { IContext } from '../types';
 import { countryOptions } from '../../commons/countries';
 import validations from '../validations';
 import { checkUsername } from '../../services';
+import { checkBlockedCountry } from '../../services';
 
 const Register = () => {
   const {
@@ -35,7 +36,18 @@ const Register = () => {
     accounttype_id: 1
   });
 
-  const onSetCountry = (e, data) => onSetCredentials('country_id', data.value);
+  const onSetCountry = debounce(async (e, data) => {
+    const { value } = data;
+    const validateCountry: any = await checkBlockedCountry(value);
+
+    validateCountry.fold(
+      () => setErrors({ ...errors, country: true }),
+      () => {
+        setErrors({ ...errors, country: false });
+        onSetCredentials('country_id', data.value);
+      }
+    );
+  }, 800);
 
   const onChangeUsername = debounce(async (e, data) => {
     const { value } = data;
@@ -78,7 +90,13 @@ const Register = () => {
           search
           placeholder="Country of residence"
           onChange={onSetCountry}
+          error={errors.country}
         />
+        {errors.country && (
+          <div className="errorTextSelect">
+            Sorry we don’t accept registrations from this country
+          </div>
+        )}
         <Icon size="big" name="globe" />
       </OnboardInput>
       <OnboardInput>

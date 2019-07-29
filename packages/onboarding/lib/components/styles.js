@@ -49,6 +49,15 @@ exports.OnboardingWrapper = styled_components_1.default.div `
     padding: 50px;
     box-sizing: border-box;
   }
+
+  .error.field {
+    .ui.search {
+      background-color: #fff6f6 !important;
+      border-color: #e0b4b4 !important;
+      color: #9f3a38 !important;
+      box-shadow: none !important;
+    }
+  }
 `;
 exports.OnboardHeader = styled_components_1.default.h1 `
   color: #3C4251;
@@ -94,6 +103,13 @@ exports.OnboardInput = styled_components_1.default.div `
     color: ${theme_1.default.colors.error};
     position: absolute;
     top: 55px;
+    left: 0;
+  }
+
+  .errorTextSelect {
+    color: ${theme_1.default.colors.error};
+    position: absolute;
+    top: 60px;
     left: 0;
   }
 `;
