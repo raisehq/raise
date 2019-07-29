@@ -21,20 +21,38 @@ All installed in **global**
 The project uses Lerna to handle the cross-dependency and the code shared around all projects (you can find them at packages folder). It's **very important to NOT run npm i within them**, Lerna will handle this at the root of the project. So, first step:
 
 ```bash
-lerna bootstrap
+npx lerna bootstrap
 ```
 
-This will download and create the symlinks across all projects, you don't need to care about anything else.
+This will download, build all the packages and create the symlinks across all projects, you don't need to care about anything else.
 
 ## Usage
 
-In order to work on the packages you should run a task defined in the **local (to the projects) package.json** from the root of the project with:
+The commands below should be run at the root of the monorepo.
 
+### Run @raise/client
+
+Start `@raise/client` in development pointing to integration
 ```bash
-lerna run int
+yarn run dev:int
 ```
 
-This will run the task int defined in client project
+Start `@raise/client` in development pointing to localhost
+```bash
+yarn run dev
+```
+### Watch all packages and run @raise/client
+(Experimental: The first screen will be blank, refresh and all should work)
+
+In case you need to work in a dependency and need to check the client at the same time, you can watch all packages with the next command. 
+
+```bash
+yarn run dev-all
+```
+Watch all pointing to integration
+```bash
+yarn run dev-all:int
+```
 
 With this one, for instance, we will run the task storybook
 

@@ -1,4 +1,5 @@
-node_modules
+node_modules/
 packages/client/node_modules
 packages/components/node_modules
 packages/onboarding/node_modules
+packages/*/lib

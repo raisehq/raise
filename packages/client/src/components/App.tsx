@@ -87,7 +87,7 @@ const App = ({ children, history }: any) => {
 
   useEffect(() => {
     const refMode = Boolean(process.env.REACT_APP_REFERAL);
-    const isJoin = history.location.pathname.includes('/join');
+    const isJoin = history.location.pathname.includes('/join') || history.location.pathname.includes('/login') ;
     const conditions = {
       logged,
       deposited: !!deposited,
@@ -132,6 +132,7 @@ const App = ({ children, history }: any) => {
           { web3Pass && <LayoutV2 exact path="/referral" component={Referral} /> } 
           <LayoutV2 exact path="/verify-web3" component={Web3Check} />
           <LayoutV2 exact path="/join" component={Join} />
+          <LayoutV2 exact path="/login" component={Join} />
           <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
           <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
           <Layout exact path="/kyc" component={Kyc} />

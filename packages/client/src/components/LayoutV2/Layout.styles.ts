@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Card, Grid, Button, Image } from 'semantic-ui-react';
 import { match, ANY } from 'pampy';
 import { device } from './breakpoints';
+import { getImages } from '../../utils';
+
 interface PropsPathname {
   pathname: string;
 }
@@ -17,8 +19,7 @@ const depositWidth = pathname =>
     () => '1200px'
   );
 
-const backgroundImage =
-  'https://static.herodev.es/images/pattern-fdesk-dark.svg';
+const backgroundImage = getImages('pattern-fdesk-dark.svg');
 
 export const ContainerWrapper = styled.div`
   min-height: 100%;
@@ -51,7 +52,8 @@ export const CardSized = styled(Card)`
     width: 100%;
     box-shadow: none;
     @media ${device.mobileL} {
-      height: 570px;
+      min-height: 570px;
+      height: auto !important;
       width: 425px;
     }
   }

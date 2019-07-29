@@ -16,7 +16,10 @@
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "transpile": "tsc --watch"
+    "transpile": "tsc --watch",
+    "dev": "tsc --watch",
+    "dev:int": "yarn run dev",
+    "build": "tsc"
   },
   "dependencies": {
     "typescript": "^3.5.3"

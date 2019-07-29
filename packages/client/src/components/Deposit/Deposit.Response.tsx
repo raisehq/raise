@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
+import { getImages } from '../../utils';
 import { Loader, Segment, Divider, Image, List } from 'semantic-ui-react';
 import {
   ButtonGreen,
@@ -19,8 +20,9 @@ import {
   IconSuccess
 } from './Deposit.styles';
 import { CardContent } from '../LayoutV2/Layout.styles';
-const ErrorImg = 'https://static.herodev.es/images/img_error.png';
-const SuccessImg = 'https://static.herodev.es/images/img_awesome.png';
+
+const ErrorImg = getImages('img_error.png');
+const SuccessImg = getImages('img_awesome.png');
 
 const UI = daggy.taggedSum('UI', {
   Success: [{}],
