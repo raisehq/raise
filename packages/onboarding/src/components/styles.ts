@@ -58,6 +58,15 @@ export const OnboardingWrapper = styled.div`
     padding: 50px;
     box-sizing: border-box;
   }
+
+  .error.field {
+    .ui.search {
+      background-color: #fff6f6 !important;
+      border-color: #e0b4b4 !important;
+      color: #9f3a38 !important;
+      box-shadow: none !important;
+    }
+  }
 `;
 
 export const OnboardHeader = styled.h1`
@@ -106,6 +115,13 @@ export const OnboardInput = styled.div`
     color: ${theme.colors.error};
     position: absolute;
     top: 55px;
+    left: 0;
+  }
+
+  .errorTextSelect {
+    color: ${theme.colors.error};
+    position: absolute;
+    top: 60px;
     left: 0;
   }
 `;
