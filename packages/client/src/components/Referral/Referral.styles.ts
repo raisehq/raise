@@ -99,13 +99,20 @@ export const HeaderRow = styled(Grid.Row)`
 export const TopReferal = styled.div`
   width: 100%;
 `;
-
+export const MidReferral = styled.div`
+  width: 100%;
+  padding: 1em 1em;
+  border-bottom-right-radius: 0.285714rem;
+  border-bottom-left-radius: 0.285714rem;
+  background-color: #ffffff;
+`;
 export const BottomReferal = styled.div`
   width: 100%;
   padding: 1em 1em;
   border-bottom-right-radius: 0.285714rem;
   border-bottom-left-radius: 0.285714rem;
   background-color: #ffffff;
+  box-shadow: 0 0 26px 0 rgba(217,217,217,0.61);
 `;
 
 export const ButtonGreen = styled(Button)`
@@ -138,13 +145,22 @@ export const RewardWrapper = styled.div`
 export const ContainerListFriends = styled.div`
   min-height: 300px;
   margin-bottom: 20px;
-  padding-top: 55px;
 `;
 
-export const RewardAmount = styled.div`
-  font-size: 26px;
-  line-height: 36px;
-  text-align: center;
+export const CenterContainer = styled.div`
+  display: -webkit-flex; /* Safari */
+  -webkit-align-items: center; /* Safari 7.0+ */
+  display: flex;
+  align-items: center;
+`
+
+export const RewardAmount = styled.span`
+  height: 21px;
+  color: #5C5D5D;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 21px;
+  text-align: left;
 `;
 export const FriendsListItem = styled(List.Item)`
   &&& {
@@ -152,13 +168,19 @@ export const FriendsListItem = styled(List.Item)`
   }
 `;
 export const RewardMessage = styled.div`
-  color: #5c5d5d;
-  width: 60%;
-  text-align: center;
-  margin: auto;
-  margin-top: 20%;
+  height: 21px;
+  color: #5C5D5D;
+  font-weight: bold;
 `;
 
 export const MessageCoin = styled.span`
-  font-size: 18px;
+  height: 21px;
+  color: #5A5A5A;
+  font-size: 10px;
+  line-height: 21px;
+  text-align: left;
+`;
+
+export const Divider =  styled.div`
+  background-color: #99A6B8;
 `;

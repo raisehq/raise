@@ -18,9 +18,10 @@ import {
   Social,
   CopyButton,
   Raf,
-  StyledAddress as Web3Address
+  StyledAddress as Web3Address,
+  RafImageContainer
 } from './Invite.styles';
-import { Input } from 'semantic-ui-react';
+import { Input, Responsive } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { AppContext } from '../App';
 
@@ -100,7 +101,9 @@ const Invite = () => {
         </div>
         <div className="visuals">
           <Web3Address />
-          <RafImage src="https://static.herodev.es/images/img_raf.png" />
+          <Responsive as={RafImageContainer} minWidth={1024}>
+            <RafImage src="https://static.herodev.es/images/img_raf.png" />
+          </Responsive>
         </div>
     </Raf>
   );

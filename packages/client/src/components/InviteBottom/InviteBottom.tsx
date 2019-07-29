@@ -3,26 +3,19 @@ import {
   GettingReady,
   Footer,
   Soon,
-  Down,
-  Rectangle,
-  RectangleDown,
   DaysToGoLive
 } from './InviteBottom.styles';
-import Countdown from 'react-countdown-now';
-
-const Completionist = () => <span>We're live!</span>;
 
 const InviteBottom = () => {
   const SEPTEMBERRELEASEDAY = process.env.SEPTEMBERRELEASEDAY ? process.env.SEPTEMBERRELEASEDAY : "2019-09-30T00:00:00.753Z";
-  const DAYSTOGOLIVE = new Date(SEPTEMBERRELEASEDAY).getTime()- new Date().getTime();
-  
-  const renderer = ({ days, completed }) => {
-    return completed ? <Completionist />: <span>{days}</span>;
-  };
+  const oneDay = 1000 * 60 * 60 * 24;
+  const DAYSTOGOLIVE = Math.ceil((new Date(SEPTEMBERRELEASEDAY).getTime() - new Date().getTime()) / oneDay);
 
   return (
       <Footer>
         <div className="footer">
+          <DaysToGoLive>{DAYSTOGOLIVE > 0 ? `${DAYSTOGOLIVE} Days to go live` : `We're live!`}</DaysToGoLive>
+
           <GettingReady as="h1">We are getting ready</GettingReady>
 
           <Soon>
@@ -36,18 +29,6 @@ const InviteBottom = () => {
               <strong>The Raise Team</strong>
             </p>
           </Soon>
-        </div>
-        <div className="visuals">
-          <Down>
-            <Rectangle>
-              <DaysToGoLive as="h1">
-                Days to go live
-              </DaysToGoLive>
-              <RectangleDown>
-                <Countdown date={Date.now() + DAYSTOGOLIVE} renderer={renderer} />
-              </RectangleDown>
-            </Rectangle>
-          </Down>
         </div>
       </Footer>
   );
