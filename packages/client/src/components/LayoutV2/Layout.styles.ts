@@ -80,9 +80,13 @@ export const Title = styled.div`
 export const HeaderRow = styled(Grid.Row)`
   &&&&& {
     margin: 20px 0px 0px;
+    padding: 0px 14px 0px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media ${device.mobileL} {
+      padding: 0px;
+    }
   }
 `;
 
