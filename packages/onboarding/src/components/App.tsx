@@ -236,6 +236,7 @@ const App = ({ history, open }: IProps) => {
         onRecover,
         onLogin,
         credentials,
+        setLoginError,
         referralCode,
         error: loginError
       }}

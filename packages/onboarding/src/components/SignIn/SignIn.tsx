@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useCallback } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import * as _ from 'lodash';
 import {
@@ -12,7 +12,7 @@ import validations from '../validations';
 import { AppContext } from '../App';
 
 const Signin = () => {
-  const { onSetStep, onSetCredentials, onLogin, error }: any = useContext(
+  const { onSetStep, onSetCredentials, onLogin, error, setLoginError }: any = useContext(
     AppContext
   );
 
@@ -24,10 +24,10 @@ const Signin = () => {
     email: false
   });
 
-  const onSetEmail = _.debounce((e, data) => {
+  const onSetEmail = useCallback(_.debounce((e, data) => {
+    setLoginError(false);
     const { value } = data;
     const validateEmail = validations.isEmail(value);
-
     validateEmail.fold(
       () => setErrors({ ...errors, email: true }),
       () => {
@@ -35,9 +35,12 @@ const Signin = () => {
         onSetCredentials('email', value);
       }
     );
-  }, 800);
+  }, 800), []);
 
-  const onSetPassword = e => onSetCredentials('password', e.target.value);
+  const onSetPassword = e => {
+    setLoginError(false);
+    onSetCredentials('password', e.target.value);
+  }
 
   return (
     <Fragment>
