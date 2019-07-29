@@ -107,7 +107,7 @@ export const CopyButton = styled.button`
   margin-left: 4px;
   height: 48px;
   width: 105px;
-  background-color: #3b3b9e;
+  background-color: #EB3F93;
   color: #ffffff;
   font-family: Lato;
   font-size: 14px;
@@ -125,7 +125,7 @@ export const CopyButton = styled.button`
 export const RafImage = styled.img`
   height: auto;
   width: 100%;
-  margin: 255px 23px 54px -110px;
+  margin: 285px 0px 50px -110px;
 `;
 
 export const RafImageContainer = styled.div`
@@ -135,7 +135,7 @@ export const Social = styled.div`
   height: 38px;
   width: 302px;
   display: flex;
-  margin: 41px 73px 54px 50px;
+  margin: 41px 73px 50px 50px;
 
   .SocialMediaShareButton {
     margin-right: 28px;
