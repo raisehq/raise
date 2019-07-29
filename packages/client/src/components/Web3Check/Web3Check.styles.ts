@@ -18,6 +18,19 @@ export const NoticeHeader = styled(Card.Header)`
   }
 `;
 
+export const HelpMessage = styled.div`
+  position: 'absolute';
+  bottom: 10;
+  left: 0;
+  right: 0;
+  textalign: 'center';
+`;
+export const SuccessMessage = styled.div`
+  margin: '20px 0px';
+  height: 60;
+  fontsize: '76px';
+`;
+
 export const CardDescription = styled(Card.Description)`
   &&&&&&&&& {
     min-height: 210px;

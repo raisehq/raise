@@ -5,22 +5,19 @@ import useWeb3 from '../../hooks/useWeb3';
 import { satisfiesBrowser } from './Web3Checklist';
 import { Href } from '../LayoutV2/Layout.styles';
 import { ButtonGreen } from '../Referral/Referral.styles';
-import { StyledAddress, CardDescription } from './Web3Check.styles';
+import {
+  StyledAddress,
+  CardDescription,
+  HelpMessage,
+  SuccessMessage
+} from './Web3Check.styles';
 
 const NeedHelp = ({ href }) => (
-  <div
-    style={{
-      position: 'absolute',
-      bottom: 10,
-      left: 0,
-      right: 0,
-      textAlign: 'center'
-    }}
-  >
+  <HelpMessage>
     <Href target="_blank" href={href}>
       Need help?
     </Href>
-  </div>
+  </HelpMessage>
 );
 
 const BrowserErrorNotice = () => (
@@ -95,9 +92,7 @@ const AccountNotMatchNotice = ({ verifiedAddress }) => (
 
 const Success = () => (
   <CardDescription textAlign="center" style={{ fontSize: '24px' }}>
-    <div style={{ margin: '20px 0px', height: 60, fontSize: '76px' }}>
-      🎉🎉🎉
-    </div>
+    <SuccessMessage>🎉🎉🎉</SuccessMessage>
     All set!
   </CardDescription>
 );
