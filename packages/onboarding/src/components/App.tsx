@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useCallback } from 'react';
 import isUUID from 'validator/lib/isUUID';
 import daggy from 'daggy';
 import GetStarted from './SignUp/GetStarted';
@@ -88,8 +88,8 @@ const App = ({ history, open }: IProps) => {
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
 
-  const onSetCredentials = (input, value) =>
-    setCredentials({ ...credentials, [input]: value });
+  const onSetCredentials = (input, value) => 
+    setCredentials( creds => ({ ...creds, [input]: value }))
 
   const onSendCredentials = async () => {
     const signup = await services.signUp({

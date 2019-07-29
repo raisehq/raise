@@ -12,7 +12,7 @@ import validations from '../validations';
 import { AppContext } from '../App';
 
 const Signin = () => {
-  const { onSetStep, onSetCredentials, onLogin, error, setLoginError }: any = useContext(
+  const { onSetStep, onSetCredentials, onLogin, error, setLoginError, credentials }: any = useContext(
     AppContext
   );
 
@@ -41,6 +41,8 @@ const Signin = () => {
     setLoginError(false);
     onSetCredentials('password', e.target.value);
   }
+  console.log('checklist', (error || errors.email || !credentials.email || !credentials.password))
+  console.log(error, errors.email, credentials.email, credentials.password)
 
   return (
     <Fragment>
@@ -57,7 +59,7 @@ const Signin = () => {
             This format doesn't look right. Make sure there aren't any typos.
           </div>
         )}
-        <Icon size="big" name="globe" />
+        <Icon size="big" name="mail" />
       </OnboardInput>
       <OnboardInput>
         <Input
@@ -70,9 +72,9 @@ const Signin = () => {
         {error && (
           <div className="errorText">Sorry, I can't find anyone with these details.</div>
         )}
-        <Icon size="big" name="user" />
+        <Icon size="big" name="lock" />
       </OnboardInput>
-      <OnboardButton onClick={onLogin}>Log In</OnboardButton>
+      <OnboardButton disabled={(error || errors.email || !credentials.email || !credentials.password )} onClick={onLogin}>Log In</OnboardButton>
       <CallToSignIn>
         <button className="callToSignIn" onClick={onSetStep('Reset')}>
           Forgot password?
