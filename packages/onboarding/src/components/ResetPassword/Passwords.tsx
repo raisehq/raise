@@ -6,7 +6,8 @@ import {
   OnboardHeader,
   OnboardInput,
   OnboardButton,
-  CallToSignIn
+  CallToSignIn,
+  OnboardLogo
 } from '../styles';
 import validations from '../validations';
 import { AppContext } from '../App';
@@ -89,7 +90,9 @@ const Reset = ({ token }) => {
 
   return (
     <Fragment>
-      <OnboardHeader>Recover your password</OnboardHeader>
+      <OnboardHeader>
+        Recover your password <OnboardLogo />
+      </OnboardHeader>
       <OnboardInput>
         <Input
           data-testid="loginPassword"

@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   OnboardingSimpleModal,
   OnboardingWrapper,
   commonModal
 } from '../styles';
+import { AppContext } from '../App';
 
-const SimpleModal = ({ children }) => (
-  <OnboardingSimpleModal style={commonModal} open dimmer="blurring">
-    <OnboardingWrapper>
-      <div className="process">{children}</div>
-    </OnboardingWrapper>
-  </OnboardingSimpleModal>
-);
+const SimpleModal = ({ children }) => {
+  const { blur } = useContext(AppContext);
+
+  const dimmer = blur ? { dimmer: 'blurring' } : null;
+
+  return (
+    <OnboardingSimpleModal style={commonModal} open {...dimmer}>
+      <OnboardingWrapper>
+        <div className="process">{children}</div>
+      </OnboardingWrapper>
+    </OnboardingSimpleModal>
+  );
+};
 
 export default SimpleModal;

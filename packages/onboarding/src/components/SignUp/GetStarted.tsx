@@ -7,7 +7,8 @@ import {
   OnboardInput,
   OnboardButton,
   CallToSignIn,
-  OnboardDisclaimer
+  OnboardDisclaimer,
+  OnboardLogo
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
@@ -61,7 +62,9 @@ const GetStarted = () => {
 
   return (
     <Fragment>
-      <OnboardHeader>{header}</OnboardHeader>
+      <OnboardHeader>
+        {header} <OnboardLogo />
+      </OnboardHeader>
       <OnboardSubHeader>Create an account</OnboardSubHeader>
       <OnboardInput>
         <Input

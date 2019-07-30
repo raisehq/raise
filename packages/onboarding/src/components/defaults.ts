@@ -5,6 +5,7 @@ export const defaultContext = {
   onResetPassword: () => null,
   onLogin: () => null,
   error: false,
+  blur: false,
   referralCode: null,
   onRecover: () => null,
   setLoginError: () => null,

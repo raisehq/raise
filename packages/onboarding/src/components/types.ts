@@ -28,6 +28,7 @@ export interface ISignin {
 }
 
 export interface IContext {
+  blur: boolean;
   credentials: ICredentials;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
   onSetCredentials: (
