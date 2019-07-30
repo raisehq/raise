@@ -52,7 +52,3 @@ export const to = (promise: any) => {
       return Left(err);
     });
 };
-
-export const getRootNode = () => {
-  return document.getElementById('root');
-};
