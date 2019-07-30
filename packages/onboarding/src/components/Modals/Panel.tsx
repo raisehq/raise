@@ -5,9 +5,14 @@ import {
   TwoPanelModal,
   MainImage
 } from '../styles';
-
+import { getRootNode } from '../../utils';
 const PanelModal = ({ children }) => (
-  <OnboardingModal style={TwoPanelModal} open dimmer="blurring">
+  <OnboardingModal
+    style={TwoPanelModal}
+    open
+    dimmer="blurring"
+    mountNode={getRootNode()}
+  >
     <OnboardingWrapper>
       <div className="visuals">
         <MainImage src="https://static.herodev.es/images/img_signin.png" />
