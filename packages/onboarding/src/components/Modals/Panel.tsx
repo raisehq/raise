@@ -1,16 +1,17 @@
 import React, { useContext } from 'react';
 import {
-  OnboardingModal,
+  OnboardingTwoModal,
   OnboardingWrapper,
-  TwoPanelModal,
+  commonModal,
   MainImage
 } from '../styles';
 import { AppContext } from '../App';
+
 const PanelModal = ({ children }) => {
   const { mountNode }: any = useContext(AppContext);
   return (
-    <OnboardingModal
-      style={TwoPanelModal}
+    <OnboardingTwoModal
+      style={commonModal}
       open
       dimmer="blurring"
       mountNode={mountNode}
@@ -21,7 +22,7 @@ const PanelModal = ({ children }) => {
         </div>
         <div className="process">{children}</div>
       </OnboardingWrapper>
-    </OnboardingModal>
+    </OnboardingTwoModal>
   );
 };
 

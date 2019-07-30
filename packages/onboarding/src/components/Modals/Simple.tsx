@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
-import { OnboardingModal, OnboardingWrapper, OnePanelModal } from '../styles';
+import {
+  OnboardingSimpleModal,
+  OnboardingWrapper,
+  commonModal
+} from '../styles';
+
 import { AppContext } from '../App';
 const SimpleModal = ({ children }) => {
   const { mountNode }: any = useContext(AppContext);
-
   return (
-    <OnboardingModal
-      style={OnePanelModal}
+    <OnboardingSimpleModal
+      style={commonModal}
       open
       dimmer="blurring"
       mountNode={mountNode}
@@ -14,7 +18,7 @@ const SimpleModal = ({ children }) => {
       <OnboardingWrapper>
         <div className="process">{children}</div>
       </OnboardingWrapper>
-    </OnboardingModal>
+    </OnboardingSimpleModal>
   );
 };
 

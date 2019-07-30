@@ -46,6 +46,15 @@ const GetStarted = () => {
     );
   }, 500);
 
+  const onKeyPress = event => {
+    if (
+      event.key === 'Enter' &&
+      (credentials.email !== '' && !error.validation && !error.exist)
+    ) {
+      onSetStep('Register')();
+    }
+  };
+
   const header = !!referralCode
     ? 'True friends invited you to Raise'
     : 'Get started';
@@ -59,6 +68,7 @@ const GetStarted = () => {
           placeholder="Email address"
           onChange={onChangeEmail}
           error={error.validation || error.exist}
+          onKeyPress={onKeyPress}
         />
         <Icon size="big" name="mail outline" />
         {error.validation && (
