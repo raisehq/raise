@@ -102,7 +102,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             </BlockAmount>
             <Divider />
             <CardCenteredText>
-              <HowToGetHeroToken target="_blank" href="/howtogetherotoken">
+              <HowToGetHeroToken target="_blank" href="https://www.raise.it">
                 How to get Hero Tokens
               </HowToGetHeroToken>
             </CardCenteredText>
