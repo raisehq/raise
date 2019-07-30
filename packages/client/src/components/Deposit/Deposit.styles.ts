@@ -122,8 +122,10 @@ export const CardSubtitle = styled.div`
 export const Amount = styled.p`
   &&& {
     color: #5c5d5d;
-    font: 60px bold;
-    line-height: 32px;
+    font-size: 50px;
+    font-weight: 300;
+    line-height: 16px;
+    padding-top: 57px;
     text-align: center;
     margin: 0px 105px;
   }
@@ -132,32 +134,28 @@ export const Amount = styled.p`
     color: #7f8fa4;
     font-size: 12px;
     float: left;
-    margin-top: 19px;
+    margin-top: 9px;
+    line-height: 21px;
     content: 'Amount';
   }
   &&&::after {
     color: #7f8fa4;
     font-size: 12px;
     float: right;
-    margin-top: 19px;
-    content: 'HeroToken';
+    margin-top: 9px;
+    line-height: 21px;
+    content: 'Tokens';
   }
 `;
 
-export const EquivalencyTitle = styled.p`
-  color: #7f8fa4;
-  font-size: 12px;
-  line-height: 21px;
-`;
-export const EquivalencyAmount = styled.p`
-  color: #5c5d5d;
-  font-size: 26px;
-  line-height: 36px;
-`;
-export const EquivalencyExtra = styled.p`
-  color: #5c5d5d;
-  font-size: 10px;
-  line-height: 14px;
+export const HowToGetHeroToken = styled.a`
+  height: 21px;
+  width: 147px;
+  color: #00a76f;
+  font-size: 14px;
+  line-height: 45px;
+  text-align: center;
+  text-decoration: underline;
 `;
 
 export const BlockAmount = styled.div`
