@@ -77,7 +77,7 @@ export const ShareYourUniqueLi = styled.div`
   }
 `;
 
-export const ShareInput2 = styled.div`
+export const ShareInput = styled.div`
   input {
     height: 48px;
     border: 1px solid #d4d4d4;
@@ -94,27 +94,6 @@ export const ShareInput2 = styled.div`
   margin: 0px 0px 0px 15px;
   @media ${device.mobileL} {
     margin: 10px 5px 10px 50px;
-  }
-`;
-
-export const ShareInput = styled.div`
-  width: 320px;
-  display: flex;
-
-  input {
-    height: 48px;
-    width: 222px;
-    border: 1px solid #d4d4d4;
-    border-radius: 4px;
-    margin: 10px 4px 55px 0px;
-
-    .value {
-      height: 21px;
-      color: #5c5d5d;
-      font-family: Lato;
-      font-size: 14px;
-      line-height: 21px;
-    }
   }
 `;
 
@@ -145,28 +124,6 @@ export const RafImageContainer = styled.div`
 export const Social = styled.div`
   margin: 25px 32px 0px 15px;
 
-  @media ${device.mobileL} {
-    margin: 10px 5px 10px 50px;
-  }
-`;
-
-
-
-export const SocialOld = styled.div`
-  height: 38px;
-  width: 302px;
-  display: flex;
-  margin: 41px 73px 50px 15px;
-
-  .SocialMediaShareButton {
-    margin-right: 28px;
-  }
-
-  .img {
-    height: 38px;
-    width: 38px;
-    background: linear-gradient(203.2deg, #37aee2 0%, #1e96c8 100%);
-  }
   @media ${device.mobileL} {
     margin: 10px 5px 10px 50px;
   }

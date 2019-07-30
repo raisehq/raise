@@ -13,15 +13,14 @@ import {
   StartEarningNow,
   RafImage,
   InviteYourFriends,
-  // ShareLink,
+  RafImageContainer,
   ContainerGrid,
   ShareYourUniqueLi,
-  ShareInput2,
+  ShareInput,
   Social,
   CopyButton,
   Raf,
   StyledAddress as Web3Address,
-  RafImageContainer
 } from './Invite.styles';
 import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -77,9 +76,9 @@ const Invite = () => {
             <Grid.Row>
               <Grid>
                 <Grid.Column width={12}>
-                  <ShareInput2>
+                  <ShareInput>
                     <Input value={shareLink} fluid />
-                  </ShareInput2>
+                  </ShareInput>
                 </Grid.Column>
                 <Grid.Column width={4}  verticalAlign='middle'>
                   <CopyToClipboard
@@ -143,9 +142,9 @@ const Invite = () => {
             <Grid.Row>
               <Grid>
                 <Grid.Column width={9}>
-                  <ShareInput2>
+                  <ShareInput>
                     <Input value={shareLink} fluid />
-                  </ShareInput2>
+                  </ShareInput>
                 </Grid.Column>
                 <Grid.Column width={4}  verticalAlign='middle'>
                   <CopyToClipboard
