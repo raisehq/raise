@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Form } from 'semantic-ui-react';
+import { Form, Modal } from 'semantic-ui-react';
 import theme from '../theme';
 
 const commonModal = {
@@ -11,18 +11,34 @@ const commonModal = {
   overflow: 'hidden'
 };
 
-
 const size = {
   mobileS: '320px',
   mobileM: '375px',
   mobileL: '425px'
-}
+};
 
 export const device = {
   mobileS: `(min-width: ${size.mobileS})`,
   mobileM: `(min-width: ${size.mobileM})`,
   mobileL: `(min-width: ${size.mobileL})`
 };
+
+export const OnboardingModal: any = styled(Modal)`
+  &[style] {
+    @media (max-width: ${size.mobileL}) {
+      width: 100% !important;
+
+      .visuals {
+        display: none;
+      }
+
+      .process {
+        width: 100%;
+        padding: 25px;
+      }
+    }
+  }
+`;
 
 export const OnePanelModal = {
   ...commonModal,
@@ -70,7 +86,7 @@ export const OnboardingWrapper = styled.div`
 `;
 
 export const OnboardHeader = styled.h1`
-  color: #3C4251;
+  color: #3c4251;
 `;
 
 export const OnboardSubHeader = styled.h3`
