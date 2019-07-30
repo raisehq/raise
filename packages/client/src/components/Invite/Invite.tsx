@@ -13,16 +13,17 @@ import {
   StartEarningNow,
   RafImage,
   InviteYourFriends,
-  ShareLink,
+  // ShareLink,
+  ContainerGrid,
   ShareYourUniqueLi,
-  ShareInput,
+  ShareInput2,
   Social,
   CopyButton,
   Raf,
   StyledAddress as Web3Address,
   RafImageContainer
 } from './Invite.styles';
-import { Input, Responsive } from 'semantic-ui-react';
+import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { AppContext } from '../App';
 
@@ -46,55 +47,100 @@ const Invite = () => {
 
   return (
     <Raf>
-      <div className="process">
-        <StartEarningNow as="h1">Start earning now !</StartEarningNow>
-
-        <InviteYourFriends as="h1">
-          Invite your friends and get 100 tokens for each.
-        </InviteYourFriends>
-
-        <ShareLink>
-          <ShareYourUniqueLi>Share your unique link</ShareYourUniqueLi>
-          <ShareInput>
-            <Input value={shareLink} />
-
-            <CopyToClipboard
-              text={shareLink}
-              onCopy={() => setState({ value: shareLink, copied: true })}
-            >
-              <CopyButton>{!state.copied ? 'Copy' : 'Copied!'}</CopyButton>
-            </CopyToClipboard>
-          </ShareInput>
-        </ShareLink>
-        <Social>
-          <FacebookShareButton quote={quote} url={shareLink}>
-            <img alt="Facebook ico" src={getImages('ico_facebook.svg')} />
-          </FacebookShareButton>
-          <TwitterShareButton title={quote} url={shareLink}>
-            <img alt="Twitter ico" src={getImages('ico_twitter.svg')} />
-          </TwitterShareButton>
-          <EmailShareButton
-            subject="Invitation to Raise"
-            body={quote}
-            url={shareLink}
-          >
-            <img alt="Email ico" src={getImages('ico_mail.svg')} />
-          </EmailShareButton>
-          <TelegramShareButton title={quote} url={shareLink}>
-            <img alt="Telegram ico" src={getImages('ico_telegram.svg')} />
-          </TelegramShareButton>
-          <WhatsappShareButton title={quote} separator=" - " url={shareLink}>
-            <img alt="Whatsapp ico" src={getImages('ico_whatsapp.svg')} />
-          </WhatsappShareButton>
-        </Social>
-      </div>
-      <div className="visuals">
-        <Web3Address />
-        <Responsive as={RafImageContainer} minWidth={1024}>
-          <RafImage src={getImages('img_raf.png')} />
-        </Responsive>
-        
-      </div>
+      <ContainerGrid width={16}>
+        <Grid.Row>
+          <Grid.Column floated='right'>
+            <Web3Address />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>
+            <Grid.Row>
+              <StartEarningNow as="h1">Start earning now !</StartEarningNow>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid>
+                <Grid.Column width={10}>
+                  <InviteYourFriends as="h1">
+                    Invite your friends and get 100 tokens for each.
+                  </InviteYourFriends>
+                </Grid.Column>
+              </Grid>
+            </Grid.Row>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Grid.Row>
+              <ShareYourUniqueLi>Share your unique link</ShareYourUniqueLi>
+            </Grid.Row>  
+            <Grid.Row>
+              <Grid>
+                <Grid.Column width={9}>
+                  <ShareInput2>
+                    <Input value={shareLink} fluid />
+                  </ShareInput2>
+                </Grid.Column>
+                <Grid.Column width={4}  verticalAlign='middle'>
+                  <CopyToClipboard
+                    text={shareLink}
+                    onCopy={() => setState({ value: shareLink, copied: true })}
+                  >
+                    <CopyButton>{!state.copied ? 'Copy' : 'Copied!'}</CopyButton>
+                  </CopyToClipboard>
+                </Grid.Column>
+              </Grid>
+            </Grid.Row>
+            <Grid.Row>
+              <Social>
+                {/* <Grid.Column width={9}> */}
+                  <Grid columns={5}>
+                    <Grid.Row>
+                      <Grid.Column width={3}>
+                        <FacebookShareButton quote={quote} url={shareLink}>
+                          <img alt="Facebook ico" src={getImages('ico_facebook.svg')} />
+                        </FacebookShareButton>
+                      </Grid.Column>
+                      <Grid.Column width={3}>
+                        <TwitterShareButton title={quote} url={shareLink}>
+                          <img alt="Twitter ico" src={getImages('ico_twitter.svg')} />
+                        </TwitterShareButton>
+                      </Grid.Column>
+                      <Grid.Column width={3}>
+                        <EmailShareButton
+                          subject="Invitation to Raise"
+                          body={quote}
+                          url={shareLink}
+                        >
+                          <img alt="Email ico" src={getImages('ico_mail.svg')} />
+                        </EmailShareButton>
+                      </Grid.Column>
+                      <Grid.Column width={3}>
+                        <TelegramShareButton title={quote} url={shareLink}>
+                          <img alt="Telegram ico" src={getImages('ico_telegram.svg')} />
+                        </TelegramShareButton>
+                      </Grid.Column>
+                      <Grid.Column width={3}>
+                        <WhatsappShareButton title={quote} separator=" - " url={shareLink}>
+                          <img alt="Whatsapp ico" src={getImages('ico_whatsapp.svg')} />
+                        </WhatsappShareButton>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                {/* </Grid.Column> */}
+                
+              </Social>
+            </Grid.Row>
+          </Grid.Column>
+            {/* < > */}
+              <Responsive as={Grid.Column} width={5} minWidth={1024}>
+                <RafImageContainer>
+                  <RafImage src={getImages('img_raf.png')} />
+                </RafImageContainer>
+          {/* </Grid.Column> */}
+          </Responsive>
+        </Grid.Row>
+      </ContainerGrid>
     </Raf>
   );
 };

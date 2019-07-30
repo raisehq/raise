@@ -8,35 +8,48 @@ import {
   SegmentLeft,
   ColumnRight,
   ColumnLeft,
+  // ContainerGrid
 } from './Referral.styles';
 import Invite from '../Invite/index';
 import Resume from './Referral.Resume';
 import InviteBottom from '../InviteBottom/index';
 const Referal = () => {
-  
   return (
-      <Grid.Row>
+    <div>
+      <Responsive as={Grid} minWidth={1024}>
         <ColumnLeft width={12}>
-          <Grid.Row>
-            <SegmentLeft>
-              <TopReferal>
-                <Invite />
-              </TopReferal>
-              <Responsive as={MidReferral} maxWidth={1024}>
-                <Resume />
-              </Responsive>
-              <BottomReferal>
-                <InviteBottom />
-              </BottomReferal>
-            </SegmentLeft>
-          </Grid.Row>
+          <SegmentLeft>
+            <TopReferal>
+              <Invite />
+            </TopReferal>
+            <BottomReferal>
+              <InviteBottom />
+            </BottomReferal>
+          </SegmentLeft>
         </ColumnLeft>
-        <Responsive as={ColumnRight} minWidth={1024} width={4}>
-          <SegmentRight >
+        <ColumnRight width={4}>
+          <SegmentRight>
             <Resume />
           </SegmentRight>
-        </Responsive>
-      </Grid.Row>
+        </ColumnRight>
+      </Responsive>
+
+      <Responsive as={Grid} maxWidth={1024}>
+      <ColumnLeft>
+        <SegmentLeft>
+          <TopReferal>
+            <Invite />
+          </TopReferal>
+          <MidReferral>
+            <Resume />
+          </MidReferral>
+          <BottomReferal>
+            <InviteBottom />
+          </BottomReferal>
+        </SegmentLeft>
+      </ColumnLeft>
+    </Responsive>
+  </div>
   );
 };
 
