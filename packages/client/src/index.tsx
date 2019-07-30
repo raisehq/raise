@@ -17,14 +17,13 @@ type PropsValueType = {
   isLogged: Boolean;
 };
 
-export const getModalRoot = () => document.getElementById('modals');
-
 const Root = () => {
   const [store, dispatch]: any = useReducer<any, any>(
     reducers,
     initialState,
     () => initialState
   );
+
   const actions: any = connector(dispatch, store);
   const values: PropsValueType = { store, actions, isLogged: false };
   return (
