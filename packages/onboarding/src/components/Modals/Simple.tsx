@@ -4,15 +4,18 @@ import {
   OnboardingWrapper,
   commonModal
 } from '../styles';
-
 import { AppContext } from '../App';
+
 const SimpleModal = ({ children }) => {
-  const { mountNode }: any = useContext(AppContext);
+  const { blur, mountNode }: any = useContext(AppContext);
+
+  const dimmer = blur ? { dimmer: 'blurring' } : null;
+
   return (
     <OnboardingSimpleModal
       style={commonModal}
       open
-      dimmer="blurring"
+      {...dimmer}
       mountNode={mountNode}
     >
       <OnboardingWrapper>

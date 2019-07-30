@@ -8,12 +8,15 @@ import {
 import { AppContext } from '../App';
 
 const PanelModal = ({ children }) => {
-  const { mountNode }: any = useContext(AppContext);
+  const { blur, mountNode }: any = useContext(AppContext);
+
+  const dimmer = blur ? { dimmer: 'blurring' } : null;
+
   return (
     <OnboardingTwoModal
       style={commonModal}
       open
-      dimmer="blurring"
+      {...dimmer}
       mountNode={mountNode}
     >
       <OnboardingWrapper>

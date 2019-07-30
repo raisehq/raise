@@ -28,6 +28,8 @@ export interface ISignin {
 }
 
 export interface IContext {
+  blur: boolean;
+  mountNode: any | null;
   credentials: ICredentials;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
   onSetCredentials: (

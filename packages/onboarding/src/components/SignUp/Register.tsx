@@ -7,7 +7,8 @@ import {
   OnboardInput,
   OnboardButton,
   OnboardCountries,
-  CallToSignIn
+  CallToSignIn,
+  OnboardLogo
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
@@ -92,7 +93,10 @@ const Register = () => {
 
   return (
     <Fragment>
-      <OnboardHeader>{header}</OnboardHeader>
+      <OnboardHeader>
+        {header}
+        <OnboardLogo />
+      </OnboardHeader>
       <OnboardSubHeader>Create an account</OnboardSubHeader>
       <OnboardInput>
         <OnboardCountries
