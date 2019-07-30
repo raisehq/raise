@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { fromWei } from 'web3-utils';
-import { List, Divider, Grid } from 'semantic-ui-react';
+import { List, Grid } from 'semantic-ui-react';
 import { UI, getViewResponse } from './Referral.Response';
 import useReferralContract from '../../hooks/useReferralContract';
 
@@ -11,7 +11,8 @@ import {
   RewardMessage,
   ContainerListFriends,
   FriendsListItem,
-  RewardAmount
+  RewardAmount,
+  Separator
 } from './Referral.styles';
 import { AppContext } from '../App';
 
@@ -73,19 +74,23 @@ const Resume = () => {
           </RewardMessage>
         </Grid.Row>
         <Grid.Row>
-          <Divider />
+          <Separator />
         </Grid.Row>
         <ContainerListFriends>
           <RewardMessage >Referred friends:</RewardMessage>
           {getView(referrals || [])}
         </ContainerListFriends>
         <Grid.Row>
-          <ButtonGreen
-            onClick={onWithdraw}
-            disabled={Number(balanceWei) > 0 ? false : true}
-          >
-            {Number(balanceWei) > 0 ? `Claim ${balanceWei} Tokens` : 'Claim'}
-          </ButtonGreen>
+          {/* <Grid>
+          <Grid.Column> */}
+            <ButtonGreen
+              onClick={onWithdraw}
+              disabled={Number(balanceWei) > 0 ? false : true}
+            >
+              {Number(balanceWei) > 0 ? `Claim ${balanceWei} Tokens` : 'Claim'}
+            </ButtonGreen>
+          {/* </Grid.Column>
+          </Grid> */}
         </Grid.Row>
         <Grid.Row>
           {getViewResponse(status)}
@@ -96,25 +101,3 @@ const Resume = () => {
 };
 
 export default Resume;
-/* <RewardWrapper>
-<Container textAlign='center'>
-    <RewardMessage>You have earned: 
-      <RewardAmount> {balanceWei}</RewardAmount>
-      <MessageCoin> HERO</MessageCoin>
-    </RewardMessage>
-</Container>
-<Divider />
-<ContainerListFriends>
-  <Container textAlign='center'>
-    <RewardMessage >Referred friends:</RewardMessage>
-  </Container>
-  {getView(referrals || [])}
-</ContainerListFriends>
-<ButtonGreen
-  onClick={onWithdraw}
-  disabled={Number(balanceWei) > 0 ? false : true}
->
-  {Number(balanceWei) > 0 ? `Claim ${balanceWei} Tokens` : 'Claim'}
-</ButtonGreen>
-{getViewResponse(status)}
-</RewardWrapper> */

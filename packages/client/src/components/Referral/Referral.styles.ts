@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { device } from '../LayoutV2/breakpoints';
 
-import { Grid, Segment, Button, List } from 'semantic-ui-react';
+import { Grid, Segment, Button, List, Divider } from 'semantic-ui-react';
 
 export const CenteredContainer = styled.div`
   margin-left: auto;
@@ -62,6 +62,7 @@ export const ColumnLeft = styled(Grid.Column)`
   &&& {
     z-index: 100 !important;
     padding: 0px !important;
+    margin: 20px 0px 40px 0px;
   }
 `;
 
@@ -119,16 +120,34 @@ export const ButtonGreen = styled(Button)`
     color: white;
     font: 18px bold;
     line-height: 24px;
+    height: 45px;
+    margin: 0px 15px 0px 15px !important;
+    @media ${device.mobileL} {
+      margin: 0px 0px 0px 15px !important;
+      padding: 0;
+    }
   }
   &&&:hover {
     background: linear-gradient(134.72deg, #5aafb8 0%, #78d8ca 100%);
     color: white;
     font-weith: bold;
+    height: 45px;
+    margin: 0px 15px 0px 15px !important;
+    @media ${device.mobileL} {
+      margin: 0px 0px 0px 15px !important;
+      padding: 0;
+    }
   }
   &&&:active {
     background-color: #188e9b;
     color: white;
     font-weith: bold;
+    height: 45px;
+    margin: 0px 15px 0px 15px !important;
+    @media ${device.mobileL} {
+      margin: 0px 0px 0px 15px !important;
+      padding: 0;
+    }
   }
 `;
 
@@ -149,9 +168,9 @@ export const RewardWrapper = styled(Grid)`
   margin: 0px 0px 0px 15px;
   width: 100%
   
-  padding: 0;
+  padding: 0 !important;
   @media ${device.mobileL} {
-    margin: 0px 0px 0px 50px;
+    margin: 0px 0px 0px 0px;
   }
 `;
 
@@ -187,6 +206,12 @@ export const MessageCoin = styled.span`
   text-align: left;
 `;
 
-export const Divider =  styled.div`
+export const Separator =  styled(Divider)`
+  margin: 0px 15px 0px 15px !important;
+  
   background-color: #99A6B8;
+  @media ${device.mobileL} {
+    margin: 15px 50px 0px 50px !important;
+    padding: 0;
+  }
 `;
