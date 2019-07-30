@@ -9,6 +9,7 @@ export const defaultContext = {
   referralCode: null,
   onRecover: () => null,
   setLoginError: () => null,
+  mountNode: null,
   credentials: {
     email: '',
     password: '',

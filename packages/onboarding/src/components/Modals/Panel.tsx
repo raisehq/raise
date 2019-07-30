@@ -8,12 +8,17 @@ import {
 import { AppContext } from '../App';
 
 const PanelModal = ({ children }) => {
-  const { blur } = useContext(AppContext);
+  const { blur, mountNode }: any = useContext(AppContext);
 
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
-    <OnboardingTwoModal style={commonModal} open {...dimmer}>
+    <OnboardingTwoModal
+      style={commonModal}
+      open
+      {...dimmer}
+      mountNode={mountNode}
+    >
       <OnboardingWrapper>
         <div className="visuals">
           <MainImage src="https://static.herodev.es/images/img_signin.png" />

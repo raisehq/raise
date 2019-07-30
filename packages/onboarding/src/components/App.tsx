@@ -45,9 +45,10 @@ interface IProps {
   history: any;
   open: boolean;
   blur: boolean;
+  mountNode?: any;
 }
 
-const App = ({ history, open, blur }: IProps) => {
+const App = ({ history, open, mountNode, blur }: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(
@@ -240,7 +241,8 @@ const App = ({ history, open, blur }: IProps) => {
         setLoginError,
         referralCode,
         blur,
-        error: loginError
+        error: loginError,
+        mountNode
       }}
     >
       {open && getStep()}

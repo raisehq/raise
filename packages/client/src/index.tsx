@@ -17,6 +17,8 @@ type PropsValueType = {
   isLogged: Boolean;
 };
 
+export const getModalRoot = () => document.getElementById('modals');
+
 const Root = () => {
   const [store, dispatch]: any = useReducer<any, any>(
     reducers,
@@ -28,7 +30,7 @@ const Root = () => {
   return (
     <RootContext.Provider value={values}>
       <BrowserRouter>
-        <App/>
+        <App />
       </BrowserRouter>
     </RootContext.Provider>
   );
