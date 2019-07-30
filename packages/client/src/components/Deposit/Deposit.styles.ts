@@ -125,7 +125,7 @@ export const Amount = styled.p`
     font-size: 50px;
     font-weight: 300;
     line-height: 16px;
-    padding-top: 57px;
+    padding-top: 45px;
     text-align: center;
     margin: 0px 105px;
   }
