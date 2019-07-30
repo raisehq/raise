@@ -14,7 +14,8 @@ const commonModal = {
 const size = {
   mobileS: '320px',
   mobileM: '375px',
-  mobileL: '425px'
+  mobileL: '425px',
+  signUp: '860px'
 };
 
 export const device = {
@@ -25,7 +26,7 @@ export const device = {
 
 export const OnboardingModal: any = styled(Modal)`
   &[style] {
-    @media (max-width: ${size.mobileL}) {
+    @media (max-width: ${size.signUp}) {
       width: 100% !important;
 
       .visuals {
@@ -42,7 +43,7 @@ export const OnboardingModal: any = styled(Modal)`
 
 export const OnePanelModal = {
   ...commonModal,
-  width: '425px'
+  width: size.mobileL
 };
 
 export const TwoPanelModal = {
