@@ -6,7 +6,8 @@ import {
   OnboardInput,
   OnboardButton,
   CallToSignIn,
-  Separator
+  Separator,
+  OnboardLogo
 } from '../styles';
 import validations from '../validations';
 import { AppContext } from '../App';
@@ -61,7 +62,9 @@ const Signin = () => {
 
   return (
     <Fragment>
-      <OnboardHeader>Welcome to Raise</OnboardHeader>
+      <OnboardHeader>
+        Welcome to Raise <OnboardLogo />
+      </OnboardHeader>
       <OnboardInput>
         <Input
           data-testid="loginEmail"

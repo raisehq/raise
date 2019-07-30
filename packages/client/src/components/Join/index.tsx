@@ -4,7 +4,12 @@ import { AppContext } from '../App';
 const Join = ({ history }) => {
   const { modalRefs }: any = useContext(AppContext);
   return (
-    <Onboarding open={true} history={history} mountNode={modalRefs.current} />
+    <Onboarding
+      open={true}
+      history={history}
+      mountNode={modalRefs.current}
+      blur={true}
+    />
   );
 };
 

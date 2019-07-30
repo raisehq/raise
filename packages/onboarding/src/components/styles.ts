@@ -244,3 +244,15 @@ export const Separator = styled.div`
   background: #dfe3e9;
   margin-top: 20px;
 `;
+
+export const OnboardLogo = styled.div`
+  position: relative;
+  top: 5px;
+  float: right;
+  width: 25px;
+  height: 25px;
+  border: none;
+  background: url(${theme.resources}/favicons/ms-icon-150x150.png) center center
+    no-repeat;
+  background-size: cover;
+`;
