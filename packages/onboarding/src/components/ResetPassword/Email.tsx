@@ -1,7 +1,12 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
-import { OnboardHeader, OnboardInput, OnboardButton, CallToSignIn } from '../styles';
+import {
+  OnboardHeader,
+  OnboardInput,
+  OnboardButton,
+  CallToSignIn
+} from '../styles';
 import validations from '../validations';
 import { AppContext } from '../App';
 
@@ -14,10 +19,19 @@ const Reset = () => {
     const { value } = data;
     const validateEmail = validations.isEmail(value);
 
-    validateEmail.fold(() => setEmail({ value: '', error: true }), () => setEmail({ value, error: false }));
+    validateEmail.fold(
+      () => setEmail({ value: '', error: true }),
+      () => setEmail({ value, error: false })
+    );
   }, 500);
 
   const onSendRecover = () => onRecover(email.value);
+
+  const onKeyPress = event => {
+    if (event.key === 'Enter' && (email.value !== '' && !email.error)) {
+      onSendRecover();
+    }
+  };
 
   return (
     <Fragment>
@@ -30,13 +44,19 @@ const Reset = () => {
           type="text"
           onChange={onChangeEmail}
           error={email.error}
+          onKeyPress={onKeyPress}
         />
         {email.error && (
-          <div className="errorText">That format doesn't look right. Make sure there aren't any typos.</div>
+          <div className="errorText">
+            That format doesn't look right. Make sure there aren't any typos.
+          </div>
         )}
         <Icon size="big" name="globe" />
       </OnboardInput>
-      <OnboardButton onClick={onSendRecover} disabled={email.value === '' || email.error}>
+      <OnboardButton
+        onClick={onSendRecover}
+        disabled={email.value === '' || email.error}
+      >
         Reset password
       </OnboardButton>
       <CallToSignIn>

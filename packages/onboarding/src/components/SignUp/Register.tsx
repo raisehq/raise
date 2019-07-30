@@ -79,6 +79,17 @@ const Register = () => {
     ? 'True friends invited you to Raise'
     : 'Get started';
 
+  const onKeyPress = event => {
+    if (
+      event.key === 'Enter' &&
+      (credentials.username !== '' &&
+        credentials.password !== '' &&
+        credentials.country_id !== '')
+    ) {
+      onSendCredentials();
+    }
+  };
+
   return (
     <Fragment>
       <OnboardHeader>{header}</OnboardHeader>
@@ -91,6 +102,7 @@ const Register = () => {
           placeholder="Country of residence"
           onChange={onSetCountry}
           error={errors.country}
+          onKeyPress={onKeyPress}
         />
         {errors.country && (
           <div className="errorTextSelect">
@@ -104,6 +116,7 @@ const Register = () => {
           placeholder="Username"
           onChange={onChangeUsername}
           error={errors.username}
+          onKeyPress={onKeyPress}
         />
         {errors.username && (
           <div className="errorText">This username already exist.</div>
@@ -116,6 +129,7 @@ const Register = () => {
           onChange={onSetPassword}
           error={errors.password}
           type="password"
+          onKeyPress={onKeyPress}
         />
         {errors.password && (
           <div className="errorText">

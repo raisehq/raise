@@ -12,9 +12,14 @@ import validations from '../validations';
 import { AppContext } from '../App';
 
 const Signin = () => {
-  const { onSetStep, onSetCredentials, onLogin, error, setLoginError, credentials }: any = useContext(
-    AppContext
-  );
+  const {
+    onSetStep,
+    onSetCredentials,
+    onLogin,
+    error,
+    setLoginError,
+    credentials
+  }: any = useContext(AppContext);
 
   const [errors, setErrors] = useState<{
     login: boolean;
@@ -24,23 +29,35 @@ const Signin = () => {
     email: false
   });
 
-  const onSetEmail = useCallback(_.debounce((e, data) => {
-    setLoginError(false);
-    const { value } = data;
-    const validateEmail = validations.isEmail(value);
-    validateEmail.fold(
-      () => setErrors({ ...errors, email: true }),
-      () => {
-        setErrors({ ...errors, email: false });
-        onSetCredentials('email', value);
-      }
-    );
-  }, 800), []);
+  const onSetEmail = useCallback(
+    _.debounce((e, data) => {
+      setLoginError(false);
+      const { value } = data;
+      const validateEmail = validations.isEmail(value);
+      validateEmail.fold(
+        () => setErrors({ ...errors, email: true }),
+        () => {
+          setErrors({ ...errors, email: false });
+          onSetCredentials('email', value);
+        }
+      );
+    }, 800),
+    []
+  );
 
   const onSetPassword = e => {
     setLoginError(false);
     onSetCredentials('password', e.target.value);
-  }
+  };
+
+  const onKeyPress = event => {
+    if (
+      event.key === 'Enter' &&
+      (!error && !errors.email && credentials.email && credentials.password)
+    ) {
+      onLogin();
+    }
+  };
 
   return (
     <Fragment>
@@ -51,6 +68,7 @@ const Signin = () => {
           placeholder="Please enter you email address"
           onChange={onSetEmail}
           error={errors.email || error}
+          onKeyPress={onKeyPress}
         />
         {errors.email && (
           <div className="errorText">
@@ -66,13 +84,23 @@ const Signin = () => {
           type="password"
           onChange={onSetPassword}
           error={error}
+          onKeyPress={onKeyPress}
         />
         {error && (
-          <div className="errorText">Sorry, I can't find anyone with these details.</div>
+          <div className="errorText">
+            Sorry, I can't find anyone with these details.
+          </div>
         )}
         <Icon size="big" name="lock" />
       </OnboardInput>
-      <OnboardButton disabled={(error || errors.email || !credentials.email || !credentials.password )} onClick={onLogin}>Log In</OnboardButton>
+      <OnboardButton
+        disabled={
+          error || errors.email || !credentials.email || !credentials.password
+        }
+        onClick={onLogin}
+      >
+        Log In
+      </OnboardButton>
       <CallToSignIn>
         <button className="callToSignIn" onClick={onSetStep('Reset')}>
           Forgot password?
