@@ -41,8 +41,6 @@ const Signin = () => {
     setLoginError(false);
     onSetCredentials('password', e.target.value);
   }
-  console.log('checklist', (error || errors.email || !credentials.email || !credentials.password))
-  console.log(error, errors.email, credentials.email, credentials.password)
 
   return (
     <Fragment>
