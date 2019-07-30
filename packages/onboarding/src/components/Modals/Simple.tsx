@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   OnboardingSimpleModal,
   OnboardingWrapper,
   commonModal
 } from '../styles';
 
-const SimpleModal = ({ children }) => (
-  <OnboardingSimpleModal style={commonModal} open dimmer="blurring">
-    <OnboardingWrapper>
-      <div className="process">{children}</div>
-    </OnboardingWrapper>
-  </OnboardingSimpleModal>
-);
+import { AppContext } from '../App';
+const SimpleModal = ({ children }) => {
+  const { mountNode }: any = useContext(AppContext);
+  return (
+    <OnboardingSimpleModal
+      style={commonModal}
+      open
+      dimmer="blurring"
+      mountNode={mountNode}
+    >
+      <OnboardingWrapper>
+        <div className="process">{children}</div>
+      </OnboardingWrapper>
+    </OnboardingSimpleModal>
+  );
+};
 
 export default SimpleModal;

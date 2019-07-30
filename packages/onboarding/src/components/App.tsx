@@ -44,9 +44,10 @@ const Step = daggy.taggedSum('UI', {
 interface IProps {
   history: any;
   open: boolean;
+  mountNode?: any;
 }
 
-const App = ({ history, open }: IProps) => {
+const App = ({ history, open, mountNode }: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(
@@ -238,7 +239,8 @@ const App = ({ history, open }: IProps) => {
         credentials,
         setLoginError,
         referralCode,
-        error: loginError
+        error: loginError,
+        mountNode
       }}
     >
       {open && getStep()}

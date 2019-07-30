@@ -21,7 +21,10 @@ export function getMimeType(base64: string) {
   return '';
 }
 export function isBrowser() {
-  return typeof window !== 'undefined' && {}.toString.call(window) === '[object Window]';
+  return (
+    typeof window !== 'undefined' &&
+    {}.toString.call(window) === '[object Window]'
+  );
 }
 
 export const Right = (x: any) => ({
