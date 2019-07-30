@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import { Form, Modal } from 'semantic-ui-react';
 import theme from '../theme';
 
-const commonModal = {
-  /*minHeight: '507px',*/
+export const commonModal = {
   borderRadius: '4px',
   boxShadow: '0 10px 26px 0 rgba(6, 52, 40, 0.1)',
   margin: '0 !important',
@@ -15,41 +14,46 @@ const size = {
   mobileS: '320px',
   mobileM: '375px',
   mobileL: '425px',
-  signUp: '860px'
+  signUp: '860px',
+  desktop: '950px'
 };
 
 export const device = {
   mobileS: `(min-width: ${size.mobileS})`,
   mobileM: `(min-width: ${size.mobileM})`,
-  mobileL: `(min-width: ${size.mobileL})`
+  mobileL: `(min-width: ${size.mobileL})`,
+  desktop: `(min-width: ${size.desktop})`
 };
 
-export const OnboardingModal: any = styled(Modal)`
-  &[style] {
-    @media (max-width: ${size.signUp}) {
-      width: 100% !important;
+export const OnboardingTwoModal: any = styled(Modal)`
+  &&& {
+    width: ${size.desktop};
 
+    @media (max-width: ${size.mobileL}) {
+      width: 100%;
+    }
+
+    @media (min-width: ${size.mobileL}) and (max-width: ${size.signUp}) {
+      width: ${size.mobileL};
+    }
+
+    @media (max-width: ${size.signUp}) {
       .visuals {
         display: none;
-      }
-
-      .process {
-        width: 100%;
-        padding: 25px;
       }
     }
   }
 `;
 
-export const OnePanelModal = {
-  ...commonModal,
-  width: size.mobileL
-};
+export const OnboardingSimpleModal: any = styled(Modal)`
+  &&& {
+    width: ${size.mobileL};
 
-export const TwoPanelModal = {
-  ...commonModal,
-  width: '950px'
-};
+    @media (max-width: ${size.mobileL}) {
+      width: 100%;
+    }
+  }
+`;
 
 export const OnboardingWrapper = styled.div`
   width: 100%;
