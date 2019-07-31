@@ -71,7 +71,7 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }) => (
       account. You will be able to operate only with this address.
     </p>
     <div />
-    <ButtonGreen onClick={uploadSignature} double={'true'}>
+    <ButtonGreen onClick={uploadSignature} double>
       Sign message with
       <AddressContainer>
         <StyledAddress account={currentAddress} />

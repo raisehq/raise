@@ -97,7 +97,7 @@ export const ButtonGreen = styled(Button)`
     width: 100%;
     ${({ disabled }) => (disabled === 'true' ? 'opacity: 0.4 !important;' : '')}
     ${({ double }) =>
-      double === 'true'
+      double === true
         ? ' height: 90px;'
         : 'height: 45px;'}
     background: linear-gradient(134.72deg, #188E9B 0%, #6DD7C7 100%);
