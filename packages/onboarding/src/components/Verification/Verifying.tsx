@@ -1,10 +1,10 @@
 import React from 'react';
 import { ConfirmWrapper, ConfirmHeader, MainImage } from '../styles';
-import { getImages } from '../../utils';
+import useImages from '../../hooks/useImages';
 
 const Verifying = () => (
   <ConfirmWrapper>
-    <MainImage src={getImages('img_mailverify.png')} />
+    <MainImage src={useImages('img_mailverify.png')} />
     <ConfirmHeader>WAIT A MOMENT</ConfirmHeader>
   </ConfirmWrapper>
 );

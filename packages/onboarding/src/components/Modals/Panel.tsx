@@ -6,7 +6,8 @@ import {
   MainImage
 } from '../styles';
 import { AppContext } from '../App';
-import { getImages } from '../../utils';
+import useImages from '../../hooks/useImages';
+
 const PanelModal = ({ children }) => {
   const { blur, mountNode }: any = useContext(AppContext);
 
@@ -21,7 +22,7 @@ const PanelModal = ({ children }) => {
     >
       <OnboardingWrapper>
         <div className="visuals">
-          <MainImage src={getImages('img_signin.png')} />
+          <MainImage src={useImages('img_signin.png')} />
         </div>
         <div className="process">{children}</div>
       </OnboardingWrapper>
