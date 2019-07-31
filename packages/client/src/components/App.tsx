@@ -138,19 +138,22 @@ const App = ({ children, history }: any) => {
         mapStyles={styles => ({
           transform: `translateX(${styles.offset}%)`
         })}
-      >
-        {web3Pass && <LayoutV2 exact path="/deposit" component={Deposit} />}
-        {web3Pass && <LayoutV2 exact path="/referral" component={Referral} />}
-        <LayoutV2 exact path="/verify-web3" component={Web3Check} />
-        <LayoutV2 exact path="/join" component={Join} />
-        <LayoutV2 exact path="/login" component={Join} />
-        <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
-        <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
-        <Layout exact path="/kyc" component={Kyc} />
-        <Layout exact path="/kyc/validation" component={KycValidation} />
-        <Layout exact path="/dashboard" component={Dashboard} />
-        <Layout exact path="/create-loan" component={CreateLoan} />
-        <Layout exact path="/marketplace" component={Marketplace} />
+       >
+
+          { web3Pass && <LayoutV2 exact path="/deposit" component={Deposit} /> }
+          { web3Pass && <LayoutV2 exact path="/referral" component={Referral} /> } 
+          <LayoutV2 exact path="/verify-web3" component={Web3Check} />
+          <LayoutV2 exact path="/join" component={Join} />
+          <LayoutV2 exact path="/login" component={Join} />
+          <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
+          <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+          <LayoutV2 exact component={Join} />
+          <Layout exact path="/kyc" component={Kyc} />
+          <Layout exact path="/kyc/validation" component={KycValidation} />
+          <Layout exact path="/dashboard" component={Dashboard} />
+          <Layout exact path="/create-loan" component={CreateLoan} />
+          <Layout exact path="/marketplace" component={Marketplace} />
+          <Layout exact component={Join} />
       </AnimatedSwitch>
       <div ref={modalRefs} />
     </AppContext.Provider>

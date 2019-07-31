@@ -1,22 +1,23 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Responsive } from 'semantic-ui-react';
 import {
   TopReferal,
+  MidReferral,
   BottomReferal,
   SegmentRight,
   SegmentLeft,
   ColumnRight,
   ColumnLeft,
+  // ContainerGrid
 } from './Referral.styles';
 import Invite from '../Invite/index';
 import Resume from './Referral.Resume';
 import InviteBottom from '../InviteBottom/index';
 const Referal = () => {
-  
   return (
-    <Grid.Row>
-      <ColumnLeft width={12}>
-        <Grid.Row>
+    <div>
+      <Responsive as={Grid} minWidth={1024}>
+        <ColumnLeft width={12}>
           <SegmentLeft>
             <TopReferal>
               <Invite />
@@ -25,14 +26,30 @@ const Referal = () => {
               <InviteBottom />
             </BottomReferal>
           </SegmentLeft>
-        </Grid.Row>
+        </ColumnLeft>
+        <ColumnRight width={4}>
+          <SegmentRight>
+            <Resume />
+          </SegmentRight>
+        </ColumnRight>
+      </Responsive>
+
+      <Responsive as={Grid} maxWidth={1024}>
+      <ColumnLeft>
+        <SegmentLeft>
+          <TopReferal>
+            <Invite />
+          </TopReferal>
+          <MidReferral>
+            <Resume />
+          </MidReferral>
+          <BottomReferal>
+            <InviteBottom />
+          </BottomReferal>
+        </SegmentLeft>
       </ColumnLeft>
-      <ColumnRight width={4}>
-        <SegmentRight>
-          <Resume />
-        </SegmentRight>
-      </ColumnRight>
-    </Grid.Row>
+    </Responsive>
+  </div>
   );
 };
 

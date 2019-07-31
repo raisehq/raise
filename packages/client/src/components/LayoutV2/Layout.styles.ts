@@ -21,6 +21,7 @@ const depositWidth = pathname =>
 
 const backgroundImage = getImages('pattern-fdesk-dark.svg');
 
+
 export const ContainerWrapper = styled.div`
   min-height: 100%;
   width: 100%;

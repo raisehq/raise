@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { fromWei } from 'web3-utils';
-import { List, Header, Container } from 'semantic-ui-react';
+import { List, Grid } from 'semantic-ui-react';
 import { UI, getViewResponse } from './Referral.Response';
 import useReferralContract from '../../hooks/useReferralContract';
 
@@ -8,10 +8,11 @@ import {
   ButtonGreen,
   RewardWrapper,
   MessageCoin,
-  RewardAmount,
   RewardMessage,
   ContainerListFriends,
-  FriendsListItem
+  FriendsListItem,
+  RewardAmount,
+  Separator
 } from './Referral.styles';
 import { AppContext } from '../App';
 
@@ -25,10 +26,10 @@ const getView = friends => {
     <List>
       {friends.map((friend, i) => (
         <FriendsListItem key={i}>
-          <List.Icon name="check" color="green" />
-          <List.Content>{friend.name ? 
-            (friend.name.length > 10 ? `${friend.name.substring(0, 7)}...` : friend.name)
-            : `${friend.substring(0, 6)}...${friend.substring(friend.length - 4)}`}</List.Content>
+            <List.Icon name="check" color="green" />
+            <List.Content>{friend.name ? 
+              (friend.name.length > 10 ? `${friend.name.substring(0, 7)}...` : friend.name)
+              : `${friend.substring(0, 6)}...${friend.substring(friend.length - 4)}`}</List.Content>
         </FriendsListItem>
       ))}
     </List>
@@ -65,20 +66,36 @@ const Resume = () => {
   const balanceWei = fromWei(balance.toString(), 'ether');
   return (
     <RewardWrapper>
-      <Container textAlign="center">
-        <Header as="h1">You have:</Header>
-        <RewardAmount>
-          {balanceWei} <MessageCoin>Hero Tokens</MessageCoin>
-        </RewardAmount>
-      </Container>
-      <ContainerListFriends>{getView(referrals || [])}</ContainerListFriends>
-      <ButtonGreen
-        onClick={onWithdraw}
-        disabled={Number(balanceWei) > 0 ? false : true}
-      >
-        Get Reward
-      </ButtonGreen>
-      {getViewResponse(status)}
+      <Grid.Column width={16}>
+        <Grid.Row>
+          <RewardMessage>You have earned: 
+            <RewardAmount> {balanceWei}</RewardAmount>
+            <MessageCoin> HERO</MessageCoin>
+          </RewardMessage>
+        </Grid.Row>
+        <Grid.Row>
+          <Separator />
+        </Grid.Row>
+        <ContainerListFriends>
+          <RewardMessage >Referred friends:</RewardMessage>
+          {getView(referrals || [])}
+        </ContainerListFriends>
+        <Grid.Row>
+          {/* <Grid>
+          <Grid.Column> */}
+            <ButtonGreen
+              onClick={onWithdraw}
+              disabled={Number(balanceWei) > 0 ? false : true}
+            >
+              {Number(balanceWei) > 0 ? `Claim ${balanceWei} Tokens` : 'Claim'}
+            </ButtonGreen>
+          {/* </Grid.Column>
+          </Grid> */}
+        </Grid.Row>
+        <Grid.Row>
+          {getViewResponse(status)}
+        </Grid.Row>
+      </Grid.Column>
     </RewardWrapper>
   );
 };

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { device } from '../LayoutV2/breakpoints';
 
-import { Grid, Segment, Button, List } from 'semantic-ui-react';
+import { Grid, Segment, Button, List, Divider } from 'semantic-ui-react';
 
 export const CenteredContainer = styled.div`
   margin-left: auto;
@@ -8,7 +9,9 @@ export const CenteredContainer = styled.div`
   min-height: 780px;
   width: 80%;
 `;
-
+export const ContainerGrid = styled(Grid)`
+  padding: 0px 0px 0px 0px;
+`
 export const GridSized = styled(Grid)`
   &&& {
     height: 100vh;
@@ -51,10 +54,7 @@ export const ColumnRight = styled(Grid.Column)`
 
 export const SegmentRight = styled(Segment)`
   &&& {
-    min-height: 460px;
     margin-top: 50px !important;
-    margin-left: -15px;
-    padding-left: 30px;
   }
 `;
 
@@ -62,6 +62,7 @@ export const ColumnLeft = styled(Grid.Column)`
   &&& {
     z-index: 100 !important;
     padding: 0px !important;
+    margin: 20px 0px 40px 0px;
   }
 `;
 
@@ -86,17 +87,28 @@ export const HeaderRow = styled(Grid.Row)`
   }
 `;
 
-export const TopReferal = styled.div`
+export const TopReferal = styled(Grid.Row)`
   width: 100%;
 `;
-
-export const BottomReferal = styled.div`
+export const MidReferral = styled(Grid.Row)`
   width: 100%;
   padding: 1em 1em;
   border-bottom-right-radius: 0.285714rem;
   border-bottom-left-radius: 0.285714rem;
   background-color: #ffffff;
 `;
+export const BottomReferal = styled(Grid.Row)`
+  width: 100%;
+  padding: 1em 1em;
+  border-bottom-right-radius: 0.285714rem;
+  border-bottom-left-radius: 0.285714rem;
+  background-color: #ffffff;
+  box-shadow: 0 0 26px 0 rgba(217,217,217,0.61);
+`;
+
+/**
+ * ######### RESUME ########
+ */
 
 export const ButtonGreen = styled(Button)`
   &&&,
@@ -108,47 +120,98 @@ export const ButtonGreen = styled(Button)`
     color: white;
     font: 18px bold;
     line-height: 24px;
+    height: 45px;
+    margin: 0px 15px 0px 15px !important;
+    @media ${device.mobileL} {
+      margin: 0px 0px 0px 15px !important;
+      padding: 0;
+    }
   }
   &&&:hover {
     background: linear-gradient(134.72deg, #5aafb8 0%, #78d8ca 100%);
     color: white;
     font-weith: bold;
+    height: 45px;
+    margin: 0px 15px 0px 15px !important;
+    @media ${device.mobileL} {
+      margin: 0px 0px 0px 15px !important;
+      padding: 0;
+    }
   }
   &&&:active {
     background-color: #188e9b;
     color: white;
     font-weith: bold;
+    height: 45px;
+    margin: 0px 15px 0px 15px !important;
+    @media ${device.mobileL} {
+      margin: 0px 0px 0px 15px !important;
+      padding: 0;
+    }
   }
 `;
 
-export const RewardWrapper = styled.div`
-  padding: 1em 1em;
-`;
 
-export const ContainerListFriends = styled.div`
+export const ContainerListFriends = styled(Grid.Row)`
   min-height: 300px;
   margin-bottom: 20px;
-  padding-top: 55px;
 `;
 
-export const RewardAmount = styled.div`
-  font-size: 26px;
-  line-height: 36px;
-  text-align: center;
+export const CenterContainer = styled.div`
+  display: -webkit-flex; /* Safari */
+  -webkit-align-items: center; /* Safari 7.0+ */
+  display: flex;
+  align-items: center;
 `;
-export const FriendsListItem = styled(List.Item)`
-  &&& {
-    margin: 20px 0px;
+
+export const RewardWrapper = styled(Grid)`
+  margin: 0px 0px 0px 15px;
+  width: 100%
+  
+  padding: 0 !important;
+  @media ${device.mobileL} {
+    margin: 0px 0px 0px 0px;
   }
 `;
+
 export const RewardMessage = styled.div`
-  color: #5c5d5d;
-  width: 60%;
+  color: #5C5D5D;
+  font-weight: bold;
+  padding: 0;
+  margin: 15px 0px 0px 0px;
   text-align: center;
-  margin: auto;
-  margin-top: 20%;
+`;
+
+export const RewardAmount = styled.span`
+  color: #5C5D5D;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 21px;
+  text-align: left;
+`;
+
+export const FriendsListItem = styled(List.Item)`
+  &&& {
+    margin: 20px 0px 0px 15px;
+  }
+  @media ${device.mobileL} {
+    margin: 20px 0px 0px 50px;
+  }
 `;
 
 export const MessageCoin = styled.span`
-  font-size: 18px;
+  color: #5A5A5A;
+  font-size: 10px;
+  line-height: 21px;
+  text-align: left;
+`;
+
+export const Separator =  styled(Divider)`
+  margin: 0px 15px 0px 15px !important;
+  
+  background-color: #99A6B8;
+  @media ${device.mobileL} {
+    margin: 15px 50px 0px 50px !important;
+    padding: 0;
+  }
 `;

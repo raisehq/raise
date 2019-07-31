@@ -65,11 +65,9 @@ const App = ({ history, open, mountNode, blur }: IProps) => {
 
       setStep(Step.Verifying);
 
-      const verifying = await to(
-        validateToken({
-          token
-        })
-      );
+      const verifying = await validateToken({
+        token
+      });
 
       verifying.fold(
         () => setStep(Step.VerifiedError(token)),
