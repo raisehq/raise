@@ -19,7 +19,7 @@ export const Raf = styled(Grid)`
   padding: 0 !important;
   background-image: linear-gradient(0deg, #F2FAFA 0%, #FFFFFF 100%);
     
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     float: right;
     padding: 1em 1em;
     border-top-left-radius: 0.285714rem;
@@ -41,7 +41,7 @@ export const StartEarningNow = styled.div`
   color: #002947;
   padding: 0px 0px 15px 0px;
   margin: 0px 50px 0px 15px;
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     margin: 10px 5px 10px 50px;
     font-size: 48px;
     line-height: 44px;
@@ -55,7 +55,7 @@ export const InviteYourFriends = styled.div`
   line-height: 28px;
   padding: 10px 0px 0px 0px;
   margin: 8px 50px 0px 15px;
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     margin: 10px 5px 10px 50px;
     font-size: 27px;
     line-height: 36px;
@@ -70,7 +70,7 @@ export const ShareYourUniqueLi = styled.div`
   line-height: 21px;
   padding: 0px 0px 10px 0px;
   margin: 0px 50px 0px 15px;
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     margin-bottom: 10px;
     margin-left: 50px;
     padding: 50px 0px 0px 0px;
@@ -92,7 +92,7 @@ export const ShareInput = styled.div`
     }
   }
   margin: 0px 0px 0px 15px;
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     margin: 10px 5px 10px 50px;
   }
 `;
@@ -124,7 +124,7 @@ export const RafImageContainer = styled.div`
 export const Social = styled.div`
   margin: 25px 32px 0px 15px;
 
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     margin: 10px 5px 10px 50px;
   }
 `;
