@@ -115,6 +115,8 @@ export const validateToken = async ({ token }: Types.ValidateToken) => {
     ...COMMON_HEADERS
   };
 
+  console.log(token);
+
   try {
     const rawResponse = await axios(config);
     switch (rawResponse.status) {
@@ -186,7 +188,7 @@ export const refreshToken = async () => {
 };
 
 export const verifyAuth = async () => {
-  if ( LocalData.getObj('auth') === null ) {
+  if (LocalData.getObj('auth') === null) {
     throw new Error('Not logged in');
   }
   const config: any = {

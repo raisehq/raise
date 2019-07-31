@@ -66,7 +66,7 @@ export const changePassword = async (token, password) => {
   );
 };
 
-export const validateToken = async token => {
+export const validateToken = async ({ token }) => {
   const config: any = {
     url: URL.EMAIL.replace(':id', token),
     method: 'GET',
