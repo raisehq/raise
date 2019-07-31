@@ -7,12 +7,13 @@ import {
 } from '../styles';
 import { AppContext } from '../App';
 
+import { getImages } from '../../utils';
 const ResetPasswordOK = () => {
   const { onSetStep }: any = useContext(AppContext);
 
   return (
     <ConfirmWrapper>
-      <MainImage src="https://static.herodev.es/images/img_mailverify.png" />
+      <MainImage src={getImages('img_mailverify.png')} />
       <ConfirmHeader>Password updated! </ConfirmHeader>
       <p>Your password has been updated</p>
       <OnboardButton onClick={onSetStep('SignIn')}>Continue</OnboardButton>

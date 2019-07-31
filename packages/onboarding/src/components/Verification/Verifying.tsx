@@ -1,9 +1,10 @@
 import React from 'react';
 import { ConfirmWrapper, ConfirmHeader, MainImage } from '../styles';
+import { getImages } from '../../utils';
 
 const Verifying = () => (
   <ConfirmWrapper>
-    <MainImage src="https://static.herodev.es/images/img_mailverify.png" />
+    <MainImage src={getImages('img_mailverify.png')} />
     <ConfirmHeader>WAIT A MOMENT</ConfirmHeader>
   </ConfirmWrapper>
 );

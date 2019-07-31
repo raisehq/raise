@@ -52,3 +52,6 @@ export const to = (promise: any) => {
       return Left(err);
     });
 };
+
+export const getImages = name =>
+  `${process.env.REACT_APP_HOST_IMAGES}/images/${name}`;
