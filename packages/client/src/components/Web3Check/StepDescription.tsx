@@ -4,7 +4,7 @@ import Web3Address from './Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
 import { satisfiesBrowser } from './Web3Checklist';
 import { Href } from '../LayoutV2/Layout.styles';
-import { ButtonGreen } from '../Referral/Referral.styles';
+import { ButtonGreen, AddressContainer } from './Web3Check.styles';
 import {
   StyledAddress,
   CardDescription,
@@ -71,9 +71,11 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }) => (
       account. You will be able to operate only with this address.
     </p>
     <div />
-    <ButtonGreen onClick={uploadSignature}>
+    <ButtonGreen onClick={uploadSignature} double>
       Sign message with
-      <StyledAddress account={currentAddress} />
+      <AddressContainer>
+        <StyledAddress account={currentAddress} />
+      </AddressContainer>
     </ButtonGreen>
     <NeedHelp href="/faq" />
   </CardDescription>

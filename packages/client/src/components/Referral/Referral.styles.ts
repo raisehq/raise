@@ -122,7 +122,7 @@ export const ButtonGreen = styled(Button)`
     line-height: 24px;
     height: 45px;
     margin: 0px 15px 0px 15px !important;
-    @media ${device.mobileL} {
+    @media ${device.tablet} {
       margin: 0px 0px 0px 15px !important;
       padding: 0;
     }
@@ -133,7 +133,7 @@ export const ButtonGreen = styled(Button)`
     font-weith: bold;
     height: 45px;
     margin: 0px 15px 0px 15px !important;
-    @media ${device.mobileL} {
+    @media ${device.tablet} {
       margin: 0px 0px 0px 15px !important;
       padding: 0;
     }
@@ -144,7 +144,7 @@ export const ButtonGreen = styled(Button)`
     font-weith: bold;
     height: 45px;
     margin: 0px 15px 0px 15px !important;
-    @media ${device.mobileL} {
+    @media ${device.tablet} {
       margin: 0px 0px 0px 15px !important;
       padding: 0;
     }
@@ -153,7 +153,8 @@ export const ButtonGreen = styled(Button)`
 
 
 export const ContainerListFriends = styled(Grid.Row)`
-  min-height: 300px;
+  height: 300px;
+  overflow-y: auto;
   margin-bottom: 20px;
 `;
 
