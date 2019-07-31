@@ -136,7 +136,7 @@ const Invite = () => {
           </RafImageContainer>
         </Grid.Column>
       </Responsive>
-      <Responsive as={Grid.Row} maxWidth={1024}>
+      <Responsive as={Grid.Row} maxWidth={1023}>
         <Grid.Column width={16}>
           <Grid.Row>
             <ShareYourUniqueLi>Share your unique link</ShareYourUniqueLi>

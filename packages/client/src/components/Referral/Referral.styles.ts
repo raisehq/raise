@@ -132,20 +132,27 @@ export const ButtonGreen = styled(Button)`
     font: 18px bold;
     line-height: 24px;
     height: 45px;
+    @media ${device.tablet} {
+      padding: 0;
+    }
   }
   &&&:hover {
     background: linear-gradient(134.72deg, #5aafb8 0%, #78d8ca 100%);
     color: white;
     font-weith: bold;
     height: 45px;
-    
+    @media ${device.tablet} {
+      padding: 0;
+    }
   }
   &&&:active {
     background-color: #188e9b;
     color: white;
     font-weith: bold;
     height: 45px;
-    
+    @media ${device.tablet} {
+      padding: 0;
+    }
   }
 `;
 

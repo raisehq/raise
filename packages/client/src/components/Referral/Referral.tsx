@@ -40,7 +40,7 @@ const Referal = () => {
         </Grid.Row>
       </Responsive>
 
-      <Responsive as={Grid} maxWidth={1024}>
+      <Responsive as={Grid} maxWidth={1023}>
         <Grid.Row>
             <ColumnLeft>
               <Grid>

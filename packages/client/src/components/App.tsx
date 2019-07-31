@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, createContext, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  createContext,
+  useState,
+  useRef
+} from 'react';
 import { withRouter } from 'react-router-dom';
 import { AnimatedSwitch, spring } from 'react-router-transition';
 import { match, _ } from 'pampy';
@@ -41,7 +47,8 @@ export const AppContext = createContext({
   store: {},
   actions: {},
   history: {},
-  web3Status: {}
+  web3Status: {},
+  modalRefs: {}
 });
 
 const App = ({ children, history }: any) => {
@@ -63,6 +70,7 @@ const App = ({ children, history }: any) => {
       blockchain: { fetchReferrals }
     }
   }: any = useContext(RootContext);
+  const modalRefs = useRef<HTMLDivElement>(null);
   const web3Status = useWeb3Checker();
   const {
     hasDeposit: deposited,
@@ -87,7 +95,9 @@ const App = ({ children, history }: any) => {
 
   useEffect(() => {
     const refMode = Boolean(process.env.REACT_APP_REFERAL);
-    const isJoin = history.location.pathname.includes('/join') || history.location.pathname.includes('/login') ;
+    const isJoin =
+      history.location.pathname.includes('/join') ||
+      history.location.pathname.includes('/login');
     const conditions = {
       logged,
       deposited: !!deposited,
@@ -116,7 +126,9 @@ const App = ({ children, history }: any) => {
   }, [isLoading, logged, web3Pass, deposited]);
 
   return (
-    <AppContext.Provider value={{ store, actions, history, web3Status }}>
+    <AppContext.Provider
+      value={{ store, actions, history, web3Status, modalRefs }}
+    >
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
@@ -141,6 +153,7 @@ const App = ({ children, history }: any) => {
           <Layout exact path="/create-loan" component={CreateLoan} />
           <Layout exact path="/marketplace" component={Marketplace} />
       </AnimatedSwitch>
+      <div ref={modalRefs} />
     </AppContext.Provider>
   );
 };
