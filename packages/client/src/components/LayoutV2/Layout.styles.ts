@@ -22,9 +22,6 @@ const depositWidth = pathname =>
 const backgroundImage = getImages('pattern-fdesk-dark.svg');
 
 
-export const AllRights = styled.span``;
-export const LeaveFeedback = styled.a``;
-
 export const ContainerWrapper = styled.div`
   min-height: 100%;
   width: 100%;
@@ -139,18 +136,4 @@ export const ImageSized = styled(Image)`
 
 export const Credits = styled.em`
   font-size: 1em;
- 
-  ${LeaveFeedback} {
-    display: block;
-    margin: 10px 0px 0px 0px;
-  }
-  ${AllRights} {
-      display: block;
-      margin: 10px 0px 0px 0px;
-  }
-  @media ${device.tablet} {
-    ${AllRights} {
-      display: inline;
-    }
-  }
 `;

@@ -9,9 +9,7 @@ import {
   CenteredContainerStyled as CenteredContainer,
   HeaderRow,
   FooterRow,
-  Credits,
-  AllRights,
-  LeaveFeedback
+  Credits
 } from './Layout.styles';
 
 interface IDefaultProps {
@@ -53,19 +51,18 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 {logged && (
                   <FooterRow centered>
                     <Credits>
-                      <span>Copyright ©2019 Hero Fintech Technologies. </span>
-                      <AllRights>All Rights Reserved</AllRights>
-                      <LeaveFeedback href='mailto:team@raise.it'>Leave feedback</LeaveFeedback>
+                      Copyright ©2019 Hero Fintech Technologies. All Rights
+                      Reserved
                     </Credits>
                   </FooterRow>
-                  )}
-                </Grid>
-              </CenteredContainer>
-            </Grid>
-          </ContainerWrapper>
-        )}
-      />
-    );
-  };
+                )}
+              </Grid>
+            </CenteredContainer>
+          </Grid>
+        </ContainerWrapper>
+      )}
+    />
+  );
+};
 
-  export default LayoutV2;
+export default LayoutV2;
