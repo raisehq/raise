@@ -27,7 +27,7 @@ export const ContainerWrapper = styled.div`
   width: 100%;
   background: white;
   box-shadow: none;
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     background: #d4e5e8 url(${backgroundImage}) no-repeat fixed bottom/100%;
     padding: 2em 8em;
   }
@@ -38,7 +38,8 @@ export const CardContent = styled(Card.Content)`
     border: none !important;
     border-top: 0 !important;
     margin: 0px;
-    @media ${device.mobileL} {
+    @media ${device.tablet} {
+
       margin: ${({ bottom_spacing }) =>
         bottom_spacing
           ? '0 2.5em 2.5em 2.5em !important;'
@@ -52,7 +53,7 @@ export const CardSized = styled(Card)`
     height: 100%;
     width: 100%;
     box-shadow: none;
-    @media ${device.mobileL} {
+    @media ${device.tablet} {
       min-height: 570px;
       height: auto !important;
       width: 425px;
@@ -63,12 +64,10 @@ export const GridSized = styled(Grid)`
   &&& {
     height: 100vh;
     margin: 0px;
-    @media ${device.mobileL} {
-    }
   }
 `;
 export const CenteredContainerStyled = styled('div')<PropsPathname>`
-  @media ${device.mobileL} {
+  @media ${device.tablet} {
     margin-left: auto;
     margin-right: auto;
     max-width: ${({ pathname }) => depositWidth(pathname)};
@@ -87,7 +86,7 @@ export const HeaderRow = styled(Grid.Row)`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @media ${device.mobileL} {
+    @media ${device.tablet} {
       padding: 0px;
     }
   }

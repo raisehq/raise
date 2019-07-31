@@ -34,7 +34,7 @@ const Referal = () => {
         </ColumnRight>
       </Responsive>
 
-      <Responsive as={Grid} maxWidth={1024}>
+      <Responsive as={Grid} maxWidth={1023}>
       <ColumnLeft>
         <SegmentLeft>
           <TopReferal>
