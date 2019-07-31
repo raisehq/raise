@@ -158,7 +158,8 @@ export const ButtonGreen = styled(Button)`
 
 
 export const ContainerListFriends = styled(Grid.Row)`
-  min-height: 300px;
+  height: 300px;
+  overflow-y: auto;
   margin-bottom: 20px;
 `;
 
