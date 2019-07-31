@@ -46,9 +46,18 @@ interface IProps {
   open: boolean;
   blur: boolean;
   mountNode?: any;
+  onClose?: () => null;
+  closeButton?: boolean;
 }
 
-const App = ({ history, open, mountNode, blur }: IProps) => {
+const App = ({
+  history,
+  open,
+  mountNode,
+  blur,
+  onClose,
+  closeButton
+}: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(
@@ -84,7 +93,7 @@ const App = ({ history, open, mountNode, blur }: IProps) => {
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
-  }, [history]);
+  }, [history.location.pathname]);
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
 
@@ -240,10 +249,13 @@ const App = ({ history, open, mountNode, blur }: IProps) => {
         referralCode,
         blur,
         error: loginError,
-        mountNode
+        mountNode,
+        onClose,
+        closeButton,
+        open
       }}
     >
-      {open && getStep()}
+      {getStep()}
     </AppContext.Provider>
   );
 };

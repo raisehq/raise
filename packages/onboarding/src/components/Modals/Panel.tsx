@@ -3,22 +3,26 @@ import {
   OnboardingTwoModal,
   OnboardingWrapper,
   commonModal,
-  MainImage
+  MainImage,
+  OnboardingCloseButton
 } from '../styles';
 import { AppContext } from '../App';
 
 const PanelModal = ({ children }) => {
-  const { blur, mountNode }: any = useContext(AppContext);
+  const { blur, mountNode, open, onClose, closeButton }: any = useContext(
+    AppContext
+  );
 
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
     <OnboardingTwoModal
-      style={commonModal}
-      open
       {...dimmer}
+      style={commonModal}
+      open={open}
       mountNode={mountNode}
     >
+      {closeButton && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
       <OnboardingWrapper>
         <div className="visuals">
           <MainImage src="https://static.herodev.es/images/img_signin.png" />

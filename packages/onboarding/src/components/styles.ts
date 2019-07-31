@@ -1,13 +1,12 @@
 import styled from 'styled-components';
-import { Form, Modal } from 'semantic-ui-react';
+import { Form, Modal, Button } from 'semantic-ui-react';
 import theme from '../theme';
 
 export const commonModal = {
   borderRadius: '4px',
   boxShadow: '0 10px 26px 0 rgba(6, 52, 40, 0.1)',
   margin: '0 !important',
-  padding: '0 !important',
-  overflow: 'hidden'
+  padding: '0 !important'
 };
 
 const size = {
@@ -24,6 +23,26 @@ export const device = {
   mobileL: `(min-width: ${size.mobileL})`,
   desktop: `(min-width: ${size.desktop})`
 };
+
+export const OnboardingCloseButton = styled(Button)`
+  &&& {
+    background: none;
+    border: none;
+    position: absolute;
+    top: -30px;
+    right: -40px;
+    color: rgba(255, 255, 255, 0.7);
+
+    i {
+      font-size: 20px;
+    }
+
+    &:hover {
+      background: none;
+      color: #fff;
+    }
+  }
+`;
 
 export const OnboardingTwoModal: any = styled(Modal)`
   &&& {
@@ -51,6 +70,10 @@ export const OnboardingSimpleModal: any = styled(Modal)`
 
     @media (max-width: ${size.mobileL}) {
       width: 100%;
+
+      ${OnboardingCloseButton} {
+        display: none;
+      }
     }
   }
 `;
@@ -59,6 +82,7 @@ export const OnboardingWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  overflow: hidden;
 
   .content {
     margin: 0 !important;
