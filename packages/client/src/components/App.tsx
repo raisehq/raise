@@ -135,11 +135,13 @@ const App = ({ children, history }: any) => {
           <LayoutV2 exact path="/login" component={Join} />
           <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
           <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+          <LayoutV2 exact component={Join} />
           <Layout exact path="/kyc" component={Kyc} />
           <Layout exact path="/kyc/validation" component={KycValidation} />
           <Layout exact path="/dashboard" component={Dashboard} />
           <Layout exact path="/create-loan" component={CreateLoan} />
           <Layout exact path="/marketplace" component={Marketplace} />
+          <Layout exact component={Join} />
       </AnimatedSwitch>
     </AppContext.Provider>
   );
