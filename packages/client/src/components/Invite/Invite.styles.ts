@@ -6,12 +6,14 @@ import { Grid } from 'semantic-ui-react';
 export const StyledAddress = styled(Web3Address)`
   float: right;
   padding: 0px;
-  margin-right: 15px;
   @media ${device.mobileL} {
     float: right;
   }
 `;
+export const AddressRow = styled(Grid.Row)`
+height: 36px;
 
+`
 export const Raf = styled(Grid)`
   min-height: 519px;
   
@@ -21,7 +23,7 @@ export const Raf = styled(Grid)`
     
   @media ${device.tablet} {
     float: right;
-    padding: 1em 1em;
+    padding: 0 !important;
     border-top-left-radius: 0.285714rem;
     border-top-right-radius: 0.285714rem;
     display: flex;
@@ -39,13 +41,13 @@ export const StartEarningNow = styled.div`
   font-weight: bold;
   line-height: 36px;
   color: #002947;
-  padding: 0px 0px 15px 0px;
-  margin: 0px 50px 0px 15px;
+  padding: 0px 0px 15px 0px !important;
+  margin: 0px 0px 0px 15px !important;
   @media ${device.tablet} {
-    margin: 10px 5px 10px 50px;
+    margin: 20px 5px 10px 50px !important;
     font-size: 48px;
     line-height: 44px;
-    padding: 0px 0px 30px 0px;
+    padding: 0px 0px 30px 0px !important;
   }
 `;
 
@@ -53,13 +55,13 @@ export const InviteYourFriends = styled.div`
   color: #3C4251;
   font-size: 18px;
   line-height: 28px;
-  padding: 10px 0px 0px 0px;
-  margin: 8px 50px 0px 15px;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 15px;
   @media ${device.tablet} {
-    margin: 10px 5px 10px 50px;
+    margin: 10px 0px 10px 50px;
     font-size: 27px;
     line-height: 36px;
-    padding: 50px 0px 0px 0px;
+    padding: 10px 0px 0px 0px;
   }
 `;
 
@@ -69,7 +71,7 @@ export const ShareYourUniqueLi = styled.div`
   font-size: 14px;
   line-height: 21px;
   padding: 0px 0px 10px 0px;
-  margin: 0px 50px 0px 15px;
+  margin: 0px 0px 0px 15px;
   @media ${device.tablet} {
     margin-bottom: 10px;
     margin-left: 50px;
@@ -114,9 +116,20 @@ export const CopyButton = styled.button`
   }
 `;
 
+export const InputColumn = styled(Grid.Column)`
+  padding-right: 0px !important;
+`
+export const ButtonColumn = styled(Grid.Column)`
+  padding-left: 0px !important;
+`
+export const InviteContent = styled(Grid.Row)`
+  padding-bottom: 65px !important;
+`
+
 export const RafImage = styled.img`
   height: auto;
-  width: 100%;
+  width: 90%;
+  margin-left: 20px;
 `;
 
 export const RafImageContainer = styled.div`
@@ -128,6 +141,11 @@ export const Social = styled.div`
     margin: 10px 5px 10px 50px;
   }
 `;
+
+export const LinkColumn = styled(Grid.Column)`
+  margin: 20px 0px 0px 0px;
+  padding-right: 10px;
+`
 
 export const LabelWeb3 = styled.div`
   padding: 0.8em !important;

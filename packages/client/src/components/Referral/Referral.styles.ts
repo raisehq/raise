@@ -52,9 +52,9 @@ export const ColumnRight = styled(Grid.Column)`
   }
 `;
 
-export const SegmentRight = styled(Segment)`
+export const SegmentRight = styled(Grid.Row)`
   &&& {
-    margin-top: 50px !important;
+    margin-top: 25px !important;
   }
 `;
 
@@ -68,7 +68,6 @@ export const ColumnLeft = styled(Grid.Column)`
 
 export const SegmentLeft = styled(Segment)`
   &&& {
-    min-height: 840px !important;
     padding: 0 !important;
     border: none;
   }
@@ -89,26 +88,38 @@ export const HeaderRow = styled(Grid.Row)`
 
 export const TopReferal = styled(Grid.Row)`
   width: 100%;
+  padding: 0 !important;
+  margin-top: 20px;
 `;
 export const MidReferral = styled(Grid.Row)`
   width: 100%;
-  padding: 1em 1em;
+  padding: 0 !important;
+
   border-bottom-right-radius: 0.285714rem;
   border-bottom-left-radius: 0.285714rem;
-  background-color: #ffffff;
 `;
 export const BottomReferal = styled(Grid.Row)`
   width: 100%;
-  padding: 1em 1em;
+  
+  padding: 0 !important;
   border-bottom-right-radius: 0.285714rem;
   border-bottom-left-radius: 0.285714rem;
-  background-color: #ffffff;
-  box-shadow: 0 0 26px 0 rgba(217,217,217,0.61);
 `;
 
 /**
  * ######### RESUME ########
  */
+
+export const ResumeContainer = styled(Grid)`
+  margin-top: 50px !important;  
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #ffffff;
+  
+  @media ${device.mobileL} {
+
+  }
+`;
 
 export const ButtonGreen = styled(Button)`
   &&&,
@@ -121,9 +132,7 @@ export const ButtonGreen = styled(Button)`
     font: 18px bold;
     line-height: 24px;
     height: 45px;
-    margin: 0px 15px 0px 15px !important;
     @media ${device.tablet} {
-      margin: 0px 0px 0px 15px !important;
       padding: 0;
     }
   }
@@ -132,9 +141,7 @@ export const ButtonGreen = styled(Button)`
     color: white;
     font-weith: bold;
     height: 45px;
-    margin: 0px 15px 0px 15px !important;
     @media ${device.tablet} {
-      margin: 0px 0px 0px 15px !important;
       padding: 0;
     }
   }
@@ -143,9 +150,7 @@ export const ButtonGreen = styled(Button)`
     color: white;
     font-weith: bold;
     height: 45px;
-    margin: 0px 15px 0px 15px !important;
     @media ${device.tablet} {
-      margin: 0px 0px 0px 15px !important;
       padding: 0;
     }
   }
@@ -179,7 +184,7 @@ export const RewardMessage = styled.div`
   color: #5C5D5D;
   font-weight: bold;
   padding: 0;
-  margin: 15px 0px 0px 0px;
+  margin: 15px 0px 10px 0px;
   text-align: center;
 `;
 
@@ -212,7 +217,7 @@ export const Separator =  styled(Divider)`
   
   background-color: #99A6B8;
   @media ${device.mobileL} {
-    margin: 15px 50px 0px 50px !important;
+    margin: 0px 50px 0px 50px !important;
     padding: 0;
   }
 `;

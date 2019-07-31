@@ -6,13 +6,14 @@ import useReferralContract from '../../hooks/useReferralContract';
 
 import {
   ButtonGreen,
-  RewardWrapper,
+  // RewardWrapper,
   MessageCoin,
   RewardMessage,
   ContainerListFriends,
   FriendsListItem,
   RewardAmount,
-  Separator
+  Separator,
+  ResumeContainer,
 } from './Referral.styles';
 import { AppContext } from '../App';
 
@@ -65,38 +66,42 @@ const Resume = () => {
   }, [status]);
   const balanceWei = fromWei(balance.toString(), 'ether');
   return (
-    <RewardWrapper>
-      <Grid.Column width={16}>
-        <Grid.Row>
+    <ResumeContainer>
+      <Grid.Row>
+        <Grid.Column>
           <RewardMessage>You have earned: 
             <RewardAmount> {balanceWei}</RewardAmount>
             <MessageCoin> HERO</MessageCoin>
           </RewardMessage>
-        </Grid.Row>
-        <Grid.Row>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
           <Separator />
-        </Grid.Row>
-        <RewardMessage >Referred friends:</RewardMessage>
-        <ContainerListFriends>
+        </Grid.Column>
+      </Grid.Row>
+      <ContainerListFriends>
+        <Grid.Column>
+          <RewardMessage >Referred friends:</RewardMessage>
           {getView(referrals || [])}
-        </ContainerListFriends>
-        <Grid.Row>
-          {/* <Grid>
-          <Grid.Column> */}
-            <ButtonGreen
-              onClick={onWithdraw}
-              disabled={Number(balanceWei) > 0 ? false : true}
-            >
-              {Number(balanceWei) > 0 ? `Claim ${balanceWei} Tokens` : 'Claim'}
-            </ButtonGreen>
-          {/* </Grid.Column>
-          </Grid> */}
-        </Grid.Row>
-        <Grid.Row>
+        </Grid.Column>
+      </ContainerListFriends>
+      <Grid.Row>
+        <Grid.Column>
+          <ButtonGreen
+            onClick={onWithdraw}
+            disabled={Number(balanceWei) > 0 ? false : true}
+          >
+            {Number(balanceWei) > 0 ? `Claim ${balanceWei} Tokens` : 'Claim'}
+          </ButtonGreen>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
           {getViewResponse(status)}
-        </Grid.Row>
-      </Grid.Column>
-    </RewardWrapper>
+        </Grid.Column>
+      </Grid.Row>
+    </ResumeContainer>
   );
 };
 
