@@ -76,8 +76,8 @@ const Resume = () => {
         <Grid.Row>
           <Separator />
         </Grid.Row>
+        <RewardMessage >Referred friends:</RewardMessage>
         <ContainerListFriends>
-          <RewardMessage >Referred friends:</RewardMessage>
           {getView(referrals || [])}
         </ContainerListFriends>
         <Grid.Row>
