@@ -23,6 +23,9 @@ import {
   StyledAddress as Web3Address,
   AddressRow,
   LinkColumn,
+  InputColumn,
+  ButtonColumn,
+  InviteContent,
 } from './Invite.styles';
 import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -69,26 +72,26 @@ const Invite = () => {
           </Grid.Row>
         </Grid.Column>
       </Grid.Row>
-      <Responsive as={Grid.Row} minWidth={1024}>
+      <Responsive as={InviteContent} minWidth={1024}>
         <LinkColumn width={8} verticalAlign='bottom'>
           <Grid.Row>
             <ShareYourUniqueLi>Share your unique link</ShareYourUniqueLi>
           </Grid.Row>  
           <Grid.Row>
             <Grid>
-              <Grid.Column width={12}>
+              <InputColumn width={12}>
                 <ShareInput>
                   <Input value={shareLink} fluid />
                 </ShareInput>
-              </Grid.Column>
-              <Grid.Column width={4}  verticalAlign='middle' floated='left'>
+              </InputColumn>
+              <ButtonColumn width={4}  verticalAlign='middle' floated='right'>
                 <CopyToClipboard
                   text={shareLink}
                   onCopy={() => setState({ value: shareLink, copied: true })}
                 >
                   <CopyButton>{!state.copied ? 'Copy' : 'Copied!'}</CopyButton>
                 </CopyToClipboard>
-              </Grid.Column>
+              </ButtonColumn>
             </Grid>
           </Grid.Row>
           <Grid.Row>

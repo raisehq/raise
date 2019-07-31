@@ -116,6 +116,16 @@ export const CopyButton = styled.button`
   }
 `;
 
+export const InputColumn = styled(Grid.Column)`
+  padding-right: 0px !important;
+`
+export const ButtonColumn = styled(Grid.Column)`
+  padding-left: 0px !important;
+`
+export const InviteContent = styled(Grid.Row)`
+  padding-bottom: 65px !important;
+`
+
 export const RafImage = styled.img`
   height: auto;
   width: 90%;

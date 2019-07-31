@@ -54,7 +54,7 @@ export const ColumnRight = styled(Grid.Column)`
 
 export const SegmentRight = styled(Grid.Row)`
   &&& {
-    margin-top: 50px !important;
+    margin-top: 25px !important;
   }
 `;
 
