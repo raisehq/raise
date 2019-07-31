@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Onboarding from '@raise/onboarding';
-import { getModalRoot } from '../../index';
-
-const Join = ({ history }) => (
-  <Onboarding
-    open={true}
-    history={history}
-    mountNode={getModalRoot()}
-    blur={true}
-  />
-);
+import { AppContext } from '../App';
+const Join = ({ history }) => {
+  const { modalRefs }: any = useContext(AppContext);
+  return (
+    <Onboarding
+      open={true}
+      history={history}
+      mountNode={modalRefs.current}
+      blur={true}
+    />
+  );
+};
 
 export default Join;
