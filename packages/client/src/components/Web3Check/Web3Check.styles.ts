@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { Card, Segment } from 'semantic-ui-react';
+import { Card, Segment, Button } from 'semantic-ui-react';
 import { OnlyActive } from '../../commons/OnlyActive';
 import Web3Address from './Web3Address';
 
+import { device } from '../LayoutV2/breakpoints';
 export const StyledAddress = styled(Web3Address)`
   font-size: 14px;
   margin: 0px 0px 0px 10px;
@@ -87,4 +88,32 @@ export const NoticeValue = styled.span`
   margin-right: 8px;
   font-size: 1.3rem;
 }
+`;
+export const AddressContainer = styled.div`
+  margin: 6px;
+`;
+export const ButtonGreen = styled(Button)`
+  &&& {
+    width: 100%;
+    ${({ disabled }) => (disabled === 'true' ? 'opacity: 0.4 !important;' : '')}
+    ${({ double }) =>
+      double === 'true'
+        ? ' height: 90px;'
+        : 'height: 45px;'}
+    background: linear-gradient(134.72deg, #188E9B 0%, #6DD7C7 100%);
+    color: white !important;
+    font: 18px bold;
+    @media ${device.mobileL} {
+      padding: 0;
+    }
+  }
+  ,
+  &&&:hover {
+    background: linear-gradient(134.72deg, #5aafb8 0%, #78d8ca 100%);
+    color: white;
+  }
+  &&&:active {
+    background-color: #188e9b;
+    color: white;
+  }
 `;
