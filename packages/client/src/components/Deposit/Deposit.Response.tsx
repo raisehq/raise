@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
-import { getImages } from '../../utils';
+import useImages from '../../hooks/useImages';
 import { Loader, Segment, Divider, Image, List } from 'semantic-ui-react';
 import {
   ButtonGreen,
@@ -20,9 +20,6 @@ import {
   IconSuccess
 } from './Deposit.styles';
 import { CardContent } from '../LayoutV2/Layout.styles';
-
-const ErrorImg = getImages('img_error.png');
-const SuccessImg = getImages('img_awesome.png');
 
 const UI = daggy.taggedSum('UI', {
   Success: [{}],
@@ -69,7 +66,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             <CardTitle>Awesome!</CardTitle>
           </CardCenteredText>
 
-          <Image src={SuccessImg} fluid />
+          <Image src={useImages('img_awesome.png')} fluid />
         </CardContent>
         <CardContent bottom_spacing={'true'}>
           <ButtonGreen onClick={onContinue}>Take me home</ButtonGreen>
@@ -162,7 +159,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             <p />
           </CardCenteredText>
           <CardCenteredText>
-            <ImageSized src={ErrorImg} />
+            <ImageSized src={useImages('img_error.png')} />
           </CardCenteredText>
         </CardContent>
         <CardContent bottom_spacing={'true'}>
