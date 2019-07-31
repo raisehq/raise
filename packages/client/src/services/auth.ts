@@ -115,8 +115,6 @@ export const validateToken = async ({ token }: Types.ValidateToken) => {
     ...COMMON_HEADERS
   };
 
-  console.log(token);
-
   try {
     const rawResponse = await axios(config);
     switch (rawResponse.status) {
