@@ -51,7 +51,7 @@ const Invite = () => {
     copied: false
   });
 
-  const getImagesUrl = useImages('');
+  const getImagesUrl = useImages();
   const getIsMobileOrTablet = useIsMobileChecker();
 
   return (
@@ -131,7 +131,7 @@ const Invite = () => {
                       />
                     </TwitterShareButton>
                   )}
-                  {getIsMobileOrTablet && (
+                  {!getIsMobileOrTablet && (
                     <SocialButtonForMobile
                       href={`twitter://post?text=${quote}&=url${encodeURIComponent(shareLink)}`}
                     >

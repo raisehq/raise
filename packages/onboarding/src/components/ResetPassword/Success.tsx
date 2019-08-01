@@ -10,10 +10,11 @@ import useImages from '../../hooks/useImages';
 
 const ResetPasswordOK = () => {
   const { onSetStep }: any = useContext(AppContext);
+  const getImagesUrl = useImages();
 
   return (
     <ConfirmWrapper>
-      <MainImage src={useImages('img_mailverify.png')} />
+      <MainImage src={`${getImagesUrl}img_mailverify.png`} />
       <ConfirmHeader>Password updated! </ConfirmHeader>
       <p>Your password has been updated</p>
       <OnboardButton onClick={onSetStep('SignIn')}>Continue</OnboardButton>

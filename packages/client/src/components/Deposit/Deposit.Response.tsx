@@ -35,6 +35,9 @@ const UISteps = daggy.taggedSum('UISteps', {
 });
 
 const StepNumber = props => {
+
+const getImagesUrl = useImages();
+
   switch (props.type) {
     case 'success':
       return (
@@ -58,6 +61,7 @@ const StepNumber = props => {
 };
 
 const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
+
   ui.cata({
     Success: () => (
       <Fragment>
@@ -66,7 +70,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             <CardTitle>Awesome!</CardTitle>
           </CardCenteredText>
 
-          <Image src={useImages('img_awesome.png')} fluid />
+          <Image src={`${getImagesUrl}img_awesome.png`} fluid />
         </CardContent>
         <CardContent bottom_spacing={'true'}>
           <ButtonGreen onClick={onContinue}>Take me home</ButtonGreen>
@@ -159,7 +163,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             <p />
           </CardCenteredText>
           <CardCenteredText>
-            <ImageSized src={useImages('img_error.png')} />
+            <ImageSized src={`${getImagesUrl}img_error.png`} />
           </CardCenteredText>
         </CardContent>
         <CardContent bottom_spacing={'true'}>
@@ -167,6 +171,6 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
         </CardContent>
       </Fragment>
     )
-  });
+  }, [getImagesUrl]);
 
 export { getViewResponse, UI, UISteps };

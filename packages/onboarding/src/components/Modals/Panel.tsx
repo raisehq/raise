@@ -12,6 +12,7 @@ const PanelModal = ({ children }) => {
   const { blur, mountNode }: any = useContext(AppContext);
 
   const dimmer = blur ? { dimmer: 'blurring' } : null;
+  const getImagesUrl = useImages();
 
   return (
     <OnboardingTwoModal
@@ -22,7 +23,7 @@ const PanelModal = ({ children }) => {
     >
       <OnboardingWrapper>
         <div className="visuals">
-          <MainImage src={useImages('img_signin.png')} />
+          <MainImage src={`${getImagesUrl}img_signin.png`} />
         </div>
         <div className="process">{children}</div>
       </OnboardingWrapper>
