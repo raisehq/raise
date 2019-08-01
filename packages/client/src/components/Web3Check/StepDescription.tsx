@@ -44,10 +44,10 @@ const AccountLockedNotice = () => {
 
 const NetworkNotMatch = ({ targetNetwork, currentNetwork }) => (
   <CardDescription>
-    <h6>Change the network to {targetNetwork}</h6>
+    <h6>Change the network</h6>
     <p>
-      Raise currently works on the <b>{targetNetwork}</b> network, please switch
-      to this network in MetaMask.
+      Please switch to one of the following networks in Metamask wallet:
+      <b> {targetNetwork.join(', ')}</b>
     </p>
     <NeedHelp href="/faq" />
   </CardDescription>
