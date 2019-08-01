@@ -7,6 +7,7 @@ import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
 import { AppContext } from '../App';
+import useImages from '../../hooks/useImages';
 import { toWei } from 'web3-utils';
 import { CardContent } from '../LayoutV2/Layout.styles';
 const switchDepositMethod = async (depositContract, account, referrer_code) => {
@@ -86,13 +87,15 @@ const Deposit = (props: any) => {
     setStatus(UI.Deposit);
   };
 
+  const getImagesUrl = useImages();
+
   return (
     <Grid.Row>
       <CardSized centered>
         <CardContent extra>
           <Web3Address />
         </CardContent>
-        {getViewResponse(status, handleDeposit, handleContinue, handleRetry)}
+        {getViewResponse(status, handleDeposit, handleContinue, handleRetry, getImagesUrl)}
       </CardSized>
     </Grid.Row>
   );

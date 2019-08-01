@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { getHost } from '../../utils/index';
 
 import useImages from '../../hooks/useImages';
+import useIsMobileChecker from '../../hooks/useIsMobileChecker';
 
 import {
   FacebookShareButton,
@@ -15,7 +16,6 @@ import {
   RafImage,
   InviteYourFriends,
   RafImageContainer,
-  // ContainerGrid,
   ShareYourUniqueLi,
   ShareInput,
   Social,
@@ -26,7 +26,8 @@ import {
   LinkColumn,
   InputColumn,
   ButtonColumn,
-  InviteContent
+  InviteContent,
+  SocialButtonForMobile
 } from './Invite.styles';
 import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -49,6 +50,9 @@ const Invite = () => {
     value: shareLink,
     copied: false
   });
+
+  const getImagesUrl = useImages();
+  const getIsMobileOrTablet = useIsMobileChecker();
 
   return (
     <Raf>
@@ -99,17 +103,44 @@ const Invite = () => {
             <Social>
               <Grid columns={5} stackable>
                 <Grid.Column width={3}>
-                  <FacebookShareButton quote={quote} url={shareLink}>
-                    <img
-                      alt="Facebook ico"
-                      src={useImages('ico_facebook.svg')}
-                    />
-                  </FacebookShareButton>
+                  {!getIsMobileOrTablet && (
+                    <FacebookShareButton quote={quote} url={shareLink}>
+                      <img
+                        alt="Facebook ico"
+                        src={`${getImagesUrl}ico_facebook.svg`}
+                      />
+                    </FacebookShareButton>
+                  )}
+                  {getIsMobileOrTablet && (
+                    <SocialButtonForMobile
+                      href={`fb://sharer/sharer.php?=u${encodeURIComponent(shareLink)}&quote=${quote}`}
+                    >
+                      <img
+                        alt="Facebook ico"
+                        src={`${getImagesUrl}ico_facebook.svg`}
+                      />
+                    </SocialButtonForMobile>
+                  )}
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <TwitterShareButton title={quote} url={shareLink}>
-                    <img alt="Twitter ico" src={useImages('ico_twitter.svg')} />
-                  </TwitterShareButton>
+                  {!getIsMobileOrTablet && (
+                    <TwitterShareButton title={quote} url={shareLink}>
+                      <img
+                        alt="Twitter ico"
+                        src={`${getImagesUrl}ico_twitter.svg`}
+                      />
+                    </TwitterShareButton>
+                  )}
+                  {!getIsMobileOrTablet && (
+                    <SocialButtonForMobile
+                      href={`twitter://post?text=${quote}&=url${encodeURIComponent(shareLink)}`}
+                    >
+                      <img
+                        alt="Twitter ico"
+                        src={`${getImagesUrl}ico_twitter.svg`}
+                      />
+                    </SocialButtonForMobile>
+                  )}
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <EmailShareButton
@@ -117,14 +148,14 @@ const Invite = () => {
                     body={quote}
                     url={shareLink}
                   >
-                    <img alt="Email ico" src={useImages('ico_mail.svg')} />
+                    <img alt="Email ico" src={`${getImagesUrl}ico_mail.svg`} />
                   </EmailShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <TelegramShareButton title={quote} url={shareLink}>
                     <img
                       alt="Telegram ico"
-                      src={useImages('ico_telegram.svg')}
+                      src={`${getImagesUrl}ico_telegram.svg`}
                     />
                   </TelegramShareButton>
                 </Grid.Column>
@@ -136,7 +167,7 @@ const Invite = () => {
                   >
                     <img
                       alt="Whatsapp ico"
-                      src={useImages('ico_whatsapp.svg')}
+                      src={`${getImagesUrl}ico_whatsapp.svg`}
                     />
                   </WhatsappShareButton>
                 </Grid.Column>
@@ -146,7 +177,7 @@ const Invite = () => {
         </LinkColumn>
         <Grid.Column width={8} verticalAlign="bottom">
           <RafImageContainer>
-            <RafImage src={useImages('img_raf.png')} />
+            <RafImage src={`${getImagesUrl}img_raf.png`} />
           </RafImageContainer>
         </Grid.Column>
       </Responsive>
@@ -172,6 +203,7 @@ const Invite = () => {
               </Grid.Column>
             </Grid>
           </Grid.Row>
+
           <Grid.Row>
             <Social>
               <Grid columns={5}>
@@ -179,13 +211,16 @@ const Invite = () => {
                   <FacebookShareButton quote={quote} url={shareLink}>
                     <img
                       alt="Facebook ico"
-                      src={useImages('ico_facebook.svg')}
+                      src={`${getImagesUrl}ico_facebook.svg`}
                     />
                   </FacebookShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <TwitterShareButton title={quote} url={shareLink}>
-                    <img alt="Twitter ico" src={useImages('ico_twitter.svg')} />
+                    <img
+                      alt="Twitter ico"
+                      src={`${getImagesUrl}ico_twitter.svg`}
+                    />
                   </TwitterShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
@@ -194,14 +229,14 @@ const Invite = () => {
                     body={quote}
                     url={shareLink}
                   >
-                    <img alt="Email ico" src={useImages('ico_mail.svg')} />
+                    <img alt="Email ico" src={`${getImagesUrl}ico_mail.svg`} />
                   </EmailShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <TelegramShareButton title={quote} url={shareLink}>
                     <img
                       alt="Telegram ico"
-                      src={useImages('ico_telegram.svg')}
+                      src={`${getImagesUrl}ico_telegram.svg`}
                     />
                   </TelegramShareButton>
                 </Grid.Column>
@@ -213,7 +248,7 @@ const Invite = () => {
                   >
                     <img
                       alt="Whatsapp ico"
-                      src={useImages('ico_whatsapp.svg')}
+                      src={`${getImagesUrl}ico_whatsapp.svg`}
                     />
                   </WhatsappShareButton>
                 </Grid.Column>

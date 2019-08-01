@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
-import useImages from '../../hooks/useImages';
 import { Loader, Segment, Divider, Image, List } from 'semantic-ui-react';
 import {
   ButtonGreen,
@@ -57,7 +56,13 @@ const StepNumber = props => {
   }
 };
 
-const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
+const getViewResponse = (
+  ui: any,
+  onDeposit,
+  onContinue,
+  onRetry,
+  getImagesUrl
+) =>
   ui.cata({
     Success: () => (
       <Fragment>
@@ -66,7 +71,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             <CardTitle>Awesome!</CardTitle>
           </CardCenteredText>
 
-          <Image src={useImages('img_awesome.png')} fluid />
+          <Image src={`${getImagesUrl}img_awesome.png`} fluid />
         </CardContent>
         <CardContent bottom_spacing={'true'}>
           <ButtonGreen onClick={onContinue}>Take me home</ButtonGreen>
@@ -159,7 +164,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             <p />
           </CardCenteredText>
           <CardCenteredText>
-            <ImageSized src={useImages('img_error.png')} />
+            <ImageSized src={`${getImagesUrl}img_error.png`} />
           </CardCenteredText>
         </CardContent>
         <CardContent bottom_spacing={'true'}>
