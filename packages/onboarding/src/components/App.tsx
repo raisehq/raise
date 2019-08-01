@@ -156,8 +156,8 @@ const App = ({ history, open, mountNode, blur }: IProps) => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
-
-    if (!!refCode && isUUID(refCode, 4)) {
+    
+    if (!!refCode) {
       setRefCode(refCode);
     }
   }, []);
