@@ -60,14 +60,19 @@ export default (dispatch: any, state: any) => {
     try {
       const data = await getReferralStatus(address);
       if (data) {
-        const addressReferals = data.referrals.map(referral => {
-          return referral.referred.id;
+        const addressReferrals = data.referrals.map(referral => {
+          return referral.referred.id.toLowerCase();
         });
-        const refUsers = await getUsersReferrerByCryptoAddress(addressReferals);
+        const refUsers = await getUsersReferrerByCryptoAddress(addressReferrals);
+
+        let addrNotFound = refUsers.filter(refUser => addressReferrals.indexOf(refUser.address) === -1);
+        addrNotFound = addrNotFound.map(addr => ({name: undefined, address: addr}));
+        const finalUsers = [...refUsers, ...addrNotFound];
+        
         return dispatch({
           type: 'SET_REFERAL_DATA',
           data: {
-            referrals: refUsers,
+            referrals: finalUsers,
             totalReferralsCount: data.totalReferralsCount,
             totalBountyToWithdraw: data.totalBountyToWithdraw
           }
