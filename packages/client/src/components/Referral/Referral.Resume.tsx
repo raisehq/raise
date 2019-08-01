@@ -13,7 +13,7 @@ import {
   FriendsListItem,
   RewardAmount,
   Separator,
-  ResumeContainer,
+  ResumeContainer
 } from './Referral.styles';
 import { AppContext } from '../App';
 
@@ -27,10 +27,16 @@ const getView = friends => {
     <List>
       {friends.map((friend, i) => (
         <FriendsListItem key={i}>
-            <List.Icon name="check" color="green" />
-            <List.Content>{friend.name ? 
-              (friend.name.length > 10 ? `${friend.name.substring(0, 7)}...` : friend.name)
-              : `${friend.address.substring(0, 6)}...${friend.address.substring(friend.address.length - 4)}`}</List.Content>
+          <List.Icon name="check" color="green" />
+          <List.Content>
+            {friend.name
+              ? friend.name.length > 14
+                ? `${friend.name.substring(0, 11)}...`
+                : friend.name
+              : `${friend.address.substring(0, 6)}...${friend.address.substring(
+                  friend.address.length - 4
+                )}`}
+          </List.Content>
         </FriendsListItem>
       ))}
     </List>
@@ -69,7 +75,8 @@ const Resume = () => {
     <ResumeContainer>
       <Grid.Row>
         <Grid.Column>
-          <RewardMessage>You have earned: 
+          <RewardMessage>
+            You have earned:
             <RewardAmount> {balanceWei}</RewardAmount>
             <MessageCoin> HERO</MessageCoin>
           </RewardMessage>
@@ -82,7 +89,7 @@ const Resume = () => {
       </Grid.Row>
       <ContainerListFriends>
         <Grid.Column>
-          <RewardMessage >Referred friends:</RewardMessage>
+          <RewardMessage>Referred friends:</RewardMessage>
           {getView(referrals || [])}
         </Grid.Column>
       </ContainerListFriends>
@@ -97,9 +104,7 @@ const Resume = () => {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column>
-          {getViewResponse(status)}
-        </Grid.Column>
+        <Grid.Column>{getViewResponse(status)}</Grid.Column>
       </Grid.Row>
     </ResumeContainer>
   );
