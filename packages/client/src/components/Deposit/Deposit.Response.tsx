@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
-import useImages from '../../hooks/useImages';
 import { Loader, Segment, Divider, Image, List } from 'semantic-ui-react';
 import {
   ButtonGreen,
@@ -35,9 +34,6 @@ const UISteps = daggy.taggedSum('UISteps', {
 });
 
 const StepNumber = props => {
-
-const getImagesUrl = useImages();
-
   switch (props.type) {
     case 'success':
       return (
@@ -60,8 +56,13 @@ const getImagesUrl = useImages();
   }
 };
 
-const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
-
+const getViewResponse = (
+  ui: any,
+  onDeposit,
+  onContinue,
+  onRetry,
+  getImagesUrl
+) =>
   ui.cata({
     Success: () => (
       <Fragment>
@@ -171,6 +172,6 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
         </CardContent>
       </Fragment>
     )
-  }, [getImagesUrl]);
+  });
 
 export { getViewResponse, UI, UISteps };
