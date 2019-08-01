@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { AppContext } from '../App';
 import { List, Icon } from 'semantic-ui-react';
 import { match, ANY, TAIL } from 'pampy';
-import * as Bowser from 'bowser';
 
 const Check = ({ value, message }) => {
   const iconProps = match(
@@ -26,15 +25,6 @@ const Check = ({ value, message }) => {
   );
 };
 
-export const satisfiesBrowser = () => {
-  const browser = Bowser.getParser(window.navigator.userAgent);
-  return !!browser.satisfies({
-    // or in general
-    chrome: '>50',
-    firefox: '>53'
-  });
-};
-
 const capitalize = s => {
   if (typeof s !== 'string') return '';
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -51,24 +41,20 @@ const Checklist = () => {
     }
   }: any = useContext(AppContext);
 
-  // Browsers compatible: Brave, Firefox, Chrome, Metamask mobile
-
-  const steps = match(
-    [satisfiesBrowser(), hasProvider, unlocked, networkMatches, accountMatches],
+  // prettier-ignore
+  const steps = match([hasProvider, unlocked, networkMatches, accountMatches],
     [false, TAIL],
-    () => ['error', 'pending', 'pending', 'pending'],
+      () => ['error', 'pending', 'pending', 'pending'],
     [true, false, TAIL],
-    () => ['user-action', 'pending', 'pending', 'pending'],
+      () => ['pass', 'user-action', 'pending', 'pending'],
     [true, true, false, TAIL],
-    () => ['pass', 'user-action', 'pending', 'pending'],
-    [true, true, true, false, TAIL],
-    () => ['pass', 'pass', 'user-action', 'pending'],
-    [true, true, true, true, false],
-    () => ['pass', 'pass', 'pass', 'user-action'],
-    [true, true, true, true, true],
-    () => ['pass', 'pass', 'pass', 'pass'],
+      () => ['pass', 'pass', 'user-action', 'pending'],
+    [true, true, true, false],
+      () => ['pass', 'pass', 'pass', 'user-action'],
+    [true, true, true, true],
+      () => ['pass', 'pass', 'pass', 'pass'],
     ANY,
-    () => ['pending', 'pending', 'pending', 'pending']
+      () => ['pending', 'pending', 'pending', 'pending']
   );
 
   const stepsMessage = [

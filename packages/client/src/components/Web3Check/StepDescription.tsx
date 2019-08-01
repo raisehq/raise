@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { AppContext } from '../App';
 import Web3Address from './Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
-import { satisfiesBrowser } from './Web3Checklist';
 import { Href } from '../LayoutV2/Layout.styles';
 import { ButtonGreen, AddressContainer } from './Web3Check.styles';
 import {
@@ -18,16 +17,6 @@ const NeedHelp = ({ href }) => (
       Need help?
     </Href>
   </HelpMessage>
-);
-
-const BrowserErrorNotice = () => (
-  <CardDescription>
-    <p>
-      To continue, you need to use one of the following browsers: Brave, Chrome,
-      or Firefox.
-    </p>
-    <NeedHelp href="/faq" />
-  </CardDescription>
 );
 
 const ProviderErrorNotice = () => (
@@ -120,9 +109,6 @@ const CurrentNotice = () => {
     }
   }: any = useContext(AppContext);
 
-  if (!satisfiesBrowser()) {
-    return <BrowserErrorNotice />;
-  }
   if (!hasProvider) {
     return <ProviderErrorNotice />;
   }
