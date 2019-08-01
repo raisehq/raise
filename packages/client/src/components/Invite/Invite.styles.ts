@@ -162,3 +162,8 @@ export const LabelWeb3 = styled.div`
   transition: background 0.1s ease;
   float: right;
 `;
+
+export const SocialButtonForMobile = styled.a`
+  text-decoration: none;
+  border:0;
+`;
