@@ -1,16 +1,21 @@
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
+import hasIn from 'lodash/hasIn';
+import get from 'lodash/get';
 import { getWeb3 } from '../utils';
 import useAsyncEffect from './useAsyncEffect';
+import { AppContext } from '../components/App'
 
 const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v2/contracts.json';
+  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts-temp.json';
 
 const useMetaMask = () => {
+  const { web3Status: { network } }: any = useContext(AppContext);
   const [metamask, setMetaMask]: any = useState(null);
   const [heroContracts, setHeroContracts]: any = useState(null);
   const web3 = getWeb3();
   const contracts = useRef({});
+  
   useAsyncEffect(async () => {
     const contracts = await axios.get(HERO_CONTRACTS);
 
@@ -19,14 +24,18 @@ const useMetaMask = () => {
 
   useEffect(() => {
     const web3 = getWeb3();
-    if (web3 && heroContracts) {
+    if (web3 && network && heroContracts) {
       setMetaMask({
         heroContracts,
         isConnected: web3.eth.net.isListening,
         addContract: async (name: string) => {
+          const netId = await web3.eth.net.getId()
+          if (!hasIn(heroContracts, `address.${netId}.${name}`)) {
+            throw new Error(`contract not found in current network ${netId}`)
+          }
           const contract = await web3.eth.Contract(
-            heroContracts[name].abi,
-            heroContracts[name].address
+            get(heroContracts, `abi.${name}`),
+            get(heroContracts, `address.${netId}.${name}`)
           );
           contracts.current = { ...contract.current, [name]: contract };
           return contract;
@@ -38,7 +47,7 @@ const useMetaMask = () => {
         enable: web3._currentProvider.connection.enable
       });
     }
-  }, [web3, heroContracts]);
+  }, [web3, network, heroContracts]);
 
   return metamask;
 };
