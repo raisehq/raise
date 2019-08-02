@@ -57,10 +57,10 @@ export const MicroLoader = styled(Loader)`
 `;
 export const SegmentPadded = styled(Segment)`
   &&& {
-    padding: 3em 4em !important;
+    padding: 2em !important;
     margin-top: 15% !important;
-    @media ${device.mobileL} {
-      padding: 7em 7em !important;
+    @media ${device.mobileS} {
+      padding: 3em !important;
     }
   }
 `;

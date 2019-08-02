@@ -55,7 +55,7 @@ const GetStarted = () => {
       onSetStep('Register')();
     }
   };
-
+  
   const header = !!referralCode
     ? 'True friends invited you to Raise'
     : 'Get started';

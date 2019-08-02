@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { AppContext } from '../App';
 import Web3Address from './Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
-import { satisfiesBrowser } from './Web3Checklist';
 import { Href } from '../LayoutV2/Layout.styles';
 import { ButtonGreen, AddressContainer } from './Web3Check.styles';
 import {
@@ -18,16 +17,6 @@ const NeedHelp = ({ href }) => (
       Need help?
     </Href>
   </HelpMessage>
-);
-
-const BrowserErrorNotice = () => (
-  <CardDescription>
-    <p>
-      To continue, you need to use one of the following browsers: Brave, Chrome,
-      or Firefox.
-    </p>
-    <NeedHelp href="/faq" />
-  </CardDescription>
 );
 
 const ProviderErrorNotice = () => (
@@ -55,10 +44,10 @@ const AccountLockedNotice = () => {
 
 const NetworkNotMatch = ({ targetNetwork, currentNetwork }) => (
   <CardDescription>
-    <h6>Change the network to {targetNetwork}</h6>
+    <h6>Change the network</h6>
     <p>
-      Raise currently works on the <b>{targetNetwork}</b> network, please switch
-      to this network in MetaMask.
+      Please switch to one of the following networks in Metamask wallet:
+      <b> {targetNetwork.join(', ')}</b>
     </p>
     <NeedHelp href="/faq" />
   </CardDescription>
@@ -120,9 +109,6 @@ const CurrentNotice = () => {
     }
   }: any = useContext(AppContext);
 
-  if (!satisfiesBrowser()) {
-    return <BrowserErrorNotice />;
-  }
   if (!hasProvider) {
     return <ProviderErrorNotice />;
   }
