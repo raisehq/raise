@@ -7,7 +7,7 @@ import useAsyncEffect from './useAsyncEffect';
 import { AppContext } from '../components/App'
 
 const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts-temp.json';
+  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
 
 const useMetaMask = () => {
   const { web3Status: { network } }: any = useContext(AppContext);

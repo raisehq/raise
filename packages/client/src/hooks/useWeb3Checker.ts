@@ -26,7 +26,7 @@ const parseNetwork = id => {
 };
 
 const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts-temp.json';
+  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
 
 export const web3CheckList = (web3, accounts, targetAddress, network, targetNetwork, hasDeposit) => ({
   hasProvider: !!get(web3, 'currentProvider', false),
