@@ -30,5 +30,8 @@
     "build:deps": "lerna run --stream --scope '{@raise/onboarding,@raise/components}' build",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client"
+  },
+  "dependencies": {
+    "bowser": "^2.5.2"
   }
 }
