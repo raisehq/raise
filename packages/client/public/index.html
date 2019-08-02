@@ -53,8 +53,28 @@
       name="twitter:description"
       content="Join Raise today and get the chance to earn 100 tokens for free"
     />
-
     <title>Raise - Invest, Grow and Do Good!</title>
+    <!-- Google Tag Manager -->
+    <script>
+      (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+          'gtm.start': new Date().getTime(),
+          event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' +
+          i +
+          dl +
+          '&gtm_auth=%REACT_APP_TAG_MANAGER_AUTH%&gtm_preview=%REACT_APP_TAG_MANAGER_PREVIEW%&gtm_cookies_win=x';
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-TSWV62G');
+    </script>
+    <!-- End Google Tag Manager -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -69,5 +89,15 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-TSWV62G&gtm_auth=%REACT_APP_TAG_MANAGER_AUTH%&gtm_preview=%REACT_APP_TAG_MANAGER_PREVIEW%&gtm_cookies_win=x"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
   </body>
 </html>
