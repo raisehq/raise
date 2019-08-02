@@ -1,10 +1,11 @@
 {
-  "name": "@raise/onboarding",
+  "name": "@raisehq/onboarding",
+  "private": false,
   "version": "1.0.0",
   "description": "> TODO: description",
   "author": "Raul Vallespin <raul@herotoken.io>",
-  "homepage": "",
-  "license": "ISC",
+  "homepage": "http://www.raise.it",
+  "license": "AGPL",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "directories": {

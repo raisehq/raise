@@ -18,12 +18,12 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build": "tsc",
-    "dev": "tsc --watch", 
+    "dev": "tsc --watch",
     "dev:int": "yarn run dev"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
-    "@raise/onboarding": "*",
+    "@raisehq/onboarding": "*",
     "@storybook/addon-actions": "^5.1.9",
     "@storybook/addon-info": "^5.1.9",
     "@storybook/addon-links": "^5.1.9",
