@@ -27,7 +27,7 @@
     "dev-all:int": "lerna run dev:int --stream --parallel",
     "clean": "lerna exec -- rm -rf ./node_modules ./lib ./build || true && rm -rf node_modules || true",
     "build": "lerna run build --stream",
-    "build:deps": "lerna run --stream --scope '{@raise/onboarding,@raise/components}' build",
+    "build:deps": "lerna run --stream --scope '{@raisehq/onboarding,@raise/components}' build",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client"
   }
