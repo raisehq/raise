@@ -1,0 +1,39 @@
+{
+  "name": "web-raise",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "/client/hero/raise/",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts-with-stylus start src/css/main.styl",
+    "build": "react-scripts-with-stylus build src/css/main.styl",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@raise/onboarding": "*",
+    "semantic-ui-css": "^2.4.1",
+    "create-react-app-stylus": "^1.1.1",
+    "react-lottie": "^1.2.3",
+    "react-router-dom": "^4.3.1"
+  }
+}

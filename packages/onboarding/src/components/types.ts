@@ -29,7 +29,7 @@ export interface ISignin {
 
 export interface IContext {
   blur: boolean;
-  mountNode: any | null;
+  mountNode?: any | null;
   credentials: ICredentials;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
   onSetCredentials: (
@@ -46,4 +46,7 @@ export interface IContext {
   error: boolean;
   referralCode: string | null;
   onRecover: (email: string) => null | void | Promise<any>;
+  onClose?: () => null | void;
+  open: boolean;
+  closeButton: boolean;
 }
