@@ -171,6 +171,11 @@ const App = ({
     }
   }, []);
 
+  const onOnClose = () => {
+    setStep(Step.Start);
+    onClose();
+  };
+
   const getStep = () =>
     step.cata({
       Start: () => (
@@ -247,10 +252,10 @@ const App = ({
         credentials,
         setLoginError,
         referralCode,
+        onClose: onOnClose,
         blur,
         error: loginError,
         mountNode,
-        onClose,
         closeButton,
         open
       }}
