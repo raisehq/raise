@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { getHost } from '../../utils/index';
 
 import useImages from '../../hooks/useImages';
-import { isMobile } from 'react-device-detect';
 
 import {
   FacebookShareButton,
@@ -56,38 +55,6 @@ const Invite = () => {
 
   const getImagesUrl = useImages();
 
-  const config: any = !isMobile
-    ? {
-        facebookButton: () => (
-          <FacebookShareButton quote={quote} url={shareLink}>
-            <img alt="Facebook ico" src={`${getImagesUrl}ico_facebook.svg`} />
-          </FacebookShareButton>
-        ),
-        twitterButton: () => (
-          <TwitterShareButton title={quote} url={shareLink}>
-            <img alt="Twitter ico" src={`${getImagesUrl}ico_twitter.svg`} />
-          </TwitterShareButton>
-        )
-      }
-    : {
-        facebookButton: () => (
-          <SocialButtonForMobile
-            target="_blank"
-            href={`https://m.facebook.com/sharer/sharer.php?u=${encodedSharedLink}&quote=${encodedText}`}
-          >
-            <img alt="Facebook ico" src={`${getImagesUrl}ico_facebook.svg`} />
-          </SocialButtonForMobile>
-        ),
-        twitterButton: () => (
-          <SocialButtonForMobile
-            target="_blank"
-            href={`twitter://post?text=${encodedText}${encodedSharedLink}`}
-          >
-            <img alt="Twitter ico" src={`${getImagesUrl}ico_twitter.svg`} />
-          </SocialButtonForMobile>
-        )
-      };
-
   return (
     <Raf>
       <AddressRow>
@@ -136,8 +103,22 @@ const Invite = () => {
           <Grid.Row>
             <Social>
               <Grid columns={5} stackable>
-                <Grid.Column width={3}>{config.facebookButton()}</Grid.Column>
-                <Grid.Column width={3}>{config.twitterButton()}</Grid.Column>
+                <Grid.Column width={3}>
+                  <FacebookShareButton quote={quote} url={shareLink}>
+                    <img
+                      alt="Facebook ico"
+                      src={`${getImagesUrl}ico_facebook.svg`}
+                    />
+                  </FacebookShareButton>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <TwitterShareButton title={quote} url={shareLink}>
+                    <img
+                      alt="Twitter ico"
+                      src={`${getImagesUrl}ico_twitter.svg`}
+                    />
+                  </TwitterShareButton>
+                </Grid.Column>
                 <Grid.Column width={3}>
                   <EmailShareButton
                     subject="Invitation to Raise"
@@ -203,8 +184,28 @@ const Invite = () => {
           <Grid.Row>
             <Social>
               <Grid columns={5}>
-                <Grid.Column width={3}>{config.facebookButton()}</Grid.Column>
-                <Grid.Column width={3}>{config.twitterButton()}</Grid.Column>
+                <Grid.Column width={3}>
+                  <SocialButtonForMobile
+                    target="_blank"
+                    href={`https://m.facebook.com/sharer/sharer.php?u=${encodedSharedLink}&quote=${encodedText}`}
+                  >
+                    <img
+                      alt="Facebook ico"
+                      src={`${getImagesUrl}ico_facebook.svg`}
+                    />
+                  </SocialButtonForMobile>
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <SocialButtonForMobile
+                    target="_blank"
+                    href={`twitter://post?text=${encodedText}${encodedSharedLink}`}
+                  >
+                    <img
+                      alt="Twitter ico"
+                      src={`${getImagesUrl}ico_twitter.svg`}
+                    />
+                  </SocialButtonForMobile>
+                </Grid.Column>
                 <Grid.Column width={3}>
                   <EmailShareButton
                     subject="Invitation to Raise"
