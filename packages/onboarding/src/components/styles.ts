@@ -256,6 +256,10 @@ export const ConfirmHeader = styled.h1`
   text-align: center;
 `;
 
+export const ConfirmText = styled.p`
+  text-align: center;
+`
+
 export const MainImage = styled.img`
   display: block;
   width: 100%;
