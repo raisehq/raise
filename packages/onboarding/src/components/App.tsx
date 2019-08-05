@@ -1,5 +1,4 @@
 import React from 'react';
-import isUUID from 'validator/lib/isUUID';
 import daggy from 'daggy';
 import GetStarted from './SignUp/GetStarted';
 import Register from './SignUp/Register';
@@ -20,7 +19,7 @@ import { defaultContext } from './defaults';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import { validateToken } from '../services';
 import { to, getHost } from '../utils';
-import LocalData from './localData';
+import useCookie from '../hooks/useCookie';
 import * as services from '../services';
 
 const { useState, useEffect, createContext } = React;
@@ -64,6 +63,8 @@ const App = ({
     defaultContext.credentials
   );
   const [referralCode, setRefCode] = useState<string>('');
+  const [user, setuserCookie] = useCookie('user', {});
+  const [auth, setAuthCookie] = useCookie('auth', {});
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
@@ -149,14 +150,15 @@ const App = ({
           }
         } = response;
 
-        LocalData.setObj('auth', {
+        setAuthCookie({
           id,
           status,
           token: JwtToken,
           type: accounttype_id
         });
 
-        LocalData.setObj('user', user);
+        setuserCookie(user);
+
         window.location.href = getHost('APP');
       }
     );
@@ -165,7 +167,7 @@ const App = ({
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
-    
+
     if (!!refCode) {
       setRefCode(refCode);
     }
