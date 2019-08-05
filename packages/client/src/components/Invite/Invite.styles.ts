@@ -11,16 +11,15 @@ export const StyledAddress = styled(Web3Address)`
   }
 `;
 export const AddressRow = styled(Grid.Row)`
-height: 36px;
-
-`
+  height: 36px;
+`;
 export const Raf = styled(Grid)`
   min-height: 519px;
-  
+
   margin: 0 !important;
   padding: 0 !important;
-  background-image: linear-gradient(0deg, #F2FAFA 0%, #FFFFFF 100%);
-    
+  background-image: linear-gradient(0deg, #f2fafa 0%, #ffffff 100%);
+
   @media ${device.tablet} {
     float: right;
     padding: 0 !important;
@@ -28,13 +27,12 @@ export const Raf = styled(Grid)`
     border-top-right-radius: 0.285714rem;
     display: flex;
     box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
-
   }
 `;
 
 export const ContainerGrid = styled(Grid)`
   padding: 0px 0px 0px 0px;
-`
+`;
 
 export const StartEarningNow = styled.div`
   font-size: 26px;
@@ -52,8 +50,9 @@ export const StartEarningNow = styled.div`
 `;
 
 export const InviteYourFriends = styled.div`
-  color: #3C4251;
+  color: #3c4251;
   font-size: 18px;
+  font-weight: normal;
   line-height: 28px;
   padding: 0px 0px 0px 0px;
   margin: 0px 0px 0px 15px;
@@ -102,7 +101,7 @@ export const ShareInput = styled.div`
 export const CopyButton = styled.button`
   height: 48px;
   width: 111px;
-  background-color: #EB3F93;
+  background-color: #eb3f93;
   color: #ffffff;
   font-size: 14px;
   font-weight: bold;
@@ -118,13 +117,13 @@ export const CopyButton = styled.button`
 
 export const InputColumn = styled(Grid.Column)`
   padding-right: 0px !important;
-`
+`;
 export const ButtonColumn = styled(Grid.Column)`
   padding-left: 0px !important;
-`
+`;
 export const InviteContent = styled(Grid.Row)`
   padding-bottom: 65px !important;
-`
+`;
 
 export const RafImage = styled.img`
   height: auto;
@@ -132,8 +131,7 @@ export const RafImage = styled.img`
   margin-left: 20px;
 `;
 
-export const RafImageContainer = styled.div`
-`
+export const RafImageContainer = styled.div``;
 export const Social = styled.div`
   margin: 25px 32px 0px 15px;
 
@@ -145,7 +143,7 @@ export const Social = styled.div`
 export const LinkColumn = styled(Grid.Column)`
   margin: 20px 0px 0px 0px;
   padding-right: 10px;
-`
+`;
 
 export const LabelWeb3 = styled.div`
   padding: 0.8em !important;
@@ -165,5 +163,5 @@ export const LabelWeb3 = styled.div`
 
 export const SocialButtonForMobile = styled.a`
   text-decoration: none;
-  border:0;
+  border: 0;
 `;
