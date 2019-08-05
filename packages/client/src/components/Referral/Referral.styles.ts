@@ -11,7 +11,7 @@ export const CenteredContainer = styled.div`
 `;
 export const ContainerGrid = styled(Grid)`
   padding: 0px 0px 0px 0px;
-`
+`;
 export const GridSized = styled(Grid)`
   &&& {
     height: 100vh;
@@ -100,7 +100,7 @@ export const MidReferral = styled(Grid.Row)`
 `;
 export const BottomReferal = styled(Grid.Row)`
   width: 100%;
-  
+
   padding: 0 !important;
   border-bottom-right-radius: 0.285714rem;
   border-bottom-left-radius: 0.285714rem;
@@ -111,13 +111,12 @@ export const BottomReferal = styled(Grid.Row)`
  */
 
 export const ResumeContainer = styled(Grid)`
-  margin-top: 50px !important;  
+  margin-top: 50px !important;
   margin: 0 !important;
   padding: 0 !important;
   background-color: #ffffff;
-  
-  @media ${device.mobileL} {
 
+  @media ${device.mobileL} {
   }
 `;
 
@@ -125,7 +124,7 @@ export const ButtonGreen = styled(Button)`
   &&&,
   &&&:focus,
   &&&.disabled {
-    width: 100%;
+    width: 85%;
     ${({ disabled }) => (disabled === 'true' ? 'opacity: 0.4 !important;' : '')}
     background: linear-gradient(134.72deg, #188E9B 0%, #6DD7C7 100%) !important;
     color: white;
@@ -133,6 +132,7 @@ export const ButtonGreen = styled(Button)`
     line-height: 24px;
     height: 45px;
     @media ${device.tablet} {
+      margin: 0 0px 0 22px !important;
       padding: 0;
     }
   }
@@ -142,6 +142,7 @@ export const ButtonGreen = styled(Button)`
     font-weith: bold;
     height: 45px;
     @media ${device.tablet} {
+      margin: 0 0px 0 22px !important;
       padding: 0;
     }
   }
@@ -151,11 +152,11 @@ export const ButtonGreen = styled(Button)`
     font-weith: bold;
     height: 45px;
     @media ${device.tablet} {
+      margin: 0 0px 0 22px !important;
       padding: 0;
     }
   }
 `;
-
 
 export const ContainerListFriends = styled(Grid.Row)`
   height: 300px;
@@ -181,15 +182,31 @@ export const RewardWrapper = styled(Grid)`
 `;
 
 export const RewardMessage = styled.div`
-  color: #5C5D5D;
+  color: #5a5a5a;
   font-weight: bold;
+  padding: 0;
+  margin: 15px 0px -15px 0px;
+  text-align: center;
+`;
+
+export const RewardMessageFriends = styled.div`
+  color: #5a5a5a;
+  font-weight: bold;
+  padding: 0;
+  margin: -10px 0px 10px 0px;
+  text-align: center;
+`;
+
+export const RewardMessageSubTitle = styled.div`
+  color: #5a5a5a;
+  font-weight: normal;
   padding: 0;
   margin: 15px 0px 10px 0px;
   text-align: center;
 `;
 
 export const RewardAmount = styled.span`
-  color: #5C5D5D;
+  color: #5c5d5d;
   font-size: 14px;
   font-weight: bold;
   line-height: 21px;
@@ -206,16 +223,16 @@ export const FriendsListItem = styled(List.Item)`
 `;
 
 export const MessageCoin = styled.span`
-  color: #5A5A5A;
+  color: #5a5a5a;
   font-size: 10px;
   line-height: 21px;
   text-align: left;
 `;
 
-export const Separator =  styled(Divider)`
-  margin: 0px 15px 0px 15px !important;
-  
-  background-color: #99A6B8;
+export const Separator = styled(Divider)`
+  margin: 0px 15px 0px 0px !important;
+
+  background-color: #99a6b8;
   @media ${device.mobileL} {
     margin: 0px 50px 0px 50px !important;
     padding: 0;
