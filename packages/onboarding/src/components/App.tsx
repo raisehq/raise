@@ -150,14 +150,17 @@ const App = ({
           }
         } = response;
 
-        setAuthCookie({
-          id,
-          status,
-          token: JwtToken,
-          type: accounttype_id
-        });
+        setAuthCookie(
+          {
+            id,
+            status,
+            token: JwtToken,
+            type: accounttype_id
+          },
+          { domain: 'herodev.es' }
+        );
 
-        setuserCookie(user);
+        setuserCookie(user, { domain: 'herodev.es' });
 
         window.location.href = getHost('APP');
       }
