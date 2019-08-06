@@ -3,6 +3,7 @@ import useAsyncEffect from './useAsyncEffect';
 import isEqual from 'lodash/isEqual';
 import axios from 'axios';
 import get from 'lodash/get';
+import hasIn from 'lodash/hasIn';
 import { toChecksumAddress} from 'web3-utils';
 import { RootContext } from '../context';
 import { getWeb3 } from '../utils'
@@ -11,13 +12,13 @@ import { Web3State } from '../commons/Web3State';
 const parseNetwork = id => {
   switch (id) {
     case 1:
-      return 'main';
+      return 'mainnet';
     case 3:
       return 'ropsten';
     case 4:
       return 'rinkeby';
     case 5:
-      return 'görli';
+      return 'goerli';
     case 42:
       return 'kovan';
     default:
@@ -35,16 +36,16 @@ export const web3CheckList = (web3, accounts, targetAddress, network, targetNetw
   account: get(accounts, '[0]', null),
   accountMatches: !!targetAddress && !!accounts && !!accounts.length && toChecksumAddress(accounts[0]) === toChecksumAddress(targetAddress),
   network,
-  networkMatches: !!targetNetwork.find(x => x == network),
+  networkMatches: !!targetNetwork.find(x => x === network),
   targetNetwork, // this need to be set by config/env
   hasDeposit,
 })
 
 const hasDeposited = async (web3, definitions, address) => {
-  if (!definitions || !address || !web3) {
+  const netId = await web3.eth.net.getId();
+  if (!definitions || !address || !web3 || !hasIn(definitions, `address.${netId}`)) {
     return false;
   }
-  const netId = await web3.eth.net.getId();
   const contract = await web3.eth.Contract(
     get(definitions, `abi.Deposit`),
     get(definitions, `address.${netId}.Deposit`)
@@ -62,7 +63,11 @@ const useWeb3Checker = () : Web3State => {
 
   useAsyncEffect(async () => {
     const contracts = await axios.get(HERO_CONTRACTS);
-    setTargetNetwork(Object.keys(contracts.data.address).map(x => parseNetwork(Number(x))));
+    setTargetNetwork(
+      Object.keys(contracts.data.address)
+      .map(x => parseNetwork(Number(x)))
+      .filter(availableId => ['mainnet', 'goerli', 'kovan'].find(id => id === availableId))
+    );
     setDefs(contracts.data);
   }, []);
 

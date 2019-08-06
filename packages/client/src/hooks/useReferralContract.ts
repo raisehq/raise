@@ -8,12 +8,16 @@ const useRefferalContract = () => {
 
   useAsyncEffect(async () => {
     if (metamask) {
-      const contract = await metamask.addContract('ReferralTracker');
-      setActiveContract({
-        address: contract.address,
-        withdraw: (account) => contract.methods.withdraw(account).send({ from: account }),
-        balance: (account) => contract.methods.unclaimedReferrals(account).call()
-      });
+      try {
+        const contract = await metamask.addContract('ReferralTracker');
+        setActiveContract({
+          address: contract.address,
+          withdraw: (account) => contract.methods.withdraw(account).send({ from: account }),
+          balance: (account) => contract.methods.unclaimedReferrals(account).call()
+        });
+      } catch (error) {
+        console.error('Contract ReferralTracker not found in current network.')
+      }
     }
   }, [metamask]);
 
