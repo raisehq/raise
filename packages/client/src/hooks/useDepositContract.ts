@@ -8,22 +8,27 @@ const useDepositContract = () => {
 
   useAsyncEffect(async () => {
     if (metamask) {
-      const contract = await metamask.addContract('Deposit');
-      setActiveContract({
-        address: contract.address,
-        hasDeposited: (address) =>
-          contract.methods.hasDeposited(address).call(),
-        deposit: (address) =>
-          contract.methods
-            .depositFor(address)
-            .send({ from: address }),
-        depositWithReferral: (address, referralAddress) =>
+      try {
+        const contract = await metamask.addContract('Deposit');
+        setActiveContract({
+          address: contract.address,
+          hasDeposited: (address) =>
+            contract.methods.hasDeposited(address).call(),
+          deposit: (address) =>
             contract.methods
-              .depositForWithReferral(address, referralAddress)
+              .depositFor(address)
               .send({ from: address }),
-        withdraw: (address) =>
-          contract.methods.withdraw(address).send({ from: address })
-      });
+          depositWithReferral: (address, referralAddress) =>
+              contract.methods
+                .depositForWithReferral(address, referralAddress)
+                .send({ from: address }),
+          withdraw: (address) =>
+            contract.methods.withdraw(address).send({ from: address })
+        });
+      } catch (error) {
+        console.error('Contract Deposit not found in current network.')
+      }
+      
     }
   }, [metamask]);
 
