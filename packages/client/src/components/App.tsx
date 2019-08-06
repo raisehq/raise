@@ -95,7 +95,7 @@ const App = ({ children, history }: any) => {
   }, [logged, address, network, netOk]);
 
   useEffect(() => {
-    const refMode = Boolean(process.env.REACT_APP_REFERAL);
+    const refMode = (process.env.REACT_APP_REFERAL == 'true');
     const isJoin =
       history.location.pathname.includes('/join') ||
       history.location.pathname.includes('/login');
@@ -113,13 +113,20 @@ const App = ({ children, history }: any) => {
       { isLoading: true },
         () => {},
       { logged: true, web3Pass: false },
-        () => history.push('/verify-web3'),
+        () => history.push(`/verify-web3${history.location.pathname !== '/verify-web3'? `?redirect=${encodeURI(history.location.pathname)}` : '' }`),
       { logged: true, web3Pass: true, deposited: false },
         () => setTimeout(() => history.push('/deposit'), 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: true },
         () => setTimeout(() => history.push('/referral'), 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
-        () => {},
+        () => {
+          setTimeout(() => {
+            const params = new URLSearchParams(window['location']['search']);
+            if (params.has('redirect')) {
+              history.push(params.get('redirect'));
+            } 
+          }, 3000)
+        },
       { logged: false, isJoin: false },
         () => history.push('/join'),
       _,

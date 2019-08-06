@@ -194,7 +194,7 @@ export const SideInfo = styled.div`
   bottom: 0;
   right: 0;
   position: absolute;
-  color: #40e0c4;
+  color: #5A5A5A;
   font-size: 12px;
 `;
 

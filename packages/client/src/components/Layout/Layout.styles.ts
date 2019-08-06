@@ -12,7 +12,7 @@ export const HeroLayout = styled('div')`
   }
 
   .content {
-    flex: 1 0 auto;
+    max-width: 735px;
     background: ${theme.colors.background};
     box-sizing: border-box;
   }

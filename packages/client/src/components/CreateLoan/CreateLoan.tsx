@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Icon, Input } from 'semantic-ui-react';
+import { Header, Icon } from 'semantic-ui-react';
 import {
   CreateLoanInputLabel,
   BloodWrapper,
@@ -15,7 +15,6 @@ import {
   ConfirmButton,
   SideInfo,
   InputError,
-  MinAmount
 } from './CreateLoan.styles';
 import Slider from '../Slider';
 import Card from '../Card';
@@ -116,6 +115,7 @@ const CreateLoan = () => {
               </CreateLoanInputLabel>
             </CreateLoanInput>
           </BloodCardFloat>
+          <SideInfo>* Based on current exchange rate</SideInfo>
         </BloodWrapper>
         <BloodWrapper className="content">
           <BloodCardContent>
@@ -127,10 +127,35 @@ const CreateLoan = () => {
               different reasons
             </p>
             {loan.accept && (
-              <MinAmount>
-                <p>Please select how much less</p>
-                <Input onChange={onMinAmount} placeholder="Minimun amount" />
-              </MinAmount>
+              <BloodWrapper className="content">
+                <BloodCardContent>
+                  <p>Please select how much less, minimum 10.000 DAI</p>
+                </BloodCardContent>
+                <BloodCardFloat>
+                <CreateLoanInput>
+                  <input
+                    max="2500000"
+                    min="10000"
+                    type="number"
+                    onChange={onMinAmount}
+                    onBlur={onBlur}
+                  />
+                  <DAILogo>
+                    <Icon name="ethereum" size="large" />
+                  </DAILogo>
+                  <CreateLoanInputLabel>
+                    {amountValidation.error ? (
+                      <InputError>{amountValidation.msg}</InputError>
+                    ) : loan.amount ? (
+                      `${loan.amount} €`
+                    ) : (
+                      '0'
+                    )}
+                  </CreateLoanInputLabel>
+                </CreateLoanInput>
+               </BloodCardFloat>
+               <SideInfo>* Based on current exchange rate</SideInfo>
+              </BloodWrapper>
             )}
           </BloodCardContent>
           <BloodCardFloat>
@@ -140,7 +165,6 @@ const CreateLoan = () => {
               onChange={onToggleAccept}
             />
           </BloodCardFloat>
-          <SideInfo>* Based on current exchange rate</SideInfo>
         </BloodWrapper>
         <BloodWrapper className="content separator">
           <BloodCardContent>
