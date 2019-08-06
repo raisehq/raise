@@ -75,7 +75,8 @@ const App = ({ children, history }: any) => {
   const {
     hasDeposit: deposited,
     accountMatches: accMatch,
-    networkMatches: netOk
+    networkMatches: netOk,
+    network
   } = web3Status;
   const web3Pass = netOk && accMatch;
 
@@ -90,8 +91,8 @@ const App = ({ children, history }: any) => {
   }, [logged]);
 
   useAsyncEffect(async () => {
-    logged && address && fetchReferrals();
-  }, [logged, address]);
+    logged && address && network && netOk && fetchReferrals(network);
+  }, [logged, address, network, netOk]);
 
   useEffect(() => {
     const refMode = Boolean(process.env.REACT_APP_REFERAL);

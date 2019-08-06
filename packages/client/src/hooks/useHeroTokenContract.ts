@@ -17,23 +17,27 @@ const useDepositContract = () => {
 
         isActive.fold(
           async () => {
-            const HeroTokenContract = await metamask.addContract('HeroToken');
-            const DepositContract = await metamask.addContract('Deposit');
-            setActiveContract({
-              allowance: (account, spender) => HeroTokenContract.methods.allowance(account, spender).call(),
-              balance: (account) =>
-                HeroTokenContract.methods.balanceOf(account).call(),
-              approveDeposit: async (account, amount) => {
-                return HeroTokenContract.methods
-                  .approve(
-                    DepositContract.address,
-                    metamask.utils.toWei(amount.toString(), 'ether')
-                  )
-                  .send({
-                    from: account
-                  });
-              }
-            });
+            try {
+              const HeroTokenContract = await metamask.addContract('HeroToken');
+              const DepositContract = await metamask.addContract('Deposit');
+              setActiveContract({
+                allowance: (account, spender) => HeroTokenContract.methods.allowance(account, spender).call(),
+                balance: (account) =>
+                  HeroTokenContract.methods.balanceOf(account).call(),
+                approveDeposit: async (account, amount) => {
+                  return HeroTokenContract.methods
+                    .approve(
+                      DepositContract.address,
+                      metamask.utils.toWei(amount.toString(), 'ether')
+                    )
+                    .send({
+                      from: account
+                    });
+                }
+              });
+            } catch (error) {
+              console.error('Contract Hero not found in current network');
+            }
           },
           () => activeContract
         );
