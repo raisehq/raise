@@ -80,6 +80,8 @@ export default (dispatch: any, state: any) => {
   const onSignout = () => {
     LocalData.remove('user');
     LocalData.remove('auth');
+    Cookies.remove('auth');
+    Cookies.remove('user');
     window.location.href = `${getHost('APP')}/login`;
   };
 
