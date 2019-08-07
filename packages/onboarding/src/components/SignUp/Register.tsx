@@ -15,7 +15,6 @@ import { IContext } from '../types';
 import { countryOptions } from '../../commons/countries';
 import validations from '../validations';
 import { checkUsername } from '../../services';
-import { checkBlockedCountry } from '../../services';
 
 const Register = () => {
   const {
@@ -38,16 +37,7 @@ const Register = () => {
   });
 
   const onSetCountry = debounce(async (e, data) => {
-    const { value } = data;
-    const validateCountry: any = await checkBlockedCountry(value);
-
-    validateCountry.fold(
-      () => setErrors({ ...errors, country: true }),
-      () => {
-        setErrors({ ...errors, country: false });
-        onSetCredentials('country_id', data.value);
-      }
-    );
+    onSetCredentials('country_id', data.value);
   }, 800);
 
   const onChangeUsername = debounce(async (e, data) => {
