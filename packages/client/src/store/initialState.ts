@@ -1,15 +1,15 @@
 import LocalData from '../helpers/localData';
-import Cookie from 'js-cookie';
+import * as Cookies from 'js-cookie';
 
-const authCookie = Cookie.get('auth');
-const userCookie = Cookie.get('user');
+const authCookie = Cookies.get('auth');
+const userCookie = Cookies.get('user');
 
 if (authCookie || userCookie) {
   LocalData.setObj('auth', JSON.parse(authCookie));
   LocalData.setObj('user', JSON.parse(userCookie));
 
-  Cookie.remove('auth');
-  Cookie.remove('user');
+  Cookies.remove('auth', { path: '/', domain: '.herodev.es'});
+  Cookies.remove('user', { path: '/', domain: '.herodev.es'});
 }
 
 const { id, status, accounttype_id } = LocalData.getObj('auth') || {
