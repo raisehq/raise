@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header, Icon } from 'semantic-ui-react';
+import numeral from 'numeral';
 import {
   CreateLoanInputLabel,
   BloodWrapper,
@@ -21,23 +22,40 @@ import Card from '../Card';
 import months from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 
+numeral.defaultFormat('0.0,');
+
+const min = 10000;
+const max = 2500000;
 const CreateLoan = () => {
   const loanDispatcher = useLoanDispatcher();
+  const inputRef: any = React.createRef();
   const [amountValidation, setAmountValidation] = useState({
     error: false,
     msg: ''
   });
   const [APR, setAPR] = useState(0);
   const [loan, setLoan] = useState({
-    amount: 0,
+    amount: numeral(min).format(),
     term: 0,
     mir: 0,
     accept: false,
     minAmount: 0
   });
 
-  const onSetAmount = e =>
-    setLoan({ ...loan, amount: parseFloat(e.target.value) });
+  // Calculations
+  const numberAmount = numeral(loan.amount).value();
+  const repaymentAmount = numeral((numberAmount + (numberAmount * loan.mir) / 100).toFixed(2)).format();
+  const netLoan = numeral(numberAmount - (numberAmount * 1) / 100).format();
+  const systemFees = numeral((numberAmount * 1) / 100).format();
+  const totalInterest = numeral(((numberAmount * loan.mir) / 100).toFixed(2)).format()
+
+  const onSetAmount = e => {
+    const cursor = e.target.selectionStart;
+    setLoan({ ...loan, amount: numeral(e.target.value).format() });
+    if (inputRef.current != null) {
+      inputRef['current']['selectionEnd'] = cursor + 1;
+    }
+  }
 
   const onSetTerm = (e, data) =>
     setLoan({ ...loan, term: parseFloat(data.value) });
@@ -64,20 +82,20 @@ const CreateLoan = () => {
 
   const onBlur = e => {
     const { value } = e.target;
-
+    const currentValue = numeral(value).value();
     setAmountValidation({
-      error: value < 10000 || value > 2500000,
+      error: currentValue < min || currentValue > max,
       msg: `Can not be ${
-        value < 10000 ? 'less than 1,000' : 'more than 250,000,000'
+        currentValue < 10000 ? 'less than 1.000' : 'more than 250.000.000'
       }`
     });
   };
 
   useEffect(() => {
     const { amount, term, mir } = loan;
-
-    if (amount && mir && term) {
-      setAPR((((amount * mir * term) / amount) * 12) / term);
+    const currentAmount = numeral(amount).value()
+    if (currentAmount && mir && term) {
+      setAPR((((currentAmount * mir * term) / currentAmount) * 12) / term);
     }
   }, [loan]);
 
@@ -95,9 +113,8 @@ const CreateLoan = () => {
           <BloodCardFloat>
             <CreateLoanInput>
               <input
-                max="2500000"
-                min="10000"
-                type="number"
+                ref={inputRef}
+                value={loan.amount}
                 onChange={onSetAmount}
                 onBlur={onBlur}
               />
@@ -208,22 +225,22 @@ const CreateLoan = () => {
               <div className="title">Loan amount</div>
               <div className="info main">{loan.amount} DAI</div>
               <div className="subtitle">System fees (1%)</div>
-              <div className="info">{(loan.amount * 1) / 100}%</div>
+              <div className="info">{systemFees} DAI</div>
               <div className="subtitle">Net loan proceeds</div>
               <div className="info">
-                {loan.amount - (loan.amount * 1) / 100}
+                {netLoan}
               </div>
             </div>
             <div className="reviewBlock border">
               <div className="title">Total repayment amount</div>
               <div className="info main">
-                {(loan.amount + (loan.amount * loan.mir) / 100).toFixed(2)} DAI
+                {repaymentAmount} DAI
               </div>
               <div className="subtitle">Principal</div>
               <div className="info">{loan.amount} DAI</div>
               <div className="subtitle">Interest</div>
               <div className="info">
-                {((loan.amount * loan.mir) / 100).toFixed(2)} DAI
+                {totalInterest} DAI
               </div>
             </div>
             <ConfirmButton
@@ -232,7 +249,7 @@ const CreateLoan = () => {
                 amountValidation.error ||
                 loan.term === 0 ||
                 loan.mir === 0 ||
-                loan.amount === 0
+                numberAmount === 0
               }
             >
               Confirm
