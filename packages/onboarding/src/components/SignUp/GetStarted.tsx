@@ -8,11 +8,13 @@ import {
   OnboardButton,
   CallToSignIn,
   OnboardDisclaimer,
-  OnboardLogo
+  OnboardLogo,
+  OnboardCheckbox
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
 import validations from '../validations';
+import theme from '../../theme';
 import { checkEmail } from '../../services';
 
 const GetStarted = () => {
@@ -22,7 +24,8 @@ const GetStarted = () => {
 
   const [error, setError] = useState<any>({
     validation: false,
-    exist: false
+    exist: false,
+    terms: true
   });
 
   const onChangeEmail = _.debounce((e, data) => {
@@ -36,16 +39,18 @@ const GetStarted = () => {
 
         alreadyExist.fold(
           () => {
-            setError({ validation: false, exist: true });
+            setError({ validation: false, exist: true, terms: error.terms });
           },
           () => {
-            setError({ validation: false, exist: false });
+            setError({ validation: false, exist: false, terms: error.terms });
             onSetCredentials('email', value);
           }
         );
       }
     );
   }, 500);
+
+  const onAcceptTerms = () => setError({ ...error, terms: !error.terms });
 
   const onKeyPress = event => {
     if (
@@ -55,7 +60,7 @@ const GetStarted = () => {
       onSetStep('Register')();
     }
   };
-  
+
   const header = !!referralCode
     ? 'True friends invited you to Raise'
     : 'Get started';
@@ -84,18 +89,37 @@ const GetStarted = () => {
         )}
       </OnboardInput>
       <OnboardButton
-        disabled={credentials.email === '' || error.validation || error.exist}
+        disabled={
+          credentials.email === '' ||
+          error.validation ||
+          error.exist ||
+          error.terms
+        }
         onClick={onSetStep('Register')}
       >
         Next
       </OnboardButton>
       <OnboardDisclaimer>
+        <OnboardCheckbox onChange={onAcceptTerms} />
         By signing up, I agree to Raise
-        <button className="disclaimerBTN">Terms of Service</button> and
-        <button className="disclaimerBTN">Privacy Policy</button>
+        <a
+          className="disclaimerBTN"
+          href={`${theme.resources}/terms/terms.pdf`}
+          target="_blank"
+        >
+          Terms of Service
+        </a>
+        and
+        <a
+          className="disclaimerBTN"
+          href={`${theme.resources}/terms/terms.pdf`}
+          target="_blank"
+        >
+          Privacy Policy
+        </a>
       </OnboardDisclaimer>
       <CallToSignIn>
-        Do you have an account already? Press here to
+        Do you have an account already?
         <button className="callToSignIn" onClick={onSetStep('SignIn')}>
           Sign In
         </button>
