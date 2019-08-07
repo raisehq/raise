@@ -43,7 +43,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
               <Grid>
                 {logged && (
                   <HeaderRow>
-                    <Image src="http://raise.it/logo.svg" />
+                    <Image src="https://s3-eu-west-1.amazonaws.com/static.herodev.es/images/logo.svg" />
                     <Logout basic floated="right">
                       Logout
                     </Logout>
