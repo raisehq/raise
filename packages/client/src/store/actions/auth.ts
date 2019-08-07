@@ -80,8 +80,8 @@ export default (dispatch: any, state: any) => {
   const onSignout = () => {
     LocalData.remove('user');
     LocalData.remove('auth');
-    Cookies.remove('auth');
-    Cookies.remove('user');
+    Cookies.remove('auth', { path: '/', domain: '.herodev.es'});
+    Cookies.remove('user', { path: '/', domain: '.herodev.es'});
     window.location.href = `${getHost('APP')}/login`;
   };
 
@@ -117,8 +117,8 @@ export default (dispatch: any, state: any) => {
     } catch (error) {
       LocalData.remove('user');
       LocalData.remove('auth');
-      Cookies.remove('auth');
-      Cookies.remove('user');
+      Cookies.remove('auth', { path: '/', domain: '.herodev.es'});
+      Cookies.remove('user', { path: '/', domain: '.herodev.es'});
     }
   };
 
