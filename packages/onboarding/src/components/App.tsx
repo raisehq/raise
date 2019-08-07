@@ -157,10 +157,10 @@ const App = ({
             token: JwtToken,
             type: accounttype_id
           },
-          { domain: '.herodev.es' }
+          { domain: process.env.REACT_APP_COOKIE_DOMAIN }
         );
 
-        setuserCookie(user, { domain: '.herodev.es' });
+        setuserCookie(user, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
 
         window.location.href = getHost('APP');
       }
