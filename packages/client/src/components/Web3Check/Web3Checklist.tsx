@@ -41,7 +41,6 @@ const Checklist = () => {
     }
   }: any = useContext(AppContext);
 
-  console.log(unlocked)
 
   // prettier-ignore
   const steps = match([hasProvider, unlocked, networkMatches, accountMatches],
