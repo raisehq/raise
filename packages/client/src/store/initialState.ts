@@ -8,8 +8,8 @@ if (authCookie || userCookie) {
   LocalData.setObj('auth', JSON.parse(authCookie));
   LocalData.setObj('user', JSON.parse(userCookie));
 
-  Cookies.remove('auth', { path: '/', domain: '.herodev.es'});
-  Cookies.remove('user', { path: '/', domain: '.herodev.es'});
+  Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
+  Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
 }
 
 const { id, status, accounttype_id } = LocalData.getObj('auth') || {
