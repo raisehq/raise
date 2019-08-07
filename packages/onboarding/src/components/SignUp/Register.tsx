@@ -105,14 +105,13 @@ const Register = () => {
           search
           placeholder="Country of residence"
           onChange={onSetCountry}
-          error={errors.country}
           onKeyPress={onKeyPress}
         />
-        {errors.country && (
+        {/* {errors.country && (
           <div className="errorTextSelect">
             Sorry we don’t accept registrations from this country
           </div>
-        )}
+        )} */}
         <Icon size="big" name="globe" />
       </OnboardInput>
       <OnboardInput>
