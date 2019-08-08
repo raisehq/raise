@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import { Select, Checkbox } from 'semantic-ui-react';
+import { Select, Checkbox, Card } from 'semantic-ui-react';
 import theme from '../../theme';
+
+interface LoanFormValueProps {
+  big?: boolean;
+}
 
 export const BloodWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-
-  .first {
-    padding-top: 90px;
-  }
 
   .content {
     padding-left: 0;
@@ -19,20 +19,11 @@ export const BloodWrapper = styled.div`
     background: none;
     position: relative;
   }
-
-  .separator {
-    padding-top: 50px;
-    margin-bottom: 80px;
-    box-sizing: border-box;
-  }
-
-  .lone {
-    flex: 0 1 350px;
-    margin: 40px;
-  }
 `;
 
 export const BloodCardMain = styled.div`
+  max-width: 735px;
+  padding-top: 90px;
   height: 100%;
   box-shadow: ${theme.shadow};
   padding-top: 70px;
@@ -58,7 +49,42 @@ export const BloodCardFloat = styled.div`
   margin-top: 40px;
 `;
 
-export const CreateLoanInput = styled.div`
+export const LoanForm = styled(Card)`
+&&& {
+  text-align: right;
+  max-width: 350px;
+  height: 550px;
+  margin-left: 35px;
+  margin-top: 40px;
+  padding: 30px 20px 20px 20px;
+  box-shadow: 0 0 26px 0 rgba(217,217,217,0.61);
+}
+`
+
+export const LoanFormInfo = styled.p`
+    font-size: 12px;
+    margin: 0;
+`
+
+export const LoanFormValue = styled('p')<LoanFormValueProps>`
+  font-size: ${({big}) => big ? '26px' : '18px'};
+  font-weight: bold;
+  margin: 0px 0px 17px 0px;
+`
+
+export const InputDescription = styled.div`
+  min-width: 190px;
+  margin-right: 24px;
+  font-size: 14px;
+  font-family: Lato;
+`;
+export const InputBox = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  
+`;
+export const LoanInputBox = styled.div`
   width: 80%;
   float: right;
   position: relative;
@@ -71,6 +97,7 @@ export const CreateLoanInput = styled.div`
     box-sizing: border-box;
     background: none !important;
     font-size: 26px;
+    font-weight: bold;
     color: #5c5d5d;
     text-align: right;
   }
@@ -95,14 +122,20 @@ export const DAILogo = styled.div`
   }
 `;
 
-export const CreateLoanInputLabel = styled.div`
+export const LoanInputLabel = styled.div`
   position: absolute;
   top: 35px;
   right: 0;
   font-size: 14px;
+  text-align: right;
+  font-weight: bold;
+  & > p {
+    font-weight: normal;
+    font-size: 12px;
+  }
 `;
 
-export const CreateLoanSelect = styled(Select)`
+export const LoanSelect = styled(Select)`
   float: right;
   padding: 20px !important;
 
@@ -111,8 +144,17 @@ export const CreateLoanSelect = styled(Select)`
   }
 `;
 
-export const CreateLoanCheckbox = styled(Checkbox)`
+export const MininumLoanSelect = styled(LoanSelect)`
+&&&& {
+  min-width: 120px;
+}
+`
+
+export const LoanCheckbox = styled(Checkbox)`
   float: right;
+  &&&&.checked label:before{
+    background: linear-gradient(180deg, #39B54A 0%, #34AA44 100%);
+  }
 `;
 
 export const InterestCard = styled.div`
@@ -174,10 +216,9 @@ export const LoanCreationReview = styled.div`
 
 export const ConfirmButton: any = styled.button`
   height: 60px;
-  width: 310px;
+  width: 100%;
   border-radius: 4px;
-  background-color: #6851d8;
-  border: none;
+  background: linear-gradient(270deg, #3DC9FF 0%, #0098CC 100%);  border: none;
   display: flex;
   align-content: center;
   justify-content: center;
@@ -188,6 +229,7 @@ export const ConfirmButton: any = styled.button`
   text-align: center;
   text-transform: uppercase;
   cursor: pointer;
+  margin: 40px 0px 0px 0px;
 `;
 
 export const SideInfo = styled.div`

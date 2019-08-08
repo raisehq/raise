@@ -113,7 +113,7 @@ const App = ({ children, history }: any) => {
       { isLoading: true },
         () => {},
       { logged: true, web3Pass: false },
-        () => history.push(`/verify-web3${history.location.pathname !== '/verify-web3'? `?redirect=${encodeURI(history.location.pathname)}` : '' }`),
+        () => history.location.pathname !== '/verify-web3' ? history.push(`/verify-web3?redirect=${encodeURI(history.location.pathname)}`) : '',
       { logged: true, web3Pass: true, deposited: false },
         () => setTimeout(() => history.push('/deposit'), 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: true },

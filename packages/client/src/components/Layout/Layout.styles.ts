@@ -12,7 +12,7 @@ export const HeroLayout = styled('div')`
   }
 
   .content {
-    max-width: 735px;
+    width: 100%;
     background: ${theme.colors.background};
     box-sizing: border-box;
   }

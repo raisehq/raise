@@ -6,6 +6,8 @@ import {
   handleStyle,
   railStyle,
   trackStyle,
+  dotStyle,
+  activeDotStyle,
   LabelLess,
   LabelMore
 } from './Slider.styles';
@@ -20,6 +22,8 @@ const HeroSlider = ({ onChange, ...rest }) => (
       step={0.1}
       handleStyle={handleStyle}
       railStyle={railStyle}
+      dotStyle={dotStyle}
+      activeDotStyle={activeDotStyle}
       trackStyle={trackStyle}
       onAfterChange={onChange}
     />
