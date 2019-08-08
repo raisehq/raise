@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import * as _ from 'lodash';
 import {
@@ -9,7 +9,8 @@ import {
   CallToSignIn,
   OnboardDisclaimer,
   OnboardLogo,
-  OnboardCheckbox
+  OnboardCheckbox,
+  OnboardMailingList
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
@@ -21,6 +22,10 @@ const GetStarted = () => {
   const { onSetStep, credentials, onSetCredentials, referralCode } = useContext<
     IContext
   >(AppContext);
+
+  useEffect(() => {
+    onSetCredentials('mailingChecked', false)
+  }, [])
 
   const [error, setError] = useState<any>({
     validation: false,
@@ -51,6 +56,11 @@ const GetStarted = () => {
   }, 500);
 
   const onAcceptTerms = () => setError({ ...error, terms: !error.terms });
+
+  const onAcceptMailingList = () => {
+    const mailingChecked = !credentials.mailingChecked;
+    onSetCredentials('mailingChecked', mailingChecked)
+  }
 
   const onKeyPress = event => {
     if (
@@ -118,6 +128,10 @@ const GetStarted = () => {
           Privacy Policy
         </a>
       </OnboardDisclaimer>
+      <OnboardMailingList>
+        <OnboardCheckbox onChange={onAcceptMailingList} />
+        I agree to receive Raise latest updates
+      </OnboardMailingList>
       <CallToSignIn>
         Do you have an account already?
         <button className="callToSignIn" onClick={onSetStep('SignIn')}>
