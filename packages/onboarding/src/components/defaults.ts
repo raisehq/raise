@@ -18,6 +18,7 @@ export const defaultContext = {
     email: '',
     password: '',
     username: '',
-    country_id: ''
+    country_id: '',
+    mailingChecked: false
   }
 };
