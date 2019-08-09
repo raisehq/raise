@@ -21,7 +21,7 @@ export interface ISignup {
   password: string;
   country_id: string;
   referrer_code?: any;
-  mailingChecked: boolean
+  mailingChecked: boolean;
 }
 
 export interface ISignin {
