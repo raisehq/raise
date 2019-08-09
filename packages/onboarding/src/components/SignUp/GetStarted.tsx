@@ -110,6 +110,10 @@ const GetStarted = () => {
       >
         Next
       </OnboardButton>
+      <OnboardMailingList>
+        <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive
+        Raise latest updates
+      </OnboardMailingList>
       <OnboardDisclaimer>
         <OnboardingCell>
           <OnboardCheckbox onChange={onAcceptTerms} />
