@@ -1,5 +1,5 @@
 import React from 'react';
-import Onboarding from '@raise/onboarding';
+import Onboarding from '@raisehq/onboarding';
 import Lottie from 'react-lottie';
 import animationData from '../animations/Farolillos_01.json';
 //import Anime from 'react-anime'
