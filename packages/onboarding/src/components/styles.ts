@@ -100,7 +100,7 @@ export const OnboardingWrapper = styled.div`
 
   .visuals {
     flex: 0 1 100%;
-    background: ${theme.gradient.blue};
+    background: #f7fdff;
     display: flex;
     align-items: center;
     justify-content: center;
