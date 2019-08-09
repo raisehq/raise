@@ -41,6 +41,11 @@ export const OnboardingCloseButton = styled(Button)`
       background: none;
       color: #fff;
     }
+
+    @media (max-width: ${size.mobileL}) {
+      top: -35px;
+      right: 0px;
+    }
   }
 `;
 
@@ -78,10 +83,6 @@ export const OnboardingSimpleModal: any = styled(Modal)`
 
     @media (max-width: ${size.mobileL}) {
       width: 100%;
-
-      ${OnboardingCloseButton} {
-        display: none;
-      }
     }
   }
 `;
@@ -212,6 +213,20 @@ export const CallToSignIn = styled.div`
 
 export const OnboardDisclaimer = styled.div`
   margin-top: 60px;
+  padding-bottom: 20px;
+  line-height: 20px;
+
+  .disclaimerBTN {
+    border: none;
+    background: none;
+    padding: 0px 2px 0px 2px;
+    margin: 0;
+    color: ${theme.colors.green};
+    cursor: pointer;
+  }
+`;
+
+export const OnboardMailingList = styled.div`
   padding-bottom: 20px;
   border-bottom: 1px solid #dfe3e9;
   line-height: 20px;
