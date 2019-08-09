@@ -136,10 +136,11 @@ const App = ({
     useGoogleTagManager(
       credentials.email,
       'www.raise.it',
-      'CTA',
+      'Login',
       '/join',
       'LoginPage',
       'dataLayer',
+      'Click',
       'Login Attempt'
     );
 
@@ -176,10 +177,11 @@ const App = ({
         useGoogleTagManager(
           id,
           'www.raise.it',
-          'Function success',
+          'Login',
           '/join',
           'LoginPage',
           'dataLayer',
+          'Submit',
           'Login Success'
         );
 
