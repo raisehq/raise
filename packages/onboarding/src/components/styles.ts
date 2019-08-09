@@ -212,7 +212,7 @@ export const CallToSignIn = styled.div`
 `;
 
 export const OnboardDisclaimer = styled.div`
-  margin-top: 60px;
+  border-bottom: 1px solid #dfe3e9;
   padding-bottom: 20px;
   line-height: 20px;
 
@@ -227,10 +227,9 @@ export const OnboardDisclaimer = styled.div`
 `;
 
 export const OnboardMailingList = styled.div`
-  padding-bottom: 20px;
-  border-bottom: 1px solid #dfe3e9;
   line-height: 20px;
-
+  margin-top: 60px;
+  padding-bottom: 20px;
   .disclaimerBTN {
     border: none;
     background: none;
