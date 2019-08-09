@@ -27,7 +27,7 @@ const ProviderErrorNotice = () => (
       href="https://metamask.io/"
       content="Install Metamask extension"
     />
-    <NeedHelp href="/faq" />
+    <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
 
@@ -37,7 +37,7 @@ const AccountLockedNotice = () => {
     <CardDescription>
       <p>Raise needs to connect with your MetaMask wallet</p>
       <ButtonGreen onClick={enableWeb3} content="Approve" />
-      <NeedHelp href="/faq" />
+      <NeedHelp href="https://www.raise.it/help" />
     </CardDescription>
   );
 };
@@ -49,7 +49,7 @@ const NetworkNotMatch = ({ targetNetwork, currentNetwork }) => (
       Please switch to one of the following networks in Metamask wallet:
       <b> {targetNetwork.join(', ')}</b>
     </p>
-    <NeedHelp href="/faq" />
+    <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
 
@@ -66,7 +66,7 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }) => (
         <StyledAddress account={currentAddress} />
       </AddressContainer>
     </ButtonGreen>
-    <NeedHelp href="/faq" />
+    <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
 
@@ -77,7 +77,7 @@ const AccountNotMatchNotice = ({ verifiedAddress }) => (
     <div>
       <Web3Address account={verifiedAddress} />
     </div>
-    <NeedHelp href="/faq" />
+    <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
 
