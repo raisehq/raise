@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Header, Icon, Divider } from 'semantic-ui-react';
-import NumberFormat from 'react-number-format';
 import numeral from 'numeral';
+import Coin from '../Coin';
+import LoanInput from './LoanInput';
 import {
+  TopHeader,
+  Header,
+  Divider,
   LoanInputLabel,
-  BloodWrapper,
+  LoanContainer,
+  LoanBox,
   LoanInputBox,
   LoanSelect,
   MininumLoanSelect,
   LoanCheckbox,
-  BloodCardMain,
-  BloodCardContent,
-  BloodCardFloat,
-  DAILogo,
+  LoanConfirmation,
+  LoanDescription,
+  LoanDescriptionLowerAmount,
+  LoanFormInput,
   InterestCard,
   ConfirmButton,
   SideInfo,
@@ -21,7 +25,9 @@ import {
   InputDescription,
   LoanForm,
   LoanFormInfo,
-  LoanFormValue
+  LoanFormValue,
+  LoanResume,
+  SliderWrapper
 } from './CreateLoan.styles';
 import Slider from '../Slider';
 import months from '../../commons/months';
@@ -56,25 +62,10 @@ numeral.defaultFormat(numeralFormat)
 
 const minAmountOptions = Array.from({length: 99}, (v, k) => ({ value: k + 1, text: `${k + 1} %`})); 
 
-const LoanInput = (props) => {
-  const decimalScale = 2;
-  const thousandSeparator = '.';
-  const decimalSeparator = ',';
-  return (
-    <NumberFormat
-      allowEmptyFormatting={true}
-      fixedDecimalScale={true}
-      decimalScale={decimalScale} 
-      thousandSeparator={thousandSeparator}
-      decimalSeparator={decimalSeparator}
-      {...props}
-    />
-  );
-}
 const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
-const defaultMir = 0.5;
+const defaultMir = 1;
 const defaultTerm = 3;
 const defaultMinPercent = 10;
 const minMir = 0;
@@ -137,7 +128,8 @@ const CreateLoan = () => {
       loan.minAmount,
       loan.amount,
       loan.mir,
-      loan.term
+      loan.term,
+      loan.accept
     );
 
     //WAIT FOR CONFIRMATION UI
@@ -163,16 +155,16 @@ const CreateLoan = () => {
   }, [loan]);
 
   return (
-    <BloodWrapper>
-      <BloodCardMain>
-        <BloodWrapper className="content">
-          <BloodCardContent>
-            <Header as="h2">How much would you like to borrow?</Header>
+    <LoanContainer>
+      <LoanForm>
+        <LoanBox>
+          <LoanDescription>
+            <TopHeader as="h2">How much would you like to borrow?</TopHeader>
             <p>
               Please enter the amount you would like to borrow.
             </p>
-          </BloodCardContent>
-          <BloodCardFloat>
+          </LoanDescription>
+          <LoanFormInput>
             <LoanInputBox>
               <LoanInput
                 value={loan.amount}
@@ -180,21 +172,17 @@ const CreateLoan = () => {
                 onBlur={onBlur}
                 fmt={numeralFormat}
               />
-              <DAILogo>
-                <Icon name="ethereum" size="large" />
-              </DAILogo>
-              <LoanInputLabel>
+              <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`} name="DAI"/>
+            </LoanInputBox>
+            <LoanInputLabel>
                 {amountValidation.error ? (
                   <InputError>{amountValidation.msg}</InputError>
                 ) : `${formattedAmount} EUR*`
                 }
                 <p>* Based on current exchange rate</p>
-              </LoanInputLabel>
-            </LoanInputBox>
-          </BloodCardFloat>
-        </BloodWrapper>
-        <BloodWrapper className="content">
-          <BloodCardContent>
+            </LoanInputLabel>
+          </LoanFormInput>
+          <LoanDescriptionLowerAmount>
             <Header as="h3">
               Would you accept a lower amount than the requested?
             </Header>
@@ -216,74 +204,75 @@ const CreateLoan = () => {
                   />
                 </InputBox>
             )}
-          </BloodCardContent>
-          <BloodCardFloat>
+          </LoanDescriptionLowerAmount>
+          <LoanFormInput>
             <LoanCheckbox
               toggle
               label={loan.accept ? 'YES' : 'NO'}
               onChange={onToggleAccept}
             />
-          </BloodCardFloat>
-        </BloodWrapper>
+          </LoanFormInput>
+        </LoanBox>
         <Divider />
-        <BloodWrapper className="content">
-          <BloodCardContent>
+        <LoanBox>
+          <LoanDescription>
             <Header as="h2">Loan term</Header>
             <p>
               The loan term will start after the loan auction is finished. This
               process could take from a few days up to 30 days. You will be able
               to check the auction progress from your dashboard.
             </p>
-          </BloodCardContent>
-          <BloodCardFloat>
+          </LoanDescription>
+          <LoanFormInput>
             <LoanSelect
               value={loan.term}
               onChange={onSetTerm}
               placeholder="Select term"
               options={months}
             />
-          </BloodCardFloat>
-        </BloodWrapper>
+          </LoanFormInput>
+        </LoanBox>
         <Divider />
-        <BloodWrapper className="content">
-          <BloodCardContent>
+        <LoanBox>
+          <LoanDescription>
             <Header as="h2">Monthly interest rate *</Header>
             <p>
               Select the maximun interest rate you would accept for your loan.
             </p>
+          </LoanDescription>
+          <SliderWrapper>
             <Slider defaultValue={loan.mir} onChange={onInterestChange} min={minMir} marks={marks} max={maxMir} />
-          </BloodCardContent>
-          <BloodCardFloat>
             <InterestCard>
               <span>
                 {loan.mir}% MIR* ({APR.toFixed(2)}% APR)
               </span>
+              <SideInfo>* MIR : Monthly simple interest rate</SideInfo>
             </InterestCard>
-          </BloodCardFloat>
-          <SideInfo>* MIR : Monthly simple interest rate</SideInfo>
-        </BloodWrapper>
-      </BloodCardMain>
-      <LoanForm>
-        <LoanFormInfo>Loan amount</LoanFormInfo>
-        <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
-          
-        <LoanFormInfo>System fees (1%)</LoanFormInfo>
-        <LoanFormValue>-{systemFees} DAI</LoanFormValue>
+          </SliderWrapper>
+        </LoanBox>
+      </LoanForm>
+      <LoanConfirmation>
+        <LoanResume>
+          <LoanFormInfo>Loan amount</LoanFormInfo>
+          <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
+            
+          <LoanFormInfo>System fees (1%)</LoanFormInfo>
+          <LoanFormValue>-{systemFees} DAI</LoanFormValue>
 
-        <LoanFormInfo>Net loan proceeds</LoanFormInfo>
-        <LoanFormValue big>{netLoan} DAI</LoanFormValue>
+          <LoanFormInfo>Net loan proceeds</LoanFormInfo>
+          <LoanFormValue big>{netLoan} DAI</LoanFormValue>
 
-        <Divider />
-          
-        <LoanFormInfo>Principal</LoanFormInfo>
-        <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
+          <Divider />
+            
+          <LoanFormInfo>Principal</LoanFormInfo>
+          <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
 
-        <LoanFormInfo>Interest</LoanFormInfo>
-        <LoanFormValue>{totalInterest} DAI</LoanFormValue>
+          <LoanFormInfo>Interest</LoanFormInfo>
+          <LoanFormValue>{totalInterest} DAI</LoanFormValue>
 
-        <LoanFormInfo>Total repayment amount</LoanFormInfo>
-        <LoanFormValue big>{repaymentAmount} DAI</LoanFormValue>
-
+          <LoanFormInfo>Total repayment amount</LoanFormInfo>
+          <LoanFormValue big>{repaymentAmount} DAI</LoanFormValue>
+        </LoanResume>
         <ConfirmButton
           onClick={onSave}
           disabled={
@@ -295,8 +284,8 @@ const CreateLoan = () => {
         >
           Confirm
         </ConfirmButton>
-      </LoanForm>
-    </BloodWrapper>
+      </LoanConfirmation>
+    </LoanContainer>
   );
 };
 
