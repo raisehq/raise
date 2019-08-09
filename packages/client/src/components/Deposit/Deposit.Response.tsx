@@ -104,7 +104,7 @@ const getViewResponse = (
             </BlockAmount>
             <Divider />
             <CardCenteredText>
-              <HowToGetHeroToken target="_blank" href="https://www.raise.it">
+              <HowToGetHeroToken target="_blank" href="https://www.raise.it/help">
                 How to get Hero Tokens
               </HowToGetHeroToken>
             </CardCenteredText>
