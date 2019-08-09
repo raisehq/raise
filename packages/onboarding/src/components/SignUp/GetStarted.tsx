@@ -10,7 +10,8 @@ import {
   OnboardDisclaimer,
   OnboardLogo,
   OnboardCheckbox,
-  OnboardMailingList
+  OnboardMailingList,
+  OnboardingCell
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
@@ -24,8 +25,8 @@ const GetStarted = () => {
   >(AppContext);
 
   useEffect(() => {
-    onSetCredentials('mailingChecked', false)
-  }, [])
+    onSetCredentials('mailingChecked', false);
+  }, []);
 
   const [error, setError] = useState<any>({
     validation: false,
@@ -59,8 +60,8 @@ const GetStarted = () => {
 
   const onAcceptMailingList = () => {
     const mailingChecked = !credentials.mailingChecked;
-    onSetCredentials('mailingChecked', mailingChecked)
-  }
+    onSetCredentials('mailingChecked', mailingChecked);
+  };
 
   const onKeyPress = event => {
     if (
@@ -110,27 +111,31 @@ const GetStarted = () => {
         Next
       </OnboardButton>
       <OnboardDisclaimer>
-        <OnboardCheckbox onChange={onAcceptTerms} />
-        By signing up, I agree to Raise
-        <a
-          className="disclaimerBTN"
-          href={`${theme.resources}/terms/terms.pdf`}
-          target="_blank"
-        >
-          Terms of Service
-        </a>
-        and
-        <a
-          className="disclaimerBTN"
-          href={`${theme.resources}/terms/terms.pdf`}
-          target="_blank"
-        >
-          Privacy Policy
-        </a>
+        <OnboardingCell>
+          <OnboardCheckbox onChange={onAcceptTerms} />
+        </OnboardingCell>
+        <OnboardingCell>
+          By signing up, I agree to Raise
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/terms/terms.pdf`}
+            target="_blank"
+          >
+            Terms of Service
+          </a>
+          and
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/terms/terms.pdf`}
+            target="_blank"
+          >
+            Privacy Policy
+          </a>
+        </OnboardingCell>
       </OnboardDisclaimer>
       <OnboardMailingList>
-        <OnboardCheckbox onChange={onAcceptMailingList} />
-        I agree to receive Raise latest updates
+        <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive
+        Raise latest updates
       </OnboardMailingList>
       <CallToSignIn>
         Do you have an account already?

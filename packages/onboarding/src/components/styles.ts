@@ -73,7 +73,7 @@ export const OnboardCheckbox: any = styled(Checkbox)`
   &&& {
     position: relative;
     margin-right: 4px;
-    top: 4px;
+    top: 3px;
   }
 `;
 
@@ -211,10 +211,13 @@ export const CallToSignIn = styled.div`
   }
 `;
 
+export const OnboardingCell: any = styled.div``;
+
 export const OnboardDisclaimer = styled.div`
   margin-top: 60px;
   padding-bottom: 20px;
   line-height: 20px;
+  display: flex;
 
   .disclaimerBTN {
     border: none;
