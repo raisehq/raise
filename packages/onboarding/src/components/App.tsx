@@ -21,6 +21,7 @@ import { validateToken } from '../services';
 import { to, getHost } from '../utils';
 import useCookie from '../hooks/useCookie';
 import * as services from '../services';
+import useGoogleTagManager from '../hooks/useGoogleTagManager';
 
 const { useState, useEffect, createContext } = React;
 
@@ -132,6 +133,16 @@ const App = ({
   };
 
   const onLogin = async () => {
+    useGoogleTagManager(
+      credentials.email,
+      'www.raise.it',
+      'CTA',
+      '/join',
+      'LoginPage',
+      'dataLayer',
+      'Login Attempt'
+    );
+
     const request = await services.signIn({
       email: credentials.email,
       password: credentials.password
@@ -158,6 +169,16 @@ const App = ({
         });
 
         setuserCookie(user);
+
+        useGoogleTagManager(
+          id,
+          'www.raise.it',
+          'Function success',
+          '/join',
+          'LoginPage',
+          'dataLayer',
+          'Login Success'
+        );
 
         window.location.href = getHost('APP');
       }
