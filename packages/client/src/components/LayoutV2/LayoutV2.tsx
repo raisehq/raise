@@ -22,6 +22,7 @@ interface IDefaultProps {
 
 const LayoutV2: React.SFC<IDefaultProps> = props => {
   const { component: Component, ...rest } = props;
+  const logoPath = process.env.REACT_APP_HOST_IMAGES+"/images/logo.svg";
   const {
     store: {
       auth: {
@@ -43,7 +44,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
               <Grid>
                 {logged && (
                   <HeaderRow>
-                    <Image src="https://s3-eu-west-1.amazonaws.com/static.herodev.es/images/logo.svg" />
+                    <Image src={logoPath} />
                     <Logout basic floated="right">
                       Logout
                     </Logout>
