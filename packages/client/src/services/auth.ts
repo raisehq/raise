@@ -186,7 +186,7 @@ export const refreshToken = async () => {
 };
 
 export const verifyAuth = async () => {
-  if ( LocalData.getObj('auth') === null ) {
+  if (LocalData.getObj('auth') === null) {
     throw new Error('Not logged in');
   }
   const config: any = {

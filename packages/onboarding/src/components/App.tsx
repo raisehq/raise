@@ -1,5 +1,4 @@
-import * as React from 'react';
-import isUUID from 'validator/lib/isUUID';
+import React from 'react';
 import daggy from 'daggy';
 import GetStarted from './SignUp/GetStarted';
 import Register from './SignUp/Register';
@@ -20,13 +19,13 @@ import { defaultContext } from './defaults';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import { validateToken } from '../services';
 import { to, getHost } from '../utils';
-import LocalData from './localData';
+import useCookie from '../hooks/useCookie';
 import * as services from '../services';
+import useGoogleTagManager from '../hooks/useGoogleTagManager';
 
 const { useState, useEffect, createContext } = React;
 
 export const AppContext = createContext<IContext>(defaultContext);
-
 
 const Step = daggy.taggedSum('UI', {
   Start: [],
@@ -42,19 +41,31 @@ const Step = daggy.taggedSum('UI', {
   ResetError: [],
   ResetPasswordInput: [{}]
 });
-
 interface IProps {
   history: any;
   open: boolean;
+  blur: boolean;
+  mountNode?: any;
+  onClose?: () => null;
+  closeButton?: boolean;
 }
 
-const App = ({ history, open }: IProps) => {
+const App = ({
+  history,
+  open,
+  mountNode,
+  blur,
+  onClose,
+  closeButton
+}: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(
     defaultContext.credentials
   );
   const [referralCode, setRefCode] = useState<string>('');
+  const [user, setuserCookie] = useCookie('user', {});
+  const [auth, setAuthCookie] = useCookie('auth', {});
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
@@ -65,11 +76,9 @@ const App = ({ history, open }: IProps) => {
 
       setStep(Step.Verifying);
 
-      const verifying = await to(
-        validateToken({
-          token
-        })
-      );
+      const verifying = await validateToken({
+        token
+      });
 
       verifying.fold(
         () => setStep(Step.VerifiedError(token)),
@@ -83,19 +92,22 @@ const App = ({ history, open }: IProps) => {
 
       setStep(Step.ResetPasswordInput(token));
     }
-  }, [history]);
+    if (pathname.includes('login')) {
+      setStep(Step.SignIn);
+    }
+  }, [history.location.pathname]);
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
 
   const onSetCredentials = (input, value) =>
-    setCredentials({ ...credentials, [input]: value });
+    setCredentials(creds => ({ ...creds, [input]: value }));
 
   const onSendCredentials = async () => {
     const signup = await services.signUp({
       ...credentials,
-      ...(!!referralCode ? { referrer_code: referralCode } : {})
+      ...(!!referralCode ? { referrer_code: referralCode } : {}),
+      accounttype_id: 1
     });
-
     signup.fold(
       () => console.log('something went wrong'),
       () => setStep(Step.Confirm)
@@ -121,6 +133,17 @@ const App = ({ history, open }: IProps) => {
   };
 
   const onLogin = async () => {
+    useGoogleTagManager(
+      credentials.email,
+      'www.raise.it',
+      'Login',
+      '/join',
+      'LoginPage',
+      'dataLayer',
+      'Click',
+      'Login Attempt'
+    );
+
     const request = await services.signIn({
       email: credentials.email,
       password: credentials.password
@@ -139,14 +162,29 @@ const App = ({ history, open }: IProps) => {
           }
         } = response;
 
-        LocalData.setObj('auth', {
-          id,
-          status,
-          token: JwtToken,
-          type: accounttype_id
-        });
+        setAuthCookie(
+          {
+            id,
+            status,
+            token: JwtToken,
+            type: accounttype_id
+          },
+          { domain: process.env.REACT_APP_COOKIE_DOMAIN }
+        );
 
-        LocalData.setObj('user', user);
+        setuserCookie(user, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
+
+        useGoogleTagManager(
+          id,
+          'www.raise.it',
+          'Login',
+          '/join',
+          'LoginPage',
+          'dataLayer',
+          'Submit',
+          'Login Success'
+        );
+
         window.location.href = getHost('APP');
       }
     );
@@ -156,10 +194,15 @@ const App = ({ history, open }: IProps) => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
 
-    if (!!refCode && isUUID(refCode, 4)) {
+    if (!!refCode) {
       setRefCode(refCode);
     }
   }, []);
+
+  const onOnClose = () => {
+    setStep(Step.Start);
+    onClose();
+  };
 
   const getStep = () =>
     step.cata({
@@ -235,11 +278,17 @@ const App = ({ history, open }: IProps) => {
         onRecover,
         onLogin,
         credentials,
+        setLoginError,
         referralCode,
-        error: loginError
+        onClose: onOnClose,
+        blur,
+        error: loginError,
+        mountNode,
+        closeButton,
+        open
       }}
     >
-      {open && getStep()}
+      {getStep()}
     </AppContext.Provider>
   );
 };

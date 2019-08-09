@@ -2,7 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="https://int.herodev.es/static/favicons/favicon.ico" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' +
+          i +
+          dl +
+          '&gtm_auth=%REACT_APP_GTM_AUTH%&gtm_preview=%REACT_APP_GTM_ENV%&gtm_cookies_win=x';
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', '%REACT_APP_GTM_ID%');
+    </script>
+    <!-- End Google Tag Manager -->
+    <link
+      rel="shortcut icon"
+      href="%REACT_APP_HOST_IMAGES%/favicons/favicon.ico"
+    />
     <link
       href="https://fonts.googleapis.com/css?family=Lato&display=swap"
       rel="stylesheet"
@@ -26,22 +47,25 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Raise - Invest, Grow and Do Good!" />
-    <meta property="og:description" content="Join Raise today and get the chance to earn 100 tokens for free" />
-    <meta property="og:url" content="https://int.herodev.es/join" />
-    <meta property="og:site_name" content="HeroToken" />
-    <meta property="og:image" content="http://www.herotoken.io/img/raf.png" />
-    <meta property="og:image:secure_url" content="https://www.herotoken.io/img/raf.png" />
-    <meta property="og:image:type" content="image/png" /> 
-    <meta name="twitter:image:src" content="https://www.herotoken.io/img/raf.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@HeroTokenIO" />
-    <meta name="twitter:creator" content="@PawnHeroPH" />
-    <meta name="twitter:title" content="Raise - Invest, Grow and Do Good!" />
-    <meta name="twitter:description" content="Join Raise today and get the chance to earn 100 tokens for free" />
-    
+    <meta
+      property="og:description"
+      content="Join Raise today and get the chance to earn 100 tokens for free"
+    />
+    <meta property="og:url" content="%REACT_APP_HOST_URL%/join" />
+    <meta property="og:site_name" content="Raise" />
     <title>Raise - Invest, Grow and Do Good!</title>
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=%REACT_APP_GTM_ID%&gtm_auth=%REACT_APP_GTM_AUTH%&gtm_preview=%REACT_APP_GTM_ENV%&gtm_cookies_win=x"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

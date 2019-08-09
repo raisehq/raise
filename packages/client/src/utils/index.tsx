@@ -9,12 +9,24 @@ const HOSTS: any = {
   THEGRAPH: process.env.REACT_APP_HOST_THEGRAPH
 };
 
+const THEGRAPH_IDS: any = {
+  KOVAN: process.env.REACT_APP_THEGRAPH_ID_KOVAN,
+  MAINNET: process.env.REACT_APP_THEGRAPH_ID_MAIN,
+  GOERLI: process.env.REACT_APP_THEGRAPH_ID_GOERLI,
+};
+
+export function getGraphEndpoint(network: string) {
+  return `${HOSTS.THEGRAPH}${THEGRAPH_IDS[network.toUpperCase()]}`;
+}
+
 export function getHost(name: string) {
   if (process.env.REACT_APP_MOCK_API === 'true') {
     return 'http://localhost:3000';
   }
   return HOSTS[name];
 }
+export const getImages = name =>
+  `${process.env.REACT_APP_HOST_IMAGES}/images/${name}`;
 
 export function getMimeType(base64: string) {
   const mime = base64.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
@@ -56,7 +68,7 @@ export const to = (promise: any) => {
     });
 };
 
-export const checkAuth = () => LocalData.getObj('auth') !== null
+export const checkAuth = () => LocalData.getObj('auth') !== null;
 
 export const getWeb3 = () => {
   if (!!window['web3Instance'] && !!window['web3Instance'].currentProvider) {

@@ -1,38 +1,69 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Responsive } from 'semantic-ui-react';
 import {
   TopReferal,
+  MidReferral,
   BottomReferal,
   SegmentRight,
-  SegmentLeft,
+  // SegmentLeft,
   ColumnRight,
   ColumnLeft,
+  // ContainerGrid
 } from './Referral.styles';
 import Invite from '../Invite/index';
 import Resume from './Referral.Resume';
 import InviteBottom from '../InviteBottom/index';
 const Referal = () => {
-  
   return (
-    <Grid.Row>
-      <ColumnLeft width={12}>
+    <div>
+      <Responsive as={Grid} minWidth={1024}>
         <Grid.Row>
-          <SegmentLeft>
-            <TopReferal>
-              <Invite />
-            </TopReferal>
-            <BottomReferal>
-              <InviteBottom />
-            </BottomReferal>
-          </SegmentLeft>
+          <ColumnLeft width={12}>
+            <Grid>
+              <TopReferal>
+                <Grid.Column>
+                  <Invite />
+                </Grid.Column>
+              </TopReferal>
+              <BottomReferal>
+                <Grid.Column>
+                  <InviteBottom />
+                </Grid.Column>
+              </BottomReferal>
+            </Grid>
+          </ColumnLeft>
+          <ColumnRight width={4}>
+            <SegmentRight>
+              <Resume />
+            </SegmentRight>
+          </ColumnRight>
         </Grid.Row>
-      </ColumnLeft>
-      <ColumnRight width={4}>
-        <SegmentRight>
-          <Resume />
-        </SegmentRight>
-      </ColumnRight>
-    </Grid.Row>
+      </Responsive>
+
+      <Responsive as={Grid} maxWidth={1023}>
+        <Grid.Row>
+            <ColumnLeft>
+              <Grid>
+                <TopReferal>
+                  <Grid.Column>
+                    <Invite />
+                  </Grid.Column>
+                </TopReferal>
+                <MidReferral>
+                  <Grid.Column>
+                    <Resume />
+                  </Grid.Column>
+                </MidReferral>
+                <BottomReferal>
+                  <Grid.Column>
+                    <InviteBottom />
+                  </Grid.Column>
+                </BottomReferal>
+              </Grid>
+            </ColumnLeft>
+          </Grid.Row>  
+      </Responsive>
+  </div>
   );
 };
 

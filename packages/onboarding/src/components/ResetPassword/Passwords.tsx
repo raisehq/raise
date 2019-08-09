@@ -2,7 +2,13 @@ import React, { Fragment, useContext, useState } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
-import { OnboardHeader, OnboardInput, OnboardButton, CallToSignIn } from '../styles';
+import {
+  OnboardHeader,
+  OnboardInput,
+  OnboardButton,
+  CallToSignIn,
+  OnboardLogo
+} from '../styles';
 import validations from '../validations';
 import { AppContext } from '../App';
 import { Either } from '../../utils';
@@ -73,9 +79,20 @@ const Reset = ({ token }) => {
 
   const onReset = () => onResetPassword(token, password.main);
 
+  const onKeyPress = event => {
+    if (
+      event.key === 'Enter' &&
+      (!errors.retyped.notPassword && !errors.retyped.notEqual && !errors.main)
+    ) {
+      onReset();
+    }
+  };
+
   return (
     <Fragment>
-      <OnboardHeader>Recover your password</OnboardHeader>
+      <OnboardHeader>
+        Recover your password <OnboardLogo />
+      </OnboardHeader>
       <OnboardInput>
         <Input
           data-testid="loginPassword"
@@ -83,8 +100,13 @@ const Reset = ({ token }) => {
           type="password"
           onChange={onSetPassword}
           error={errors.main}
+          onKeyPress={onKeyPress}
         />
-        {errors.main && <div className="errorText">Password at least must have 8 characters 1 capital letter.</div>}
+        {errors.main && (
+          <div className="errorText">
+            Password at least must have 8 characters 1 capital letter.
+          </div>
+        )}
         <Icon size="big" name="key" />
       </OnboardInput>
       <OnboardInput>
@@ -94,11 +116,16 @@ const Reset = ({ token }) => {
           type="password"
           onChange={onSetRetypedPassword}
           error={errors.retyped.notPassword || errors.retyped.notEqual}
+          onKeyPress={onKeyPress}
         />
         {errors.retyped.notPassword && (
-          <div className="errorText">Password at least must have 8 characters 1 capital letter.</div>
+          <div className="errorText">
+            Password at least must have 8 characters 1 capital letter.
+          </div>
         )}
-        {errors.retyped.notEqual && <div className="errorText">Passwords do not match</div>}
+        {errors.retyped.notEqual && (
+          <div className="errorText">Passwords do not match</div>
+        )}
         <Icon size="big" name="key" />
       </OnboardInput>
       <OnboardButton onClick={onReset}>Reset password</OnboardButton>

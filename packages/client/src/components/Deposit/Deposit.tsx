@@ -1,17 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { getReferralAddress } from '../../services/user';
-import {
-  CardSized,
-  CardContent,
-  StyledAddress as Web3Address
-} from './Deposit.styles';
-
-import { UI, getViewResponse } from './Deposit.Response';
+import { StyledAddress as Web3Address } from './Deposit.styles';
+import { CardSized } from '../LayoutV2/Layout.styles';
+import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
 import { AppContext } from '../App';
+import useImages from '../../hooks/useImages';
 import { toWei } from 'web3-utils';
+import { CardContent } from '../LayoutV2/Layout.styles';
+import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const switchDepositMethod = async (depositContract, account, referrer_code) => {
   const defaultMethod = {
@@ -21,18 +20,28 @@ const switchDepositMethod = async (depositContract, account, referrer_code) => {
   if (!referrer_code) {
     return defaultMethod;
   }
-  const [{address: referrerAddress}] = await getReferralAddress(referrer_code);
+  const [{ address: referrerAddress }] = await getReferralAddress(
+    referrer_code
+  );
   if (referrerAddress && referrerAddress) {
-    return ({
+    return {
       depositMethod: depositContract.depositWithReferral,
       params: [account, referrerAddress]
-    });
+    };
   }
   return defaultMethod;
-}
+};
 
 const Deposit = (props: any) => {
-  const { history, store: { user: {details: { referrer_code }}}, web3Status: { account, hasDeposited } }: any = useContext(AppContext);
+  const {
+    history,
+    store: {
+      user: {
+        details: { id, referrer_code }
+      }
+    },
+    web3Status: { account, hasDeposited }
+  }: any = useContext(AppContext);
   const [status, setStatus] = useState(UI.Deposit);
   const heroTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
@@ -41,17 +50,39 @@ const Deposit = (props: any) => {
     if (status !== UI.Success && hasDeposited) {
       setStatus(UI.Success);
     }
-  }, [status, hasDeposited])
+  }, [status, hasDeposited]);
+
+  const TagManager = () => {
+    return useGoogleTagManager(
+      id,
+      'www.raise.it',
+      'Deposit',
+      '/deposit',
+      'DepositPage',
+      'dataLayer',
+      'Submit',
+      'Deposit Success'
+    );
+  };
 
   const handleDeposit = async () => {
     try {
-      setStatus(UI.Waiting);
-      const { depositMethod, params }: any = await switchDepositMethod(depositContract, account, referrer_code)
-      const allowance = await heroTokenContract.allowance(account, depositContract.address);
+      setStatus(UI.Waiting(UISteps.Approve));
+      const { depositMethod, params }: any = await switchDepositMethod(
+        depositContract,
+        account,
+        referrer_code
+      );
+      const allowance = await heroTokenContract.allowance(
+        account,
+        depositContract.address
+      );
       if (allowance.lt(toWei('200'))) {
         await heroTokenContract.approveDeposit(account, 200);
       }
+      setStatus(UI.Waiting(UISteps.Transaction));
       await depositMethod(...params);
+      TagManager();
       setStatus(UI.Success);
     } catch (error) {
       console.error(error);
@@ -63,7 +94,7 @@ const Deposit = (props: any) => {
     const refMode = Boolean(process.env.REACT_APP_REFERAL);
     if (history && refMode) {
       history.push('/referral');
-    } else if ( history && !refMode) {
+    } else if (history && !refMode) {
       history.push('/');
     }
   };
@@ -71,6 +102,8 @@ const Deposit = (props: any) => {
   const handleRetry = async () => {
     setStatus(UI.Deposit);
   };
+
+  const getImagesUrl = useImages();
 
   return (
     <Grid.Row>
@@ -82,7 +115,8 @@ const Deposit = (props: any) => {
           status,
           handleDeposit,
           handleContinue,
-          handleRetry
+          handleRetry,
+          getImagesUrl
         )}
       </CardSized>
     </Grid.Row>

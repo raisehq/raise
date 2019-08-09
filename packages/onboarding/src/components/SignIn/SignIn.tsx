@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useCallback } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import * as _ from 'lodash';
 import {
@@ -6,15 +6,21 @@ import {
   OnboardInput,
   OnboardButton,
   CallToSignIn,
-  Separator
+  Separator,
+  OnboardLogo
 } from '../styles';
 import validations from '../validations';
 import { AppContext } from '../App';
 
 const Signin = () => {
-  const { onSetStep, onSetCredentials, onLogin, error }: any = useContext(
-    AppContext
-  );
+  const {
+    onSetStep,
+    onSetCredentials,
+    onLogin,
+    error,
+    setLoginError,
+    credentials
+  }: any = useContext(AppContext);
 
   const [errors, setErrors] = useState<{
     login: boolean;
@@ -24,37 +30,55 @@ const Signin = () => {
     email: false
   });
 
-  const onSetEmail = _.debounce((e, data) => {
-    const { value } = data;
-    const validateEmail = validations.isEmail(value);
+  const onSetEmail = useCallback(
+    _.debounce((e, data) => {
+      setLoginError(false);
+      const { value } = data;
+      const validateEmail = validations.isEmail(value);
+      validateEmail.fold(
+        () => setErrors({ ...errors, email: true }),
+        () => {
+          setErrors({ ...errors, email: false });
+          onSetCredentials('email', value);
+        }
+      );
+    }, 800),
+    []
+  );
 
-    validateEmail.fold(
-      () => setErrors({ ...errors, email: true }),
-      () => {
-        setErrors({ ...errors, email: false });
-        onSetCredentials('email', value);
-      }
-    );
-  }, 800);
+  const onSetPassword = e => {
+    setLoginError(false);
+    onSetCredentials('password', e.target.value);
+  };
 
-  const onSetPassword = e => onSetCredentials('password', e.target.value);
+  const onKeyPress = event => {
+    if (
+      event.key === 'Enter' &&
+      (!error && !errors.email && credentials.email && credentials.password)
+    ) {
+      onLogin();
+    }
+  };
 
   return (
     <Fragment>
-      <OnboardHeader>Welcome to Hero</OnboardHeader>
+      <OnboardHeader>
+        Welcome to Raise <OnboardLogo />
+      </OnboardHeader>
       <OnboardInput>
         <Input
           data-testid="loginEmail"
           placeholder="Please enter you email address"
           onChange={onSetEmail}
           error={errors.email || error}
+          onKeyPress={onKeyPress}
         />
         {errors.email && (
           <div className="errorText">
-            That format doesn't look right. Make sure there aren't any typos.
+            This format doesn't look right. Make sure there aren't any typos.
           </div>
         )}
-        <Icon size="big" name="globe" />
+        <Icon size="big" name="mail" />
       </OnboardInput>
       <OnboardInput>
         <Input
@@ -63,13 +87,23 @@ const Signin = () => {
           type="password"
           onChange={onSetPassword}
           error={error}
+          onKeyPress={onKeyPress}
         />
         {error && (
-          <div className="errorText">The email or password is incorrect</div>
+          <div className="errorText">
+            Sorry, I can't find anyone with these details.
+          </div>
         )}
-        <Icon size="big" name="user" />
+        <Icon size="big" name="lock" />
       </OnboardInput>
-      <OnboardButton onClick={onLogin}>Log In</OnboardButton>
+      <OnboardButton
+        disabled={
+          error || errors.email || !credentials.email || !credentials.password
+        }
+        onClick={onLogin}
+      >
+        Log In
+      </OnboardButton>
       <CallToSignIn>
         <button className="callToSignIn" onClick={onSetStep('Reset')}>
           Forgot password?

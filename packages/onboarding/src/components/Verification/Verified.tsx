@@ -3,19 +3,22 @@ import {
   ConfirmWrapper,
   ConfirmHeader,
   OnboardButton,
-  MainImage
+  MainImage,
+  ConfirmText
 } from '../styles';
 import { AppContext } from '../App';
+import useImages from '../../hooks/useImages';
 
 const Verified = (props: any) => {
   const { onSetStep }: any = useContext(AppContext);
+  const getImagesUrl = useImages();
 
   return (
     <ConfirmWrapper>
-      <MainImage src="https://static.herodev.es/images/img_mailverify.png" />
-      <ConfirmHeader>Account verified! </ConfirmHeader>
-      <p>Login to Raise with your details to complete the sign up</p>
-      <OnboardButton onClick={onSetStep('SignIn')}>Continue</OnboardButton>
+      <MainImage src={`${getImagesUrl}img_mailverify.png`} />
+      <ConfirmHeader>Email verified! </ConfirmHeader>
+      <ConfirmText>Login to complete your sign up</ConfirmText>
+      <OnboardButton onClick={onSetStep('SignIn')}>Log in</OnboardButton>
     </ConfirmWrapper>
   );
 };

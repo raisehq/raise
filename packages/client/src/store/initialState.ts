@@ -1,4 +1,16 @@
 import LocalData from '../helpers/localData';
+import * as Cookies from 'js-cookie';
+
+const authCookie = Cookies.get('auth');
+const userCookie = Cookies.get('user');
+
+if (authCookie || userCookie) {
+  LocalData.setObj('auth', JSON.parse(authCookie));
+  LocalData.setObj('user', JSON.parse(userCookie));
+
+  Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
+  Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
+}
 
 const { id, status, accounttype_id } = LocalData.getObj('auth') || {
   id: '',

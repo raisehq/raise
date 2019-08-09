@@ -1,21 +1,69 @@
 import styled from 'styled-components';
-import { Card, Grid, Button, Image } from 'semantic-ui-react';
+import {
+  Grid,
+  Button,
+  Image,
+  Loader,
+  Segment,
+  Label,
+  List,
+  Icon
+} from 'semantic-ui-react';
 import Web3Address from '../Web3Address';
+import { device } from '../LayoutV2/breakpoints';
 
 export const StyledAddress = styled(Web3Address)`
   float: right;
 `;
 
-const backgroundImage =
-  'https://static.herodev.es/images/pattern-fdesk-dark.svg';
-
-export const ContainerStyled = styled.div`
-  height: 100%;
-  width: 100%;
-  padding: 1em;
-  background: #d4e5e8 url(${backgroundImage}) no-repeat fixed bottom/100%;
+export const ListItemPadding = styled(List.Item)`
+  &&& {
+    font-size: 18px;
+  }
+  &&&:first-child {
+    margin-bottom: 25px;
+  }
 `;
 
+export const LabelPadding = styled(Label)`
+  &&& {
+    font-size: 14px !important;
+    margin-right: 8px !important;
+  }
+`;
+export const IconSuccess = styled(Icon)`
+  &&& {
+    margin: 0 !important;
+  }
+`;
+export const LabelPaddingLoader = styled(LabelPadding)`
+  &&& {
+    position: relative;
+    margin-bottom: -7px;
+  }
+`;
+export const MicroLoader = styled(Loader)`
+  &&& {
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.78571429em;
+  }
+  &&&:before,
+  &&&:after {
+    width: 10px;
+    height: 10px;
+    margin: 2px 0 0 -0.35rem;
+  }
+`;
+export const SegmentPadded = styled(Segment)`
+  &&& {
+    padding: 2em !important;
+    margin-top: 15% !important;
+    @media ${device.mobileS} {
+      padding: 3em !important;
+    }
+  }
+`;
 export const Message = styled.p`
   font-size: 20px;
   color: #767676;
@@ -30,17 +78,6 @@ export const AutoConfirmStyled = styled.div`
   }
 `;
 
-export const CardSized = styled(Card)`
-  &&& {
-    height: 570px;
-    width: 512px;
-  }
-`;
-export const GridSized = styled(Grid)`
-  &&& {
-    height: 100vh;
-  }
-`;
 export const CenteredContainerStyled = styled.div`
   margin-left: auto;
   margin-right: auto;
@@ -70,7 +107,7 @@ export const CardCenteredText = styled.div`
   }
 `;
 export const CardTitle = styled.div`
-  color: #188e9b;
+  color: #3c4251;
   font: 26px bold;
   line-height: 36px;
   text-align: center;
@@ -85,20 +122,14 @@ export const CardSubtitle = styled.div`
     margin: 19px;
   }
 `;
-export const CardContent = styled(Card.Content)`
-  &&& {
-    border-top: none !important;
-    margin: ${({ bottom_spacing }) =>
-      bottom_spacing
-        ? '0 2.5em 2.5em 2.5em !important;'
-        : '0 2.5em 0em 2.5em !important;'};
-  }
-`;
+
 export const Amount = styled.p`
   &&& {
     color: #5c5d5d;
-    font: 60px bold;
-    line-height: 32px;
+    font-size: 50px;
+    font-weight: 300;
+    line-height: 16px;
+    padding-top: 45px;
     text-align: center;
     margin: 0px 105px;
   }
@@ -107,32 +138,28 @@ export const Amount = styled.p`
     color: #7f8fa4;
     font-size: 12px;
     float: left;
-    margin-top: 19px;
+    margin-top: 9px;
+    line-height: 21px;
     content: 'Amount';
   }
   &&&::after {
     color: #7f8fa4;
     font-size: 12px;
     float: right;
-    margin-top: 19px;
-    content: 'HeroToken';
+    margin-top: 9px;
+    line-height: 21px;
+    content: 'Tokens';
   }
 `;
 
-export const EquivalencyTitle = styled.p`
-  color: #7f8fa4;
-  font-size: 12px;
-  line-height: 21px;
-`;
-export const EquivalencyAmount = styled.p`
-  color: #5c5d5d;
-  font-size: 26px;
-  line-height: 36px;
-`;
-export const EquivalencyExtra = styled.p`
-  color: #5c5d5d;
-  font-size: 10px;
-  line-height: 14px;
+export const HowToGetHeroToken = styled.a`
+  height: 21px;
+  width: 147px;
+  color: #00a76f;
+  font-size: 14px;
+  line-height: 45px;
+  text-align: center;
+  text-decoration: underline;
 `;
 
 export const BlockAmount = styled.div`

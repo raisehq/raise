@@ -1,95 +1,44 @@
 import styled from 'styled-components';
+import { device } from '../LayoutV2/breakpoints';
+import { Grid } from 'semantic-ui-react';
 
-export const Footer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  background-color: #FFFFFF;
+export const Footer = styled(Grid)`
+  margin: 0px 0px 30px 0px !important;
+  padding: 0 !important;
+  background-color: #ffffff;
 
-  .content {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .visuals {
-    flex: 0 1 500px;
-
-    span {
-      height: 37px;
-      width: 120px;
-      color: #ffffff;
-      font-family: Lato;
-      font-size: 40px;
-      font-weight: bold;
-      letter-spacing: 3px;
-      line-height: 70px;
-      text-align: center;
-      margin: 17px 17px 0px 35px;
-    }
-  }
-
-  .footer {
-    height: 191px;
-    width: 430px;
-    padding: 50px;
-    flex: 0 1 450px;
-    box-sizing: border-box;
-    margin: 40px 40px 90px 50px;
-  }
+    box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
 `;
 
 export const GettingReady = styled.div`
-  height: 21px;
-  width: 191px;
+  margin: 25px 0px 0px 15px;
   color: #002947;
-  font-family: Lato;
   font-size: 20px;
   font-weight: bold;
   line-height: 21px;
+  @media ${device.mobileL} {
+    margin: 25px 0px 0px 50px;
+  }
 `;
 
 export const Soon = styled.div`
-  height: 147px;
-  width: 430px;
+  margin: 15px 0px 10px 15px;
   color: #5c5d5d;
-  font-family: Lato;
   font-size: 14px;
   font-weight: bold;
   line-height: 21px;
-`;
-
-export const Down = styled.div`
-  height: 165px;
-  width: 200px;
-  margin: 84px 40px 72px 52px;
-`;
-
-export const Rectangle = styled.div`
-	height: 165px;
-	width: 200px;
-	border: 1px solid #002848;
-	border-radius: 8px;
-  background-color: #FFFFFF;
-  margin-bottom: 22px;
-`;
-
-export const RectangleDown = styled.div`
-	height: 70px;
-	width: 120px;
-	border-radius: 5px;
-  background-color: #002947;
-  margin: 22px 40px 30px 40px;
+  @media ${device.mobileL} {
+    margin: 10px 0px 10px 50px;
+  }
 `;
 
 export const DaysToGoLive = styled.div`
-	height: 21px;
-	width: 141px;
-	color: #002947;
-	font-family: Lato;
-	font-size: 17px;
-	font-weight: bold;
-	line-height: 45px;
-  text-align: center;
-  text-transform: uppercase;
-  margin: 22px 31px 29px 31px;
+  margin: 10px 0px 25px 15px;
+  color: #3C4251;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 36px
+  @media ${device.mobileL} {
+    margin: 10px 0px 0px 50px;
+  }
 `;

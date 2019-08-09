@@ -12,6 +12,7 @@ import LocalData from '../../helpers/localData';
 import * as Type from '../store.types';
 import { Either, to, getHost } from '../../utils/index';
 import { Status } from '../../commons/userStatus';
+import * as Cookies from 'js-cookie';
 
 export default (dispatch: any, state: any) => {
   const onSignin = async ({ email, password }: Type.onSignin) => {
@@ -79,8 +80,9 @@ export default (dispatch: any, state: any) => {
   const onSignout = () => {
     LocalData.remove('user');
     LocalData.remove('auth');
-    dispatch({ type: 'SIGNOUT_SUCCESS' });
-    window.location.href = `${getHost('APP')}/join`;
+    Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
+    Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
+    window.location.href = `${getHost('APP')}/login`;
   };
 
   const getUserAuth = async () => {
@@ -115,6 +117,8 @@ export default (dispatch: any, state: any) => {
     } catch (error) {
       LocalData.remove('user');
       LocalData.remove('auth');
+      Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
+      Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
     }
   };
 

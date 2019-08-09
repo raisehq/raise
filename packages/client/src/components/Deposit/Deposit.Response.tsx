@@ -1,34 +1,68 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
-import { Loader, Segment, Divider, Image } from 'semantic-ui-react';
+import { Loader, Segment, Divider, Image, List } from 'semantic-ui-react';
 import {
   ButtonGreen,
   ButtonRetry,
-  CardContent,
   CardSubtitle,
   CardTitle,
   CardCenteredText,
   Amount,
+  LabelPadding,
+  LabelPaddingLoader,
+  MicroLoader,
   BlockAmount,
-  EquivalencyTitle,
-  EquivalencyAmount,
-  EquivalencyExtra,
-  ImageSized
+  HowToGetHeroToken,
+  ImageSized,
+  SegmentPadded,
+  ListItemPadding,
+  IconSuccess
 } from './Deposit.styles';
-
-const AlmostImg = 'https://static.herodev.es/images/img_almost.png';
-const ErrorImg = 'https://static.herodev.es/images/img_error.png';
-const SuccessImg = 'https://static.herodev.es/images/img_awesome.png';
+import { CardContent } from '../LayoutV2/Layout.styles';
 
 const UI = daggy.taggedSum('UI', {
   Success: [{}],
   Check: [],
   Deposit: [],
-  Waiting: [],
+  Waiting: ['steps'],
   Error: []
 });
 
-const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
+const UISteps = daggy.taggedSum('UISteps', {
+  Approve: [],
+  Transaction: []
+});
+
+const StepNumber = props => {
+  switch (props.type) {
+    case 'success':
+      return (
+        <LabelPaddingLoader circular color={'green'}>
+          <IconSuccess name="check" />
+        </LabelPaddingLoader>
+      );
+    case 'loading':
+      return (
+        <LabelPaddingLoader circular color="grey" key="black-01">
+          <MicroLoader active inverted />
+        </LabelPaddingLoader>
+      );
+    default:
+      return (
+        <LabelPadding circular color="black" key="black-02">
+          {props.number}
+        </LabelPadding>
+      );
+  }
+};
+
+const getViewResponse = (
+  ui: any,
+  onDeposit,
+  onContinue,
+  onRetry,
+  getImagesUrl
+) =>
   ui.cata({
     Success: () => (
       <Fragment>
@@ -37,7 +71,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             <CardTitle>Awesome!</CardTitle>
           </CardCenteredText>
 
-          <Image src={SuccessImg} fluid />
+          <Image src={`${getImagesUrl}img_awesome.png`} fluid />
         </CardContent>
         <CardContent bottom_spacing={'true'}>
           <ButtonGreen onClick={onContinue}>Take me home</ButtonGreen>
@@ -58,10 +92,10 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             <CardTitle>Lender Subscription</CardTitle>
             <CardSubtitle>
               <p>
-                To complete your registration and start lending, you will need
-                to complete the deposit.
+                In order to access Raise, you will need to complete the
+                membership deposit. You will be able to unlock the deposit at
+                anytime.
               </p>
-              You will be able to unblock this deposit from your account profile
             </CardSubtitle>
           </CardCenteredText>
           <Segment>
@@ -70,11 +104,9 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             </BlockAmount>
             <Divider />
             <CardCenteredText>
-              <EquivalencyTitle>ETH Equivalency</EquivalencyTitle>
-              <EquivalencyAmount>5.40 ETH</EquivalencyAmount>
-              <EquivalencyExtra>
-                *Based on current exchange rate
-              </EquivalencyExtra>
+              <HowToGetHeroToken target="_blank" href="https://www.raise.it">
+                How to get Hero Tokens
+              </HowToGetHeroToken>
             </CardCenteredText>
           </Segment>
         </CardContent>
@@ -83,24 +115,45 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
         </CardContent>
       </Fragment>
     ),
-    Waiting: () => (
+    Waiting: steps => (
       <Fragment>
         <CardContent>
           <CardCenteredText>
-            <CardTitle>Almost done</CardTitle>
-            <CardSubtitle>
-              Approve and accept the deposit in your MetaMask wallet
-            </CardSubtitle>
+            <CardTitle>Processing deposit </CardTitle>
+            <CardSubtitle>Check your MetaMask wallet to proceed</CardSubtitle>
           </CardCenteredText>
           <CardCenteredText>
-            <ImageSized src={AlmostImg} />
+            <SegmentPadded textAlign="left">
+              {steps.cata({
+                Approve: () => (
+                  <List>
+                    <ListItemPadding>
+                      <StepNumber type="loading" />
+                      Approve deposit
+                    </ListItemPadding>
+                    <ListItemPadding>
+                      <StepNumber number={2} />
+                      Transaction completed
+                    </ListItemPadding>
+                  </List>
+                ),
+                Transaction: () => (
+                  <List>
+                    <ListItemPadding>
+                      <StepNumber type="success" />
+                      Approve deposit
+                    </ListItemPadding>
+                    <ListItemPadding>
+                      <StepNumber type="loading" />
+                      Transaction completed
+                    </ListItemPadding>
+                  </List>
+                )
+              })}
+            </SegmentPadded>
           </CardCenteredText>
         </CardContent>
-        <CardContent bottom_spacing={'true'}>
-          <ButtonGreen blocked={'true'} loading>
-            Deposit
-          </ButtonGreen>
-        </CardContent>
+        <CardContent bottom_spacing={'true'} />
       </Fragment>
     ),
     Error: () => (
@@ -111,7 +164,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             <p />
           </CardCenteredText>
           <CardCenteredText>
-            <ImageSized src={ErrorImg} />
+            <ImageSized src={`${getImagesUrl}img_error.png`} />
           </CardCenteredText>
         </CardContent>
         <CardContent bottom_spacing={'true'}>
@@ -121,4 +174,4 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
     )
   });
 
-export { getViewResponse, UI };
+export { getViewResponse, UI, UISteps };

@@ -1,5 +1,14 @@
-import React, { useContext, useEffect, createContext, useState } from 'react';
-import { withRouter, Switch, Route } from 'react-router-dom';
+import React, {
+  useContext,
+  useEffect,
+  createContext,
+  useState,
+  useRef
+} from 'react';
+import { withRouter } from 'react-router-dom';
+import { AnimatedSwitch, spring } from 'react-router-transition';
+import { match, _ } from 'pampy';
+import { Dimmer, Loader } from 'semantic-ui-react';
 import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
 import Dashboard from './Dashboard';
@@ -14,13 +23,33 @@ import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
-import { match, _ } from 'pampy';
+import useGoogleTagManager from '../hooks/useGoogleTagManager';
+
+function glide(val) {
+  return spring(val, {
+    stiffness: 174,
+    damping: 24
+  });
+}
+
+const pageTransitions = {
+  atEnter: {
+    offset: 100
+  },
+  atLeave: {
+    offset: glide(-100)
+  },
+  atActive: {
+    offset: glide(0)
+  }
+};
 
 export const AppContext = createContext({
   store: {},
   actions: {},
   history: {},
-  web3Status: {}
+  web3Status: {},
+  modalRefs: {}
 });
 
 const App = ({ children, history }: any) => {
@@ -32,6 +61,7 @@ const App = ({ children, history }: any) => {
         login: { logged }
       },
       user: {
+        details: { id },
         cryptoAddress: { address }
       }
     },
@@ -42,13 +72,28 @@ const App = ({ children, history }: any) => {
       blockchain: { fetchReferrals }
     }
   }: any = useContext(RootContext);
+  const modalRefs = useRef<HTMLDivElement>(null);
   const web3Status = useWeb3Checker();
   const {
     hasDeposit: deposited,
     accountMatches: accMatch,
-    networkMatches: netOk
+    networkMatches: netOk,
+    network
   } = web3Status;
   const web3Pass = netOk && accMatch;
+
+  const TagManager = () => {
+    return useGoogleTagManager(
+      id,
+      'www.raise.it',
+      'Wallet',
+      '/verify-web3',
+      'TrafficLight',
+      'dataLayer',
+      'Submit',
+      'Wallet Connect Success'
+    );
+  };
 
   useAsyncEffect(async () => {
     if (logged) {
@@ -61,12 +106,14 @@ const App = ({ children, history }: any) => {
   }, [logged]);
 
   useAsyncEffect(async () => {
-    logged && address && fetchReferrals();
-  }, [logged, address]);
+    logged && address && network && netOk && fetchReferrals(network);
+  }, [logged, address, network, netOk]);
 
   useEffect(() => {
     const refMode = Boolean(process.env.REACT_APP_REFERAL);
-    const isJoin = history.location.pathname.includes('/join');
+    const isJoin =
+      history.location.pathname.includes('/join') ||
+      history.location.pathname.includes('/login');
     const conditions = {
       logged,
       deposited: !!deposited,
@@ -75,46 +122,58 @@ const App = ({ children, history }: any) => {
       isJoin,
       isLoading
     };
-    match(
-      conditions,
+
+    // prettier-ignore
+    match(conditions,
       { isLoading: true },
-      () => {},
+        () => {},
       { logged: true, web3Pass: false },
-      () => history.push('/verify-web3'),
+        () => history.push('/verify-web3'),
       { logged: true, web3Pass: true, deposited: false },
-      () => setTimeout(() => history.push('/deposit'), 3000),
+        () => setTimeout(() => {
+          TagManager();
+          history.push('/deposit')}, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: true },
-      () => setTimeout(() => history.push('/referral'), 3000),
+        () => setTimeout(() => {
+          TagManager();
+          history.push('/referral')}, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
-      () => {},
+        () => {},
       { logged: false, isJoin: false },
-      () => history.push('/join'),
+        () => history.push('/join'),
       _,
-      () => {}
+        () => {}
     );
   }, [isLoading, logged, web3Pass, deposited]);
 
   return (
-    <AppContext.Provider value={{ store, actions, history, web3Status }}>
-      {!isLoading && (
-        <Switch>
-          <LayoutV2>
-            <Route exact path="/deposit" component={Deposit} />
-            <Route exact path="/verify-web3" component={Web3Check} />
-            <Route exact path="/join" component={Join} />
-            <Route exact path="/referral" component={Referral} />
-            <Route exact path="/join/verify/token/:token" component={Join} />
-          </LayoutV2>
-          <Layout>
-            <Route exact path="/kyc" component={Kyc} />
-            <Route exact path="/kyc/validation" component={KycValidation} />
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/create-loan" component={CreateLoan} />
-            <Route exact path="/marketplace" component={Marketplace} />
-            {children}
-          </Layout>
-        </Switch>
-      )}
+    <AppContext.Provider
+      value={{ store, actions, history, web3Status, modalRefs }}
+    >
+      <Dimmer active={isLoading} inverted>
+        <Loader>Loading app</Loader>
+      </Dimmer>
+      <AnimatedSwitch
+        className="switch-wrapper"
+        {...pageTransitions}
+        mapStyles={styles => ({
+          transform: `translateX(${styles.offset}%)`
+        })}
+      >
+        {web3Pass && <LayoutV2 exact path="/deposit" component={Deposit} />}
+        {web3Pass && <LayoutV2 exact path="/referral" component={Referral} />}
+        <LayoutV2 exact path="/verify-web3" component={Web3Check} />
+        <LayoutV2 exact path="/join" component={Join} />
+        <LayoutV2 exact path="/login" component={Join} />
+        <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
+        <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+        <Layout exact path="/kyc" component={Kyc} />
+        <Layout exact path="/kyc/validation" component={KycValidation} />
+        <Layout exact path="/dashboard" component={Dashboard} />
+        <Layout exact path="/create-loan" component={CreateLoan} />
+        <Layout exact path="/marketplace" component={Marketplace} />
+      </AnimatedSwitch>
+      <div ref={modalRefs} />
     </AppContext.Provider>
   );
 };

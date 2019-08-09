@@ -1,10 +1,11 @@
 {
-  "name": "@raise/onboarding",
-  "version": "1.0.0",
+  "name": "@raisehq/onboarding",
+  "private": false,
+  "version": "1.0.11",
   "description": "> TODO: description",
   "author": "Raul Vallespin <raul@herotoken.io>",
-  "homepage": "",
-  "license": "ISC",
+  "homepage": "http://www.raise.it",
+  "license": "AGPL",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "directories": {
@@ -16,9 +17,14 @@
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "transpile": "tsc --watch"
+    "transpile": "tsc --watch",
+    "dev": "tsc --watch",
+    "dev:int": "yarn run dev",
+    "build": "tsc"
   },
   "dependencies": {
+    "js-cookie": "^2.2.0",
+    "react-gtm-module": "^2.0.7",
     "typescript": "^3.5.3"
   }
 }

@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import Routes from './routes';
+import App from './components/App';
 import { RootContext } from './context';
 import connector from './store/actions';
 import reducers from './store/reducers';
@@ -23,12 +23,13 @@ const Root = () => {
     initialState,
     () => initialState
   );
+
   const actions: any = connector(dispatch, store);
   const values: PropsValueType = { store, actions, isLogged: false };
   return (
     <RootContext.Provider value={values}>
       <BrowserRouter>
-        <Routes />
+        <App />
       </BrowserRouter>
     </RootContext.Provider>
   );
