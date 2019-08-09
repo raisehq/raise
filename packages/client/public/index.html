@@ -15,9 +15,9 @@
           'https://www.googletagmanager.com/gtm.js?id=' +
           i +
           dl +
-          '&gtm_auth=VKZpzRBykMPmfSzCQXs1lw&gtm_preview=env-6&gtm_cookies_win=x';
+          '&gtm_auth=%REACT_APP_GTM_AUTH%&gtm_preview=%REACT_APP_GTM_ENV%&gtm_cookies_win=x';
         f.parentNode.insertBefore(j, f);
-      })(window, document, 'script', 'dataLayer', 'GTM-TSWV62G');
+      })(window, document, 'script', 'dataLayer', '%REACT_APP_GTM_ID%');
     </script>
     <!-- End Google Tag Manager -->
     <link
@@ -53,7 +53,10 @@
     />
     <meta property="og:url" content="%REACT_APP_HOST_URL%/join" />
     <meta property="og:site_name" content="Raise" />
-    <meta property="og:image" content="%REACT_APP_HOST_IMAGES%/images/img_raf.png" />
+    <meta
+      property="og:image"
+      content="%REACT_APP_HOST_IMAGES%/images/img_raf.png"
+    />
     <meta
       property="og:image:secure_url"
       content="%REACT_APP_HOST_IMAGES%/images/img_raf.png"
@@ -78,7 +81,7 @@
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-TSWV62G&gtm_auth=qQmOBe_bJxOKR-ZKDW7QEw&gtm_preview=env-2&gtm_cookies_win=x"
+        src="https://www.googletagmanager.com/ns.html?id=%REACT_APP_GTM_ID%&gtm_auth=%REACT_APP_GTM_AUTH%&gtm_preview=%REACT_APP_GTM_ENV%&gtm_cookies_win=x"
         height="0"
         width="0"
         style="display:none;visibility:hidden"

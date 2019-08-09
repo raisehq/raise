@@ -80,6 +80,16 @@ const App = ({
         token
       });
 
+      /*    useGoogleTagManager(
+      credentials.email,
+      'www.raise.it',
+      'CTA',
+      '/join',
+      'LoginPage',
+      'dataLayer',
+      'Login Attempt'
+    );*/
+
       verifying.fold(
         () => setStep(Step.VerifiedError(token)),
         () => setStep(Step.Verified)
