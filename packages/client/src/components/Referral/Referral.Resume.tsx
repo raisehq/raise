@@ -57,7 +57,7 @@ const Resume = () => {
     actions: {
       blockchain: { fetchReferrals }
     },
-    web3Status: { account }
+    web3Status: { account, network }
   }: any = useContext(AppContext);
 
   const onWithdraw = async () => {
@@ -71,8 +71,8 @@ const Resume = () => {
   };
 
   useEffect(() => {
-    status === UI.Success && fetchReferrals();
-  }, [status]);
+    network && status === UI.Success && fetchReferrals(network);
+  }, [status, network]);
   const balanceWei = fromWei(balance.toString(), 'ether');
   return (
     <ResumeContainer>

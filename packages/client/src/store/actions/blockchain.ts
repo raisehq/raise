@@ -56,9 +56,9 @@ export default (dispatch: any, state: any) => {
     );
   };
 
-  const fetchReferrals = async () => {
+  const fetchReferrals = async (network) => {
     try {
-      const data = await getReferralStatus(address);
+      const data = await getReferralStatus(address, network);
       if (data) {
         const addressReferrals = data.referrals.map(referral => {
           return referral.referred.id.toLowerCase();

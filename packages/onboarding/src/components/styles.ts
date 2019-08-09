@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Form, Modal, Button } from 'semantic-ui-react';
+import { Form, Modal, Button, Checkbox } from 'semantic-ui-react';
 import theme from '../theme';
 
 export const commonModal = {
@@ -61,6 +61,14 @@ export const OnboardingTwoModal: any = styled(Modal)`
         display: none;
       }
     }
+  }
+`;
+
+export const OnboardCheckbox: any = styled(Checkbox)`
+  &&& {
+    position: relative;
+    margin-right: 4px;
+    top: 4px;
   }
 `;
 
@@ -206,6 +214,7 @@ export const OnboardDisclaimer = styled.div`
   margin-top: 60px;
   padding-bottom: 20px;
   border-bottom: 1px solid #dfe3e9;
+  line-height: 20px;
 
   .disclaimerBTN {
     border: none;
@@ -258,7 +267,7 @@ export const ConfirmHeader = styled.h1`
 
 export const ConfirmText = styled.p`
   text-align: center;
-`
+`;
 
 export const MainImage = styled.img`
   display: block;

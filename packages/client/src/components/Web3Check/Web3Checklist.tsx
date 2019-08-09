@@ -41,6 +41,7 @@ const Checklist = () => {
     }
   }: any = useContext(AppContext);
 
+
   // prettier-ignore
   const steps = match([hasProvider, unlocked, networkMatches, accountMatches],
     [false, TAIL],

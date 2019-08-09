@@ -161,14 +161,17 @@ const App = ({
           }
         } = response;
 
-        setAuthCookie({
-          id,
-          status,
-          token: JwtToken,
-          type: accounttype_id
-        });
+        setAuthCookie(
+          {
+            id,
+            status,
+            token: JwtToken,
+            type: accounttype_id
+          },
+          { domain: process.env.REACT_APP_COOKIE_DOMAIN }
+        );
 
-        setuserCookie(user);
+        setuserCookie(user, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
 
         useGoogleTagManager(
           id,

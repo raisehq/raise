@@ -1,3 +1,5 @@
+declare var process: { env: { [key: string]: string } };
+
 const HOSTS: any = {
   AUTH: process.env.REACT_APP_HOST_URL_AUTH,
   CORE: process.env.REACT_APP_HOST_URL_CORE,

@@ -9,6 +9,16 @@ const HOSTS: any = {
   THEGRAPH: process.env.REACT_APP_HOST_THEGRAPH
 };
 
+const THEGRAPH_IDS: any = {
+  KOVAN: process.env.REACT_APP_THEGRAPH_ID_KOVAN,
+  MAINNET: process.env.REACT_APP_THEGRAPH_ID_MAIN,
+  GOERLI: process.env.REACT_APP_THEGRAPH_ID_GOERLI,
+};
+
+export function getGraphEndpoint(network: string) {
+  return `${HOSTS.THEGRAPH}${THEGRAPH_IDS[network.toUpperCase()]}`;
+}
+
 export function getHost(name: string) {
   if (process.env.REACT_APP_MOCK_API === 'true') {
     return 'http://localhost:3000';

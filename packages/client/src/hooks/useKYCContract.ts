@@ -8,12 +8,16 @@ const useKYCContract = () => {
 
   useAsyncEffect(async () => {
     if (metamask) {
-      const contract = await metamask.addContract('KYC');
+      try {
+        const contract = await metamask.addContract('KYC');
 
-      setActiveContract({
-        add: (account) => contract.methods.add(account).send({ from: account }),
-        isConfirmed: (account) => contract.methods.isConfirmed(account).call()
-      });
+        setActiveContract({
+          add: (account) => contract.methods.add(account).send({ from: account }),
+          isConfirmed: (account) => contract.methods.isConfirmed(account).call()
+        });
+      } catch (error) {
+        console.error('Ćontract KYC not found in current network.')
+      }
     }
   }, [metamask]);
 
