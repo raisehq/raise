@@ -122,7 +122,7 @@ const GetStarted = () => {
           By signing up, I agree to Raise
           <a
             className="disclaimerBTN"
-            href={`${theme.resources}/terms/terms.pdf`}
+            href={`${theme.resources}/toc.pdf`}
             target="_blank"
           >
             Terms of Service
@@ -130,7 +130,7 @@ const GetStarted = () => {
           and
           <a
             className="disclaimerBTN"
-            href={`${theme.resources}/terms/terms.pdf`}
+            href={`${theme.resources}/privacy-policy.pdf`}
             target="_blank"
           >
             Privacy Policy
