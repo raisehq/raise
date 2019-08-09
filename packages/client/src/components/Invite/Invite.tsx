@@ -31,6 +31,7 @@ import {
 import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { AppContext } from '../App';
+import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
 
@@ -40,7 +41,7 @@ const Invite = () => {
   const {
     store: {
       user: {
-        details: { referral_code }
+        details: { id, referral_code }
       }
     }
   }: any = useContext(AppContext);
@@ -54,6 +55,15 @@ const Invite = () => {
   });
 
   const getImagesUrl = useImages();
+  useGoogleTagManager(
+    id,
+    'www.raise.it',
+    'Page View',
+    '/referral',
+    'ReferafriendPage',
+    'dataLayer',
+    'Refer a Friend View'
+  );
 
   return (
     <Raf>

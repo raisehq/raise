@@ -2800,10 +2800,10 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/react@^16.9.0":
-  version "16.9.0"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.0.tgz#27434f16d889a335eb4626d1f1e67eda54039e5b"
-  integrity sha512-eOct1hyZI9YZf/eqNlYu7jxA9qyTw1EGXruAJhHhBDBpc00W0C1vwlnh+hkOf7UFZkNK+UxnFBpwAZe3d7XJhQ==
+"@types/react@16.8.22":
+  version "16.8.22"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.22.tgz#7f18bf5ea0c1cad73c46b6b1c804a3ce0eec6d54"
+  integrity sha512-C3O1yVqk4sUXqWyx0wlys76eQfhrQhiDhDlHBrjER76lR2S2Agiid/KpOU9oCqj1dISStscz7xXz1Cg8+sCQeA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -13296,6 +13296,11 @@ react-focus-lock@^1.18.3:
     focus-lock "^0.6.3"
     prop-types "^15.6.2"
     react-clientside-effect "^1.2.0"
+
+react-gtm-module@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/react-gtm-module/-/react-gtm-module-2.0.7.tgz#1d1d085eddac36d522b56d45308ff4472ace09d6"
+  integrity sha512-QYnzQdRpN9qZIc/HaWnpmXUZ31ZsJ4BICp8Gb9VOAh4v5wtytXIrSvQdB7/dS9RgI9cuYN6KCl7NuqiNCPS+DA==
 
 react-helmet-async@^1.0.2:
   version "1.0.2"

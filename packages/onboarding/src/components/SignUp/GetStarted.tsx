@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import * as _ from 'lodash';
 import {
@@ -9,7 +9,9 @@ import {
   CallToSignIn,
   OnboardDisclaimer,
   OnboardLogo,
-  OnboardCheckbox
+  OnboardCheckbox,
+  OnboardMailingList,
+  OnboardingCell
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
@@ -21,6 +23,10 @@ const GetStarted = () => {
   const { onSetStep, credentials, onSetCredentials, referralCode } = useContext<
     IContext
   >(AppContext);
+
+  useEffect(() => {
+    onSetCredentials('mailingChecked', false);
+  }, []);
 
   const [error, setError] = useState<any>({
     validation: false,
@@ -51,6 +57,11 @@ const GetStarted = () => {
   }, 500);
 
   const onAcceptTerms = () => setError({ ...error, terms: !error.terms });
+
+  const onAcceptMailingList = () => {
+    const mailingChecked = !credentials.mailingChecked;
+    onSetCredentials('mailingChecked', mailingChecked);
+  };
 
   const onKeyPress = event => {
     if (
@@ -99,24 +110,32 @@ const GetStarted = () => {
       >
         Next
       </OnboardButton>
+      <OnboardMailingList>
+        <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive
+        Raise latest updates
+      </OnboardMailingList>
       <OnboardDisclaimer>
-        <OnboardCheckbox onChange={onAcceptTerms} />
-        By signing up, I agree to Raise
-        <a
-          className="disclaimerBTN"
-          href={`${theme.resources}/terms/terms.pdf`}
-          target="_blank"
-        >
-          Terms of Service
-        </a>
-        and
-        <a
-          className="disclaimerBTN"
-          href={`${theme.resources}/terms/terms.pdf`}
-          target="_blank"
-        >
-          Privacy Policy
-        </a>
+        <OnboardingCell>
+          <OnboardCheckbox onChange={onAcceptTerms} />
+        </OnboardingCell>
+        <OnboardingCell>
+          By signing up, I agree to Raise
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/toc.pdf`}
+            target="_blank"
+          >
+            Terms of Service
+          </a>
+          and
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/privacy-policy.pdf`}
+            target="_blank"
+          >
+            Privacy Policy
+          </a>
+        </OnboardingCell>
       </OnboardDisclaimer>
       <CallToSignIn>
         Do you have an account already?

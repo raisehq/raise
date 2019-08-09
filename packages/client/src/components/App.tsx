@@ -23,6 +23,7 @@ import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
+import useGoogleTagManager from '../hooks/useGoogleTagManager';
 
 function glide(val) {
   return spring(val, {
@@ -60,6 +61,7 @@ const App = ({ children, history }: any) => {
         login: { logged }
       },
       user: {
+        details: { id },
         cryptoAddress: { address }
       }
     },
@@ -79,6 +81,18 @@ const App = ({ children, history }: any) => {
     network
   } = web3Status;
   const web3Pass = netOk && accMatch;
+
+  const TagManager = () => {
+    return useGoogleTagManager(
+      id,
+      'www.raise.it',
+      'Business action',
+      '/verify-web3',
+      'TrafficLight',
+      'dataLayer',
+      'Wallet Connect Success'
+    );
+  };
 
   useAsyncEffect(async () => {
     if (logged) {
@@ -115,9 +129,13 @@ const App = ({ children, history }: any) => {
       { logged: true, web3Pass: false },
         () => history.location.pathname !== '/verify-web3' ? history.push(`/verify-web3?redirect=${encodeURI(history.location.pathname)}`) : '',
       { logged: true, web3Pass: true, deposited: false },
-        () => setTimeout(() => history.push('/deposit'), 3000),
+        () => setTimeout(() => {
+          TagManager();
+          history.push('/deposit')}, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: true },
-        () => setTimeout(() => history.push('/referral'), 3000),
+        () => setTimeout(() => {
+          TagManager();
+          history.push('/referral')}, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
         () => {
           setTimeout(() => {

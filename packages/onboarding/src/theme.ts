@@ -7,7 +7,7 @@ export default {
     green: '#00A76F',
     darkgray: '#5A5A5A'
   },
-  resources: 'https://static.herodev.es',
+  resources: process.env.REACT_APP_HOST_IMAGES,
   shadow: '0 0 26px 0 rgba(217,217,217,0.61);',
   padding: '50px',
   gradient: {

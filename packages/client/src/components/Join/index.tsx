@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Onboarding from '@raisehq/onboarding';
 import { AppContext } from '../App';
+
 const Join = ({ history }) => {
   const { modalRefs }: any = useContext(AppContext);
   return (
