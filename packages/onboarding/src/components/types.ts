@@ -12,6 +12,7 @@ export interface ICredentials {
   password: string;
   username: string;
   country_id: string;
+  mailingChecked: boolean;
 }
 
 export interface ISignup {
@@ -20,6 +21,7 @@ export interface ISignup {
   password: string;
   country_id: string;
   referrer_code?: any;
+  mailingChecked: boolean
 }
 
 export interface ISignin {
@@ -34,7 +36,7 @@ export interface IContext {
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
   onSetCredentials: (
     input: string,
-    value: string
+    value: string | boolean
   ) => null | void | Promise<any>;
   onSendCredentials: () => null | void | Promise<any>;
   onResetPassword: (
