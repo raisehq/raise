@@ -109,6 +109,10 @@ const GetStarted = () => {
       >
         Next
       </OnboardButton>
+      <OnboardMailingList>
+        <OnboardCheckbox onChange={onAcceptMailingList} />
+        I agree to receive Raise latest updates
+      </OnboardMailingList>
       <OnboardDisclaimer>
         <OnboardCheckbox onChange={onAcceptTerms} />
         By signing up, I agree to Raise
@@ -128,10 +132,6 @@ const GetStarted = () => {
           Privacy Policy
         </a>
       </OnboardDisclaimer>
-      <OnboardMailingList>
-        <OnboardCheckbox onChange={onAcceptMailingList} />
-        I agree to receive Raise latest updates
-      </OnboardMailingList>
       <CallToSignIn>
         Do you have an account already?
         <button className="callToSignIn" onClick={onSetStep('SignIn')}>
