@@ -95,7 +95,10 @@ const App = ({
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
-  }, [history.location.pathname]);
+    if (pathname.includes('join')) {
+      setStep(Step.Start);
+    }
+  }, [history.location.pathname, open]);
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
 
