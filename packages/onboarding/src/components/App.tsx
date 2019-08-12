@@ -69,6 +69,9 @@ const App = ({
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
+    if (pathname === '/join') {
+      setStep(Step.Start);
+    }
 
     if (pathname.includes('verify/token')) {
       const path = pathname.split('/');
@@ -95,9 +98,7 @@ const App = ({
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
-    if (pathname.includes('join')) {
-      setStep(Step.Start);
-    }
+    
   }, [history.location.pathname, open]);
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
