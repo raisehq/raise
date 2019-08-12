@@ -23,8 +23,8 @@ export const isSupportedBrowser = () => ['brave', 'chrome', 'chromium', 'firefox
 
 const BrowserCompatible = () => (
   <CardDescription>
-    <p>To access Raise you will need a browser that supports MetaMask:
-      <BrowserView>
+    <BrowserView>
+      <p>To access Raise you will need a browser that supports MetaMask:
         <span>
           <a href='https://www.mozilla.org/firefox'> Firefox</a>
           <span>, </span>
@@ -32,11 +32,11 @@ const BrowserCompatible = () => (
           <span> and </span>
           <a href='https://brave.com/'>Brave</a>.
         </span>
-      </BrowserView>
-      <MobileView>
-        <span> <a href='https://mobile.metamask.io/Metamask'>Metamask Mobile</a></span>
-      </MobileView>
-    </p>
+      </p>
+    </BrowserView>
+    <MobileView>
+      <p>To access Raise on mobile please download <a href='https://mobile.metamask.io/Metamask'>Metamask Mobile</a>.</p>
+    </MobileView>
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
