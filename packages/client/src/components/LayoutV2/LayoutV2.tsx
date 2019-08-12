@@ -54,7 +54,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 {logged && (
                   <FooterRow centered>
                     <Credits>
-                      <span>Copyright ©2019 Hero Fintech Technologies. </span>
+                      <span>Copyright ©2019 Hero Fintech Technologies S.L. </span>
                       <AllRights>All Rights Reserved</AllRights>
                       <LeaveFeedback href='mailto:team@raise.it'>Leave feedback</LeaveFeedback>
                     </Credits>
