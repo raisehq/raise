@@ -34,7 +34,7 @@ const BrowserCompatible = () => (
         </span>
       </BrowserView>
       <MobileView>
-        <span> <a href='https://mobile.metamask.io/Metamask'>Metamask Mobile</a></span>
+        <p>To access Raise on mobile please download <a href='https://mobile.metamask.io/Metamask'>Metamask Mobile</a>.</p>
       </MobileView>
     </p>
     <NeedHelp href="https://www.raise.it/help" />
