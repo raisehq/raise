@@ -10,13 +10,13 @@ import useImages from '../../hooks/useImages';
 import { AppContext } from '../App';
 
 const VerifiedError = ({ token }) => {
-
   const { onResetToken }: any = useContext(AppContext);
-  const onUpdateToken = () => {
-    updateToken(token).then(() => {
-      onResetToken()
-    });
+  
+  const onUpdateToken = async () => {
+    await updateToken(token)
+    await onResetToken()
   }
+  
   const getImagesUrl = useImages();
 
   return (
