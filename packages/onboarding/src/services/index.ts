@@ -72,7 +72,7 @@ export const validateToken = async ({ token }) => {
     method: 'GET',
     ...COMMON_HEADERS
   };
-
+  
   return await to(axios(config));
 };
 export const updateToken = async token => {

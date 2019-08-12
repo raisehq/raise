@@ -194,6 +194,10 @@ const App = ({
     );
   };
 
+  const onResetToken = async () => {
+    setStep(Step.Confirm)
+  }
+
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
@@ -281,6 +285,7 @@ const App = ({
         onResetPassword,
         onRecover,
         onLogin,
+        onResetToken,
         credentials,
         setLoginError,
         referralCode,

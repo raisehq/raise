@@ -51,4 +51,5 @@ export interface IContext {
   onClose?: () => null | void;
   open: boolean;
   closeButton: boolean;
+  onResetToken: () => null | void | Promise<any>;
 }

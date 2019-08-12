@@ -20,5 +20,6 @@ export const defaultContext = {
     username: '',
     country_id: '',
     mailingChecked: false
-  }
+  },
+  onResetToken: () => null
 };
