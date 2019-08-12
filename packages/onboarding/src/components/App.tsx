@@ -69,10 +69,10 @@ const App = ({
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
-    if (pathname == '/join') {
+    if (pathname === '/join') {
       setStep(Step.Start);
     }
-    
+
     if (pathname.includes('verify/token')) {
       const path = pathname.split('/');
       const token = path[path.length - 1];
