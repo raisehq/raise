@@ -9,7 +9,7 @@ import { updateToken } from '../../services';
 import useImages from '../../hooks/useImages';
 
 const VerifiedError = ({ token }) => {
-  const onUpdateToken = () => updateToken({ token });
+  const onUpdateToken = () => updateToken(token);
   const getImagesUrl = useImages();
 
   return (
