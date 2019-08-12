@@ -83,6 +83,17 @@ const App = ({
         token
       });
 
+      useGoogleTagManager(
+        'newuser',
+        'www.raise.it',
+        'Signup',
+        '/join',
+        'LoginPage',
+        'dataLayer',
+        'Submit',
+        'Emailform'
+      );
+
       verifying.fold(
         () => setStep(Step.VerifiedError(token)),
         () => setStep(Step.Verified)
@@ -98,7 +109,6 @@ const App = ({
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
-    
   }, [history.location.pathname, open]);
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
