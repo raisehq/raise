@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AppContext } from '../App';
 import { List, Icon } from 'semantic-ui-react';
 import { match, ANY, TAIL } from 'pampy';
+import { isSupportedBrowser } from './StepDescription';
 
 const Check = ({ value, message }) => {
   const iconProps = match(
@@ -43,7 +44,7 @@ const Checklist = () => {
 
 
   // prettier-ignore
-  const steps = match([hasProvider, unlocked, networkMatches, accountMatches],
+  const steps = match([(isSupportedBrowser && hasProvider), unlocked, networkMatches, accountMatches],
     [false, TAIL],
       () => ['error', 'pending', 'pending', 'pending'],
     [true, false, TAIL],
@@ -59,7 +60,7 @@ const Checklist = () => {
   );
 
   const stepsMessage = [
-    'Detecting Web3 provider',
+    'Detecting compatible browser',
     'Connect your wallet with Raise',
     `Select ${capitalize(targetNetwork)} network in your wallet`,
     'Sign message and bind your wallet to your account'
