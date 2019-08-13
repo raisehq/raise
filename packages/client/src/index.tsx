@@ -6,6 +6,7 @@ import { RootContext } from './context';
 import connector from './store/actions';
 import reducers from './store/reducers';
 import initialState from './store/initialState';
+import LogRocket from 'logrocket';
 
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -23,6 +24,8 @@ const Root = () => {
     initialState,
     () => initialState
   );
+  process.env.REACT_APP_LOGROCKET === 'true' &&
+    LogRocket.init('rjsyho/raisehq');
 
   const actions: any = connector(dispatch, store);
   const values: PropsValueType = { store, actions, isLogged: false };
