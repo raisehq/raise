@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import { RaiseMenu, MenuList, MenuIcon, MenuIconActive, CloseButton, Logo, MenuLogout, Credits } from './Menu.styles';
+import Web3Address from '../Web3Address';
 import { AppContext } from '../App';
 
 const Menus = {
@@ -50,10 +51,12 @@ const commonRoutes = [
   {
     title: 'Privacy Policy',
     link: '/privacy-policy',
+    icon: 'help'
   },
   {
     title: 'Terms and Conditions',
     link: '/terms',
+    icon: 'help'
   },
 ];
 
@@ -84,7 +87,7 @@ const Menu = () => {
           className={pathname === item.link ? 'active' : 'non-active'}
         >
           <Link to={item.link}>
-            {item.icon && <MenuIcon name={item.icon} /> }
+            {item.icon && <MenuIcon name={item.icon} size='large' /> }
             {item.title}
             {pathname === item.link && <MenuIconActive name="chevron right" />}
             <Icon name='angle right' />
@@ -112,6 +115,7 @@ const Menu = () => {
   return (
     <RaiseMenu vertical borderless inverted className={menu ? 'open' : 'closed' }>
       <Logo src={logoPath} />
+      <Web3Address />
       <CloseButton onClick={closeMenu} icon >
         <Icon name='close' size='big' inverted/>
       </CloseButton>

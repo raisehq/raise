@@ -8,12 +8,13 @@ export const HeroLayout = styled('div')`
 
   > .content {
     width: 100%;
-    min-height: 100%;
+    height: 100vh;
+    overflow-y: scroll;
     background: ${theme.colors.background};
     box-sizing: border-box;
     padding: 20px;
     @media ${device.laptop} {
-      margin-left: 280px;
+      padding-left: 300px;
     }
   }
 `;
