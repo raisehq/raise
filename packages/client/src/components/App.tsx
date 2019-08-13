@@ -25,7 +25,7 @@ import { Web3Check } from '../components/Web3Check';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
 import useGoogleTagManager from '../hooks/useGoogleTagManager';
-
+import LogRocket from 'logrocket';
 function glide(val) {
   return spring(val, {
     stiffness: 174,
@@ -61,8 +61,9 @@ const App = ({ children, history }: any) => {
       auth: {
         login: { logged }
       },
+
       user: {
-        details: { id },
+        details: { id, accounttype_id, email, status },
         cryptoAddress: { address }
       }
     },
@@ -106,12 +107,23 @@ const App = ({ children, history }: any) => {
     }
   }, [logged]);
 
+  useEffect(() => {
+    process.env.REACT_APP_LOGROCKET === 'true' &&
+      logged &&
+      LogRocket.identify(id, {
+        id,
+        email,
+        accounttype_id,
+        status
+      });
+  }, [logged, id, accounttype_id, email, status]);
+
   useAsyncEffect(async () => {
     logged && address && network && netOk && fetchReferrals(network);
   }, [logged, address, network, netOk]);
 
   useEffect(() => {
-    const refMode = (process.env.REACT_APP_REFERAL == 'true');
+    const refMode = process.env.REACT_APP_REFERAL == 'true';
     const isJoin =
       history.location.pathname.includes('/join') ||
       history.location.pathname.includes('/login');
@@ -167,14 +179,44 @@ const App = ({ children, history }: any) => {
         })}
       >
         {/* Dashboard */}
-        <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} />
-        <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} />
+        <Web3Route
+          layout={LayoutV2}
+          exact
+          path="/deposit"
+          component={Deposit}
+        />
+        <Web3Route
+          layout={LayoutV2}
+          exact
+          path="/referral"
+          component={Referral}
+        />
         <Web3Route layout={Layout} exact path="/kyc" component={Kyc} />
-        <Web3Route layout={Layout} exact path="/kyc/validation" component={KycValidation} />
+        <Web3Route
+          layout={Layout}
+          exact
+          path="/kyc/validation"
+          component={KycValidation}
+        />
         <Web3Route layout={Layout} exact path="/" component={Dashboard} />
-        <Web3Route layout={Layout} exact path="/dashboard" component={Dashboard} />
-        <Web3Route layout={Layout} exact path="/create-loan" component={CreateLoan} />
-        <Web3Route layout={Layout} exact path="/marketplace" component={Marketplace} />
+        <Web3Route
+          layout={Layout}
+          exact
+          path="/dashboard"
+          component={Dashboard}
+        />
+        <Web3Route
+          layout={Layout}
+          exact
+          path="/create-loan"
+          component={CreateLoan}
+        />
+        <Web3Route
+          layout={Layout}
+          exact
+          path="/marketplace"
+          component={Marketplace}
+        />
         {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />
         <LayoutV2 exact path="/join" component={Join} />
