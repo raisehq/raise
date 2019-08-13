@@ -33,8 +33,8 @@ const getView = friends => {
           <List.Icon name="check" color="green" />
           <List.Content>
             {friend.name
-              ? friend.name.length > 10
-                ? `${friend.name.substring(0, 7)}...`
+              ? friend.name.length > 14
+                ? `${friend.name.substring(0, 11)}...`
                 : friend.name
               : `${friend.address.substring(0, 6)}...${friend.address.substring(
                   friend.address.length - 4
