@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import {AppContext} from '../App';
+import { NotAllowed } from '../NotAllowed';
 
 const Route = (props) => {
   const { history, layout, exact, ...rest }: any = props;
@@ -13,7 +14,7 @@ const Route = (props) => {
   }
   if (history.location.pathname !== '/verify-web3') {
     const redirectUrl = refMode ? '/verify-web3' : `/verify-web3?redirect=${history.location.pathname}`;
-    return <Redirect to={redirectUrl} />
+    return <NotAllowed to={redirectUrl} />
   }
   return null;
 }

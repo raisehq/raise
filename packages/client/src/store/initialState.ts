@@ -36,6 +36,7 @@ const details =
 
 const initialState = {
   config: {
+    menu: false,
     targetNetwork: 42,
     targetAddressId: 2
   },
