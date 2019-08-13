@@ -56,10 +56,11 @@ const Deposit = (props: any) => {
     return useGoogleTagManager(
       id,
       'www.raise.it',
-      'Business action',
+      'Deposit',
       '/deposit',
       'DepositPage',
       'dataLayer',
+      'Submit',
       'Deposit Success'
     );
   };

@@ -58,11 +58,12 @@ const Invite = () => {
   useGoogleTagManager(
     id,
     'www.raise.it',
-    'Page View',
+    'RAF',
     '/referral',
     'ReferafriendPage',
     'dataLayer',
-    'Refer a Friend View'
+    'Page View',
+    'RAFriend View'
   );
 
   return (

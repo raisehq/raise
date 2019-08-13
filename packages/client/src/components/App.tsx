@@ -87,10 +87,11 @@ const App = ({ children, history }: any) => {
     return useGoogleTagManager(
       id,
       'www.raise.it',
-      'Business action',
+      'Wallet',
       '/verify-web3',
       'TrafficLight',
       'dataLayer',
+      'Submit',
       'Wallet Connect Success'
     );
   };

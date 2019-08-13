@@ -7,7 +7,8 @@ export function useGoogleTagManager(
   pagePath,
   pageTitle,
   dataLayerName,
-  event
+  event,
+  label
 ) {
   const tagManagerArgs = {
     dataLayer: {
@@ -18,7 +19,7 @@ export function useGoogleTagManager(
       pageTitle: pageTitle,
       category: category,
       action: event,
-      label: pageTitle
+      label: label
     },
     dataLayerName: dataLayerName
   };

@@ -69,6 +69,9 @@ const App = ({
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
+    if (pathname === '/join') {
+      setStep(Step.Start);
+    }
 
     if (pathname.includes('verify/token')) {
       const path = pathname.split('/');
@@ -79,6 +82,17 @@ const App = ({
       const verifying = await validateToken({
         token
       });
+
+      useGoogleTagManager(
+        'newuser',
+        'www.raise.it',
+        'Signup',
+        '/join',
+        'LoginPage',
+        'dataLayer',
+        'Submit',
+        'Emailform'
+      );
 
       verifying.fold(
         () => setStep(Step.VerifiedError(token)),
@@ -95,7 +109,7 @@ const App = ({
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
-  }, [history.location.pathname]);
+  }, [history.location.pathname, open]);
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
 
@@ -136,10 +150,11 @@ const App = ({
     useGoogleTagManager(
       credentials.email,
       'www.raise.it',
-      'CTA',
+      'Login',
       '/join',
       'LoginPage',
       'dataLayer',
+      'Click',
       'Login Attempt'
     );
 
@@ -176,10 +191,11 @@ const App = ({
         useGoogleTagManager(
           id,
           'www.raise.it',
-          'Function success',
+          'Login',
           '/join',
           'LoginPage',
           'dataLayer',
+          'Submit',
           'Login Success'
         );
 
@@ -187,6 +203,10 @@ const App = ({
       }
     );
   };
+
+  const onResetToken = async () => {
+    setStep(Step.Confirm)
+  }
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
@@ -275,6 +295,7 @@ const App = ({
         onResetPassword,
         onRecover,
         onLogin,
+        onResetToken,
         credentials,
         setLoginError,
         referralCode,
