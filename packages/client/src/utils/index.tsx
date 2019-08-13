@@ -1,5 +1,6 @@
 import LocalData from '../helpers/localData';
 import Web3 from 'web3';
+import { match, ANY } from 'pampy';
 
 const HOSTS: any = {
   AUTH: process.env.REACT_APP_HOST_URL_AUTH,
@@ -85,4 +86,31 @@ export const getWeb3 = () => {
     return web3Instance;
   }
   return null;
+};
+
+
+export const averageBlockTime = async () => {
+  const web3 = getWeb3();
+  const network = parseNetwork(await web3.eth.net.getId());
+  return match(network,
+    'kovan', () => 4,
+    ANY, () => 15
+  )
+};
+
+export const parseNetwork = id => {
+  switch (id) {
+    case 1:
+      return 'mainnet';
+    case 3:
+      return 'ropsten';
+    case 4:
+      return 'rinkeby';
+    case 5:
+      return 'goerli';
+    case 42:
+      return 'kovan';
+    default:
+      return 'private';
+  }
 };

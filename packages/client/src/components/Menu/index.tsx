@@ -1,3 +1,7 @@
 import Menu from './Menu';
+import TopMobileMenu from './TopMobileMenu';
 
-export default Menu;
+export {
+  Menu,
+  TopMobileMenu
+};

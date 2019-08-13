@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { AnimatedSwitch, spring } from 'react-router-transition';
 import { match, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
+import { Web3Route } from './Web3Check';
 import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
 import Dashboard from './Dashboard';
@@ -110,7 +111,7 @@ const App = ({ children, history }: any) => {
   }, [logged, address, network, netOk]);
 
   useEffect(() => {
-    const refMode = Boolean(process.env.REACT_APP_REFERAL);
+    const refMode = (process.env.REACT_APP_REFERAL == 'true');
     const isJoin =
       history.location.pathname.includes('/join') ||
       history.location.pathname.includes('/login');
@@ -127,8 +128,6 @@ const App = ({ children, history }: any) => {
     match(conditions,
       { isLoading: true },
         () => {},
-      { logged: true, web3Pass: false },
-        () => history.push('/verify-web3'),
       { logged: true, web3Pass: true, deposited: false },
         () => setTimeout(() => {
           TagManager();
@@ -138,7 +137,14 @@ const App = ({ children, history }: any) => {
           TagManager();
           history.push('/referral')}, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
-        () => {},
+        () => {
+          setTimeout(() => {
+            const params = new URLSearchParams(window['location']['search']);
+            if (params.has('redirect')) {
+              history.push(params.get('redirect'));
+            } 
+          }, 3000)
+        },
       { logged: false, isJoin: false },
         () => history.push('/join'),
       _,
@@ -160,18 +166,21 @@ const App = ({ children, history }: any) => {
           transform: `translateX(${styles.offset}%)`
         })}
       >
-        {web3Pass && <LayoutV2 exact path="/deposit" component={Deposit} />}
-        {web3Pass && <LayoutV2 exact path="/referral" component={Referral} />}
+        {/* Dashboard */}
+        <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} />
+        <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} />
+        <Web3Route layout={Layout} exact path="/kyc" component={Kyc} />
+        <Web3Route layout={Layout} exact path="/kyc/validation" component={KycValidation} />
+        <Web3Route layout={Layout} exact path="/" component={Dashboard} />
+        <Web3Route layout={Layout} exact path="/dashboard" component={Dashboard} />
+        <Web3Route layout={Layout} exact path="/create-loan" component={CreateLoan} />
+        <Web3Route layout={Layout} exact path="/marketplace" component={Marketplace} />
+        {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />
         <LayoutV2 exact path="/join" component={Join} />
         <LayoutV2 exact path="/login" component={Join} />
         <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
         <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
-        <Layout exact path="/kyc" component={Kyc} />
-        <Layout exact path="/kyc/validation" component={KycValidation} />
-        <Layout exact path="/dashboard" component={Dashboard} />
-        <Layout exact path="/create-loan" component={CreateLoan} />
-        <Layout exact path="/marketplace" component={Marketplace} />
       </AnimatedSwitch>
       <div ref={modalRefs} />
     </AppContext.Provider>

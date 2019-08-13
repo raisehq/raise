@@ -11,8 +11,8 @@ export const Wrapper = styled.div`
 export const LabelLess = styled.div`
   height: 30px;
   width: 88px;
-  color: #b2c0cf;
-  font-size: 10px;
+  color: #5A5A5A;;
+  font-size: 12px;
   font-weight: bold;
   line-height: 15px;
   position: absolute;
@@ -30,9 +30,9 @@ export const LabelLess = styled.div`
 export const LabelMore = styled.div`
   height: 30px;
   width: 88px;
-  color: #b2c0cf;
+  color: #5A5A5A;;
+  font-size: 12px;
   font-family: Lato;
-  font-size: 10px;
   font-weight: bold;
   line-height: 15px;
   position: absolute;
@@ -46,7 +46,7 @@ export const handleStyle = {
   height: '24px',
   width: '24px',
   borderRadius: '12px',
-  backgroundColor: ' #40E0C4',
+  backgroundColor: '#3C4251',
   border: 'none',
   position: 'relative',
   top: '-4px'
@@ -63,3 +63,13 @@ export const trackStyle = {
   background: 'none',
   borderRadius: '8px'
 };
+
+export const dotStyle = {
+  background: '#9498A0',
+  border: '0px'
+}
+
+export const activeDotStyle = {
+  background: '#9498A0',
+  border: '0px'
+}

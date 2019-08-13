@@ -1,25 +1,20 @@
 import styled from 'styled-components';
 import theme from '../../theme';
+import { device } from '../LayoutV2/breakpoints';
 
 export const HeroLayout = styled('div')`
   width: 100%;
   height: 100%;
-  display: flex;
 
-  .menu {
-    flex: 0 0 280px;
-    background: ${theme.colors.main};
-  }
-
-  .content {
-    flex: 1 0 auto;
+  > .content {
+    width: 100%;
+    min-height: 100%;
     background: ${theme.colors.background};
     box-sizing: border-box;
-  }
-
-  .logo {
-    width: 100%;
-    height: 177px;
+    padding: 20px;
+    @media ${device.laptop} {
+      margin-left: 280px;
+    }
   }
 `;
 
