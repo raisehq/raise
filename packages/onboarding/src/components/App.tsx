@@ -1,5 +1,4 @@
 import React from 'react';
-import isUUID from 'validator/lib/isUUID';
 import daggy from 'daggy';
 import GetStarted from './SignUp/GetStarted';
 import Register from './SignUp/Register';
@@ -20,8 +19,9 @@ import { defaultContext } from './defaults';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import { validateToken } from '../services';
 import { to, getHost } from '../utils';
-import LocalData from './localData';
+import useCookie from '../hooks/useCookie';
 import * as services from '../services';
+import useGoogleTagManager from '../hooks/useGoogleTagManager';
 
 const { useState, useEffect, createContext } = React;
 
@@ -46,18 +46,32 @@ interface IProps {
   open: boolean;
   blur: boolean;
   mountNode?: any;
+  onClose?: () => null;
+  closeButton?: boolean;
 }
 
-const App = ({ history, open, mountNode, blur }: IProps) => {
+const App = ({
+  history,
+  open,
+  mountNode,
+  blur,
+  onClose,
+  closeButton
+}: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(
     defaultContext.credentials
   );
   const [referralCode, setRefCode] = useState<string>('');
+  const [user, setuserCookie] = useCookie('user', {});
+  const [auth, setAuthCookie] = useCookie('auth', {});
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
+    if (pathname === '/join') {
+      setStep(Step.Start);
+    }
 
     if (pathname.includes('verify/token')) {
       const path = pathname.split('/');
@@ -68,6 +82,17 @@ const App = ({ history, open, mountNode, blur }: IProps) => {
       const verifying = await validateToken({
         token
       });
+
+      useGoogleTagManager(
+        'newuser',
+        'www.raise.it',
+        'Signup',
+        '/join',
+        'LoginPage',
+        'dataLayer',
+        'Submit',
+        'Emailform'
+      );
 
       verifying.fold(
         () => setStep(Step.VerifiedError(token)),
@@ -84,7 +109,7 @@ const App = ({ history, open, mountNode, blur }: IProps) => {
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
-  }, [history]);
+  }, [history.location.pathname, open]);
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
 
@@ -122,6 +147,17 @@ const App = ({ history, open, mountNode, blur }: IProps) => {
   };
 
   const onLogin = async () => {
+    useGoogleTagManager(
+      credentials.email,
+      'www.raise.it',
+      'Login',
+      '/join',
+      'LoginPage',
+      'dataLayer',
+      'Click',
+      'Login Attempt'
+    );
+
     const request = await services.signIn({
       email: credentials.email,
       password: credentials.password
@@ -140,27 +176,51 @@ const App = ({ history, open, mountNode, blur }: IProps) => {
           }
         } = response;
 
-        LocalData.setObj('auth', {
-          id,
-          status,
-          token: JwtToken,
-          type: accounttype_id
-        });
+        setAuthCookie(
+          {
+            id,
+            status,
+            token: JwtToken,
+            type: accounttype_id
+          },
+          { domain: process.env.REACT_APP_COOKIE_DOMAIN }
+        );
 
-        LocalData.setObj('user', user);
+        setuserCookie(user, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
+
+        useGoogleTagManager(
+          id,
+          'www.raise.it',
+          'Login',
+          '/join',
+          'LoginPage',
+          'dataLayer',
+          'Submit',
+          'Login Success'
+        );
+
         window.location.href = getHost('APP');
       }
     );
   };
 
+  const onResetToken = async () => {
+    setStep(Step.Confirm)
+  }
+
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
-    
+
     if (!!refCode) {
       setRefCode(refCode);
     }
   }, []);
+
+  const onOnClose = () => {
+    setStep(Step.Start);
+    onClose();
+  };
 
   const getStep = () =>
     step.cata({
@@ -235,15 +295,19 @@ const App = ({ history, open, mountNode, blur }: IProps) => {
         onResetPassword,
         onRecover,
         onLogin,
+        onResetToken,
         credentials,
         setLoginError,
         referralCode,
+        onClose: onOnClose,
         blur,
         error: loginError,
-        mountNode
+        mountNode,
+        closeButton,
+        open
       }}
     >
-      {open && getStep()}
+      {getStep()}
     </AppContext.Provider>
   );
 };

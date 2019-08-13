@@ -23,6 +23,7 @@ import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
+import useGoogleTagManager from '../hooks/useGoogleTagManager';
 
 function glide(val) {
   return spring(val, {
@@ -60,6 +61,7 @@ const App = ({ children, history }: any) => {
         login: { logged }
       },
       user: {
+        details: { id },
         cryptoAddress: { address }
       }
     },
@@ -75,9 +77,23 @@ const App = ({ children, history }: any) => {
   const {
     hasDeposit: deposited,
     accountMatches: accMatch,
-    networkMatches: netOk
+    networkMatches: netOk,
+    network
   } = web3Status;
   const web3Pass = netOk && accMatch;
+
+  const TagManager = () => {
+    return useGoogleTagManager(
+      id,
+      'www.raise.it',
+      'Wallet',
+      '/verify-web3',
+      'TrafficLight',
+      'dataLayer',
+      'Submit',
+      'Wallet Connect Success'
+    );
+  };
 
   useAsyncEffect(async () => {
     if (logged) {
@@ -90,8 +106,8 @@ const App = ({ children, history }: any) => {
   }, [logged]);
 
   useAsyncEffect(async () => {
-    logged && address && fetchReferrals();
-  }, [logged, address]);
+    logged && address && network && netOk && fetchReferrals(network);
+  }, [logged, address, network, netOk]);
 
   useEffect(() => {
     const refMode = Boolean(process.env.REACT_APP_REFERAL);
@@ -106,6 +122,7 @@ const App = ({ children, history }: any) => {
       isJoin,
       isLoading
     };
+
     // prettier-ignore
     match(conditions,
       { isLoading: true },
@@ -113,9 +130,13 @@ const App = ({ children, history }: any) => {
       { logged: true, web3Pass: false },
         () => history.push('/verify-web3'),
       { logged: true, web3Pass: true, deposited: false },
-        () => setTimeout(() => history.push('/deposit'), 3000),
+        () => setTimeout(() => {
+          TagManager();
+          history.push('/deposit')}, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: true },
-        () => setTimeout(() => history.push('/referral'), 3000),
+        () => setTimeout(() => {
+          TagManager();
+          history.push('/referral')}, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
         () => {},
       { logged: false, isJoin: false },
@@ -138,20 +159,19 @@ const App = ({ children, history }: any) => {
         mapStyles={styles => ({
           transform: `translateX(${styles.offset}%)`
         })}
-       >
-
-          { web3Pass && <LayoutV2 exact path="/deposit" component={Deposit} /> }
-          { web3Pass && <LayoutV2 exact path="/referral" component={Referral} /> } 
-          <LayoutV2 exact path="/verify-web3" component={Web3Check} />
-          <LayoutV2 exact path="/join" component={Join} />
-          <LayoutV2 exact path="/login" component={Join} />
-          <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
-          <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
-          <Layout exact path="/kyc" component={Kyc} />
-          <Layout exact path="/kyc/validation" component={KycValidation} />
-          <Layout exact path="/dashboard" component={Dashboard} />
-          <Layout exact path="/create-loan" component={CreateLoan} />
-          <Layout exact path="/marketplace" component={Marketplace} />
+      >
+        {web3Pass && <LayoutV2 exact path="/deposit" component={Deposit} />}
+        {web3Pass && <LayoutV2 exact path="/referral" component={Referral} />}
+        <LayoutV2 exact path="/verify-web3" component={Web3Check} />
+        <LayoutV2 exact path="/join" component={Join} />
+        <LayoutV2 exact path="/login" component={Join} />
+        <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
+        <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+        <Layout exact path="/kyc" component={Kyc} />
+        <Layout exact path="/kyc/validation" component={KycValidation} />
+        <Layout exact path="/dashboard" component={Dashboard} />
+        <Layout exact path="/create-loan" component={CreateLoan} />
+        <Layout exact path="/marketplace" component={Marketplace} />
       </AnimatedSwitch>
       <div ref={modalRefs} />
     </AppContext.Provider>

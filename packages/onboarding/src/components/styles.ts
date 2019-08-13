@@ -1,13 +1,12 @@
 import styled from 'styled-components';
-import { Form, Modal } from 'semantic-ui-react';
+import { Form, Modal, Button, Checkbox } from 'semantic-ui-react';
 import theme from '../theme';
 
 export const commonModal = {
   borderRadius: '4px',
   boxShadow: '0 10px 26px 0 rgba(6, 52, 40, 0.1)',
   margin: '0 !important',
-  padding: '0 !important',
-  overflow: 'hidden'
+  padding: '0 !important'
 };
 
 const size = {
@@ -24,6 +23,31 @@ export const device = {
   mobileL: `(min-width: ${size.mobileL})`,
   desktop: `(min-width: ${size.desktop})`
 };
+
+export const OnboardingCloseButton = styled(Button)`
+  &&& {
+    background: none;
+    border: none;
+    position: absolute;
+    top: -30px;
+    right: -40px;
+    color: rgba(255, 255, 255, 0.7);
+
+    i {
+      font-size: 20px;
+    }
+
+    &:hover {
+      background: none;
+      color: #fff;
+    }
+
+    @media (max-width: ${size.mobileL}) {
+      top: -35px;
+      right: 0px;
+    }
+  }
+`;
 
 export const OnboardingTwoModal: any = styled(Modal)`
   &&& {
@@ -45,6 +69,14 @@ export const OnboardingTwoModal: any = styled(Modal)`
   }
 `;
 
+export const OnboardCheckbox: any = styled(Checkbox)`
+  &&& {
+    position: relative;
+    margin-right: 4px;
+    top: 3px;
+  }
+`;
+
 export const OnboardingSimpleModal: any = styled(Modal)`
   &&& {
     width: ${size.mobileL};
@@ -59,6 +91,7 @@ export const OnboardingWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  overflow: hidden;
 
   .content {
     margin: 0 !important;
@@ -67,7 +100,7 @@ export const OnboardingWrapper = styled.div`
 
   .visuals {
     flex: 0 1 100%;
-    background: ${theme.gradient.blue};
+    background: #f7fdff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -178,11 +211,28 @@ export const CallToSignIn = styled.div`
   }
 `;
 
+export const OnboardingCell: any = styled.div``;
+
 export const OnboardDisclaimer = styled.div`
+  border-bottom: 1px solid #dfe3e9;
+  padding-bottom: 20px;
+  line-height: 20px;
+  display: flex;
+
+  .disclaimerBTN {
+    border: none;
+    background: none;
+    padding: 0px 2px 0px 2px;
+    margin: 0;
+    color: ${theme.colors.green};
+    cursor: pointer;
+  }
+`;
+
+export const OnboardMailingList = styled.div`
+  line-height: 20px;
   margin-top: 60px;
   padding-bottom: 20px;
-  border-bottom: 1px solid #dfe3e9;
-
   .disclaimerBTN {
     border: none;
     background: none;
@@ -229,6 +279,10 @@ export const ConfirmHeader = styled.h1`
   color: #188e9b;
   font-size: 26px;
   font-weight: bold;
+  text-align: center;
+`;
+
+export const ConfirmText = styled.p`
   text-align: center;
 `;
 

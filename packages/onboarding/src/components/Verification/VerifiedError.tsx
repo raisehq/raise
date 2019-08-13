@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   ConfirmWrapper,
   ConfirmHeader,
@@ -7,9 +7,16 @@ import {
 } from '../styles';
 import { updateToken } from '../../services';
 import useImages from '../../hooks/useImages';
+import { AppContext } from '../App';
 
 const VerifiedError = ({ token }) => {
-  const onUpdateToken = () => updateToken({ token });
+  const { onResetToken }: any = useContext(AppContext);
+  
+  const onUpdateToken = async () => {
+    await updateToken(token)
+    await onResetToken()
+  }
+  
   const getImagesUrl = useImages();
 
   return (

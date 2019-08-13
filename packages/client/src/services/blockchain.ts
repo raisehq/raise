@@ -1,7 +1,6 @@
 import axios from './common';
 import axiosRaw from 'axios';
-import { getWeb3 } from '../utils';
-import { getHost } from '../utils/index';
+import { getWeb3, getHost, getGraphEndpoint } from '../utils';
 import Header from '../helpers/header';
 
 const COMMON_HEADERS = {
@@ -71,9 +70,9 @@ export const getDepositAddress = async () => {
   }
 };
 
-export const getReferralStatus = async address => {
+export const getReferralStatus = async (address, network) => {
   const config: any = {
-    url: URL.THEGRAPH,
+    url: getGraphEndpoint(network),
     method: 'POST',
     headers: {},
     data: {

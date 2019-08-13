@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { getHost } from '../../utils/index';
 
 import useImages from '../../hooks/useImages';
-import useIsMobileChecker from '../../hooks/useIsMobileChecker';
 
 import {
   FacebookShareButton,
@@ -32,6 +31,7 @@ import {
 import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { AppContext } from '../App';
+import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
 
@@ -41,18 +41,30 @@ const Invite = () => {
   const {
     store: {
       user: {
-        details: { referral_code }
+        details: { id, referral_code }
       }
     }
   }: any = useContext(AppContext);
+
   const shareLink = `${REFERAFRIEND}=${referral_code ? referral_code : ''}`;
+  const encodedSharedLink = encodeURIComponent(shareLink);
+  const encodedText = encodeURIComponent(quote);
   const [state, setState] = useState({
     value: shareLink,
     copied: false
   });
 
   const getImagesUrl = useImages();
-  const getIsMobileOrTablet = useIsMobileChecker();
+  useGoogleTagManager(
+    id,
+    'www.raise.it',
+    'RAF',
+    '/referral',
+    'ReferafriendPage',
+    'dataLayer',
+    'Page View',
+    'RAFriend View'
+  );
 
   return (
     <Raf>
@@ -103,44 +115,20 @@ const Invite = () => {
             <Social>
               <Grid columns={5} stackable>
                 <Grid.Column width={3}>
-                  {!getIsMobileOrTablet && (
-                    <FacebookShareButton quote={quote} url={shareLink}>
-                      <img
-                        alt="Facebook ico"
-                        src={`${getImagesUrl}ico_facebook.svg`}
-                      />
-                    </FacebookShareButton>
-                  )}
-                  {getIsMobileOrTablet && (
-                    <SocialButtonForMobile
-                      href={`fb://sharer/sharer.php?=u${encodeURIComponent(shareLink)}&quote=${quote}`}
-                    >
-                      <img
-                        alt="Facebook ico"
-                        src={`${getImagesUrl}ico_facebook.svg`}
-                      />
-                    </SocialButtonForMobile>
-                  )}
+                  <FacebookShareButton quote={quote} url={shareLink}>
+                    <img
+                      alt="Facebook ico"
+                      src={`${getImagesUrl}ico_facebook.svg`}
+                    />
+                  </FacebookShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  {!getIsMobileOrTablet && (
-                    <TwitterShareButton title={quote} url={shareLink}>
-                      <img
-                        alt="Twitter ico"
-                        src={`${getImagesUrl}ico_twitter.svg`}
-                      />
-                    </TwitterShareButton>
-                  )}
-                  {!getIsMobileOrTablet && (
-                    <SocialButtonForMobile
-                      href={`twitter://post?text=${quote}&=url${encodeURIComponent(shareLink)}`}
-                    >
-                      <img
-                        alt="Twitter ico"
-                        src={`${getImagesUrl}ico_twitter.svg`}
-                      />
-                    </SocialButtonForMobile>
-                  )}
+                  <TwitterShareButton title={quote} url={shareLink}>
+                    <img
+                      alt="Twitter ico"
+                      src={`${getImagesUrl}ico_twitter.svg`}
+                    />
+                  </TwitterShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <EmailShareButton
@@ -208,20 +196,26 @@ const Invite = () => {
             <Social>
               <Grid columns={5}>
                 <Grid.Column width={3}>
-                  <FacebookShareButton quote={quote} url={shareLink}>
+                  <SocialButtonForMobile
+                    target="_blank"
+                    href={`https://m.facebook.com/sharer/sharer.php?u=${encodedSharedLink}&quote=${encodedText}`}
+                  >
                     <img
                       alt="Facebook ico"
                       src={`${getImagesUrl}ico_facebook.svg`}
                     />
-                  </FacebookShareButton>
+                  </SocialButtonForMobile>
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <TwitterShareButton title={quote} url={shareLink}>
+                  <SocialButtonForMobile
+                    target="_blank"
+                    href={`twitter://post?text=${encodedText}${encodedSharedLink}`}
+                  >
                     <img
                       alt="Twitter ico"
                       src={`${getImagesUrl}ico_twitter.svg`}
                     />
-                  </TwitterShareButton>
+                  </SocialButtonForMobile>
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <EmailShareButton

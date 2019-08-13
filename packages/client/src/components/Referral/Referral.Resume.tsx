@@ -6,21 +6,24 @@ import useReferralContract from '../../hooks/useReferralContract';
 
 import {
   ButtonGreen,
-  // RewardWrapper,
   MessageCoin,
   RewardMessage,
   ContainerListFriends,
   FriendsListItem,
   RewardAmount,
   Separator,
-  ResumeContainer
+  ResumeContainer,
+  RewardMessageSubTitle,
+  RewardMessageFriends
 } from './Referral.styles';
 import { AppContext } from '../App';
 
 const getView = friends => {
   if (friends.length === 0) {
     return (
-      <RewardMessage>None of your friends have registered yet</RewardMessage>
+      <RewardMessageSubTitle>
+        Invite friends and start earning
+      </RewardMessageSubTitle>
     );
   }
   return (
@@ -54,7 +57,7 @@ const Resume = () => {
     actions: {
       blockchain: { fetchReferrals }
     },
-    web3Status: { account }
+    web3Status: { account, network }
   }: any = useContext(AppContext);
 
   const onWithdraw = async () => {
@@ -68,8 +71,8 @@ const Resume = () => {
   };
 
   useEffect(() => {
-    status === UI.Success && fetchReferrals();
-  }, [status]);
+    network && status === UI.Success && fetchReferrals(network);
+  }, [status, network]);
   const balanceWei = fromWei(balance.toString(), 'ether');
   return (
     <ResumeContainer>
@@ -89,7 +92,7 @@ const Resume = () => {
       </Grid.Row>
       <ContainerListFriends>
         <Grid.Column>
-          <RewardMessage>Referred friends:</RewardMessage>
+          <RewardMessageFriends>Referred friends</RewardMessageFriends>
           {getView(referrals || [])}
         </Grid.Column>
       </ContainerListFriends>

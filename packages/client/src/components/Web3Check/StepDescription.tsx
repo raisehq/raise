@@ -3,6 +3,7 @@ import { AppContext } from '../App';
 import Web3Address from './Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
 import { Href } from '../LayoutV2/Layout.styles';
+import { browserName, MobileView, BrowserView } from "react-device-detect";
 import { ButtonGreen, AddressContainer } from './Web3Check.styles';
 import {
   StyledAddress,
@@ -18,6 +19,27 @@ const NeedHelp = ({ href }) => (
     </Href>
   </HelpMessage>
 );
+export const isSupportedBrowser = () => ['brave', 'chrome', 'chromium', 'firefox'].some(supportedBrowser => (browserName.toLowerCase().includes(supportedBrowser)));
+
+const BrowserCompatible = () => (
+  <CardDescription>
+    <BrowserView>
+      <p>To access Raise you will need a browser that supports MetaMask:
+        <span>
+          <a href='https://www.mozilla.org/firefox'> Firefox</a>
+          <span>, </span>
+          <a href='https://www.google.com/chrome'>Chrome</a>
+          <span> and </span>
+          <a href='https://brave.com/'>Brave</a>.
+        </span>
+      </p>
+    </BrowserView>
+    <MobileView>
+      <p>To access Raise on mobile please download <a href='https://mobile.metamask.io/Metamask'>Metamask Mobile</a>.</p>
+    </MobileView>
+    <NeedHelp href="https://www.raise.it/help" />
+  </CardDescription>
+);
 
 const ProviderErrorNotice = () => (
   <CardDescription>
@@ -27,7 +49,7 @@ const ProviderErrorNotice = () => (
       href="https://metamask.io/"
       content="Install Metamask extension"
     />
-    <NeedHelp href="/faq" />
+    <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
 
@@ -37,19 +59,19 @@ const AccountLockedNotice = () => {
     <CardDescription>
       <p>Raise needs to connect with your MetaMask wallet</p>
       <ButtonGreen onClick={enableWeb3} content="Approve" />
-      <NeedHelp href="/faq" />
+      <NeedHelp href="https://www.raise.it/help" />
     </CardDescription>
   );
 };
 
 const NetworkNotMatch = ({ targetNetwork, currentNetwork }) => (
   <CardDescription>
-    <h6>Change the network to {targetNetwork}</h6>
+    <h6>Change the network</h6>
     <p>
-      Raise currently works on the <b>{targetNetwork}</b> network, please switch
-      to this network in MetaMask.
+      Please switch to one of the following networks in Metamask wallet:
+      <b> {targetNetwork.join(', ')}</b>
     </p>
-    <NeedHelp href="/faq" />
+    <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
 
@@ -66,7 +88,7 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }) => (
         <StyledAddress account={currentAddress} />
       </AddressContainer>
     </ButtonGreen>
-    <NeedHelp href="/faq" />
+    <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
 
@@ -77,7 +99,7 @@ const AccountNotMatchNotice = ({ verifiedAddress }) => (
     <div>
       <Web3Address account={verifiedAddress} />
     </div>
-    <NeedHelp href="/faq" />
+    <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
 
@@ -108,6 +130,10 @@ const CurrentNotice = () => {
       }
     }
   }: any = useContext(AppContext);
+  
+  if (!isSupportedBrowser()) {
+    return <BrowserCompatible />
+  }
 
   if (!hasProvider) {
     return <ProviderErrorNotice />;

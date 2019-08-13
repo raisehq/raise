@@ -12,6 +12,7 @@ export interface ICredentials {
   password: string;
   username: string;
   country_id: string;
+  mailingChecked: boolean;
 }
 
 export interface ISignup {
@@ -20,6 +21,7 @@ export interface ISignup {
   password: string;
   country_id: string;
   referrer_code?: any;
+  mailingChecked: boolean;
 }
 
 export interface ISignin {
@@ -29,12 +31,12 @@ export interface ISignin {
 
 export interface IContext {
   blur: boolean;
-  mountNode: any | null;
+  mountNode?: any | null;
   credentials: ICredentials;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
   onSetCredentials: (
     input: string,
-    value: string
+    value: string | boolean
   ) => null | void | Promise<any>;
   onSendCredentials: () => null | void | Promise<any>;
   onResetPassword: (
@@ -46,4 +48,8 @@ export interface IContext {
   error: boolean;
   referralCode: string | null;
   onRecover: (email: string) => null | void | Promise<any>;
+  onClose?: () => null | void;
+  open: boolean;
+  closeButton: boolean;
+  onResetToken: () => null | void | Promise<any>;
 }

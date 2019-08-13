@@ -22,6 +22,7 @@ interface IDefaultProps {
 
 const LayoutV2: React.SFC<IDefaultProps> = props => {
   const { component: Component, ...rest } = props;
+  const logoPath = process.env.REACT_APP_HOST_IMAGES+"/images/logo.svg";
   const {
     store: {
       auth: {
@@ -43,7 +44,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
               <Grid>
                 {logged && (
                   <HeaderRow>
-                    <Image src="http://raise.it/logo.svg" />
+                    <Image src={logoPath} />
                     <Logout basic floated="right">
                       Logout
                     </Logout>
@@ -53,7 +54,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 {logged && (
                   <FooterRow centered>
                     <Credits>
-                      <span>Copyright ©2019 Hero Fintech Technologies. </span>
+                      <span>Copyright ©2019 Hero Fintech Technologies S.L. </span>
                       <AllRights>All Rights Reserved</AllRights>
                       <LeaveFeedback href='mailto:team@raise.it'>Leave feedback</LeaveFeedback>
                     </Credits>

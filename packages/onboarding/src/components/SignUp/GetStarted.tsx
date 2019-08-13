@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import * as _ from 'lodash';
 import {
@@ -8,11 +8,15 @@ import {
   OnboardButton,
   CallToSignIn,
   OnboardDisclaimer,
-  OnboardLogo
+  OnboardLogo,
+  OnboardCheckbox,
+  OnboardMailingList,
+  OnboardingCell
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
 import validations from '../validations';
+import theme from '../../theme';
 import { checkEmail } from '../../services';
 
 const GetStarted = () => {
@@ -20,9 +24,14 @@ const GetStarted = () => {
     IContext
   >(AppContext);
 
+  useEffect(() => {
+    onSetCredentials('mailingChecked', false);
+  }, []);
+
   const [error, setError] = useState<any>({
     validation: false,
-    exist: false
+    exist: false,
+    terms: true
   });
 
   const onChangeEmail = _.debounce((e, data) => {
@@ -36,16 +45,23 @@ const GetStarted = () => {
 
         alreadyExist.fold(
           () => {
-            setError({ validation: false, exist: true });
+            setError({ validation: false, exist: true, terms: error.terms });
           },
           () => {
-            setError({ validation: false, exist: false });
+            setError({ validation: false, exist: false, terms: error.terms });
             onSetCredentials('email', value);
           }
         );
       }
     );
   }, 500);
+
+  const onAcceptTerms = () => setError({ ...error, terms: !error.terms });
+
+  const onAcceptMailingList = () => {
+    const mailingChecked = !credentials.mailingChecked;
+    onSetCredentials('mailingChecked', mailingChecked);
+  };
 
   const onKeyPress = event => {
     if (
@@ -55,7 +71,7 @@ const GetStarted = () => {
       onSetStep('Register')();
     }
   };
-  
+
   const header = !!referralCode
     ? 'True friends invited you to Raise'
     : 'Get started';
@@ -84,18 +100,45 @@ const GetStarted = () => {
         )}
       </OnboardInput>
       <OnboardButton
-        disabled={credentials.email === '' || error.validation || error.exist}
+        disabled={
+          credentials.email === '' ||
+          error.validation ||
+          error.exist ||
+          error.terms
+        }
         onClick={onSetStep('Register')}
       >
         Next
       </OnboardButton>
+      <OnboardMailingList>
+        <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive
+        Raise latest updates
+      </OnboardMailingList>
       <OnboardDisclaimer>
-        By signing up, I agree to Raise
-        <button className="disclaimerBTN">Terms of Service</button> and
-        <button className="disclaimerBTN">Privacy Policy</button>
+        <OnboardingCell>
+          <OnboardCheckbox onChange={onAcceptTerms} />
+        </OnboardingCell>
+        <OnboardingCell>
+          By signing up, I agree to Raise
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/toc.pdf`}
+            target="_blank"
+          >
+            Terms of Service
+          </a>
+          and
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/privacy-policy.pdf`}
+            target="_blank"
+          >
+            Privacy Policy
+          </a>
+        </OnboardingCell>
       </OnboardDisclaimer>
       <CallToSignIn>
-        Do you have an account already? Press here to
+        Do you have an account already?
         <button className="callToSignIn" onClick={onSetStep('SignIn')}>
           Sign In
         </button>

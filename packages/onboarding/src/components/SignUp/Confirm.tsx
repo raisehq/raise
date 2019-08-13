@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfirmWrapper, ConfirmHeader, MainImage } from '../styles';
+import { ConfirmWrapper, ConfirmHeader, MainImage, ConfirmText } from '../styles';
 import useImages from '../../hooks/useImages';
 
 const Confirm = () => {
@@ -10,10 +10,10 @@ const Confirm = () => {
         <MainImage src={`${getImagesUrl}img_mail.png`} />
       </div>
       <ConfirmHeader>Check your inbox!</ConfirmHeader>
-      <p>
+      <ConfirmText>
         We've sent a confirmation to your inbox to verify your email and
         instructions for the next steps.
-      </p>
+      </ConfirmText>
     </ConfirmWrapper>
   );
 };

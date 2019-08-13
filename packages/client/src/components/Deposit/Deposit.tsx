@@ -10,6 +10,8 @@ import { AppContext } from '../App';
 import useImages from '../../hooks/useImages';
 import { toWei } from 'web3-utils';
 import { CardContent } from '../LayoutV2/Layout.styles';
+import useGoogleTagManager from '../../hooks/useGoogleTagManager';
+
 const switchDepositMethod = async (depositContract, account, referrer_code) => {
   const defaultMethod = {
     depositMethod: depositContract.deposit,
@@ -35,7 +37,7 @@ const Deposit = (props: any) => {
     history,
     store: {
       user: {
-        details: { referrer_code }
+        details: { id, referrer_code }
       }
     },
     web3Status: { account, hasDeposited }
@@ -49,6 +51,19 @@ const Deposit = (props: any) => {
       setStatus(UI.Success);
     }
   }, [status, hasDeposited]);
+
+  const TagManager = () => {
+    return useGoogleTagManager(
+      id,
+      'www.raise.it',
+      'Deposit',
+      '/deposit',
+      'DepositPage',
+      'dataLayer',
+      'Submit',
+      'Deposit Success'
+    );
+  };
 
   const handleDeposit = async () => {
     try {
@@ -67,6 +82,7 @@ const Deposit = (props: any) => {
       }
       setStatus(UI.Waiting(UISteps.Transaction));
       await depositMethod(...params);
+      TagManager();
       setStatus(UI.Success);
     } catch (error) {
       console.error(error);
@@ -95,7 +111,13 @@ const Deposit = (props: any) => {
         <CardContent extra>
           <Web3Address />
         </CardContent>
-        {getViewResponse(status, handleDeposit, handleContinue, handleRetry, getImagesUrl)}
+        {getViewResponse(
+          status,
+          handleDeposit,
+          handleContinue,
+          handleRetry,
+          getImagesUrl
+        )}
       </CardSized>
     </Grid.Row>
   );
