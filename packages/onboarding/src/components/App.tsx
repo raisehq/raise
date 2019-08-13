@@ -160,7 +160,8 @@ const App = ({
 
     const request = await services.signIn({
       email: credentials.email,
-      password: credentials.password
+      password: credentials.password,
+      'g-recaptcha-response': credentials['g-recaptcha-response']
     });
 
     request.fold(

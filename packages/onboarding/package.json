@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "js-cookie": "^2.2.0",
+    "react-google-recaptcha": "^2.0.0-rc.1",
     "react-gtm-module": "^2.0.7",
     "typescript": "^3.5.3"
   }

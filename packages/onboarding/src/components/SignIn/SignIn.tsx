@@ -7,7 +7,9 @@ import {
   OnboardButton,
   CallToSignIn,
   Separator,
-  OnboardLogo
+  OnboardLogo,
+  MyRecapcha,
+  GoogleCaptchaPolicies
 } from '../styles';
 import validations from '../validations';
 import { AppContext } from '../App';
@@ -29,6 +31,8 @@ const Signin = () => {
     login: false,
     email: false
   });
+
+  const recaptchaRef: any = React.createRef();
 
   const onSetEmail = useCallback(
     _.debounce((e, data) => {
@@ -56,9 +60,22 @@ const Signin = () => {
       event.key === 'Enter' &&
       (!error && !errors.email && credentials.email && credentials.password)
     ) {
-      onLogin();
+      onLoginCaptcha();
     }
   };
+
+  const onCaptchaCallback = async (captchaResponse) => {
+    console.log('response:: ', captchaResponse);
+    //set g-captcha to credentials
+    onSetCredentials('g-recaptcha-response', captchaResponse);
+    
+    console.log('credentials: ', credentials)
+    onLogin();
+  }
+
+  const onLoginCaptcha = () => {
+    recaptchaRef.current.execute();
+  }
 
   return (
     <Fragment>
@@ -96,11 +113,19 @@ const Signin = () => {
         )}
         <Icon size="big" name="lock" />
       </OnboardInput>
+      <MyRecapcha 
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
+        render="explicit"
+        onChange={onCaptchaCallback}
+      />
       <OnboardButton
         disabled={
           error || errors.email || !credentials.email || !credentials.password
         }
-        onClick={onLogin}
+        onClick={onLoginCaptcha}
+        // onClick={onLogin}
       >
         Log In
       </OnboardButton>
@@ -116,6 +141,9 @@ const Signin = () => {
           Get Started
         </button>
       </CallToSignIn>
+      <GoogleCaptchaPolicies>
+        This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+      </GoogleCaptchaPolicies>
     </Fragment>
   );
 };

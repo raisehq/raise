@@ -8,7 +8,9 @@ import {
   OnboardButton,
   OnboardCountries,
   CallToSignIn,
-  OnboardLogo
+  OnboardLogo,
+  MyRecapcha,
+  GoogleCaptchaPolicies
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
@@ -36,6 +38,8 @@ const Register = () => {
     accounttype_id: 1
   });
 
+  const recaptchaRef: any = React.createRef();
+  
   const onSetCountry = debounce(async (e, data) => {
     onSetCredentials('country_id', data.value);
   }, 800);
@@ -77,9 +81,26 @@ const Register = () => {
         credentials.password !== '' &&
         credentials.country_id !== '')
     ) {
-      onSendCredentials();
+      // onSendCredentials();
+      onSubmitSignUp();
     }
   };
+
+  const testfunc = () => {
+    onSendCredentials();
+  }
+
+  const onCaptchaCallback = async (captchaResponse) => {
+    console.log('response:: ', captchaResponse);
+    //set g-captcha to credentials
+    onSetCredentials('g-recaptcha-response', captchaResponse);
+    console.log('credentials: ', credentials)
+    onSendCredentials()
+  }
+
+  const onSubmitSignUp = () => {
+    recaptchaRef.current.execute();
+  }
 
   return (
     <Fragment>
@@ -131,13 +152,21 @@ const Register = () => {
         )}
         <Icon size="big" name="key" />
       </OnboardInput>
+      <MyRecapcha 
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
+        render="explicit"
+        onChange={onCaptchaCallback}
+      />
       <OnboardButton
         disabled={
           credentials.username === '' ||
           credentials.password === '' ||
           credentials.country_id === ''
         }
-        onClick={onSendCredentials}
+        onClick={onSubmitSignUp}
+        // onClick={onSendCredentials}
       >
         Get Started
       </OnboardButton>
@@ -147,6 +176,9 @@ const Register = () => {
           Sign In
         </button>
       </CallToSignIn>
+      <GoogleCaptchaPolicies>
+        This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+      </GoogleCaptchaPolicies>
     </Fragment>
   );
 };

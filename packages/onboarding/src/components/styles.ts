@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Form, Modal, Button, Checkbox } from 'semantic-ui-react';
+import ReCAPTCHA from "react-google-recaptcha";
 import theme from '../theme';
 
 export const commonModal = {
@@ -310,3 +311,19 @@ export const OnboardLogo = styled.div`
     no-repeat;
   background-size: cover;
 `;
+
+export const MyRecapcha = styled(ReCAPTCHA)`
+    .grecaptcha-badge {
+      visibility: hidden;
+      right: auto
+      left: 0
+      pointer-events: none
+    }
+`;
+
+export const GoogleCaptchaPolicies = styled.div`
+width: 100%;
+text-align: center;
+padding-top: 20px;
+
+`

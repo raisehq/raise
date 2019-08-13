@@ -29,7 +29,7 @@ export const signUp = async data => {
     ...COMMON_HEADERS,
     data
   };
-
+  console.log('data to signup:: ', data)
   return await to(axios(config));
 };
 
@@ -41,6 +41,7 @@ export const signIn = async data => {
     data
   };
 
+  console.log('data before sign in::: ', data);
   return await to(axios(config));
 };
 
