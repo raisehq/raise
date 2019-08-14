@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
-import { Grid, Image } from 'semantic-ui-react';
+import { Grid, Image, Button } from 'semantic-ui-react';
 import Logout from '../Logout';
 import { AppContext } from '../App';
 import {
@@ -33,7 +33,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
       location: { pathname }
     }
   }: any = useContext(AppContext);
-
+  const refMode = process.env.REACT_APP_REFERAL == 'true' ? true : false;
   return (
     <Route
       {...rest}
@@ -45,6 +45,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 {logged && (
                   <HeaderRow>
                     <Image src={logoPath} />
+                    {!refMode ? <Button basic as={Link} to='/'>Dashboard 🤖</Button> : null }
                     <Logout basic floated="right">
                       Logout
                     </Logout>
@@ -54,7 +55,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 {logged && (
                   <FooterRow centered>
                     <Credits>
-                      <span>Copyright ©2019 Hero Fintech Technologies. </span>
+                      <span>Copyright ©2019 Hero Fintech Technologies S.L. </span>
                       <AllRights>All Rights Reserved</AllRights>
                       <LeaveFeedback href='mailto:team@raise.it'>Leave feedback</LeaveFeedback>
                     </Credits>

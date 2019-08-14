@@ -8,6 +8,11 @@ body {
   width: 100%;
   background: white;
 }
+
+body.hidescroll {
+  overflow-y: hidden;
+}
+
 *:not(.icon) {
   font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
 }

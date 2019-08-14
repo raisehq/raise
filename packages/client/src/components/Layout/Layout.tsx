@@ -1,7 +1,6 @@
 import React from 'react';
-import Menu from '../Menu';
-import { HeroLayout, Separator } from './Layout.styles';
-import Web3Address from '../Web3Address';
+import { Menu, TopMobileMenu } from '../Menu';
+import { HeroLayout } from './Layout.styles';
 import { Route } from "react-router-dom";
 
 interface IDefaultProps {
@@ -14,12 +13,8 @@ const Layout: React.SFC<IDefaultProps> = (props) => {
   const { component: Component, ...rest } = props;
   return <Route {...rest} render={matchProps => (
     <HeroLayout>
-      <div className="menu">
-        <div className="logo" />
-        <Web3Address />
-        <Menu />
-        <Separator />
-      </div>
+      <TopMobileMenu />
+      <Menu />
       <div className="content">
         <Component {...matchProps} />
       </div>

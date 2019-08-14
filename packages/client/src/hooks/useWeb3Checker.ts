@@ -6,25 +6,9 @@ import get from 'lodash/get';
 import hasIn from 'lodash/hasIn';
 import { toChecksumAddress} from 'web3-utils';
 import { RootContext } from '../context';
-import { getWeb3 } from '../utils'
+import { getWeb3, parseNetwork } from '../utils'
 import { Web3State } from '../commons/Web3State';
 
-const parseNetwork = id => {
-  switch (id) {
-    case 1:
-      return 'mainnet';
-    case 3:
-      return 'ropsten';
-    case 4:
-      return 'rinkeby';
-    case 5:
-      return 'goerli';
-    case 42:
-      return 'kovan';
-    default:
-      return 'private';
-  }
-};
 
 const HERO_CONTRACTS =
   'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
