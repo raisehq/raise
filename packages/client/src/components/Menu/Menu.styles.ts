@@ -94,6 +94,7 @@ export const CloseButton = styled(Button)<ButtonProps>`
 
 export const MobileMenu = styled(SemanticMenu)`
 &&&& {
+  position: sticky;
   border-radius: 0px;
   display: flex;
   align-items: center;
