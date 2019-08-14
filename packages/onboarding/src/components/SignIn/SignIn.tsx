@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useCallback } from 'react';
+import React, { Fragment, useContext, useState, useCallback, useEffect } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import * as _ from 'lodash';
 import {
@@ -31,6 +31,7 @@ const Signin = () => {
     login: false,
     email: false
   });
+  const [recaptcha, setRecaptcha] = useState(null);
 
   const recaptchaRef: any = React.createRef();
 
@@ -63,14 +64,16 @@ const Signin = () => {
       onLoginCaptcha();
     }
   };
+  
+  useEffect(() => {
+    if (recaptcha) {
+      onLogin();
+    }
+  }, [recaptcha]);
 
   const onCaptchaCallback = async (captchaResponse) => {
-    console.log('response:: ', captchaResponse);
-    //set g-captcha to credentials
     onSetCredentials('g-recaptcha-response', captchaResponse);
-    
-    console.log('credentials: ', credentials)
-    onLogin();
+    setRecaptcha(captchaResponse)
   }
 
   const onLoginCaptcha = () => {

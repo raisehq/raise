@@ -113,8 +113,9 @@ const App = ({
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
 
-  const onSetCredentials = (input, value) =>
+  const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
+  }
 
   const onSendCredentials = async () => {
     const signup = await services.signUp({

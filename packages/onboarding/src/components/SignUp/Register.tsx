@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Icon, Select, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 import {
@@ -38,8 +38,15 @@ const Register = () => {
     accounttype_id: 1
   });
 
+  const [recaptcha, setRecaptcha] = useState(null);
   const recaptchaRef: any = React.createRef();
   
+  useEffect(() => {
+    if (recaptcha !== null) {
+      onSendCredentials();
+    }
+  }, [recaptcha]);
+
   const onSetCountry = debounce(async (e, data) => {
     onSetCredentials('country_id', data.value);
   }, 800);
@@ -86,16 +93,9 @@ const Register = () => {
     }
   };
 
-  const testfunc = () => {
-    onSendCredentials();
-  }
-
   const onCaptchaCallback = async (captchaResponse) => {
-    console.log('response:: ', captchaResponse);
-    //set g-captcha to credentials
     onSetCredentials('g-recaptcha-response', captchaResponse);
-    console.log('credentials: ', credentials)
-    onSendCredentials()
+    setRecaptcha(captchaResponse);
   }
 
   const onSubmitSignUp = () => {
