@@ -54,8 +54,8 @@ export const RaiseMenu = styled(SemanticMenu)`
     left: 0px;
     right: unset;
     ${Logo} {
-      margin: 56px auto;
-      max-width: 120px;
+      margin: 34px auto 40px;
+      max-width: 127px;
       width: 100%;
     }
   }
@@ -114,7 +114,7 @@ export const MenuList = styled('div')`
   width: 100%;
   margin: 0;
   padding: 0;
-
+  margin-top: 40px;
   li {
     margin: 0;
     padding: 0;
@@ -124,7 +124,10 @@ export const MenuList = styled('div')`
 
     a {
       position: relative;
-      display: block;
+      display: flex;
+      justify-content: flex-start;
+      font-weight: bold;
+      align-items: center;
       color: #fff;
       padding: 15px 20px;
 
@@ -148,7 +151,7 @@ export const MenuList = styled('div')`
     background: #fff;
 
     a {
-      color: ${theme.colors.main};
+      color: #212121;
     }
   }
 `;
