@@ -13,6 +13,7 @@ export interface ICredentials {
   username: string;
   country_id: string;
   mailingChecked: boolean;
+  'g-recaptcha-response': string;
 }
 
 export interface ISignup {
@@ -22,11 +23,13 @@ export interface ISignup {
   country_id: string;
   referrer_code?: any;
   mailingChecked: boolean;
+  'g-recaptcha-response': string;
 }
 
 export interface ISignin {
   email: string;
   password: string;
+  'g-recaptcha-response': string;
 }
 
 export interface IContext {

@@ -19,7 +19,8 @@ export const defaultContext = {
     password: '',
     username: '',
     country_id: '',
-    mailingChecked: false
+    mailingChecked: false,
+    'g-recaptcha-response': ''
   },
   onResetToken: () => null
 };
