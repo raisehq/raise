@@ -93,7 +93,7 @@ const Deposit = (props: any) => {
 
   const handleContinue = async () => {
     const refMode = process.env.REACT_APP_REFERAL == 'true' ? true : false;
-    
+
     if (history && refMode) {
       history.push('/referral');
     } else if (history && !refMode) {
