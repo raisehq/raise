@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Card, Loader } from 'semantic-ui-react';
 
 interface NotAllowedProps {
   to: string; 
@@ -18,12 +17,7 @@ const NotAllowed : React.SFC<NotAllowedProps>= ({ to }) => {
   if (redirect) {
     return <Redirect to={to} />
   }
-  return (
-    <Card>
-      Checking Ethereum network connection...
-      <Loader />
-    </Card>
-  )
+  return null;
 }
 
 export default NotAllowed;

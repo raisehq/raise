@@ -102,7 +102,7 @@ export const MobileMenu = styled(SemanticMenu)`
   height: 72px;
   margin: 0;
   border: none;
-  box-shadow: 0 0 26px 0 rgba(217,217,217,0.61);
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);   
   background: white;
   @media ${device.laptop} {
     display: none;

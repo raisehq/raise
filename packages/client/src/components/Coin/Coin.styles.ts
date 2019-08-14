@@ -7,7 +7,7 @@ export const CoinBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  color: #EEB345;
   & > ${CoinImage} {
     width: 18px;
     height: 18px;
