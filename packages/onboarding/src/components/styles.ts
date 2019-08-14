@@ -43,8 +43,9 @@ export const OnboardingCloseButton = styled(Button)`
     }
 
     @media (max-width: ${size.mobileL}) {
-      top: -35px;
+      top: 5px;
       right: 0px;
+      color: rgba(0, 0, 0, 0.87);
     }
   }
 `;
