@@ -108,14 +108,24 @@ const App = ({ children, history }: any) => {
   }, [logged]);
 
   useEffect(() => {
-    process.env.REACT_APP_LOGROCKET === 'true' &&
-      logged &&
-      LogRocket.identify(id, {
-        id,
-        email,
-        accounttype_id,
-        status
-      });
+    if (process.env.REACT_APP_LOGROCKET === 'true') {
+      if (logged) {
+        LogRocket.identify(id, {
+          id,
+          email,
+          accounttype_id,
+          status,
+          availWidth: window.innerWidth,
+          availHeight: window.innerHeight
+        });
+      } else {
+        // @ts-ignore
+        LogRocket.identify(undefined, {
+          availWidth: window.innerWidth,
+          availHeight: window.innerHeight
+        });
+      }
+    }
   }, [logged, id, accounttype_id, email, status]);
 
   useAsyncEffect(async () => {
