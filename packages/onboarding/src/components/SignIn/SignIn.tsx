@@ -128,7 +128,6 @@ const Signin = () => {
           error || errors.email || !credentials.email || !credentials.password
         }
         onClick={onLoginCaptcha}
-        // onClick={onLogin}
       >
         Log In
       </OnboardButton>

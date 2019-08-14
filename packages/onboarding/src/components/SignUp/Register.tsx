@@ -88,7 +88,6 @@ const Register = () => {
         credentials.password !== '' &&
         credentials.country_id !== '')
     ) {
-      // onSendCredentials();
       onSubmitSignUp();
     }
   };
@@ -166,7 +165,6 @@ const Register = () => {
           credentials.country_id === ''
         }
         onClick={onSubmitSignUp}
-        // onClick={onSendCredentials}
       >
         Get Started
       </OnboardButton>
