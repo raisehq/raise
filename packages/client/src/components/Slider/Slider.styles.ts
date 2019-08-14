@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '../LayoutV2/breakpoints'
 
 export const Wrapper = styled.div`
   width: 390px;
@@ -6,9 +7,29 @@ export const Wrapper = styled.div`
   position: relative;
   background: #e5e2f1;
   border-radius: 8px;
+  & .rc-slider-handle {
+    height: 37px;
+    width: 37px;
+    margin-top: -18px;
+    margin-left: -18px;
+  }
+  & .rc-slider-dot {
+    display: none;
+  }
+  @media ${device.laptop} {
+    & .rc-slider-handle {
+      height: 24px;
+      width: 24px;
+      margin-top: -4px;
+    }
+    & .rc-slider-dot {
+      display: none;
+    }
+  }
 `;
 
 export const LabelLess = styled.div`
+  display: none;
   height: 30px;
   width: 88px;
   color: #5A5A5A;;
@@ -25,9 +46,13 @@ export const LabelLess = styled.div`
       display: none !important;
     }
   }
+  @media ${device.laptop} {
+    display: block;
+  }
 `;
 
 export const LabelMore = styled.div`
+  display: none;
   height: 30px;
   width: 88px;
   color: #5A5A5A;;
@@ -40,16 +65,14 @@ export const LabelMore = styled.div`
   top: 30px;
   text-align: right;
   text-transform: uppercase;
+  @media ${device.laptop} {
+    display: block;
+  }
 `;
 
 export const handleStyle = {
-  height: '24px',
-  width: '24px',
-  borderRadius: '12px',
   backgroundColor: '#3C4251',
   border: 'none',
-  position: 'relative',
-  top: '-4px'
 };
 
 export const railStyle = {

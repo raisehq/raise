@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import numeral from 'numeral';
+import { BrowserView, MobileView } from 'react-device-detect';
 import Coin from '../Coin';
 import LoanInput from './LoanInput';
 import {
@@ -9,6 +10,8 @@ import {
   LoanInputLabel,
   LoanContainer,
   LoanBox,
+  LoanTerm,
+  LoanAmountBox,
   LoanInputBox,
   LoanSelect,
   MininumLoanSelect,
@@ -65,7 +68,7 @@ const minAmountOptions = Array.from({length: 99}, (v, k) => ({ value: k + 1, tex
 const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
-const defaultMir = 1;
+const defaultMir = 10;
 const defaultTerm = 3;
 const defaultMinPercent = 10;
 const minMir = 0;
@@ -157,7 +160,7 @@ const CreateLoan = () => {
   return (
     <LoanContainer>
       <LoanForm>
-        <LoanBox>
+        <LoanAmountBox>
           <LoanDescription>
             <TopHeader as="h2">How much would you like to borrow?</TopHeader>
             <p>
@@ -186,6 +189,13 @@ const CreateLoan = () => {
             <Header as="h3">
               Would you accept a lower amount than the requested?
             </Header>
+            <LoanFormInput>
+              <LoanCheckbox
+                toggle
+                label={loan.accept ? 'YES' : 'NO'}
+                onChange={onToggleAccept}
+              />
+            </LoanFormInput>
             <p>
               In some cases, loan auctions don't achieve the target amount for
               different reasons
@@ -205,16 +215,12 @@ const CreateLoan = () => {
                 </InputBox>
             )}
           </LoanDescriptionLowerAmount>
-          <LoanFormInput>
-            <LoanCheckbox
-              toggle
-              label={loan.accept ? 'YES' : 'NO'}
-              onChange={onToggleAccept}
-            />
-          </LoanFormInput>
-        </LoanBox>
-        <Divider />
-        <LoanBox>
+          
+        </LoanAmountBox>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
+        <LoanTerm>
           <LoanDescription>
             <Header as="h2">Loan term</Header>
             <p>
@@ -231,8 +237,10 @@ const CreateLoan = () => {
               options={months}
             />
           </LoanFormInput>
-        </LoanBox>
-        <Divider />
+        </LoanTerm>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
         <LoanBox>
           <LoanDescription>
             <Header as="h2">Monthly interest rate *</Header>
@@ -241,37 +249,45 @@ const CreateLoan = () => {
             </p>
           </LoanDescription>
           <SliderWrapper>
-            <Slider defaultValue={loan.mir} onChange={onInterestChange} min={minMir} marks={marks} max={maxMir} />
             <InterestCard>
               <span>
                 {loan.mir}% MIR* ({APR.toFixed(2)}% APR)
               </span>
               <SideInfo>* MIR : Monthly simple interest rate</SideInfo>
             </InterestCard>
+            <Slider defaultValue={loan.mir} onChange={onInterestChange} min={minMir} marks={marks} max={maxMir} />
           </SliderWrapper>
         </LoanBox>
       </LoanForm>
       <LoanConfirmation>
         <LoanResume>
-          <LoanFormInfo>Loan amount</LoanFormInfo>
-          <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
-            
-          <LoanFormInfo>System fees (1%)</LoanFormInfo>
-          <LoanFormValue>-{systemFees} DAI</LoanFormValue>
+          <div>
+            <LoanFormInfo>Loan amount</LoanFormInfo>
+            <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
+              
+            <LoanFormInfo>System fees (1%)</LoanFormInfo>
+            <LoanFormValue>-{systemFees} DAI</LoanFormValue>
 
-          <LoanFormInfo>Net loan proceeds</LoanFormInfo>
-          <LoanFormValue big>{netLoan} DAI</LoanFormValue>
+            <LoanFormInfo>Net loan proceeds</LoanFormInfo>
+            <LoanFormValue>{netLoan} DAI</LoanFormValue>
+          </div>
 
-          <Divider />
-            
-          <LoanFormInfo>Principal</LoanFormInfo>
-          <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
+          <BrowserView>
+            <Divider />
+          </BrowserView>
+          <MobileView>
+            <Divider vertical />
+          </MobileView>
+          <div>
+            <LoanFormInfo>Principal</LoanFormInfo>
+            <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
 
-          <LoanFormInfo>Interest</LoanFormInfo>
-          <LoanFormValue>{totalInterest} DAI</LoanFormValue>
+            <LoanFormInfo>Interest</LoanFormInfo>
+            <LoanFormValue>{totalInterest} DAI</LoanFormValue>
 
-          <LoanFormInfo>Total repayment amount</LoanFormInfo>
-          <LoanFormValue big>{repaymentAmount} DAI</LoanFormValue>
+            <LoanFormInfo>Total repayment amount</LoanFormInfo>
+            <LoanFormValue>{repaymentAmount} DAI</LoanFormValue>
+          </div>
         </LoanResume>
         <ConfirmButton
           onClick={onSave}
