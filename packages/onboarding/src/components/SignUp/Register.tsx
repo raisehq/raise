@@ -42,7 +42,7 @@ const Register = () => {
   const recaptchaRef: any = React.createRef();
   
   useEffect(() => {
-    if (recaptcha !== null) {
+    if (recaptcha) {
       onSendCredentials();
     }
   }, [recaptcha]);
