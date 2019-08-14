@@ -1,9 +1,26 @@
 import React from 'react';
-import { ConfirmWrapper, ConfirmHeader, MainImage, ConfirmText } from '../styles';
+import {
+  ConfirmWrapper,
+  ConfirmHeader,
+  MainImage,
+  ConfirmText
+} from '../styles';
 import useImages from '../../hooks/useImages';
+import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const Confirm = () => {
   const getImagesUrl = useImages();
+  useGoogleTagManager(
+    'new user',
+    'www.raise.it',
+    'Signup',
+    '/confirm',
+    'RegisterConfirm',
+    'dataLayer',
+    'Submit',
+    'signup_form_success'
+  );
+
   return (
     <ConfirmWrapper>
       <div>

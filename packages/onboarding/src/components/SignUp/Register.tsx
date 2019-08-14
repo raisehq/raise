@@ -15,6 +15,7 @@ import { IContext } from '../types';
 import { countryOptions } from '../../commons/countries';
 import validations from '../validations';
 import { checkUsername } from '../../services';
+import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const Register = () => {
   const {
@@ -71,6 +72,17 @@ const Register = () => {
     : 'Get started';
 
   const onKeyPress = event => {
+    useGoogleTagManager(
+      credentials.email,
+      'www.raise.it',
+      'Signup',
+      '/register',
+      'RegisterForm',
+      'dataLayer',
+      'Click',
+      'signup_form_attempt'
+    );
+
     if (
       event.key === 'Enter' &&
       (credentials.username !== '' &&

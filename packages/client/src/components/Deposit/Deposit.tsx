@@ -52,7 +52,7 @@ const Deposit = (props: any) => {
     }
   }, [status, hasDeposited]);
 
-  const TagManager = () => {
+  const TagManager = label => {
     return useGoogleTagManager(
       id,
       'www.raise.it',
@@ -61,12 +61,13 @@ const Deposit = (props: any) => {
       'DepositPage',
       'dataLayer',
       'Submit',
-      'Deposit Success'
+      label
     );
   };
 
   const handleDeposit = async () => {
     try {
+      TagManager('Deposit Attempt');
       setStatus(UI.Waiting(UISteps.Approve));
       const { depositMethod, params }: any = await switchDepositMethod(
         depositContract,
@@ -82,7 +83,7 @@ const Deposit = (props: any) => {
       }
       setStatus(UI.Waiting(UISteps.Transaction));
       await depositMethod(...params);
-      TagManager();
+      TagManager('Deposit Success');
       setStatus(UI.Success);
     } catch (error) {
       console.error(error);
@@ -92,7 +93,7 @@ const Deposit = (props: any) => {
 
   const handleContinue = async () => {
     const refMode = process.env.REACT_APP_REFERAL == 'true' ? true : false;
-    
+
     if (history && refMode) {
       history.push('/referral');
     } else if (history && !refMode) {
