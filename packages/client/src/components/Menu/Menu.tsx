@@ -78,6 +78,9 @@ const Menu = () => {
     }
   }: any = useContext(AppContext);
 
+  const toRoute = () => {
+    showMenu(false);
+  }
 
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo_light.svg`;
 
@@ -88,7 +91,7 @@ const Menu = () => {
           key={item.link}
           className={pathname === item.link ? 'active' : 'non-active'}
         >
-          <Link to={item.link} target={item.new_tab ? '_blank' : ''}>
+          <Link to={item.link} onClick={toRoute} target={item.new_tab ? '_blank' : ''}>
             {item.icon && <MenuIcon name={item.icon} size='large' /> }
             {item.title}
             {pathname === item.link && <MenuIconActive name="chevron right" />}
