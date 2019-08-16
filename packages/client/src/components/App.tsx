@@ -208,7 +208,7 @@ const App = ({ children, history }: any) => {
           path="/kyc/validation"
           component={KycValidation}
         />
-        <Web3Route layout={Layout} exact path="/" component={Dashboard} />
+        <Web3Route layout={LayoutV2} exact path="/" component={Referral} />
         <Web3Route
           layout={Layout}
           exact
