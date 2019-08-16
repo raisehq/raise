@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from 'semantic-ui-react';
-import { RaiseMenu, MenuList, MenuIcon, MenuIconActive, CloseButton, Logo, MenuLogout, Credits } from './Menu.styles';
-import Web3Address from '../Web3Address';
+import { Icon, Divider } from 'semantic-ui-react';
+import { RaiseMenu, Web3Address, MenuList, MenuIcon, MenuIconActive, CloseButton, Logo, MenuLogout, Credits } from './Menu.styles';
 import { AppContext } from '../App';
 
 const Menus = {
@@ -20,7 +19,7 @@ const Menus = {
     {
       title: 'My Loans',
       link: '/marketplace',
-      icon: 'paper plane'
+      icon: 'chart line'
     }
   ],
   2: [
@@ -37,7 +36,7 @@ const Menus = {
     {
       title: 'My Loans',
       link: '/marketplace',
-      icon: 'paper plane'
+      icon: 'chart line'
     }
   ]
 };
@@ -46,17 +45,20 @@ const commonRoutes = [
   {
     title: 'Help',
     link: '/help',
-    icon: 'help'
+    icon: 'help',
+    new_tab: true
   },
   {
     title: 'Privacy Policy',
     link: '/privacy-policy',
-    icon: 'help'
+    icon: 'help',
+    new_tab: true
   },
   {
     title: 'Terms and Conditions',
     link: '/terms',
-    icon: 'help'
+    icon: 'help',
+    new_tab: true
   },
 ];
 
@@ -80,13 +82,13 @@ const Menu = () => {
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo_light.svg`;
 
   const getMenu = useCallback(
-    () =>
-      [...Menus[accounttype_id || 1], ...commonRoutes].map(item => (
+    (links) =>
+      links.map(item => (
         <li
           key={item.link}
           className={pathname === item.link ? 'active' : 'non-active'}
         >
-          <Link to={item.link}>
+          <Link to={item.link} target={item.new_tab ? '_blank' : ''}>
             {item.icon && <MenuIcon name={item.icon} size='large' /> }
             {item.title}
             {pathname === item.link && <MenuIconActive name="chevron right" />}
@@ -119,12 +121,17 @@ const Menu = () => {
       <CloseButton onClick={closeMenu} icon >
         <Icon name='close' size='big' inverted/>
       </CloseButton>
-      <MenuList>{getMenu()}</MenuList>
+      <MenuList>
+      {getMenu(Menus[accounttype_id || 1])}
+      <Divider inverted />
+      {getMenu(commonRoutes)}
+      </MenuList>
       <div style={{ flex: 2 }} />
       <MenuLogout />
       <Credits>
-        <p>Version: Release 0.1.0.38 (Beta)</p>
-        <p>Copyright ©2019 Hero Fintech Technologies. All Rights Reserved</p>
+        <p>Version: Release {process.env.REACT_APP_VERSION} (Beta)</p>
+        <p>Hero Fintech Technologies S.L. Copyright ©2019 </p>
+        <p>All Rights Reserved</p>
       </Credits>
     </RaiseMenu>
   );
