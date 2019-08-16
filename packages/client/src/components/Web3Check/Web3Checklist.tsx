@@ -44,7 +44,7 @@ const Checklist = () => {
 
 
   // prettier-ignore
-  const steps = match([(isSupportedBrowser() && hasProvider), unlocked, networkMatches, accountMatches],
+  const steps = match([isSupportedBrowser(), hasProvider && unlocked, networkMatches, accountMatches],
     [false, TAIL],
       () => ['error', 'pending', 'pending', 'pending'],
     [true, false, TAIL],
