@@ -20,10 +20,11 @@ export const Wrapper = styled.div`
     & .rc-slider-handle {
       height: 24px;
       width: 24px;
-      margin-top: -4px;
+      margin-top: -9px;
+      margin-left: -9px;
     }
     & .rc-slider-dot {
-      display: none;
+      display: block;
     }
   }
 `;

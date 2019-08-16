@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Select, Checkbox, Card, Header as HeaderUI, Divider as DividerUI, HeaderProps, DividerProps } from 'semantic-ui-react';
+import { Select, Checkbox, Card, Header as HeaderUI, Button, ButtonProps, Divider as DividerUI, HeaderProps, DividerProps } from 'semantic-ui-react';
 import { device } from '../LayoutV2/breakpoints';
 import theme from '../../theme';
 
@@ -108,6 +108,14 @@ export const LoanTerm = styled(LoanBox)`
     display: block;
     width: 100%;
   }
+  @media ${device.laptop} {
+    & ${LoanFormInput} {
+      max-width: 180px;
+    }
+    &&&& ${LoanSelect} {
+      max-width: 180px;
+    }
+  }
 `
 
 export const LoanDescriptionLowerAmount = styled(LoanDescription)`
@@ -148,20 +156,21 @@ export const SliderWrapper = styled.div`
   width: 100%;
   @media ${device.laptop} {
     margin-top: 36px;
+    & .slider {
+      order: 1;
+    }
   }
 `
 export const LoanConfirmation = styled(Card)`
 &&& {
-  text-align: right;
-  max-width: 350px;
-  max-height: 520px;
+  height: fit-content;
   width: 100%;
-
   padding: 30px 20px 20px 20px;
   box-shadow: 0 0 26px 0 rgba(217,217,217,0.61);
 }
 @media ${device.laptop} {
   &&& {
+    max-width: 380px;
     margin-left: 35px;
     margin-top: 30px;
   }
@@ -169,29 +178,37 @@ export const LoanConfirmation = styled(Card)`
 `
 
 export const LoanResume = styled.div`
-&&& {
   position: relative;
-  text-align: right;
   padding: 0px;
   display: flex;
   justify-content: space-between;
-  
-}
 
-&&& .divider.vertical::before {
-  height: calc(100%);
-}
 
-&&& .divider.vertical::after {
-  height: calc(100%);
-}`
+  & .divider.vertical::before {
+    height: calc(100%);
+  }
+
+  & .divider.vertical::after {
+    height: calc(100%);
+  }
+
+  @media ${device.laptop} {
+    & .divider.vertical {
+      display: none;
+    }
+    justify-content: center;
+    flex-direction: column;
+  }
+`
 
 export const LoanFormInfo = styled.p`
-    font-size: 12px;
-    margin: 0;
+  text-align: right;
+  font-size: 12px;
+  margin: 0;
 `
 
 export const LoanFormValue = styled('p')<LoanFormValueProps>`
+  text-align: right;
   font-size: ${({big}) => big ? '26px' : '18px'};
   font-weight: bold;
   margin: 0px 0px 17px 0px;
@@ -213,6 +230,7 @@ export const InputBox = styled.div`
 `;
 export const LoanInputBox = styled.div`
   border-bottom: 1px solid #90a1b5;
+  background-color: #EFF4F7;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,7 +238,7 @@ export const LoanInputBox = styled.div`
   input {
     max-width: 140px;
     border: none !important;
-    margin-right: 10px;
+    margin-right: 5px;
     box-sizing: border-box;
     background: none !important;
     font-size: 26px;
@@ -230,10 +248,18 @@ export const LoanInputBox = styled.div`
   }
   @media ${device.laptop} {
     justify-content: flex-end;
-    max-width: 170px;
+    max-width: 200px;
   }
 `;
 
+export const NewLoanAnchor = styled.div`
+  margin-top: 10px;  
+  text-align: center;
+  width: 100%;
+  color: #00A76F;
+  font-size: 14px;
+  font-weight: bold;
+`
 export const LoanAmountBox = styled(LoanBox)`
 & ${LoanInputBox}:first-child {
   margin-top: 30px;
@@ -283,46 +309,55 @@ export const InterestCard = styled.div`
   background-color: white;
   color: #495b70;
   font-size: 14px;
-  font-weight: bold;
   line-height: 21px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
   @media ${device.laptop} {
-    border: 1px solid #3DC9FF;
+    margin: unset;
+    order: 2;
+    font-weight: bold;
+    border: 1px solid #9398A0;
   }
 `;
 
-export const ConfirmButton: any = styled.button`
+export const ConfirmButton: any = styled(Button)<ButtonProps>`
+&&&&& {
   height: 60px;
   width: 100%;
+  background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
   border-radius: 4px;
-  background: linear-gradient(270deg, #3DC9FF 0%, #0098CC 100%);  border: none;
-  display: flex;
+  display: block;
   align-content: center;
   justify-content: center;
   color: #ffffff;
+  padding: 0;
   font-size: 18px;
   font-weight: bold;
-  line-height: 21px;
+  line-height: 60px;
   text-align: center;
   text-transform: uppercase;
   cursor: pointer;
   margin: 40px 0px 0px 0px;
+}
+`;
+
+export const WaitingButton: any = styled(ConfirmButton)`
+&&&&&& {
+  background: #EFF4F7;
+}
 `;
 
 export const SideInfo = styled.div`
-  bottom: 0;
-  right: 0px;
-  left: 0px;
+  display: block;
+  width: 100%;
   text-align: center;
-  position: absolute;
   color: #5A5A5A;
+  margin-top: 20px;
   font-size: 12px;
   @media ${device.laptop} {
-    right: 0;
-    left: unset;
+    order: 3;
     text-align: right;
   }
 `;
