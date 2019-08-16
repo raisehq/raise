@@ -110,6 +110,7 @@ const Register = () => {
   }
 
   const onSubmitSignUp = () => {
+    recaptchaRef.current.reset();
     recaptchaRef.current.execute();
   }
 

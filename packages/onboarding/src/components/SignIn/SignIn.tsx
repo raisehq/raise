@@ -77,9 +77,10 @@ const Signin = () => {
   }
 
   const onLoginCaptcha = () => {
+    recaptchaRef.current.reset();
     recaptchaRef.current.execute();
   }
-
+  
   return (
     <Fragment>
       <OnboardHeader>
