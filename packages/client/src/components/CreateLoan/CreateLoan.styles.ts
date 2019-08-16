@@ -69,7 +69,7 @@ export const LoanContainer = styled.div`
 export const LoanForm = styled.div`
   max-width: 735px;
   width: 100%;
-  height: auto;
+  height: fit-content;
   box-shadow: ${theme.shadow};
   box-sizing: border-box;
   padding: 30px 16px;
@@ -163,6 +163,8 @@ export const SliderWrapper = styled.div`
 `
 export const LoanConfirmation = styled(Card)`
 &&& {
+  position: sticky;
+  bottom: 0px;
   height: fit-content;
   width: 100%;
   padding: 30px 20px 20px 20px;
@@ -170,6 +172,7 @@ export const LoanConfirmation = styled(Card)`
 }
 @media ${device.laptop} {
   &&& {
+    position: relative;
     max-width: 380px;
     margin-left: 35px;
     margin-top: 30px;

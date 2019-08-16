@@ -207,9 +207,7 @@ const CreateLoan = () => {
             <LoanInputLabel>
                 {amountValidation.error ? (
                   <InputError>{amountValidation.msg}</InputError>
-                ) : `${formattedAmount} EUR*`
-                }
-                <p>* Based on current exchange rate</p>
+                ) : '' }
             </LoanInputLabel>
           </LoanFormInput>
           <LoanDescriptionLowerAmount>
