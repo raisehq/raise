@@ -12,8 +12,9 @@ export const HeroLayout = styled('div')`
     overflow-y: scroll;
     background: ${theme.colors.background};
     box-sizing: border-box;
-    padding: 20px;
+    padding: 0;
     @media ${device.laptop} {
+      padding: 20px;
       padding-left: 300px;
     }
   }

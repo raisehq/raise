@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import numeral from 'numeral';
+import { BrowserView } from 'react-device-detect';
+import { UI, getLoanAction } from './CreateLoan.Response';
 import Coin from '../Coin';
 import LoanInput from './LoanInput';
 import {
@@ -9,31 +11,30 @@ import {
   LoanInputLabel,
   LoanContainer,
   LoanBox,
+  LoanTerm,
+  LoanAmountBox,
   LoanInputBox,
   LoanSelect,
   MininumLoanSelect,
   LoanCheckbox,
-  LoanConfirmation,
   LoanDescription,
   LoanDescriptionLowerAmount,
   LoanFormInput,
   InterestCard,
-  ConfirmButton,
   SideInfo,
   InputError,
   InputBox,
   InputDescription,
   LoanForm,
-  LoanFormInfo,
-  LoanFormValue,
-  LoanResume,
   SliderWrapper
 } from './CreateLoan.styles';
 import Slider from '../Slider';
 import months from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 
-const numeralFormat = '0,0.00'
+/** Start of number formatting */
+const numeralFormat = '0,0.00';
+
 numeral.register('locale', 'hero', {
   delimiters: {
       thousands: '.',
@@ -57,15 +58,18 @@ numeral.register('locale', 'hero', {
       symbol: '€'
   }
 });
+
 numeral.locale('hero');
 numeral.defaultFormat(numeralFormat)
+/** End of numer formatting */
 
+/** Start of defaults */
 const minAmountOptions = Array.from({length: 99}, (v, k) => ({ value: k + 1, text: `${k + 1} %`})); 
 
 const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
-const defaultMir = 1;
+const defaultMir = 10;
 const defaultTerm = 3;
 const defaultMinPercent = 10;
 const minMir = 0;
@@ -78,9 +82,12 @@ const marks = {
   16: ' '
 }
 
+/** End of defaults */
+
 const calculateMinAmount = (value, percent) => value - (value * (percent / 100))
 
 const CreateLoan = () => {
+  const [stage, setStage] = useState(UI.Confirm);
   const loanDispatcher = useLoanDispatcher();
   const [amountValidation, setAmountValidation] = useState({
     error: false,
@@ -124,16 +131,36 @@ const CreateLoan = () => {
   const onInterestChange = value => onSetMIR(parseFloat(value));
 
   const onSave = async () => {
-    const deploy = await loanDispatcher.deploy(
-      loan.minAmount,
-      loan.amount,
-      loan.mir,
-      loan.term,
-      loan.accept
-    );
-
-    //WAIT FOR CONFIRMATION UI
-    console.log(deploy);
+    setStage(UI.Waiting);
+    try {
+      await loanDispatcher.deploy(
+        loan.minAmount,
+        loan.amount,
+        loan.mir,
+        loan.term,
+        loan.accept
+      );
+      setStage(UI.Success);
+    } catch (error) {
+      setStage(UI.Error)
+    }
+  };
+  
+  const onRetry = async () => {
+    setStage(UI.Confirm);
+    setAmountValidation({
+      error: false,
+      msg: ''
+    })
+    setAPR(0)
+    setMinPercent(defaultMinPercent);
+    setLoan({
+      amount: defaultAmount,
+      term: defaultTerm,
+      mir: defaultMir,
+      accept: false,
+      minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
+    });
   };
 
   const onBlur = e => {
@@ -154,10 +181,13 @@ const CreateLoan = () => {
     }
   }, [loan]);
 
+  const values = {loan, numberAmount, amountValidation, formattedAmount, repaymentAmount, netLoan, systemFees, totalInterest};
+  const methods = {onSave, onRetry}
+
   return (
     <LoanContainer>
       <LoanForm>
-        <LoanBox>
+        <LoanAmountBox>
           <LoanDescription>
             <TopHeader as="h2">How much would you like to borrow?</TopHeader>
             <p>
@@ -186,6 +216,13 @@ const CreateLoan = () => {
             <Header as="h3">
               Would you accept a lower amount than the requested?
             </Header>
+            <LoanFormInput>
+              <LoanCheckbox
+                toggle
+                label={loan.accept ? 'YES' : 'NO'}
+                onChange={onToggleAccept}
+              />
+            </LoanFormInput>
             <p>
               In some cases, loan auctions don't achieve the target amount for
               different reasons
@@ -205,16 +242,12 @@ const CreateLoan = () => {
                 </InputBox>
             )}
           </LoanDescriptionLowerAmount>
-          <LoanFormInput>
-            <LoanCheckbox
-              toggle
-              label={loan.accept ? 'YES' : 'NO'}
-              onChange={onToggleAccept}
-            />
-          </LoanFormInput>
-        </LoanBox>
-        <Divider />
-        <LoanBox>
+          
+        </LoanAmountBox>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
+        <LoanTerm>
           <LoanDescription>
             <Header as="h2">Loan term</Header>
             <p>
@@ -231,8 +264,10 @@ const CreateLoan = () => {
               options={months}
             />
           </LoanFormInput>
-        </LoanBox>
-        <Divider />
+        </LoanTerm>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
         <LoanBox>
           <LoanDescription>
             <Header as="h2">Monthly interest rate *</Header>
@@ -241,50 +276,17 @@ const CreateLoan = () => {
             </p>
           </LoanDescription>
           <SliderWrapper>
-            <Slider defaultValue={loan.mir} onChange={onInterestChange} min={minMir} marks={marks} max={maxMir} />
             <InterestCard>
               <span>
                 {loan.mir}% MIR* ({APR.toFixed(2)}% APR)
               </span>
-              <SideInfo>* MIR : Monthly simple interest rate</SideInfo>
             </InterestCard>
+            <Slider defaultValue={loan.mir} onChange={onInterestChange} min={minMir} marks={marks} max={maxMir} />
+            <SideInfo>* MIR : Monthly simple interest rate</SideInfo>
           </SliderWrapper>
         </LoanBox>
       </LoanForm>
-      <LoanConfirmation>
-        <LoanResume>
-          <LoanFormInfo>Loan amount</LoanFormInfo>
-          <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
-            
-          <LoanFormInfo>System fees (1%)</LoanFormInfo>
-          <LoanFormValue>-{systemFees} DAI</LoanFormValue>
-
-          <LoanFormInfo>Net loan proceeds</LoanFormInfo>
-          <LoanFormValue big>{netLoan} DAI</LoanFormValue>
-
-          <Divider />
-            
-          <LoanFormInfo>Principal</LoanFormInfo>
-          <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
-
-          <LoanFormInfo>Interest</LoanFormInfo>
-          <LoanFormValue>{totalInterest} DAI</LoanFormValue>
-
-          <LoanFormInfo>Total repayment amount</LoanFormInfo>
-          <LoanFormValue big>{repaymentAmount} DAI</LoanFormValue>
-        </LoanResume>
-        <ConfirmButton
-          onClick={onSave}
-          disabled={
-            amountValidation.error ||
-            loan.term === 0 ||
-            loan.mir === 0 ||
-            numberAmount === 0
-          }
-        >
-          Confirm
-        </ConfirmButton>
-      </LoanConfirmation>
+     {getLoanAction(stage, values, methods)}
     </LoanContainer>
   );
 };

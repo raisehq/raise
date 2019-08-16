@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Icon, Select, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 import {
@@ -8,7 +8,9 @@ import {
   OnboardButton,
   OnboardCountries,
   CallToSignIn,
-  OnboardLogo
+  OnboardLogo,
+  MyRecapcha,
+  GoogleCaptchaPolicies
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
@@ -36,6 +38,15 @@ const Register = () => {
     username: false,
     accounttype_id: 1
   });
+
+  const [recaptcha, setRecaptcha] = useState(null);
+  const recaptchaRef: any = React.createRef();
+  
+  useEffect(() => {
+    if (recaptcha) {
+      onSendCredentials();
+    }
+  }, [recaptcha]);
 
   const onSetCountry = debounce(async (e, data) => {
     onSetCredentials('country_id', data.value);
@@ -89,9 +100,18 @@ const Register = () => {
         credentials.password !== '' &&
         credentials.country_id !== '')
     ) {
-      onSendCredentials();
+      onSubmitSignUp();
     }
   };
+
+  const onCaptchaCallback = async (captchaResponse) => {
+    onSetCredentials('g-recaptcha-response', captchaResponse);
+    setRecaptcha(captchaResponse);
+  }
+
+  const onSubmitSignUp = () => {
+    recaptchaRef.current.execute();
+  }
 
   return (
     <Fragment>
@@ -143,13 +163,20 @@ const Register = () => {
         )}
         <Icon size="big" name="key" />
       </OnboardInput>
+      <MyRecapcha 
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
+        render="explicit"
+        onChange={onCaptchaCallback}
+      />
       <OnboardButton
         disabled={
           credentials.username === '' ||
           credentials.password === '' ||
           credentials.country_id === ''
         }
-        onClick={onSendCredentials}
+        onClick={onSubmitSignUp}
       >
         Get Started
       </OnboardButton>
@@ -159,6 +186,9 @@ const Register = () => {
           Sign In
         </button>
       </CallToSignIn>
+      <GoogleCaptchaPolicies>
+        This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+      </GoogleCaptchaPolicies>
     </Fragment>
   );
 };

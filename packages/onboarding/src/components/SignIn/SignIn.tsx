@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useCallback } from 'react';
+import React, { Fragment, useContext, useState, useCallback, useEffect } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import * as _ from 'lodash';
 import {
@@ -7,7 +7,9 @@ import {
   OnboardButton,
   CallToSignIn,
   Separator,
-  OnboardLogo
+  OnboardLogo,
+  MyRecapcha,
+  GoogleCaptchaPolicies
 } from '../styles';
 import validations from '../validations';
 import { AppContext } from '../App';
@@ -29,6 +31,9 @@ const Signin = () => {
     login: false,
     email: false
   });
+  const [recaptcha, setRecaptcha] = useState(null);
+
+  const recaptchaRef: any = React.createRef();
 
   const onSetEmail = useCallback(
     _.debounce((e, data) => {
@@ -56,9 +61,24 @@ const Signin = () => {
       event.key === 'Enter' &&
       (!error && !errors.email && credentials.email && credentials.password)
     ) {
-      onLogin();
+      onLoginCaptcha();
     }
   };
+  
+  useEffect(() => {
+    if (recaptcha) {
+      onLogin();
+    }
+  }, [recaptcha]);
+
+  const onCaptchaCallback = async (captchaResponse) => {
+    onSetCredentials('g-recaptcha-response', captchaResponse);
+    setRecaptcha(captchaResponse)
+  }
+
+  const onLoginCaptcha = () => {
+    recaptchaRef.current.execute();
+  }
 
   return (
     <Fragment>
@@ -96,11 +116,18 @@ const Signin = () => {
         )}
         <Icon size="big" name="lock" />
       </OnboardInput>
+      <MyRecapcha 
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
+        render="explicit"
+        onChange={onCaptchaCallback}
+      />
       <OnboardButton
         disabled={
           error || errors.email || !credentials.email || !credentials.password
         }
-        onClick={onLogin}
+        onClick={onLoginCaptcha}
       >
         Log In
       </OnboardButton>
@@ -116,6 +143,9 @@ const Signin = () => {
           Get Started
         </button>
       </CallToSignIn>
+      <GoogleCaptchaPolicies>
+        This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+      </GoogleCaptchaPolicies>
     </Fragment>
   );
 };

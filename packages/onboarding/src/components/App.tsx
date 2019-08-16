@@ -113,8 +113,9 @@ const App = ({
 
   const onSetStep = (step: Steps) => () => setStep(Step[step]);
 
-  const onSetCredentials = (input, value) =>
+  const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
+  }
 
   const onSendCredentials = async () => {
     const signup = await services.signUp({
@@ -160,7 +161,8 @@ const App = ({
 
     const request = await services.signIn({
       email: credentials.email,
-      password: credentials.password
+      password: credentials.password,
+      'g-recaptcha-response': credentials['g-recaptcha-response']
     });
 
     request.fold(

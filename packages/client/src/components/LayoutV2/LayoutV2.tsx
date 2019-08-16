@@ -45,7 +45,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 {logged && (
                   <HeaderRow>
                     <Image src={logoPath} />
-                    {!refMode ? <Button basic as={Link} to='/'>Dashboard 🤖</Button> : null }
+                    {!refMode ? <Button basic as={Link} to='/dashboard'>Dashboard 🤖</Button> : null }
                     <Logout basic floated="right">
                       Logout
                     </Logout>

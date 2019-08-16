@@ -29,7 +29,7 @@ export const signUp = async data => {
     ...COMMON_HEADERS,
     data
   };
-
+  
   return await to(axios(config));
 };
 
