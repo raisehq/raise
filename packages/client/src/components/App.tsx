@@ -225,7 +225,7 @@ const App = ({ children, history }: any) => {
           layout={Layout}
           exact
           path="/dashboard"
-          component={componentsByRole[accounttype_id].dashboard}
+          component={accounttype_id ? componentsByRole[accounttype_id].dashboard: null}
           roles={[1,2]}
         />
         <Web3Route
