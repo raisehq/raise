@@ -84,7 +84,10 @@ const marks = {
 
 /** End of defaults */
 
-const calculateMinAmount = (value, percent) => value - (value * (percent / 100))
+const calculateMinAmount = (value, percent) => {
+  const minAmount = value - (value * (percent / 100))
+  return minAmount >= 1 ? minAmount : 1;
+}
 
 const CreateLoan = () => {
   const [stage, setStage] = useState(UI.Confirm);
@@ -113,7 +116,8 @@ const CreateLoan = () => {
   const totalInterest = numeral((numberAmount * (loan.mir * loan.term)) / 100).format()
 
   const onSetAmount = ({ floatValue }) => {
-    setLoan({ ...loan, amount: floatValue, minAmount: loan.accept ? calculateMinAmount(floatValue, minPercent) : floatValue });
+    const minAmount = calculateMinAmount(floatValue, minPercent);
+    setLoan({ ...loan, amount: floatValue, minAmount: loan.accept ? minAmount : floatValue });
   }
 
   const onSetTerm = (e, data) =>
@@ -125,7 +129,10 @@ const CreateLoan = () => {
 
   const onMinAmount = (e, data) => {
     setMinPercent(data.value);
-    setLoan((l) => ({ ...l, minAmount: calculateMinAmount(l.amount, data.value) }));
+    setLoan((l) => {
+      const minAmount = calculateMinAmount(l.amount, data.value);
+      return ({ ...l, minAmount })
+    });
   }
 
   const onInterestChange = value => onSetMIR(parseFloat(value));
@@ -207,9 +214,7 @@ const CreateLoan = () => {
             <LoanInputLabel>
                 {amountValidation.error ? (
                   <InputError>{amountValidation.msg}</InputError>
-                ) : `${formattedAmount} EUR*`
-                }
-                <p>* Based on current exchange rate</p>
+                ) : '' }
             </LoanInputLabel>
           </LoanFormInput>
           <LoanDescriptionLowerAmount>
