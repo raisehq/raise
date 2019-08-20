@@ -84,7 +84,7 @@ const max = 2500000;
 const defaultAmount = 10000;
 const defaultMir = 10;
 const defaultTerm = 3;
-const defaultMinPercent = 10;
+const defaultMinPercent = 20;
 const minMir = 0;
 const maxMir = 20;
 
