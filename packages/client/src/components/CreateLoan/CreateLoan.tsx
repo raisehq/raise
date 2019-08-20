@@ -71,7 +71,6 @@ numeral.defaultFormat(numeralFormat);
 
 /** Start of defaults */
 const minAmountOptions = Array(
-  { text: '10%', value: 10 },
   { text: '20%', value: 20 },
   { text: '30%', value: 30 },
   { text: '40%', value: 40 },
