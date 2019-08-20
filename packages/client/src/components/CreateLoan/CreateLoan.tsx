@@ -70,7 +70,6 @@ numeral.defaultFormat(numeralFormat);
 /** End of numer formatting */
 
 /** Start of defaults */
-<<<<<<< HEAD
 const minAmountOptions = Array(
   { text: '10%', value: 10 },
   { text: '20%', value: 20 },
@@ -80,12 +79,6 @@ const minAmountOptions = Array(
   { text: '60%', value: 60 },
   { text: '70%', value: 70 }
 );
-=======
-const minAmountOptions = Array.from({ length: 99 }, (v, k) => ({
-  value: k + 1,
-  text: `${k + 1} %`
-}));
->>>>>>> integration
 
 const min = 1;
 const max = 2500000;
@@ -200,10 +193,6 @@ const CreateLoan = () => {
 
   const onBlur = e => {
     const currentValue = loan.amount;
-<<<<<<< HEAD
-=======
-    console.log(currentValue);
->>>>>>> integration
     setAmountValidation({
       error: currentValue < min || currentValue > max,
       msg: `Can not be ${
