@@ -70,17 +70,21 @@ numeral.defaultFormat(numeralFormat);
 /** End of numer formatting */
 
 /** Start of defaults */
-const minAmountOptions = Array.from({ length: 99 }, (v, k) => ({
-  value: k + 1,
-  text: `${k + 1} %`
-}));
+const minAmountOptions = [
+  { text: '20%', value: 20 },
+  { text: '30%', value: 30 },
+  { text: '40%', value: 40 },
+  { text: '50%', value: 50 },
+  { text: '60%', value: 60 },
+  { text: '70%', value: 70 }
+];
 
 const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
 const defaultMir = 10;
 const defaultTerm = 3;
-const defaultMinPercent = 10;
+const defaultMinPercent = 20;
 const minMir = 0;
 const maxMir = 20;
 
@@ -188,7 +192,6 @@ const CreateLoan = () => {
 
   const onBlur = e => {
     const currentValue = loan.amount;
-    console.log(currentValue);
     setAmountValidation({
       error: currentValue < min || currentValue > max,
       msg: `Can not be ${
