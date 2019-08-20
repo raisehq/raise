@@ -70,14 +70,14 @@ numeral.defaultFormat(numeralFormat);
 /** End of numer formatting */
 
 /** Start of defaults */
-const minAmountOptions = Array(
+const minAmountOptions = [
   { text: '20%', value: 20 },
   { text: '30%', value: 30 },
   { text: '40%', value: 40 },
   { text: '50%', value: 50 },
   { text: '60%', value: 60 },
   { text: '70%', value: 70 }
-);
+];
 
 const min = 1;
 const max = 2500000;
