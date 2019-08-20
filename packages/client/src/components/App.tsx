@@ -235,7 +235,7 @@ const App = ({ children, history }: any) => {
           exact
           path="/create-loan"
           component={CreateLoan}
-          roles={[1, 2]}
+          roles={[1]}
         />
         <Web3Route
           layout={Layout}
