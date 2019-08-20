@@ -164,7 +164,7 @@ const App = ({ children, history }: any) => {
             const params = new URLSearchParams(window['location']['search']);
             if (params.has('redirect')) {
               history.push(params.get('redirect'));
-            } 
+            }
           }, 3000)
         },
       { logged: false, isJoin: false },
@@ -212,7 +212,13 @@ const App = ({ children, history }: any) => {
           component={Referral}
           roles={[1, 2]}
         />
-        <Web3Route layout={Layout} exact path="/kyc" component={Kyc} />
+        <Web3Route
+          layout={Layout}
+          exact
+          path="/kyc"
+          component={Kyc}
+          roles={[1, 2]}
+        />
         <Web3Route
           layout={Layout}
           exact
@@ -235,7 +241,7 @@ const App = ({ children, history }: any) => {
           exact
           path="/create-loan"
           component={CreateLoan}
-          roles={[1]}
+          roles={[1, 2]}
         />
         <Web3Route
           layout={Layout}
