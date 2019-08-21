@@ -12,7 +12,7 @@ import { Dimmer, Loader } from 'semantic-ui-react';
 import { Web3Route } from './Web3Check';
 import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
-import DashboardBorrower from './DashboardBorrower';
+import Dashboard from './Dashboard';
 import Referral from './Referral/index';
 import Marketplace from './Marketplace';
 import CreateLoan from './CreateLoan';
