@@ -203,7 +203,7 @@ export const LoanConfirmation = styled(Card)`
     }
   }
 
-  @media ${device.laptopL} {
+  @media ${device.laptopXL} {
     &&& {
       border-radius: 4px;
       box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
@@ -229,18 +229,18 @@ export const LoanResume = styled.div`
     height: calc(100%);
   }
 
-  @media (min-width: ${size.laptop}) and (max-width: ${size.laptopXL}) {
+  @media (min-width: ${size.laptop}) and (max-width: ${size.laptopL}) {
     & .divider.vertical {
       display: none;
     }
   }
 
-  @media ${device.laptopXXL} {
+  @media ${device.laptopXL} {
+    justify-content: center;
+    flex-direction: column;
     & .divider.vertical {
       display: none;
     }
-    justify-content: center;
-    flex-direction: column;
   }
 `;
 
