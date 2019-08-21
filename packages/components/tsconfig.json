@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["es5", "es6", "dom"],
     "outDir": "./lib",
     "module": "commonjs",
     "declaration": true,
@@ -10,7 +11,6 @@
     "experimentalDecorators": true,
     "target": "es6",
     "sourceMap": true,
-    "lib": ["es6"],
     "esModuleInterop": true,
     "jsx": "react"
   },
