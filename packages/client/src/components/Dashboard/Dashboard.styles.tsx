@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import { Tab } from 'semantic-ui-react';
 import theme from '../../theme';
 
+export const DashboardContainer = styled.div`
+  max-width: 1080px;
+  width: 100%;
+`;
+
 export const DashboardTab: any = styled(Tab)`
   margin-bottom: 25px;
 
@@ -25,7 +30,13 @@ export const DashboardTab: any = styled(Tab)`
   }
 
   &&& .ui.attached.segment {
+    display: flex;
+    flex-wrap: wrap;
     border: none;
+
+    .heroCard {
+      margin: 0 10px 10px 0;
+    }
   }
 `;
 

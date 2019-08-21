@@ -3,6 +3,8 @@ import auth from './auth';
 import kyc from './kyc';
 import blockchain from './blockchain';
 import config from './config';
+import loan from './loan';
+
 const combineReducers = reducers => {
   return (state = {}, action) => {
     return Object.keys(reducers).reduce((nextState, key) => {
@@ -17,5 +19,6 @@ export default combineReducers({
   user,
   auth,
   kyc,
-  blockchain
+  blockchain,
+  loan
 });
