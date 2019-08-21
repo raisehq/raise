@@ -105,7 +105,7 @@ export const LoanFormInput = styled.div`
 
 export const LoanTerm = styled(LoanBox)`
   & ${LoanFormInput} {
-    margin-top: 20px;
+    margin-top: 47px;
     display: block;
     width: 100%;
   }
@@ -304,11 +304,11 @@ export const NewLoanAnchor = styled.div`
 `;
 export const LoanAmountBox = styled(LoanBox)`
   & ${LoanInputBox}:first-child {
-    margin-top: 30px;
+    margin-top: 10px;
   }
   @media ${device.laptop} {
     & ${LoanInputBox}:first-child {
-      margin-top: 60px;
+      margin-top: 10px;
     }
   }
 `;
