@@ -12,7 +12,7 @@ import { Dimmer, Loader } from 'semantic-ui-react';
 import { Web3Route } from './Web3Check';
 import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
-import Dashboard from './Dashboard';
+import DashboardBorrower from './DashboardBorrower';
 import Referral from './Referral/index';
 import Marketplace from './Marketplace';
 import CreateLoan from './CreateLoan';
@@ -164,7 +164,7 @@ const App = ({ children, history }: any) => {
             const params = new URLSearchParams(window['location']['search']);
             if (params.has('redirect')) {
               history.push(params.get('redirect'));
-            } 
+            }
           }, 3000)
         },
       { logged: false, isJoin: false },
@@ -213,7 +213,7 @@ const App = ({ children, history }: any) => {
           layout={Layout}
           exact
           path="/dashboard"
-          component={Dashboard}
+          component={DashboardBorrower}
         />
         <Web3Route
           layout={Layout}

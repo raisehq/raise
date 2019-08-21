@@ -1,3 +1,1 @@
-export function components() {
-    // TODO
-}
+export { default as Card } from './components/Card';

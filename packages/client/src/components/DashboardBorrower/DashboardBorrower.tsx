@@ -1,12 +1,13 @@
 import React from 'react';
-
-import { Container } from 'semantic-ui-react';
 import KycMessage from '../KycMessage';
+import Card from '../Card';
+
 const Dashboard = () => (
-  <Container>
+  <div>
     <KycMessage />
-    HOLA FROM DASHBOARD
-  </Container>
+    HOLA FROM DASHBOARD LOLens molens kkkkk
+    <Card>hello</Card>
+  </div>
 );
 
 export default Dashboard;
