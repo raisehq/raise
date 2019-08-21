@@ -10,7 +10,7 @@ import {
   HeaderProps,
   DividerProps
 } from 'semantic-ui-react';
-import { device, maxDevice } from '../LayoutV2/breakpoints';
+import { device, size } from '../LayoutV2/breakpoints';
 import theme from '../../theme';
 
 interface LoanFormValueProps {
@@ -96,7 +96,8 @@ export const LoanForm = styled.div`
 export const LoanFormInput = styled.div`
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0);
-  width: 100% @media ${device.laptop} {
+  width: 100%;
+  @media ${device.laptop} {
     margin-top: 60px;
     width: unset;
   }
@@ -173,23 +174,43 @@ export const LoanConfirmation = styled(Card)`
     padding: 30px 20px 20px 20px;
     box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
   }
-  @media ${device.laptopS} and  ${maxDevice.laptopM} {
+
+  @media ${device.laptopM} {
     &&& {
+      box-shadow: none;
+      border-top: 1px solid black;
+      border-radius: 0;
       position: relative;
       margin-top: 0px;
       top: 0px;
       width: 100%;
       max-width: 735px;
+      padding: 50px;
     }
   }
-  @media ${device.laptop} {
+
+  @media (min-width: ${size.laptop}) and (max-width: ${size.laptopL}) {
     &&& {
+      box-shadow: none;
+      border-top: 1px solid black;
+      border-radius: 0;
       position: relative;
       margin-top: 0px;
       top: 0px;
       width: 100%;
       max-width: 735px;
-      padding: 30px 20px 20px 20px;
+      padding: 50px;
+    }
+  }
+
+  @media ${device.laptopL} {
+    &&& {
+      border-radius: 4px;
+      box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
+      border-top: 0;
+      max-width: 380px;
+      margin-left: 35px;
+      margin-top: 30px;
     }
   }
 `;
@@ -208,35 +229,18 @@ export const LoanResume = styled.div`
     height: calc(100%);
   }
 
-  @media ${device.laptopS} and  ${maxDevice.laptopM} {
-    width:100%;
-    position: relative;
-    padding: 0px;
-    display: flex;
-    justify-content: space-between;
-  
-    & .divider.vertical::before {
-      height: calc(100%);
+  @media (min-width: ${size.laptop}) and (max-width: ${size.laptopXL}) {
+    & .divider.vertical {
+      display: none;
     }
-  
-    & .divider.vertical::after {
-      height: calc(100%);
-    }
+  }
 
-  @media ${device.laptop} {
-    width:100%;
-    position: relative;
-    padding: 0px;
-    display: flex;
-    justify-content: space-between;
-  
-    & .divider.vertical::before {
-      height: calc(100%);
+  @media ${device.laptopXXL} {
+    & .divider.vertical {
+      display: none;
     }
-  
-    & .divider.vertical::after {
-      height: calc(100%);
-    }
+    justify-content: center;
+    flex-direction: column;
   }
 `;
 
