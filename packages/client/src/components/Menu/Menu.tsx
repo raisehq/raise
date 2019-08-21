@@ -12,11 +12,6 @@ const Menus = {
       icon: 'th large',
     },
     {
-      title: 'Request a loan',
-      link: '/create-loan',
-      icon: 'university'
-    },
-    {
       title: 'My Loans',
       link: '/marketplace',
       icon: 'chart line'

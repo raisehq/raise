@@ -174,6 +174,15 @@ const App = ({ children, history }: any) => {
     );
   }, [isLoading, logged, web3Pass, deposited]);
 
+  const componentsByRole = {
+    1: {
+      dashboard: Dashboard
+    },
+    2: {
+      dashboard: Dashboard
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{ store, actions, history, web3Status, modalRefs }}
@@ -194,38 +203,52 @@ const App = ({ children, history }: any) => {
           exact
           path="/deposit"
           component={Deposit}
+          roles={[1, 2]}
         />
         <Web3Route
           layout={LayoutV2}
           exact
           path="/referral"
           component={Referral}
+          roles={[1, 2]}
         />
-        <Web3Route layout={Layout} exact path="/kyc" component={Kyc} />
+        <Web3Route
+          layout={Layout}
+          exact
+          path="/kyc"
+          component={Kyc}
+          roles={[1, 2]}
+        />
         <Web3Route
           layout={Layout}
           exact
           path="/kyc/validation"
           component={KycValidation}
+          roles={[1, 2]}
         />
         <Web3Route layout={LayoutV2} exact path="/" component={Referral} />
         <Web3Route
           layout={Layout}
           exact
           path="/dashboard"
-          component={DashboardBorrower}
+          component={
+            accounttype_id ? componentsByRole[accounttype_id].dashboard : null
+          }
+          roles={[1, 2]}
         />
         <Web3Route
           layout={Layout}
           exact
           path="/create-loan"
           component={CreateLoan}
+          roles={[1, 2]}
         />
         <Web3Route
           layout={Layout}
           exact
           path="/marketplace"
           component={Marketplace}
+          roles={[1, 2]}
         />
         {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />

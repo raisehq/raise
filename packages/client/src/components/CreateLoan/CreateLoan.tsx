@@ -37,41 +37,54 @@ const numeralFormat = '0,0.00';
 
 numeral.register('locale', 'hero', {
   delimiters: {
-      thousands: '.',
-      decimal: ','
+    thousands: '.',
+    decimal: ','
   },
   abbreviations: {
-      thousand: 'k',
-      million: 'mm',
-      billion: 'b',
-      trillion: 't'
+    thousand: 'k',
+    million: 'mm',
+    billion: 'b',
+    trillion: 't'
   },
-  ordinal: function (number) {
-      var b = number % 10;
-      return (b === 1 || b === 3) ? 'er' :
-          (b === 2) ? 'do' :
-              (b === 7 || b === 0) ? 'mo' :
-                  (b === 8) ? 'vo' :
-                      (b === 9) ? 'no' : 'to';
+  ordinal: function(number) {
+    var b = number % 10;
+    return b === 1 || b === 3
+      ? 'er'
+      : b === 2
+      ? 'do'
+      : b === 7 || b === 0
+      ? 'mo'
+      : b === 8
+      ? 'vo'
+      : b === 9
+      ? 'no'
+      : 'to';
   },
   currency: {
-      symbol: '€'
+    symbol: '€'
   }
 });
 
 numeral.locale('hero');
-numeral.defaultFormat(numeralFormat)
+numeral.defaultFormat(numeralFormat);
 /** End of numer formatting */
 
 /** Start of defaults */
-const minAmountOptions = Array.from({length: 99}, (v, k) => ({ value: k + 1, text: `${k + 1} %`})); 
+const minAmountOptions = [
+  { text: '20%', value: 20 },
+  { text: '30%', value: 30 },
+  { text: '40%', value: 40 },
+  { text: '50%', value: 50 },
+  { text: '60%', value: 60 },
+  { text: '70%', value: 70 }
+];
 
 const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
 const defaultMir = 10;
 const defaultTerm = 3;
-const defaultMinPercent = 10;
+const defaultMinPercent = 20;
 const minMir = 0;
 const maxMir = 20;
 
@@ -80,11 +93,14 @@ const marks = {
   8: ' ',
   12: ' ',
   16: ' '
-}
+};
 
 /** End of defaults */
 
-const calculateMinAmount = (value, percent) => value - (value * (percent / 100))
+const calculateMinAmount = (value, percent) => {
+  const minAmount = value - value * (percent / 100);
+  return minAmount >= 1 ? minAmount : 1;
+};
 
 const CreateLoan = () => {
   const [stage, setStage] = useState(UI.Confirm);
@@ -107,17 +123,25 @@ const CreateLoan = () => {
   const numberAmount = loan.amount;
   const formattedAmount = numeral(loan.amount).format();
   const formattedMinAmount = numeral(loan.minAmount).format();
-  const repaymentAmount = numeral(numberAmount + (numberAmount * (loan.mir * loan.term)) / 100).format();
+  const repaymentAmount = numeral(
+    numberAmount + (numberAmount * (loan.mir * loan.term)) / 100
+  ).format();
   const netLoan = numeral(numberAmount - (numberAmount * 1) / 100).format();
   const systemFees = numeral((numberAmount * 1) / 100).format();
-  const totalInterest = numeral((numberAmount * (loan.mir * loan.term)) / 100).format()
+  const totalInterest = numeral(
+    (numberAmount * (loan.mir * loan.term)) / 100
+  ).format();
 
   const onSetAmount = ({ floatValue }) => {
-    setLoan({ ...loan, amount: floatValue, minAmount: loan.accept ? calculateMinAmount(floatValue, minPercent) : floatValue });
-  }
+    const minAmount = calculateMinAmount(floatValue, minPercent);
+    setLoan({
+      ...loan,
+      amount: floatValue,
+      minAmount: loan.accept ? minAmount : floatValue
+    });
+  };
 
-  const onSetTerm = (e, data) =>
-    setLoan({ ...loan, term: data.value });
+  const onSetTerm = (e, data) => setLoan({ ...loan, term: data.value });
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
 
@@ -125,8 +149,11 @@ const CreateLoan = () => {
 
   const onMinAmount = (e, data) => {
     setMinPercent(data.value);
-    setLoan((l) => ({ ...l, minAmount: calculateMinAmount(l.amount, data.value) }));
-  }
+    setLoan(l => {
+      const minAmount = calculateMinAmount(l.amount, data.value);
+      return { ...l, minAmount };
+    });
+  };
 
   const onInterestChange = value => onSetMIR(parseFloat(value));
 
@@ -142,17 +169,17 @@ const CreateLoan = () => {
       );
       setStage(UI.Success);
     } catch (error) {
-      setStage(UI.Error)
+      setStage(UI.Error);
     }
   };
-  
+
   const onRetry = async () => {
     setStage(UI.Confirm);
     setAmountValidation({
       error: false,
       msg: ''
-    })
-    setAPR(0)
+    });
+    setAPR(0);
     setMinPercent(defaultMinPercent);
     setLoan({
       amount: defaultAmount,
@@ -165,7 +192,6 @@ const CreateLoan = () => {
 
   const onBlur = e => {
     const currentValue = loan.amount;
-    console.log(currentValue)
     setAmountValidation({
       error: currentValue < min || currentValue > max,
       msg: `Can not be ${
@@ -181,8 +207,17 @@ const CreateLoan = () => {
     }
   }, [loan]);
 
-  const values = {loan, numberAmount, amountValidation, formattedAmount, repaymentAmount, netLoan, systemFees, totalInterest};
-  const methods = {onSave, onRetry}
+  const values = {
+    loan,
+    numberAmount,
+    amountValidation,
+    formattedAmount,
+    repaymentAmount,
+    netLoan,
+    systemFees,
+    totalInterest
+  };
+  const methods = { onSave, onRetry };
 
   return (
     <LoanContainer>
@@ -190,9 +225,7 @@ const CreateLoan = () => {
         <LoanAmountBox>
           <LoanDescription>
             <TopHeader as="h2">How much would you like to borrow?</TopHeader>
-            <p>
-              Please enter the amount you would like to borrow.
-            </p>
+            <p>Please enter the amount you would like to borrow.</p>
           </LoanDescription>
           <LoanFormInput>
             <LoanInputBox>
@@ -202,12 +235,17 @@ const CreateLoan = () => {
                 onBlur={onBlur}
                 fmt={numeralFormat}
               />
-              <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`} name="DAI"/>
+              <Coin
+                src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`}
+                name="DAI"
+              />
             </LoanInputBox>
             <LoanInputLabel>
-                {amountValidation.error ? (
-                  <InputError>{amountValidation.msg}</InputError>
-                ) : '' }
+              {amountValidation.error ? (
+                <InputError>{amountValidation.msg}</InputError>
+              ) : (
+                ''
+              )}
             </LoanInputLabel>
           </LoanFormInput>
           <LoanDescriptionLowerAmount>
@@ -226,21 +264,20 @@ const CreateLoan = () => {
               different reasons
             </p>
             {loan.accept && (
-                <InputBox>
-                  <InputDescription>
+              <InputBox>
+                <InputDescription>
                   Please select how much less:
                   <p>Minimum amount: {formattedMinAmount} DAI</p>
-                  </InputDescription>
-                  <MininumLoanSelect
-                    value={minPercent}
-                    onChange={onMinAmount}
-                    placeholder="Select"
-                    options={minAmountOptions}
-                  />
-                </InputBox>
+                </InputDescription>
+                <MininumLoanSelect
+                  value={minPercent}
+                  onChange={onMinAmount}
+                  placeholder="Select"
+                  options={minAmountOptions}
+                />
+              </InputBox>
             )}
           </LoanDescriptionLowerAmount>
-          
         </LoanAmountBox>
         <BrowserView>
           <Divider />
@@ -279,12 +316,18 @@ const CreateLoan = () => {
                 {loan.mir}% MIR* ({APR.toFixed(2)}% APR)
               </span>
             </InterestCard>
-            <Slider defaultValue={loan.mir} onChange={onInterestChange} min={minMir} marks={marks} max={maxMir} />
+            <Slider
+              defaultValue={loan.mir}
+              onChange={onInterestChange}
+              min={minMir}
+              marks={marks}
+              max={maxMir}
+            />
             <SideInfo>* MIR : Monthly simple interest rate</SideInfo>
           </SliderWrapper>
         </LoanBox>
       </LoanForm>
-     {getLoanAction(stage, values, methods)}
+      {getLoanAction(stage, values, methods)}
     </LoanContainer>
   );
 };
