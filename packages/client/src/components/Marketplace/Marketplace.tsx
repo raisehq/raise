@@ -1,5 +1,17 @@
 import React from 'react';
+import { InvestModal } from '../InvestModal';
+const Marketplace = () => {
+  const investProps = {
+    loan: {
 
-const Marketplace = () => <div>HOLA FROM Marketplace</div>;
+    }
+  }
+  return (
+    <div>
+      HOLA FROM Marketplace
+      <InvestModal {...investProps} />
+    </div>
+  )
+};
 
 export default Marketplace;
