@@ -35,7 +35,7 @@ module.exports = {
     'import/order': 'warn',
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: true, packageDir: [__dirname, path.joint(__dirname, '/../../')] }
+      { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '/../../')] }
     ]
   },
   settings: {
