@@ -1,4 +1,4 @@
-export const countryOptions = [
+export default [
   {
     key: 'af',
     value: 'af',
@@ -1445,4 +1445,4 @@ export const countryOptions = [
     flag: 'zw',
     text: 'Zimbabwe'
   }
-];
+]

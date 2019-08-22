@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 import { device } from '../LayoutV2/breakpoints'
 
 export const Wrapper = styled.div`
@@ -27,13 +27,13 @@ export const Wrapper = styled.div`
       display: block;
     }
   }
-`;
+`
 
 export const LabelLess = styled.div`
   display: none;
   height: 30px;
   width: 88px;
-  color: #5A5A5A;;
+  color: #5a5a5a;
   font-size: 12px;
   font-weight: bold;
   line-height: 15px;
@@ -50,13 +50,13 @@ export const LabelLess = styled.div`
   @media ${device.laptop} {
     display: block;
   }
-`;
+`
 
 export const LabelMore = styled.div`
   display: none;
   height: 30px;
   width: 88px;
-  color: #5A5A5A;;
+  color: #5a5a5a;
   font-size: 12px;
   font-family: Lato;
   font-weight: bold;
@@ -69,24 +69,24 @@ export const LabelMore = styled.div`
   @media ${device.laptop} {
     display: block;
   }
-`;
+`
 
 export const handleStyle = {
   backgroundColor: '#3C4251',
-  border: 'none',
-};
+  border: 'none'
+}
 
 export const railStyle = {
   border: 'none',
   background: 'none'
-};
+}
 
 export const trackStyle = {
   width: '100%',
   height: '15px',
   background: 'none',
   borderRadius: '8px'
-};
+}
 
 export const dotStyle = {
   background: '#9498A0',
