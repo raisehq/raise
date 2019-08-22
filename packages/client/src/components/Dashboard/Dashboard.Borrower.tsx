@@ -1,12 +1,11 @@
-import React, { useContext, useCallback, createContext } from 'react';
+import React, { useContext, useCallback, Fragment } from 'react';
 import { Header } from 'semantic-ui-react';
 import { Button, DashboardContainer } from './Dashboard.styles';
 import KycMessage from '../KycMessage';
-import Tabs from './Dashboard.Tabs';
+import { DashboardTab } from './Dashboard.styles';
 import { AppContext } from '../App';
+import Tab from './Dashboard.Tab';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-
-export const DashboardContext: any = createContext({});
 
 const Dashboard = () => {
   const {
@@ -22,6 +21,17 @@ const Dashboard = () => {
 
   const onCreateLoan = useCallback(() => history.push('/create-loan'), []);
 
+  const panes = [
+    {
+      menuItem: 'Live auctions',
+      render: () => <Tab auctions={auctions} state={0} />
+    },
+    {
+      menuItem: 'Active loans',
+      render: () => <Tab auctions={auctions} state={1} />
+    }
+  ];
+
   useAsyncEffect(() => {
     if (history.location.pathname.includes('/dashboard')) {
       onGetLiveAuctionsByAccount();
@@ -29,14 +39,18 @@ const Dashboard = () => {
   }, [store.user.cryptoAddress.address]);
 
   return (
-    <DashboardContext.Provider value={{ auctions }}>
+    <Fragment>
       <KycMessage />
       <DashboardContainer>
         <Header as="h1">Recent Loans</Header>
-        <Tabs />
+        <DashboardTab
+          renderActiveOnly
+          menu={{ secondary: true, pointing: true }}
+          panes={panes}
+        />
         <Button onClick={onCreateLoan}>create loan</Button>
       </DashboardContainer>
-    </DashboardContext.Provider>
+    </Fragment>
   );
 };
 

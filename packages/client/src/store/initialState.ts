@@ -112,7 +112,7 @@ const initialState = {
     totalBountyToWithdraw: 0
   },
   loan: {
-    auctions: [],
+    auctions: null,
     active: []
   }
 };

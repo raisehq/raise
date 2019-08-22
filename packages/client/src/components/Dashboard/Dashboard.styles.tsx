@@ -52,3 +52,23 @@ export const Button = styled.button`
   text-transform: uppercase;
   cursor: pointer;
 `;
+
+export const SuggestedContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px 0 15px 0;
+
+  .heroCard {
+    margin: 0 10px 10px 0;
+  }
+`;
+
+export const NoResults = styled.div`
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+`;

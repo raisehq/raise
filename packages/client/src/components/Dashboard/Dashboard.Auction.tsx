@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { getWeb3, averageBlockTime } from '../../utils';
+import React, { useState } from 'react';
+import { Card } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
 import numeral from 'numeral';
-import { Card } from '@raisehq/components';
-import { DashboardTab } from './Dashboard.styles';
-import { DashboardContext } from './Dashboard';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
+import { getWeb3, averageBlockTime } from '../../utils';
 
 const calculateFromWei = number => fromWei(number.toString(), 'ether');
 
@@ -39,7 +37,7 @@ const calculateTerm = async auction => {
   }
 };
 
-const Auction = ({ auction }) => {
+const Auction = ({ auction, cta }: { auction: any; cta?: any }) => {
   const [loanTerm, setLoanTerm]: any = useState('-');
   const maxAmount: any = calculateFromWei(auction.maxAmount);
   const operatorFee: any = calculateFromWei(auction.operatorFee);
@@ -67,33 +65,9 @@ const Auction = ({ auction }) => {
         <Card.Row title="Investors" content={auction.investorCount} />
         <Card.Row title="System fees" content="-3000" />
       </Card.Grid>
+      {cta}
     </Card>
   );
 };
 
-const Tabs = () => {
-  const { auctions }: any = useContext(DashboardContext);
-
-  const panes = [
-    {
-      menuItem: 'Live auctions',
-      render: () => (
-        <DashboardTab.Pane loading={!auctions.length}>
-          {auctions.map(auction => (
-            <Auction auction={auction} />
-          ))}
-        </DashboardTab.Pane>
-      )
-    },
-    {
-      menuItem: 'Active loans',
-      render: () => <DashboardTab.Pane>tab 2</DashboardTab.Pane>
-    }
-  ];
-
-  return (
-    <DashboardTab menu={{ secondary: true, pointing: true }} panes={panes} />
-  );
-};
-
-export default Tabs;
+export default Auction;
