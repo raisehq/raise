@@ -3,5 +3,5 @@
 const onboarding = require('..');
 
 describe('onboarding', () => {
-    it('needs tests');
+  it('needs tests');
 });
