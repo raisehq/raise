@@ -28,7 +28,7 @@ const TokenInput: React.SFC<TokenInputProps> = ({
       {displayType === 'text' ? (
         <span>{numeral(value).format()}</span>
       ) : (
-        <LoanInput onValueChange={onValueChange} {...props} />
+        <LoanInput value={value} onValueChange={onValueChange} {...props} />
       )}
       <Coin
         src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`}

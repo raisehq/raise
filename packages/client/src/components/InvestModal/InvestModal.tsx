@@ -1,10 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useMetamask from '../../hooks/useMetaMask';
 import { Modal as SemanticModal } from 'semantic-ui-react';
-import { fromWei } from 'web3-utils';
+import { fromWei, toWei } from 'web3-utils';
 import { getWeb3, averageBlockTime } from '../../utils';
 import { TokenInput } from '../TokenInput';
+import numeral from '../CreateLoan/numeral';
+import ERC20 from '../../commons/erc20';
+import { MAX_VALUE } from '../../commons/constants';
 import { numeralFormat } from '../CreateLoan/numeral';
 import { ResumeItemProps, RaisedAmountProps, InvestModalProps } from './types';
 import {
@@ -23,7 +26,7 @@ import {
   Percentage,
   ConfirmButton
 } from './InvestModal.styles';
-
+import { AppContext } from '../App';
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
   <ResumeItemBox>
     <p>{value}</p>
@@ -61,12 +64,9 @@ const calculateTerms = async auction => {
     const auctionRemainingSeconds = auctionRemainingBlocks * averageBT;
     const auctionEndDate = getAuctionEndDate(auctionRemainingSeconds);
     const termEndDate = new Date(parseInt(auction.termEndTimestamp));
-    const rawDurationPercent = (currentBlock * 100) / auction.auctionEndBlock;
-    const auctionDurationPercent = Math.round(rawDurationPercent);
     return {
       loanDuration: getTermLength(termEndDate, auctionEndDate),
-      auctionEnds: Math.round(auctionRemainingSeconds / 60 / 60 / 24),
-      auctionDurationPercent
+      auctionEnds: Math.round(auctionRemainingSeconds / 60 / 60 / 24)
     };
   } catch (error) {
     return error;
@@ -75,12 +75,10 @@ const calculateTerms = async auction => {
 
 const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
   const { id: loanAddress, principal, investorCount, maxAmount } = loan;
-
+  const {
+    web3Status: { account }
+  }: any = useContext(AppContext);
   const metamask = useMetamask();
-  const [auctionPercent, setAuctionPercent]: [
-    number,
-    React.Dispatch<React.SetStateAction<number>>
-  ] = useState(0);
   const [auctionDuration, setAuctionDuration]: [
     number,
     React.Dispatch<React.SetStateAction<number>>
@@ -109,16 +107,12 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
           .getInterestRate()
           .call();
         setInterest(Number(loanInterest) / 1000);
-        const {
-          loanDuration,
-          auctionEnds,
-          auctionDurationPercent
-        } = await calculateTerms(loan);
+        const { loanDuration, auctionEnds } = await calculateTerms(loan);
         setLoanTerm(loanDuration);
         setAuctionDuration(auctionEnds);
-        setAuctionPercent(auctionDurationPercent);
       } catch (error) {
         setInterest(0);
+        setLoanTerm(0);
       }
     }
   }, [metamask, loanAddress]);
@@ -127,12 +121,43 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
     value,
     interest
   ]);
-  const raised = useMemo(() => (principal ? fromWei(principal) : 0), [
-    principal
-  ]);
-  const targetAmount = useMemo(() => (maxAmount ? fromWei(maxAmount) : 0), [
-    principal
-  ]);
+  const { raised, targetAmount, raisedPercentage } = useMemo(
+    () => ({
+      raised: principal ? fromWei(principal) : 0,
+      targetAmount: maxAmount ? numeral(fromWei(maxAmount)).format() : 0,
+      raisedPercentage:
+        principal && maxAmount
+          ? (Number(fromWei(principal)) * 100) / Number(fromWei(maxAmount))
+          : 0
+    }),
+    [principal, maxAmount]
+  );
+
+  const fundAll = () => {
+    setValue(Number(fromWei(maxAmount)) - Number(fromWei(principal)));
+  };
+
+  const onConfirm = async () => {
+    const web3 = getWeb3();
+    const { BN } = web3.utils;
+    const valueBN = new BN(toWei(value.toString()));
+    const Proxy = await metamask.addContract('DAIProxy');
+    const DAI = await metamask.addContract('DAI');
+    const DAIContract = await web3.eth.Contract(ERC20, DAI.address);
+    const approved = await DAIContract.methods.allowance(
+      Proxy.address,
+      toWei(value.toString())
+    );
+    if (valueBN.gt(approved)) {
+      await DAIContract.methods
+        .approve(Proxy.address, MAX_VALUE)
+        .send({ from: account });
+    }
+    await Proxy.methods
+      .fund(loanAddress, toWei(value.toString()))
+      .send({ from: account });
+  };
+
   return (
     <>
       <LenderButton />
@@ -148,7 +173,9 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
                   onValueChange={setValue}
                 />
               </ModalInputBox>
-              <InputLabel green>Fund all</InputLabel>
+              <InputLabel green onClick={fundAll}>
+                Fund all
+              </InputLabel>
             </div>
             <div>
               <ModalInputBox roi>
@@ -169,11 +196,11 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
               <ResumeItem title="Days left" value={`${auctionDuration}`} />
             </FlexSpacedLayout>
             <ProgressLayout>
-              <AuctionProgress active percent={auctionPercent} />
-              <Percentage>{auctionPercent} %</Percentage>
+              <AuctionProgress active percent={raisedPercentage} />
+              <Percentage>{raisedPercentage} %</Percentage>
             </ProgressLayout>
           </InvestResume>
-          <ConfirmButton>CONFIRM</ConfirmButton>
+          <ConfirmButton onClick={onConfirm}>CONFIRM</ConfirmButton>
         </SemanticModal.Content>
       </Modal>
     </>

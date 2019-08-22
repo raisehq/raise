@@ -140,4 +140,9 @@ export const ConfirmButton = styled(LenderButton)`
     font-size: 16px;
     color: #ffffff;
   }
+  &&&:hover,
+  &&&:focus {
+    background-color: #ff047f;
+    color: #ffffff;
+  }
 `;
