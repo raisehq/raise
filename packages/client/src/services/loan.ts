@@ -11,6 +11,7 @@ export const getLiveAuctionsByAccount = async (address, network) => {
         {
           users(where:{address:"${address}"}) {
             loanRequests {
+              state
               principal
               maxAmount
               operatorFee
@@ -21,6 +22,7 @@ export const getLiveAuctionsByAccount = async (address, network) => {
               interestRate
               borrowerDebt
               investorCount
+              id
             }
           }
         }`

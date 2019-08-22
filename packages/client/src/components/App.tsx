@@ -12,7 +12,7 @@ import { Dimmer, Loader } from 'semantic-ui-react';
 import { Web3Route } from './Web3Check';
 import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
-import Dashboard from './Dashboard';
+import { DashboardLender, DashboardBorrower } from './Dashboard';
 import Referral from './Referral/index';
 import Marketplace from './Marketplace';
 import CreateLoan from './CreateLoan';
@@ -175,11 +175,11 @@ const App = ({ children, history }: any) => {
   }, [isLoading, logged, web3Pass, deposited]);
 
   const componentsByRole = {
-    1: {
-      dashboard: Dashboard
-    },
     2: {
-      dashboard: Dashboard
+      dashboard: DashboardBorrower
+    },
+    1: {
+      dashboard: DashboardLender
     }
   };
 
