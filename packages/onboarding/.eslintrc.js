@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   root: true,
   env: {
@@ -33,7 +35,7 @@ module.exports = {
     'import/order': 'warn',
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: true, packageDir: [__dirname, __dirname + '/../../'] }
+      { devDependencies: true, packageDir: [__dirname, path.joint(__dirname, '/../../')] }
     ]
   },
   settings: {
@@ -41,4 +43,4 @@ module.exports = {
       version: 'detect'
     }
   }
-}
+};
