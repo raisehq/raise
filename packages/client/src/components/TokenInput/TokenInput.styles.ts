@@ -8,6 +8,7 @@ export const LoanInputBox = styled.div`
   justify-content: flex-end;
   width: 100%;
   input {
+    overflow: visible;
     max-width: 80px;
     border: none !important;
     margin-right: 5px;

@@ -1,21 +1,24 @@
 import axios from 'axios';
 import { useState, useEffect, useRef, useContext } from 'react';
 import hasIn from 'lodash/hasIn';
+import { isAddress } from 'web3-utils';
 import get from 'lodash/get';
 import { getWeb3 } from '../utils';
 import useAsyncEffect from './useAsyncEffect';
-import { AppContext } from '../components/App'
+import { AppContext } from '../components/App';
 
 const HERO_CONTRACTS =
   'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
 
 const useMetaMask = () => {
-  const { web3Status: { network } }: any = useContext(AppContext);
+  const {
+    web3Status: { network }
+  }: any = useContext(AppContext);
   const [metamask, setMetaMask]: any = useState(null);
   const [heroContracts, setHeroContracts]: any = useState(null);
   const web3 = getWeb3();
   const contracts = useRef({});
-  
+
   useAsyncEffect(async () => {
     const contracts = await axios.get(HERO_CONTRACTS);
 
@@ -29,13 +32,28 @@ const useMetaMask = () => {
         heroContracts,
         isConnected: web3.eth.net.isListening,
         addContract: async (name: string) => {
-          const netId = await web3.eth.net.getId()
+          const netId = await web3.eth.net.getId();
           if (!hasIn(heroContracts, `address.${netId}.${name}`)) {
-            throw new Error(`contract not found in current network ${netId}`)
+            throw new Error(`contract not found in current network ${netId}`);
           }
           const contract = await web3.eth.Contract(
             get(heroContracts, `abi.${name}`),
             get(heroContracts, `address.${netId}.${name}`)
+          );
+          contracts.current = { ...contract.current, [name]: contract };
+          return contract;
+        },
+        addContractByAddress: async (name: string, address: string) => {
+          if (!address || !isAddress(address)) {
+            throw new Error('address not valid or null');
+          }
+          console.log(heroContracts);
+          if (!hasIn(heroContracts, `abi.${name}`)) {
+            throw new Error(`contract not found in abi metadata list`);
+          }
+          const contract = await web3.eth.Contract(
+            get(heroContracts, `abi.${name}`),
+            address
           );
           contracts.current = { ...contract.current, [name]: contract };
           return contract;

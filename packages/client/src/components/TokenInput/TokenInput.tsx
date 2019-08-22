@@ -4,34 +4,31 @@ import LoanInput from '../CreateLoan/LoanInput';
 import Coin from '../Coin';
 
 interface TokenInputProps {
-  value?: any;
+  value?: number;
   onValueChange?: any;
   onBlur?: any;
-  numeralFormat?: any;
-  error?: any;
+  numeralFormat?: string;
+  error?: boolean;
   error_msg?: any;
+  decimalScale?: number;
+  displayType?: string;
 }
 
 const TokenInput: React.SFC<TokenInputProps> = ({
-  value,
-  onValueChange,
-  onBlur,
-  numeralFormat,
-  error,
-  error_msg
-}) => (
-  <LoanInputBox>
-    <LoanInput
-      value={value}
-      onValueChange={onValueChange}
-      onBlur={onBlur}
-      fmt={numeralFormat}
-    />
-    <Coin
-      src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`}
-      name="DAI"
-    />
-  </LoanInputBox>
-);
+  onValueChange: onChange,
+  ...props
+}) => {
+  const onValueChange = ({ floatValue }) =>
+    onChange ? onChange(floatValue) : undefined;
+  return (
+    <LoanInputBox>
+      <LoanInput onValueChange={onValueChange} {...props} />
+      <Coin
+        src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`}
+        name="DAI"
+      />
+    </LoanInputBox>
+  );
+};
 
 export default TokenInput;
