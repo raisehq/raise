@@ -20,14 +20,17 @@ const useLoanDispatcher = () => {
             acceptMinimum
           ) => {
             const averageMiningTime = await averageBlockTime();
-            const loanTimeLength = 1 * 4 * 7 * 24 * 60 * 60;
-            const termLengthDate = new Date(
+            const auctionTimeLength = 1 * 30 * 24 * 60 * 60;
+            
+            const termLengthMonths = new Date(
               new Date().setMonth(new Date().getMonth() + term)
+            );
+            const termLengthDate = new Date(
+              termLengthMonths.setSeconds(termLengthMonths.getSeconds() + auctionTimeLength)
             );
             const termLength = termLengthDate.getTime();
 
-            //const termLength = Date.now() + term * 4 * 7 * 24 * 60 * 60 * 1000;
-            const lengthBlocks = loanTimeLength / averageMiningTime;
+            const lengthBlocks = auctionTimeLength / averageMiningTime;
             const params = [
               lengthBlocks,
               metamask.utils.toWei(
