@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import numeral from 'numeral';
+import numeral, { numeralFormat } from './numeral';
 import { BrowserView } from 'react-device-detect';
 import { UI, getLoanAction } from './CreateLoan.Response';
 import Coin from '../Coin';
@@ -31,43 +31,6 @@ import {
 import Slider from '../Slider';
 import months from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
-
-/** Start of number formatting */
-const numeralFormat = '0,0.00';
-
-numeral.register('locale', 'hero', {
-  delimiters: {
-    thousands: '.',
-    decimal: ','
-  },
-  abbreviations: {
-    thousand: 'k',
-    million: 'mm',
-    billion: 'b',
-    trillion: 't'
-  },
-  ordinal: function(number) {
-    var b = number % 10;
-    return b === 1 || b === 3
-      ? 'er'
-      : b === 2
-      ? 'do'
-      : b === 7 || b === 0
-      ? 'mo'
-      : b === 8
-      ? 'vo'
-      : b === 9
-      ? 'no'
-      : 'to';
-  },
-  currency: {
-    symbol: '€'
-  }
-});
-
-numeral.locale('hero');
-numeral.defaultFormat(numeralFormat);
-/** End of numer formatting */
 
 /** Start of defaults */
 const minAmountOptions = [

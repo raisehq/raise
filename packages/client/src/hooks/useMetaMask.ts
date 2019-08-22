@@ -47,7 +47,6 @@ const useMetaMask = () => {
           if (!address || !isAddress(address)) {
             throw new Error('address not valid or null');
           }
-          console.log(heroContracts);
           if (!hasIn(heroContracts, `abi.${name}`)) {
             throw new Error(`contract not found in abi metadata list`);
           }

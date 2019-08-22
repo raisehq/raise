@@ -5,6 +5,7 @@ import { Modal as SemanticModal } from 'semantic-ui-react';
 import { fromWei } from 'web3-utils';
 import { getWeb3, averageBlockTime } from '../../utils';
 import { TokenInput } from '../TokenInput';
+import { numeralFormat } from '../CreateLoan/numeral';
 import { ResumeItemProps, RaisedAmountProps, InvestModalProps } from './types';
 import {
   LenderButton,
@@ -33,7 +34,7 @@ const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
 const RaisedAmount: React.SFC<RaisedAmountProps> = ({ value }) => (
   <RaisedAmountBox>
     <p>Raised</p>
-    <TokenInput value={value} />
+    <TokenInput value={value} displayType="text" />
   </RaisedAmountBox>
 );
 
@@ -141,7 +142,11 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
           <ModalInputContainer>
             <div>
               <ModalInputBox>
-                <TokenInput value={value} onValueChange={setValue} />
+                <TokenInput
+                  value={value}
+                  numeralFormat={numeralFormat}
+                  onValueChange={setValue}
+                />
               </ModalInputBox>
               <InputLabel green>Fund all</InputLabel>
             </div>
@@ -156,7 +161,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
             <RaisedAmount value={raised} />
             <FlexSpacedLayout>
               <ResumeItem title="Borrower" value="Company A" />
-              <ResumeItem title="Loan Term" value={`${loanTerm}`} />
+              <ResumeItem title="Loan Term" value={`${loanTerm} months`} />
               <ResumeItem title="Min APR" value={`${interest} %`} />
 
               <ResumeItem title="Target Amount" value={`${targetAmount} DAI`} />

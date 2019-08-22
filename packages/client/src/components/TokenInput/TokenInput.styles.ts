@@ -5,10 +5,11 @@ export const LoanInputBox = styled.div`
   background-color: transparent;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   width: 100%;
-  input {
-    overflow: visible;
+  input,
+  span {
+    display: block;
     max-width: 80px;
     border: none !important;
     margin-right: 5px;
