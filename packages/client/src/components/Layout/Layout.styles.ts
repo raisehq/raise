@@ -14,8 +14,7 @@ export const HeroLayout = styled('div')`
     padding: 0;
     @media ${device.laptop} {
       overflow-y: scroll;
-      padding: 20px;
-      padding-left: 300px;
+      padding 0px 0px 0px 280px;
     }
   }
 `;
