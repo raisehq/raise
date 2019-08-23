@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { Card } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
 import numeral from 'numeral';
+import Coin from '../Coin';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getWeb3, averageBlockTime } from '../../utils';
+import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
+import { AmountComponent } from './Dashboard.styles';
 
 const calculateFromWei = number => fromWei(number.toString(), 'ether');
 
@@ -64,21 +67,32 @@ const Auction = ({ auction, cta }: { auction: any; cta?: any }) => {
     setTimes({ loanTerm, daysLeft });
   }, []);
 
+  const Amount = () => (
+    <AmountComponent>
+      {auction.principal}
+      <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`} name="DAI" />
+    </AmountComponent>
+  );
+
   return (
     <Card>
-      <Card.Header title="Requested Amount" amount={auction.principal} />
+      <Card.Header title="Raised" amount={<Amount />} />
+      {auction.state !== 0 && (
+        <Card.Badge color={loanStatusColors[auction.state]}>{loanStatus[auction.state]}</Card.Badge>
+      )}
+      <Card.Graph currentAmount={principal} totalAmount={maxAmount} />
       <Card.Grid>
-        <Card.Row title="System Fees" content={systemFees} />
-        <Card.Row title="Loan Term" content={times.loanTerm} />
-        <Card.Row title="Net Loan Proceed" content={auction.netBalance || 0} />
+        <Card.Row title="Investors" content={auction.investorCount} />
+        <Card.Row title="Current APR" content={auction.interestRate * 12} />
+        <Card.Row title="Days Left" content={times.daysLeft} />
         <Card.Row title="Requested Amount" content={maxAmount} />
-        <Card.Row title="APR" content={auction.interestRate * 12} />
         <Card.Row title="Total Repayemnt" content={auction.borrowerDebt} />
       </Card.Grid>
-      <Card.Graph currentAmount={principal} totalAmount={maxAmount} />
+      <Card.Separator />
       <Card.Grid nobottom>
-        <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="Days Left" content={times.daysLeft} />
+        <Card.Row title="System Fees" content={systemFees} />
+        <Card.Row title="Loan Term" content={`${times.loanTerm} months`} />
+        <Card.Row title="Net Loan Proceeds" content={`${auction.netBalance || 0} DAI`} />
       </Card.Grid>
       {cta}
     </Card>

@@ -1,6 +1,6 @@
-import React, { useContext, useCallback, Fragment } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Header } from 'semantic-ui-react';
-import { Button, DashboardContainer } from './Dashboard.styles';
+import { Button, DashboardContainer, DashboardWrapper } from './Dashboard.styles';
 import KycMessage from '../KycMessage';
 import { AppContext } from '../App';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
@@ -40,20 +40,16 @@ const Dashboard = () => {
   ];
 
   return (
-    <Fragment>
+    <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
         <Header as="h1">Suggested auctions</Header>
         <Suggested auctions={auctions} />
         <Button onClick={onCreateLoan}>marketplace</Button>
         <Header as="h1">My activity</Header>
-        <DashboardTab
-          renderActiveOnly
-          menu={{ secondary: true, pointing: true }}
-          panes={panes}
-        />
+        <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
       </DashboardContainer>
-    </Fragment>
+    </DashboardWrapper>
   );
 };
 

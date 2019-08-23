@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 import { Tab } from 'semantic-ui-react';
+import { maxDevice } from '../LayoutV2/breakpoints';
 import theme from '../../theme';
 
-export const DashboardContainer = styled.div`
-  max-width: 1080px;
+export const DashboardWrapper = styled.div`
   width: 100%;
+  padding: 25px;
+  box-sizing: border-box;
+`;
+
+export const DashboardContainer = styled.div`
+  width: 100%;
+  max-width: 1080px;
 `;
 
 export const DashboardTab: any = styled(Tab)`
@@ -36,6 +43,11 @@ export const DashboardTab: any = styled(Tab)`
 
     .heroCard {
       margin: 0 10px 10px 0;
+
+      @media ${maxDevice.mobileL} {
+        width: 100%;
+        margin: 0 0 10px 0;
+      }
     }
   }
 `;
@@ -71,4 +83,15 @@ export const NoResults = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 26px;
+`;
+
+export const AmountComponent = styled.div`
+  position: relative;
+  display: inline-block;
+
+  &&& > div {
+    position: absolute;
+    top: 2px;
+    right: -47px;
+  }
 `;

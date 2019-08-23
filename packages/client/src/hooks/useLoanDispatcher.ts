@@ -12,22 +12,12 @@ const useLoanDispatcher = () => {
         const contract = await metamask.addContract('LoanDispatcher');
         const account = await metamask.getAccounts();
         setActiveContract({
-          deploy: async (
-            minAmount,
-            amount,
-            bpMaxInterestRate,
-            term,
-            acceptMinimum
-          ) => {
+          deploy: async (minAmount, amount, bpMaxInterestRate, term, acceptMinimum) => {
             const averageMiningTime = await averageBlockTime();
             const auctionTimeLength = 1 * 30 * 24 * 60 * 60;
-            const termLengthMonths = new Date(
-              new Date().setMonth(new Date().getMonth() + term)
-            );
+            const termLengthMonths = new Date(new Date().setMonth(new Date().getMonth() + term));
             const termLengthDate = new Date(
-              termLengthMonths.setSeconds(
-                termLengthMonths.getSeconds() + auctionTimeLength
-              )
+              termLengthMonths.setSeconds(termLengthMonths.getSeconds() + auctionTimeLength)
             );
             const termLength = termLengthDate.getTime();
             const lengthBlocks = auctionTimeLength / averageMiningTime;
@@ -42,9 +32,7 @@ const useLoanDispatcher = () => {
               termLength
             ];
             console.log(params);
-            return contract.methods
-              .deploy(...params)
-              .send({ from: account[0] });
+            return contract.methods.deploy(...params).send({ from: account[0] });
           }
         });
       } catch (error) {
