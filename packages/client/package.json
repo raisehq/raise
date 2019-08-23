@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@raisehq/onboarding": "*",
+    "@raisehq/components": "*",
     "@types/hero-ui": "git+https://herolending:N5dMwpevvwyEe5BQBKqk@bitbucket.org/herodevteam/hero-ui.git#integration",
     "@types/jest": "24.0.15",
     "@types/lodash": "^4.14.135",

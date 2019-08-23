@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import theme from '../../../theme';
 
 export const HeroCard = styled.div`
-  width: 100%;
-  min-width: 350px;
+  width: 350px;
   border-radius: 4px;
   background-color: #ffffff;
   box-shadow: ${theme.shadow};
