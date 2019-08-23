@@ -36,7 +36,8 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '/../../')] }
-    ]
+    ],
+    'implicit-arrow-linebreak': 0
   },
   settings: {
     react: {
