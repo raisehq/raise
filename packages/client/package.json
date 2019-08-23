@@ -63,6 +63,14 @@
     "web3": "1.0.0-beta.55",
     "web3-utils": "1.0.0-beta.55"
   },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "eslint": "^6.2.1",
+    "eslint-config-airbnb-typescript": "^4.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.14.3"
+  },
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "react-start": "react-scripts start ",
@@ -72,13 +80,10 @@
     "build": "NODE_OPTIONS='--max-old-space-size=2048' react-scripts build",
     "build:integration": "env-cmd .env.integration yarn run build",
     "build:production": "NODE_ENV=production env-cmd .env.production yarn run build ",
-    "lint": "eslint src/**/*.js --fix",
     "test": "jest --coverage --coverageDirectory=output/coverage/jest",
     "test:watch": "jest --watchAll --verbose=false",
+    "lint": "eslint . --ext .js,.ts,.tsx",
     "generator": "plop --plopfile ./node_modules/hero-generator-react/index.js"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -90,37 +95,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "jest": {
-    "setupFiles": [
-      "./.storybook/__conf__/jestMockConfig.js",
-      "./.storybook/__conf__/enzymeConfig.js"
-    ],
-    "testRegex": "\\.test\\.js$",
-    "automock": false,
-    "globals": {
-      "__TESTS__": true
-    },
-    "roots": [
-      "./src"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-    },
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react/",
-      "<rootDir>/node_modules/lodash/",
-      "<rootDir>/node_modules/material-ui/",
-      "<rootDir>/node_modules/react-dom/",
-      "<rootDir>/node_modules/enzyme/",
-      "<rootDir>/node_modules/chai/",
-      "<rootDir>/node_modules/core-js/",
-      "<rootDir>/node_modules/sinon/",
-      "<rootDir>/node_modules/uuid/",
-      "<rootDir>/node_modules/es6-shim/",
-      "<rootDir>/node_modules/react-addons-test-utils/"
     ]
   }
 }

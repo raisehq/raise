@@ -21,7 +21,8 @@
     "build-storybook": "build-storybook",
     "build": "tsc",
     "dev": "tsc --watch",
-    "dev:int": "yarn run dev"
+    "dev:int": "yarn run dev",
+    "lint": "eslint . --ext .js,.ts,.tsx"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -33,7 +34,13 @@
     "@storybook/react": "^5.1.9",
     "@types/storybook__react": "^4.0.2",
     "awesome-typescript-loader": "^5.2.1",
-    "babel-loader": "^8.0.6"
+    "babel-loader": "^8.0.6",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "eslint": "^6.2.1",
+    "eslint-config-airbnb-typescript": "^4.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.14.3"
   },
   "dependencies": {
     "js-cookie": "^2.2.0"
