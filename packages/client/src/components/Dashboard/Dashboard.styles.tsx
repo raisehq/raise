@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import { Tab } from 'semantic-ui-react';
 import theme from '../../theme';
 
+export const DashboardContainer = styled.div`
+  max-width: 1080px;
+  width: 100%;
+`;
+
 export const DashboardTab: any = styled(Tab)`
   margin-bottom: 25px;
 
@@ -25,7 +30,13 @@ export const DashboardTab: any = styled(Tab)`
   }
 
   &&& .ui.attached.segment {
+    display: flex;
+    flex-wrap: wrap;
     border: none;
+
+    .heroCard {
+      margin: 0 10px 10px 0;
+    }
   }
 `;
 
@@ -40,4 +51,24 @@ export const Button = styled.button`
   background: none;
   text-transform: uppercase;
   cursor: pointer;
+`;
+
+export const SuggestedContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px 0 15px 0;
+
+  .heroCard {
+    margin: 0 10px 10px 0;
+  }
+`;
+
+export const NoResults = styled.div`
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
 `;

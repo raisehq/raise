@@ -8,8 +8,14 @@ if (authCookie || userCookie) {
   LocalData.setObj('auth', JSON.parse(authCookie));
   LocalData.setObj('user', JSON.parse(userCookie));
 
-  Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
-  Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
+  Cookies.remove('auth', {
+    path: '/',
+    domain: process.env.REACT_APP_COOKIE_DOMAIN
+  });
+  Cookies.remove('user', {
+    path: '/',
+    domain: process.env.REACT_APP_COOKIE_DOMAIN
+  });
 }
 
 const { id, status, accounttype_id } = LocalData.getObj('auth') || {
@@ -104,6 +110,10 @@ const initialState = {
     referrals: null,
     totalReferralsCount: 0,
     totalBountyToWithdraw: 0
+  },
+  loan: {
+    auctions: null,
+    active: []
   }
 };
 
