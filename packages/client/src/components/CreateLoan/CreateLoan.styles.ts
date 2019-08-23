@@ -75,7 +75,7 @@ export const LoanContainer = styled.div`
 `;
 
 export const LoanForm = styled.div`
-  max-width: 735px;
+  max-width: 100%;
   width: 100%;
   height: fit-content;
   box-shadow: ${theme.shadow};
@@ -87,6 +87,7 @@ export const LoanForm = styled.div`
     padding: 0px 0px 30px 0px;
   }
   @media ${device.laptop} {
+    max-width: 735px;
     font-size: 14px;
     padding: 40px 50px 50px;
     background: #fff;
