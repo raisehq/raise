@@ -14,14 +14,23 @@ const getAuctionEndDate = auctionRemainingSeconds => {
   return now;
 };
 
-const getTermLength = (termEndDate, auctionEndDate) => {
-  let diff = (termEndDate.getTime() - auctionEndDate.getTime()) / 1000;
-  diff /= 60 * 60 * 24 * 7 * 4;
+const getTermLength = (d, dd) => {
+  var hour = 60 * 60 * 1000,
+    day = hour * 24,
+    month = day * 30,
+    ms = Math.abs(d - dd),
+    months = parseInt((ms / month).toString(), 10);
 
-  return Math.abs(Math.round(diff));
+  ms = ms - months * month;
+  var days = parseInt((ms / day).toString(), 10);
+  ms -= days * day;
+  var hours = parseInt((ms / hour).toString(), 10);
+  ms -= hours * hour;
+
+  return months;
 };
 
-const calculateTerm = async auction => {
+const calculateTimes = async auction => {
   try {
     const web3 = getWeb3();
     const currentBlock = await web3.eth.getBlockNumber();
@@ -30,40 +39,46 @@ const calculateTerm = async auction => {
     const auctionRemainingSeconds = auctionRemainingBlocks * averageBT;
     const auctionEndDate = getAuctionEndDate(auctionRemainingSeconds);
     const termEndDate = new Date(parseInt(auction.termEndTimestamp));
+    const loanTerm = getTermLength(termEndDate, auctionEndDate);
+    let seconds = auctionRemainingSeconds;
+    const daysLeft = Math.floor(seconds / (3600 * 24));
 
-    return getTermLength(termEndDate, auctionEndDate);
+    return { loanTerm, daysLeft };
   } catch (error) {
     return error;
   }
 };
 
 const Auction = ({ auction, cta }: { auction: any; cta?: any }) => {
-  const [loanTerm, setLoanTerm]: any = useState('-');
+  const [times, setTimes]: any = useState({
+    loanTerm: '-',
+    daysLeft: '-'
+  });
   const maxAmount: any = calculateFromWei(auction.maxAmount);
   const operatorFee: any = calculateFromWei(auction.operatorFee);
   const principal: any = calculateFromWei(auction.principal);
   const systemFees: any = numeral((maxAmount * operatorFee) / 100).format();
 
   useAsyncEffect(async () => {
-    const loanTerm = await calculateTerm(auction);
-    setLoanTerm(loanTerm);
+    const { loanTerm, daysLeft } = await calculateTimes(auction);
+    setTimes({ loanTerm, daysLeft });
   }, []);
 
   return (
     <Card>
       <Card.Header title="Requested Amount" amount={auction.principal} />
       <Card.Grid>
-        <Card.Row title="System fees" content={systemFees} />
-        <Card.Row title="Loan term" content={loanTerm} />
-        <Card.Row title="Net loan proceed" content={auction.netBalance || 0} />
-        <Card.Row title="Requested amount" content={maxAmount} />
+        <Card.Row title="System Fees" content={systemFees} />
+        <Card.Row title="Loan Term" content={times.loanTerm} />
+        <Card.Row title="Net Loan Proceed" content={auction.netBalance || 0} />
+        <Card.Row title="Requested Amount" content={maxAmount} />
         <Card.Row title="APR" content={auction.interestRate * 12} />
-        <Card.Row title="Total repayemnt" content={auction.borrowerDebt} />
+        <Card.Row title="Total Repayemnt" content={auction.borrowerDebt} />
       </Card.Grid>
       <Card.Graph currentAmount={principal} totalAmount={maxAmount} />
       <Card.Grid nobottom>
         <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="System fees" content="-3000" />
+        <Card.Row title="Days Left" content={times.daysLeft} />
       </Card.Grid>
       {cta}
     </Card>
