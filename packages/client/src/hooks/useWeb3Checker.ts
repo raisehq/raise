@@ -90,7 +90,7 @@ const useWeb3Checker = (): Web3State => {
   }, []);
 
   const verifyCheckList = async () => {
-    const web3 = getWeb3();
+    const web3 = getWeb3()
     try {
       const accounts = await web3.eth.getAccounts();
       const netName = parseNetwork(await web3.eth.net.getId());
@@ -128,8 +128,8 @@ const useWeb3Checker = (): Web3State => {
   };
 
   useEffect(() => {
-    let accountInterval;
-    const web3 = getWeb3();
+    let accountInterval
+    const web3 = getWeb3()
 
     const defaultCheckList = web3CheckList(
       web3,
@@ -146,11 +146,11 @@ const useWeb3Checker = (): Web3State => {
     );
 
     if (web3 && web3.givenProvider) {
-      accountInterval = setInterval(verifyCheckList, 500);
+      accountInterval = setInterval(verifyCheckList, 500)
     }
     return () => {
       if (accountInterval) {
-        clearInterval(accountInterval);
+        clearInterval(accountInterval)
       }
     };
   }, [targetAddress, targetNetwork, definitions]);
@@ -159,4 +159,4 @@ const useWeb3Checker = (): Web3State => {
   return { ...web3State, ...contracts };
 };
 
-export default useWeb3Checker;
+export default useWeb3Checker

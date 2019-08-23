@@ -8,6 +8,6 @@ export default (state: any, action: any) => {
     default:
       return {
         ...state
-      }
+      };
   }
 };

@@ -1,10 +1,10 @@
 export interface Web3State {
-  hasProvider: boolean; 
+  hasProvider: boolean;
   isMetamask: boolean;
   unlocked: boolean;
-  account: string; 
+  account: string;
   accountMatches: boolean;
-  network: string; 
+  network: string;
   networkMatches: boolean;
   targetNetwork: string;
   hasDeposit: boolean;
