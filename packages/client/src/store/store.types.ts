@@ -81,16 +81,16 @@ export type Loan = {
 
 export type Store = {
   config: {
-    targetNetwork: Number,
-    targetAddressId: Number,
-  },
+    targetNetwork: Number;
+    targetAddressId: Number;
+  };
   auth: {
     login: { error: boolean };
     id: string;
     status: number;
     type: number;
   };
-  user: { details: any; addressTypes: AddressTypes };
+  user: { details: any; addressTypes: any };
 };
 
 export type CheckStatus = {

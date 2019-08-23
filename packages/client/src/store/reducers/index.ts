@@ -1,8 +1,9 @@
-import user from './user'
-import auth from './auth'
-import kyc from './kyc'
-import blockchain from './blockchain'
-import config from './config'
+import user from './user';
+import auth from './auth';
+import kyc from './kyc';
+import blockchain from './blockchain';
+import config from './config';
+import loan from './loan';
 
 const combineReducers = reducers => {
   return (state = {}, action) => {
@@ -18,5 +19,6 @@ export default combineReducers({
   user,
   auth,
   kyc,
-  blockchain
-})
+  blockchain,
+  loan
+});
