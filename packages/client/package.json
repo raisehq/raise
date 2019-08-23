@@ -71,7 +71,7 @@
     "int": "env-cmd .env.integration npm run react-start",
     "build": "NODE_OPTIONS='--max-old-space-size=2048' react-scripts build",
     "build:integration": "env-cmd .env.integration yarn run build",
-    "build:production": "env-cmd .env.production yarn run build ",
+    "build:production": "NODE_ENV=production env-cmd .env.production yarn run build ",
     "lint": "eslint src/**/*.js --fix",
     "test": "jest --coverage --coverageDirectory=output/coverage/jest",
     "test:watch": "jest --watchAll --verbose=false",
