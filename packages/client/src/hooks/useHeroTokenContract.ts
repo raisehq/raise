@@ -27,7 +27,7 @@ const useDepositContract = () => {
                 approveDeposit: async (account, amount) => {
                   return HeroTokenContract.methods
                     .approve(
-                      DepositContract.address,
+                      DepositContract.options.address,
                       metamask.utils.toWei(amount.toString(), 'ether')
                     )
                     .send({

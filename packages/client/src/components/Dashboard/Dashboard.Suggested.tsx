@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
 import Auction from './Dashboard.Auction';
 import useAuctionState from './Dashboard.useAuctionState';
 import { SuggestedContainer } from './Dashboard.styles';
+import { InvestModal }  from '../InvestModal'
 
 const Suggested = ({ auctions }) => {
   const auctionsState: any = useAuctionState(auctions, 'all');
@@ -15,7 +15,7 @@ const Suggested = ({ auctions }) => {
           <Auction
             key={auction.id}
             auction={auction}
-            cta={<Button>INVEST</Button>}
+            cta={<InvestModal loan={auction} />}
           />
         ))}
       </SuggestedContainer>

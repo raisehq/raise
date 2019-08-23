@@ -45,7 +45,7 @@ const hasDeposited = async (web3, definitions, address) => {
   ) {
     return false;
   }
-  const contract = await web3.eth.Contract(
+  const contract = new web3.eth.Contract(
     get(definitions, `abi.Deposit`),
     get(definitions, `address.${netId}.Deposit`)
   );
@@ -111,6 +111,7 @@ const useWeb3Checker = (): Web3State => {
         isEqual(newWeb3State, prevWeb3State) ? prevWeb3State : newWeb3State
       );
     } catch (err) {
+      console.error(err);
       const errorState = web3CheckList(
         web3,
         [],

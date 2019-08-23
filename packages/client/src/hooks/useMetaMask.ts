@@ -36,7 +36,7 @@ const useMetaMask = () => {
           if (!hasIn(heroContracts, `address.${netId}.${name}`)) {
             throw new Error(`contract not found in current network ${netId}`);
           }
-          const contract = await web3.eth.Contract(
+          const contract = new web3.eth.Contract(
             get(heroContracts, `abi.${name}`),
             get(heroContracts, `address.${netId}.${name}`)
           );
@@ -50,7 +50,7 @@ const useMetaMask = () => {
           if (!hasIn(heroContracts, `abi.${name}`)) {
             throw new Error(`contract not found in abi metadata list`);
           }
-          const contract = await web3.eth.Contract(
+          const contract = new web3.eth.Contract(
             get(heroContracts, `abi.${name}`),
             address
           );
@@ -60,8 +60,7 @@ const useMetaMask = () => {
         utils: web3.utils,
         getContract: (name: string) => contracts.current[name],
         getContracts: () => contracts.current,
-        getAccounts: web3.eth.getAccounts,
-        enable: web3._currentProvider.connection.enable
+        getAccounts: web3.eth.getAccounts
       });
     }
   }, [web3, network, heroContracts]);

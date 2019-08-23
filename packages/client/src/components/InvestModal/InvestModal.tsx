@@ -27,6 +27,7 @@ import {
   ConfirmButton
 } from './InvestModal.styles';
 import { AppContext } from '../App';
+
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
   <ResumeItemBox>
     <p>{value}</p>
@@ -79,6 +80,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
     web3Status: { account }
   }: any = useContext(AppContext);
   const metamask = useMetamask();
+  const [open, setOpen] = useState(false);
   const [auctionDuration, setAuctionDuration]: [
     number,
     React.Dispatch<React.SetStateAction<number>>
@@ -143,14 +145,14 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
     const valueBN = new BN(toWei(value.toString()));
     const Proxy = await metamask.addContract('DAIProxy');
     const DAI = await metamask.addContract('DAI');
-    const DAIContract = await web3.eth.Contract(ERC20, DAI.address);
+    const DAIContract = new web3.eth.Contract(ERC20, DAI._address);
     const approved = await DAIContract.methods.allowance(
-      Proxy.address,
-      toWei(value.toString())
-    );
-    if (valueBN.gt(approved)) {
+      account,
+      Proxy.options.address,
+    ).call({from: account});
+    if (valueBN.gt(new BN(approved))) {
       await DAIContract.methods
-        .approve(Proxy.address, MAX_VALUE)
+        .approve(Proxy.options.address, MAX_VALUE)
         .send({ from: account });
     }
     await Proxy.methods
@@ -158,10 +160,17 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
       .send({ from: account });
   };
 
+  const openModal = () => {
+     setOpen(true);
+  }
+  const closeModal = () => {
+    setOpen(false);
+  }
+
   return (
     <>
-      <LenderButton />
-      <Modal size="small" defaultOpen={true}>
+      <LenderButton  onClick={openModal}>Invest</LenderButton>
+      <Modal open={open} size="small" onClose={closeModal}>
         <SemanticModal.Content>
           <Header>How much would you like to invest?</Header>
           <ModalInputContainer>
