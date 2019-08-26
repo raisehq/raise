@@ -1,49 +1,37 @@
 import { useState } from 'react';
 import { fromWei } from 'web3-utils';
 import numeral from 'numeral';
+import { match, ANY } from 'pampy';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { getWeb3, averageBlockTime } from '../../utils';
+
+const secondUnits = {
+  month: 2592000,
+  day: 86400,
+  hour: 3600,
+  minute: 60
+}
+
+const roundedTime = (seconds, secondUnit) => Math.round(seconds / secondUnit)
+
+const getDesiredTime = seconds => match(seconds,
+  s => s >= secondUnits.month, s => `${roundedTime(s, secondUnits.month)} `,
+  s => s >= secondUnits.day, s => `${roundedTime(s, secondUnits.day)} days`,
+  s => s >= secondUnits.hour, s => `${roundedTime(s, secondUnits.hour)} hours`,
+  s => s >= secondUnits.minute, s => `${roundedTime(s, secondUnits.minute)} minutes`,
+  s => s > 0 && s < secondUnits.minute, () => '<1 minute',
+  ANY, () => 'Auction ended');
 
 const calculateFromWei = number => fromWei(number.toString(), 'ether');
 
-const getAuctionEndDate = auctionRemainingSeconds => {
-  let now = new Date();
-  now.setSeconds(now.getSeconds() + auctionRemainingSeconds);
-
-  return now;
-};
-
-const getTermLength = (d, dd) => {
-  var hour = 60 * 60 * 1000,
-    day = hour * 24,
-    month = day * 30,
-    ms = Math.abs(d - dd),
-    months = parseInt((ms / month).toString(), 10);
-
-  ms = ms - months * month;
-  var days = parseInt((ms / day).toString(), 10);
-  ms -= days * day;
-  var hours = parseInt((ms / hour).toString(), 10);
-  ms -= hours * hour;
-
-  return months;
-};
-
-const calculateTimes = async auction => {
+const calculateTimes = auction => {
   try {
-    const web3 = getWeb3();
-    const currentBlock = await web3.eth.getBlockNumber();
-    const averageBT = await averageBlockTime();
-    const auctionRemainingBlocks = auction.auctionEndBlock - currentBlock;
-    const auctionRemainingSeconds = auctionRemainingBlocks * averageBT;
-    const auctionEndDate = getAuctionEndDate(auctionRemainingSeconds);
-    const termEndDate = new Date(parseInt(auction.termEndTimestamp));
-    const loanTerm = getTermLength(termEndDate, auctionEndDate);
-    let seconds = auctionRemainingSeconds;
-    const daysLeft = Math.floor(seconds / (3600 * 24));
+    const loanTerm = getDesiredTime(auction.termLength);
 
-    return { loanTerm, daysLeft };
+    const today = (new Date()).getTime() / 1000;
+    const auctionTimeLeft = getDesiredTime(Number(auction.auctionEndTimestamp) - today);
+    return { loanTerm, auctionTimeLeft };
   } catch (error) {
+    console.log(error)
     return error;
   }
 };
@@ -55,7 +43,7 @@ const useCal = auction => {
     principal: 0,
     systemFees: 0,
     times: {
-      daysLeft: null,
+      auctionTimeLeft: null,
       loanTerm: 0
     }
   });
@@ -66,8 +54,8 @@ const useCal = auction => {
   const systemFees: any = numeral((maxAmount * operatorFee) / 100).format();
 
   useAsyncEffect(async () => {
-    const { loanTerm, daysLeft } = await calculateTimes(auction);
-    setCalcs({ times: { loanTerm, daysLeft }, maxAmount, operatorFee, principal, systemFees });
+    const { loanTerm, auctionTimeLeft } = calculateTimes(auction);
+    setCalcs({ times: { loanTerm, auctionTimeLeft }, maxAmount, operatorFee, principal, systemFees });
   }, []);
 
   return calcs;
