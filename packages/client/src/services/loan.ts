@@ -84,7 +84,7 @@ export const getSuggestedAuctions = async network => {
       if (response.data.errors) {
         return Left(response.data.errors)
       }
-      return Right(response.data.data.users[0].loanRequests)
+      return Right(response.data.data.loans)
     }
   );
 };

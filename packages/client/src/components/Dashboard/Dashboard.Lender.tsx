@@ -12,7 +12,7 @@ const Dashboard = () => {
   const {
     history,
     actions: {
-      loan: { onGetSuggestedLoans, onGetLiveAuctionsByAccount }
+      loan: { onGetSuggestedAuctions, onGetLiveAuctionsByAccount }
     },
     store: {
       loan: { suggested, auctions }
@@ -23,7 +23,7 @@ const Dashboard = () => {
 
   useAsyncEffect(() => {
     if (history.location.pathname.includes('/dashboard')) {
-      onGetSuggestedLoans();
+      onGetSuggestedAuctions();
       onGetLiveAuctionsByAccount();
     }
   }, []);
