@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Icon, Popup } from 'semantic-ui-react';
 import {
   HeroCard,
   Grid,
@@ -10,6 +11,8 @@ import {
   RowContent,
   Graph,
   Badge,
+  InfoIconCmp,
+  InfoIcon,
   Separator
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
@@ -54,11 +57,24 @@ const GraphComponent = ({ currentAmount, totalAmount }) => {
   return <Graph width={config.width} />;
 };
 
+const TooltipComponent = () => (
+  <Popup
+    content="blablabablalbabalabl"
+    key={2434324}
+    trigger={
+      <InfoIcon>
+        <InfoIconCmp name="info" />
+      </InfoIcon>
+    }
+  />
+);
+
 Card.Badge = BadgeComponent;
 Card.Row = RowComponent;
 Card.Grid = Grid;
 Card.Header = HeaderComponent;
 Card.Graph = GraphComponent;
 Card.Separator = Separator;
+Card.Tooltip = TooltipComponent;
 
 export default Card;
