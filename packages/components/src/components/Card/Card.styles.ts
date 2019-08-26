@@ -38,6 +38,18 @@ export const RowTitle = styled.div`
   text-align: center;
 `;
 
+export const GraphContainer = styled.div`
+  position: relative;
+  margin-bottom: 35px;
+`;
+
+export const GraphTitle = styled.div`
+  position: absolute;
+  right: 0;
+  top: 11px;
+  font-size: 10px;
+`;
+
 export const Header = styled.div`
   margin-bottom: 25px;
 `;
@@ -65,7 +77,7 @@ export const Graph: any = styled.div`
     height: 100%;
     top: 0;
     left: 0;
-    background: #00da9e;
+    background: ${(props: any) => props.color};
   }
 `;
 
@@ -103,6 +115,9 @@ export const InfoIcon = styled.div`
 
 export const InfoIconCmp = styled(Icon)`
   &&& {
+    position: absolute;
+    top: 0;
+    right: 0;
     color: white;
   }
 `;

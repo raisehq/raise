@@ -52,25 +52,16 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
   }: any = useContext(AppContext);
   const metamask = useMetamask();
   const [open, setOpen] = useState(false);
-  const [value, setValue]: [
-    number,
-    React.Dispatch<React.SetStateAction<number>>
-  ] = useState(0);
-  const [interest, setInterest]: [
-    number,
-    React.Dispatch<React.SetStateAction<number>>
-  ] = useState(0);
+  const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
+  const [interest, setInterest]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(
+    0
+  );
 
   useAsyncEffect(async () => {
     if (metamask && loanAddress) {
       try {
-        const loanContract = await metamask.addContractByAddress(
-          'LoanContract',
-          loanAddress
-        );
-        const loanInterest = await loanContract.methods
-          .getInterestRate()
-          .call();
+        const loanContract = await metamask.addContractByAddress('LoanContract', loanAddress);
+        const loanInterest = await loanContract.methods.getInterestRate().call();
         setInterest(Number(loanInterest) / 1000);
       } catch (error) {
         console.error(error);
@@ -78,18 +69,13 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
     }
   }, [metamask, loanAddress]);
 
-  const roi = useMemo(() => value + (value * interest) / 100, [
-    value,
-    interest
-  ]);
+  const roi = useMemo(() => value + (value * interest) / 100, [value, interest]);
   const { raised, targetAmount, raisedPercentage } = useMemo(
     () => ({
       raised: principal ? fromWei(principal) : 0,
       targetAmount: maxAmount ? numeral(fromWei(maxAmount)).format() : 0,
       raisedPercentage:
-        principal && maxAmount
-          ? (Number(fromWei(principal)) * 100) / Number(fromWei(maxAmount))
-          : 0
+        principal && maxAmount ? (Number(fromWei(principal)) * 100) / Number(fromWei(maxAmount)) : 0
     }),
     [principal, maxAmount]
   );
@@ -105,41 +91,34 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
     const Proxy = await metamask.addContract('DAIProxy');
     const DAI = await metamask.addContract('DAI');
     const DAIContract = new web3.eth.Contract(ERC20, DAI._address);
-    const approved = await DAIContract.methods.allowance(
-      account,
-      Proxy.options.address,
-    ).call({from: account});
+    const approved = await DAIContract.methods
+      .allowance(account, Proxy.options.address)
+      .call({ from: account });
     if (valueBN.gt(new BN(approved))) {
-      await DAIContract.methods
-        .approve(Proxy.options.address, MAX_VALUE)
-        .send({ from: account });
+      await DAIContract.methods.approve(Proxy.options.address, MAX_VALUE).send({ from: account });
     }
-    await Proxy.methods
-      .fund(loanAddress, toWei(value.toString()))
-      .send({ from: account });
+    await Proxy.methods.fund(loanAddress, toWei(value.toString())).send({ from: account });
   };
 
   const openModal = () => {
-     setOpen(true);
-  }
+    setOpen(true);
+  };
   const closeModal = () => {
     setOpen(false);
-  }
+  };
 
   return (
     <>
-      <LenderButton  onClick={openModal}>Invest</LenderButton>
+      <LenderButton fluid onClick={openModal}>
+        Invest
+      </LenderButton>
       <Modal open={open} size="small" onClose={closeModal}>
         <SemanticModal.Content>
           <Header>How much would you like to invest?</Header>
           <ModalInputContainer>
             <div>
               <ModalInputBox>
-                <TokenInput
-                  value={value}
-                  numeralFormat={numeralFormat}
-                  onValueChange={setValue}
-                />
+                <TokenInput value={value} numeralFormat={numeralFormat} onValueChange={setValue} />
               </ModalInputBox>
               <InputLabel green onClick={fundAll}>
                 Fund all
@@ -169,7 +148,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
             </ProgressLayout>
           </InvestResume>
           <ConfirmButton onClick={onConfirm}>CONFIRM</ConfirmButton>
-          <ExitButton size="normal" name="close" color="black" onClick={closeModal}/>
+          <ExitButton size="normal" name="close" color="black" onClick={closeModal} />
         </SemanticModal.Content>
       </Modal>
     </>

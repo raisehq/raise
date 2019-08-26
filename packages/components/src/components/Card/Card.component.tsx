@@ -13,7 +13,9 @@ import {
   Badge,
   InfoIconCmp,
   InfoIcon,
-  Separator
+  Separator,
+  GraphContainer,
+  GraphTitle
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -50,11 +52,16 @@ const Card = ({ children }) => {
   );
 };
 
-const GraphComponent = ({ currentAmount, totalAmount }) => {
+const GraphComponent = ({ color, currentAmount, totalAmount }) => {
   const { ref }: any = React.useContext(Context);
   const config = useGraphWidth(ref, currentAmount, totalAmount);
 
-  return <Graph width={config.width} />;
+  return (
+    <GraphContainer>
+      <Graph color={color} width={config.width} />
+      <GraphTitle>{Math.floor(config.width)}%</GraphTitle>
+    </GraphContainer>
+  );
 };
 
 const TooltipComponent = () => (
