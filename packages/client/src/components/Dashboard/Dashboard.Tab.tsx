@@ -17,7 +17,7 @@ const Tab = ({ auctions, state, type }) => {
 
   return auctionsState.cata({
     Loading: () => <DashboardTab.Pane loading />,
-    Success: () => (
+    Success: auctions => (
       <DashboardTab.Pane>
         {auctions.map(auction => (
           <Component key={auction.id} auction={auction} />

@@ -12,6 +12,14 @@ interface InputLabelProps {
 
 export const LenderButton = styled(Button)`
   &&& {
+    cursor: pointer;
+    color: white;
+    background-color: #eb3f93;
+    text-transform: uppercase;
+  }
+
+  &&&:hover {
+    color: white;
     background-color: #eb3f93;
   }
 `;
