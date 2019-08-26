@@ -24,7 +24,8 @@ import {
   ProgressLayout,
   AuctionProgress,
   Percentage,
-  ConfirmButton
+  ConfirmButton,
+  ExitButton
 } from './InvestModal.styles';
 import { AppContext } from '../App';
 
@@ -210,6 +211,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
             </ProgressLayout>
           </InvestResume>
           <ConfirmButton onClick={onConfirm}>CONFIRM</ConfirmButton>
+          <ExitButton size="normal" name="close" color="black" onClick={closeModal}/>
         </SemanticModal.Content>
       </Modal>
     </>
