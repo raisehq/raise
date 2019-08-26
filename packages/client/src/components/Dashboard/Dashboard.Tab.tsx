@@ -1,17 +1,24 @@
 import React from 'react';
 import { DashboardTab, NoResults } from './Dashboard.styles';
 import Auction from './Dashboard.Auction';
+import Loan from './Dashboard.Loan';
 import useActionState from './Dashboard.useAuctionState';
 
-const Tab = ({ auctions, state }) => {
+const Card = {
+  auction: Auction,
+  loan: Loan
+};
+
+const Tab = ({ auctions, state, type }) => {
   const auctionsState: any = useActionState(auctions, state);
+  const Component = Card[type];
 
   return auctionsState.cata({
     Loading: () => <DashboardTab.Pane loading />,
     Success: () => (
       <DashboardTab.Pane>
         {auctions.map(auction => (
-          <Auction key={auction.id} auction={auction} />
+          <Component key={auction.id} auction={auction} />
         ))}
       </DashboardTab.Pane>
     ),

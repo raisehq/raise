@@ -23,12 +23,12 @@ const Dashboard = () => {
 
   const panes = [
     {
-      menuItem: 'Live auctions',
-      render: () => <Tab auctions={auctions} state={0} />
+      menuItem: 'Auctions',
+      render: () => <Tab auctions={auctions} state={0} type="auction" />
     },
     {
-      menuItem: 'My Loans',
-      render: () => <Tab auctions={auctions} state={1} />
+      menuItem: 'Loans',
+      render: () => <Tab auctions={auctions} state={1} type="loan" />
     }
   ];
 
