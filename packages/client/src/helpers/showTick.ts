@@ -1,1 +1,1 @@
-export const showTick = (booleano: boolean) => !!booleano ? "✔️" : "❌"
+export const showTick = (booleano: boolean) => (!!booleano ? '✔️' : '❌');
