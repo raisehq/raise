@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Card } from '@raisehq/components';
-import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
+import { loanStatus, loanStatusColors } from '@raisehq/components/src/commons/loanStatus';
 import useCalculations from './Dashboard.useCalc';
 import Amount from './Dashboard.Amount';
 

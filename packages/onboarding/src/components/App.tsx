@@ -22,6 +22,8 @@ import { to, getHost } from '../utils';
 import useCookie from '../hooks/useCookie';
 import * as services from '../services';
 import useGoogleTagManager from '../hooks/useGoogleTagManager';
+import { AccountType } from '@raisehq/components/src/commons/accountType';
+
 
 const { useState, useEffect, createContext } = React;
 
@@ -121,7 +123,7 @@ const App = ({
     const signup = await services.signUp({
       ...credentials,
       ...(!!referralCode ? { referrer_code: referralCode } : {}),
-      accounttype_id: 1
+      accountype_id: AccountType.Lender
     });
     signup.fold(
       () => console.log('something went wrong'),

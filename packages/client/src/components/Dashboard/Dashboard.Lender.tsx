@@ -15,9 +15,9 @@ const Dashboard = () => {
       loan: { onGetSuggestedAuctions, onGetLiveAuctionsByAccount }
     },
     store: {
-      web3Status: { account },
       loan: { suggested, auctions }
-    }
+    },
+    web3Status: { account }
   }: any = useContext(AppContext);
 
   const onCreateLoan = useCallback(() => history.push('/marketplace'), []);

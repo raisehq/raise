@@ -1,4 +1,4 @@
-import { Loan } from '../../commons/loan';
+import { Loan } from '@raisehq/components/src/commons/loan';
 
 export interface InvestModalProps {
   loan: Loan;

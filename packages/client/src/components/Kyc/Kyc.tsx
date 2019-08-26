@@ -8,7 +8,7 @@ import Information from './Kyc.Info';
 import Sending from './Kyc.Sending';
 import ErrorSending from './Kyc.Error';
 import { AppContext } from '../App';
-import { KycStatus } from '../../commons/kycStatus';
+import { KycStatus } from '@raisehq/components/src/commons/kycStatus';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

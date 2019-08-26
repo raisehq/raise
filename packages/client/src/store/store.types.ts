@@ -1,3 +1,5 @@
+import { AccountType } from '@raisehq/components/commons/accountType';
+
 export type onSignin = {
   email: string;
   password: string;
@@ -12,7 +14,7 @@ export type onSignup = {
   email: string;
   password: string;
   country_id: string;
-  accounttype_id: number;
+  accounttype_id: AccountType;
 };
 
 export type ValidateToken = {

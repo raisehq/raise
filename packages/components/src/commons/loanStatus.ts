@@ -17,3 +17,8 @@ export const loanStatusColors = {
   5: '#00DA9E', // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
   6: 'FROZEN' // when admin unlocks withdrawals
 };
+
+export default {
+  loanStatus,
+  loanStatusColors
+}
