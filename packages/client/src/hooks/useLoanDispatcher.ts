@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AppContext } from '../components/App';
 import useMetaMask from './useMetaMask';
-import { averageBlockTime } from '../utils';
 import useAsyncEffect from './useAsyncEffect';
 
 const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
+  const { web3Status: { network } }: any = useContext(AppContext);
   const metamask = useMetaMask();
   useAsyncEffect(async () => {
     if (metamask) {
@@ -12,24 +13,24 @@ const useLoanDispatcher = () => {
         const contract = await metamask.addContract('LoanDispatcher');
         const account = await metamask.getAccounts();
         setActiveContract({
-          deploy: async (minAmount, amount, bpMaxInterestRate, term, acceptMinimum) => {
-            const averageMiningTime = await averageBlockTime();
-            const auctionTimeLength = 1 * 30 * 24 * 60 * 60;
-            const termLengthMonths = new Date(new Date().setMonth(new Date().getMonth() + term));
-            const termLengthDate = new Date(
-              termLengthMonths.setSeconds(termLengthMonths.getSeconds() + auctionTimeLength)
-            );
-            const termLength = termLengthDate.getTime();
-            const lengthBlocks = auctionTimeLength / averageMiningTime;
+          deploy: async (
+            minAmount,
+            amount,
+            bpMaxInterestRate,
+            termMonthsLength,
+            acceptMinimum
+          ) => {
+            const auctionSecondsLength = network === 'kovan' ? '300' : (1 * 30 * 24 * 60 * 60).toString();
+            const termSecondsLength = termMonthsLength.toString();
             const params = [
-              lengthBlocks,
               metamask.utils.toWei(
                 acceptMinimum ? minAmount.toString() : amount.toString(),
                 'ether'
               ),
               metamask.utils.toWei(amount.toString(), 'ether'),
               (bpMaxInterestRate * 1000).toString(),
-              termLength
+              termSecondsLength,
+              auctionSecondsLength
             ];
             console.log(params);
             return contract.methods.deploy(...params).send({ from: account[0] });

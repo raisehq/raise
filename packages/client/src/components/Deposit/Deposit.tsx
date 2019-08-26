@@ -9,6 +9,7 @@ import useHeroTokenContract from '../../hooks/useHeroTokenContract';
 import { AppContext } from '../App';
 import useImages from '../../hooks/useImages';
 import { toWei } from 'web3-utils';
+import { getWeb3 } from '../../utils';
 import { CardContent } from '../LayoutV2/Layout.styles';
 import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
@@ -67,6 +68,8 @@ const Deposit = (props: any) => {
 
   const handleDeposit = async () => {
     try {
+      const web3 = getWeb3();
+      const { BN } = web3.utils;
       TagManager('Deposit Attempt');
       setStatus(UI.Waiting(UISteps.Approve));
       const { depositMethod, params }: any = await switchDepositMethod(
@@ -74,11 +77,11 @@ const Deposit = (props: any) => {
         account,
         referrer_code
       );
-      const allowance = await heroTokenContract.allowance(
+      const allowance = new BN(await heroTokenContract.allowance(
         account,
         depositContract.address
-      );
-      if (allowance.lt(toWei('200'))) {
+      ));
+      if (allowance.lt(new BN(toWei('200')))) {
         await heroTokenContract.approveDeposit(account, 200);
       }
       setStatus(UI.Waiting(UISteps.Transaction));

@@ -78,9 +78,7 @@ export const getWeb3 = () => {
   const provider = window['ethereum']
     ? window['ethereum']
     : (window['web3'] && window['web3'].currentProvider) || null;
-  const web3Instance = new Web3(provider, undefined, {
-    transactionConfirmationBlocks: 1
-  });
+  const web3Instance = new Web3(provider);
   if (!!web3Instance.currentProvider) {
     window['web3Instance'] = web3Instance;
     return web3Instance;
