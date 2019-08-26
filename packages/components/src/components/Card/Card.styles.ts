@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Coin from '../Coin';
+import { Icon } from 'semantic-ui-react';
 import theme from '../../../theme';
 
 export const HeroCard = styled.div`
@@ -88,4 +88,21 @@ export const Separator = styled.div`
   height: 1px;
   background: #ecedee;
   margin: 10px 0 10px 0;
+`;
+
+export const InfoIcon = styled.div`
+  position: absolute;
+  top: 18px;
+  right: 105px;
+  font-size: 9px;
+  background: black;
+  width: 18px;
+  height: 18px;
+  border-radius: 36px;
+`;
+
+export const InfoIconCmp = styled(Icon)`
+  &&& {
+    color: white;
+  }
 `;
