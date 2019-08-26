@@ -27,7 +27,7 @@ const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
       <Card.Grid>
         <Card.Row title="Repayment amount" content={maxAmount} />
         <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="Loan Term" content={`${times.loanTerm} months`} />
+        <Card.Row title="Loan Term" content={`${times.loanTerm} `} />
       </Card.Grid>
       {cta}
     </Card>

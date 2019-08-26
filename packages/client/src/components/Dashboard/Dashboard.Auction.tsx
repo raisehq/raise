@@ -14,12 +14,12 @@ const Auction = ({ auction, cta }: { auction: any; cta?: any }) => {
       <Card.Grid>
         <Card.Row title="Investors" content={auction.investorCount} />
         <Card.Row title="Current APR" content={auction.interestRate * 12} />
-        <Card.Row title="Days Left" content={times.daysLeft} />
+        <Card.Row title="Days Left" content={times.auctionTimeLeft} />
       </Card.Grid>
       <Card.Separator />
       <Card.Grid nobottom>
         <Card.Row title="System Fees" content={systemFees} />
-        <Card.Row title="Loan Term" content={`${times.loanTerm} months`} />
+        <Card.Row title="Loan Term" content={`${times.loanTerm} `} />
         <Card.Row title="Net Loan Proceeds" content={`${auction.netBalance || 0} DAI`} />
         <Card.Row title="Target Amount" content={maxAmount} />
         <Card.Row title="Max APR" content={auction.borrowerDebt} />
