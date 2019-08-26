@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Modal as SemanticModal, Progress } from 'semantic-ui-react';
+import { Button, Modal as SemanticModal, Progress, Icon } from 'semantic-ui-react';
 import { device } from '../LayoutV2/breakpoints';
 
 interface ModalInputProps {
@@ -9,6 +9,15 @@ interface ModalInputProps {
 interface InputLabelProps {
   green?: boolean;
 }
+
+export const ExitButton = styled(Icon)`
+  &&& {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    pointer: pointer;
+  }
+`;
 
 export const LenderButton = styled(Button)`
   &&& {
