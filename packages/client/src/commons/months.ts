@@ -1,4 +1,5 @@
 export default [
+  { key: '0', value: 0.000114155, text: '5 minutes' },
   { key: '1', value: 1, text: '1 month' },
   { key: '2', value: 2, text: '2 months' },
   { key: '3', value: 3, text: '3 months' },

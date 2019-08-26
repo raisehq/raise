@@ -132,6 +132,7 @@ const CreateLoan = () => {
       );
       setStage(UI.Success);
     } catch (error) {
+      console.error(error);
       setStage(UI.Error);
     }
   };

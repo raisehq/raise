@@ -18,11 +18,14 @@ export const getLiveAuctionsByAccount = async (address, network) => {
               termEndTimestamp
               netBalance
               auctionEnded
-              auctionEndBlock
               interestRate
               borrowerDebt
               investorCount
               id
+              auctionLength
+              auctionStartTimestamp
+              auctionEndTimestamp
+              termLength
             }
           }
         }`
@@ -30,9 +33,16 @@ export const getLiveAuctionsByAccount = async (address, network) => {
   };
 
   const request = await to(axiosRaw(config));
+  console.log(request);
 
   return request.fold(
     () => Left(null),
-    data => Right(data.data.data.users[0].loanRequests)
+    response => {
+      console.log(response.data)
+      if (response.data.errors) {
+        return Left(response.data.errors)
+      }
+      return Right(response.data.data.users[0].loanRequests)
+    }
   );
 };
