@@ -2,11 +2,13 @@ import React from 'react';
 import { DashboardTab, NoResults } from './Dashboard.styles';
 import Auction from './Dashboard.Auction';
 import Loan from './Dashboard.Loan';
+import Suggested from './Dashboard.Loan';
 import useActionState from './Dashboard.useAuctionState';
 
 const Card = {
   auction: Auction,
-  loan: Loan
+  loan: Loan,
+  suggested: Suggested
 };
 
 const Tab = ({ auctions, state, type }) => {

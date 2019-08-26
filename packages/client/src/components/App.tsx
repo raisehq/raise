@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  createContext,
-  useState,
-  useRef
-} from 'react';
+import React, { useContext, useEffect, createContext, useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AnimatedSwitch, spring } from 'react-router-transition';
 import { match, _ } from 'pampy';
@@ -135,8 +129,7 @@ const App = ({ children, history }: any) => {
   useEffect(() => {
     const refMode = process.env.REACT_APP_REFERAL == 'true';
     const isJoin =
-      history.location.pathname.includes('/join') ||
-      history.location.pathname.includes('/login');
+      history.location.pathname.includes('/join') || history.location.pathname.includes('/login');
     const conditions = {
       logged,
       deposited: !!deposited,
@@ -175,18 +168,16 @@ const App = ({ children, history }: any) => {
   }, [isLoading, logged, web3Pass, deposited]);
 
   const componentsByRole = {
-    1: {
+    2: {
       dashboard: DashboardBorrower
     },
-    2: {
+    1: {
       dashboard: DashboardLender
     }
   };
 
   return (
-    <AppContext.Provider
-      value={{ store, actions, history, web3Status, modalRefs }}
-    >
+    <AppContext.Provider value={{ store, actions, history, web3Status, modalRefs }}>
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
@@ -198,27 +189,9 @@ const App = ({ children, history }: any) => {
         })}
       >
         {/* Dashboard */}
-        <Web3Route
-          layout={LayoutV2}
-          exact
-          path="/deposit"
-          component={Deposit}
-          roles={[1, 2]}
-        />
-        <Web3Route
-          layout={LayoutV2}
-          exact
-          path="/referral"
-          component={Referral}
-          roles={[1, 2]}
-        />
-        <Web3Route
-          layout={Layout}
-          exact
-          path="/kyc"
-          component={Kyc}
-          roles={[1, 2]}
-        />
+        <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[1, 2]} />
+        <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} roles={[1, 2]} />
+        <Web3Route layout={Layout} exact path="/kyc" component={Kyc} roles={[1, 2]} />
         <Web3Route
           layout={Layout}
           exact
@@ -231,9 +204,7 @@ const App = ({ children, history }: any) => {
           layout={Layout}
           exact
           path="/dashboard"
-          component={
-            accounttype_id ? componentsByRole[accounttype_id].dashboard : null
-          }
+          component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
           roles={[1, 2]}
         />
         <Web3Route
