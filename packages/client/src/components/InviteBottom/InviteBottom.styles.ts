@@ -6,8 +6,7 @@ export const Footer = styled(Grid)`
   margin: 0px 0px 30px 0px !important;
   padding: 0 !important;
   background-color: #ffffff;
-
-    box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
+  box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
 `;
 
 export const GettingReady = styled.div`
@@ -34,11 +33,10 @@ export const Soon = styled.div`
 
 export const DaysToGoLive = styled.div`
   margin: 10px 0px 25px 15px;
-  color: #3C4251;
+  color: #3c4251;
   font-size: 26px;
   font-weight: bold;
-  line-height: 36px
-  @media ${device.mobileL} {
+  line-height: 36px @media ${device.mobileL} {
     margin: 10px 0px 0px 50px;
   }
 `;

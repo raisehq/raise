@@ -1,6 +1,16 @@
 import styled from 'styled-components';
-import { Select, Checkbox, Card, Header as HeaderUI, Button, ButtonProps, Divider as DividerUI, HeaderProps, DividerProps } from 'semantic-ui-react';
-import { device } from '../LayoutV2/breakpoints';
+import {
+  Select,
+  Checkbox,
+  Card,
+  Header as HeaderUI,
+  Button,
+  ButtonProps,
+  Divider as DividerUI,
+  HeaderProps,
+  DividerProps
+} from 'semantic-ui-react';
+import { device, size } from '../LayoutV2/breakpoints';
 import theme from '../../theme';
 
 interface LoanFormValueProps {
@@ -8,29 +18,28 @@ interface LoanFormValueProps {
 }
 
 export const Header = styled(HeaderUI)<HeaderProps>`
-&& {
-  color: #3C4251;
-}
+  && {
+    color: #3c4251;
+  }
 `;
 
 export const TopHeader = styled(HeaderUI)<HeaderProps>`
-&& {
-  color: #3C4251;
-  max-width: 300px; 
-  font-size: 22px;
-  @media ${device.laptop} {
-    font-size: 26px;
+  && {
+    color: #3c4251;
+    max-width: 300px;
+    font-size: 22px;
+    @media ${device.laptop} {
+      font-size: 26px;
+    }
   }
-}
 `;
 
-
 export const Divider = styled(DividerUI)<DividerProps>`
-&&&&& {
-  border-top: none;
-  border-bottom: 1px solid #9498A0;
-}`;
-
+  &&&&& {
+    border-top: none;
+    border-bottom: 1px solid #9498a0;
+  }
+`;
 
 export const LoanSelect = styled(Select)`
   padding: 20px !important;
@@ -47,7 +56,6 @@ export const LoanDescription = styled.div`
     max-width: 396px;
   }
 `;
-
 
 export const LoanBox = styled.div`
   display: flex;
@@ -67,7 +75,7 @@ export const LoanContainer = styled.div`
 `;
 
 export const LoanForm = styled.div`
-  max-width: 735px;
+  max-width: 100%;
   width: 100%;
   height: fit-content;
   box-shadow: ${theme.shadow};
@@ -79,6 +87,7 @@ export const LoanForm = styled.div`
     padding: 0px 0px 30px 0px;
   }
   @media ${device.laptop} {
+    max-width: 735px;
     font-size: 14px;
     padding: 40px 50px 50px;
     background: #fff;
@@ -88,19 +97,16 @@ export const LoanForm = styled.div`
 export const LoanFormInput = styled.div`
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0);
-  width: 100%
+  width: 100%;
   @media ${device.laptop} {
     margin-top: 60px;
     width: unset;
   }
 `;
 
-
-
-
 export const LoanTerm = styled(LoanBox)`
   & ${LoanFormInput} {
-    margin-top: 20px;
+    margin-top: 47px;
     display: block;
     width: 100%;
   }
@@ -116,7 +122,7 @@ export const LoanTerm = styled(LoanBox)`
       max-width: 180px;
     }
   }
-`
+`;
 
 export const LoanDescriptionLowerAmount = styled(LoanDescription)`
   display: flex;
@@ -144,8 +150,7 @@ export const LoanDescriptionLowerAmount = styled(LoanDescription)`
       flex: unset;
     }
   }
-`
-
+`;
 
 export const SliderWrapper = styled.div`
   margin-top: 20px;
@@ -160,32 +165,62 @@ export const SliderWrapper = styled.div`
       order: 1;
     }
   }
-`
+`;
 export const LoanConfirmation = styled(Card)`
-&&& {
-  position: sticky;
-  bottom: 0px;
-  height: fit-content;
-  width: 100%;
-  padding: 30px 20px 20px 20px;
-  box-shadow: 0 0 26px 0 rgba(217,217,217,0.61);
-}
-@media ${device.laptop} {
   &&& {
-    position: relative;
-    max-width: 380px;
-    margin-left: 35px;
-    margin-top: 30px;
+    position: sticky;
+    bottom: 0px;
+    height: fit-content;
+    width: 100%;
+    padding: 30px 20px 20px 20px;
+    box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
   }
-}
-`
+
+  @media ${device.laptopM} {
+    &&& {
+      box-shadow: none;
+      border-top: 1px solid black;
+      border-radius: 0;
+      position: relative;
+      margin-top: 0px;
+      top: 0px;
+      width: 100%;
+      max-width: 735px;
+      padding: 50px;
+    }
+  }
+
+  @media (min-width: ${size.laptop}) and (max-width: ${size.laptopL}) {
+    &&& {
+      box-shadow: none;
+      border-top: 1px solid black;
+      border-radius: 0;
+      position: relative;
+      margin-top: 0px;
+      top: 0px;
+      width: 100%;
+      max-width: 735px;
+      padding: 50px;
+    }
+  }
+
+  @media ${device.laptopXL} {
+    &&& {
+      border-radius: 4px;
+      box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
+      border-top: 0;
+      max-width: 380px;
+      margin-left: 35px;
+      margin-top: 30px;
+    }
+  }
+`;
 
 export const LoanResume = styled.div`
   position: relative;
   padding: 0px;
   display: flex;
   justify-content: space-between;
-
 
   & .divider.vertical::before {
     height: calc(100%);
@@ -195,27 +230,33 @@ export const LoanResume = styled.div`
     height: calc(100%);
   }
 
-  @media ${device.laptop} {
+  @media (min-width: ${size.laptop}) and (max-width: ${size.laptopL}) {
     & .divider.vertical {
       display: none;
     }
+  }
+
+  @media ${device.laptopXL} {
     justify-content: center;
     flex-direction: column;
+    & .divider.vertical {
+      display: none;
+    }
   }
-`
+`;
 
 export const LoanFormInfo = styled.p`
   text-align: right;
   font-size: 12px;
   margin: 0;
-`
+`;
 
 export const LoanFormValue = styled('p')<LoanFormValueProps>`
   text-align: right;
-  font-size: ${({big}) => big ? '26px' : '18px'};
+  font-size: ${({ big }) => (big ? '26px' : '18px')};
   font-weight: bold;
   margin: 0px 0px 17px 0px;
-`
+`;
 
 export const InputDescription = styled.div`
   font-size: 14px;
@@ -229,11 +270,10 @@ export const InputBox = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  
 `;
 export const LoanInputBox = styled.div`
   border-bottom: 1px solid #90a1b5;
-  background-color: #EFF4F7;
+  background-color: #eff4f7;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -256,22 +296,22 @@ export const LoanInputBox = styled.div`
 `;
 
 export const NewLoanAnchor = styled.div`
-  margin-top: 10px;  
+  margin-top: 10px;
   text-align: center;
   width: 100%;
-  color: #00A76F;
+  color: #00a76f;
   font-size: 14px;
   font-weight: bold;
-`
+`;
 export const LoanAmountBox = styled(LoanBox)`
-& ${LoanInputBox}:first-child {
-  margin-top: 30px;
-}
-@media ${device.laptop} {
   & ${LoanInputBox}:first-child {
-    margin-top: 60px;
+    margin-top: 10px;
   }
-}
+  @media ${device.laptop} {
+    & ${LoanInputBox}:first-child {
+      margin-top: 10px;
+    }
+  }
 `;
 
 export const LoanInputLabel = styled.div`
@@ -289,19 +329,18 @@ export const LoanInputLabel = styled.div`
   }
 `;
 
-
 export const MininumLoanSelect = styled(LoanSelect)`
-&&&& {
-  min-width: 120px;
-}
-`
+  &&&& {
+    min-width: 120px;
+  }
+`;
 
 export const LoanCheckbox = styled(Checkbox)`
   &&&&&& label:before {
-    background: #3C4251;
+    background: #3c4251;
   }
-  &&&&&&.checked label:before{
-    background: linear-gradient(180deg, #39B54A 0%, #34AA44 100%);
+  &&&&&&.checked label:before {
+    background: linear-gradient(180deg, #39b54a 0%, #34aa44 100%);
   }
 `;
 
@@ -321,42 +360,42 @@ export const InterestCard = styled.div`
     margin: unset;
     order: 2;
     font-weight: bold;
-    border: 1px solid #9398A0;
+    border: 1px solid #9398a0;
   }
 `;
 
 export const ConfirmButton: any = styled(Button)<ButtonProps>`
-&&&&& {
-  height: 60px;
-  width: 100%;
-  background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
-  border-radius: 4px;
-  display: block;
-  align-content: center;
-  justify-content: center;
-  color: #ffffff;
-  padding: 0;
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 60px;
-  text-align: center;
-  text-transform: uppercase;
-  cursor: pointer;
-  margin: 40px 0px 0px 0px;
-}
+  &&&&& {
+    height: 60px;
+    width: 100%;
+    background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
+    border-radius: 4px;
+    display: block;
+    align-content: center;
+    justify-content: center;
+    color: #ffffff;
+    padding: 0;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 60px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin: 40px 0px 0px 0px;
+  }
 `;
 
 export const WaitingButton: any = styled(ConfirmButton)`
-&&&&&& {
-  background: #EFF4F7;
-}
+  &&&&&& {
+    background: #eff4f7;
+  }
 `;
 
 export const SideInfo = styled.div`
   display: block;
   width: 100%;
   text-align: center;
-  color: #5A5A5A;
+  color: #5a5a5a;
   margin-top: 20px;
   font-size: 12px;
   @media ${device.laptop} {

@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body {
+  font-family: 'Lato', sans-serif !important;
+}
+
+#root {
+  background: #f0f4f7;
+  height: 100%;
+}

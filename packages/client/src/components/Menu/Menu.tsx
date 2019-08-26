@@ -1,7 +1,17 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon, Divider } from 'semantic-ui-react';
-import { RaiseMenu, Web3Address, MenuList, MenuIcon, MenuIconActive, CloseButton, Logo, MenuLogout, Credits } from './Menu.styles';
+import {
+  RaiseMenu,
+  Web3Address,
+  MenuList,
+  MenuIcon,
+  MenuIconActive,
+  CloseButton,
+  Logo,
+  MenuLogout,
+  Credits
+} from './Menu.styles';
 import { AppContext } from '../App';
 
 const Menus = {
@@ -9,7 +19,7 @@ const Menus = {
     {
       title: 'My Dashboard',
       link: '/dashboard',
-      icon: 'th large',
+      icon: 'th large'
     },
     {
       title: 'Request a loan',
@@ -26,7 +36,7 @@ const Menus = {
     {
       title: 'My Dashboard',
       link: '/dashboard',
-      icon: 'th large',
+      icon: 'th large'
     },
     {
       title: 'Request a loan',
@@ -59,15 +69,13 @@ const commonRoutes = [
     link: '/terms',
     icon: 'help',
     new_tab: true
-  },
+  }
 ];
 
 const Menu = () => {
   const {
     actions: {
-      config: {
-        showMenu
-      }
+      config: { showMenu }
     },
     history: {
       location: { pathname }
@@ -80,22 +88,26 @@ const Menu = () => {
 
   const toRoute = () => {
     showMenu(false);
-  }
+  };
 
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo_light.svg`;
 
   const getMenu = useCallback(
-    (links) =>
+    links =>
       links.map(item => (
         <li
           key={item.link}
           className={pathname === item.link ? 'active' : 'non-active'}
         >
-          <Link to={item.link} onClick={toRoute} target={item.new_tab ? '_blank' : ''}>
-            {item.icon && <MenuIcon name={item.icon} size='large' /> }
+          <Link
+            to={item.link}
+            onClick={toRoute}
+            target={item.new_tab ? '_blank' : ''}
+          >
+            {item.icon && <MenuIcon name={item.icon} size="large" />}
             {item.title}
             {pathname === item.link && <MenuIconActive name="chevron right" />}
-            <Icon name='angle right' />
+            <Icon name="angle right" />
           </Link>
         </li>
       )),
@@ -112,22 +124,27 @@ const Menu = () => {
     } else {
       document.body.classList.remove('hidescroll');
     }
-    return (() => {
+    return () => {
       document.body.classList.remove('hidescroll');
-    });
-  }, [menu])
+    };
+  }, [menu]);
 
   return (
-    <RaiseMenu vertical borderless inverted className={menu ? 'open' : 'closed' }>
+    <RaiseMenu
+      vertical
+      borderless
+      inverted
+      className={menu ? 'open' : 'closed'}
+    >
       <Logo src={logoPath} />
       <Web3Address />
-      <CloseButton onClick={closeMenu} icon >
-        <Icon name='close' size='big' inverted/>
+      <CloseButton onClick={closeMenu} icon>
+        <Icon name="close" size="big" inverted />
       </CloseButton>
       <MenuList>
-      {getMenu(Menus[accounttype_id || 1])}
-      <Divider inverted />
-      {getMenu(commonRoutes)}
+        {getMenu(Menus[accounttype_id || 1])}
+        <Divider inverted />
+        {getMenu(commonRoutes)}
       </MenuList>
       <div style={{ flex: 2 }} />
       <MenuLogout />

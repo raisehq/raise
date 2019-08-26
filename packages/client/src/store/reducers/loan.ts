@@ -1,13 +1,12 @@
 export default (state: any, action: any) => {
   switch (action.type) {
-    case 'SHOW_MENU':
+    case 'SET_LIVE_AUCTIONS':
       return {
         ...state,
-        menu: action.data
+        auctions: action.data
       };
+
     default:
-      return {
-        ...state
-      };
+      return state;
   }
 };
