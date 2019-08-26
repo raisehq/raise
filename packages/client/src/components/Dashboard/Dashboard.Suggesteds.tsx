@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
 import Suggested from './Dashboard.Suggested';
 import useAuctionState from './Dashboard.useAuctionState';
 import { SuggestedContainer } from './Dashboard.styles';
+import { InvestModal } from '../InvestModal'
 
 const Suggesteds = ({ auctions }) => {
   const auctionsState: any = useAuctionState(auctions, 'all');
@@ -12,7 +12,7 @@ const Suggesteds = ({ auctions }) => {
     Success: () => (
       <SuggestedContainer>
         {auctions.slice(0, 3).map(auction => (
-          <Suggested key={auction.id} auction={auction} cta={<Button>INVEST</Button>} />
+          <Suggested key={auction.id} auction={auction} cta={<InvestModal loan={auction} />} />
         ))}
       </SuggestedContainer>
     ),
