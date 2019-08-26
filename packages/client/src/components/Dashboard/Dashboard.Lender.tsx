@@ -12,11 +12,11 @@ const Dashboard = () => {
   const {
     history,
     actions: {
-      loan: { onGetLiveAuctionsByAccount }
+      loan: { onGetSuggestedAuctions, onGetLiveAuctionsByAccount }
     },
-    store,
     store: {
-      loan: { auctions }
+      web3Status: { account },
+      loan: { suggested, auctions }
     }
   }: any = useContext(AppContext);
 
@@ -24,9 +24,10 @@ const Dashboard = () => {
 
   useAsyncEffect(() => {
     if (history.location.pathname.includes('/dashboard')) {
+      onGetSuggestedAuctions();
       onGetLiveAuctionsByAccount();
     }
-  }, [store.user.cryptoAddress.address]);
+  }, [account]);
 
   const panes = [
     {
@@ -44,7 +45,7 @@ const Dashboard = () => {
       <KycMessage />
       <DashboardContainer>
         <Header as="h1">Suggested auctions</Header>
-        <Suggesteds auctions={auctions} />
+        <Suggesteds auctions={suggested} />
         <Button onClick={onCreateLoan}>marketplace</Button>
         <Header as="h1">My activity</Header>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
