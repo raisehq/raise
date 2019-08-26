@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Icon } from 'semantic-ui-react';
 import theme from '../../../theme';
 
 export const HeroCard = styled.div`
@@ -8,6 +9,7 @@ export const HeroCard = styled.div`
   box-shadow: ${theme.shadow};
   padding: 25px;
   box-sizing: border-box;
+  position: relative;
 `;
 
 export const Grid: any = styled.div`
@@ -36,7 +38,9 @@ export const RowTitle = styled.div`
   text-align: center;
 `;
 
-export const Header = styled.div``;
+export const Header = styled.div`
+  margin-bottom: 25px;
+`;
 export const HeaderTitle = styled.h1`
   color: #5a5a5a;
   font-size: 12px;
@@ -62,5 +66,43 @@ export const Graph: any = styled.div`
     top: 0;
     left: 0;
     background: #00da9e;
+  }
+`;
+
+export const Badge = styled.div`
+  width: 80px;
+  color: #fff;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  text-align: center;
+  padding: 3px 0 3px 0;
+  font-weight: bold;
+  background: ${({ color }) => color};
+  border-radius: 30px;
+  font-size: 12px;
+`;
+
+export const Separator = styled.div`
+  width: 100%;
+  height: 1px;
+  background: #ecedee;
+  margin: 10px 0 10px 0;
+`;
+
+export const InfoIcon = styled.div`
+  position: absolute;
+  top: 18px;
+  right: 105px;
+  font-size: 9px;
+  background: black;
+  width: 18px;
+  height: 18px;
+  border-radius: 36px;
+`;
+
+export const InfoIconCmp = styled(Icon)`
+  &&& {
+    color: white;
   }
 `;

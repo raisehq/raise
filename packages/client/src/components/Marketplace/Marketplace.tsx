@@ -1,5 +1,11 @@
 import React from 'react';
 
-const Marketplace = () => <div>HOLA FROM Marketplace</div>;
+const Marketplace = () => {
+  return (
+    <div>
+      Marketplace
+    </div>
+  );
+};
 
 export default Marketplace;

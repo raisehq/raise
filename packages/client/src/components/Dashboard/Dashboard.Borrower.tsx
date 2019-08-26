@@ -1,6 +1,6 @@
-import React, { useContext, useCallback, Fragment } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Header } from 'semantic-ui-react';
-import { Button, DashboardContainer } from './Dashboard.styles';
+import { Button, DashboardContainer, DashboardWrapper } from './Dashboard.styles';
 import KycMessage from '../KycMessage';
 import { DashboardTab } from './Dashboard.styles';
 import { AppContext } from '../App';
@@ -23,12 +23,12 @@ const Dashboard = () => {
 
   const panes = [
     {
-      menuItem: 'Live auctions',
-      render: () => <Tab auctions={auctions} state={0} />
+      menuItem: 'Auctions',
+      render: () => <Tab auctions={auctions} state={0} type="auction" />
     },
     {
-      menuItem: 'Active loans',
-      render: () => <Tab auctions={auctions} state={1} />
+      menuItem: 'Loans',
+      render: () => <Tab auctions={auctions} state={1} type="loan" />
     }
   ];
 
@@ -39,18 +39,14 @@ const Dashboard = () => {
   }, [store.user.cryptoAddress.address]);
 
   return (
-    <Fragment>
+    <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
         <Header as="h1">Recent Loans</Header>
-        <DashboardTab
-          renderActiveOnly
-          menu={{ secondary: true, pointing: true }}
-          panes={panes}
-        />
+        <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
         <Button onClick={onCreateLoan}>create loan</Button>
       </DashboardContainer>
-    </Fragment>
+    </DashboardWrapper>
   );
 };
 
