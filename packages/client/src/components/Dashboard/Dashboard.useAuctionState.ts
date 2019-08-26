@@ -13,7 +13,8 @@ const useAuctionState = (auctions, state) => {
 
   useEffect(() => {
     const activeAuctions = auctions
-      ? auctions.filter(auction => auction.state === state || state === 'all')
+      ? // ? auctions.filter(auction => auction.state === state || state === 'all')
+        auctions.filter(auction => true)
       : [];
 
     const conditions = {

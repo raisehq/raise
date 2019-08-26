@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Card } from '@raisehq/components';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import useCalculations from './Dashboard.useCalc';
@@ -11,8 +11,13 @@ const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
   return (
     <Card>
       <Card.Header title="Loan amount" amount={<Amount principal={principal} />} />
-      {auction.state !== 0 && (
-        <Card.Badge color={loanStatusColors[auction.state]}>{loanStatus[auction.state]}</Card.Badge>
+      {auction.state !== 1 && (
+        <Fragment>
+          <Card.Tooltip />
+          <Card.Badge color={loanStatusColors[auction.state]}>
+            {loanStatus[auction.state]}
+          </Card.Badge>
+        </Fragment>
       )}
       <Card.Grid>
         <Card.Row title="System Fees" content={systemFees} />

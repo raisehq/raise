@@ -168,10 +168,10 @@ const App = ({ children, history }: any) => {
   }, [isLoading, logged, web3Pass, deposited]);
 
   const componentsByRole = {
-    2: {
+    1: {
       dashboard: DashboardBorrower
     },
-    1: {
+    2: {
       dashboard: DashboardLender
     }
   };
