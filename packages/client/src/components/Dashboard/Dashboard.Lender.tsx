@@ -1,10 +1,10 @@
-import React, { useContext, useCallback, Fragment } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Header } from 'semantic-ui-react';
-import { Button, DashboardContainer } from './Dashboard.styles';
+import { Button, DashboardContainer, DashboardWrapper } from './Dashboard.styles';
 import KycMessage from '../KycMessage';
 import { AppContext } from '../App';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import Suggested from './Dashboard.Suggested';
+import Suggesteds from './Dashboard.Suggesteds';
 import Tab from './Dashboard.Tab';
 import { DashboardTab } from './Dashboard.styles';
 
@@ -30,30 +30,26 @@ const Dashboard = () => {
 
   const panes = [
     {
-      menuItem: 'Live auctions',
-      render: () => <Tab auctions={auctions} state={0} />
+      menuItem: 'Auctions',
+      render: () => <Tab auctions={auctions} state={0} type="auction" />
     },
     {
-      menuItem: 'My Investments',
-      render: () => <Tab auctions={auctions} state={1} />
+      menuItem: 'Investments',
+      render: () => <Tab auctions={auctions} state={1} type="auction" />
     }
   ];
 
   return (
-    <Fragment>
+    <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
         <Header as="h1">Suggested auctions</Header>
-        <Suggested auctions={auctions} />
+        <Suggesteds auctions={auctions} />
         <Button onClick={onCreateLoan}>marketplace</Button>
         <Header as="h1">My activity</Header>
-        <DashboardTab
-          renderActiveOnly
-          menu={{ secondary: true, pointing: true }}
-          panes={panes}
-        />
+        <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
       </DashboardContainer>
-    </Fragment>
+    </DashboardWrapper>
   );
 };
 

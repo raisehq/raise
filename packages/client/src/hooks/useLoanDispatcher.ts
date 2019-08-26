@@ -21,7 +21,7 @@ const useLoanDispatcher = () => {
             acceptMinimum
           ) => {
             const auctionSecondsLength = network === 'kovan' ? '300' : (1 * 30 * 24 * 60 * 60).toString();
-            const termSecondsLength = (termMonthsLength * 30 * 24 * 60 * 60).toString();
+            const termSecondsLength = termMonthsLength.toString();
             const params = [
               metamask.utils.toWei(
                 acceptMinimum ? minAmount.toString() : amount.toString(),
@@ -33,9 +33,7 @@ const useLoanDispatcher = () => {
               auctionSecondsLength
             ];
             console.log(params);
-            return contract.methods
-              .deploy(...params)
-              .send({ from: account[0] });
+            return contract.methods.deploy(...params).send({ from: account[0] });
           }
         });
       } catch (error) {

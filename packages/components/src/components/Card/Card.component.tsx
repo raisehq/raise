@@ -8,11 +8,15 @@ import {
   HeaderContent,
   RowTitle,
   RowContent,
-  Graph
+  Graph,
+  Badge,
+  Separator
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
 const Context = React.createContext({});
+
+const BadgeComponent = ({ children, color }) => <Badge color={color}>{children}</Badge>;
 
 const RowComponent = ({ title, content }) => (
   <Row>
@@ -50,9 +54,11 @@ const GraphComponent = ({ currentAmount, totalAmount }) => {
   return <Graph width={config.width} />;
 };
 
+Card.Badge = BadgeComponent;
 Card.Row = RowComponent;
 Card.Grid = Grid;
 Card.Header = HeaderComponent;
 Card.Graph = GraphComponent;
+Card.Separator = Separator;
 
 export default Card;

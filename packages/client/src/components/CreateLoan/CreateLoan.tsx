@@ -46,7 +46,7 @@ const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
 const defaultMir = 10;
-const defaultTerm = 3;
+const defaultTerm = 300;
 const defaultMinPercent = 20;
 const minMir = 0;
 const maxMir = 20;
@@ -81,18 +81,19 @@ const CreateLoan = () => {
     accept: false,
     minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
   });
+  const termMonths = loan.term / 60 / 60 / 24 / 30;
 
   // Calculations
   const numberAmount = loan.amount;
   const formattedAmount = numeral(loan.amount).format();
   const formattedMinAmount = numeral(loan.minAmount).format();
   const repaymentAmount = numeral(
-    numberAmount + (numberAmount * (loan.mir * loan.term)) / 100
+    numberAmount + (numberAmount * (loan.mir * termMonths)) / 100
   ).format();
   const netLoan = numeral(numberAmount - (numberAmount * 1) / 100).format();
   const systemFees = numeral((numberAmount * 1) / 100).format();
   const totalInterest = numeral(
-    (numberAmount * (loan.mir * loan.term)) / 100
+    (numberAmount * (loan.mir * termMonths)) / 100
   ).format();
 
   const onSetAmount = ({ floatValue }) => {
@@ -104,7 +105,7 @@ const CreateLoan = () => {
     });
   };
 
-  const onSetTerm = (e, data) => setLoan({ ...loan, term: data.value });
+    const onSetTerm = (e, data) => setLoan({ ...loan, term: data.value });
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
 
@@ -165,7 +166,8 @@ const CreateLoan = () => {
   };
 
   useEffect(() => {
-    const { amount: currentAmount, term, mir } = loan;
+    const { amount: currentAmount, term: termSeconds, mir } = loan;
+    const term = termSeconds / 60 / 60 / 24 / 30;
     if (currentAmount && mir && term) {
       setAPR((((currentAmount * mir * term) / currentAmount) * 12) / term);
     }
