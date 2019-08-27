@@ -128,7 +128,6 @@ const App = ({ children, history }: any) => {
   }, [logged, address, network, netOk]);
 
   useEffect(() => {
-    console.log(refMode)
     const isJoin =
       history.location.pathname.includes('/join') || history.location.pathname.includes('/login');
     const conditions = {
