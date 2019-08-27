@@ -18,11 +18,15 @@ export const getLiveAuctionsByAccount = async (address, network) => {
               termEndTimestamp
               netBalance
               auctionEnded
-              auctionEndBlock
               interestRate
               borrowerDebt
               investorCount
               id
+              minimumReached
+              auctionLength
+              auctionStartTimestamp
+              auctionEndTimestamp
+              termLength
             }
           }
         }`
@@ -33,6 +37,56 @@ export const getLiveAuctionsByAccount = async (address, network) => {
 
   return request.fold(
     () => Left(null),
-    data => Right(data.data.data.users[0].loanRequests)
+    response => {
+      console.log(response.data)
+      if (response.data.errors) {
+        return Left(response.data.errors)
+      }
+      return Right(response.data.data.users[0].loanRequests)
+    }
+  );
+};
+
+export const getSuggestedAuctions = async network => {
+  const config: any = {
+    url: getGraphEndpoint(network),
+    method: 'POST',
+    headers: {},
+    data: {
+      query: `
+        {
+          loans(orderBy: auctionStartTimestamp, orderDirection: desc) {
+            state
+            principal
+            maxAmount
+            operatorFee
+            termEndTimestamp
+            netBalance
+            auctionEnded
+            interestRate
+            borrowerDebt
+            investorCount
+            id
+            minimumReached
+            auctionLength
+            auctionStartTimestamp
+            auctionEndTimestamp
+            termLength
+          }
+        }`
+    }
+  };
+
+  const request = await to(axiosRaw(config));
+
+  return request.fold(
+    () => Left(null),
+    response => {
+      console.log(response.data)
+      if (response.data.errors) {
+        return Left(response.data.errors)
+      }
+      return Right(response.data.data.loans)
+    }
   );
 };

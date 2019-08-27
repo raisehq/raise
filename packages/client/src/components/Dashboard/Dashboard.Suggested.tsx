@@ -1,27 +1,30 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
-import Auction from './Dashboard.Auction';
-import useAuctionState from './Dashboard.useAuctionState';
-import { SuggestedContainer } from './Dashboard.styles';
+import { Card } from '@raisehq/components';
+import useCalculations from './Dashboard.useCalc';
+import Amount from './Dashboard.Amount';
 
-const Suggested = ({ auctions }) => {
-  const auctionsState: any = useAuctionState(auctions, 'all');
+const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
+  const calcs = useCalculations(auction);
+  const { principal, maxAmount, times } = calcs;
 
-  return auctionsState.cata({
-    Loading: () => <SuggestedContainer>loading</SuggestedContainer>,
-    Success: () => (
-      <SuggestedContainer>
-        {auctions.slice(0, 3).map(auction => (
-          <Auction
-            key={auction.id}
-            auction={auction}
-            cta={<Button>INVEST</Button>}
-          />
-        ))}
-      </SuggestedContainer>
-    ),
-    Empty: () => <SuggestedContainer>No Results</SuggestedContainer>
-  });
+  return (
+    <Card>
+      <Card.Header title="Raised" amount={<Amount principal={principal} />} />
+      <Card.Graph color="#eb3f93" currentAmount={principal} totalAmount={maxAmount} />
+      <Card.Grid>
+        <Card.Row title="Target Amount" content={maxAmount} />
+        <Card.Row title="Investors" content={auction.investorCount} />
+        <Card.Row title="Time left" content={times.auctionTimeLeft} />
+      </Card.Grid>
+      <Card.Separator />
+      <Card.Grid>
+        <Card.Row title="Borrower" content="Company A" />
+        <Card.Row title="Loan Term" content={times.loanTerm} />
+        <Card.Row title="Min APR" content={auction.borrowerDebt} />
+      </Card.Grid>
+      {cta}
+    </Card>
+  );
 };
 
-export default Suggested;
+export default Loan;

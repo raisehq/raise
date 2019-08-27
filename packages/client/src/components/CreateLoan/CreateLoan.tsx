@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import numeral from 'numeral';
+import numeral, { numeralFormat } from './numeral';
 import { BrowserView } from 'react-device-detect';
 import { UI, getLoanAction } from './CreateLoan.Response';
 import Coin from '../Coin';
@@ -32,43 +32,6 @@ import Slider from '../Slider';
 import months from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 
-/** Start of number formatting */
-const numeralFormat = '0,0.00';
-
-numeral.register('locale', 'hero', {
-  delimiters: {
-    thousands: '.',
-    decimal: ','
-  },
-  abbreviations: {
-    thousand: 'k',
-    million: 'mm',
-    billion: 'b',
-    trillion: 't'
-  },
-  ordinal: function(number) {
-    var b = number % 10;
-    return b === 1 || b === 3
-      ? 'er'
-      : b === 2
-      ? 'do'
-      : b === 7 || b === 0
-      ? 'mo'
-      : b === 8
-      ? 'vo'
-      : b === 9
-      ? 'no'
-      : 'to';
-  },
-  currency: {
-    symbol: '€'
-  }
-});
-
-numeral.locale('hero');
-numeral.defaultFormat(numeralFormat);
-/** End of numer formatting */
-
 /** Start of defaults */
 const minAmountOptions = [
   { text: '20%', value: 20 },
@@ -83,7 +46,7 @@ const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
 const defaultMir = 10;
-const defaultTerm = 3;
+const defaultTerm = 300;
 const defaultMinPercent = 20;
 const minMir = 0;
 const maxMir = 20;
@@ -118,18 +81,19 @@ const CreateLoan = () => {
     accept: false,
     minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
   });
+  const termMonths = loan.term / 60 / 60 / 24 / 30;
 
   // Calculations
   const numberAmount = loan.amount;
   const formattedAmount = numeral(loan.amount).format();
   const formattedMinAmount = numeral(loan.minAmount).format();
   const repaymentAmount = numeral(
-    numberAmount + (numberAmount * (loan.mir * loan.term)) / 100
+    numberAmount + (numberAmount * (loan.mir * termMonths)) / 100
   ).format();
   const netLoan = numeral(numberAmount - (numberAmount * 1) / 100).format();
   const systemFees = numeral((numberAmount * 1) / 100).format();
   const totalInterest = numeral(
-    (numberAmount * (loan.mir * loan.term)) / 100
+    (numberAmount * (loan.mir * termMonths)) / 100
   ).format();
 
   const onSetAmount = ({ floatValue }) => {
@@ -141,7 +105,7 @@ const CreateLoan = () => {
     });
   };
 
-  const onSetTerm = (e, data) => setLoan({ ...loan, term: data.value });
+    const onSetTerm = (e, data) => setLoan({ ...loan, term: data.value });
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
 
@@ -169,6 +133,7 @@ const CreateLoan = () => {
       );
       setStage(UI.Success);
     } catch (error) {
+      console.error(error);
       setStage(UI.Error);
     }
   };
@@ -201,7 +166,8 @@ const CreateLoan = () => {
   };
 
   useEffect(() => {
-    const { amount: currentAmount, term, mir } = loan;
+    const { amount: currentAmount, term: termSeconds, mir } = loan;
+    const term = termSeconds / 60 / 60 / 24 / 30;
     if (currentAmount && mir && term) {
       setAPR((((currentAmount * mir * term) / currentAmount) * 12) / term);
     }

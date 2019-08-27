@@ -19,16 +19,13 @@ type PropsValueType = {
 };
 
 const Root = () => {
-  const [store, dispatch]: any = useReducer<any, any>(
-    reducers,
-    initialState,
-    () => initialState
-  );
-  process.env.REACT_APP_LOGROCKET === 'true' &&
-    LogRocket.init('rjsyho/raisehq');
+  const [store, dispatch]: any = useReducer<any, any>(reducers, initialState, () => initialState);
+
+  process.env.REACT_APP_LOGROCKET === 'true' && LogRocket.init('rjsyho/raisehq');
 
   const actions: any = connector(dispatch, store);
   const values: PropsValueType = { store, actions, isLogged: false };
+
   return (
     <RootContext.Provider value={values}>
       <BrowserRouter>

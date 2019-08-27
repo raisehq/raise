@@ -11,7 +11,7 @@ const useRefferalContract = () => {
       try {
         const contract = await metamask.addContract('ReferralTracker');
         setActiveContract({
-          address: contract.address,
+          address: contract.options.address,
           withdraw: (account) => contract.methods.withdraw(account).send({ from: account }),
           balance: (account) => contract.methods.unclaimedReferrals(account).call()
         });
