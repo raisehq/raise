@@ -20,6 +20,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "compile:components": "tsc",
+    "build": "tsc",
     "dev": "tsc --watch",
     "dev:int": "yarn run dev",
     "lint": "eslint . --ext .js,.ts,.tsx"
