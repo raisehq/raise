@@ -11,8 +11,7 @@ import {
 import LocalData from '../../helpers/localData';
 import * as Type from '../store.types';
 import { Either, to, getHost } from '../../utils/index';
-import { Status } from '@raisehq/components/src/commons/userStatus';
-import AccountType from '@raisehq/components/src/commons/accountType';
+import { Status } from '../../commons/userStatus';
 import * as Cookies from 'js-cookie';
 
 export default (dispatch: any, state: any) => {
@@ -70,7 +69,7 @@ export default (dispatch: any, state: any) => {
 
   const onSignup = async (data: Type.onSignup) => {
     try {
-      const response = await signUp({ ...data, accountype_id: AccountType.Lender });
+      const response = await signUp({ ...data, accounttype_id: 1 });
 
       return dispatch({ type: 'SIGNUP_SUCCESS', response });
     } catch (error) {

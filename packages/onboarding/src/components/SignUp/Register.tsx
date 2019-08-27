@@ -14,7 +14,7 @@ import {
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
-import countryOptions from '@raisehq/components/src/commons/countries';
+import { countryOptions } from '../../commons/countries';
 import validations from '../validations';
 import { checkUsername } from '../../services';
 import useGoogleTagManager from '../../hooks/useGoogleTagManager';
@@ -36,7 +36,7 @@ const Register = () => {
     password: false,
     country: false,
     username: false,
-    accounttype_id: 2
+    accounttype_id: 1
   });
 
   const [recaptcha, setRecaptcha] = useState(null);

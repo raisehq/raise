@@ -1,5 +1,5 @@
 import { to } from '../../utils/index';
-import { Status as UserStatus } from '@raisehq/components/src/commons/userStatus';
+import { Status as UserStatus } from '../../commons/userStatus';
 import { Store } from '../store.types';
 import {
   getAddressTypes,
@@ -14,7 +14,7 @@ import {
   cryptoAddressByAccount
 } from '../../services/user';
 //import LocalData from '../../helpers/localData';
-//import { countryOptions as countries } from '@raisehq/components/src/commons/countries';
+//import { countryOptions as countries } from '../../commons/countries';
 //import initialState from '../initialState';
 
 export default (dispatch: any, state: Store) => {

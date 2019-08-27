@@ -5,5 +5,3 @@ export enum KycStatus {
   Completed = 3,
   Uncompleted = 4
 }
-
-export default KycStatus

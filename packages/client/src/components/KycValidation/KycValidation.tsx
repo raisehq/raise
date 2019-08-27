@@ -4,7 +4,7 @@ import { ContainerStyled } from './KycValidation.styles';
 import { AppContext } from '../App';
 import useValidationKyc from '../../hooks/useValidationKyc';
 import Response from './KycValidation.Response';
-import { KycStatus } from '@raisehq/components/src/commons/kycStatus';
+import { KycStatus } from '../../commons/kycStatus';
 import AutoConfirm from './KycValidation.AutoConfirm';
 
 const SUCCESSFUL_RESPONSES = [

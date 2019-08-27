@@ -15,9 +15,3 @@ export const q3Options = [
   { key: 2, label: 'To others', value: 2 },
   { key: 3, label: 'Unemployed', value: 3 }
 ]
-
-export default {
-  q1Options,
-  q2Options,
-  q3Options
-}

@@ -7,7 +7,7 @@ import hasIn from 'lodash/hasIn';
 import { toChecksumAddress } from 'web3-utils';
 import { RootContext } from '../context';
 import { getWeb3, parseNetwork } from '../utils';
-import { Web3State } from '@raisehq/components/src/commons/Web3State';
+import { Web3State } from '../commons/Web3State';
 
 const HERO_CONTRACTS =
   'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';

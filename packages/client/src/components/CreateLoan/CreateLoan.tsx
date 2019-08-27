@@ -29,7 +29,7 @@ import {
   SliderWrapper
 } from './CreateLoan.styles';
 import Slider from '../Slider';
-import months from '@raisehq/components/src/commons/months';
+import months from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 
 /** Start of defaults */

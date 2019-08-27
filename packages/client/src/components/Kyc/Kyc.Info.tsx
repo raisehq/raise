@@ -12,7 +12,7 @@ import {
 import { Separator, Countries } from 'hero-ui';
 import { ButtonContainer, SelectStyled } from './Kyc.styles';
 import InlineDatePicker from './Kyc.InputDate';
-import { q1Options, q2Options, q3Options } from '@raisehq/components/src/commons/questions';
+import { q1Options, q2Options, q3Options } from '../../commons/questions';
 import { Either, Left, Right } from '../../utils';
 import 'react-select/dist/react-select.css';
 import 'react-virtualized-select/styles.css';

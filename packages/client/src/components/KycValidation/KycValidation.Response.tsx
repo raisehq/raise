@@ -3,7 +3,7 @@ import { Loader, Icon, Button } from 'semantic-ui-react';
 import { Message } from './KycValidation.styles';
 import * as Types from '../../store/store.types';
 import daggy from 'daggy';
-import { KycStatus } from '@raisehq/components/src/commons/kycStatus';
+import { KycStatus } from '../../commons/kycStatus';
 import { AppContext } from '../App';
 
 const UI = daggy.taggedSum('UI', {

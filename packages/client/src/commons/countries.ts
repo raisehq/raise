@@ -1446,5 +1446,3 @@ export const countryOptions = [
     text: 'Zimbabwe'
   }
 ];
-
-export default countryOptions;

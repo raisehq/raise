@@ -12,8 +12,8 @@ import { Separator } from 'hero-ui';
 import { ButtonContainer, SelectStyled } from './Kyc.styles';
 import { isLength, isNumeric, isEmpty } from 'validator';
 import InlineDatePicker from './Kyc.InputDate';
-import { countryOptions } from '@raisehq/components/src/commons/countries';
-import { q1Options, q2Options, q3Options } from '@raisehq/components/src/commons/questions';
+import { countryOptions } from '../../commons/countries';
+import { q1Options, q2Options, q3Options } from '../../commons/questions';
 import 'react-select/dist/react-select.css';
 import 'react-virtualized-select/styles.css';
 

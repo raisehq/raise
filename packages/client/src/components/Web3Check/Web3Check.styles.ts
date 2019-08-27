@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Card, Segment, Button } from 'semantic-ui-react';
-import { OnlyActive } from '@raisehq/components/src/commons/OnlyActive';
+import { OnlyActive } from '../../commons/OnlyActive';
 import Web3Address from './Web3Address';
 
 import { device } from '../LayoutV2/breakpoints';
