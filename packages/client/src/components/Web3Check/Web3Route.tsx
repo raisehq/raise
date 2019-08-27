@@ -4,7 +4,7 @@ import { AppContext } from '../App';
 import { NotAllowed } from '../NotAllowed';
 
 const Route = props => {
-  const { history, layout, exact, roles, ...rest }: any = props;
+  const { history, layout, exact, roles, marketplace, ...rest }: any = props;
   const {
     store: {
       auth: {
@@ -20,19 +20,24 @@ const Route = props => {
   const web3Pass = netOk && accMatch;
   const refMode = process.env.REACT_APP_REFERAL == 'true';
   const Layout = layout;
+    console.log('what')
 
   const acceptedRole =
     (roles !== undefined && roles.indexOf(accounttype_id) > -1) || false;
 
   if (logged && web3Pass && acceptedRole) {
+    if (refMode && marketplace) {
+      return <Redirect to="/referral" />;
+    }
     return <Layout exact {...rest} />;
   }
 
-  if (logged && web3Pass && !acceptedRole) {
+  if (logged && web3Pass && !refMode && !acceptedRole) {
     return <Redirect to="/dashboard" />;
   }
 
   if (logged && !web3Pass && history.location.pathname !== '/verify-web3') {
+    console.log('what')
     const redirectUrl = refMode
       ? '/verify-web3'
       : `/verify-web3?redirect=${history.location.pathname}`;
