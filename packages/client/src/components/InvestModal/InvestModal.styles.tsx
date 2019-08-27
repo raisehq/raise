@@ -1,5 +1,15 @@
 import styled from 'styled-components';
-import { Button, Modal as SemanticModal, Progress, Icon } from 'semantic-ui-react';
+import {
+  Button,
+  Modal as SemanticModal,
+  Progress,
+  Icon,
+  List,
+  Label,
+  Loader,
+  Segment,
+  Grid
+} from 'semantic-ui-react';
 import { device } from '../LayoutV2/breakpoints';
 
 interface ModalInputProps {
@@ -154,4 +164,140 @@ export const ConfirmButton = styled(LenderButton)`
     background-color: #ff047f;
     color: #ffffff;
   }
+`;
+
+// processing state
+export const RetryButton = styled(LenderButton)`
+  &&& {
+    height: 48px;
+    width: 100%;
+    font-size: 16px;
+    color: #ffffff;
+    margin-top: 10px;
+  }
+  &&&:hover,
+  &&&:focus {
+    background-color: #ff047f;
+    color: #ffffff;
+  }
+`;
+
+export const BlankSpace = styled.div`
+  &&& {
+    height: 48px;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+`;
+
+export const ListItemPadding = styled(List.Item)`
+  &&& {
+    font-size: 18px;
+  }
+  &&&:first-child {
+    margin-bottom: 25px;
+  }
+`;
+
+export const LabelPadding = styled(Label)`
+  &&& {
+    font-size: 14px !important;
+    margin-right: 8px !important;
+    background-color: #ff047f;
+    color: #ffffff;
+  }
+`;
+export const IconSuccess = styled(Icon)`
+  &&& {
+    margin: 0 !important;
+  }
+`;
+export const LabelPaddingLoader = styled(LabelPadding)`
+  &&& {
+    position: relative;
+    margin-bottom: -7px;
+    background-color: #ff047f;
+    color: #ffffff;
+  }
+`;
+export const MicroLoader = styled(Loader)`
+  &&& {
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.78571429em;
+  }
+  &&&:before,
+  &&&:after {
+    width: 10px;
+    height: 10px;
+    margin: 2px 0 0 -0.35rem;
+  }
+`;
+export const SegmentPadded = styled(Segment)`
+  &&& {
+    padding: 2em !important;
+    margin-top: 15% !important;
+    @media ${device.mobileS} {
+      padding: 3em !important;
+    }
+  }
+`;
+
+export const CardCenteredText = styled.div`
+  &&& {
+    text-align: center;
+  }
+`;
+export const CardTitle = styled.div`
+  color: #3c4251;
+  font: 26px bold;
+  line-height: 36px;
+  text-align: center;
+  margin: 10px;
+`;
+export const CardSubtitle = styled.div`
+  &&& {
+    color: #99a6b6;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    margin: 19px;
+  }
+`;
+
+export const ButtonGreen = styled(Button)`
+  &&&,
+  &&&:focus {
+    height: 62px;
+    width: 100%;
+    ${({ blocked }) => (blocked ? 'opacity: 0.4 !important;' : '')}
+    background:linear-gradient(134.72deg, #188E9B 0%, #6DD7C7 100%);
+    color: white;
+    font: 18px bold;
+    line-height: 24px;
+  }
+  &&&:hover {
+    background: linear-gradient(134.72deg, #5aafb8 0%, #78d8ca 100%);
+    color: white;
+    font-weith: bold;
+  }
+  &&&:active {
+    background-color: #188e9b;
+    color: white;
+    font-weith: bold;
+  }
+`;
+
+export const Action = styled(Grid.Row)`
+  color: #3C4251;
+  font-size: 18px;
+  line-height: 28px;
+`;
+
+export const Explanation = styled(Grid.Row)`
+  color: #5A5A5A;
+  font-size: 14px;
+  line-height: 21px;
+  margin-top: 10px;
 `;

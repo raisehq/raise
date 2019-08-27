@@ -30,6 +30,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
   const [investment, setInvestment] = useState();
   
   const openModal = () => {
+    setStage(UI.Confirm)
     setOpen(true);
   }
   const closeModal = () => {

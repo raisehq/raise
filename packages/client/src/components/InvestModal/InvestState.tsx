@@ -138,7 +138,6 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         </ProgressLayout>
       </InvestResume>
       <ConfirmButton onClick={onConfirm}>CONFIRM</ConfirmButton>
-      
     </>
   );
 };
