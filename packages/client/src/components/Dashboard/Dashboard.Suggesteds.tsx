@@ -5,7 +5,7 @@ import { SuggestedContainer, NoResults } from './Dashboard.styles';
 import { InvestModal } from '../InvestModal';
 
 const Suggesteds = ({ auctions }) => {
-  const auctionsState: any = useAuctionState(auctions, 'all');
+  const auctionsState: any = useAuctionState(auctions, ['all']);
 
   return auctionsState.cata({
     Loading: () => <SuggestedContainer>loading</SuggestedContainer>,

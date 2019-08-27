@@ -25,7 +25,7 @@ const calculateFromWei = number => fromWei(number.toString(), 'ether');
 
 const calculateTimes = auction => {
   try {
-    const loanTerm = getDesiredTime(auction.termLength);
+    const loanTerm = getDesiredTime(Number(auction.termLength));
 
     const today = (new Date()).getTime() / 1000;
     const auctionTimeLeft = getDesiredTime(Number(auction.auctionEndTimestamp) - today);
