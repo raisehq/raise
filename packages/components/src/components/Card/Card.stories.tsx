@@ -34,7 +34,7 @@ storiesOf('Card', module)
           <Card.Row title="System fees" content="-3000" />
           <Card.Row title="System fees" content="-3000" />
         </Card.Grid>
-        <Card.Graph currentAmount={43} totalAmount={122} />
+        <Card.Graph color="black" currentAmount={43} totalAmount={122} />
         <Card.Grid nobottom>
           <Card.Row title="System fees" content="-3000" />
           <Card.Row title="System fees" content="-3000" />
