@@ -48,6 +48,7 @@ export const AppContext = createContext({
 });
 
 const App = ({ children, history }: any) => {
+  const refMode = process.env.REACT_APP_REFERAL == 'true';
   const [isLoading, setLoading] = useState(true);
   const {
     store,
@@ -127,7 +128,6 @@ const App = ({ children, history }: any) => {
   }, [logged, address, network, netOk]);
 
   useEffect(() => {
-    const refMode = process.env.REACT_APP_REFERAL == 'true';
     const isJoin =
       history.location.pathname.includes('/join') || history.location.pathname.includes('/login');
     const conditions = {
@@ -150,7 +150,7 @@ const App = ({ children, history }: any) => {
       { logged: true, web3Pass: true, deposited: true, refMode: true },
         () => setTimeout(() => {
           TagManager();
-          history.push('/referral')}, 3000),
+          history.push('/referral')}, 1000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
         () => {
           setTimeout(() => {
@@ -188,39 +188,46 @@ const App = ({ children, history }: any) => {
           transform: `translateX(${styles.offset}%)`
         })}
       >
-        {/* Dashboard */}
+        {/** Referral */}
         <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[1, 2]} />
         <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} roles={[1, 2]} />
-        <Web3Route layout={Layout} exact path="/kyc" component={Kyc} roles={[1, 2]} />
-        <Web3Route
-          layout={Layout}
-          exact
-          path="/kyc/validation"
-          component={KycValidation}
-          roles={[1, 2]}
-        />
-        <Web3Route layout={LayoutV2} exact path="/" component={Referral} />
-        <Web3Route
-          layout={Layout}
-          exact
-          path="/dashboard"
-          component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
-          roles={[1, 2]}
-        />
-        <Web3Route
-          layout={Layout}
-          exact
-          path="/create-loan"
-          component={CreateLoan}
-          roles={[1, 2]}
-        />
-        <Web3Route
-          layout={Layout}
-          exact
-          path="/marketplace"
-          component={Marketplace}
-          roles={[1, 2]}
-        />
+
+        {/* Dashboard */
+          !refMode ? (
+            <>
+              <Web3Route layout={Layout} exact path="/kyc" component={Kyc} roles={[1, 2]} />
+              <Web3Route
+                layout={Layout}
+                exact
+                path="/kyc/validation"
+                component={KycValidation}
+                roles={[1, 2]}
+              />
+              <Web3Route layout={LayoutV2} exact path="/" component={Referral} />
+              <Web3Route
+                layout={Layout}
+                exact
+                path="/dashboard"
+                component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
+                roles={[1, 2]}
+              />
+              <Web3Route
+                layout={Layout}
+                exact
+                path="/create-loan"
+                component={CreateLoan}
+                roles={[1, 2]}
+              />
+              <Web3Route
+                layout={Layout}
+                exact
+                path="/marketplace"
+                component={Marketplace}
+                roles={[1, 2]}
+              />
+          </>) : null
+        }
+        
         {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />
         <LayoutV2 exact path="/join" component={Join} />
