@@ -1,9 +1,6 @@
 import {
   signIn,
-  signUp,
-  recovery,
   getUser,
-  changePassword,
   checkUsername,
   checkEmail,
   verifyAuth
@@ -46,35 +43,6 @@ export default (dispatch: any, state: any) => {
         );
       }
     );
-  };
-
-  const onRecovery = async (email: Type.onRecovery) => {
-    try {
-      await recovery(email);
-
-      return dispatch({ type: 'RECOVERY_SUCCESS' });
-    } catch (error) {
-      return dispatch({ type: 'RECOVERY_ERROR', error });
-    }
-  };
-
-  const onChangePassword = token => async email => {
-    const request = await changePassword(token, email);
-
-    request.fold(
-      () => dispatch({ type: 'NEW_PASSWORD_ERROR' }),
-      () => dispatch({ type: 'NEW_PASSWORD_SUCCESS' })
-    );
-  };
-
-  const onSignup = async (data: Type.onSignup) => {
-    try {
-      const response = await signUp({ ...data, accounttype_id: 1 });
-
-      return dispatch({ type: 'SIGNUP_SUCCESS', response });
-    } catch (error) {
-      return dispatch({ type: 'SIGNUP_ERROR', error });
-    }
   };
 
   const onSignout = () => {
@@ -124,11 +92,8 @@ export default (dispatch: any, state: any) => {
 
   return {
     onSignin,
-    onRecovery,
-    onSignup,
     onSignout,
     getUserAuth,
-    onChangePassword,
     onCheckUsername,
     onCheckEmail,
     onVerifyAuth

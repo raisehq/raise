@@ -1,5 +1,6 @@
 import React from 'react';
 import daggy from 'daggy';
+import { AccountType } from '@raisehq/components'
 import GetStarted from './SignUp/GetStarted';
 import Register from './SignUp/Register';
 import Confirm from './SignUp/Confirm';
@@ -121,7 +122,7 @@ const App = ({
     const signup = await services.signUp({
       ...credentials,
       ...(!!referralCode ? { referrer_code: referralCode } : {}),
-      accounttype_id: 1
+      accounttype_id: AccountType.Lender
     });
     signup.fold(
       () => console.log('something went wrong'),
