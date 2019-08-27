@@ -230,7 +230,6 @@ const App = ({ children, history }: any) => {
         
         {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />
-        <LayoutV2 exact path="/verify-web3" component={Web3Check} />
         <LayoutV2 exact path="/join" component={Join} />
         <LayoutV2 exact path="/login" component={Join} />
         <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
