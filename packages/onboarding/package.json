@@ -20,6 +20,7 @@
     "transpile": "tsc --watch",
     "dev": "tsc --watch",
     "dev:int": "yarn run dev",
+    "compile:onboarding": "tsc",
     "build": "tsc",
     "lint": "eslint . --ext .js,.ts,.tsx"
   },

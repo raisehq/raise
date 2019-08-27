@@ -19,6 +19,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "compile:components": "tsc",
     "build": "tsc",
     "dev": "tsc --watch",
     "dev:int": "yarn run dev",
