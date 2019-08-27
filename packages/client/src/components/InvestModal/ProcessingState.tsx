@@ -76,6 +76,8 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
 
   useAsyncEffect(async () => {
     if (approved) {
+      console.log('investment:: ', investment)
+      console.log(loan)
       const { DAIProxy } = contracts;
       try {
         await DAIProxy.methods

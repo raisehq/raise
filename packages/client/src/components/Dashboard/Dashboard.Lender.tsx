@@ -39,13 +39,12 @@ const Dashboard = () => {
       render: () => <Tab auctions={auctions} states={[1,2,3,4,5,6]} type="auction" />
     }
   ];
-
   return (
     <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
         <Header as="h1">Suggested auctions</Header>
-        <Suggesteds auctions={suggested} />
+        <Suggesteds auctions={suggested} states={['all']}/>
         <Button onClick={onCreateLoan}>marketplace</Button>
         <Header as="h1">My activity</Header>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
