@@ -24,11 +24,11 @@ const Dashboard = () => {
   const panes = [
     {
       menuItem: 'Auctions',
-      render: () => <Tab auctions={auctions} state={0} type="auction" />
+      render: () => <Tab auctions={auctions} states={[0]} type="auction" />
     },
     {
       menuItem: 'Loans',
-      render: () => <Tab auctions={auctions} state={1} type="loan" />
+      render: () => <Tab auctions={auctions} states={[1,2,3,4,5,6]} type="loan" />
     }
   ];
 

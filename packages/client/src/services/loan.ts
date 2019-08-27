@@ -22,6 +22,7 @@ export const getLiveAuctionsByAccount = async (address, network) => {
               borrowerDebt
               investorCount
               id
+              minimumReached
               auctionLength
               auctionStartTimestamp
               auctionEndTimestamp
@@ -66,6 +67,7 @@ export const getSuggestedAuctions = async network => {
             borrowerDebt
             investorCount
             id
+            minimumReached
             auctionLength
             auctionStartTimestamp
             auctionEndTimestamp

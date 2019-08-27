@@ -8,12 +8,12 @@ const Auctions = daggy.taggedSum('Auctions', {
   Empty: []
 });
 
-const useAuctionState = (auctions, state) => {
+const useAuctionState = (auctions, states) => {
   const [auctionsState, setAuctionState]: any = useState(Auctions.Loading);
 
   useEffect(() => {
     const activeAuctions = auctions
-      ? auctions.filter(auction => auction.state === state || state === 'all')
+      ? auctions.filter(auction => states.some(st => st === auction.state) || states === ['all'])
       : [];
 
     const conditions = {
@@ -30,7 +30,7 @@ const useAuctionState = (auctions, state) => {
       _,
       () => {}
     );
-  }, [auctions, state]);
+  }, [auctions, states]);
 
   return auctionsState;
 };
