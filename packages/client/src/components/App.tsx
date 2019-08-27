@@ -150,7 +150,7 @@ const App = ({ children, history }: any) => {
       { logged: true, web3Pass: true, deposited: true, refMode: true },
         () => setTimeout(() => {
           TagManager();
-          history.push('/referral')}, 100),
+          history.push('/referral')}, 1000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
         () => {
           setTimeout(() => {
