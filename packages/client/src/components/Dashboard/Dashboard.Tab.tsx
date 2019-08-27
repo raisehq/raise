@@ -11,13 +11,13 @@ const Card = {
   suggested: Suggested
 };
 
-const Tab = ({ auctions, state, type }) => {
-  const auctionsState: any = useActionState(auctions, state);
+const Tab = ({ auctions, states, type }) => {
+  const auctionsState: any = useActionState(auctions, states);
   const Component = Card[type];
 
   return auctionsState.cata({
     Loading: () => <DashboardTab.Pane loading />,
-    Success: () => (
+    Success: auctions => (
       <DashboardTab.Pane>
         {auctions.map(auction => (
           <Component key={auction.id} auction={auction} />

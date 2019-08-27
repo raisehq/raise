@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Icon, Select, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
+import { AccountType } from '@raisehq/components';
 import {
   OnboardHeader,
   OnboardSubHeader,
@@ -36,7 +37,7 @@ const Register = () => {
     password: false,
     country: false,
     username: false,
-    accounttype_id: 1
+    accounttype_id: AccountType.Lender
   });
 
   const [recaptcha, setRecaptcha] = useState(null);

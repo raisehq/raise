@@ -10,7 +10,7 @@ const Auction = ({ auction, cta }: { auction: any; cta?: any }) => {
   return (
     <Card>
       <Card.Header title="Raised amount" amount={<Amount principal={auction.principal} />} />
-      <Card.Graph currentAmount={principal} totalAmount={maxAmount} />
+      <Card.Graph color="#00DA9E" currentAmount={principal} totalAmount={maxAmount} />
       <Card.Grid>
         <Card.Row title="Investors" content={auction.investorCount} />
         <Card.Row title="Current APR" content={auction.interestRate * 12} />
