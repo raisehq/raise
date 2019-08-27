@@ -14,8 +14,8 @@ const Dashboard = () => {
     actions: {
       loan: { onGetSuggestedAuctions, onGetLiveAuctionsByAccount }
     },
+    web3Status: { account },
     store: {
-      web3Status: { account },
       loan: { suggested, auctions }
     }
   }: any = useContext(AppContext);
