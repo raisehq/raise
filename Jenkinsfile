@@ -15,7 +15,7 @@ pipeline {
       steps{
         nodejs(nodeJSInstallationName: 'node_11') {
           sh 'echo "- INSTALLING DEPENDENCIES"'
-          sh 'npm i'
+          sh 'npx lerna bootstrap'
         }
       }
     }
