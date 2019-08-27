@@ -73,7 +73,7 @@ export const Graph: any = styled.div`
   &&:before {
     content: '';
     position: absolute;
-    width: ${(props: any) => props.width}px;
+    width: ${(props: any) => props.width}%;
     height: 100%;
     top: 0;
     left: 0;
