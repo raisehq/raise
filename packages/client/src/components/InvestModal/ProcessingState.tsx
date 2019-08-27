@@ -163,10 +163,10 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
                   </Grid.Column>
                   <Grid.Column width={14}>
                     <Action>
-                      Allow Raise to interact with your wallet
+                      Allow Raise to interact with your DAI
                     </Action>
                     <Explanation>
-                      Once you give us allowance, you will be able to operate in our marketplace
+                      Once you give us allowance, you will be able to make investments in DAI
                     </Explanation>
                   </Grid.Column>
                 </Grid>

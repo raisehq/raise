@@ -11,7 +11,7 @@ const Suggesteds = ({ auctions }) => {
     Loading: () => <SuggestedContainer>loading</SuggestedContainer>,
     Success: () => (
       <SuggestedContainer>
-        {auctions.slice(0, 10).map(auction => (
+        {auctions.slice(0, 3).map(auction => (
           <Suggested key={auction.id} auction={auction} cta={<InvestModal loan={auction} />} />
         ))}
       </SuggestedContainer>
