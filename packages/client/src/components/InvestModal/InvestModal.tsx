@@ -27,7 +27,7 @@ const UI = daggy.taggedSum('UI', {
 const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Confirm);
-  const [investment, setInvestment] = useState();
+  const [investment, setInvestment] = useState(0);
   
   const openModal = () => {
     setStage(UI.Confirm)
