@@ -1956,13 +1956,6 @@
     universal-user-agent "^3.0.0"
     url-template "^2.0.8"
 
-"@raisehq/onboarding@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@raisehq/onboarding/-/onboarding-1.0.1.tgz#3de6daf9096ed9d0f0a36529d1ab303b34caa14a"
-  integrity sha512-HTP+X7spTxRq27TREbmDo7kSfAvN0MoSpK6kObsckroDTfii0KFWiomHwKyZuHcwmj2vhnb8nPGlf41wfh665A==
-  dependencies:
-    typescript "^3.5.3"
-
 "@reach/router@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.2.1.tgz#34ae3541a5ac44fa7796e5506a5d7274a162be4e"

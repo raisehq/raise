@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { fromWei } from 'web3-utils';
+import { Card } from '@raisehq/components';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useMetamask from '../../hooks/useMetaMask';
 import { TokenInput } from '../TokenInput';
@@ -31,7 +32,7 @@ const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
 
 const RaisedAmount: React.SFC<RaisedAmountProps> = ({ value }) => (
   <RaisedAmountBox>
-    <p>Raised</p>
+    <p>Raised Amount</p>
     <TokenInput value={value} displayType="text" />
   </RaisedAmountBox>
 );
@@ -57,6 +58,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
 
   useAsyncEffect(async () => {
     if (metamask && loanAddress) {
+      console.log('loan address::: ', loanAddress)
       try {
         const loanContract = await metamask.addContractByAddress(
           'LoanContract',
@@ -123,19 +125,19 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       </ModalInputContainer>
       <InvestResume>
         <RaisedAmount value={raised} />
-        <FlexSpacedLayout>
-          <ResumeItem title="Borrower" value="Company A" />
-          <ResumeItem title="Loan Term" value={`${times.loanTerm}`} />
-          <ResumeItem title="Min APR" value={`${interest} %`} />
-
-          <ResumeItem title="Target Amount" value={`${targetAmount} DAI`} />
-          <ResumeItem title="Investors" value={`${investorCount}`} />
-          <ResumeItem title="Time left" value={`${times.auctionTimeLeft}`} />
-        </FlexSpacedLayout>
         <ProgressLayout>
           <AuctionProgress active percent={raisedPercentage} />
           <Percentage>{raisedPercentage} %</Percentage>
         </ProgressLayout>
+        <FlexSpacedLayout>
+          <ResumeItem title="Target Amount" value={`${targetAmount} DAI`} />
+          <ResumeItem title="Investors" value={`${investorCount}`} />
+          <ResumeItem title="Time left" value={`${times.auctionTimeLeft}`} />
+          <Card.Separator />
+          <ResumeItem title="Borrower" value="Company A" />
+          <ResumeItem title="Loan Term" value={`${times.loanTerm}`} />
+          <ResumeItem title="Min APR" value={`${interest} %`} />
+        </FlexSpacedLayout>
       </InvestResume>
       <ConfirmButton onClick={onConfirm}>CONFIRM</ConfirmButton>
     </>
