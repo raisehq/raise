@@ -32,7 +32,7 @@ const useLoanDispatcher = () => {
               termSecondsLength,
               auctionSecondsLength
             ];
-            console.log(params);
+            
             return contract.methods.deploy(...params).send({ from: account[0] });
           }
         });

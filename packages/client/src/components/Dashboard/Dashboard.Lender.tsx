@@ -40,7 +40,7 @@ const Dashboard = () => {
       <KycMessage />
       <DashboardContainer>
         <Header as="h1">Suggested auctions</Header>
-        <Suggesteds auctions={suggested} states={['all']}/>
+        <Suggesteds auctions={suggested} states={[0]}/>
         <Button onClick={onCreateLoan}>marketplace</Button>
         <Header as="h1">My activity</Header>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />

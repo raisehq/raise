@@ -4,7 +4,7 @@ import { Card } from '@raisehq/components';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useMetamask from '../../hooks/useMetaMask';
 import { TokenInput } from '../TokenInput';
-import numeral, { numeralFormat } from '../CreateLoan/numeral';
+import numeral from '../CreateLoan/numeral';
 import { ResumeItemProps, RaisedAmountProps, InvestStateProps } from './types';
 import useCalc from '../Dashboard/Dashboard.useCalc';
 import {
@@ -58,7 +58,6 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
 
   useAsyncEffect(async () => {
     if (metamask && loanAddress) {
-      console.log('loan address::: ', loanAddress)
       try {
         const loanContract = await metamask.addContractByAddress(
           'LoanContract',
@@ -108,7 +107,6 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
           <ModalInputBox>
             <TokenInput
               value={value}
-              numeralFormat={numeralFormat}
               onValueChange={setValue}
             />
           </ModalInputBox>

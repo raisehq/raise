@@ -8,9 +8,9 @@ const Suggesteds = ({ auctions, states }) => {
   const auctionsState: any = useAuctionState(auctions, states);
   return auctionsState.cata({
     Loading: () => <SuggestedContainer>loading</SuggestedContainer>,
-    Success: () => (
+    Success: suggestedAuctions => (
       <SuggestedContainer>
-        {auctions.slice(0, 3).map(auction => (
+        {suggestedAuctions.slice(0, 3).map(auction => (
           <Suggested key={auction.id} auction={auction} cta={<InvestModal loan={auction} />} />
         ))}
       </SuggestedContainer>

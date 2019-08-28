@@ -69,7 +69,7 @@ export const getLoanAction = (stage, values, methods) => {
         <Header as="h2">Please wait</Header>
         <p>Creating loan. Can take several minutes.</p>
         <WaitingButton disabled>
-          <Loader active centered inline />
+          <Loader active inline />
         </WaitingButton>
       </LoanConfirmation>
     ),
