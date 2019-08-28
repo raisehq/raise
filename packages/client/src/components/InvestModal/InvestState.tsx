@@ -66,7 +66,6 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         const loanInterest = await loanContract.methods
           .getInterestRate()
           .call();
-          
         setInterest(Number(loanInterest) / 1000);
       } catch (error) {
         console.error(error);
