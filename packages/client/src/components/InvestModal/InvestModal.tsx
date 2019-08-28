@@ -63,7 +63,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
         <SemanticModal.Content>
           {getInvestAction(stage)}
 
-          <ExitButton size="normal" name="close" color="black" onClick={closeModal}/>
+          <ExitButton name="close" color="black" onClick={closeModal}/>
 
         </SemanticModal.Content>
       </Modal>

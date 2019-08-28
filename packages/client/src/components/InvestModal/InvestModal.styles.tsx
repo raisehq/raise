@@ -275,26 +275,13 @@ export const CardSubtitle = styled.div`
 `;
 
 export const ButtonGreen = styled(Button)`
-  &&&,
-  &&&:focus {
-    height: 62px;
+  &&& {
+    height: 58px;
     width: 100%;
-    ${({ blocked }) => (blocked ? 'opacity: 0.4 !important;' : '')}
-    background:linear-gradient(134.72deg, #188E9B 0%, #6DD7C7 100%);
+    background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
     color: white;
-    font: 18px bold;
-    line-height: 24px;
   }
-  &&&:hover {
-    background: linear-gradient(134.72deg, #5aafb8 0%, #78d8ca 100%);
-    color: white;
-    font-weith: bold;
-  }
-  &&&:active {
-    background-color: #188e9b;
-    color: white;
-    font-weith: bold;
-  }
+  
 `;
 
 export const Action = styled(Grid.Row)`
