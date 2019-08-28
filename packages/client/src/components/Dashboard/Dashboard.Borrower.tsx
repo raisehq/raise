@@ -1,11 +1,10 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useEffect } from 'react';
 import { Header } from 'semantic-ui-react';
 import { Button, DashboardContainer, DashboardWrapper } from './Dashboard.styles';
 import KycMessage from '../KycMessage';
 import { DashboardTab } from './Dashboard.styles';
 import { AppContext } from '../App';
 import Tab from './Dashboard.Tab';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 const Dashboard = () => {
   const {
@@ -13,7 +12,6 @@ const Dashboard = () => {
     actions: {
       loan: { onGetLiveAuctionsByAccount }
     },
-    store,
     store: {
       loan: { auctions }
     }
@@ -32,11 +30,9 @@ const Dashboard = () => {
     }
   ];
 
-  useAsyncEffect(() => {
-    if (history.location.pathname.includes('/dashboard')) {
-      onGetLiveAuctionsByAccount();
-    }
-  }, [store.user.cryptoAddress.address]);
+  useEffect(() => {
+    onGetLiveAuctionsByAccount();
+  }, []);
 
   return (
     <DashboardWrapper>

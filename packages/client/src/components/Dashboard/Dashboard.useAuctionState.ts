@@ -18,7 +18,7 @@ const useAuctionState = (auctions, states) => {
 
     const conditions = {
       auctionsExist: auctions !== null,
-      isEmpty: auctions ? !activeAuctions.length : null
+      isEmpty: auctions ? !activeAuctions.length : true
     };
 
     match(
