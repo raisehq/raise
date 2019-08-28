@@ -4,7 +4,7 @@ import { AppContext } from '../App';
 import { NotAllowed } from '../NotAllowed';
 
 const Route = props => {
-  const { history, layout, exact, roles, ...rest }: any = props;
+  const { history, layout, exact, roles, marketplace, ...rest }: any = props;
   const {
     store: {
       auth: {
@@ -25,10 +25,13 @@ const Route = props => {
     (roles !== undefined && roles.indexOf(accounttype_id) > -1) || false;
 
   if (logged && web3Pass && acceptedRole) {
+    if (refMode && marketplace) {
+      return <Redirect to="/referral" />;
+    }
     return <Layout exact {...rest} />;
   }
 
-  if (logged && web3Pass && !acceptedRole) {
+  if (logged && web3Pass && !refMode && !acceptedRole) {
     return <Redirect to="/dashboard" />;
   }
 
