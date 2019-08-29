@@ -4,7 +4,7 @@ import { Card } from '@raisehq/components';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useMetamask from '../../hooks/useMetaMask';
 import { TokenInput } from '../TokenInput';
-import numeral, { numeralFormat } from '../CreateLoan/numeral';
+import numeral, { numeralFormat } from '../../commons/numeral';
 import { ResumeItemProps, RaisedAmountProps, InvestStateProps } from './types';
 import useCalc from '../Dashboard/Dashboard.useCalc';
 import {
@@ -83,9 +83,9 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       raised: principal ? fromWei(principal) : 0,
       targetAmount: maxAmount ? numeral(fromWei(maxAmount)).format() : 0,
       raisedPercentage:
-        principal && maxAmount
-          ? (Number(fromWei(principal)) * 100) / Number(fromWei(maxAmount))
-          : 0
+      principal && maxAmount
+        ? (Number(fromWei(principal)) * 100) / Number(fromWei(maxAmount))
+        : 0
     }),
     [principal, maxAmount]
   );
@@ -102,44 +102,44 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
 
   return (
     <>
-      <Header>How much would you like to invest?</Header>
-      <ModalInputContainer>
-        <div>
-          <ModalInputBox>
-            <TokenInput
-              value={value}
-              numeralFormat={numeralFormat}
-              onValueChange={setValue}
-            />
-          </ModalInputBox>
-          <InputLabel green onClick={fundAll}>
-            Fund all
+    <Header>How much would you like to invest?</Header>
+    <ModalInputContainer>
+      <div>
+        <ModalInputBox>
+          <TokenInput
+            value={value}
+            numeralFormat={numeralFormat}
+            onValueChange={setValue}
+          />
+        </ModalInputBox>
+        <InputLabel green onClick={fundAll}>
+          Fund all
           </InputLabel>
-        </div>
-        <div>
-          <ModalInputBox roi>
-            <TokenInput value={roi} decimalScale={4} displayType="text" />
-          </ModalInputBox>
-          <InputLabel>Expected ROI</InputLabel>
-        </div>
-      </ModalInputContainer>
-      <InvestResume>
-        <RaisedAmount value={raised} />
-        <ProgressLayout>
-          <AuctionProgress active percent={raisedPercentage} />
-          <Percentage>{raisedPercentage} %</Percentage>
-        </ProgressLayout>
-        <FlexSpacedLayout>
-          <ResumeItem title="Target Amount" value={`${targetAmount} DAI`} />
-          <ResumeItem title="Investors" value={`${investorCount}`} />
-          <ResumeItem title="Time left" value={`${times.auctionTimeLeft}`} />
-          <Card.Separator />
-          <ResumeItem title="Borrower" value="Company A" />
-          <ResumeItem title="Loan Term" value={`${times.loanTerm}`} />
-          <ResumeItem title="Min APR" value={`${interest} %`} />
-        </FlexSpacedLayout>
-      </InvestResume>
-      <ConfirmButton onClick={onConfirm}>CONFIRM</ConfirmButton>
+      </div>
+      <div>
+        <ModalInputBox roi>
+          <TokenInput value={roi} decimalScale={4} displayType="text" />
+        </ModalInputBox>
+        <InputLabel>Expected ROI</InputLabel>
+      </div>
+    </ModalInputContainer>
+    <InvestResume>
+      <RaisedAmount value={raised} />
+      <ProgressLayout>
+        <AuctionProgress active percent={raisedPercentage} />
+        <Percentage>{raisedPercentage} %</Percentage>
+      </ProgressLayout>
+      <FlexSpacedLayout>
+        <ResumeItem title="Target Amount" value={`${targetAmount} DAI`} />
+        <ResumeItem title="Investors" value={`${investorCount}`} />
+        <ResumeItem title="Time left" value={`${times.auctionTimeLeft}`} />
+        <Card.Separator />
+        <ResumeItem title="Borrower" value="Company A" />
+        <ResumeItem title="Loan Term" value={`${times.loanTerm}`} />
+        <ResumeItem title="Min APR" value={`${interest} %`} />
+      </FlexSpacedLayout>
+    </InvestResume>
+    <ConfirmButton onClick={onConfirm}>CONFIRM</ConfirmButton>
     </>
   );
 };

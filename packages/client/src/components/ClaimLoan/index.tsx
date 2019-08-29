@@ -1,5 +1,5 @@
-import InvestModal from './InvestModal';
+import ClaimLoan from './ClaimLoan';
 
 export {
-  InvestModal
+  ClaimLoan
 };

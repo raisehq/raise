@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Header, ConfirmButton } from '../../InvestModal/InvestModal.styles';
-import { ClaimLoanContext } from '../ClaimLoan';
+import { RepayLoanContext } from '../RepayLoan';
 
 const Processing = () => {
-  const { closeModal }: any = useContext(ClaimLoanContext)
+  const { closeModal }: any = useContext(RepayLoanContext)
   return (
     <>
     <Header>Claim Loan</Header>

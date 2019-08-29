@@ -20,7 +20,7 @@ interface InputLabelProps {
   green?: boolean;
 }
 
-export const ExitButton = styled(Icon)`
+export const ExitButton = styled(Icon) `
   &&& {
     position: absolute;
     top: 20px;
@@ -29,21 +29,36 @@ export const ExitButton = styled(Icon)`
   }
 `;
 
-export const LenderButton = styled(Button)`
-  &&& {
-    cursor: pointer;
-    color: white;
-    background-color: #eb3f93;
-    text-transform: uppercase;
-  }
+export const LenderButton = styled(Button) `
+&&& {
+  cursor: pointer;
+  color: white;
+  background-color: #eb3f93;
+  text-transform: uppercase;
+  border-radius: 4px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 20px;
+}
 
-  &&&:hover {
-    color: white;
-    background-color: #eb3f93;
-  }
+&&&:hover {
+  color: white;
+  background-color: #eb3f93;
+}
 `;
 
-export const Modal = styled(SemanticModal)`
+export const BorrowerButton = styled(LenderButton) `
+&&& {
+  background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
+  &&&:hover {
+    color: white;
+    background: linear-gradient(134.72deg,#02bb7d 0%,#00efad 100%);
+  }
+}
+`
+export const Modal = styled(SemanticModal) `
   width: 100%;
   height: fit-content;
   background-color: #fcfcfc;
@@ -73,7 +88,7 @@ export const ModalInputContainer = styled.div`
   margin-top: 30px;
 `;
 
-export const ModalInputBox = styled.div<ModalInputProps>`
+export const ModalInputBox = styled.div < ModalInputProps > `
   width: 350px;
   height: 48px;
   width: 173px;
@@ -88,7 +103,7 @@ export const ModalInputBox = styled.div<ModalInputProps>`
   }
 `;
 
-export const InputLabel = styled.div<InputLabelProps>`
+export const InputLabel = styled.div < InputLabelProps > `
   margin-top: 12px;
   text-align: center;
   color: ${({ green }) => (green ? '#00A76F' : '#5A5A5A')};
@@ -136,11 +151,11 @@ export const ResumeItemBox = styled.div`
   }
 `;
 
-export const ProgressLayout = styled(FlexSpacedLayout)`
+export const ProgressLayout = styled(FlexSpacedLayout) `
   margin-top: 10px;
 `;
 
-export const AuctionProgress = styled(Progress)`
+export const AuctionProgress = styled(Progress) `
   &&&& {
     flex: 3;
     margin: 0;
@@ -160,7 +175,7 @@ export const Percentage = styled.div`
   margin-left: 10px;
 `;
 
-export const ConfirmButton = styled(LenderButton)`
+export const ConfirmButton = styled(LenderButton) `
   &&& {
     height: 48px;
     width: 100%;
@@ -175,7 +190,7 @@ export const ConfirmButton = styled(LenderButton)`
 `;
 
 // processing state
-export const RetryButton = styled(LenderButton)`
+export const RetryButton = styled(LenderButton) `
   &&& {
     height: 48px;
     width: 100%;
@@ -199,7 +214,7 @@ export const BlankSpace = styled.div`
   }
 `;
 
-export const ListItemPadding = styled(List.Item)`
+export const ListItemPadding = styled(List.Item) `
   &&& {
     font-size: 18px;
   }
@@ -208,7 +223,7 @@ export const ListItemPadding = styled(List.Item)`
   }
 `;
 
-export const LabelPadding = styled(Label)`
+export const LabelPadding = styled(Label) `
   &&& {
     font-size: 14px !important;
     margin-right: 8px !important;
@@ -216,12 +231,12 @@ export const LabelPadding = styled(Label)`
     color: #ffffff;
   }
 `;
-export const IconSuccess = styled(Icon)`
+export const IconSuccess = styled(Icon) `
   &&& {
     margin: 0 !important;
   }
 `;
-export const LabelPaddingLoader = styled(LabelPadding)`
+export const LabelPaddingLoader = styled(LabelPadding) `
   &&& {
     position: relative;
     margin-bottom: -7px;
@@ -229,7 +244,7 @@ export const LabelPaddingLoader = styled(LabelPadding)`
     color: #ffffff;
   }
 `;
-export const MicroLoader = styled(Loader)`
+export const MicroLoader = styled(Loader) `
   &&& {
     width: 1rem;
     height: 1rem;
@@ -242,7 +257,7 @@ export const MicroLoader = styled(Loader)`
     margin: 2px 0 0 -0.35rem;
   }
 `;
-export const SegmentPadded = styled(Segment)`
+export const SegmentPadded = styled(Segment) `
   &&& {
     padding: 2em !important;
     margin-top: 15% !important;
@@ -274,7 +289,7 @@ export const CardSubtitle = styled.div`
   }
 `;
 
-export const ButtonGreen = styled(Button)`
+export const ButtonGreen = styled(Button) `
   &&&,
   &&&:focus {
     height: 62px;
@@ -297,13 +312,13 @@ export const ButtonGreen = styled(Button)`
   }
 `;
 
-export const Action = styled(Grid.Row)`
+export const Action = styled(Grid.Row) `
   color: #3C4251;
   font-size: 18px;
   line-height: 28px;
 `;
 
-export const Explanation = styled(Grid.Row)`
+export const Explanation = styled(Grid.Row) `
   color: #5A5A5A;
   font-size: 14px;
   line-height: 21px;

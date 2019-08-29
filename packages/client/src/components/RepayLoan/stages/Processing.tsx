@@ -1,11 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Header, ConfirmButton } from '../../InvestModal/InvestModal.styles';
+const Processing = () => {
 
-const Processing = () => (
-  <Fragment>
+  return (
+    <>
     <Header>Claim Loan</Header>
     <ConfirmButton disabled>Loading...</ConfirmButton>
-  </Fragment>
-)
+    </>
+  );
+};
 
 export default Processing;

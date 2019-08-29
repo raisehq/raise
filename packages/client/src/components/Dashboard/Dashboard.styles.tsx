@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Tab } from 'semantic-ui-react';
+import { Tab, Header as SemanticHeader } from 'semantic-ui-react';
 import { maxDevice } from '../LayoutV2/breakpoints';
 import theme from '../../theme';
 
@@ -15,7 +15,7 @@ export const DashboardContainer = styled.div`
   padding-top: 25px;
 `;
 
-export const DashboardTab: any = styled(Tab)`
+export const DashboardTab: any = styled(Tab) `
   margin-bottom: 25px;
 
   &&& .ui.secondary.pointing.menu .active.item {
@@ -96,3 +96,11 @@ export const AmountComponent = styled.div`
     right: -47px;
   }
 `;
+
+export const Header = styled(SemanticHeader) `
+  color: #3C4251;
+  h1.& {
+    font-size: 26px;
+    font-weight: bold;
+  }
+`

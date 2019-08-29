@@ -8,7 +8,7 @@ import ProcessingStage from './stages/Processing';
 import SuccessStage from './stages/Success';
 
 import {
-  LenderButton,
+  BorrowerButton,
   Modal,
   ExitButton,
 } from '../InvestModal/InvestModal.styles';
@@ -24,7 +24,7 @@ export const Stages = daggy.taggedSum('UI', {
 const ClaimLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(Stages.Confirm);
-  
+
   const openModal = () => {
     setStage(Stages.Confirm)
     setOpen(true);
@@ -32,26 +32,26 @@ const ClaimLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
   const closeModal = () => {
     setOpen(false);
   }
-  
+
   const getStage = (stage) => {
     return stage.cata({
-      Confirm: () => <ConfirmStage/>,
+      Confirm: () => <ConfirmStage />,
       Processing: () => <ProcessingStage />,
       Success: () => <SuccessStage />
     });
   }
 
-  
+
 
   return (
-    <ClaimLoanContext.Provider value={{loan, setStage, closeModal}}>
-      <LenderButton onClick={openModal}>Claim funds</LenderButton>
+    <ClaimLoanContext.Provider value={{ loan, setStage, closeModal }}>
+      <BorrowerButton onClick={openModal}>Claim funds</BorrowerButton>
       <Modal open={open} size="small" onClose={closeModal}>
 
         <SemanticModal.Content>
           {getStage(stage)}
 
-          <ExitButton size="normal" name="close" color="black" onClick={closeModal}/>
+          <ExitButton size="normal" name="close" color="black" onClick={closeModal} />
 
         </SemanticModal.Content>
       </Modal>
