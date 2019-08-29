@@ -12,13 +12,7 @@ import { LenderButton, Modal, ExitButton } from './InvestModal.styles';
 const UI = daggy.taggedSum('UI', {
   Confirm: [],
   Processing: [],
-<<<<<<< HEAD
   Success: [],
-=======
-  // Waiting: [],
-  Success: []
-  // Error: ['error']
->>>>>>> 80b2f4b461a3f7dd35564bdd22a680cc5f9ece3b
 });
 
 const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
