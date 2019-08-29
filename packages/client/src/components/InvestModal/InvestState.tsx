@@ -4,12 +4,8 @@ import { Card } from '@raisehq/components';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useMetamask from '../../hooks/useMetaMask';
 import { TokenInput } from '../TokenInput';
-<<<<<<< HEAD
-import numeral, { numeralFormat } from '../../commons/numeral';
-=======
+import numeral from '../../commons/numeral';
 import Coin from '../Coin';
-import numeral from '../CreateLoan/numeral';
->>>>>>> ce0b7cf9d3b33db7b7f57796bedf69ae0d927837
 import { ResumeItemProps, RaisedAmountProps, InvestStateProps } from './types';
 import useCalc from '../Dashboard/Dashboard.useCalc';
 import {
