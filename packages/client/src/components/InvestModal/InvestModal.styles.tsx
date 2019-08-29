@@ -103,6 +103,16 @@ export const InputLabel = styled.div<InputLabelProps>`
   color: ${({ green }) => (green ? '#00A76F' : '#5A5A5A')};
 `;
 
+
+export const FundAllLabel = styled.div<InputLabelProps>`
+display: inline-block
+  margin-top: 12px;
+  text-align: center;
+  color: #00A76F;
+  cursor: pointer;
+  margin-left: 60px;
+`;
+
 export const InvestResume = styled.div`
   height: fit-content;
   border: 1px solid #cfd0d4;

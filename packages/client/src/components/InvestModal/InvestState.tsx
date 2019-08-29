@@ -23,7 +23,8 @@ import {
   ConfirmButton,
   InputContainer,
   RaisedAmountContent,
-  Amount
+  Amount,
+  FundAllLabel
 } from './InvestModal.styles';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
@@ -118,9 +119,9 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
               onValueChange={setValue}
             />
           </ModalInputBox>
-          <InputLabel green onClick={fundAll}>
+          <FundAllLabel green onClick={fundAll}>
             Fund all
-          </InputLabel>
+          </FundAllLabel>
         </InputContainer>
         <InputContainer>
           <ModalInputBox roi>

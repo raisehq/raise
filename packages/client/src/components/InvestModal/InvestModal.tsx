@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
-// import { Loader, Header } from 'semantic-ui-react';
-// import { isMobile } from 'react-device-detect';
 import { InvestModalProps } from './types';
 
 import InvestState from './InvestState';
@@ -14,9 +12,7 @@ import { LenderButton, Modal, ExitButton } from './InvestModal.styles';
 const UI = daggy.taggedSum('UI', {
   Confirm: [],
   Processing: [],
-  // Waiting: [],
-  Success: []
-  // Error: ['error']
+  Success: [],
 });
 
 const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
