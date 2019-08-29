@@ -7,6 +7,17 @@ export const DashboardWrapper = styled.div`
   width: 100%;
   padding: 25px;
   box-sizing: border-box;
+
+  .heroCard {
+    margin: 0 10px 10px 0;
+  }
+
+  .heroCard {
+    @media ${maxDevice.tablet} {
+      width: 100%;
+      margin: 0 0 10px 0;
+    }
+  }
 `;
 
 export const DashboardContainer = styled.div`
@@ -41,15 +52,6 @@ export const DashboardTab: any = styled(Tab)`
     display: flex;
     flex-wrap: wrap;
     border: none;
-
-    .heroCard {
-      margin: 0 10px 10px 0;
-
-      @media ${maxDevice.mobileL} {
-        width: 100%;
-        margin: 0 0 10px 0;
-      }
-    }
   }
 `;
 
@@ -71,10 +73,6 @@ export const SuggestedContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 15px 0 15px 0;
-
-  .heroCard {
-    margin: 0 10px 10px 0;
-  }
 `;
 
 export const NoResults = styled.div`
