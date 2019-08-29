@@ -105,7 +105,6 @@ export const InputLabel = styled.div<InputLabelProps>`
 
 export const InvestResume = styled.div`
   height: fit-content;
-  /*width: 350px;*/
   border: 1px solid #cfd0d4;
   border-radius: 4px;
   background-color: #ffffff;
