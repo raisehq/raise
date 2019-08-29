@@ -25,7 +25,6 @@ import {
   RaisedAmountContent,
   Amount
 } from './InvestModal.styles';
-// import { AppContext } from '../App';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
   <ResumeItemBox>
@@ -44,7 +43,6 @@ const RaisedAmount: React.SFC<RaisedAmountProps> = ({ value }) => (
         name="DAI"
       />
     </RaisedAmountContent>
-    {/* <TokenInput value={value} displayType="text" /> */}
   </RaisedAmountBox>
 );
 
