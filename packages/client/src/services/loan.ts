@@ -27,6 +27,7 @@ export const getLiveAuctionsByAccount = async (address, network) => {
               auctionStartTimestamp
               auctionEndTimestamp
               termLength
+              maxInterestRate
             }
           }
         }`
@@ -38,7 +39,6 @@ export const getLiveAuctionsByAccount = async (address, network) => {
   return request.fold(
     () => Left(null),
     response => {
-      console.log(response.data)
       if (response.data.errors) {
         return Left(response.data.errors)
       }
@@ -72,6 +72,7 @@ export const getSuggestedAuctions = async network => {
             auctionStartTimestamp
             auctionEndTimestamp
             termLength
+            maxInterestRate
           }
         }`
     }
@@ -82,7 +83,6 @@ export const getSuggestedAuctions = async network => {
   return request.fold(
     () => Left(null),
     response => {
-      console.log(response.data)
       if (response.data.errors) {
         return Left(response.data.errors)
       }
