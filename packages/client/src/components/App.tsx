@@ -233,7 +233,7 @@ const App = ({ children, history }: any) => {
           component={Marketplace}
           roles={[1, 2]}
         />
-  
+
         {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />
         <LayoutV2 exact path="/join" component={Join} />

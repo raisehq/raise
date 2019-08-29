@@ -28,7 +28,7 @@ const useAuctionState = (auctions, states) => {
       { auctionsExist: true, isEmpty: false },
       () => setAuctionState(Auctions.Success(activeAuctions)),
       _,
-      () => {}
+      () => { }
     );
   }, [auctions, states]);
 

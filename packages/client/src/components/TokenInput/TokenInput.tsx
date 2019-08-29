@@ -22,7 +22,7 @@ const TokenInput: React.SFC<TokenInputProps> = ({
   ...props
 }) => {
   const onValueChange = ({ floatValue }) =>
-    onChange ? onChange(floatValue) : undefined;
+    (onChange ? onChange(floatValue) : undefined);
   return (
     <LoanInputBox>
       {displayType === 'text' ? (

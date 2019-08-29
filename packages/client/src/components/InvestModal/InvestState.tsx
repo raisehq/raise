@@ -4,7 +4,12 @@ import { Card } from '@raisehq/components';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useMetamask from '../../hooks/useMetaMask';
 import { TokenInput } from '../TokenInput';
+<<<<<<< HEAD
 import numeral, { numeralFormat } from '../../commons/numeral';
+=======
+import Coin from '../Coin';
+import numeral from '../CreateLoan/numeral';
+>>>>>>> ce0b7cf9d3b33db7b7f57796bedf69ae0d927837
 import { ResumeItemProps, RaisedAmountProps, InvestStateProps } from './types';
 import useCalc from '../Dashboard/Dashboard.useCalc';
 import {
@@ -19,9 +24,12 @@ import {
   ProgressLayout,
   AuctionProgress,
   Percentage,
-  ConfirmButton
+  ConfirmButton,
+  InputContainer,
+  RaisedAmountContent,
+  Amount,
+  FundAllLabel
 } from './InvestModal.styles';
-// import { AppContext } from '../App';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
   <ResumeItemBox>
@@ -33,7 +41,13 @@ const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
 const RaisedAmount: React.SFC<RaisedAmountProps> = ({ value }) => (
   <RaisedAmountBox>
     <p>Raised Amount</p>
-    <TokenInput value={value} displayType="text" />
+    <RaisedAmountContent>
+      <Amount>{numeral(value).format()}</Amount>
+      <Coin
+        src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`}
+        name="DAI"
+      />
+    </RaisedAmountContent>
   </RaisedAmountBox>
 );
 
@@ -58,7 +72,6 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
 
   useAsyncEffect(async () => {
     if (metamask && loanAddress) {
-      console.log('loan address::: ', loanAddress)
       try {
         const loanContract = await metamask.addContractByAddress(
           'LoanContract',
@@ -99,29 +112,27 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
     setStage(ui.Processing);
   };
 
-
   return (
     <>
     <Header>How much would you like to invest?</Header>
     <ModalInputContainer>
-      <div>
+      <InputContainer>
         <ModalInputBox>
           <TokenInput
             value={value}
-            numeralFormat={numeralFormat}
             onValueChange={setValue}
           />
         </ModalInputBox>
-        <InputLabel green onClick={fundAll}>
+        <FundAllLabel green onClick={fundAll}>
           Fund all
-          </InputLabel>
-      </div>
-      <div>
+          </FundAllLabel>
+      </InputContainer>
+      <InputContainer>
         <ModalInputBox roi>
           <TokenInput value={roi} decimalScale={4} displayType="text" />
         </ModalInputBox>
         <InputLabel>Expected ROI</InputLabel>
-      </div>
+      </InputContainer>
     </ModalInputContainer>
     <InvestResume>
       <RaisedAmount value={raised} />
@@ -139,7 +150,14 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         <ResumeItem title="Min APR" value={`${interest} %`} />
       </FlexSpacedLayout>
     </InvestResume>
-    <ConfirmButton onClick={onConfirm}>CONFIRM</ConfirmButton>
+    <ConfirmButton
+      onClick={onConfirm}
+      disabled={
+        value === 0
+      }
+    >
+      CONFIRM
+      </ConfirmButton>
     </>
   );
 };

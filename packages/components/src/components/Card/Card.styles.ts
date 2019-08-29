@@ -75,6 +75,7 @@ export const Graph: any = styled.div`
   height: 10px;
   background: #ecedee;
   position: relative;
+  overflow: hidden;
 
   &&:before {
     content: '';

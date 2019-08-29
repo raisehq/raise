@@ -30,6 +30,7 @@ export const getLiveAuctionsByAccount = async (address, network) => {
               termLength
               loanWithdrawn
               loanRepaid
+              maxInterestRate
             }
           }
         }`
@@ -41,7 +42,6 @@ export const getLiveAuctionsByAccount = async (address, network) => {
   return request.fold(
     () => Left(null),
     response => {
-      console.log(response.data)
       if (response.data.errors) {
         return Left(response.data.errors)
       }
@@ -76,8 +76,12 @@ export const getSuggestedAuctions = async network => {
             auctionStartTimestamp
             auctionEndTimestamp
             termLength
+<<<<<<< HEAD
             loanWithdrawn
             loanRepaid
+=======
+            maxInterestRate
+>>>>>>> ce0b7cf9d3b33db7b7f57796bedf69ae0d927837
           }
         }`
     }
@@ -88,7 +92,6 @@ export const getSuggestedAuctions = async network => {
   return request.fold(
     () => Left(null),
     response => {
-      console.log(response.data)
       if (response.data.errors) {
         return Left(response.data.errors)
       }
