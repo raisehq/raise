@@ -76,12 +76,9 @@ export const getSuggestedAuctions = async network => {
             auctionStartTimestamp
             auctionEndTimestamp
             termLength
-<<<<<<< HEAD
             loanWithdrawn
             loanRepaid
-=======
             maxInterestRate
->>>>>>> ce0b7cf9d3b33db7b7f57796bedf69ae0d927837
           }
         }`
     }
