@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Either, to } from '../utils';
 
 const useGraphWidth = (ref, currentAmount, totalAmount) => {
@@ -11,7 +10,9 @@ const useGraphWidth = (ref, currentAmount, totalAmount) => {
     }),
     () => {
       const width = ref.getBoundingClientRect().width - 50;
-      const percent = (currentAmount / totalAmount) * 100;
+      const percent = (parseInt(currentAmount) / parseInt(totalAmount)) * 100;
+
+      console.log(parseInt(currentAmount), parseInt(totalAmount), totalAmount);
 
       return {
         width: percent,
