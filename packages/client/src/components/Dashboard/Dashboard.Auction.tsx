@@ -5,12 +5,16 @@ import Amount from './Dashboard.Amount';
 
 const Auction = ({ auction, cta }: { auction: any; cta?: any }) => {
   const calcs = useCalculations(auction);
-  const { principal, maxAmount, times, systemFees } = calcs;
+  const { principal, maxAmount, times, systemFees, numbers } = calcs;
 
   return (
     <Card>
-      <Card.Header title="Raised amount" amount={<Amount principal={auction.principal} />} />
-      <Card.Graph color="#00DA9E" currentAmount={principal} totalAmount={maxAmount} />
+      <Card.Header title="Raised amount" amount={<Amount principal={principal} />} />
+      <Card.Graph
+        color="#00DA9E"
+        currentAmount={numbers.principal}
+        totalAmount={numbers.maxAmount}
+      />
       <Card.Grid>
         <Card.Row title="Investors" content={auction.investorCount} />
         <Card.Row title="Current APR" content={auction.interestRate * 12} />
