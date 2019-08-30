@@ -10,9 +10,7 @@ const useGraphWidth = (ref, currentAmount, totalAmount) => {
     }),
     () => {
       const width = ref.getBoundingClientRect().width - 50;
-      const percent = (parseInt(currentAmount) / parseInt(totalAmount)) * 100;
-
-      console.log(parseInt(currentAmount), parseInt(totalAmount), totalAmount);
+      const percent = (currentAmount / totalAmount) * 100;
 
       return {
         width: percent,
