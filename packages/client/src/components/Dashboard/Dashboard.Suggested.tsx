@@ -5,7 +5,7 @@ import Amount from './Dashboard.Amount';
 
 const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
   const calcs = useCalculations(auction);
-  const { principal, maxAmount, times } = calcs;
+  const { principal, maxAmount, interest, times } = calcs;
 
   return (
     <Card>
@@ -20,7 +20,7 @@ const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
       <Card.Grid>
         <Card.Row title="Borrower" content="Company A" />
         <Card.Row title="Loan Term" content={times.loanTerm} />
-        <Card.Row title="Min APR" content={auction.borrowerDebt} />
+        <Card.Row title="Min APR" content={interest} />
       </Card.Grid>
       {cta}
     </Card>
