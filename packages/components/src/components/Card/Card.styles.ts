@@ -15,6 +15,9 @@ export const HeroCard = styled.div`
   padding: 20px;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
 `;
 
 export const Grid: any = styled.div`

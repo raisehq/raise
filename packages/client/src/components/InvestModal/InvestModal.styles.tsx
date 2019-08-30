@@ -40,7 +40,7 @@ export const LenderButton = styled(Button) `
   font-size: 16px;
   font-weight: bold;
   width: 100%;
-  margin-top: 20px;
+  margin-top: auto;
 }
 
 &&&:hover {
