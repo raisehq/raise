@@ -9,7 +9,7 @@ import {
 } from '../ClaimLoan.styles';
 import useMetamask from '../../../hooks/useMetaMask';
 import { ClaimLoanContext, Stages } from '../ClaimLoan';
-import { ResumeItemProps } from '../types';
+import { ResumeItemProps } from '../../InvestModal/types';
 import { Loader } from 'semantic-ui-react';
 import { AppContext } from '../../App';
 

@@ -1,7 +1,7 @@
 import React, { useState, createContext } from 'react';
 import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
-import { InvestModalProps } from './types';
+import { InvestModalProps } from '../InvestModal/types';
 
 import useCalculations from '../Dashboard/Dashboard.useCalc';
 import ConfirmStage from './stages/Confirm';
