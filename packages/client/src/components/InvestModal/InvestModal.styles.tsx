@@ -55,6 +55,9 @@ export const Modal = styled(SemanticModal)`
   @media ${device.laptop} {
     max-width: 500px;
   }
+  @media ${device.tablet} {
+    max-width: 500px;
+  }
 `;
 
 export const Header = styled.h2`
@@ -71,10 +74,15 @@ export const ModalInputContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 30px;
+  -webkit-flex-flow: row wrap;
 `;
 
+export const InputContainer = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+`
+
 export const ModalInputBox = styled.div<ModalInputProps>`
-  width: 350px;
   height: 48px;
   width: 173px;
   border: 1px solid #cfd0d4;
@@ -82,6 +90,7 @@ export const ModalInputBox = styled.div<ModalInputProps>`
   background-color: ${({ roi }) => (roi ? '#ECEDEE' : '#FFFFFF')};
   display: flex;
   align-items: center;
+  flex-grow: 1;
   justify-content: center;
   & > div {
     flex: 0.99;
@@ -94,15 +103,29 @@ export const InputLabel = styled.div<InputLabelProps>`
   color: ${({ green }) => (green ? '#00A76F' : '#5A5A5A')};
 `;
 
+
+export const FundAllLabel = styled.div<InputLabelProps>`
+display: inline-block
+  margin-top: 12px;
+  text-align: center;
+  color: #00A76F;
+  cursor: pointer;
+  margin-left: 60px;
+`;
+
 export const InvestResume = styled.div`
   height: fit-content;
-  width: 350px;
   border: 1px solid #cfd0d4;
   border-radius: 4px;
   background-color: #ffffff;
   color: #5a5a5a;
   margin: 18px 0px 22px;
   padding: 20px;
+
+  @media ${device.laptop} {
+    min-width: 350px;
+  }
+
 `;
 
 export const FlexSpacedLayout = styled.div`
@@ -119,6 +142,18 @@ export const RaisedAmountBox = styled.div`
     margin: 0;
   }
 `;
+export const RaisedAmountContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+`;
+
+export const Amount = styled.span`
+  font-size: 26px;
+  color: #3C4251;
+  line-height: 36px;
+  font-weight: bold;
+`
 
 export const ResumeItemBox = styled.div`
   width: 98px;

@@ -14,7 +14,7 @@ const useGraphWidth = (ref, currentAmount, totalAmount) => {
       const percent = (currentAmount / totalAmount) * 100;
 
       return {
-        width: (width * percent) / 100,
+        width: percent,
         originalWidth: width
       };
     }
