@@ -8,13 +8,16 @@ interface RowContentProps {
 
 export const HeroCard = styled.div`
   width: 350px;
-  max-height: 310px;
+  min-height: 100%;
   border-radius: 4px;
   background-color: #ffffff;
   box-shadow: ${theme.shadow};
   padding: 20px;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
 `;
 
 export const Grid: any = styled.div`
