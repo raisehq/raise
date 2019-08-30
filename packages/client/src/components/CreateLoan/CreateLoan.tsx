@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import numeral, { numeralFormat } from './numeral';
+import numeral, { numeralFormat } from '../../commons/numeral';
 import { BrowserView } from 'react-device-detect';
 import { UI, getLoanAction } from './CreateLoan.Response';
 import Coin from '../Coin';
@@ -105,7 +105,7 @@ const CreateLoan = () => {
     });
   };
 
-    const onSetTerm = (e, data) => setLoan({ ...loan, term: data.value });
+  const onSetTerm = (e, data) => setLoan({ ...loan, term: data.value });
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
 
@@ -160,7 +160,7 @@ const CreateLoan = () => {
     setAmountValidation({
       error: currentValue < min || currentValue > max,
       msg: `Can not be ${
-        currentValue < min ? `less than ${min} DAI` : `more than ${max} DAI`
+      currentValue < min ? `less than ${min} DAI` : `more than ${max} DAI`
       }`
     });
   };
@@ -210,8 +210,8 @@ const CreateLoan = () => {
               {amountValidation.error ? (
                 <InputError>{amountValidation.msg}</InputError>
               ) : (
-                ''
-              )}
+                  ''
+                )}
             </LoanInputLabel>
           </LoanFormInput>
           <LoanDescriptionLowerAmount>

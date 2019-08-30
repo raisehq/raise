@@ -15,6 +15,7 @@ const useAuctionState = (auctions, states) => {
     const activeAuctions = auctions
       ? auctions.filter(auction => states.some(st => st === auction.state) || states.indexOf('all') > -1)
       : [];
+
     const conditions = {
       auctionsExist: auctions !== null,
       isEmpty: auctions ? !activeAuctions.length : true
@@ -25,12 +26,9 @@ const useAuctionState = (auctions, states) => {
       { auctionsExist: true, isEmpty: true },
       () => setAuctionState(Auctions.Empty),
       { auctionsExist: true, isEmpty: false },
-      () => {
-        setAuctionState(Auctions.Success(activeAuctions))
-      
-      },
+      () => setAuctionState(Auctions.Success(activeAuctions)),
       _,
-      () => {}
+      () => { }
     );
   }, [auctions, states]);
 
