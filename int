@@ -1,0 +1,5 @@
+yarn run v1.17.3
+$ yarn run build:deps && lerna run dev --stream --scope client
+$ lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build
+@raisehq/components: $ tsc
+@raisehq/onboarding: $ tsc
