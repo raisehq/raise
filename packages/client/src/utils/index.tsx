@@ -7,17 +7,22 @@ const HOSTS: any = {
   CORE: process.env.REACT_APP_HOST_URL_CORE,
   FILE: process.env.REACT_APP_HOST_URL_FILE,
   APP: process.env.REACT_APP_HOST_URL,
-  THEGRAPH: process.env.REACT_APP_HOST_THEGRAPH
+  THEGRAPH: process.env.REACT_APP_HOST_THEGRAPH,
+  THEGRAPHWS: process.env.REACT_APP_HOST_THEGRAPH_WS
 };
 
 const THEGRAPH_IDS: any = {
   KOVAN: process.env.REACT_APP_THEGRAPH_ID_KOVAN,
   MAINNET: process.env.REACT_APP_THEGRAPH_ID_MAIN,
-  GOERLI: process.env.REACT_APP_THEGRAPH_ID_GOERLI,
+  GOERLI: process.env.REACT_APP_THEGRAPH_ID_GOERLI
 };
 
 export function getGraphEndpoint(network: string) {
   return `${HOSTS.THEGRAPH}${THEGRAPH_IDS[network.toUpperCase()]}`;
+}
+
+export function getGraphWSEndpoint(network: string) {
+  return `${HOSTS.THEGRAPHWS}${THEGRAPH_IDS[network.toUpperCase()]}`;
 }
 
 export function getHost(name: string) {
@@ -26,8 +31,7 @@ export function getHost(name: string) {
   }
   return HOSTS[name];
 }
-export const getImages = name =>
-  `${process.env.REACT_APP_HOST_IMAGES}/images/${name}`;
+export const getImages = name => `${process.env.REACT_APP_HOST_IMAGES}/images/${name}`;
 
 export function getMimeType(base64: string) {
   const mime = base64.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
@@ -37,10 +41,7 @@ export function getMimeType(base64: string) {
   return '';
 }
 export function isBrowser() {
-  return (
-    typeof window !== 'undefined' &&
-    {}.toString.call(window) === '[object Window]'
-  );
+  return typeof window !== 'undefined' && {}.toString.call(window) === '[object Window]';
 }
 
 export const Right = (x: any) => ({
@@ -86,14 +87,10 @@ export const getWeb3 = () => {
   return null;
 };
 
-
 export const averageBlockTime = async () => {
   const web3 = getWeb3();
   const network = parseNetwork(await web3.eth.net.getId());
-  return match(network,
-    'kovan', () => 4,
-    ANY, () => 15
-  )
+  return match(network, 'kovan', () => 4, ANY, () => 15);
 };
 
 export const parseNetwork = id => {
