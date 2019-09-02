@@ -5,8 +5,8 @@ import { BorrowerLoanCard, } from './BorrowerLoan.styles';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import useCalculations from './Dashboard.useCalc';
 import Amount from './Dashboard.Amount';
-import { ClaimLoan } from '../ClaimLoan';
-import { RepayLoan } from '../RepayLoan';
+import { ClaimRefund } from '../ClaimRefund';
+import { ClaimRoi } from '../ClaimRoi';
 import { GetInTouch } from '../GetInTouch';
 
 const Loan = ({ auction }: { auction: any }) => {
@@ -14,14 +14,20 @@ const Loan = ({ auction }: { auction: any }) => {
   const { principal, interest, borrowerDebt, times, systemFees, netBalance } = calcs;
 
   const cta = useMemo(() => {
-    const conditions = [auction.state, auction.loanWithdrawn, auction.loanRepaid];
+    const conditions = [auction.state, auction.withdrawn];
+    console.log(conditions, match(conditions,
+      [1, false, ], () => <ClaimRefund loan={auction} />,
+      [4, false], () => <ClaimRoi loan={auction} />,
+      [3, ANY], () => <GetInTouch />,
+      ANY, () => null,
+    ))
     return match(conditions,
-      [2, false, ANY], () => <ClaimLoan loan={auction} />,
-      [2, true, false], () => <RepayLoan loan={auction} />,
-      [3, ANY, ANY], () => <GetInTouch />,
+      [1, false, ], () => <ClaimRefund loan={auction} />,
+      [4, false], () => <ClaimRoi loan={auction} />,
+      [3, ANY], () => <GetInTouch />,
       ANY, () => null,
     )
-  }, [auction.state, auction.loanWithdrawn, auction.loanRepaid]);
+  }, [auction.state, auction.withdrawn]);
 
   const state = useMemo(() => {
     if (auction.loanRepaid) {

@@ -35,6 +35,8 @@ const queryies = {
             principal
             maxAmount
             operatorFee
+            operatorBalance
+            loanRepaid
             termEndTimestamp
             netBalance
             auctionEnded
@@ -59,11 +61,13 @@ const queryies = {
       {
         users(where: {address: $address}) {
           loanFundings {
+            withdrawn
             loan {
               state
               principal
               maxAmount
               operatorFee
+              operatorBalance
               termEndTimestamp
               netBalance
               auctionEnded
@@ -71,6 +75,7 @@ const queryies = {
               borrowerDebt
               investorCount
               id
+              loanRepaid
               minimumReached
               auctionLength
               auctionStartTimestamp

@@ -22,6 +22,8 @@ const renderedLoans = (auctions, type) => auctions.map(auction => {
     ['borrower', 0], () => BorrowerAuction,
     ['borrower', 1], () => BorrowerAuction,
     ['borrower', ANY], () => BorrowerLoan,
+    ['lender', 0], () => BorrowerAuction,
+    ['lender', 1], () => BorrowerAuction,
     ['lender', ANY], () => LenderLoan,
     ANY, () => Card[type]
   )

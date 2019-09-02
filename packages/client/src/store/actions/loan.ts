@@ -36,7 +36,7 @@ export default (dispatch: any, state: any) => {
     if (error) {
       console.log('error on get live auction subs :: ', error);
     } else {
-      dispatch({ type: 'SET_LENDER_INVESTMENT', data: data.users[0].loanFundings.map(({ loan }) => loan) });
+      dispatch({ type: 'SET_LENDER_INVESTMENTS', data: data.users[0].loanFundings.map(({ withdrawn, loan }) => ({ ...loan, withdrawn })) });
     }
   };
 

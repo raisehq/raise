@@ -25,11 +25,6 @@ const Menus = {
       title: 'Request a loan',
       link: '/create-loan',
       icon: 'university'
-    },
-    {
-      title: 'My Loans',
-      link: '/marketplace',
-      icon: 'chart line'
     }
   ],
   2: [
@@ -37,16 +32,6 @@ const Menus = {
       title: 'My Dashboard',
       link: '/dashboard',
       icon: 'th large'
-    },
-    {
-      title: 'Request a loan',
-      link: '/create-loan',
-      icon: 'university'
-    },
-    {
-      title: 'My Loans',
-      link: '/marketplace',
-      icon: 'chart line'
     }
   ]
 };
