@@ -16,17 +16,6 @@ export const isDefaulted = ({ auctionEndTimestamp, termEndTimestamp }) => {
   return true;
 };
 
-export const getInterestRate = auction => {
-  if (
-    isAuctionExpired(auction.auctionEndTimestamp) &&
-    auction.minimumReached &&
-    LoanState.CREATED
-  ) {
-    return auction.maxInterestRate;
-  }
-  return auction.interestRate;
-};
-
 // this function mimics "updateStateMachine" method from LoanContract.sol:391
 export const assumeStateMachine = auction => {
   const { state: currentState, minimumReached } = auction;
@@ -41,8 +30,7 @@ export const assumeStateMachine = auction => {
   if (isDefaulted(auction) && clonedAuction.state === LoanState.ACTIVE) {
     clonedAuction.state = LoanState.DEFAULTED;
   }
-  const interest = getInterestRate(clonedAuction);
-  clonedAuction.interestRate = interest;
+
   return clonedAuction;
 };
 

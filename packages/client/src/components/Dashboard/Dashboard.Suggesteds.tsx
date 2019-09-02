@@ -21,7 +21,6 @@ const Suggesteds = ({ auctions, states }) => {
       </SuggestedContainer>
     )
   });
-
 };
 
 export default Suggesteds;

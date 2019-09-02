@@ -3,6 +3,7 @@ import { fromWei } from 'web3-utils';
 import numeral from 'numeral';
 import { match, ANY } from 'pampy';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
+import { LoanState } from '../../commons/loanStatus';
 
 const secondUnits = {
   month: 2592000,
@@ -45,14 +46,20 @@ const calculateTimes = auction => {
   }
 };
 
-const calculateAPR = interestRate => {
-  if (
-    isAuctionExpired(auction.auctionEndTimestamp) &&
-    auction.minimumReached &&
-    LoanState.CREATED
-  ) {
-    return auction.maxInterestRate;
+const calculateAPR = auction => {
+  const nowTimestamp = Date.now();
+  let interest = 0;
+  if (auction.state === LoanState.CREATED) {
+    interest =
+      auction.maxInterestRate *
+      ((nowTimestamp - auction.auctionStartTimestamp) /
+        (auction.auctionEndTimestamp - auction.auctionStartTimestamp));
+  } else if (auction.state === LoanState.ACTIVE || auction.state === LoanState.REPAID) {
+    interest = auction.maxInterestRate;
+  } else {
+    interest = auction.interestRate;
   }
+  return interest;
 };
 
 const useCal = auction => {
