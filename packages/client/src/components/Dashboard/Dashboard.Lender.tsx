@@ -18,7 +18,7 @@ const Dashboard = () => {
     }
   }: any = useContext(AppContext);
 
-  const onCreateLoan = useCallback(() => history.push('/marketplace'), []);
+  const onSeeMore = useCallback(() => history.push('/marketplace'), []);
 
   useEffect(() => {
     onGetSuggestedAuctions();
@@ -32,16 +32,16 @@ const Dashboard = () => {
     },
     {
       menuItem: 'Investments',
-      render: () => <Tab auctions={auctions} states={[1,2,3,4,5,6]} type="auction" />
+      render: () => <Tab auctions={auctions} states={[1, 2, 3, 4, 5, 6]} type="auction" />
     }
   ];
   return (
     <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
-        <Header as="h1">Suggested auctions</Header>
-        <Suggesteds auctions={suggested} states={[0]}/>
-        <Button onClick={onCreateLoan}>marketplace</Button>
+        <Header as="h1">Suggested investments</Header>
+        <Suggesteds auctions={suggested} states={[0]} />
+        <Button onClick={onSeeMore}>see more</Button>
         <Header as="h1">My activity</Header>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
       </DashboardContainer>
