@@ -100,10 +100,7 @@ const App = ({ children, history }: any) => {
   const [webSocket, setWebSocket] = useState({});
 
   useEffect(() => {
-    console.log('network:: ', network);
-    console.log('app websocket::  ', webSocket);
     if (Object.keys(webSocket).length === 0 && network !== 'Not connected') {
-      console.log('-------------');
       const webSocketInstance = new UseWebSockets(getGraphWSEndpoint(network), 'graphql-ws');
       setWebSocket({ webSocket: webSocketInstance });
     }

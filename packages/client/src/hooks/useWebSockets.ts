@@ -43,7 +43,6 @@ class UseWebsocket {
       // The code 1000 (Normal Closure) is special, and results in no error or payload.
       const error = event.code === 1000 ? null : new Error(event);
       // Notify the subscriber.
-      console.log('on close:: ', event);
       // Notify the subscriptions.
       const callbacks = Array.from(this.subscriptions.values());
       this.subscriptions.clear();
@@ -55,7 +54,6 @@ class UseWebsocket {
   }
 
   public subscribe = (query, variables, subscriptionName, callback) => {
-    console.log('state:: ', this.client.readyState);
     if (this.client.readyState === 1 && this.subscriptions.get(subscriptionName) === undefined) {
       this.subscriptions.set(subscriptionName, callback);
       this.client.send(
@@ -87,10 +85,8 @@ class UseWebsocket {
 
   private onMessage(event) {
     const data = JSON.parse(event.data);
-    console.log('data:: ', data);
     switch (data.type) {
       case GQL.CONNECTION_ACK: {
-        console.log('ack');
         // This is the successful response to GQL.CONNECTION_INIT
         break;
       }
@@ -98,18 +94,15 @@ class UseWebsocket {
         // This may occur:
         // 1. In response to GQL.CONNECTION_INIT
         // 2. In case of parsing errors in the client which will not disconnect.
-        console.log('%%%%%%%%%%%%%%%%');
         break;
       }
       case GQL.CONNECTION_KEEP_ALIVE: {
         // This may occur:
         // 1. After GQL.CONNECTION_ACK,
         // 2. Periodically to keep the connection alive.
-        console.log('keep alive');
         break;
       }
       case GQL.DATA: {
-        console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$');
         // This message is sent after GQL.START to transfer the result of the GraphQL subscription.
         const callback = this.subscriptions.get(data.id);
         if (callback) {
@@ -119,7 +112,6 @@ class UseWebsocket {
         break;
       }
       case GQL.ERROR: {
-        console.log('error');
         // This method is sent when a subscription fails. This is usually dues to validation errors
         // as resolver errors are returned in GQL.DATA messages.
         const callback = this.subscriptions.get(data.id);
@@ -130,7 +122,6 @@ class UseWebsocket {
       }
       case GQL.COMPLETE: {
         // This is sent when the operation is done and no more dta will be sent.
-        console.log('complete');
         const callback = this.subscriptions.get(data.id);
         if (callback) {
           this.subscriptions.delete(data.id);
@@ -140,7 +131,6 @@ class UseWebsocket {
         break;
       }
       case GQL.CONNECTION_TERMINATE: {
-        console.log('connection terminate::: ', data);
         break;
       }
       default:

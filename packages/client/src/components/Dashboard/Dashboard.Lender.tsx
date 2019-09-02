@@ -25,13 +25,7 @@ const Dashboard = () => {
 
   const onCreateLoan = useCallback(() => history.push('/marketplace'), []);
 
-  // useEffect(() => {
-  //   onGetSuggestedAuctions();
-  //   onGetLiveAuctionsByAccount();
-  // }, []);
-
   useEffect(() => {
-    console.log('websocket:: ', webSocket);
     if (webSocket) {
       const { query, subscriptionName } = Queryies.subscriptions.liveAuctionsByAccount;
       const variables = {
@@ -43,7 +37,6 @@ const Dashboard = () => {
   }, [webSocket]);
 
   useEffect(() => {
-    console.log('websocket:: ', webSocket);
     if (webSocket) {
       const { query, variables, subscriptionName } = Queryies.subscriptions.lenderSuggestions;
 
