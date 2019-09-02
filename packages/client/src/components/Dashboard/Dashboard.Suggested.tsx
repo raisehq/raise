@@ -5,26 +5,22 @@ import Amount from './Dashboard.Amount';
 import useInterval from '../../hooks/useInterval';
 
 const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
-  const [calculations, setCalculations] = useState({
-    maxAmount: '0.00',
-    operatorFee: '0.00',
-    principal: '0.00',
-    systemFees: '0.00',
-    maxSystemFees: '0.00',
-    borrowerDebt: '0.00',
-    interest: '0%',
-    netBalance: '0.00',
-    times: {
-      auctionTimeLeft: null,
-      loanTerm: null,
-      loanTermLeft: null
-    }
-  });
-
-  useInterval(() => {
-    const calcs = Calculations(auction);
-    setCalculations(calcs);
-  }, 1000);
+  // const [calculations, setCalculations] = useState({
+  //   maxAmount: '0.00',
+  //   operatorFee: '0.00',
+  //   principal: '0.00',
+  //   systemFees: '0.00',
+  //   maxSystemFees: '0.00',
+  //   borrowerDebt: '0.00',
+  //   interest: '0%',
+  //   netBalance: '0.00',
+  //   times: {
+  //     auctionTimeLeft: null,
+  //     loanTerm: null,
+  //     loanTermLeft: null
+  //   }
+  // });
+  const calculations = Calculations(auction);
 
   return (
     <Card>

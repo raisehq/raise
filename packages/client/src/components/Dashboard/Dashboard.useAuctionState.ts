@@ -2,18 +2,29 @@ import { useState, useEffect } from 'react';
 import { match, _ } from 'pampy';
 import daggy from 'daggy';
 
-const Auctions = daggy.taggedSum('Auctions', {
+export const Auctions = daggy.taggedSum('Auctions', {
   Loading: [],
   Success: [{}],
   Empty: []
 });
+
+export const getActiveAuctions = (auctions, states) => {
+  const activeAuctions = auctions
+    ? auctions.filter(
+        auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
+      )
+    : [];
+  return activeAuctions;
+};
 
 const useAuctionState = (auctions, states) => {
   const [auctionsState, setAuctionState]: any = useState(Auctions.Loading);
 
   useEffect(() => {
     const activeAuctions = auctions
-      ? auctions.filter(auction => states.some(st => st === auction.state) || states.indexOf('all') > -1)
+      ? auctions.filter(
+          auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
+        )
       : [];
 
     const conditions = {
@@ -28,7 +39,7 @@ const useAuctionState = (auctions, states) => {
       { auctionsExist: true, isEmpty: false },
       () => setAuctionState(Auctions.Success(activeAuctions)),
       _,
-      () => { }
+      () => {}
     );
   }, [auctions, states]);
 

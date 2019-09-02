@@ -54,13 +54,13 @@ const calculateAPR = auction => {
   let interest = 0;
   if (auction.state === LoanState.CREATED && !isAuctionExpired(auction)) {
     interest =
-      (Number(auction.maxInterestRate) / 1000) *
+      (Number(auction.maxInterestRate) / 10000) *
       ((nowTimestamp - auction.auctionStartTimestamp) /
         (auction.auctionEndTimestamp - auction.auctionStartTimestamp));
   } else if (auction.state === LoanState.ACTIVE || auction.state === LoanState.REPAID) {
-    interest = Number(auction.maxInterestRate) / 1000;
+    interest = Number(auction.maxInterestRate) / 10000;
   } else {
-    interest = auction.maxInterestRate / 1000;
+    interest = auction.maxInterestRate / 10000;
   }
   return interest;
 };
