@@ -23,7 +23,7 @@ const Dashboard = () => {
     webSocket: { webSocket }
   }: any = useContext(AppContext);
 
-  const onCreateLoan = useCallback(() => history.push('/marketplace'), []);
+  const onSeeMore = useCallback(() => history.push('/marketplace'), []);
 
   useEffect(() => {
     if (webSocket) {
@@ -59,9 +59,9 @@ const Dashboard = () => {
     <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
-        <Header as="h1">Suggested auctions</Header>
+        <Header as="h1">Suggested investments</Header>
         <Suggesteds auctions={suggested} states={[0]} />
-        <Button onClick={onCreateLoan}>marketplace</Button>
+        <Button onClick={onSeeMore}>see more</Button>
         <Header as="h1">My activity</Header>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
       </DashboardContainer>
