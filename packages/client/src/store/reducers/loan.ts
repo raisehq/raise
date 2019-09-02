@@ -7,7 +7,11 @@ export default (state: any, action: any) => {
         ...state,
         auctions: action.data.map(assumeStateMachine)
       };
-
+    case 'SET_LENDER_INVESTMENTS':
+      return {
+        ...state,
+        lenderInvestments: action.data.map(assumeStateMachine)
+      };
     case 'SET_SUGGESTED_AUCTIONS':
       return {
         ...state,

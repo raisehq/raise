@@ -14,7 +14,7 @@ const Dashboard = () => {
       loan: { onGetSuggestedAuctions, onGetLiveAuctionsByAccount }
     },
     store: {
-      loan: { suggested, auctions }
+      loan: { suggested, auctions, lenderInvestments }
     }
   }: any = useContext(AppContext);
 
@@ -32,7 +32,7 @@ const Dashboard = () => {
     },
     {
       menuItem: 'Investments',
-      render: () => <Tab auctions={auctions} states={[1, 2, 3, 4, 5, 6]} type="auction" />
+      render: () => <Tab auctions={lenderInvestments} states={[1, 2, 3, 4, 5, 6]} type="lender" />
     }
   ];
   return (
