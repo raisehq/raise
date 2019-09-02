@@ -1,26 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-//import { AppContext } from '../App';
+import { AppContext } from '../App';
 import { getToken } from '../../services/external_kyc';
 
 const KYC = () => {
-  useAsyncEffect(async () => {
-    getToken();
-  }, []);
+  const { history }: any = useContext(AppContext);
 
-  useEffect(() => {
-    window['idensic'].init(
-      '#idensic',
-      {
-        clientId: 'hero',
-        externalUserId: 'random-buh5rdjsmi',
-        accessToken: '_act-2fc1fcea-d3c4-469b-9eb4-1517acab70b3'
-      },
-      function(messageType, payload) {
-        console.log('[IDENSIC DEMO] Idensic message:', messageType, payload);
-      }
-    );
-  }, []);
+  useAsyncEffect(async () => {
+    if (history.location.pathname === '/kyc') {
+      const token = await getToken();
+
+      window['idensic'].init(
+        '#idensic',
+        {
+          clientId: 'hero',
+          externalUserId: 'random-buh5rdjsmi',
+          accessToken: token
+        },
+        function(messageType, payload) {
+          console.log('[IDENSIC DEMO] Idensic message:', messageType, payload);
+        }
+      );
+    }
+  }, [history]);
+
+  useEffect(() => {}, []);
 
   return <div id="idensic"></div>;
 };

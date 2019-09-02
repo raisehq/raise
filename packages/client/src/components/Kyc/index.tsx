@@ -1,3 +1,3 @@
-import KYC from './KYC';
+import KYC from './Kyc';
 
 export default KYC;
