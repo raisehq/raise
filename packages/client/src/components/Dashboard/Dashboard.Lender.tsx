@@ -10,7 +10,6 @@ import Queryies from '../../helpers/queryies';
 
 const Dashboard = () => {
   const {
-    
     actions: {
       loan: { onGetSuggestedAuctionsSubscription, onGetLiveAuctionsByAccountSubscription, onGetLenderInvestmentSubscription }
     },

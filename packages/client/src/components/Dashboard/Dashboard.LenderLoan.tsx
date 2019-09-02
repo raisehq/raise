@@ -1,6 +1,8 @@
 import React, { Fragment, useMemo } from 'react';
+import { fromWei } from 'web3-utils';
 import { match, ANY } from 'pampy';
-import { Card } from '@raisehq/components'
+import { Card } from '@raisehq/components';
+import numeral from '../../commons/numeral';
 import { BorrowerLoanCard, } from './BorrowerLoan.styles';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import useCalculations from './Dashboard.useCalc';
@@ -11,8 +13,10 @@ import { GetInTouch } from '../GetInTouch';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = useCalculations(auction);
-  const { principal, interest, borrowerDebt, times, systemFees, netBalance } = calcs;
+  const { principal, interest, times } = calcs;
 
+  const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
+  
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
     console.log(conditions, match(conditions,
@@ -40,7 +44,7 @@ const Loan = ({ auction }: { auction: any }) => {
 
   return (
     <BorrowerLoanCard>
-      <Card.Header title="Loan amount" amount={<Amount principal={principal} />} />
+      <Card.Header title="Loan amount" amount={<Amount principal={principal} roi={interest} />} />
       <Fragment>
         <Card.Tooltip />
         <Card.Badge color={loanStatusColors[state]}>
@@ -48,14 +52,14 @@ const Loan = ({ auction }: { auction: any }) => {
         </Card.Badge>
       </Fragment>
       <Card.Grid>
-        <Card.Row title="System Fees" content={systemFees} />
-        <Card.Row title="APR" content={interest} />
-        <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0} DAI`} />
+        <Card.Row title="Amount invested" content={lenderAmount} />
+        <Card.Row title="Investors" content={auction.investorCount} />
+        <Card.Row title="Time left" contentColor={contentColor} content={times.loanTermLeft} />
       </Card.Grid>
       <Card.Grid>
-        <Card.Row title="Repayment amount" content={borrowerDebt} />
-        <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="Loan Term" contentColor={contentColor} content={times.loanTermLeft} />
+        <Card.Row title="Borrower" content="Company A" />
+        <Card.Row title="Loan amount" content={principal} />
+        <Card.Row title="Term end" content={times.loanTerm} />
       </Card.Grid>
       {cta}
     </BorrowerLoanCard>

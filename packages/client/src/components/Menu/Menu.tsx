@@ -13,7 +13,6 @@ import {
   Credits
 } from './Menu.styles';
 import { AppContext } from '../App';
-
 const Menus = {
   1: [
     {
@@ -66,7 +65,7 @@ const Menu = () => {
       location: { pathname }
     },
     store: {
-      auth: { accounttype_id },
+      user: { details: { accounttype_id } },
       config: { menu }
     }
   }: any = useContext(AppContext);
@@ -79,7 +78,7 @@ const Menu = () => {
 
   const getMenu = useCallback(
     links =>
-      links.map(item => (
+      !links || !links.length ? [] : links.map(item => (
         <li
           key={item.link}
           className={pathname === item.link ? 'active' : 'non-active'}
@@ -127,7 +126,7 @@ const Menu = () => {
         <Icon name="close" size="big" inverted />
       </CloseButton>
       <MenuList>
-        {getMenu(Menus[accounttype_id || 1])}
+        {getMenu(Menus[accounttype_id])}
         <Divider inverted />
         {getMenu(commonRoutes)}
       </MenuList>

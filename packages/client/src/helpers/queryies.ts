@@ -62,6 +62,7 @@ const queryies = {
         users(where: {address: $address}) {
           loanFundings {
             withdrawn
+            amount
             loan {
               state
               principal
