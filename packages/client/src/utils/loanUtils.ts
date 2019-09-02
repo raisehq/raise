@@ -7,14 +7,21 @@ export const isAuctionExpired = ({ auctionEndTimestamp }) =>
   new Date() > stringUnixToDate(auctionEndTimestamp);
 
 export const isDefaulted = ({ auctionEndTimestamp, termEndTimestamp }) => {
-  if (new Date() <= stringUnixToDate(auctionEndTimestamp) || new Date() <= stringUnixToDate(termEndTimestamp)) {
+  if (
+    new Date() <= stringUnixToDate(auctionEndTimestamp) ||
+    new Date() <= stringUnixToDate(termEndTimestamp)
+  ) {
     return false;
   }
   return true;
 };
 
 export const getInterestRate = auction => {
-  if (isAuctionExpired(auction.auctionEndTimestamp) && auction.minimumReached && LoanState.CREATED) {
+  if (
+    isAuctionExpired(auction.auctionEndTimestamp) &&
+    auction.minimumReached &&
+    LoanState.CREATED
+  ) {
     return auction.maxInterestRate;
   }
   return auction.interestRate;
@@ -37,4 +44,10 @@ export const assumeStateMachine = auction => {
   const interest = getInterestRate(clonedAuction);
   clonedAuction.interestRate = interest;
   return clonedAuction;
-}
+};
+
+export const updateLoanState = loan => {
+  // update timer
+  // update apr
+  // update progress bar
+};
