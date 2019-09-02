@@ -32,9 +32,18 @@ export default (dispatch: any, state: any) => {
     }
   };
 
+  const onGetLenderInvestmentSubscription = (error, data) => {
+    if (error) {
+      console.log('error on get live auction subs :: ', error);
+    } else {
+      dispatch({ type: 'SET_LENDER_INVESTMENT', data: data.users[0].loanFundings.map(({ loan }) => loan) });
+    }
+  };
+
   return {
     onGetSuggestedAuctionsSubscription,
     onGetLiveAuctionsByAccountSubscription,
+    onGetLenderInvestmentSubscription,
     // LEGACY::
     onGetLiveAuctionsByAccount,
     onGetSuggestedAuctions

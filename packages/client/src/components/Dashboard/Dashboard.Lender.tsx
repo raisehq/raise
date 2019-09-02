@@ -12,7 +12,7 @@ const Dashboard = () => {
   const {
     history,
     actions: {
-      loan: { onGetSuggestedAuctionsSubscription, onGetLiveAuctionsByAccountSubscription }
+      loan: { onGetSuggestedAuctionsSubscription, onGetLiveAuctionsByAccountSubscription, onGetLenderInvestmentSubscription }
     },
     store: {
       loan: { suggested, auctions, lenderInvestments },
@@ -24,6 +24,17 @@ const Dashboard = () => {
   }: any = useContext(AppContext);
 
   const onSeeMore = useCallback(() => history.push('/marketplace'), []);
+
+  useEffect(() => {
+    if (webSocket) {
+      const { query, subscriptionName } = Queryies.subscriptions.lenderInvestmentsByAccount;
+      const variables = {
+        address
+      };
+      const callback = onGetLenderInvestmentSubscription;
+      webSocket.subscribe(query, variables, subscriptionName, callback);
+    }
+  }, [webSocket]);
 
   useEffect(() => {
     if (webSocket) {
