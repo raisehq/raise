@@ -45,7 +45,15 @@ const calculateTimes = auction => {
   }
 };
 
-const calculateAPR = interestRate => {};
+const calculateAPR = interestRate => {
+  if (
+    isAuctionExpired(auction.auctionEndTimestamp) &&
+    auction.minimumReached &&
+    LoanState.CREATED
+  ) {
+    return auction.maxInterestRate;
+  }
+};
 
 const useCal = auction => {
   const [calcs, setCalcs] = useState({
