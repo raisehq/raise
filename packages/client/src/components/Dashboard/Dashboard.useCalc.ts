@@ -75,8 +75,8 @@ const useCal = auction => {
   const netBalance: any = calculateFromWei(auction.netBalance);
   const borrowerDebt: any = calculateFromWei(auction.borrowerDebt);
   const maxSystemFees: any = numeral((maxAmount * operatorFee) / 100).format();
-  const systemFees: any = calculateFromWei(`-${auction.operatorBalance}`);
-  const interest: any = numeral(Number(auction.interestRate) / 1000).format('0%');
+  const systemFees: any = calculateFromWei(`-${auction.operatorBalance ? auction.operatorBalance : '0'}`);
+  const interest: any = numeral(Number(auction.interestRate) / 10000).format('0%');
 
   useAsyncEffect(async () => {
     const { loanTerm, auctionTimeLeft, loanTermLeft } = calculateTimes(auction);

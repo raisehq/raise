@@ -38,3 +38,4 @@ export const assumeStateMachine = auction => {
   clonedAuction.interestRate = interest;
   return clonedAuction;
 }
+
