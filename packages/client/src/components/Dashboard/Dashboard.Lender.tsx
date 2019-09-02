@@ -11,10 +11,10 @@ import Queryies from '../../helpers/queryies';
 const Dashboard = () => {
   const {
     actions: {
-      loan: { onGetSuggestedAuctionsSubscription, onGetLiveAuctionsByAccountSubscription, onGetLenderInvestmentSubscription }
+      loan: { onGetSuggestedAuctionsSubscription, onGetLenderInvestmentSubscription }
     },
     store: {
-      loan: { suggested, auctions, lenderInvestments },
+      loan: { suggested, lenderInvestments },
       user: {
         cryptoAddress: { address }
       }
@@ -35,17 +35,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (webSocket) {
-      const { query, subscriptionName } = Queryies.subscriptions.liveAuctionsByAccount;
-      const variables = {
-        address
-      };
-      const callback = onGetLiveAuctionsByAccountSubscription;
-      webSocket.subscribe(query, variables, subscriptionName, callback);
-    }
-  }, [webSocket]);
-
-  useEffect(() => {
-    if (webSocket) {
       const { query, variables, subscriptionName } = Queryies.subscriptions.lenderSuggestions;
 
       const callback = onGetSuggestedAuctionsSubscription;
@@ -56,7 +45,7 @@ const Dashboard = () => {
   const panes = [
     {
       menuItem: 'Auctions',
-      render: () => <Tab auctions={auctions} states={[0]} type="auction" />
+      render: () => <Tab auctions={lenderInvestments} states={[0]} type="lender" />
     },
     {
       menuItem: 'Investments',
