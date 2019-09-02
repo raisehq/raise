@@ -12,7 +12,7 @@ import Marketplace from './Marketplace';
 import CreateLoan from './CreateLoan';
 import { RootContext } from '../context';
 import Join from './Join';
-import Kyc from '../components/Kyc';
+import Kyc from '../components/KYC';
 import KycValidation from '../components/KycValidation';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
