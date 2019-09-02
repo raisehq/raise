@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { fromWei } from 'web3-utils';
-import numeral from 'numeral';
+import numeral, { numeralFormat } from '../../commons/numeral';
 import { match, ANY } from 'pampy';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { LoanState } from '../../commons/loanStatus';
+import { isAuctionExpired } from '../../utils/loanUtils';
 
 const secondUnits = {
   month: 2592000,
@@ -14,11 +13,11 @@ const secondUnits = {
 
 const roundedTime = (seconds, secondUnit) => Math.round(seconds / secondUnit);
 
-const getDesiredTime = seconds =>
+const getDesiredTime = (seconds, type?) =>
   match(
     seconds,
     s => s >= secondUnits.month,
-    s => `${roundedTime(s, secondUnits.month)} `,
+    s => `${roundedTime(s, secondUnits.month)} months`,
     s => s >= secondUnits.day,
     s => `${roundedTime(s, secondUnits.day)} days`,
     s => s >= secondUnits.hour,
@@ -28,10 +27,13 @@ const getDesiredTime = seconds =>
     s => s > 0 && s < secondUnits.minute,
     () => '<1 minute',
     ANY,
-    () => 'Auction ended'
+    () => (type === 'loan' ? 'Expired' : 'Auction ended')
   );
 
-const calculateFromWei = number => fromWei(number.toString(), 'ether');
+const defaultZero = numeral(0).format();
+
+const calculateFromWei = number =>
+  number ? numeral(fromWei(number.toString(), 'ether')).format(numeralFormat) : defaultZero;
 
 const calculateTimes = auction => {
   try {
@@ -39,7 +41,8 @@ const calculateTimes = auction => {
 
     const today = new Date().getTime() / 1000;
     const auctionTimeLeft = getDesiredTime(Number(auction.auctionEndTimestamp) - today);
-    return { loanTerm, auctionTimeLeft };
+    const loanTermLeft = getDesiredTime(Number(auction.termEndTimestamp) - today, 'loan');
+    return { loanTerm, auctionTimeLeft, loanTermLeft };
   } catch (error) {
     console.log(error);
     return error;
@@ -47,53 +50,65 @@ const calculateTimes = auction => {
 };
 
 const calculateAPR = auction => {
-  const nowTimestamp = Date.now();
+  const nowTimestamp = Date.now() / 1000;
   let interest = 0;
-  if (auction.state === LoanState.CREATED) {
+  if (auction.state === LoanState.CREATED && !isAuctionExpired(auction)) {
     interest =
-      auction.maxInterestRate *
+      (Number(auction.maxInterestRate) / 1000) *
       ((nowTimestamp - auction.auctionStartTimestamp) /
         (auction.auctionEndTimestamp - auction.auctionStartTimestamp));
   } else if (auction.state === LoanState.ACTIVE || auction.state === LoanState.REPAID) {
-    interest = auction.maxInterestRate;
+    interest = Number(auction.maxInterestRate) / 1000;
   } else {
-    interest = auction.interestRate;
+    interest = auction.maxInterestRate / 1000;
   }
   return interest;
 };
 
 const useCal = auction => {
-  const [calcs, setCalcs] = useState({
-    maxAmount: 0,
-    operatorFee: 0,
-    principal: 0,
-    systemFees: 0,
-    times: {
-      auctionTimeLeft: null,
-      loanTerm: 0
-    },
-    interestRate: 0
-  });
+  // const calcs = {
+  //   maxAmount: defaultZero,
+  //   operatorFee: defaultZero,
+  //   principal: defaultZero,
+  //   systemFees: defaultZero,
+  //   maxSystemFees: defaultZero,
+  //   borrowerDebt: defaultZero,
+  //   interest: '0%',
+  //   netBalance: defaultZero,
+  //   times: {
+  //     auctionTimeLeft: null,
+  //     loanTerm: null,
+  //     loanTermLeft: null
+  //   }
+  // };
 
   const maxAmount: any = calculateFromWei(auction.maxAmount);
   const operatorFee: any = calculateFromWei(auction.operatorFee);
   const principal: any = calculateFromWei(auction.principal);
-  const systemFees: any = numeral((maxAmount * operatorFee) / 100).format();
-  const interestRate: any = calculateAPR(auction.interestRate);
+  const netBalance: any = calculateFromWei(auction.netBalance);
+  const borrowerDebt: any = calculateFromWei(auction.borrowerDebt);
+  const maxSystemFees: any = numeral((maxAmount * operatorFee) / 100).format();
+  const systemFees: any = calculateFromWei(`-${auction.operatorBalance}`);
 
-  useAsyncEffect(async () => {
-    const { loanTerm, auctionTimeLeft } = calculateTimes(auction);
-    setCalcs({
-      times: { loanTerm, auctionTimeLeft },
-      maxAmount,
-      operatorFee,
-      principal,
-      systemFees,
-      interestRate
-    });
-  }, []);
+  const apr = calculateAPR(auction);
+  const interest: any = numeral(Number(apr) / 10).format('0.00%');
 
-  return calcs;
+  // useAsyncEffect(async () => {
+  const { loanTerm, auctionTimeLeft, loanTermLeft } = calculateTimes(auction);
+
+  const newCalcs = {
+    times: { loanTerm, auctionTimeLeft, loanTermLeft },
+    borrowerDebt,
+    interest,
+    maxAmount,
+    netBalance,
+    operatorFee,
+    principal,
+    systemFees,
+    maxSystemFees
+  };
+
+  return newCalcs;
 };
 
 export default useCal;

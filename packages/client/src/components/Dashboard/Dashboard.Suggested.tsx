@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
 import { Card } from '@raisehq/components';
-import useCalculations from './Dashboard.useCalc';
+import Calculations from './Dashboard.useCalc';
 import Amount from './Dashboard.Amount';
 import useInterval from '../../hooks/useInterval';
 
 const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
-  // const calcs = useCalculations(auction);
-  // const { principal, maxAmount, times } = calcs;
-  const [calculations, setCalculations] = useState();
+  const [calculations, setCalculations] = useState({
+    maxAmount: '0.00',
+    operatorFee: '0.00',
+    principal: '0.00',
+    systemFees: '0.00',
+    maxSystemFees: '0.00',
+    borrowerDebt: '0.00',
+    interest: '0%',
+    netBalance: '0.00',
+    times: {
+      auctionTimeLeft: null,
+      loanTerm: null,
+      loanTermLeft: null
+    }
+  });
 
   useInterval(() => {
-    const calcs = useCalculations(auction);
-    setCalculations({ calculations: calcs });
-  }, 100);
+    const calcs = Calculations(auction);
+    setCalculations(calcs);
+  }, 1000);
 
   return (
     <Card>
@@ -31,7 +43,7 @@ const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
       <Card.Grid>
         <Card.Row title="Borrower" content="Company A" />
         <Card.Row title="Loan Term" content={calculations.times.loanTerm} />
-        <Card.Row title="Min APR" content={auction.borrowerDebt} />
+        <Card.Row title="Min APR" content={calculations.interest} />
       </Card.Grid>
       {cta}
     </Card>

@@ -10,11 +10,12 @@ export const getLiveAuctionsByAccount = async (address, network) => {
       query: `
         {
           users(where:{address:"${address}"}) {
-            loanRequests {
+            loanRequests(orderBy: auctionEndTimestamp, orderDirection: desc) {
               state
               principal
               maxAmount
               operatorFee
+              operatorBalance
               termEndTimestamp
               netBalance
               auctionEnded
@@ -27,6 +28,8 @@ export const getLiveAuctionsByAccount = async (address, network) => {
               auctionStartTimestamp
               auctionEndTimestamp
               termLength
+              loanWithdrawn
+              loanRepaid
               maxInterestRate
             }
           }
@@ -55,11 +58,12 @@ export const getSuggestedAuctions = async network => {
     data: {
       query: `
         {
-          loans(orderBy: auctionStartTimestamp, orderDirection: desc) {
+          loans(orderBy: auctionStartTimestamp, orderDirection: desc, where: {state: 0}) {
             state
             principal
             maxAmount
             operatorFee
+            operatorBalance
             termEndTimestamp
             netBalance
             auctionEnded
@@ -72,6 +76,8 @@ export const getSuggestedAuctions = async network => {
             auctionStartTimestamp
             auctionEndTimestamp
             termLength
+            loanWithdrawn
+            loanRepaid
             maxInterestRate
           }
         }`
