@@ -8,7 +8,6 @@ import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import Referral from './Referral/index';
-import Marketplace from './Marketplace';
 import CreateLoan from './CreateLoan';
 import { RootContext } from '../context';
 import Join from './Join';
@@ -237,17 +236,9 @@ const App = ({ children, history }: any) => {
           exact
           path="/create-loan"
           component={CreateLoan}
-          roles={[1, 2]}
+          roles={[1]}
         />
-        <Web3Route
-          marketplace
-          layout={Layout}
-          exact
-          path="/marketplace"
-          component={Marketplace}
-          roles={[1, 2]}
-        />
-
+       
         {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />
         <LayoutV2 exact path="/join" component={Join} />

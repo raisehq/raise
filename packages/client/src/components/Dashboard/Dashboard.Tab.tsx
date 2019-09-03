@@ -3,10 +3,13 @@ import { DashboardTab, NoResults } from './Dashboard.styles';
 import Auction from './Dashboard.Auction';
 import Loan from './Dashboard.Loan';
 import BorrowerLoan from './Dashboard.BorrowerLoan';
+import LenderLoan from './Dashboard.LenderLoan';
+import LenderAuction from './Dashboard.LenderAuction';
 import BorrowerAuction from './Dashboard.BorrowerAuction';
 import Suggested from './Dashboard.Loan';
 import useActionState from './Dashboard.useAuctionState';
 import { match, ANY } from 'pampy';
+
 const Card = {
   auction: Auction,
   loan: Loan,
@@ -21,6 +24,9 @@ const renderedLoans = (auctions, type) => auctions.map(auction => {
     ['borrower', 0], () => BorrowerAuction,
     ['borrower', 1], () => BorrowerAuction,
     ['borrower', ANY], () => BorrowerLoan,
+    ['lender', 0], () => BorrowerAuction,
+    ['lender', 1], () => LenderAuction,
+    ['lender', ANY], () => LenderLoan,
     ANY, () => Card[type]
   )
   return (
@@ -29,16 +35,19 @@ const renderedLoans = (auctions, type) => auctions.map(auction => {
 });
 
 const Tab = ({ auctions, states, type }) => {
+  console.log(auctions, states)
   const auctionsState: any = useActionState(auctions, states);
 
 
   return auctionsState.cata({
     Loading: () => <DashboardTab.Pane loading />,
-    Success: filteredAuctions => (
+    Success: filteredAuctions => {
+      console.log(filteredAuctions)
+      return (
       <DashboardTab.Pane>
         {renderedLoans(filteredAuctions, type)}
       </DashboardTab.Pane>
-    ),
+    )},
     Empty: () => (
       <DashboardTab.Pane>
         <NoResults>No results</NoResults>

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Either, to } from '../utils';
 
 const useGraphWidth = (ref, currentAmount, totalAmount) => {
