@@ -12,7 +12,7 @@ import { LenderButton, Modal, ExitButton } from './InvestModal.styles';
 const UI = daggy.taggedSum('UI', {
   Confirm: [],
   Processing: [],
-  Success: [],
+  Success: []
 });
 
 const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
@@ -44,7 +44,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
 
   return (
     <>
-      <LenderButton fluid onClick={openModal}>
+      <LenderButton id="btn-lender-open" fluid onClick={openModal}>
         Invest
       </LenderButton>
       <Modal open={open} size="small" onClose={closeModal}>
