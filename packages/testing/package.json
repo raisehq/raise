@@ -1,0 +1,32 @@
+{
+  "name": "testing",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "damarnez <daniel@herotoken.io>",
+  "homepage": "https://bitbucket.org/herodevteam/raise#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://damarnezht@bitbucket.org/herodevteam/raise.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "cypress:open": "npx cypress open"
+  },
+  "dependencies": {
+    "cypress": "^3.4.1",
+    "truffle-privatekey-provider": "^1.3.0",
+    "typescript": "3.5.2",
+    "validator": "^10.11.0",
+    "web3": "1.2.1",
+    "web3-utils": "1.0.0-beta.55"
+  }
+}

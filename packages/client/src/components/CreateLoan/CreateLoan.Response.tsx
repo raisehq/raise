@@ -22,7 +22,16 @@ export const UI = daggy.taggedSum('UI', {
 });
 
 export const getLoanAction = (stage, values, methods) => {
-  const { formattedAmount, systemFees, netLoan, totalInterest, repaymentAmount, loan, amountValidation, numberAmount } = values;
+  const {
+    formattedAmount,
+    systemFees,
+    netLoan,
+    totalInterest,
+    repaymentAmount,
+    loan,
+    amountValidation,
+    numberAmount
+  } = values;
   const { onSave, onRetry } = methods;
 
   return stage.cata({
@@ -32,7 +41,7 @@ export const getLoanAction = (stage, values, methods) => {
           <div>
             <LoanFormInfo>Loan amount</LoanFormInfo>
             <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
-              
+
             <LoanFormInfo>System fees (1%)</LoanFormInfo>
             <LoanFormValue>-{systemFees} DAI</LoanFormValue>
 
@@ -52,12 +61,10 @@ export const getLoanAction = (stage, values, methods) => {
           </div>
         </LoanResume>
         <ConfirmButton
+          id="btn-create"
           onClick={onSave}
           disabled={
-            amountValidation.error ||
-            loan.term === 0 ||
-            loan.mir === 0 ||
-            numberAmount === 0
+            amountValidation.error || loan.term === 0 || loan.mir === 0 || numberAmount === 0
           }
         >
           Confirm
@@ -77,22 +84,20 @@ export const getLoanAction = (stage, values, methods) => {
       <LoanConfirmation>
         <Header as="h2">Congrats!</Header>
         <p>Your loan request have been created.</p>
-        <ConfirmButton as={Link} to='/dashboard'>
+        <ConfirmButton id="btn-check" as={Link} to="/dashboard">
           Check your loans
         </ConfirmButton>
-        <NewLoanAnchor onClick={onRetry}>
-          Create a new loan
-        </NewLoanAnchor>
+        <NewLoanAnchor onClick={onRetry}>Create a new loan</NewLoanAnchor>
       </LoanConfirmation>
     ),
     Error: () => (
       <LoanConfirmation>
         <Header as="h2">Sorry</Header>
         <p>Something went wrong while creating the loan. Contact support if you need help.</p>
-        <ConfirmButton onClick={onRetry}>
+        <ConfirmButton id="btn-retry" onClick={onRetry}>
           Retry
         </ConfirmButton>
       </LoanConfirmation>
     )
   });
-}
+};
