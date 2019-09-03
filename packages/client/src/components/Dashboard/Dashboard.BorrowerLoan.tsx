@@ -46,6 +46,7 @@ const Loan = ({ auction }: { auction: any }) => {
         <Card.Row title="APR" content={interest} />
         <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0} DAI`} />
       </Card.Grid>
+      <Card.Separator />
       <Card.Grid>
         <Card.Row title="Repayment amount" content={borrowerDebt} />
         <Card.Row title="Investors" content={auction.investorCount} />

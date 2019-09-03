@@ -51,6 +51,7 @@ const Loan = ({ auction }: { auction: any }) => {
         <Card.Row title="Investors" content={auction.investorCount} />
         <Card.Row title="Time left" contentColor={contentColor} content={times.loanTermLeft} />
       </Card.Grid>
+      <Card.Separator />
       <Card.Grid>
         <Card.Row title="Borrower" content="Company A" />
         <Card.Row title="Loan amount" content={principal} />

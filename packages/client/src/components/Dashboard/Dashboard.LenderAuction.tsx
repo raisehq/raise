@@ -31,15 +31,15 @@ const Auction = ({ auction }: { auction: any }) => {
   return (
     <Card>
       <Card.Header title="Amount invested" amount={<Amount principal={lenderAmount} />} />
+      <Fragment>
+        <Card.Tooltip />
+        <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
+      </Fragment>
       <Card.Graph
         color="#00DA9E"
         currentAmount={numbers.principal}
         totalAmount={numbers.maxAmount}
       />
-      <Fragment>
-        <Card.Tooltip />
-        <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
-      </Fragment>
       <Card.Grid>
         <Card.Row title="Raised Amount" content={principal} />
         <Card.Row title="Investors" content={auction.investorCount} />

@@ -6,6 +6,12 @@ interface RowContentProps {
   contentColor?: string;
 }
 
+export const GraphContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
 export const HeroCard = styled.div`
   width: 350px;
   min-height: 100%;
@@ -24,13 +30,17 @@ export const Grid: any = styled.div`
   display: flex;
   box-sizing: border-box;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-top: 10px;
+  
 `;
 
 export const Row = styled.div`
   flex: 1 0 33%;
   text-align: center;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const RowContent = styled.div<RowContentProps>`
@@ -46,12 +56,6 @@ export const RowTitle = styled.div`
   text-align: center;
 `;
 
-export const GraphContainer = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-`;
-
 export const GraphTitle = styled.div`
   font-size: 10px;
   font-weight: bold;
@@ -59,7 +63,8 @@ export const GraphTitle = styled.div`
 `;
 
 export const Header = styled.div`
-  margin-bottom: 25px;
+  margin-top: 20px;
+  margin-bottom: 12px;
 `;
 export const HeaderTitle = styled.h1`
   color: #5a5a5a;
