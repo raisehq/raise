@@ -46,11 +46,12 @@ const Loan = ({ auction }: { auction: any }) => {
           {loanStatus[state]}
         </Card.Badge>
       </Fragment>
-      <Card.Grid>
+      <Card.Grid noGraph>
         <Card.Row title="Amount invested" content={lenderAmount} />
         <Card.Row title="Investors" content={auction.investorCount} />
         <Card.Row title="Time left" contentColor={contentColor} content={times.loanTermLeft} />
       </Card.Grid>
+      <Card.Separator />
       <Card.Grid>
         <Card.Row title="Borrower" content="Company A" />
         <Card.Row title="Loan amount" content={principal} />
