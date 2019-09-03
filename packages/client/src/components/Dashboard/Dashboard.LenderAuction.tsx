@@ -36,7 +36,7 @@ const Auction = ({ auction }: { auction: any }) => {
         <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
       </Fragment>
       <Card.Graph
-        color="#00DA9E"
+        color="#5A5A5A"
         currentAmount={numbers.principal}
         totalAmount={numbers.maxAmount}
       />

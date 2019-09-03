@@ -30,8 +30,7 @@ export const Grid: any = styled.div`
   display: flex;
   box-sizing: border-box;
   flex-wrap: wrap;
-  margin-top: 10px;
-  
+  margin: ${({graph}) => !graph ? '10px 0px' : '30px 0px 10px'}; 
 `;
 
 export const Row = styled.div`
