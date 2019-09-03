@@ -44,11 +44,12 @@ const Loan = ({ auction }: { auction: any }) => {
         <Card.Tooltip />
         <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
       </Fragment>
-      <Card.Grid>
+      <Card.Grid noGraph>
         <Card.Row title="System Fees" content={systemFees} />
         <Card.Row title="APR" content={interest} />
         <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0} DAI`} />
       </Card.Grid>
+      <Card.Separator />
       <Card.Grid>
         <Card.Row title="Repayment amount" content={borrowerDebt} />
         <Card.Row title="Investors" content={auction.investorCount} />
