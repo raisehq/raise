@@ -62,26 +62,11 @@ const calculateAPR = auction => {
   } else {
     interest = auction.maxInterestRate / 10000;
   }
-  return interest;
+
+  return interest * 12;
 };
 
 const useCal = auction => {
-  // const calcs = {
-  //   maxAmount: defaultZero,
-  //   operatorFee: defaultZero,
-  //   principal: defaultZero,
-  //   systemFees: defaultZero,
-  //   maxSystemFees: defaultZero,
-  //   borrowerDebt: defaultZero,
-  //   interest: '0%',
-  //   netBalance: defaultZero,
-  //   times: {
-  //     auctionTimeLeft: null,
-  //     loanTerm: null,
-  //     loanTermLeft: null
-  //   }
-  // };
-
   const maxAmount: any = calculateFromWei(auction.maxAmount);
   const operatorFee: any = calculateFromWei(auction.operatorFee);
   const principal: any = calculateFromWei(auction.principal);
@@ -93,6 +78,8 @@ const useCal = auction => {
   const apr = calculateAPR(auction);
   const interest: any = numeral(Number(apr) / 10).format('0.00%');
 
+  const currentAmount = numeral(principal).value();
+  const totalAmount = numeral(maxAmount).value();
   // useAsyncEffect(async () => {
   const { loanTerm, auctionTimeLeft, loanTermLeft } = calculateTimes(auction);
 
@@ -105,7 +92,9 @@ const useCal = auction => {
     operatorFee,
     principal,
     systemFees,
-    maxSystemFees
+    maxSystemFees,
+    currentAmount,
+    totalAmount
   };
 
   return newCalcs;

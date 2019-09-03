@@ -34,8 +34,12 @@ export const assumeStateMachine = auction => {
   return clonedAuction;
 };
 
-export const updateLoanState = loan => {
-  // update timer
-  // update apr
-  // update progress bar
+export const getActiveAuctions = (auctions, states) => {
+  const updatedAuctions = auctions.map(assumeStateMachine);
+  const activeAuctions = updatedAuctions
+    ? auctions.filter(
+        auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
+      )
+    : [];
+  return activeAuctions;
 };

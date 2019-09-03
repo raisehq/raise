@@ -21,6 +21,7 @@ const queryies = {
             auctionEndTimestamp
             termLength
             maxInterestRate
+            operatorBalance
           }
         }`,
       variables: {},
@@ -48,6 +49,7 @@ const queryies = {
             auctionEndTimestamp
             termLength
             maxInterestRate
+            operatorBalance
           }
         }
       }`,

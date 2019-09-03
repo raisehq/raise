@@ -8,15 +8,6 @@ export const Auctions = daggy.taggedSum('Auctions', {
   Empty: []
 });
 
-export const getActiveAuctions = (auctions, states) => {
-  const activeAuctions = auctions
-    ? auctions.filter(
-        auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
-      )
-    : [];
-  return activeAuctions;
-};
-
 const useAuctionState = (auctions, states) => {
   const [auctionsState, setAuctionState]: any = useState(Auctions.Loading);
 
