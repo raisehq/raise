@@ -4,10 +4,12 @@ import Auction from './Dashboard.Auction';
 import Loan from './Dashboard.Loan';
 import BorrowerLoan from './Dashboard.BorrowerLoan';
 import LenderLoan from './Dashboard.LenderLoan';
+import LenderAuction from './Dashboard.LenderAuction';
 import BorrowerAuction from './Dashboard.BorrowerAuction';
 import Suggested from './Dashboard.Loan';
 import useActionState from './Dashboard.useAuctionState';
 import { match, ANY } from 'pampy';
+
 const Card = {
   auction: Auction,
   loan: Loan,
@@ -23,7 +25,7 @@ const renderedLoans = (auctions, type) => auctions.map(auction => {
     ['borrower', 1], () => BorrowerAuction,
     ['borrower', ANY], () => BorrowerLoan,
     ['lender', 0], () => BorrowerAuction,
-    ['lender', 1], () => BorrowerAuction,
+    ['lender', 1], () => LenderAuction,
     ['lender', ANY], () => LenderLoan,
     ANY, () => Card[type]
   )
