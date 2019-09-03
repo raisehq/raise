@@ -46,7 +46,7 @@ const Loan = ({ auction }: { auction: any }) => {
   return (
     <BorrowerLoanCard>
       <Card.Header
-        title="Invested return"
+        title="Investment return"
         amount={<Amount principal={lenderRoiAmount} roi={interest} />}
       />
       <Fragment>
@@ -62,7 +62,7 @@ const Loan = ({ auction }: { auction: any }) => {
       <Card.Grid>
         <Card.Row title="Borrower" content="Company A" />
         <Card.Row title="Loan amount" content={principal} />
-        <Card.Row title="Term end" content={times.loanTerm} />
+        <Card.Row title="Loan term" content={times.loanTerm} />
       </Card.Grid>
       {cta}
     </BorrowerLoanCard>
