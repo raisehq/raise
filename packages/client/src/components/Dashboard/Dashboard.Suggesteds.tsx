@@ -28,7 +28,6 @@ const Suggesteds = ({ auctions, states }) => {
 
   useInterval(() => {
     const suggested = getActiveAuctions(auctions, states);
-    console.log('suggested length: ', suggested.length);
     setSuggestedAuctions(suggested);
   }, 1000);
 

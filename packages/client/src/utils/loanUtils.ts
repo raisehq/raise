@@ -35,9 +35,9 @@ export const assumeStateMachine = auction => {
 };
 
 export const getActiveAuctions = (auctions, states) => {
-  const updatedAuctions = auctions.map(assumeStateMachine);
+  const updatedAuctions = auctions.map(auction => assumeStateMachine(auction));
   const activeAuctions = updatedAuctions
-    ? auctions.filter(
+    ? updatedAuctions.filter(
         auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
       )
     : [];
