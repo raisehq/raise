@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card } from '@raisehq/components';
-import Calculations from './Dashboard.useCalc';
+import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
 
 const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
-  const calculations = Calculations(auction);
+  const calculations = getCalculations(auction);
 
   return (
     <Card>
