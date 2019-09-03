@@ -3,28 +3,20 @@ import { Card } from '@raisehq/components';
 import { match, ANY } from 'pampy';
 import { fromWei } from 'web3-utils';
 import numeral from '../../commons/numeral';
-import useCalculations from './Dashboard.useCalc';
+import { getCalculations } from '../../utils/loanUtils';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import Amount from './Dashboard.Amount';
 import { ClaimRefund } from '../ClaimRefund';
 
 const Auction = ({ auction }: { auction: any }) => {
-  const calcs = useCalculations(auction);
-  const {
-    maxAmount,
-    times,
-    principal,
-    numbers
-  } = calcs;
+  const calcs = getCalculations(auction);
+  const { maxAmount, times, principal, currentAmount, totalAmount } = calcs;
 
   const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
 
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
-    return match(conditions,
-      [1, false, ], () => <ClaimRefund loan={auction} />,
-      ANY, () => null,
-    )
+    return match(conditions, [1, false], () => <ClaimRefund loan={auction} />, ANY, () => null);
   }, [auction.state, auction.withdrawn]);
 
   const { state } = auction;
@@ -35,11 +27,7 @@ const Auction = ({ auction }: { auction: any }) => {
         <Card.Tooltip />
         <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
       </Fragment>
-      <Card.Graph
-        color="#5A5A5A"
-        currentAmount={numbers.principal}
-        totalAmount={numbers.maxAmount}
-      />
+      <Card.Graph color="#5A5A5A" currentAmount={currentAmount} totalAmount={totalAmount} />
       <Card.Grid>
         <Card.Row title="Raised Amount" content={principal} />
         <Card.Row title="Investors" content={auction.investorCount} />
