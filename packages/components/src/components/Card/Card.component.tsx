@@ -19,13 +19,18 @@ import {
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
+interface RowComponentProps {
+  title: string,
+  content: string | number | null,
+  contentColor?: string | null
+}
 const Context = React.createContext({});
 
 const BadgeComponent = ({ children, color }) => <Badge color={color}>{children}</Badge>;
 
-const RowComponent = ({ title, content }) => (
+const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentColor }) => (
   <Row>
-    <RowContent>{content}</RowContent>
+    <RowContent contentColor={contentColor}>{content}</RowContent>
     <RowTitle>{title}</RowTitle>
   </Row>
 );

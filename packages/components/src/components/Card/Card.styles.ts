@@ -2,12 +2,17 @@ import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
 import theme from '../../../theme';
 
+interface RowContentProps {
+  contentColor?: string
+}
+
 export const HeroCard = styled.div`
   width: 350px;
+  max-height: 310px;
   border-radius: 4px;
   background-color: #ffffff;
   box-shadow: ${theme.shadow};
-  padding: 25px;
+  padding: 20px;
   box-sizing: border-box;
   position: relative;
 `;
@@ -16,17 +21,17 @@ export const Grid: any = styled.div`
   display: flex;
   box-sizing: border-box;
   flex-wrap: wrap;
-  margin-top: 25px;
+  margin-top: 20px;
 `;
 
 export const Row = styled.div`
   flex: 1 0 33%;
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 `;
 
-export const RowContent = styled.div`
-  color: #5a5a5a;
+export const RowContent = styled.div < RowContentProps > `
+  color: ${({ contentColor }) => contentColor ? contentColor : '#5a5a5a'};
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -40,14 +45,14 @@ export const RowTitle = styled.div`
 
 export const GraphContainer = styled.div`
   position: relative;
-  margin-bottom: 35px;
+  display: flex;
+  align-items: center;
 `;
 
 export const GraphTitle = styled.div`
-  position: absolute;
-  right: 0;
-  top: 11px;
   font-size: 10px;
+  font-weight: bold;
+  margin-left: 6px;
 `;
 
 export const Header = styled.div`
@@ -57,6 +62,7 @@ export const HeaderTitle = styled.h1`
   color: #5a5a5a;
   font-size: 12px;
   font-weight: lighter;
+  margin-bottom: 4px;
 `;
 export const HeaderContent = styled.div`
   color: #3c4251;
@@ -65,8 +71,8 @@ export const HeaderContent = styled.div`
 `;
 
 export const Graph: any = styled.div`
-  width: 100%;
-  height: 12px;
+  width: 90%;
+  height: 10px;
   background: #ecedee;
   position: relative;
   overflow: hidden;
@@ -74,7 +80,7 @@ export const Graph: any = styled.div`
   &&:before {
     content: '';
     position: absolute;
-    width: ${(props: any) => props.width}%;
+    width: ${(props: any) => (props.width * 100 / 90)}%;
     height: 100%;
     top: 0;
     left: 0;
@@ -84,6 +90,7 @@ export const Graph: any = styled.div`
 
 export const Badge = styled.div`
   width: 80px;
+  height: 20px;
   color: #fff;
   position: absolute;
   top: 15px;
@@ -94,18 +101,19 @@ export const Badge = styled.div`
   background: ${({ color }) => color};
   border-radius: 30px;
   font-size: 12px;
+  line-height: 15px;
 `;
 
 export const Separator = styled.div`
   width: 100%;
   height: 1px;
   background: #ecedee;
-  margin: 10px 0 10px 0;
+  margin: 0px;
 `;
 
 export const InfoIcon = styled.div`
   position: absolute;
-  top: 18px;
+  top: 16px;
   right: 105px;
   font-size: 9px;
   background: black;
@@ -114,7 +122,7 @@ export const InfoIcon = styled.div`
   border-radius: 36px;
 `;
 
-export const InfoIconCmp = styled(Icon)`
+export const InfoIconCmp = styled(Icon) `
   &&& {
     position: absolute;
     top: 0;
