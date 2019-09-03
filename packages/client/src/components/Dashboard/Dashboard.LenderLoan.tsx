@@ -15,7 +15,6 @@ const Loan = ({ auction }: { auction: any }) => {
   const { principal, interest, times } = calcs;
 
   const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
-  console.log(numeral(interest).value());
   const lenderRoiAmount = numeral(
     Number(fromWei(auction.lenderAmount)) +
       Number(fromWei(auction.lenderAmount)) * numeral(interest).value()
