@@ -17,9 +17,6 @@ import {
   RaisedAmountBox,
   FlexSpacedLayout,
   ResumeItemBox,
-  ProgressLayout,
-  AuctionProgress,
-  Percentage,
   ConfirmButton,
   InputContainer,
   RaisedAmountContent,
@@ -46,9 +43,8 @@ const RaisedAmount: React.SFC<RaisedAmountProps> = ({ value }) => (
 
 const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
   const { id: loanAddress, principal, investorCount, maxAmount } = loan;
-  const { times } = getCalculations(loan);
+  const { times, currentAmount, totalAmount } = getCalculations(loan);
   const metamask = useMetamask();
-
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
   const [interest, setInterest]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(
     0
@@ -67,12 +63,10 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   }, [metamask, loanAddress]);
 
   const roi = useMemo(() => value + (value * interest) / 100, [value, interest]);
-  const { raised, targetAmount, raisedPercentage } = useMemo(
+  const { raised, targetAmount } = useMemo(
     () => ({
       raised: principal ? fromWei(principal) : 0,
-      targetAmount: maxAmount ? numeral(fromWei(maxAmount)).format() : 0,
-      raisedPercentage:
-        principal && maxAmount ? (Number(fromWei(principal)) * 100) / Number(fromWei(maxAmount)) : 0
+      targetAmount: maxAmount ? numeral(fromWei(maxAmount)).format() : 0
     }),
     [principal, maxAmount]
   );
@@ -107,10 +101,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       </ModalInputContainer>
       <InvestResume>
         <RaisedAmount value={raised} />
-        <ProgressLayout>
-          <AuctionProgress active percent={raisedPercentage} />
-          <Percentage>{raisedPercentage} %</Percentage>
-        </ProgressLayout>
+        <Card.Graph color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
         <FlexSpacedLayout>
           <ResumeItem title="Target Amount" value={`${targetAmount} DAI`} />
           <ResumeItem title="Investors" value={`${investorCount}`} />

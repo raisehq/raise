@@ -9,6 +9,8 @@ import BorrowerAuction from './Dashboard.BorrowerAuction';
 import Suggested from './Dashboard.Loan';
 import { getActiveAuctions } from '../../utils/loanUtils';
 import useInterval from '../../hooks/useInterval';
+import LenderAuction from './Dashboard.LenderAuction';
+import LenderLoan from './Dashboard.LenderLoan';
 
 const Card = {
   auction: Auction,
@@ -29,6 +31,12 @@ const renderedLoans = (auctions, type) =>
       () => BorrowerAuction,
       ['borrower', ANY],
       () => BorrowerLoan,
+      ['lender', 0],
+      () => BorrowerAuction,
+      ['lender', 1],
+      () => LenderAuction,
+      ['lender', ANY],
+      () => LenderLoan,
       ANY,
       () => Card[type]
     );

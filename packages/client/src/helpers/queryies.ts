@@ -36,6 +36,8 @@ const queryies = {
             principal
             maxAmount
             operatorFee
+            operatorBalance
+            loanRepaid
             termEndTimestamp
             netBalance
             auctionEnded
@@ -55,9 +57,44 @@ const queryies = {
       }`,
       variables: {},
       subscriptionName: 'liveAuctionsByAccount'
-    }
+    },
+    lenderInvestmentsByAccount: {
+      query: `subscription lenderInvestmentsByAccount($address: String)
+      {
+        users(where: {address: $address}) {
+          loanFundings {
+            withdrawn
+            amount
+            loan {
+              state
+              principal
+              maxAmount
+              operatorFee
+              operatorBalance
+              termEndTimestamp
+              netBalance
+              auctionEnded
+              interestRate
+              borrowerDebt
+              investorCount
+              id
+              loanRepaid
+              minimumReached
+              auctionLength
+              auctionStartTimestamp
+              auctionEndTimestamp
+              termLength
+              maxInterestRate
+            }
+          }
+        }
+      }`,
+      variables: {},
+      subscriptionName: 'lenderInvestmentsByAccount'
+    },
   },
   queryies: {}
 };
 
 export default queryies;
+

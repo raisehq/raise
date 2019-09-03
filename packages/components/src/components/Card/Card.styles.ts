@@ -3,18 +3,21 @@ import { Icon } from 'semantic-ui-react';
 import theme from '../../../theme';
 
 interface RowContentProps {
-  contentColor?: string
+  contentColor?: string;
 }
 
 export const HeroCard = styled.div`
   width: 350px;
-  max-height: 310px;
+  min-height: 100%;
   border-radius: 4px;
   background-color: #ffffff;
   box-shadow: ${theme.shadow};
   padding: 20px;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
 `;
 
 export const Grid: any = styled.div`
@@ -30,8 +33,8 @@ export const Row = styled.div`
   margin-bottom: 20px;
 `;
 
-export const RowContent = styled.div < RowContentProps > `
-  color: ${({ contentColor }) => contentColor ? contentColor : '#5a5a5a'};
+export const RowContent = styled.div<RowContentProps>`
+  color: ${({ contentColor }) => (contentColor ? contentColor : '#5a5a5a')};
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -80,7 +83,7 @@ export const Graph: any = styled.div`
   &&:before {
     content: '';
     position: absolute;
-    width: ${(props: any) => (props.width * 100 / 90)}%;
+    width: ${(props: any) => (props.width * 100) / 90}%;
     height: 100%;
     top: 0;
     left: 0;
@@ -122,7 +125,7 @@ export const InfoIcon = styled.div`
   border-radius: 36px;
 `;
 
-export const InfoIconCmp = styled(Icon) `
+export const InfoIconCmp = styled(Icon)`
   &&& {
     position: absolute;
     top: 0;
