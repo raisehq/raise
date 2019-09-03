@@ -91,10 +91,9 @@ const queryies = {
       }`,
       variables: {},
       subscriptionName: 'lenderInvestmentsByAccount'
-    },
+    }
   },
   queryies: {}
 };
 
 export default queryies;
-

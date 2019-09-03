@@ -2,23 +2,12 @@ import React, { useState, useEffect } from 'react';
 import daggy from 'daggy';
 import { match, ANY } from 'pampy';
 import { DashboardTab, NoResults } from './Dashboard.styles';
-import Auction from './Dashboard.Auction';
-import Loan from './Dashboard.Loan';
 import BorrowerLoan from './Dashboard.BorrowerLoan';
 import BorrowerAuction from './Dashboard.BorrowerAuction';
-import Suggested from './Dashboard.Loan';
 import { getActiveAuctions } from '../../utils/loanUtils';
 import useInterval from '../../hooks/useInterval';
 import LenderAuction from './Dashboard.LenderAuction';
 import LenderLoan from './Dashboard.LenderLoan';
-
-const Card = {
-  auction: Auction,
-  loan: Loan,
-  suggested: Suggested,
-  borrowerLoan: BorrowerLoan,
-  borrowerAuction: BorrowerAuction
-};
 
 const renderedLoans = (auctions, type) =>
   auctions.map(auction => {
@@ -36,9 +25,7 @@ const renderedLoans = (auctions, type) =>
       ['lender', 1],
       () => LenderAuction,
       ['lender', ANY],
-      () => LenderLoan,
-      ANY,
-      () => Card[type]
+      () => LenderLoan
     );
     return <CardComponent key={auction.id} auction={auction} />;
   });
@@ -64,8 +51,8 @@ const Tab = ({ auctions, states, type }) => {
   }, [filteredAuctions]);
 
   useInterval(() => {
-    const suggested = getActiveAuctions(auctions, states);
-    setFilteredAuctions(suggested);
+    const filtered = getActiveAuctions(auctions, states);
+    setFilteredAuctions(filtered);
   }, 1000);
 
   return tabState.cata({
