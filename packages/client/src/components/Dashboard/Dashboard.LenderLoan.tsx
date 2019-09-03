@@ -7,7 +7,6 @@ import { BorrowerLoanCard, } from './BorrowerLoan.styles';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import useCalculations from './Dashboard.useCalc';
 import Amount from './Dashboard.Amount';
-import { ClaimRefund } from '../ClaimRefund';
 import { ClaimRoi } from '../ClaimRoi';
 import { GetInTouch } from '../GetInTouch';
 
@@ -16,17 +15,13 @@ const Loan = ({ auction }: { auction: any }) => {
   const { principal, interest, times } = calcs;
 
   const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
+  console.log(numeral(interest).value())
+  const lenderRoiAmount = numeral(Number(fromWei(auction.lenderAmount)) + Number(fromWei(auction.lenderAmount)) * numeral(interest).value() ).format();
   
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
-    console.log(conditions, match(conditions,
-      [1, false, ], () => <ClaimRefund loan={auction} />,
-      [4, false], () => <ClaimRoi loan={auction} />,
-      [3, ANY], () => <GetInTouch />,
-      ANY, () => null,
-    ))
+
     return match(conditions,
-      [1, false, ], () => <ClaimRefund loan={auction} />,
       [4, false], () => <ClaimRoi loan={auction} />,
       [3, ANY], () => <GetInTouch />,
       ANY, () => null,
@@ -44,7 +39,7 @@ const Loan = ({ auction }: { auction: any }) => {
 
   return (
     <BorrowerLoanCard>
-      <Card.Header title="Loan amount" amount={<Amount principal={principal} roi={interest} />} />
+      <Card.Header title="Invested return" amount={<Amount principal={lenderRoiAmount} roi={interest} />} />
       <Fragment>
         <Card.Tooltip />
         <Card.Badge color={loanStatusColors[state]}>
