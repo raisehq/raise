@@ -6,7 +6,7 @@ import Amount from './Dashboard.Amount';
 
 const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
   const calcs = getCalculations(auction);
-  const { principal, maxAmount, times, systemFees } = calcs;
+  const { principal, maxAmount, times, systemFees, interest } = calcs;
 
   return (
     <Card>
@@ -17,7 +17,7 @@ const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
       </Fragment>
       <Card.Grid>
         <Card.Row title="System Fees" content={systemFees} />
-        <Card.Row title="APR" content={auction.interestRate * 12} />
+        <Card.Row title="APR" content={interest} />
         <Card.Row title="Net Loan Proceeds" content={`${auction.netBalance || 0} DAI`} />
       </Card.Grid>
       <Card.Grid>
