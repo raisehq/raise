@@ -6,6 +6,10 @@ interface RowContentProps {
   contentColor?: string;
 }
 
+interface GridProps {
+  noGraph?: boolean;
+}
+
 export const GraphContainer = styled.div`
   position: relative;
   display: flex;
@@ -26,11 +30,11 @@ export const HeroCard = styled.div`
   justify-content: flex-start;
 `;
 
-export const Grid: any = styled.div`
+export const Grid: any = styled.div<GridProps>`
   display: flex;
   box-sizing: border-box;
   flex-wrap: wrap;
-  margin: ${({graph}) => !graph ? '10px 0px' : '30px 0px 10px'}; 
+  margin: ${({noGraph}) => !noGraph ? '10px 0px' : '30px 0px 10px'}; 
 `;
 
 export const Row = styled.div`
