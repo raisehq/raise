@@ -21,6 +21,7 @@ const queryies = {
             auctionEndTimestamp
             termLength
             maxInterestRate
+            operatorBalance
           }
         }`,
       variables: {},
@@ -50,6 +51,7 @@ const queryies = {
             auctionEndTimestamp
             termLength
             maxInterestRate
+            operatorBalance
           }
         }
       }`,
@@ -89,10 +91,9 @@ const queryies = {
       }`,
       variables: {},
       subscriptionName: 'lenderInvestmentsByAccount'
-    },
+    }
   },
   queryies: {}
 };
 
 export default queryies;
-

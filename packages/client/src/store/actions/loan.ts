@@ -38,7 +38,11 @@ export default (dispatch: any, state: any) => {
     } else {
       dispatch({
         type: 'SET_LENDER_INVESTMENTS',
-        data: data.users[0].loanFundings.map(({ withdrawn, amount, loan }) => ({ ...loan, withdrawn, lenderAmount: amount }))
+        data: data.users[0].loanFundings.map(({ withdrawn, amount, loan }) => ({
+          ...loan,
+          withdrawn,
+          lenderAmount: amount
+        }))
       });
     }
   };

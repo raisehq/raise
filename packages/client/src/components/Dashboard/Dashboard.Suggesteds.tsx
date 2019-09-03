@@ -1,14 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import daggy from 'daggy';
 import Suggested from './Dashboard.Suggested';
-import useAuctionState from './Dashboard.useAuctionState';
+import { getActiveAuctions } from '../../utils/loanUtils';
 import { SuggestedContainer, NoResults } from './Dashboard.styles';
 import { InvestModal } from '../InvestModal';
+import useInterval from '../../hooks/useInterval';
+
+export const Auctions = daggy.taggedSum('Auctions', {
+  Loading: [],
+  Success: [{}],
+  Empty: []
+});
 
 const Suggesteds = ({ auctions, states }) => {
-  const auctionsState: any = useAuctionState(auctions, states);
-  return auctionsState.cata({
+  const [suggestedAuctions, setSuggestedAuctions] = useState();
+  const [suggestedState, setSuggestedState]: any = useState(Auctions.Loading);
+
+  useEffect(() => {
+    if (!suggestedAuctions) {
+      setSuggestedState(Auctions.Loading);
+    } else if (suggestedAuctions.length === 0) {
+      setSuggestedState(Auctions.Empty);
+    } else {
+      setSuggestedState(Auctions.Success);
+    }
+  }, [suggestedAuctions]);
+
+  useInterval(() => {
+    const suggested = getActiveAuctions(auctions, states);
+    setSuggestedAuctions(suggested);
+  }, 1000);
+
+  return suggestedState.cata({
     Loading: () => <SuggestedContainer>loading</SuggestedContainer>,
-    Success: suggestedAuctions => (
+    Success: () => (
       <SuggestedContainer>
         {suggestedAuctions.slice(0, 3).map(auction => (
           <Suggested key={auction.id} auction={auction} cta={<InvestModal loan={auction} />} />
@@ -21,7 +46,6 @@ const Suggesteds = ({ auctions, states }) => {
       </SuggestedContainer>
     )
   });
-
 };
 
 export default Suggesteds;

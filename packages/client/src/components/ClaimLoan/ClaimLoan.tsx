@@ -3,7 +3,7 @@ import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from '../InvestModal/types';
 
-import useCalculations from '../Dashboard/Dashboard.useCalc';
+import { getCalculations } from '../../utils/loanUtils';
 import ConfirmStage from './stages/Confirm';
 import SuccessStage from './stages/Success';
 import Error from './stages/Error';
@@ -20,7 +20,7 @@ export const Stages = daggy.taggedSum('UI', {
 });
 
 const ClaimLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
-  const calculatedLoan = useCalculations(loan);
+  const calculatedLoan = getCalculations(loan);
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(Stages.Confirm);
 
