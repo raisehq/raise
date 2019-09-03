@@ -91,6 +91,37 @@ const queryies = {
       }`,
       variables: {},
       subscriptionName: 'lenderInvestmentsByAccount'
+    },
+    loansByAccount: {
+      query: `subscription loansByAccount($address: String)
+      {
+        users(where: {address: $address}) {
+          loanRequests {
+            state
+            principal
+            maxAmount
+            operatorFee
+            operatorBalance
+            loanRepaid
+            termEndTimestamp
+            netBalance
+            auctionEnded
+            interestRate
+            borrowerDebt
+            investorCount
+            id
+            minimumReached
+            auctionLength
+            auctionStartTimestamp
+            auctionEndTimestamp
+            termLength
+            maxInterestRate
+            operatorBalance
+          }
+        }
+      }`,
+      variables: {},
+      subscriptionName: 'loansByAccount'
     }
   },
   queryies: {}
