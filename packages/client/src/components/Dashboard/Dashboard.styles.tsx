@@ -9,7 +9,7 @@ export const DashboardWrapper = styled.div`
   box-sizing: border-box;
 
   .heroCard {
-    margin: 0 10px 10px 0;
+    margin: 0 15px 15px 0;
   }
 
   .heroCard {
@@ -22,7 +22,7 @@ export const DashboardWrapper = styled.div`
 
 export const DashboardContainer = styled.div`
   width: 100%;
-  max-width: 1080px;
+  max-width: 1160px;
   padding-top: 25px;
 `;
 
