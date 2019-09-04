@@ -18,8 +18,12 @@ describe('BORROWER', () => {
     cy.get('.card > .button').should('have.length', 1);
     cy.wait(2000);
     cy.get('.card > .button').click();
-    cy.wait(60000);
-    cy.get('#btn-check', { timeout: 60000 }).should('have.length', 1);
+
+    cy.get('#btn-check', { timeout: 120000 }).should('have.length', 1);
     cy.get('#btn-check').click();
+    cy.get('.heroCard', { timeout: 120000 })
+      .its('length')
+      .should('be.gte', 1)
+      .end();
   });
 });

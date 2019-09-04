@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
-
+import { AppContext } from '../App';
 import InvestState from './InvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
@@ -16,6 +16,7 @@ const UI = daggy.taggedSum('UI', {
 });
 
 const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
+  const { modalRefs }: any = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Confirm);
   const [investment, setInvestment] = useState(0);
@@ -47,7 +48,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
       <LenderButton id="btn-lender-open" fluid onClick={openModal}>
         Invest
       </LenderButton>
-      <Modal open={open} size="small" onClose={closeModal}>
+      <Modal open={open} size="small" onClose={closeModal} mountNode={modalRefs.current}>
         <SemanticModal.Content>
           {getInvestAction(stage)}
           <ExitButton name="close" color="black" onClick={closeModal} />
