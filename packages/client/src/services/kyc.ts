@@ -47,3 +47,21 @@ export const isKYCVerified = async (userId, token) => {
 
   return request.fold(error => console.log(error), success => console.log(success));
 };
+
+export const verifyKYC = async (userId, token) => {
+  console.log('token');
+  console.log(token);
+
+  const config: any = {
+    url: `${HOST}/verify/${userId}/${token}`,
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const request = await to(axios(config));
+
+  return request.fold(error => console.log(error), success => console.log(success));
+};

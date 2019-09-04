@@ -106,8 +106,6 @@ const App = ({ children, history }: any) => {
   }, [webSocket, network]);
 
   useAsyncEffect(async () => {
-    console.log(logged);
-
     if (logged) {
       onGetCryptoAddressByUser();
       onGetUser();

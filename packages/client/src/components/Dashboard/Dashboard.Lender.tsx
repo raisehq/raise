@@ -54,7 +54,7 @@ const Dashboard = () => {
   ];
   return (
     <DashboardWrapper>
-      <KycMessage />
+      {<KycMessage />}
       <DashboardContainer>
         <Header as="h1">Suggested investments</Header>
         <Suggesteds auctions={suggested} states={[0]} />

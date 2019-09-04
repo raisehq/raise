@@ -1,4 +1,4 @@
-import { initKyc, isKYCVerified, connect } from '../../services/kyc';
+import { initKyc, isKYCVerified, connect, verifyKYC } from '../../services/kyc';
 
 export default (dispatch: any, state: any) => {
   const {
@@ -26,5 +26,9 @@ export default (dispatch: any, state: any) => {
     isKYCVerified(id, token);
   };
 
-  return { onKYCVerified, onInitKyc, onConnect };
+  const onVerifyKYC = async () => {
+    verifyKYC(id, token);
+  };
+
+  return { onKYCVerified, onInitKyc, onConnect, onVerifyKYC };
 };
