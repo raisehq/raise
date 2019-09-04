@@ -84,7 +84,9 @@ const queryies = {
               auctionStartTimestamp
               auctionEndTimestamp
               termLength
-              maxInterestRate
+              maxInterestRate,
+              loanWithdrawn,
+              loanRepaid
             }
           }
         }
@@ -116,7 +118,9 @@ const queryies = {
             auctionEndTimestamp
             termLength
             maxInterestRate
-            operatorBalance
+            operatorBalance,
+            loanWithdrawn,
+            loanRepaid
           }
         }
       }`,
