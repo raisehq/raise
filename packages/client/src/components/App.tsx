@@ -12,14 +12,14 @@ import Marketplace from './Marketplace';
 import CreateLoan from './CreateLoan';
 import { RootContext } from '../context';
 import Join from './Join';
-import Kyc from '../components/KYC';
-import KycValidation from '../components/KycValidation';
+import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
 import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import LogRocket from 'logrocket';
+
 function glide(val) {
   return spring(val, {
     stiffness: 174,
@@ -56,7 +56,7 @@ const App = ({ children, history }: any) => {
       auth: {
         login: { logged }
       },
-
+      kyc: { token },
       user: {
         details: { id, accounttype_id, email, status },
         cryptoAddress: { address }
@@ -66,7 +66,8 @@ const App = ({ children, history }: any) => {
     actions: {
       auth: { onVerifyAuth },
       user: { onGetCryptoAddressByUser, onGetUser },
-      blockchain: { fetchReferrals }
+      blockchain: { fetchReferrals },
+      kyc: { onInitKyc }
     }
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
@@ -93,14 +94,21 @@ const App = ({ children, history }: any) => {
   };
 
   useAsyncEffect(async () => {
+    console.log(logged);
+
     if (logged) {
       onGetCryptoAddressByUser();
       onGetUser();
+
+      // CHECK IF NOT KCYED
+      if (!token) {
+        await onInitKyc();
+      }
     } else {
       await onVerifyAuth();
       setLoading(false);
     }
-  }, [logged]);
+  }, [logged, token]);
 
   useEffect(() => {
     if (process.env.REACT_APP_LOGROCKET === 'true') {
@@ -193,14 +201,6 @@ const App = ({ children, history }: any) => {
         <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} roles={[1, 2]} />
 
         <Web3Route marketplace layout={Layout} exact path="/kyc" component={Kyc} roles={[1, 2]} />
-        <Web3Route
-          marketplace
-          layout={Layout}
-          exact
-          path="/kyc/validation"
-          component={KycValidation}
-          roles={[1, 2]}
-        />
         <Web3Route
           marketplace
           layout={Layout}
