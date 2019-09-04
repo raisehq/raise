@@ -35,7 +35,7 @@ const Loan = ({ auction }: { auction: any }) => {
     return auction.state;
   }, [auction.state, auction.loanRepaid]);
 
-  const contentColor = state == 3 ? 'red' : null;
+  const contentColor = state === 3 ? 'red' : null;
 
   return (
     <BorrowerLoanCard>
