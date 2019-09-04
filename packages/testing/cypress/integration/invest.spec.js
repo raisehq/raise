@@ -9,11 +9,11 @@ describe('LENDER', () => {
     cy.get('#btn-lender-open').should('have.length', 1);
     cy.get('#btn-lender-open').click();
     cy.wait(4000);
-    cy.get('#input-value-invest-all').should('have.length', 1);
-    cy.get('#input-value-invest-all').click();
+    cy.get('#btn-invest-all').should('have.length', 1);
+    cy.get('#btn-invest-all').click();
     cy.wait(4000);
-    cy.get('#btn-confirm-invest').should('have.length', 1);
-    cy.get('#btn-confirm-invest').click();
+    cy.get('#btn-invest-confirm').should('have.length', 1);
+    cy.get('#btn-invest-confirm').click();
     cy.wait(4000);
   });
 });
