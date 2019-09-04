@@ -9,7 +9,7 @@ export const DashboardWrapper = styled.div`
   box-sizing: border-box;
 
   .heroCard {
-    margin: 0 10px 10px 0;
+    margin: 0 15px 15px 0;
   }
 
   .heroCard {
@@ -22,7 +22,7 @@ export const DashboardWrapper = styled.div`
 
 export const DashboardContainer = styled.div`
   width: 100%;
-  max-width: 1080px;
+  max-width: 1160px;
   padding-top: 25px;
 `;
 
@@ -86,12 +86,17 @@ export const NoResults = styled.div`
 
 export const AmountComponent = styled.div`
   position: relative;
-  display: inline-block;
-
-  &&& > div {
-    position: absolute;
-    top: 2px;
-    right: -47px;
+  display: flex;
+  align-items: flex-end;
+  height: 22px;
+  &&& > div:first-child {
+    margin-left: 5px;
+  }
+  &&& > span:last-child {
+    margin-left: 9px;
+    color: #5A5A5A;
+    font-size: 14px;
+    font-weight: bold;
   }
 `;
 

@@ -110,6 +110,7 @@ const initialState = {
   loan: {
     auctions: null,
     suggested: null,
+    lenderInvestments: null,
     active: []
   }
 };

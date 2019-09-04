@@ -1,32 +1,38 @@
 import React, { Fragment, useMemo } from 'react';
+import { fromWei } from 'web3-utils';
 import { match, ANY } from 'pampy';
 import { Card } from '@raisehq/components';
+import numeral from '../../commons/numeral';
 import { BorrowerLoanCard } from './BorrowerLoan.styles';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
-import { ClaimLoan } from '../ClaimLoan';
-import { RepayLoan } from '../RepayLoan';
+import { ClaimRoi } from '../ClaimRoi';
 import { GetInTouch } from '../GetInTouch';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
-  const { principal, interest, borrowerDebt, times, systemFees, netBalance } = calcs;
+  const { principal, interest, times } = calcs;
+
+  const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
+  const lenderRoiAmount = numeral(
+    Number(fromWei(auction.lenderAmount)) +
+      Number(fromWei(auction.lenderAmount)) * numeral(interest).value()
+  ).format();
 
   const cta = useMemo(() => {
-    const conditions = [auction.state, auction.loanWithdrawn, auction.loanRepaid];
+    const conditions = [auction.state, auction.withdrawn];
+
     return match(
       conditions,
-      [2, false, ANY],
-      () => <ClaimLoan loan={auction} />,
-      [2, true, false],
-      () => <RepayLoan loan={auction} />,
-      [3, ANY, ANY],
+      [4, false],
+      () => <ClaimRoi loan={auction} />,
+      [3, ANY],
       () => <GetInTouch />,
       ANY,
       () => null
     );
-  }, [auction.state, auction.loanWithdrawn, auction.loanRepaid]);
+  }, [auction.state, auction.withdrawn]);
 
   const state = useMemo(() => {
     if (auction.loanRepaid) {
@@ -39,21 +45,24 @@ const Loan = ({ auction }: { auction: any }) => {
 
   return (
     <BorrowerLoanCard>
-      <Card.Header title="Loan amount" amount={<Amount principal={principal} />} />
+      <Card.Header
+        title="Investment return"
+        amount={<Amount principal={lenderRoiAmount} roi={interest} />}
+      />
       <Fragment>
         <Card.Tooltip />
         <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
       </Fragment>
       <Card.Grid noGraph>
-        <Card.Row title="System Fees" content={systemFees} />
-        <Card.Row title="APR" content={interest} />
-        <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0} DAI`} />
+        <Card.Row title="Amount invested" content={lenderAmount} />
+        <Card.Row title="Investors" content={auction.investorCount} />
+        <Card.Row title="Time left" contentColor={contentColor} content={times.loanTermLeft} />
       </Card.Grid>
       <Card.Separator />
       <Card.Grid>
-        <Card.Row title="Repayment amount" content={borrowerDebt} />
-        <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="Loan Term" contentColor={contentColor} content={times.loanTermLeft} />
+        <Card.Row title="Borrower" content="Company A" />
+        <Card.Row title="Loan amount" content={principal} />
+        <Card.Row title="Loan term" content={times.loanTerm} />
       </Card.Grid>
       {cta}
     </BorrowerLoanCard>

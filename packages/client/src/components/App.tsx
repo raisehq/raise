@@ -8,7 +8,6 @@ import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import Referral from './Referral/index';
-import Marketplace from './Marketplace';
 import CreateLoan from './CreateLoan';
 import { RootContext } from '../context';
 import Join from './Join';
@@ -18,7 +17,9 @@ import { Web3Check } from '../components/Web3Check';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
 import useGoogleTagManager from '../hooks/useGoogleTagManager';
+import UseWebSockets from '../hooks/useWebSockets';
 import LogRocket from 'logrocket';
+import { getGraphWSEndpoint } from '../utils';
 
 function glide(val) {
   return spring(val, {
@@ -44,7 +45,8 @@ export const AppContext = createContext({
   actions: {},
   history: {},
   web3Status: {},
-  modalRefs: {}
+  modalRefs: {},
+  webSocket: {}
 });
 
 const App = ({ children, history }: any) => {
@@ -72,6 +74,7 @@ const App = ({ children, history }: any) => {
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
   const web3Status = useWeb3Checker();
+
   const {
     hasDeposit: deposited,
     accountMatches: accMatch,
@@ -92,6 +95,15 @@ const App = ({ children, history }: any) => {
       'Wallet Connect Success'
     );
   };
+
+  const [webSocket, setWebSocket] = useState({});
+
+  useEffect(() => {
+    if (Object.keys(webSocket).length === 0 && network !== 'Not connected') {
+      const webSocketInstance = new UseWebSockets(getGraphWSEndpoint(network), 'graphql-ws');
+      setWebSocket({ webSocket: webSocketInstance });
+    }
+  }, [webSocket, network]);
 
   useAsyncEffect(async () => {
     console.log(logged);
@@ -185,7 +197,7 @@ const App = ({ children, history }: any) => {
   };
 
   return (
-    <AppContext.Provider value={{ store, actions, history, web3Status, modalRefs }}>
+    <AppContext.Provider value={{ store, actions, history, web3Status, modalRefs, webSocket }}>
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
@@ -223,15 +235,7 @@ const App = ({ children, history }: any) => {
           exact
           path="/create-loan"
           component={CreateLoan}
-          roles={[1, 2]}
-        />
-        <Web3Route
-          marketplace
-          layout={Layout}
-          exact
-          path="/marketplace"
-          component={Marketplace}
-          roles={[1, 2]}
+          roles={[1]}
         />
 
         {/* Onboarding */}

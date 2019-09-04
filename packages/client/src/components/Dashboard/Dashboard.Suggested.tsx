@@ -1,30 +1,29 @@
 import React from 'react';
 import { Card } from '@raisehq/components';
-import useCalculations from './Dashboard.useCalc';
+import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
 
 const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
-  const calcs = useCalculations(auction);
-  const { principal, maxAmount, times, numbers } = calcs;
+  const calculations = getCalculations(auction);
 
   return (
     <Card>
-      <Card.Header title="Raised" amount={<Amount principal={principal} />} />
+      <Card.Header title="Raised" amount={<Amount principal={calculations.principal} />} />
       <Card.Graph
         color="#eb3f93"
-        currentAmount={numbers.principal}
-        totalAmount={numbers.maxAmount}
+        currentAmount={calculations.currentAmount}
+        totalAmount={calculations.totalAmount}
       />
       <Card.Grid>
-        <Card.Row title="Target Amount" content={maxAmount} />
+        <Card.Row title="Target Amount" content={calculations.maxAmount} />
         <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="Time left" content={times.auctionTimeLeft} />
+        <Card.Row title="Time left" content={calculations.times.auctionTimeLeft} />
       </Card.Grid>
       <Card.Separator />
       <Card.Grid>
         <Card.Row title="Borrower" content="Company A" />
-        <Card.Row title="Loan Term" content={times.loanTerm} />
-        <Card.Row title="Min APR" content={auction.borrowerDebt} />
+        <Card.Row title="Loan Term" content={calculations.times.loanTerm} />
+        <Card.Row title="Min APR" content={calculations.interest} />
       </Card.Grid>
       {cta}
     </Card>

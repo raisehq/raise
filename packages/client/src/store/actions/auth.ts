@@ -31,6 +31,7 @@ export default (dispatch: any, state: any) => {
             });
 
             LocalData.setObj('user', user);
+            console.log(response)
             return dispatch({ type: 'SIGNIN_SUCCESS', response });
           }
         );
