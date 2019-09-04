@@ -15,10 +15,10 @@ const Dashboard = () => {
   const {
     history,
     actions: {
-      loan: { onGetLiveAuctionsByAccountSubscription }
+      loan: { onGetLiveAuctionsByAccountSubscription, onGetLoansByAccountSubscription }
     },
     store: {
-      loan: { auctions },
+      loan: { auctions, borrowerLoans },
       user: {
         cryptoAddress: { address }
       }
@@ -35,9 +35,20 @@ const Dashboard = () => {
     },
     {
       menuItem: 'Loans',
-      render: () => <Tab auctions={auctions} states={[1, 2, 3, 4, 5, 6]} type="borrower" />
+      render: () => <Tab auctions={borrowerLoans} states={[1, 2, 3, 4, 5, 6]} type="borrower" />
     }
   ];
+
+  useEffect(() => {
+    if (webSocket) {
+      const { query, subscriptionName } = Queryies.subscriptions.loansByAccount;
+      const variables = {
+        address
+      };
+      const callback = onGetLoansByAccountSubscription;
+      webSocket.subscribe(query, variables, subscriptionName, callback);
+    }
+  }, [webSocket]);
 
   useEffect(() => {
     if (webSocket) {
