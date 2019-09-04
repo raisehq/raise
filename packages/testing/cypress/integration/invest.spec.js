@@ -1,8 +1,8 @@
-describe('BORROWER', () => {
+describe('LENDER', () => {
   it('Invest', async () => {
-    cy.web3('borrower');
+    cy.web3('lender');
     cy.viewport('macbook-13');
-    cy.login('borrower');
+    cy.login('lender');
     cy.visit(Cypress.env('url'));
 
     cy.wait(4000);

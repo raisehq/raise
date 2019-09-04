@@ -1,11 +1,11 @@
 import Web3 from 'web3';
 import PrivateKeyProvider from 'truffle-privatekey-provider';
 
-describe('LENDER', () => {
+describe('BORROWER', () => {
   it('Create Loan', async () => {
-    cy.web3('lender');
+    cy.web3('borrower');
     cy.viewport('macbook-13');
-    cy.login('lender');
+    cy.login('borrower');
     cy.visit(Cypress.env('url'));
     cy.wait(4000);
     cy.get(':nth-child(2) > a').should('have.length', 1);
