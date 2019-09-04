@@ -17,6 +17,11 @@ export default (state: any, action: any) => {
         ...state,
         suggested: action.data.map(assumeStateMachine)
       };
+    case 'SET_BORROWER_LOANS':
+      return {
+        ...state,
+        borrowerLoans: action.data.map(assumeStateMachine)
+      };
     default:
       return state;
   }
