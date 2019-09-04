@@ -7,7 +7,7 @@ import { TokenInput } from '../TokenInput';
 import numeral from '../../commons/numeral';
 import Coin from '../Coin';
 import { ResumeItemProps, RaisedAmountProps, InvestStateProps } from './types';
-import useCalc from '../Dashboard/Dashboard.useCalc';
+import { getCalculations } from '../../utils/loanUtils';
 import {
   Header,
   ModalInputContainer,
@@ -43,7 +43,7 @@ const RaisedAmount: React.SFC<RaisedAmountProps> = ({ value }) => (
 
 const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
   const { id: loanAddress, principal, investorCount, maxAmount } = loan;
-  const { times, numbers } = useCalc(loan);
+  const { times, currentAmount, totalAmount } = getCalculations(loan);
   const metamask = useMetamask();
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
   const [interest, setInterest]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(
@@ -86,9 +86,9 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       <ModalInputContainer>
         <InputContainer>
           <ModalInputBox>
-            <TokenInput id="input-value-invest" value={value} onValueChange={setValue} />
+            <TokenInput value={value} onValueChange={setValue} />
           </ModalInputBox>
-          <FundAllLabel id="input-value-invest-all" green onClick={fundAll}>
+          <FundAllLabel green onClick={fundAll}>
             Fund all
           </FundAllLabel>
         </InputContainer>
@@ -101,11 +101,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       </ModalInputContainer>
       <InvestResume>
         <RaisedAmount value={raised} />
-        <Card.Graph
-          color="#eb3f93"
-          currentAmount={numbers.principal}
-          totalAmount={numbers.maxAmount}
-        />
+        <Card.Graph color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
         <FlexSpacedLayout>
           <ResumeItem title="Target Amount" value={`${targetAmount} DAI`} />
           <ResumeItem title="Investors" value={`${investorCount}`} />
@@ -116,7 +112,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
           <ResumeItem title="Min APR" value={`${interest} %`} />
         </FlexSpacedLayout>
       </InvestResume>
-      <ConfirmButton id="btn-confirm-invest" onClick={onConfirm} disabled={value === 0}>
+      <ConfirmButton onClick={onConfirm} disabled={value === 0}>
         CONFIRM
       </ConfirmButton>
     </>

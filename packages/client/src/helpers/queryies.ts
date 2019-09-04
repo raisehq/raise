@@ -21,6 +21,7 @@ const queryies = {
             auctionEndTimestamp
             termLength
             maxInterestRate
+            operatorBalance
           }
         }`,
       variables: {},
@@ -50,6 +51,7 @@ const queryies = {
             auctionEndTimestamp
             termLength
             maxInterestRate
+            operatorBalance
           }
         }
       }`,
@@ -82,7 +84,9 @@ const queryies = {
               auctionStartTimestamp
               auctionEndTimestamp
               termLength
-              maxInterestRate
+              maxInterestRate,
+              loanWithdrawn,
+              loanRepaid
             }
           }
         }
@@ -90,9 +94,41 @@ const queryies = {
       variables: {},
       subscriptionName: 'lenderInvestmentsByAccount'
     },
+    loansByAccount: {
+      query: `subscription loansByAccount($address: String)
+      {
+        users(where: {address: $address}) {
+          loanRequests {
+            state
+            principal
+            maxAmount
+            operatorFee
+            operatorBalance
+            loanRepaid
+            termEndTimestamp
+            netBalance
+            auctionEnded
+            interestRate
+            borrowerDebt
+            investorCount
+            id
+            minimumReached
+            auctionLength
+            auctionStartTimestamp
+            auctionEndTimestamp
+            termLength
+            maxInterestRate
+            operatorBalance,
+            loanWithdrawn,
+            loanRepaid
+          }
+        }
+      }`,
+      variables: {},
+      subscriptionName: 'loansByAccount'
+    }
   },
   queryies: {}
 };
 
 export default queryies;
-

@@ -38,8 +38,20 @@ export default (dispatch: any, state: any) => {
     } else {
       dispatch({
         type: 'SET_LENDER_INVESTMENTS',
-        data: data.users[0].loanFundings.map(({ withdrawn, amount, loan }) => ({ ...loan, withdrawn, lenderAmount: amount }))
+        data: data.users[0].loanFundings.map(({ withdrawn, amount, loan }) => ({
+          ...loan,
+          withdrawn,
+          lenderAmount: amount
+        }))
       });
+    }
+  };
+
+  const onGetLoansByAccountSubscription = (error, data) => {
+    if (error) {
+      console.log('error on get loans subs :: ', error);
+    } else {
+      dispatch({ type: 'SET_BORROWER_LOANS', data: data.users[0].loanRequests });
     }
   };
 
@@ -47,6 +59,7 @@ export default (dispatch: any, state: any) => {
     onGetSuggestedAuctionsSubscription,
     onGetLiveAuctionsByAccountSubscription,
     onGetLenderInvestmentSubscription,
+    onGetLoansByAccountSubscription,
     // LEGACY::
     onGetLiveAuctionsByAccount,
     onGetSuggestedAuctions
