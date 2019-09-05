@@ -84,7 +84,7 @@ export const calculateTimes = auction => {
 export const calculateInterest = auction => {
   const nowTimestamp = Date.now() / 1000;
   const maxInterestRate = Number(fromWei(auction.maxInterestRate.toString())) / 100;
-  console.log('max interest rate:: ', maxInterestRate);
+
   let interest = 0;
   if (auction.state === LoanState.CREATED && !isAuctionExpired(auction)) {
     interest =
