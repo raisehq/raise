@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { to } from '../utils';
+import { to, getHost } from '../utils';
 
-const HOST = `http://localhost:10000/api/kyc`;
+const HOST = `${getHost('CORE')}/kyc`;
 
 export const initKyc = async id => {
   const config: any = {
