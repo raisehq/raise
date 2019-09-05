@@ -11,20 +11,10 @@ pipeline {
 
   stages {
 
-    stage('INSTALL DEPENDENCIES'){
-      steps{
-        nodejs(nodeJSInstallationName: 'node_11') {
-          sh 'echo "- INSTALLING DEPENDENCIES"'
-          sh 'npx lerna bootstrap'
-        }
-      }
-    }
-
-    
-
+  
     stage('LAUNCH TEST'){
       steps {
-        withCredentials([string(credentialsId: 'trigger test', variable: 'TOKEN')]) {
+        withCredentials([string(credentialsId: 'trigger_test', variable: 'TOKEN')]) {
           sh 'curl -X POST -F token=$TOKEN -F ref=master https://gitlab.com/api/v4/projects/14143074/trigger/pipeline'
         }
       }
