@@ -28,7 +28,6 @@ export default (dispatch: any, state: any) => {
     if (error) {
       console.log('error on get live auction subs :: ', error);
     } else {
-      console.log('auction:: ', data.users[0].loanRequests);
       dispatch({ type: 'SET_LIVE_AUCTIONS', data: data.users[0].loanRequests });
     }
   };
