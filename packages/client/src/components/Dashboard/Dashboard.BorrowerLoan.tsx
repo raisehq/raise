@@ -11,7 +11,7 @@ import { GetInTouch } from '../GetInTouch';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
-  const { principal, interest, borrowerDebt, times, systemFees, netBalance } = calcs;
+  const { principal, finalAPR, borrowerDebt, times, systemFees, netBalance } = calcs;
 
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.loanWithdrawn, auction.loanRepaid];
@@ -46,7 +46,7 @@ const Loan = ({ auction }: { auction: any }) => {
       </Fragment>
       <Card.Grid noGraph>
         <Card.Row title="System Fees" content={systemFees} />
-        <Card.Row title="APR" content={interest} />
+        <Card.Row title="APR" content={finalAPR} />
         <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0} DAI`} />
       </Card.Grid>
       <Card.Separator />

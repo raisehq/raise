@@ -5,7 +5,9 @@ import useAsyncEffect from './useAsyncEffect';
 
 const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const { web3Status: { network } }: any = useContext(AppContext);
+  const {
+    web3Status: { network }
+  }: any = useContext(AppContext);
   const metamask = useMetaMask();
   useAsyncEffect(async () => {
     if (metamask) {
@@ -13,14 +15,9 @@ const useLoanDispatcher = () => {
         const contract = await metamask.addContract('LoanDispatcher');
         const account = await metamask.getAccounts();
         setActiveContract({
-          deploy: async (
-            minAmount,
-            amount,
-            bpMaxInterestRate,
-            termMonthsLength,
-            acceptMinimum
-          ) => {
-            const auctionSecondsLength = network === 'kovan' ? '300' : (1 * 30 * 24 * 60 * 60).toString();
+          deploy: async (minAmount, amount, maxInterestRate, termMonthsLength, acceptMinimum) => {
+            const auctionSecondsLength =
+              network === 'kovan' ? '3000' : (1 * 30 * 24 * 60 * 60).toString();
             const termSecondsLength = termMonthsLength.toString();
             const params = [
               metamask.utils.toWei(
@@ -28,11 +25,11 @@ const useLoanDispatcher = () => {
                 'ether'
               ),
               metamask.utils.toWei(amount.toString(), 'ether'),
-              (bpMaxInterestRate * 1000).toString(),
+              metamask.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,
               auctionSecondsLength
             ];
-            
+
             return contract.methods.deploy(...params).send({ from: account[0] });
           }
         });
