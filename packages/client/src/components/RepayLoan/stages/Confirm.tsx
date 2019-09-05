@@ -1,19 +1,52 @@
 import React, { useContext } from 'react';
-import { Header, ConfirmButton } from '../../InvestModal/InvestModal.styles';
+import { Header, BorrowerButton } from '../../InvestModal/InvestModal.styles';
 import { RepayLoanContext, Stages } from '../RepayLoan';
+import { getCalculations } from '../../../utils/loanUtils'
+import {
+  ClaimFundsResume,
+  FlexSpacedLayout,
+  ResumeItemBoxBig,
+  ResumeItemBox
+} from '../../ClaimLoan/ClaimLoan.styles';
+import { ResumeItemProps } from '../../InvestModal/types';
+
+const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
+  <ResumeItemBox>
+    <p>{title}</p>
+    <p>{value}</p>
+  </ResumeItemBox>
+);
+
+const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
+  <ResumeItemBoxBig>
+    <p>{title}</p>
+    <p>{value}</p>
+  </ResumeItemBoxBig>
+);
 
 const Confirm = () => {
-  const { setStage }: any = useContext(RepayLoanContext)
+  const { setStage, loan, hasBalance }: any = useContext(RepayLoanContext)
   const onConfirm = async () => {
     setStage(Stages.Processing);
   };
-
+  const { principal, borrowerDebt, totalInterest, totalInterestAmount }: any = getCalculations(loan);
 
   return (
     <>
-    <Header>Claim Loan</Header>
-    <ConfirmButton onClick={onConfirm}>CONFIRM</ConfirmButton>
-    </>
+    <Header>Repay Loan</Header>
+    <ClaimFundsResume>
+      <FlexSpacedLayout>
+        <ResumeItem title="Loan Amount" value={`${principal} DAI`} />
+        <ResumeItem title={`Interests ${totalInterest}`} value={`${totalInterestAmount} DAI`} />
+        <ResumeItemBig title="Total repayment amount" value={`${borrowerDebt} DAI`} />
+        {!hasBalance ?
+          <ResumeItem title="* Not enought DAI to repay loan." value="" />
+          : null}
+      </FlexSpacedLayout>
+
+    </ClaimFundsResume>
+    <BorrowerButton disabled={!hasBalance} onClick={onConfirm}>Repay</BorrowerButton>
+  </>
   );
 };
 

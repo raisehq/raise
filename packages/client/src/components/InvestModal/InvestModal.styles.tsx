@@ -20,6 +20,10 @@ interface InputLabelProps {
   green?: boolean;
 }
 
+interface LabelPaddingProps {
+  color?: string;
+}
+
 export const ExitButton = styled(Icon) `
   &&& {
     position: absolute;
@@ -46,6 +50,14 @@ export const LenderButton = styled(Button) `
 &&&:hover {
   color: white;
   background-color: #eb3f93;
+}
+&&&:disabled, &&&.disabled {
+  cursor: default;
+  opacity: .45!important;
+  background-image: unset !important;
+  background: lightgray;
+  box-shadow: none!important;
+  pointer-events: none!important;
 }
 `;
 
@@ -258,11 +270,11 @@ export const ListItemPadding = styled(List.Item) `
   }
 `;
 
-export const LabelPadding = styled(Label) `
+export const LabelPadding = styled(Label) < LabelPaddingProps > `
   &&& {
     font-size: 14px !important;
     margin-right: 8px !important;
-    background-color: #ff047f;
+    background-color: ${({ color }) => color ? color : '#ff047f'};
     color: #ffffff;
   }
 `;
@@ -271,11 +283,11 @@ export const IconSuccess = styled(Icon) `
     margin: 0 !important;
   }
 `;
-export const LabelPaddingLoader = styled(LabelPadding) `
+export const LabelPaddingLoader = styled(LabelPadding) < LabelPaddingProps > `
   &&& {
     position: relative;
     margin-bottom: -7px;
-    background-color: #ff047f;
+    background-color: ${({ color }) => color ? color : '#ff047f'};
     color: #ffffff;
   }
 `;
