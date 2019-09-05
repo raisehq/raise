@@ -1,8 +1,6 @@
 import React, { Fragment, useMemo } from 'react';
-import { fromWei } from 'web3-utils';
 import { match, ANY } from 'pampy';
 import { Card } from '@raisehq/components';
-import numeral from '../../commons/numeral';
 import { BorrowerLoanCard } from './BorrowerLoan.styles';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import { getCalculations } from '../../utils/loanUtils';
@@ -12,13 +10,7 @@ import { GetInTouch } from '../GetInTouch';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
-  const { principal, times, roi } = calcs;
-  const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
-  console.log('amount: ', lenderAmount, ' mir: ', fromWei(auction.interestRate));
-  const lenderRoiAmount = numeral(
-    Number(fromWei(auction.lenderAmount)) +
-      Number(fromWei(auction.lenderAmount)) * numeral(roi).value()
-  ).format();
+  const { principal, times, roi, lenderAmount, lenderRoiAmount } = calcs;
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
 

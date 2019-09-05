@@ -118,6 +118,12 @@ export const calculateAPR = auction => {
   return apr;
 };
 
+export const calculateInvestmentReturn = auction => {
+  const lenderAmount = Number(fromWei(auction.lenderAmount));
+  const lenderRoiAmount = lenderAmount + lenderAmount * calculateROI(auction);
+  return lenderRoiAmount;
+};
+
 export const getCalculations = auction => {
   const maxAmount: any = calculateFromWei(auction.maxAmount);
   const operatorFee: any = calculateFromWei(auction.operatorFee);
@@ -137,11 +143,18 @@ export const getCalculations = auction => {
     '0.00%'
   );
 
+  let lenderAmount;
+  let lenderRoiAmount;
   let roi;
   let finalAPR;
   if (auction.interestRate) {
     finalAPR = numeral(calculateAPR(auction)).format('0.00%');
     roi = numeral(calculateROI(auction)).format('0.00%');
+  }
+  if (auction.lenderAmount) {
+    lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
+    const lenderRoiAmountCalc = calculateInvestmentReturn(auction);
+    lenderRoiAmount = numeral(lenderRoiAmountCalc).format();
   }
 
   const { loanTerm, auctionTimeLeft, loanTermLeft } = calculateTimes(auction);
@@ -163,7 +176,9 @@ export const getCalculations = auction => {
     currentAPR,
     finalAPR,
     calculatedInterest,
-    expectedROI
+    expectedROI,
+    lenderAmount,
+    lenderRoiAmount
   };
 
   return newCalcs;
