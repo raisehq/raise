@@ -92,9 +92,7 @@ const CreateLoan = () => {
   ).format();
   const netLoan = numeral(numberAmount - (numberAmount * 1) / 100).format();
   const systemFees = numeral((numberAmount * 1) / 100).format();
-  const totalInterest = numeral(
-    (numberAmount * (loan.mir * termMonths)) / 100
-  ).format();
+  const totalInterest = numeral((numberAmount * (loan.mir * termMonths)) / 100).format();
 
   const onSetAmount = ({ floatValue }) => {
     const minAmount = calculateMinAmount(floatValue, minPercent);
@@ -124,13 +122,7 @@ const CreateLoan = () => {
   const onSave = async () => {
     setStage(UI.Waiting);
     try {
-      await loanDispatcher.deploy(
-        loan.minAmount,
-        loan.amount,
-        loan.mir,
-        loan.term,
-        loan.accept
-      );
+      await loanDispatcher.deploy(loan.minAmount, loan.amount, loan.mir, loan.term, loan.accept);
       setStage(UI.Success);
     } catch (error) {
       console.error(error);
@@ -159,9 +151,7 @@ const CreateLoan = () => {
     const currentValue = loan.amount;
     setAmountValidation({
       error: currentValue < min || currentValue > max,
-      msg: `Can not be ${
-      currentValue < min ? `less than ${min} DAI` : `more than ${max} DAI`
-      }`
+      msg: `Can not be ${currentValue < min ? `less than ${min} DAI` : `more than ${max} DAI`}`
     });
   };
 
@@ -196,38 +186,25 @@ const CreateLoan = () => {
           <LoanFormInput>
             <LoanInputBox>
               <LoanInput
+                id="input-amount"
                 value={loan.amount}
                 onValueChange={onSetAmount}
                 onBlur={onBlur}
                 fmt={numeralFormat}
               />
-              <Coin
-                src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`}
-                name="DAI"
-              />
+              <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`} name="DAI" />
             </LoanInputBox>
             <LoanInputLabel>
-              {amountValidation.error ? (
-                <InputError>{amountValidation.msg}</InputError>
-              ) : (
-                  ''
-                )}
+              {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
             </LoanInputLabel>
           </LoanFormInput>
           <LoanDescriptionLowerAmount>
-            <Header as="h3">
-              Would you accept a lower amount than the requested?
-            </Header>
+            <Header as="h3">Would you accept a lower amount than the requested?</Header>
             <LoanFormInput>
-              <LoanCheckbox
-                toggle
-                label={loan.accept ? 'YES' : 'NO'}
-                onChange={onToggleAccept}
-              />
+              <LoanCheckbox toggle label={loan.accept ? 'YES' : 'NO'} onChange={onToggleAccept} />
             </LoanFormInput>
             <p>
-              In some cases, loan auctions don't achieve the target amount for
-              different reasons
+              In some cases, loan auctions don't achieve the target amount for different reasons
             </p>
             {loan.accept && (
               <InputBox>
@@ -252,9 +229,9 @@ const CreateLoan = () => {
           <LoanDescription>
             <Header as="h2">Loan term</Header>
             <p>
-              The loan term will start after the loan auction is finished. This
-              process could take from a few days up to 30 days. You will be able
-              to check the auction progress from your dashboard.
+              The loan term will start after the loan auction is finished. This process could take
+              from a few days up to 30 days. You will be able to check the auction progress from
+              your dashboard.
             </p>
           </LoanDescription>
           <LoanFormInput>
@@ -272,9 +249,7 @@ const CreateLoan = () => {
         <LoanBox>
           <LoanDescription>
             <Header as="h2">Monthly interest rate *</Header>
-            <p>
-              Select the maximun interest rate you would accept for your loan.
-            </p>
+            <p>Select the maximun interest rate you would accept for your loan.</p>
           </LoanDescription>
           <SliderWrapper>
             <InterestCard>
