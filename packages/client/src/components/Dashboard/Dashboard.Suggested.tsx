@@ -6,6 +6,7 @@ import Amount from './Dashboard.Amount';
 const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
   const calculations = getCalculations(auction);
   const { principal, currentAmount, totalAmount, maxAmount, times, currentAPR } = calculations;
+  console.log('current apr:: ', currentAPR);
   return (
     <Card>
       <Card.Header title="Raised" amount={<Amount principal={principal} />} />

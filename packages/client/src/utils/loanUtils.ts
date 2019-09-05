@@ -83,17 +83,18 @@ export const calculateTimes = auction => {
 
 export const calculateInterest = auction => {
   const nowTimestamp = Date.now() / 1000;
-  const maxInterestRate = Number(fromWei(auction.maxInterestRate.toString()));
+  const maxInterestRate = Number(fromWei(auction.maxInterestRate.toString())) / 100;
+  console.log('max interest rate:: ', maxInterestRate);
   let interest = 0;
   if (auction.state === LoanState.CREATED && !isAuctionExpired(auction)) {
     interest =
-      (maxInterestRate / 100) *
+      maxInterestRate *
       ((nowTimestamp - auction.auctionStartTimestamp) /
         (auction.auctionEndTimestamp - auction.auctionStartTimestamp));
   } else if (auction.state === LoanState.ACTIVE || auction.state === LoanState.REPAID) {
-    interest = maxInterestRate / 100;
+    interest = maxInterestRate;
   } else {
-    interest = maxInterestRate / 100;
+    interest = maxInterestRate;
   }
 
   return interest;
@@ -101,13 +102,12 @@ export const calculateInterest = auction => {
 
 export const calculateROI = auction => {
   const roi =
-    (Number(fromWei(auction.interestRate.toString())) * (auction.termLength / 30 / 24 / 60 / 60)) /
-    100;
+    Number(fromWei(auction.interestRate.toString())) * (auction.termLength / 30 / 24 / 60 / 60);
   return roi;
 };
 
 export const calculateExpectedRoi = (auction, interest) => {
-  const roi = (interest * (auction.termLength / 30 / 24 / 60 / 60)) / 100;
+  const roi = interest * (auction.termLength / 30 / 24 / 60 / 60);
   return roi;
 };
 
@@ -122,7 +122,7 @@ export const getCalculations = auction => {
   const operatorFee: any = calculateFromWei(auction.operatorFee);
   const principal: any = calculateFromWei(auction.principal);
   const netBalance: any = calculateFromWei(auction.netBalance);
-  const borrowerDebt: any = calculateFromWei(auction.borrowerDebt);
+  const borrowerDebt: any = Number(fromWei(auction.borrowerDebt)).toLocaleString('es-ES');
   const maxSystemFees: any = numeral((maxAmount * operatorFee) / 100).format();
   const systemFees: any = calculateFromWei(`-${auction.operatorBalance}`);
 
@@ -164,9 +164,7 @@ export const getCalculations = auction => {
     calculatedInterest,
     expectedROI
   };
-  // console.log('auction:: ', auction);
-  // console.log('calcs:: ', newCalcs);
-  // console.log('-----------------------');
+
   return newCalcs;
 };
 
