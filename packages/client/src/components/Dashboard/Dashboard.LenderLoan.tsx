@@ -12,12 +12,11 @@ import { GetInTouch } from '../GetInTouch';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
-  const { principal, interest, times } = calcs;
-
+  const { principal, times, roi } = calcs;
   const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
   const lenderRoiAmount = numeral(
     Number(fromWei(auction.lenderAmount)) +
-      Number(fromWei(auction.lenderAmount)) * numeral(interest).value()
+      Number(fromWei(auction.lenderAmount)) * numeral(roi).value()
   ).format();
 
   const cta = useMemo(() => {
@@ -41,13 +40,13 @@ const Loan = ({ auction }: { auction: any }) => {
     return auction.state;
   }, [auction.state, auction.loanRepaid]);
 
-  const contentColor = state == 3 ? 'red' : null;
+  const contentColor = state === 3 ? 'red' : null;
 
   return (
     <BorrowerLoanCard>
       <Card.Header
         title="Investment return"
-        amount={<Amount principal={lenderRoiAmount} roi={interest} />}
+        amount={<Amount principal={lenderRoiAmount} roi={roi} />}
       />
       <Fragment>
         <Card.Tooltip />
