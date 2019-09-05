@@ -5,17 +5,11 @@ import {
   getAddressTypes,
   getUserDetails,
   getUser,
-  //  addAddress,
-  //  updateUser,
   allAddressesByUser,
   removeAddress,
-  //  addCryptoAddress,
   updateCryptoAddress,
   cryptoAddressByAccount
 } from '../../services/user';
-//import LocalData from '../../helpers/localData';
-//import { countryOptions as countries } from '../../commons/countries';
-//import initialState from '../initialState';
 
 export default (dispatch: any, state: Store) => {
   const {
@@ -26,15 +20,11 @@ export default (dispatch: any, state: Store) => {
   const onGetAddressTypes = async () => {
     const response = await to(getAddressTypes());
 
-    return response.fold(
-      () => null,
-      data => dispatch({ type: 'GET_ADDRESS_TYPES', data })
-    );
+    return response.fold(() => null, data => dispatch({ type: 'GET_ADDRESS_TYPES', data }));
   };
 
   const onGetUserDetails = async () => {
-    const Method =
-      status < UserStatus.EMAIL_VERIFIED ? getUser(id) : getUserDetails(id);
+    const Method = status < UserStatus.EMAIL_VERIFIED ? getUser(id) : getUserDetails(id);
 
     try {
       const response = await Method;

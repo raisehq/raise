@@ -47,10 +47,19 @@ export default (dispatch: any, state: any) => {
     }
   };
 
+  const onGetLoansByAccountSubscription = (error, data) => {
+    if (error) {
+      console.log('error on get loans subs :: ', error);
+    } else {
+      dispatch({ type: 'SET_BORROWER_LOANS', data: data.users[0].loanRequests });
+    }
+  };
+
   return {
     onGetSuggestedAuctionsSubscription,
     onGetLiveAuctionsByAccountSubscription,
     onGetLenderInvestmentSubscription,
+    onGetLoansByAccountSubscription,
     // LEGACY::
     onGetLiveAuctionsByAccount,
     onGetSuggestedAuctions

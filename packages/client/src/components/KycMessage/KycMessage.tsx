@@ -1,14 +1,19 @@
 import React, { useContext } from 'react';
 import { Icon, Message } from 'semantic-ui-react';
-import { OrangeMessage } from './KycMessage.styles';
+import { OrangeMessage, KycMessageButton } from './KycMessage.styles';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../App';
+
 const KycMessage = () => {
   const {
+    history,
     store: {
       blockchain: { hasKYC }
     }
   }: any = useContext(AppContext);
+
+  const onKYC = () => history.push('/kyc');
+
   return (
     <OrangeMessage hidden={hasKYC} icon>
       <Icon name="info circle" />
@@ -17,7 +22,7 @@ const KycMessage = () => {
           Before you can lend money you first need to verify you account
         </Message.Header>
       </Message.Content>
-      <Icon name="caret right" />
+      <KycMessageButton onClick={onKYC}>Verify your account</KycMessageButton>
     </OrangeMessage>
   );
 };
