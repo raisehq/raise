@@ -18,6 +18,7 @@ const Auction = ({ auction }: { auction: any }) => {
     maxAPR,
     currentAPR
   } = calcs;
+
   const { state } = auction;
   return (
     <Card>

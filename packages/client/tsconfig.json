@@ -6,7 +6,7 @@
     "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "sourceMap": true,
     "allowJs": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "moduleResolution": "node",
     "rootDirs": ["src"],
     "forceConsistentCasingInFileNames": true,
@@ -28,5 +28,6 @@
     "noEmit": true,
     "downlevelIteration": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

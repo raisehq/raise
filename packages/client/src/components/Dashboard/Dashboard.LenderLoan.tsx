@@ -14,11 +14,11 @@ const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
   const { principal, times, roi } = calcs;
   const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
+  console.log('amount: ', lenderAmount, ' mir: ', fromWei(auction.interestRate));
   const lenderRoiAmount = numeral(
     Number(fromWei(auction.lenderAmount)) +
       Number(fromWei(auction.lenderAmount)) * numeral(roi).value()
   ).format();
-
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
 

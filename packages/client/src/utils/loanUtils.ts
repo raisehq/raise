@@ -102,12 +102,13 @@ export const calculateInterest = auction => {
 
 export const calculateROI = auction => {
   const roi =
-    Number(fromWei(auction.interestRate.toString())) * (auction.termLength / 30 / 24 / 60 / 60);
+    (Number(fromWei(auction.interestRate.toString())) * (auction.termLength / 30 / 24 / 60 / 60)) /
+    100;
   return roi;
 };
 
 export const calculateExpectedRoi = (auction, interest) => {
-  const roi = interest * (auction.termLength / 30 / 24 / 60 / 60);
+  const roi = (interest * (auction.termLength / 30 / 24 / 60 / 60)) / 100;
   return roi;
 };
 
