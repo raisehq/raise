@@ -79,7 +79,7 @@ describe('Test suit for loan utils', () => {
     };
     it('Expects the expected ROI to be calculated correctly', () => {
       const actualROI = calculateExpectedRoi(auction, 10);
-      const expectedROI = 0.1;
+      const expectedROI = 10;
       expect(actualROI).toEqual(expectedROI);
     });
   });
