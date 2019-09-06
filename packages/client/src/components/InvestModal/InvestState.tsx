@@ -1,8 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { fromWei } from 'web3-utils';
 import { Card } from '@raisehq/components';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
-import useMetamask from '../../hooks/useMetaMask';
 import { TokenInput } from '../TokenInput';
 import numeral from '../../commons/numeral';
 import Coin from '../Coin';
@@ -42,27 +40,12 @@ const RaisedAmount: React.SFC<RaisedAmountProps> = ({ value }) => (
 );
 
 const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
-  const { id: loanAddress, principal, investorCount, maxAmount } = loan;
-  const { times, currentAmount, totalAmount } = getCalculations(loan);
-  const metamask = useMetamask();
+  const { principal, investorCount, maxAmount } = loan;
+  const { times, currentAmount, totalAmount, currentAPR, expectedROI } = getCalculations(loan);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
-  const [interest, setInterest]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(
-    0
-  );
 
-  useAsyncEffect(async () => {
-    if (metamask && loanAddress) {
-      try {
-        const loanContract = await metamask.addContractByAddress('LoanContract', loanAddress);
-        const loanInterest = await loanContract.methods.getInterestRate().call();
-        setInterest(Number(loanInterest) / 1000);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }, [metamask, loanAddress]);
+  const roi = useMemo(() => value + value * expectedROI, [value]);
 
-  const roi = useMemo(() => value + (value * interest) / 100, [value, interest]);
   const { raised, targetAmount } = useMemo(
     () => ({
       raised: principal ? fromWei(principal) : 0,
@@ -109,7 +92,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
           <Card.Separator />
           <ResumeItem title="Borrower" value="Company A" />
           <ResumeItem title="Loan Term" value={`${times.loanTerm}`} />
-          <ResumeItem title="Min APR" value={`${interest} %`} />
+          <ResumeItem title="Min APR" value={`${currentAPR}`} />
         </FlexSpacedLayout>
       </InvestResume>
       <ConfirmButton onClick={onConfirm} disabled={value === 0}>

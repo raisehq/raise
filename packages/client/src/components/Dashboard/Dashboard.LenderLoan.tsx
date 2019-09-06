@@ -1,8 +1,6 @@
 import React, { Fragment, useMemo } from 'react';
-import { fromWei } from 'web3-utils';
 import { match, ANY } from 'pampy';
 import { Card } from '@raisehq/components';
-import numeral from '../../commons/numeral';
 import { BorrowerLoanCard } from './BorrowerLoan.styles';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import { getCalculations } from '../../utils/loanUtils';
@@ -12,14 +10,7 @@ import { GetInTouch } from '../GetInTouch';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
-  const { principal, interest, times } = calcs;
-
-  const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
-  const lenderRoiAmount = numeral(
-    Number(fromWei(auction.lenderAmount)) +
-      Number(fromWei(auction.lenderAmount)) * numeral(interest).value()
-  ).format();
-
+  const { principal, times, roi, lenderAmount, lenderRoiAmount } = calcs;
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
 
@@ -41,13 +32,13 @@ const Loan = ({ auction }: { auction: any }) => {
     return auction.state;
   }, [auction.state, auction.loanRepaid]);
 
-  const contentColor = state == 3 ? 'red' : null;
+  const contentColor = state === 3 ? 'red' : null;
 
   return (
     <BorrowerLoanCard>
       <Card.Header
         title="Investment return"
-        amount={<Amount principal={lenderRoiAmount} roi={interest} />}
+        amount={<Amount principal={lenderRoiAmount} roi={roi} />}
       />
       <Fragment>
         <Card.Tooltip />

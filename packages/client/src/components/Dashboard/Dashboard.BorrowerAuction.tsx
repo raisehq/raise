@@ -11,13 +11,14 @@ const Auction = ({ auction }: { auction: any }) => {
     netBalance,
     maxAmount,
     times,
-    interest,
     systemFees,
     borrowerDebt,
     currentAmount,
     totalAmount,
-    maxAPR
+    maxAPR,
+    currentAPR
   } = calcs;
+
   const { state } = auction;
   return (
     <Card>
@@ -29,7 +30,7 @@ const Auction = ({ auction }: { auction: any }) => {
       <Card.Graph color="#00DA9E" currentAmount={currentAmount} totalAmount={totalAmount} />
       <Card.Grid>
         <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="Current APR" content={interest} />
+        <Card.Row title="Current APR" content={currentAPR} />
         <Card.Row title="Days Left" content={times.auctionTimeLeft} />
       </Card.Grid>
       <Card.Separator />
