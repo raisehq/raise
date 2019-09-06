@@ -20,9 +20,9 @@ import {
 import useGraphWidth from '../../hooks/useGraphWidth';
 
 interface RowComponentProps {
-  title: string,
-  content: string | number | null,
-  contentColor?: string | null
+  title: string;
+  content: string | number | null;
+  contentColor?: string | null;
 }
 const Context = React.createContext({});
 
@@ -35,8 +35,8 @@ const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentCol
   </Row>
 );
 
-const HeaderComponent = ({ title, amount }) => (
-  <Header>
+const HeaderComponent = ({ title, amount, ...rest }) => (
+  <Header {...rest}>
     <HeaderTitle>{title}</HeaderTitle>
     <HeaderContent>{amount}</HeaderContent>
   </Header>

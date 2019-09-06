@@ -31,7 +31,6 @@ const Loan = ({ auction }: { auction: any }) => {
     }
     return auction.state;
   }, [auction.state, auction.loanRepaid]);
-
   const contentColor = state === 3 ? 'red' : null;
 
   return (
@@ -40,10 +39,12 @@ const Loan = ({ auction }: { auction: any }) => {
         title="Investment return"
         amount={<Amount principal={lenderRoiAmount} roi={roi} />}
       />
-      <Fragment>
-        <Card.Tooltip />
-        <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
-      </Fragment>
+      {state > 0 && (
+        <Fragment>
+          <Card.Tooltip />
+          <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
+        </Fragment>
+      )}
       <Card.Grid noGraph>
         <Card.Row title="Amount invested" content={lenderAmount} />
         <Card.Row title="Investors" content={auction.investorCount} />
