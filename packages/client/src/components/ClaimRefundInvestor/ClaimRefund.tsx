@@ -45,7 +45,7 @@ const ClaimRefundCTA: React.SFC<InvestModalProps> = ({ loan }) => {
 
   return (
     <ClaimRefundContext.Provider value={{ loan, setStage, closeModal, calculatedLoan }}>
-      <RefundButton onClick={openModal}>Claim refund Invested</RefundButton>
+      <RefundButton onClick={openModal}>Claim refund</RefundButton>
       <Modal open={open} size="small" onClose={closeModal}>
         <SemanticModal.Content>
           {getStage(stage)}
