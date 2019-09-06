@@ -10,7 +10,7 @@ import SuccessStage from './stages/Success';
 
 import { Modal } from '../ClaimLoan/ClaimLoan.styles';
 
-import { BorrowerButton, ExitButton } from '../InvestModal/InvestModal.styles';
+import { LenderButton, ExitButton } from '../InvestModal/InvestModal.styles';
 
 export const ClaimRepayContext = createContext({});
 
@@ -42,7 +42,7 @@ const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
 
   return (
     <ClaimRepayContext.Provider value={{ loan, setStage, closeModal, ...rest }}>
-      <BorrowerButton onClick={openModal}>Claim your funds</BorrowerButton>
+      <LenderButton onClick={openModal}>Claim your funds</LenderButton>
       <Modal open={open} size="small" onClose={closeModal}>
         <SemanticModal.Content>
           {getStage(stage)}
