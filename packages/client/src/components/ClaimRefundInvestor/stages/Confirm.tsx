@@ -56,7 +56,7 @@ const Confirm = () => {
       <Header>Claim Refund</Header>
       <ClaimFundsResume>
         <FlexSpacedLayout>
-          <ResumeItemBig title="Invested amount" value={`${calculatedLoan.principal} DAI`} />
+          <ResumeItemBig title="Invested amount" value={`${calculatedLoan.lenderAmount} DAI`} />
         </FlexSpacedLayout>
       </ClaimFundsResume>
       <ClaimButton loading={loading} onClick={onConfirm}>
