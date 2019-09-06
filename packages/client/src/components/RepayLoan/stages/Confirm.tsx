@@ -39,9 +39,7 @@ const Confirm = () => {
         <ResumeItem title="Loan Amount" value={`${principal} DAI`} />
         <ResumeItem title={`Interests ${totalInterest}`} value={`${totalInterestAmount} DAI`} />
         <ResumeItemBig title="Total repayment amount" value={`${borrowerDebt} DAI`} />
-        {!hasBalance ?
-          <ResumeItem title="* Not enought DAI to repay loan." value="" />
-          : null}
+        {!hasBalance && <ResumeItem title="* Not enought DAI to repay loan." value="" />}
       </FlexSpacedLayout>
 
     </ClaimFundsResume>
