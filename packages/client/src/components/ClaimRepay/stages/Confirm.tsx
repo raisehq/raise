@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Loader } from 'semantic-ui-react';
-import { Header, BorrowerButton } from '../../InvestModal/InvestModal.styles';
+import { Header, LenderButton } from '../../InvestModal/InvestModal.styles';
 import { ClaimRepayContext } from '../ClaimRepay';
 import { getCalculations } from '../../../utils/loanUtils';
 import numeral from '../../../commons/numeral';
@@ -43,13 +43,13 @@ const Confirm = () => {
         <FlexSpacedLayout>
           <ResumeItem title="Amount invested" value={`${lenderAmount} DAI`} />
           <ResumeItem title="ROI" value={`${roi}`} />
-          <ResumeItemBig title="Total repayment amount" value={`${lenderRoiAmount} DAI`} />
+          <ResumeItemBig title="Investment return" value={`${lenderRoiAmount} DAI`} />
         </FlexSpacedLayout>
       </ClaimFundsResume>
       <Loader active inverted />
-      <BorrowerButton loading={pending} onClick={claimRepayment}>
-        Repay
-      </BorrowerButton>
+      <LenderButton loading={pending} onClick={claimRepayment}>
+        Claim
+      </LenderButton>
     </>
   );
 };
