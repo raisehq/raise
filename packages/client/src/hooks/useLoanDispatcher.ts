@@ -17,7 +17,7 @@ const useLoanDispatcher = () => {
         setActiveContract({
           deploy: async (minAmount, amount, maxInterestRate, termMonthsLength, acceptMinimum) => {
             const auctionSecondsLength =
-              network === 'kovan' ? '3000' : (1 * 30 * 24 * 60 * 60).toString();
+              network === 'kovan' ? '300' : (1 * 30 * 24 * 60 * 60).toString();
             const termSecondsLength = termMonthsLength.toString();
             const params = [
               metamask.utils.toWei(
