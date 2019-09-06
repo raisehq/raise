@@ -111,13 +111,17 @@ export const calculateExpectedRoi = (auction, interest) => {
   return roi;
 };
 
-export const calculateTotalInterest = (auction) => {
-  const interest = Number(fromWei(auction.interestRate.toString())) * (auction.termLength / 30 / 24 / 60 / 60 / 100);
+export const calculateTotalInterest = auction => {
+  const interest =
+    Number(fromWei(auction.interestRate.toString())) *
+    (auction.termLength / 30 / 24 / 60 / 60 / 100);
   return interest;
 };
 
-export const calculateTotalInterestAmount = (auction) => {
-  const interest = Number(fromWei(auction.interestRate.toString())) * (auction.termLength / 30 / 24 / 60 / 60 / 100);
+export const calculateTotalInterestAmount = auction => {
+  const interest =
+    Number(fromWei(auction.interestRate.toString())) *
+    (auction.termLength / 30 / 24 / 60 / 60 / 100);
   const principal = Number(fromWei(auction.principal));
   return principal * interest;
 };
@@ -189,8 +193,8 @@ export const getActiveAuctions = (auctions, states) => {
   const updatedAuctions = auctions ? auctions.map(auction => assumeStateMachine(auction)) : [];
   const activeAuctions = updatedAuctions
     ? updatedAuctions.filter(
-      auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
-    )
+        auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
+      )
     : [];
   return activeAuctions;
 };
