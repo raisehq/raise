@@ -25,7 +25,7 @@ const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
 );
 
 const Confirm = () => {
-  const { setStage, loan, hasBalance }: any = useContext(RepayLoanContext);
+  const { setStage, loan }: any = useContext(RepayLoanContext);
   const onConfirm = async () => {
     setStage(Stages.Processing);
   };
