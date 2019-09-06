@@ -1,5 +1,3 @@
 import ClaimRepay from './ClaimRepay';
 
-export {
-  ClaimRepay
-};
+export { ClaimRepay };

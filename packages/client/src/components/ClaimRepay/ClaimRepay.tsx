@@ -24,37 +24,34 @@ const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
   const [open, setOpen] = useState(false);
   const { stage, setStage, ...rest }: any = useClaimRepay(loan, open);
 
-
   const openModal = () => {
-    setStage(Stages.Confirm)
+    setStage(Stages.Confirm);
     setOpen(true);
-  }
+  };
   const closeModal = () => {
     setOpen(false);
-  }
+  };
 
-  const getStage = (stage) => {
+  const getStage = stage => {
     return stage.cata({
       Confirm: () => <ConfirmStage />,
       Success: () => <SuccessStage />,
       Error: () => <ErrorStage />
     });
-  }
+  };
 
   return (
     <ClaimRepayContext.Provider value={{ loan, setStage, closeModal, ...rest }}>
       <BorrowerButton onClick={openModal}>Claim your funds</BorrowerButton>
       <Modal open={open} size="small" onClose={closeModal}>
-
         <SemanticModal.Content>
           {getStage(stage)}
 
           <ExitButton name="close" color="black" onClick={closeModal} />
-
         </SemanticModal.Content>
       </Modal>
     </ClaimRepayContext.Provider>
   );
-}
+};
 
 export default ClaimRepayCTA;
