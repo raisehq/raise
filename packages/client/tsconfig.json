@@ -3,12 +3,20 @@
     "outDir": "build/lib",
     "target": "es5",
     "skipLibCheck": true,
-    "lib": ["es5", "es6", "es7", "es2017", "dom"],
+    "lib": [
+      "es5",
+      "es6",
+      "es7",
+      "es2017",
+      "dom"
+    ],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "preserve",
     "moduleResolution": "node",
-    "rootDirs": ["src"],
+    "rootDirs": [
+      "src"
+    ],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -28,5 +36,11 @@
     "noEmit": true,
     "downlevelIteration": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }
