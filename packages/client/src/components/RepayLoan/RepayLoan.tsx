@@ -3,15 +3,15 @@ import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
 
+import useRepayment from './useRepayment';
 import ConfirmStage from './stages/Confirm';
 import ProcessingStage from './stages/Processing';
+import ErrorStage from './stages/Retry';
 import SuccessStage from './stages/Success';
 
-import {
-  BorrowerButton,
-  Modal,
-  ExitButton,
-} from '../InvestModal/InvestModal.styles';
+import { Modal } from '../ClaimLoan/ClaimLoan.styles';
+
+import { BorrowerButton, ExitButton } from '../InvestModal/InvestModal.styles';
 
 export const RepayLoanContext = createContext({});
 
@@ -19,11 +19,13 @@ export const Stages = daggy.taggedSum('UI', {
   Confirm: [],
   Processing: [],
   Success: [],
+  Error: []
 });
 
 const RepayLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
   const [open, setOpen] = useState(false);
-  const [stage, setStage] = useState(Stages.Confirm);
+  const { approved, stage, setStage, ...rest }: any = useRepayment(loan, open);
+
 
   const openModal = () => {
     setStage(Stages.Confirm)
@@ -37,21 +39,20 @@ const RepayLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
     return stage.cata({
       Confirm: () => <ConfirmStage />,
       Processing: () => <ProcessingStage />,
-      Success: () => <SuccessStage />
+      Success: () => <SuccessStage />,
+      Error: () => <ErrorStage />
     });
   }
 
-
-
   return (
-    <RepayLoanContext.Provider value={{ loan, setStage, closeModal }}>
+    <RepayLoanContext.Provider value={{ loan, setStage, closeModal, approved, ...rest }}>
       <BorrowerButton onClick={openModal}>Repay this loan</BorrowerButton>
       <Modal open={open} size="small" onClose={closeModal}>
 
         <SemanticModal.Content>
           {getStage(stage)}
 
-          <ExitButton size="normal" name="close" color="black" onClick={closeModal} />
+          <ExitButton name="close" color="black" onClick={closeModal} />
 
         </SemanticModal.Content>
       </Modal>

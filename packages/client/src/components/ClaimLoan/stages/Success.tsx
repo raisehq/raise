@@ -6,11 +6,11 @@ const Processing = () => {
   const { closeModal }: any = useContext(ClaimLoanContext);
   return (
     <>
-      <CardCenteredText>
-        <CardTitle>The funds have been transferred to your account</CardTitle>
-        <CardSubtitle>Check your active loans details in your dashboard</CardSubtitle>
-      </CardCenteredText>
-      <ButtonGreen onClick={closeModal}>OK</ButtonGreen>
+    <CardCenteredText>
+      <CardTitle>The funds have been transferred to your account</CardTitle>
+      <CardSubtitle>Check your active loans details in your dashboard</CardSubtitle>
+    </CardCenteredText>
+    <ButtonGreen onClick={closeModal}>OK</ButtonGreen>
     </>
   );
 };

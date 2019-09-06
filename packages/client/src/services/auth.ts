@@ -58,8 +58,6 @@ export const signIn = async (data: Types.onSignin) => {
   try {
     const rawResponse = await axios(config);
 
-    console.log(rawResponse);
-
     switch (rawResponse.status) {
       case 200:
         return rawResponse.data.data;

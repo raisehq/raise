@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Button, Modal as SemanticModal, Icon } from 'semantic-ui-react';
 import { device } from '../LayoutV2/breakpoints';
 
-export const ExitButton = styled(Icon)`
+export const ExitButton = styled(Icon) `
   &&& {
     position: absolute;
     top: 20px;
@@ -11,7 +11,7 @@ export const ExitButton = styled(Icon)`
   }
 `;
 
-export const LenderButton = styled(Button)`
+export const LenderButton = styled(Button) `
   &&& {
     cursor: pointer;
     color: white;
@@ -25,7 +25,7 @@ export const LenderButton = styled(Button)`
   }
 `;
 
-export const Modal = styled(SemanticModal)`
+export const Modal = styled(SemanticModal) `
   &&&& {
     width: 350px;
     height: fit-content;
@@ -102,11 +102,11 @@ export const ResumeItemBoxBig = styled.div`
     font-weight: bold;
     line-height: 24px;
     color: #3c4251;
-    margin-top: -8px;
+    margin-top: 0px;
   }
 `;
 
-export const ClaimButton = styled(LenderButton)`
+export const ClaimButton = styled(LenderButton) `
   &&& {
     margin: 20px 0px 0px 0px;
     height: 48px;
@@ -114,12 +114,12 @@ export const ClaimButton = styled(LenderButton)`
     font-size: 16px;
     color: #ffffff;
     background: ${({ loading }) =>
-      loading ? '#eff4f7' : 'linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%)'};
+    loading ? '#eff4f7' : 'linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%)'};
   }
 `;
 
 // processing state
-export const RetryButton = styled(LenderButton)`
+export const RetryButton = styled(LenderButton) `
   &&& {
     margin: 193px 0px 0px 0px;
     height: 48px;
@@ -159,7 +159,7 @@ export const CardSubtitle = styled.div`
   }
 `;
 
-export const ButtonGreen = styled(Button)`
+export const ButtonGreen = styled(Button) `
   &&& {
     margin-left: 0px;
     height: 58px;
