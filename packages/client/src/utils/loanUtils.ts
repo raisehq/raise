@@ -108,7 +108,7 @@ export const calculateROI = auction => {
 };
 
 export const calculateExpectedRoi = (auction, interest) => {
-  const roi = (interest * (auction.termLength / 30 / 24 / 60 / 60)) / 100;
+  const roi = interest * (auction.termLength / 30 / 24 / 60 / 60);
   return roi;
 };
 
