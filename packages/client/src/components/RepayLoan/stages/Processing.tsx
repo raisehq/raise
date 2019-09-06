@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { match, ANY } from 'pampy';
 import { RepayLoanContext } from '../RepayLoan';
-import { getCalculations } from '../../../utils/loanUtils'
+import { getCalculations } from '../../../utils/loanUtils';
 import { Header } from '../../InvestModal/InvestModal.styles';
 import { List, Grid } from 'semantic-ui-react';
 import {
@@ -12,44 +12,46 @@ import {
   ListItemPadding,
   Explanation,
   Action,
-  IconSuccess as IconError,
+  IconSuccess as IconError
 } from '../../InvestModal/InvestModal.styles';
 
 const PassDOM = (
   <LabelPaddingLoader circular color="#00DA9E">
     <IconSuccess name="check" />
   </LabelPaddingLoader>
-)
+);
 const ErrorDOM = (
   <LabelPaddingLoader circular color="red">
     <IconError name="close" />
   </LabelPaddingLoader>
-)
+);
 const PendingDOM = (
   <LabelPaddingLoader circular color="#00DA9E">
     <MicroLoader active inverted />
   </LabelPaddingLoader>
-)
-const AnyDOM = (number) => (
+);
+const AnyDOM = number => (
   <LabelPadding circular color="#00DA9E">
     {number}
   </LabelPadding>
-)
-
-const stepNumber = (step, pass, errors) => match([step, pass, !!errors],
-  [1, true, ANY],
-  () => PassDOM,
-  [1, false, true],
-  () => ErrorDOM,
-  [2, true, true],
-  () => ErrorDOM,
-  [1, false, false],
-  () => PendingDOM,
-  [2, true, false],
-  () => PendingDOM,
-  ANY,
-  () => AnyDOM(step)
 );
+
+const stepNumber = (step, pass, errors) =>
+  match(
+    [step, pass, !!errors],
+    [1, true, ANY],
+    () => PassDOM,
+    [1, false, true],
+    () => ErrorDOM,
+    [2, true, true],
+    () => ErrorDOM,
+    [1, false, false],
+    () => PendingDOM,
+    [2, true, false],
+    () => PendingDOM,
+    ANY,
+    () => AnyDOM(step)
+  );
 
 const Processing = () => {
   const { approved, error, loan }: any = useContext(RepayLoanContext);
@@ -58,40 +60,32 @@ const Processing = () => {
   const RepayIcon = useMemo(() => stepNumber(2, approved, error), [approved, error]);
   return (
     <>
-    <Header>Repay Loan</Header>
+      <Header>Repay Loan</Header>
 
-    <List>
-      <ListItemPadding>
-        <Grid columns={2}>
-          <Grid.Column width={2}>
-            {ApprovalIcon}
-          </Grid.Column>
-          <Grid.Column width={14}>
-            <Action>
-              Allow Raise to interact with your wallet
-              </Action>
-            <Explanation>
-              Once you give us allowance, you will be able to repay yout loans
+      <List>
+        <ListItemPadding>
+          <Grid columns={2}>
+            <Grid.Column width={2}>{ApprovalIcon}</Grid.Column>
+            <Grid.Column width={14}>
+              <Action>Allow Raise to interact with your wallet</Action>
+              <Explanation>
+                Once you give us allowance, you will be able to repay yout loans
               </Explanation>
-          </Grid.Column>
-        </Grid>
-      </ListItemPadding>
-      <ListItemPadding>
-        <Grid columns={2}>
-          <Grid.Column width={2}>
-            {RepayIcon}
-          </Grid.Column>
-          <Grid.Column width={14}>
-            <Action>
-              Confirm the transaction
-              </Action>
-            <Explanation>
-              {`${borrowerDebt} DAI will be transferred from your wallet to the loan`}
-            </Explanation>
-          </Grid.Column>
-        </Grid>
-      </ListItemPadding>
-    </List>
+            </Grid.Column>
+          </Grid>
+        </ListItemPadding>
+        <ListItemPadding>
+          <Grid columns={2}>
+            <Grid.Column width={2}>{RepayIcon}</Grid.Column>
+            <Grid.Column width={14}>
+              <Action>Confirm the transaction</Action>
+              <Explanation>
+                {`${borrowerDebt} DAI will be transferred from your wallet to the loan`}
+              </Explanation>
+            </Grid.Column>
+          </Grid>
+        </ListItemPadding>
+      </List>
     </>
   );
 };
