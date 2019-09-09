@@ -5,12 +5,19 @@ import Logout from '../Logout';
 import theme from '../../theme';
 import { maxDevice, device } from '../LayoutV2/breakpoints';
 
+export const Logo = styled(Image)<ImageProps>`
+&&&&& {
+  display: block;
+  max-width: 90px;
+}`;
+
 export const Web3Address = styled(Web3RawAddress)`
 &&&&& {
   background: none;
+  width: 240px;
   border-radius: 60px;
   color: #3C4251;
-  border: 1px solid #3C4251;
+  border: 1px solid #CFD0D4;
 }
 `
 export const MenuLogout = styled(Logout)`
@@ -18,26 +25,23 @@ export const MenuLogout = styled(Logout)`
   border: 1px solid #3C4251;
   background: transparent;
   height: 48px;
-  width: 100%;
+  width: 240px;
   color: #3C4251;
-  max-width: 216px;
   border-radius: 4px;
   margin: 0 auto;
 }
 `
 export const Credits = styled.div`
-  padding: 20px;
+  color: #3C4251;
+  padding: 30px 20px 30px 20px;
+  font-size: 12px;
 `
-export const Logo = styled(Image)<ImageProps>`
-&&&&& {
-  display: block;
-  max-width: 90px;
-}`;
+
 
 export const RaiseMenu = styled(SemanticMenu)`
 &&&.inverted {
   visibility: hidden;
-  background: ${theme.colors.menu};
+  background: ${theme.colors.background};
   color: white;
   position: absolute;
   top: 0px;
@@ -147,7 +151,7 @@ export const MenuList = styled('div')`
       justify-content: flex-start;
       font-weight: bold;
       align-items: center;
-      color: #fff;
+      color: #CFD0D4;
       padding: 15px 20px;
 
       .icon:last-child {
@@ -179,7 +183,7 @@ export const MenuSubList = styled('div')`
 width: 100%;
   margin: 0;
   padding: 0;
-  margin-top: 40px;
+  margin-bottom: 40px;
   li {
     margin: 0;
     padding: 0;
@@ -193,7 +197,7 @@ width: 100%;
       justify-content: flex-start;
       font-weight: bold;
       align-items: center;
-      color: #fff;
+      color: #3C4251;
       padding: 15px 20px;
 
       .icon:last-child {

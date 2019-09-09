@@ -126,14 +126,14 @@ const Menu = () => {
       <MenuList>
         {getMenu(Menus[accounttype_id])}
       </MenuList>
+      <div style={{ flex: 2 }} />
       <MenuSubList>
         {getMenu(commonRoutes)}
       </MenuSubList>
-      <div style={{ flex: 2 }} />
       <MenuLogout />
       <Credits>
         <p>Version: Release {process.env.REACT_APP_VERSION} (Beta)</p>
-        <p>Hero Fintech Technologies S.L. Copyright ©2019 </p>
+        <p>Hero Fintech Technologies S.L. Copyright ©2019</p>
         <p>All Rights Reserved</p>
       </Credits>
     </RaiseMenu>

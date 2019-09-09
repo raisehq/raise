@@ -2,7 +2,7 @@ export default {
   colors: {
     background: '#F5F6FC',
     main: '#6851D8',
-    menu: '#3C4251;',
+    menu: '#F5F6FC',
     seconday: '#40E0C4',
     error: '#ED1C24',
     complementary: '#00DA9E'
