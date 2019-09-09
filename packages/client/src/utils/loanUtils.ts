@@ -149,7 +149,7 @@ export const getCalculations = auction => {
   const systemFees: any = calculateFromWei(`-${auction.operatorBalance}`);
 
   const calculatedInterest = calculateInterest(auction);
-  const expectedROI = calculateExpectedRoi(auction, calculatedInterest);
+  const expectedROI = calculatedInterest * (Number(auction.termLength) / 2628000);
   const interest = numeral(calculatedInterest).format('0.00%');
   const currentAPR = numeral(calculatedInterest * 12).format('0.00%');
   const currentAmount = numeral(principal).value();
