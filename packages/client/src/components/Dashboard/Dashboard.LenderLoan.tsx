@@ -7,10 +7,11 @@ import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
 import { ClaimRepay } from '../ClaimRepay';
 import { GetInTouch } from '../GetInTouch';
+import { ClaimRefund } from '../ClaimRefundInvestor';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
-  const { principal, times, roi, lenderAmount, lenderRoiAmount } = calcs;
+  const { maxAmount, times, roi, lenderAmount, lenderRoiAmount } = calcs;
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
 
@@ -20,6 +21,8 @@ const Loan = ({ auction }: { auction: any }) => {
       () => <ClaimRepay loan={auction} />,
       [3, ANY],
       () => <GetInTouch />,
+      [1, false],
+      () => <ClaimRefund loan={auction} />,
       ANY,
       () => null
     );
@@ -52,7 +55,7 @@ const Loan = ({ auction }: { auction: any }) => {
       <Card.Separator />
       <Card.Grid>
         <Card.Row title="Borrower" content="Company A" />
-        <Card.Row title="Loan amount" content={principal} />
+        <Card.Row title="Loan amount" content={maxAmount} />
         <Card.Row title="Loan term" content={times.loanTerm} />
       </Card.Grid>
       {cta}

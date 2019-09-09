@@ -6,7 +6,6 @@ import numeral from '../../commons/numeral';
 import { getCalculations } from '../../utils/loanUtils';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import Amount from './Dashboard.Amount';
-import { ClaimRefund } from '../ClaimRefund';
 import { InvestModal } from '../InvestModal';
 
 const Auction = ({ auction }: { auction: any }) => {
@@ -17,15 +16,7 @@ const Auction = ({ auction }: { auction: any }) => {
 
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
-    return match(
-      conditions,
-      [1, false],
-      () => <ClaimRefund loan={auction} />,
-      [0, false],
-      () => <InvestModal loan={auction} />,
-      ANY,
-      () => null
-    );
+    return match(conditions, [0, false], () => <InvestModal loan={auction} />, ANY, () => null);
   }, [auction.state, auction.withdrawn]);
 
   const { state } = auction;
