@@ -6,8 +6,8 @@ import numeral from '../../commons/numeral';
 import { getCalculations } from '../../utils/loanUtils';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import Amount from './Dashboard.Amount';
-import { ClaimRefund } from '../ClaimRefund';
 import { InvestModal } from '../InvestModal';
+import { ClaimRefund } from '../ClaimRefundInvestor';
 import { ExpectedROI } from './Dashboard.styles';
 
 const Auction = ({ auction }: { auction: any }) => {

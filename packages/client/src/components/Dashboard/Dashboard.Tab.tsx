@@ -23,7 +23,7 @@ const renderedLoans = (auctions, type) =>
       ['lender', 0],
       () => LenderAuction,
       ['lender', 1],
-      () => LenderAuction,
+      () => LenderLoan,
       ['lender', ANY],
       () => LenderLoan
     );

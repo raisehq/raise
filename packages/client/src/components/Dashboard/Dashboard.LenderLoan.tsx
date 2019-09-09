@@ -7,6 +7,7 @@ import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
 import { ClaimRepay } from '../ClaimRepay';
 import { GetInTouch } from '../GetInTouch';
+import { ClaimRefund } from '../ClaimRefundInvestor';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
@@ -20,6 +21,8 @@ const Loan = ({ auction }: { auction: any }) => {
       () => <ClaimRepay loan={auction} />,
       [3, ANY],
       () => <GetInTouch />,
+      [1, false],
+      () => <ClaimRefund loan={auction} />,
       ANY,
       () => null
     );
