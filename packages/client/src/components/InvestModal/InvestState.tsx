@@ -69,9 +69,9 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       <ModalInputContainer>
         <InputContainer>
           <ModalInputBox>
-            <TokenInput value={value} onValueChange={setValue} />
+            <TokenInput id="input-invest-value" value={value} onValueChange={setValue} />
           </ModalInputBox>
-          <FundAllLabel green onClick={fundAll}>
+          <FundAllLabel id="btn-invest-all" green onClick={fundAll}>
             Fund all
           </FundAllLabel>
         </InputContainer>
@@ -95,7 +95,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
           <ResumeItem title="Min APR" value={`${currentAPR}`} />
         </FlexSpacedLayout>
       </InvestResume>
-      <ConfirmButton onClick={onConfirm} disabled={value === 0}>
+      <ConfirmButton id="btn-invest-confirm" onClick={onConfirm} disabled={value === 0}>
         CONFIRM
       </ConfirmButton>
     </>
