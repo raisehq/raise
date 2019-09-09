@@ -51,7 +51,7 @@ const RepayLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
         <SemanticModal.Content>
           {getStage(stage)}
 
-          <ExitButton size="normal" name="close" color="black" onClick={closeModal} />
+          <ExitButton name="close" color="black" onClick={closeModal} />
 
         </SemanticModal.Content>
       </Modal>
