@@ -46,7 +46,7 @@ const Auction = ({ auction }: { auction: any }) => {
       <Card.Grid>
         <Card.Row title="Raised Amount" content={principal} />
         <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="Days Left" content={times.auctionTimeLeft} />
+        <Card.Row title="Time left" content={times.auctionTimeLeft} />
       </Card.Grid>
       <Card.Separator />
       <Card.Grid nobottom>
