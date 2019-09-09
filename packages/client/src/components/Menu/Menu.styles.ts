@@ -9,17 +9,17 @@ export const Web3Address = styled(Web3RawAddress)`
 &&&&& {
   background: none;
   border-radius: 60px;
-  color: white;
-  border: 1px solid #CFD0D4;
+  color: #3C4251;
+  border: 1px solid #3C4251;
 }
 `
 export const MenuLogout = styled(Logout)`
 &&&& {
-  border: 1px solid #CFD0D4;
+  border: 1px solid #3C4251;
   background: transparent;
   height: 48px;
   width: 100%;
-  color: white;
+  color: #3C4251;
   max-width: 216px;
   border-radius: 4px;
   margin: 0 auto;
@@ -170,7 +170,53 @@ export const MenuList = styled('div')`
     background: #fff;
 
     a {
-      color: #212121;
+      color: #3C4251;
+    }
+  }
+`;
+
+export const MenuSubList = styled('div')`
+width: 100%;
+  margin: 0;
+  padding: 0;
+  margin-top: 40px;
+  li {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    position: relative;
+
+    a {
+      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      font-weight: bold;
+      align-items: center;
+      color: #fff;
+      padding: 15px 20px;
+
+      .icon:last-child {
+        display: none;
+        position: absolute;
+        right: 10px;
+        top: 17px;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        .icon:last-child {
+          display: block;
+        }
+      }
+    }
+  }
+
+  li.active {
+    background: #fff;
+
+    a {
+      color: #3C4251;
     }
   }
 `;

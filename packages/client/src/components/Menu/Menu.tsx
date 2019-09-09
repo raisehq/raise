@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, Divider } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import {
   RaiseMenu,
   Web3Address,
+  MenuSubList,
   MenuList,
   MenuIcon,
   MenuIconActive,
@@ -39,19 +40,16 @@ const commonRoutes = [
   {
     title: 'Help',
     link: '/help',
-    icon: 'help',
     new_tab: true
   },
   {
     title: 'Privacy Policy',
     link: '/privacy-policy',
-    icon: 'help',
     new_tab: true
   },
   {
     title: 'Terms and Conditions',
     link: '/terms',
-    icon: 'help',
     new_tab: true
   }
 ];
@@ -127,9 +125,10 @@ const Menu = () => {
       </CloseButton>
       <MenuList>
         {getMenu(Menus[accounttype_id])}
-        <Divider inverted />
-        {getMenu(commonRoutes)}
       </MenuList>
+      <MenuSubList>
+        {getMenu(commonRoutes)}
+      </MenuSubList>
       <div style={{ flex: 2 }} />
       <MenuLogout />
       <Credits>
