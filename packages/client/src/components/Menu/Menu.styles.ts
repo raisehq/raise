@@ -35,8 +35,8 @@ export const Credits = styled.div`
   color: #3C4251;
   padding: 30px 20px 30px 20px;
   font-size: 12px;
+  width: 100%;
 `
-
 
 export const RaiseMenu = styled(SemanticMenu)`
 &&&.inverted {
@@ -149,9 +149,9 @@ export const MenuList = styled('div')`
       position: relative;
       display: flex;
       justify-content: flex-start;
-      font-weight: bold;
+      font-weight: 600;
       align-items: center;
-      color: #CFD0D4;
+      color: #93969E;
       padding: 15px 20px;
 
       .icon:last-child {
@@ -160,21 +160,19 @@ export const MenuList = styled('div')`
         right: 10px;
         top: 17px;
       }
+    }
+  }
 
-      &:hover {
-        background: rgba(255, 255, 255, 0.1);
-        .icon:last-child {
-          display: block;
-        }
-      }
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    .icon:last-child {
+      display: block;
     }
   }
 
   li.active {
-    background: #fff;
-
     a {
-      color: #3C4251;
+      color: #5A5A5A;
     }
   }
 `;
@@ -196,6 +194,7 @@ width: 100%;
       position: relative;
       display: flex;
       justify-content: flex-start;
+      font-weight: 400;
       align-items: center;
       color: #3C4251;
       padding: 15px 20px;
@@ -217,8 +216,6 @@ width: 100%;
   }
 
   li.active {
-    background: #fff;
-
     a {
       color: #3C4251;
     }

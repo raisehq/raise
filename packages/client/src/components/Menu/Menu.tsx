@@ -72,7 +72,7 @@ const Menu = () => {
     showMenu(false);
   };
 
-  const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo_light.svg`;
+  const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
 
   const getMenu = useCallback(
     links =>
@@ -121,7 +121,7 @@ const Menu = () => {
       <Logo src={logoPath} />
       <Web3Address />
       <CloseButton onClick={closeMenu} icon>
-        <Icon name="close" size="big" inverted />
+        <Icon name="close" size="big" />
       </CloseButton>
       <MenuList>
         {getMenu(Menus[accounttype_id])}
@@ -133,7 +133,7 @@ const Menu = () => {
       <MenuLogout />
       <Credits>
         <p>Version: Release {process.env.REACT_APP_VERSION} (Beta)</p>
-        <p>Hero Fintech Technologies S.L. Copyright ©2019</p>
+        <p>Hero Fintech Technologies S.L.<br></br>Copyright ©2019</p>
         <p>All Rights Reserved</p>
       </Credits>
     </RaiseMenu>
