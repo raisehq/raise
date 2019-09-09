@@ -5,7 +5,7 @@ import { BorrowerLoanCard } from './BorrowerLoan.styles';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
-import { ClaimRoi } from '../ClaimRoi';
+import { ClaimRepay } from '../ClaimRepay';
 import { GetInTouch } from '../GetInTouch';
 
 const Loan = ({ auction }: { auction: any }) => {
@@ -17,7 +17,7 @@ const Loan = ({ auction }: { auction: any }) => {
     return match(
       conditions,
       [4, false],
-      () => <ClaimRoi loan={auction} />,
+      () => <ClaimRepay loan={auction} />,
       [3, ANY],
       () => <GetInTouch />,
       ANY,

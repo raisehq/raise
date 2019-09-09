@@ -3,60 +3,55 @@ import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
 
+import useClaimRepay from './useClaimRepay';
 import ConfirmStage from './stages/Confirm';
-import ProcessingStage from './stages/Processing';
+import ErrorStage from './stages/Retry';
 import SuccessStage from './stages/Success';
 
-import {
-  LenderButton,
-  Modal,
-  ExitButton,
-} from '../InvestModal/InvestModal.styles';
+import { Modal } from '../ClaimLoan/ClaimLoan.styles';
 
-export const RepayLoanContext = createContext({});
+import { LenderButton, ExitButton } from '../InvestModal/InvestModal.styles';
+
+export const ClaimRepayContext = createContext({});
 
 export const Stages = daggy.taggedSum('UI', {
   Confirm: [],
-  Processing: [],
   Success: [],
+  Error: []
 });
 
-const RepayLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
+const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
   const [open, setOpen] = useState(false);
-  const [stage, setStage] = useState(Stages.Confirm);
+  const { stage, setStage, ...rest }: any = useClaimRepay(loan, open);
 
   const openModal = () => {
-    setStage(Stages.Confirm)
+    setStage(Stages.Confirm);
     setOpen(true);
-  }
+  };
   const closeModal = () => {
     setOpen(false);
-  }
+  };
 
-  const getStage = (stage) => {
+  const getStage = stage => {
     return stage.cata({
       Confirm: () => <ConfirmStage />,
-      Processing: () => <ProcessingStage />,
-      Success: () => <SuccessStage />
+      Success: () => <SuccessStage />,
+      Error: () => <ErrorStage />
     });
-  }
-
-
+  };
 
   return (
-    <RepayLoanContext.Provider value={{ loan, setStage, closeModal }}>
+    <ClaimRepayContext.Provider value={{ loan, setStage, closeModal, ...rest }}>
       <LenderButton onClick={openModal}>Claim your funds</LenderButton>
       <Modal open={open} size="small" onClose={closeModal}>
-
         <SemanticModal.Content>
           {getStage(stage)}
 
           <ExitButton name="close" color="black" onClick={closeModal} />
-
         </SemanticModal.Content>
       </Modal>
-    </RepayLoanContext.Provider>
+    </ClaimRepayContext.Provider>
   );
-}
+};
 
-export default RepayLoanCTA;
+export default ClaimRepayCTA;
