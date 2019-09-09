@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Divider } from 'semantic-ui-react';
 import {
   RaiseMenu,
   Web3Address,
-  MenuSubList,
   MenuList,
   MenuIcon,
   MenuIconActive,
@@ -40,16 +39,19 @@ const commonRoutes = [
   {
     title: 'Help',
     link: '/help',
+    icon: 'help',
     new_tab: true
   },
   {
     title: 'Privacy Policy',
     link: '/privacy-policy',
+    icon: 'help',
     new_tab: true
   },
   {
     title: 'Terms and Conditions',
     link: '/terms',
+    icon: 'help',
     new_tab: true
   }
 ];
@@ -72,7 +74,7 @@ const Menu = () => {
     showMenu(false);
   };
 
-  const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
+  const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo_light.svg`;
 
   const getMenu = useCallback(
     links =>
@@ -121,19 +123,18 @@ const Menu = () => {
       <Logo src={logoPath} />
       <Web3Address />
       <CloseButton onClick={closeMenu} icon>
-        <Icon name="close" size="big" />
+        <Icon name="close" size="big" inverted />
       </CloseButton>
       <MenuList>
         {getMenu(Menus[accounttype_id])}
+        <Divider inverted />
+        {getMenu(commonRoutes)}
       </MenuList>
       <div style={{ flex: 2 }} />
-      <MenuSubList>
-        {getMenu(commonRoutes)}
-      </MenuSubList>
       <MenuLogout />
       <Credits>
         <p>Version: Release {process.env.REACT_APP_VERSION} (Beta)</p>
-        <p>Hero Fintech Technologies S.L.<br></br>Copyright ©2019</p>
+        <p>Hero Fintech Technologies S.L. Copyright ©2019 </p>
         <p>All Rights Reserved</p>
       </Credits>
     </RaiseMenu>

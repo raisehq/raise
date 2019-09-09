@@ -5,43 +5,39 @@ import Logout from '../Logout';
 import theme from '../../theme';
 import { maxDevice, device } from '../LayoutV2/breakpoints';
 
+export const Web3Address = styled(Web3RawAddress)`
+&&&&& {
+  background: none;
+  border-radius: 60px;
+  color: white;
+  border: 1px solid #CFD0D4;
+}
+`
+export const MenuLogout = styled(Logout)`
+&&&& {
+  border: 1px solid #CFD0D4;
+  background: transparent;
+  height: 48px;
+  width: 100%;
+  color: white;
+  max-width: 216px;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+`
+export const Credits = styled.div`
+  padding: 20px;
+`
 export const Logo = styled(Image)<ImageProps>`
 &&&&& {
   display: block;
   max-width: 90px;
 }`;
 
-export const Web3Address = styled(Web3RawAddress)`
-&&&&& {
-  background: none;
-  width: 240px;
-  border-radius: 60px;
-  color: #3C4251;
-  border: 1px solid #CFD0D4;
-}
-`
-export const MenuLogout = styled(Logout)`
-&&&& {
-  border: 1px solid #3C4251;
-  background: transparent;
-  height: 48px;
-  width: 240px;
-  color: #3C4251;
-  border-radius: 4px;
-  margin: 0 auto;
-}
-`
-export const Credits = styled.div`
-  color: #3C4251;
-  padding: 30px 20px 30px 20px;
-  font-size: 12px;
-  width: 100%;
-`
-
 export const RaiseMenu = styled(SemanticMenu)`
 &&&.inverted {
   visibility: hidden;
-  background: ${theme.colors.background};
+  background: ${theme.colors.menu};
   color: white;
   position: absolute;
   top: 0px;
@@ -149,54 +145,9 @@ export const MenuList = styled('div')`
       position: relative;
       display: flex;
       justify-content: flex-start;
-      font-weight: 600;
+      font-weight: bold;
       align-items: center;
-      color: #93969E;
-      padding: 15px 20px;
-
-      .icon:last-child {
-        display: none;
-        position: absolute;
-        right: 10px;
-        top: 17px;
-      }
-    }
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    .icon:last-child {
-      display: block;
-    }
-  }
-
-  li.active {
-    a {
-      color: #5A5A5A;
-    }
-  }
-`;
-
-export const MenuSubList = styled('div')`
-width: 100%;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 40px;
-  li {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style-type: none;
-    position: relative;
-    font-size: 1em;
-
-    a {
-      position: relative;
-      display: flex;
-      justify-content: flex-start;
-      font-weight: 400;
-      align-items: center;
-      color: #3C4251;
+      color: #fff;
       padding: 15px 20px;
 
       .icon:last-child {
@@ -216,8 +167,10 @@ width: 100%;
   }
 
   li.active {
+    background: #fff;
+
     a {
-      color: #3C4251;
+      color: #212121;
     }
   }
 `;
