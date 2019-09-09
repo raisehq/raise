@@ -17,7 +17,7 @@ import { AppContext } from '../App';
 const Menus = {
   1: [
     {
-      title: 'My dashboard',
+      title: 'My Dashboard',
       link: '/dashboard',
       icon: 'th large'
     },
@@ -29,7 +29,7 @@ const Menus = {
   ],
   2: [
     {
-      title: 'My dashboard',
+      title: 'My Dashboard',
       link: '/dashboard',
       icon: 'th large'
     }
