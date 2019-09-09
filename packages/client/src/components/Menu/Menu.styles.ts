@@ -190,12 +190,12 @@ width: 100%;
     box-sizing: border-box;
     list-style-type: none;
     position: relative;
+    font-size: 1em;
 
     a {
       position: relative;
       display: flex;
       justify-content: flex-start;
-      font-weight: bold;
       align-items: center;
       color: #3C4251;
       padding: 15px 20px;
