@@ -4,7 +4,15 @@ import { Link } from 'react-router-dom';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { requestPage } from '../../helpers/butter';
 import { BorrowerProfile as BorrowerProfileType } from '../../commons/BorrowerProfile';
-import { BorrowerCard, SideInfo, Container } from './BorrowerProfile.styles';
+import {
+  BorrowerCard,
+  SideInfo,
+  Container,
+  CompanyName,
+  HeaderBox
+} from './BorrowerProfile.styles';
+import { Resources } from './Resource';
+import { KPIList } from './KPI';
 
 const defaultBorrower = {
   companyName: 'Loading...',
@@ -12,17 +20,29 @@ const defaultBorrower = {
   logo: '',
   socialNetworks: [],
   extraResources: [],
-  kpi1: 0,
-  kpi2: 0,
-  url: ''
+  kpis: [],
+  url: '',
+  urlText: '',
+  updated: '',
+  address: ''
 };
 
 const BorrowerProfile = () => {
   const [borrower, setPayload]: [BorrowerProfileType, any] = useState(defaultBorrower);
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { companyName, description, logo, url } = borrower;
-
+  const {
+    companyName,
+    description,
+    logo,
+    url,
+    urlText,
+    updated,
+    address,
+    extraResources,
+    kpis
+  } = borrower;
+  const lastUpdated = new Date(updated).toLocaleDateString('en-GB');
   useAsyncEffect(async () => {
     try {
       const response = await requestPage('borrower_profile', 'speck-sl');
@@ -57,17 +77,23 @@ const BorrowerProfile = () => {
       {!notFound && (
         <>
           <BorrowerCard>
-            <Image size="small" src={logo} />
-            <a href={url} rel="noopener noreferrer" target="_blank">
-              {url}
-            </a>
-            <Header>{companyName}</Header>
-            <p>Last updated: 19.02.2018</p>
+            <HeaderBox>
+              <div>
+                <Image size="small" src={logo} />
+                <a href={url} rel="noopener noreferrer" target="_blank">
+                  {urlText}
+                </a>
+              </div>
+              <KPIList kpis={kpis} />
+            </HeaderBox>
+            <CompanyName>{companyName}</CompanyName>
+            <p>Last updated: {lastUpdated}</p>
             <b>About</b>
             <p>{description}</p>
           </BorrowerCard>
           <SideInfo>
-            <p>Ubication: Malaga, Spain</p>
+            <p>{address}</p>
+            <Resources extraResources={extraResources} />
           </SideInfo>
         </>
       )}
