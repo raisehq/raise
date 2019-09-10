@@ -1,1 +1,17 @@
-{ "chromeWebSecurity": false }
+{
+  "chromeWebSecurity": false,
+  "videoCompression": false,
+  "video": true,
+  "waitForAnimations": true,
+  "baseUrl": "http://localhost:3000/",
+  "defaultCommandTimeout": 60000,
+  "viewportHeight": 900,
+  "viewportWidth": 1440,
+  "reporter": "mochawesome",
+  "reporterOptions": {
+    "reportDir": "cypress/results",
+    "overwrite": false,
+    "html": false,
+    "json": true
+  }
+}

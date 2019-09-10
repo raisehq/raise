@@ -11,8 +11,8 @@ import { Web3State } from '../commons/Web3State';
 
 const HERO_CONTRACTS =
   'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
-
-export const web3CheckList = (
+// @ts-ignore
+const web3CheckList = window['web3CheckList'] =  (
   web3,
   accounts,
   targetAddress,
@@ -37,12 +37,7 @@ export const web3CheckList = (
 
 const hasDeposited = async (web3, definitions, address) => {
   const netId = await web3.eth.net.getId();
-  if (
-    !definitions ||
-    !address ||
-    !web3 ||
-    !hasIn(definitions, `address.${netId}`)
-  ) {
+  if (!definitions || !address || !web3 || !hasIn(definitions, `address.${netId}`)) {
     return false;
   }
   const contract = new web3.eth.Contract(
@@ -66,14 +61,7 @@ const useWeb3Checker = (): Web3State => {
   const [targetNetwork, setTargetNetwork]: any = useState([]);
   const [definitions, setDefs]: any = useState(null);
   const [web3State, setWeb3State]: [Web3State, any] = useState(
-    web3CheckList(
-      web3,
-      [],
-      targetAddress,
-      'Not connected',
-      targetNetwork,
-      false
-    )
+    web3CheckList(web3, [], targetAddress, 'Not connected', targetNetwork, false)
   );
 
   useAsyncEffect(async () => {
@@ -82,22 +70,18 @@ const useWeb3Checker = (): Web3State => {
     setTargetNetwork(
       Object.keys(contracts.data.address)
         .map(x => parseNetwork(Number(x)))
-        .filter(availableId =>
-          ['mainnet', 'kovan'].find(id => id === availableId)
-        )
+        .filter(availableId => ['mainnet', 'kovan'].find(id => id === availableId))
     );
     setDefs(contracts.data);
   }, []);
 
   const verifyCheckList = async () => {
-    const web3 = getWeb3()
+    const web3 = getWeb3();
     try {
       const accounts = await web3.eth.getAccounts();
       const netName = parseNetwork(await web3.eth.net.getId());
       const hasDeposit =
-        accounts &&
-        !!accounts.length &&
-        (await hasDeposited(web3, definitions, accounts[0]));
+        accounts && !!accounts.length && (await hasDeposited(web3, definitions, accounts[0]));
       const newWeb3State = web3CheckList(
         web3,
         accounts,
@@ -128,8 +112,8 @@ const useWeb3Checker = (): Web3State => {
   };
 
   useEffect(() => {
-    let accountInterval
-    const web3 = getWeb3()
+    let accountInterval;
+    const web3 = getWeb3();
 
     const defaultCheckList = web3CheckList(
       web3,
@@ -140,17 +124,15 @@ const useWeb3Checker = (): Web3State => {
       false
     );
     setWeb3State(prevWeb3State =>
-      isEqual(defaultCheckList, prevWeb3State)
-        ? prevWeb3State
-        : defaultCheckList
+      isEqual(defaultCheckList, prevWeb3State) ? prevWeb3State : defaultCheckList
     );
 
     if (web3 && web3.givenProvider) {
-      accountInterval = setInterval(verifyCheckList, 500)
+      accountInterval = setInterval(verifyCheckList, 500);
     }
     return () => {
       if (accountInterval) {
-        clearInterval(accountInterval)
+        clearInterval(accountInterval);
       }
     };
   }, [targetAddress, targetNetwork, definitions]);
@@ -159,4 +141,10 @@ const useWeb3Checker = (): Web3State => {
   return { ...web3State, ...contracts };
 };
 
-export default useWeb3Checker
+export default useWeb3Checker;
+
+// @ts-ignore
+if (window.Cypress) {
+  // @ts-ignore
+  //window.web3CheckList = web3CheckList;
+}

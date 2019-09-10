@@ -67,6 +67,7 @@
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "cypress": "^3.4.1",
     "eslint": "^6.2.1",
     "eslint-config-airbnb-typescript": "^4.0.1",
     "eslint-plugin-import": "^2.14.0",
@@ -85,7 +86,8 @@
     "test": "jest --coverage --coverageDirectory=output/coverage/jest",
     "test:watch": "jest --watchAll --verbose=false",
     "lint": "eslint . --ext .js,.ts,.tsx",
-    "generator": "plop --plopfile ./node_modules/hero-generator-react/index.js"
+    "generator": "plop --plopfile ./node_modules/hero-generator-react/index.js",
+    "cypress:open": "cypress open"
   },
   "browserslist": {
     "production": [

@@ -1,16 +1,36 @@
 import Web3 from 'web3';
 import PrivateKeyProvider from 'truffle-privatekey-provider';
+import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 
-Cypress.Commands.add('web3', type => {
+//ADD PLUGIN
+addMatchImageSnapshotCommand({
+  failureThreshold: 0.03, // threshold for entire image
+  failureThresholdType: 'percent', // percent of image or number of pixels
+  customDiffConfig: { threshold: 0.1 }, // threshold for each pixel
+  capture: 'viewport' // capture viewport in screenshot});
+});
+//OUR COMMANDS
+Cypress.Commands.add('web3', function(type) {
   cy.on('window:before:load', win => {
     const user = Cypress.env('user');
     console.log('--------', user[type]);
     const provider = new PrivateKeyProvider(user[type].private_key, Cypress.env('eth_provider'));
     win.web3 = new Web3(provider); // eslint-disable-line no-param-reassign
+    console.log('Window : ', win);
+
+    win.axios &&
+      cy.stub(win.axios, 'post', () =>
+        console.log('[STUB POST ] #######################################')
+      );
+
+    win.axios &&
+      cy.stub(win.axios, 'get', () =>
+        console.log('[STUB GET ] #######################################')
+      );
   });
 });
 
-Cypress.Commands.add('login', type => {
+Cypress.Commands.add('login', function(type) {
   const user = Cypress.env('user');
   cy.request({
     method: 'POST',
