@@ -64,23 +64,23 @@ const Signin = () => {
       onLoginCaptcha();
     }
   };
-  
+
   useEffect(() => {
     if (recaptcha) {
       onLogin();
     }
   }, [recaptcha]);
 
-  const onCaptchaCallback = async (captchaResponse) => {
+  const onCaptchaCallback = async captchaResponse => {
     onSetCredentials('g-recaptcha-response', captchaResponse);
-    setRecaptcha(captchaResponse)
-  }
+    setRecaptcha(captchaResponse);
+  };
 
   const onLoginCaptcha = () => {
     recaptchaRef.current.reset();
     recaptchaRef.current.execute();
-  }
-  
+  };
+
   return (
     <Fragment>
       <OnboardHeader>
@@ -88,7 +88,7 @@ const Signin = () => {
       </OnboardHeader>
       <OnboardInput>
         <Input
-          data-testid="loginEmail"
+          id="input-login"
           placeholder="Please enter you email address"
           onChange={onSetEmail}
           error={errors.email || error}
@@ -103,21 +103,17 @@ const Signin = () => {
       </OnboardInput>
       <OnboardInput>
         <Input
-          data-testid="loginPassword"
+          id="input-password"
           placeholder="Please enter your password"
           type="password"
           onChange={onSetPassword}
           error={error}
           onKeyPress={onKeyPress}
         />
-        {error && (
-          <div className="errorText">
-            Sorry, I can't find anyone with these details.
-          </div>
-        )}
+        {error && <div className="errorText">Sorry, I can't find anyone with these details.</div>}
         <Icon size="big" name="lock" />
       </OnboardInput>
-      <MyRecapcha 
+      <MyRecapcha
         ref={recaptchaRef}
         size="invisible"
         sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
@@ -125,9 +121,8 @@ const Signin = () => {
         onChange={onCaptchaCallback}
       />
       <OnboardButton
-        disabled={
-          error || errors.email || !credentials.email || !credentials.password
-        }
+        id="btn-login"
+        disabled={error || errors.email || !credentials.email || !credentials.password}
         onClick={onLoginCaptcha}
       >
         Log In
@@ -145,7 +140,9 @@ const Signin = () => {
         </button>
       </CallToSignIn>
       <GoogleCaptchaPolicies>
-        This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+        This site is protected by reCAPTCHA and the Google{' '}
+        <a href="https://policies.google.com/privacy">Privacy Policy</a> and{' '}
+        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
       </GoogleCaptchaPolicies>
     </Fragment>
   );

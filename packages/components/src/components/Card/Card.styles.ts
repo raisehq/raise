@@ -8,6 +8,7 @@ interface RowContentProps {
 
 interface GridProps {
   noGraph?: boolean;
+  spaceBetween: boolean;
 }
 
 export const GraphContainer = styled.div`
@@ -32,9 +33,10 @@ export const HeroCard = styled.div`
 
 export const Grid: any = styled.div<GridProps>`
   display: flex;
+  justify-content: ${({ spaceBetween }) => (spaceBetween ? 'space-between' : 'unset')};
   box-sizing: border-box;
   flex-wrap: wrap;
-  margin: ${({noGraph}) => !noGraph ? '10px 0px' : '30px 0px 10px'}; 
+  margin: ${({ noGraph }) => (!noGraph ? '10px 0px' : '30px 0px 10px')};
 `;
 
 export const Row = styled.div`
