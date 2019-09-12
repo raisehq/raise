@@ -1,7 +1,6 @@
 import axios from 'axios';
 import LocalData from '../helpers/localData';
 import MemorizeRefresh from '../helpers/memorizeRefresh';
-import ServerMock from '../__mocks__/serverMocks';
 
 const DEFAULT_RETRY_TIMES = 1;
 
@@ -77,5 +76,5 @@ instance.interceptors.response.use(
     }
   }
 );
-console.log(' SERVER MOCK :', ServerMock || instance);
-export default ServerMock !== false ? instance : ServerMock;
+
+export default instance;

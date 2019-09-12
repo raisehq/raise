@@ -1,6 +1,5 @@
 /* tslint:disable */
 const utils = require('../../../client/src/utils/index');
-import jest from 'jest';
 
 describe('BORROWER', function() {
   beforeEach(function() {
@@ -16,6 +15,7 @@ describe('BORROWER', function() {
     cy.get(':nth-child(2) > a')
       .should('have.length', 1)
       .then(() => {});
+    cy.addCards('la');
     cy.wait(2000);
     cy.get(':nth-child(2) > a').matchImageSnapshot('menu_option_borrower');
     cy.get('.borderless').matchImageSnapshot('menu_borrower');

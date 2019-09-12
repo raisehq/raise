@@ -109,6 +109,13 @@ class UseWebsocket {
         const callback = this.subscriptions.get(data.id);
         if (callback) {
           const error = data.payload.errors ? new Error(data.payload.errors) : null;
+          console.log(
+            'DATA: ',
+            data.payload.data.users[0].loanRequests &&
+              data.payload.data.users[0].loanRequests.sort(function(a, b) {
+                return parseInt(a.auctionEndTimestamp) - parseInt(b.auctionEndTimestamp);
+              })
+          );
           callback(error, data.payload.data);
         }
         break;

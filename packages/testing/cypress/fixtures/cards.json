@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "loanRequests": [
+        {
+          "auctionEndTimestamp": "1568304984",
+          "auctionEnded": false,
+          "auctionLength": "300",
+          "auctionStartTimestamp": "1568304684",
+          "borrowerDebt": "0",
+          "id": "0xe632f786a863e56bb443361155add2f7a6f0f297",
+          "interestRate": null,
+          "investorCount": 0,
+          "loanRepaid": false,
+          "loanWithdrawn": false,
+          "maxAmount": "30000000000000000000000",
+          "maxInterestRate": "10000",
+          "minimumReached": false,
+          "netBalance": null,
+          "operatorBalance": "0",
+          "operatorFee": "1000000000000000000",
+          "principal": "0",
+          "state": 0,
+          "termEndTimestamp": "0",
+          "termLength": "300"
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 import Web3 from 'web3';
 import PrivateKeyProvider from 'truffle-privatekey-provider';
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
-
+import cards from '../fixtures/cards.json';
+import { createCard } from './cardManager';
 //ADD PLUGIN
 addMatchImageSnapshotCommand({
   failureThreshold: 0.03, // threshold for entire image
@@ -17,7 +18,15 @@ Cypress.Commands.add('web3', function(type) {
     win.web3 = new Web3(provider); // eslint-disable-line no-param-reassign
   });
 });
-
+Cypress.Commands.add('addCards', function(type) {
+  cy.window().then(win => {
+    const newCard = createCard('CREATED');
+    console.log(' ----> ', cards.users[0].loanRequests.length);
+    cards.users[0].loanRequests.push(newCard);
+    console.log(' ----> ', cards.users[0].loanRequests.length);
+    win.UseWebsocket.trigger('loansByAccount', cards);
+  });
+});
 Cypress.Commands.add('login', function(type) {
   const user = Cypress.env('user');
   cy.request({
