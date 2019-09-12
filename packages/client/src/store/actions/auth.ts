@@ -1,10 +1,4 @@
-import {
-  signIn,
-  getUser,
-  checkUsername,
-  checkEmail,
-  verifyAuth
-} from '../../services/auth';
+import { signIn, getUser, checkUsername, checkEmail, verifyAuth } from '../../services/auth';
 import LocalData from '../../helpers/localData';
 import * as Type from '../store.types';
 import { Either, to, getHost } from '../../utils/index';
@@ -25,8 +19,7 @@ export default (dispatch: any, state: any) => {
           error => {
             return dispatch({
               type: 'EMAIL_NOT_VERIFIED',
-              data:
-                'Your email is not verified. Please check your inbox and verify it.'
+              data: 'Your email is not verified. Please check your inbox and verify it.'
             });
           },
           () => {
@@ -38,7 +31,6 @@ export default (dispatch: any, state: any) => {
             });
 
             LocalData.setObj('user', user);
-            console.log(response)
             return dispatch({ type: 'SIGNIN_SUCCESS', response });
           }
         );
@@ -49,8 +41,8 @@ export default (dispatch: any, state: any) => {
   const onSignout = () => {
     LocalData.remove('user');
     LocalData.remove('auth');
-    Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
-    Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
+    Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
+    Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
     window.location.href = `${getHost('APP')}/login`;
   };
 
@@ -86,8 +78,8 @@ export default (dispatch: any, state: any) => {
     } catch (error) {
       LocalData.remove('user');
       LocalData.remove('auth');
-      Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
-      Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN});
+      Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
+      Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
     }
   };
 

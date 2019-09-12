@@ -20,7 +20,11 @@ interface InputLabelProps {
   green?: boolean;
 }
 
-export const ExitButton = styled(Icon) `
+interface LabelPaddingProps {
+  color?: string;
+}
+
+export const ExitButton = styled(Icon)`
   &&& {
     position: absolute;
     top: 20px;
@@ -29,36 +33,45 @@ export const ExitButton = styled(Icon) `
   }
 `;
 
-export const LenderButton = styled(Button) `
-&&& {
-  cursor: pointer;
-  color: white;
-  background-color: #eb3f93;
-  text-transform: uppercase;
-  border-radius: 4px;
-  height: 48px;
-  font-size: 16px;
-  font-weight: bold;
-  width: 100%;
-  margin-top: auto;
-}
+export const LenderButton = styled(Button)`
+  &&& {
+    cursor: pointer;
+    color: white;
+    background-color: #eb3f93;
+    text-transform: uppercase;
+    border-radius: 4px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    margin-top: auto;
+  }
 
-&&&:hover {
-  color: white;
-  background-color: #eb3f93;
-}
-`;
-
-export const BorrowerButton = styled(LenderButton) `
-&&& {
-  background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
   &&&:hover {
     color: white;
-    background: linear-gradient(134.72deg,#02bb7d 0%,#00efad 100%);
+    background-color: #eb3f93;
   }
-}
-`
-export const Modal = styled(SemanticModal) `
+  &&&:disabled,
+  &&&.disabled {
+    cursor: default;
+    opacity: 0.45 !important;
+    background-image: unset !important;
+    background: lightgray;
+    box-shadow: none !important;
+    pointer-events: none !important;
+  }
+`;
+
+export const BorrowerButton = styled(LenderButton)`
+  &&& {
+    background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
+    &&&:hover {
+      color: white;
+      background: linear-gradient(134.72deg, #02bb7d 0%, #00efad 100%);
+    }
+  }
+`;
+export const Modal = styled(SemanticModal)`
   width: 100%;
   height: fit-content;
   background-color: #fcfcfc;
@@ -95,9 +108,9 @@ export const ModalInputContainer = styled.div`
 export const InputContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
-`
+`;
 
-export const ModalInputBox = styled.div < ModalInputProps > `
+export const ModalInputBox = styled.div<ModalInputProps>`
   height: 48px;
   width: 173px;
   border: 1px solid #cfd0d4;
@@ -112,14 +125,13 @@ export const ModalInputBox = styled.div < ModalInputProps > `
   }
 `;
 
-export const InputLabel = styled.div < InputLabelProps > `
+export const InputLabel = styled.div<InputLabelProps>`
   margin-top: 12px;
   text-align: center;
   color: ${({ green }) => (green ? '#00A76F' : '#5A5A5A')};
 `;
 
-
-export const FundAllLabel = styled.div < InputLabelProps > `
+export const FundAllLabel = styled.div<InputLabelProps>`
 display: inline-block
   margin-top: 12px;
   text-align: center;
@@ -140,7 +152,6 @@ export const InvestResume = styled.div`
   @media ${device.laptop} {
     min-width: 350px;
   }
-
 `;
 
 export const FlexSpacedLayout = styled.div`
@@ -165,10 +176,10 @@ export const RaisedAmountContent = styled.div`
 
 export const Amount = styled.span`
   font-size: 26px;
-  color: #3C4251;
+  color: #3c4251;
   line-height: 36px;
   font-weight: bold;
-`
+`;
 
 export const ResumeItemBox = styled.div`
   width: 98px;
@@ -186,11 +197,11 @@ export const ResumeItemBox = styled.div`
   }
 `;
 
-export const ProgressLayout = styled(FlexSpacedLayout) `
+export const ProgressLayout = styled(FlexSpacedLayout)`
   margin-top: 10px;
 `;
 
-export const AuctionProgress = styled(Progress) `
+export const AuctionProgress = styled(Progress)`
   &&&& {
     flex: 3;
     margin: 0;
@@ -210,7 +221,7 @@ export const Percentage = styled.div`
   margin-left: 10px;
 `;
 
-export const ConfirmButton = styled(LenderButton) `
+export const ConfirmButton = styled(LenderButton)`
   &&& {
     height: 48px;
     width: 100%;
@@ -225,7 +236,7 @@ export const ConfirmButton = styled(LenderButton) `
 `;
 
 // processing state
-export const RetryButton = styled(LenderButton) `
+export const RetryButton = styled(LenderButton)`
   &&& {
     height: 48px;
     width: 100%;
@@ -249,7 +260,7 @@ export const BlankSpace = styled.div`
   }
 `;
 
-export const ListItemPadding = styled(List.Item) `
+export const ListItemPadding = styled(List.Item)`
   &&& {
     font-size: 18px;
   }
@@ -258,28 +269,28 @@ export const ListItemPadding = styled(List.Item) `
   }
 `;
 
-export const LabelPadding = styled(Label) `
+export const LabelPadding = styled(Label)<LabelPaddingProps>`
   &&& {
     font-size: 14px !important;
     margin-right: 8px !important;
-    background-color: #ff047f;
+    background-color: ${({ color }) => (color ? color : '#ff047f')};
     color: #ffffff;
   }
 `;
-export const IconSuccess = styled(Icon) `
+export const IconSuccess = styled(Icon)`
   &&& {
     margin: 0 !important;
   }
 `;
-export const LabelPaddingLoader = styled(LabelPadding) `
+export const LabelPaddingLoader = styled(LabelPadding)<LabelPaddingProps>`
   &&& {
     position: relative;
     margin-bottom: -7px;
-    background-color: #ff047f;
+    background-color: ${({ color }) => (color ? color : '#ff047f')};
     color: #ffffff;
   }
 `;
-export const MicroLoader = styled(Loader) `
+export const MicroLoader = styled(Loader)`
   &&& {
     width: 1rem;
     height: 1rem;
@@ -292,7 +303,7 @@ export const MicroLoader = styled(Loader) `
     margin: 2px 0 0 -0.35rem;
   }
 `;
-export const SegmentPadded = styled(Segment) `
+export const SegmentPadded = styled(Segment)`
   &&& {
     padding: 2em !important;
     margin-top: 15% !important;
@@ -324,24 +335,23 @@ export const CardSubtitle = styled.div`
   }
 `;
 
-export const ButtonGreen = styled(Button) `
+export const ButtonGreen = styled(Button)`
   &&& {
     height: 58px;
     width: 100%;
-    background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
+    background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
     color: white;
   }
-  
 `;
 
-export const Action = styled(Grid.Row) `
-  color: #3C4251;
+export const Action = styled(Grid.Row)`
+  color: #3c4251;
   font-size: 18px;
   line-height: 28px;
 `;
 
-export const Explanation = styled(Grid.Row) `
-  color: #5A5A5A;
+export const Explanation = styled(Grid.Row)`
+  color: #5a5a5a;
   font-size: 14px;
   line-height: 21px;
   margin-top: 10px;

@@ -96,12 +96,8 @@ const initialState = {
     }
   },
   kyc: {
-    sended: false,
-    error: false,
-    previous: {
-      statusId: 0,
-      requestId: ''
-    }
+    token: null,
+    verified: false
   },
   blockchain: {
     hasDeposit: null,

@@ -102,7 +102,7 @@ export const ResumeItemBoxBig = styled.div`
     font-weight: bold;
     line-height: 24px;
     color: #3c4251;
-    margin-top: -8px;
+    margin-top: 0px;
   }
 `;
 

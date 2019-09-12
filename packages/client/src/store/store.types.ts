@@ -9,6 +9,7 @@ export type onRecovery = {
 
 export type onSignup = {
   username: string;
+  onGetUser;
   email: string;
   password: string;
   country_id: string;
