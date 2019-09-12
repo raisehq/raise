@@ -2,8 +2,9 @@ import React from 'react';
 import { Card } from '@raisehq/components';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
+import { InvestModal } from '../InvestModal';
 
-const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
+const Loan = ({ auction }: { auction: any }) => {
   const calculations = getCalculations(auction);
   const { principal, currentAmount, totalAmount, maxAmount, times, currentAPR } = calculations;
 
@@ -22,7 +23,7 @@ const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
         <Card.Row title="Loan Term" content={times.loanTerm} />
         <Card.Row title="Min APR" content={currentAPR} />
       </Card.Grid>
-      {cta}
+      <InvestModal loan={auction} />
     </Card>
   );
 };

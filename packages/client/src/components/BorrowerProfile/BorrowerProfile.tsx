@@ -3,7 +3,9 @@ import { Header, Segment, Loader, Dimmer, Button, Image } from 'semantic-ui-reac
 import { Link } from 'react-router-dom';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { requestPage } from '../../helpers/butter';
+import { cryptoAddressByAccount } from '../../services/user';
 import { BorrowerProfile as BorrowerProfileType } from '../../commons/BorrowerProfile';
+
 import {
   BorrowerCard,
   SideInfo,
@@ -13,6 +15,8 @@ import {
 } from './BorrowerProfile.styles';
 import { Resources } from './Resource';
 import { KPIList } from './KPI';
+import Socials from './Socials';
+import BorrowerLoans from './BorrowerLoans';
 
 const defaultBorrower = {
   companyName: 'Loading...',
@@ -24,7 +28,10 @@ const defaultBorrower = {
   url: '',
   urlText: '',
   updated: '',
-  address: ''
+  address: '',
+  userId: '',
+  account: '',
+  foundationDate: ''
 };
 
 const BorrowerProfile = () => {
@@ -40,22 +47,28 @@ const BorrowerProfile = () => {
     updated,
     address,
     extraResources,
-    kpis
+    socialNetworks,
+    kpis,
+    foundationDate,
+    account
   } = borrower;
   const lastUpdated = new Date(updated).toLocaleDateString('en-GB');
+  const createdDate = new Date(foundationDate).toLocaleDateString('en-GB');
   useAsyncEffect(async () => {
     try {
       const response = await requestPage('borrower_profile', 'speck-sl');
-      setPayload(response);
+      const { address: userAccount } = await cryptoAddressByAccount(response.userId, 2);
+      setPayload({ ...response, account: userAccount });
       setLoading(false);
     } catch (error) {
+      console.log(error);
       setNotFound(true);
       setLoading(false);
     }
   }, []);
 
   return (
-    <Container>
+    <>
       {loading && (
         <Segment>
           <Dimmer active={loading} inverted>
@@ -75,7 +88,7 @@ const BorrowerProfile = () => {
         </Segment>
       )}
       {!notFound && (
-        <>
+        <Container>
           <BorrowerCard>
             <HeaderBox>
               <div>
@@ -89,15 +102,18 @@ const BorrowerProfile = () => {
             <CompanyName>{companyName}</CompanyName>
             <p>Last updated: {lastUpdated}</p>
             <b>About</b>
-            <p>{description}</p>
+            {description}
+            <Socials socialNetworks={socialNetworks} />
           </BorrowerCard>
           <SideInfo>
             <p>{address}</p>
+            <p>Founded on {createdDate}</p>
             <Resources extraResources={extraResources} />
           </SideInfo>
-        </>
+          <BorrowerLoans account={account} />
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 

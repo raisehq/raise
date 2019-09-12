@@ -1,5 +1,5 @@
 export interface SocialNetwork {
-  network: string;
+  network: any;
   link: string;
 }
 
@@ -25,4 +25,7 @@ export interface BorrowerProfile {
   urlText: string;
   updated: string;
   address: string;
+  userId: string;
+  account: string;
+  foundationDate: string;
 }
