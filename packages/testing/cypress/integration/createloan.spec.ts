@@ -12,20 +12,7 @@ describe('BORROWER', function() {
     cy.visit(Cypress.env('url'));
 
     cy.wait(4000);
-    /*Cypress.on('window:load', function() {
-      console.log('HOLA?');
-      window.axios.interceptors.request.use(
-        config => {
-          console.log('--> called ');
-          return config;
-        },
-        error => {
-          return Promise.reject(error);
-        }
-      );
 
-      // cy.stub(window.use, 'putavida', () => console.log('marianomariano'));
-    });*/
     cy.get(':nth-child(2) > a')
       .should('have.length', 1)
       .then(() => {});
