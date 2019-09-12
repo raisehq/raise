@@ -28,7 +28,6 @@ export const DashboardWrapper = styled.div`
 
 export const DashboardContainer = styled.div`
   width: 100%;
-  max-width: 1160px;
   padding-top: 25px;
 `;
 
