@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { to } from '../utils';
+import { to, getHost } from '../utils';
 import Header from '../helpers/header';
 
-const HOST = `http://localhost:10000/api/kyc`;
+const HOST = `${getHost('CORE')}/kyc`;
 
 const COMMON_HEADERS = {
   Accept: 'application/json',
