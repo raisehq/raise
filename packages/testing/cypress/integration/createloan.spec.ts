@@ -9,13 +9,13 @@ describe('BORROWER', function() {
 
   it('Go to create loan', function() {
     cy.visit(Cypress.env('url'));
-
+    cy.addCards('CREATED');
     cy.wait(4000);
 
     cy.get(':nth-child(2) > a')
       .should('have.length', 1)
       .then(() => {});
-    cy.addCards('la');
+
     cy.wait(2000);
     cy.get(':nth-child(2) > a').matchImageSnapshot('menu_option_borrower');
     cy.get('.borderless').matchImageSnapshot('menu_borrower');

@@ -10,7 +10,10 @@ class UseWebsocket {
   public subscribe = (query, variables, subscriptionName, callback) => {
     console.log('[WEBSOCKET] SUBSCRITE ', subscriptionName);
     SUBS[subscriptionName] = callback;
-    if (DATA[subscriptionName]) callback(null, DATA[subscriptionName]);
+    if (DATA[subscriptionName]) {
+      console.log('DATA STORED : ', DATA[subscriptionName]);
+      callback(null, DATA[subscriptionName]);
+    }
   };
 
   public static trigger(subscriptionName, data) {

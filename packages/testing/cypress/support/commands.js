@@ -20,7 +20,7 @@ Cypress.Commands.add('web3', function(type) {
 });
 Cypress.Commands.add('addCards', function(type) {
   cy.window().then(win => {
-    const newCard = createCard('CREATED');
+    const newCard = createCard(type);
     console.log(' ----> ', cards.users[0].loanRequests.length);
     cards.users[0].loanRequests.push(newCard);
     console.log(' ----> ', cards.users[0].loanRequests.length);

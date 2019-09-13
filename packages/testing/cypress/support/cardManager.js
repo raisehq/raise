@@ -1,5 +1,6 @@
-const getUnixTimestamp = () => {
-  return Date.now() / 1000;
+const getUnixTimestamp = (plus = 0) => {
+  const round = Math.round(Date.now() / 10000);
+  return (round + plus).toString().substr(0, 11);
 };
 /*
   0: 'CREATED', // accepts bids until timelimit initial state
@@ -14,21 +15,22 @@ export const createCard = type => {
   switch (type) {
     case 'CREATED':
       return {
-        auctionEndTimestamp: getUnixTimestamp() + 2000,
+        mock: 1,
+        auctionEndTimestamp: getUnixTimestamp(300),
         auctionEnded: false,
-        auctionLength: '3000',
+        auctionLength: '300',
         auctionStartTimestamp: getUnixTimestamp(),
         borrowerDebt: '0',
         id: '0xf98f42a68a7fec388b93189889774a' + getUnixTimestamp(),
         interestRate: null,
         investorCount: 0,
         loanRepaid: false,
-        maxAmount: '50000000000000000000',
-        maxInterestRate: '50000000000000000000',
+        maxAmount: '5000000',
+        maxInterestRate: '500000000',
         minimumReached: false,
         netBalance: null,
         operatorBalance: '0',
-        operatorFee: '1000000000000000000',
+        operatorFee: '100000000',
         principal: '0',
         state: 0,
         termEndTimestamp: '0',
