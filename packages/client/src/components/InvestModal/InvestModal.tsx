@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
@@ -8,6 +8,7 @@ import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
 
 import { LenderButton, Modal, ExitButton } from './InvestModal.styles';
+import { AppContext } from '../App';
 
 const UI = daggy.taggedSum('UI', {
   Confirm: [],
@@ -16,6 +17,9 @@ const UI = daggy.taggedSum('UI', {
 });
 
 const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
+  const {
+    web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
+  }: any = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Confirm);
   const [investment, setInvestment] = useState(0);
@@ -44,8 +48,8 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
 
   return (
     <>
-      <LenderButton fluid onClick={openModal}>
-        Invest
+      <LenderButton fluid onClick={openModal} disabled={!hasProvider || !unlocked || !accountMatches || !networkMatches}>
+        {!hasProvider || !unlocked || !accountMatches || !networkMatches ? 'Connect wallet' : 'Invest'}
       </LenderButton>
       <Modal open={open} size="small" onClose={closeModal}>
         <SemanticModal.Content>
