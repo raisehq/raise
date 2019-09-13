@@ -1,8 +1,14 @@
 import styled from 'styled-components';
+import { Card } from '@raisehq/components';
 import { Tab, Header as SemanticHeader } from 'semantic-ui-react';
 import { maxDevice } from '../LayoutV2/breakpoints';
 import theme from '../../theme';
 
+export const ExpectedROI = styled(Card.Header)`
+  &&& {
+    margin-right: 30px;
+  }
+`;
 export const DashboardWrapper = styled.div`
   width: 100%;
   padding: 25px;
@@ -26,7 +32,7 @@ export const DashboardContainer = styled.div`
   padding-top: 25px;
 `;
 
-export const DashboardTab: any = styled(Tab) `
+export const DashboardTab: any = styled(Tab)`
   margin-bottom: 25px;
 
   &&& .ui.secondary.pointing.menu .active.item {
@@ -94,16 +100,16 @@ export const AmountComponent = styled.div`
   }
   &&& > span:last-child {
     margin-left: 9px;
-    color: #5A5A5A;
+    color: #5a5a5a;
     font-size: 14px;
     font-weight: bold;
   }
 `;
 
-export const Header = styled(SemanticHeader) `
-  color: #3C4251;
+export const Header = styled(SemanticHeader)`
+  color: #3c4251;
   h1.& {
     font-size: 26px;
     font-weight: bold;
   }
-`
+`;

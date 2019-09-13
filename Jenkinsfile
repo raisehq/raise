@@ -81,6 +81,13 @@ pipeline {
       }
     }
 
+    stage('LAUNCH TEST'){
+      steps {
+        withCredentials([string(credentialsId: 'trigger_test', variable: 'TOKEN')]) {
+          sh 'curl -X POST -F token=$TOKEN -F ref=master https://gitlab.com/api/v4/projects/14143074/trigger/pipeline'
+        }
+      }
+    }
   }
 
   environment {

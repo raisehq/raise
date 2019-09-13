@@ -9,5 +9,6 @@ export interface Loan {
   auctionEndBlock: string;
   interestRate: string;
   borrowerDebt: string;
+  lenderAmount?: string | null;
   investorCount: number;
 }

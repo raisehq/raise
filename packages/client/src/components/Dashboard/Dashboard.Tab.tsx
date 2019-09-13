@@ -23,12 +23,10 @@ const renderedLoans = (auctions, type) =>
       () => BorrowerLoan,
       ['lender', 0],
       () => LenderAuction,
-      ['lender', 1],
-      () => LenderAuction,
+      ['lender', ANY],
+      () => LenderLoan,
       ['suggested', ANY],
       () => SuggestedAuction,
-      ['lender', ANY],
-      () => LenderLoan
     );
     return <CardComponent key={auction.id} auction={auction} />;
   });
