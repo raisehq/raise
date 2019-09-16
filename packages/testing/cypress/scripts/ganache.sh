@@ -20,7 +20,7 @@ ganache_running() {
 }
 
 start_ganache() {
-  npx ganache-cli --gasLimit 0xfffffffffff -i 42 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" > /dev/null &
+  npx ganache-cli --gasLimit 0xfffffffffff ---gasPrice 0x01 -i 6969 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" > /dev/null &
 
   ganache_pid=$!
 
@@ -47,7 +47,7 @@ fi
 echo "- Clone contracts"
 rm  -rf ./contracts 
 git clone https://gitlab.com/raisehq/contracts-solidity --branch LP-666-fix-bug ./contracts > "/dev/null" 2>&1
-echo "- Adding text accounts"
+echo "- Adding json accounts to contract migration"
 cp cypress/fixtures/users.json contracts/int.accounts.json
 cp cypress/fixtures/contracts.json contracts/contracts.json
 
@@ -56,12 +56,12 @@ rm  -rf ./contracts/build
 cd contracts
 
 echo "- Install dependencies"
-#npm ci > "/dev/null" 2>&1
+npm ci > "/dev/null" 2>&1
 
 echo "- Migration contracts"
-test_private_key=
+test_private_key=d631de5b7e9cf451135896c833187c8b4dc230bf47756a9a2ca4ffccc161175e
 PRIVATE_KEY=$test_private_key npm run migration:cypress
-PRIVATE_KEY=d631de5b7e9cf451135896c833187c8b4dc230bf47756a9a2ca4ffccc161175e npm run test
+ 
 cd ..
 
 npm run cypress:open

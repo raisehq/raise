@@ -125,7 +125,7 @@ const CreateLoan = () => {
       await loanDispatcher.deploy(loan.minAmount, loan.amount, loan.mir, loan.term, loan.accept);
       setStage(UI.Success);
     } catch (error) {
-      console.error(error);
+      console.error('[LOAN DISPACHER]', ` MinAmount: ${loan.minAmount} Amount: ${loan.amount} Mir: ${loan.mir} Term: ${loan.term} Accept: ${loan.accept.toString()} `, error);
       setStage(UI.Error);
     }
   };

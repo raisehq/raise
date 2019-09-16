@@ -48,14 +48,14 @@ const getErrors = data => {
     const errors = next.suites
       .filter(element => element.failures.length > 0)
       .map(element => {
-        //console.log('AQUI llega? ');
+
         const parsedErrors = element.tests.map(tests => {
           return `
                   title: ${tests.fullTitle}
                   error: ${tests.err.message}
               `;
         });
-        //console.log('Parsed Errors : ', parsedErrors);
+
         return `
               title: ${element.title}
               tests:

@@ -1,7 +1,7 @@
 import LocalData from '../helpers/localData';
 import Web3 from 'web3';
 import { match, ANY } from 'pampy';
-
+//import axios from 'axios';
 const HOSTS: any = {
   AUTH: process.env.REACT_APP_HOST_URL_AUTH,
   CORE: process.env.REACT_APP_HOST_URL_CORE,
@@ -94,6 +94,7 @@ export const averageBlockTime = async () => {
 };
 
 export const parseNetwork = id => {
+  console.log(' NETWORK ---> ', id)
   switch (id) {
     case 1:
       return 'mainnet';
@@ -105,7 +106,19 @@ export const parseNetwork = id => {
       return 'goerli';
     case 42:
       return 'kovan';
+    case 6969:
+      return 'test'
     default:
       return 'private';
   }
 };
+//const HERO_CONTRACTS = 'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
+
+export const getContractsDefinition = async () => {
+
+  //const remoteContracts = await axios.get(HERO_CONTRACTS);
+
+  // @ts-ignore
+  const contractsDef = window.contracts;
+  return contractsDef;
+}

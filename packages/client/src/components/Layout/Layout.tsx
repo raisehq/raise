@@ -11,7 +11,7 @@ interface IDefaultProps {
 
 const Layout: React.SFC<IDefaultProps> = (props) => {
   const { component: Component, ...rest } = props;
-  return <Route {...rest} render={matchProps => (
+  return (<Route {...rest} render={matchProps => (
     <HeroLayout>
       <TopMobileMenu />
       <Menu />
@@ -19,7 +19,7 @@ const Layout: React.SFC<IDefaultProps> = (props) => {
         <Component {...matchProps} />
       </div>
     </HeroLayout>
-  )} />
+  )} />)
 };
 
 export default Layout;

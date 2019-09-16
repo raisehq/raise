@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
+import ResumeMock from '../ResumeMock/ResumeMock';
+
 import {
   RaiseMenu,
   Web3Address,
@@ -14,6 +16,7 @@ import {
   Credits
 } from './Menu.styles';
 import { AppContext } from '../App';
+
 const Menus = {
   1: [
     {
@@ -131,6 +134,7 @@ const Menu = () => {
       <MenuSubList >
         {getMenu(commonRoutes)}
       </MenuSubList>
+      <ResumeMock />
       <MenuLogout />
       <Credits>
         <p>Version: Release {process.env.REACT_APP_VERSION} (Beta)</p>

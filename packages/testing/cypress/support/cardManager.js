@@ -3,6 +3,7 @@ const getUnixTimestamp = (plus = 0) => {
   return (round + plus).toString().substr(0, 12);
 };
 /*
+  States: 
   0: 'CREATED', // accepts bids until timelimit initial state
   1: 'EXPIRED', // not fully funded in timelimit
   2: 'ACTIVE', // fully funded, inside timelimit
@@ -11,7 +12,7 @@ const getUnixTimestamp = (plus = 0) => {
   5: 'CLOSED', // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
   6: 'FROZEN' // when admin unlocks withdrawals
 */
-export const createCard = type => {
+export const createCard = (type, address = '0xf98f42a68a7fec388b93189889774a' + getUnixTimestamp()) => {
   switch (type) {
     case 'CREATED':
       return {
@@ -20,7 +21,7 @@ export const createCard = type => {
         auctionLength: '300',
         auctionStartTimestamp: getUnixTimestamp(),
         borrowerDebt: '0',
-        id: '0xf98f42a68a7fec388b93189889774a' + getUnixTimestamp(),
+        id: address,
         interestRate: null,
         investorCount: 0,
         loanRepaid: false,

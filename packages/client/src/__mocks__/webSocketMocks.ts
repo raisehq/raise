@@ -1,9 +1,9 @@
 // @ts-ignore-file
 const SUBS = {};
 const DATA = {};
-const TAG = "[WEBSOCKET_MOCK]";
+const TAG = '[WEBSOCKET_MOCK]';
 class UseWebsocket {
-  public constructor(url: string, protocol: string, options: object = {}) {
+  public constructor() {
     // subscribe to events
     console.log(TAG, ' Start ....');
   }

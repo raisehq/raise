@@ -4,14 +4,14 @@ const utils = require('../../../client/src/utils/index');
 describe('BORROWER', function () {
   beforeEach(function () {
     cy.login('borrower');
+    cy.mockAPI('borrower');
     cy.web3('borrower');
-
   });
 
   it('Go to create loan', function () {
 
     cy.visit(Cypress.env('url'));
-    cy.mockAPI();
+
     cy.addCards('CREATED');
     cy.wait(4000);
 
@@ -44,6 +44,7 @@ describe('BORROWER', function () {
     cy.wait(2000);
     cy.get('#btn-check').matchImageSnapshot('loan_created_button');
     cy.get('#btn-check').click();
+    cy.addCards('CREATED');
     cy.wait(2000);
     cy.get('.heroCard', { timeout: 120000 })
       .its('length')

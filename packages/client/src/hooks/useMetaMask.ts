@@ -1,15 +1,13 @@
-import axios from 'axios';
+//
 import { useState, useEffect, useRef, useContext } from 'react';
 import hasIn from 'lodash/hasIn';
 import { isAddress } from 'web3-utils';
 import get from 'lodash/get';
-import { getWeb3 } from '../utils';
+import { getWeb3, getContractsDefinition } from '../utils';
 import useAsyncEffect from './useAsyncEffect';
 import { AppContext } from '../components/App';
 
-const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
-
+//
 const useMetaMask = () => {
   const {
     web3Status: { network }
@@ -20,10 +18,7 @@ const useMetaMask = () => {
   const contracts = useRef({});
 
   useAsyncEffect(async () => {
-    const remoteContracts = await axios.get(HERO_CONTRACTS);
-    // @ts-ignore
-    const contractsDef = window.Cypress ? window.contracts : remoteContracts.data;
-    setHeroContracts(contractsDef);
+    setHeroContracts(await getContractsDefinition());
   }, []);
 
   useEffect(() => {

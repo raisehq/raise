@@ -37,7 +37,8 @@ module.exports = {
       'error',
       { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '/../../')] }
     ],
-    'implicit-arrow-linebreak': 0
+    'implicit-arrow-linebreak': 0,
+    'eslint(react/jsx-first-prop-new-line': 0
   },
   settings: {
     react: {

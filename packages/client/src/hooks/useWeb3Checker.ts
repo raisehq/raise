@@ -1,16 +1,13 @@
 import { useState, useContext, useEffect } from 'react';
 import useAsyncEffect from './useAsyncEffect';
 import isEqual from 'lodash/isEqual';
-import axios from 'axios';
 import get from 'lodash/get';
 import hasIn from 'lodash/hasIn';
 import { toChecksumAddress } from 'web3-utils';
 import { RootContext } from '../context';
-import { getWeb3, parseNetwork } from '../utils';
+import { getWeb3, parseNetwork, getContractsDefinition } from '../utils';
 import { Web3State } from '../commons/Web3State';
 
-const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
 // @ts-ignore
 const web3CheckList = window['web3CheckList'] = (
   web3,
@@ -65,19 +62,13 @@ const useWeb3Checker = (): Web3State => {
   );
 
   useAsyncEffect(async () => {
-    const remoteContracts = await axios.get(HERO_CONTRACTS);
-    // @ts-ignore
-    const contractsDef = window.Cypress ? { data: window.contracts } : remoteContracts;
-    // @ts-ignore
-    console.log('#### WINDOW CONTRACTS : ', window.contracts)
+
+    const contractsDef = { data: await getContractsDefinition() };
     setContracts(contractsDef);
-    console.log('NETWORK ----> ', Object.keys(contractsDef.data.address)
-      .map(x => parseNetwork(Number(x)))
-    );
     setTargetNetwork(
       Object.keys(contractsDef.data.address)
         .map(x => parseNetwork(Number(x)))
-        .filter(availableId => ['mainnet', 'kovan'].find(id => id === availableId))
+        .filter(availableId => ['mainnet', 'kovan', 'test'].find(id => id === availableId))
     );
     setDefs(contractsDef.data);
   }, []);
@@ -150,9 +141,3 @@ const useWeb3Checker = (): Web3State => {
 };
 
 export default useWeb3Checker;
-
-// @ts-ignore
-if (window.Cypress) {
-  // @ts-ignore
-  //window.web3CheckList = web3CheckList;
-}
