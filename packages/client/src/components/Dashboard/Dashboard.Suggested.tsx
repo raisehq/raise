@@ -4,7 +4,11 @@ import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
 import { InvestModal } from '../InvestModal';
 
-const Loan = ({ auction }: { auction: any }) => {
+interface LoanProps {
+  auction: any;
+}
+
+const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
   const calculations = getCalculations(auction);
   const { principal, currentAmount, totalAmount, maxAmount, times, currentAPR } = calculations;
 

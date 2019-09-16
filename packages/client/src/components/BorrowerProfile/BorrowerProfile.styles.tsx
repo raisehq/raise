@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Card, Header } from 'semantic-ui-react';
-import { device } from '../LayoutV2/breakpoints';
+import { device, maxDevice } from '../LayoutV2/breakpoints';
 import theme from '../../theme';
 
 export const Container = styled.div`
@@ -128,6 +128,16 @@ export const BorrowerLoansBox = styled.div`
   }
   @media screen and ${device.mobileM} {
     margin-top: 32px;
+  }
+  .heroCard {
+    margin: 0 15px 15px 0;
+  }
+
+  .heroCard {
+    @media ${maxDevice.tablet} {
+      width: 100%;
+      margin: 0 0 10px 0;
+    }
   }
 `;
 
