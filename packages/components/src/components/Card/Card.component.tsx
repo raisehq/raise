@@ -15,7 +15,8 @@ import {
   InfoIcon,
   Separator,
   GraphContainer,
-  GraphTitle
+  GraphTitle,
+  CardContent
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -23,13 +24,15 @@ interface RowComponentProps {
   title: string;
   content: string | number | null;
   contentColor?: string | null;
+  small?: boolean | null;
 }
+
 const Context = React.createContext({});
 
 const BadgeComponent = ({ children, color }) => <Badge color={color}>{children}</Badge>;
 
-const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentColor }) => (
-  <Row>
+const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentColor, small }) => (
+  <Row small={small}>
     <RowContent contentColor={contentColor}>{content}</RowContent>
     <RowTitle>{title}</RowTitle>
   </Row>
@@ -81,6 +84,7 @@ const TooltipComponent = () => (
   />
 );
 
+Card.Content = CardContent;
 Card.Badge = BadgeComponent;
 Card.Row = RowComponent;
 Card.Grid = Grid;

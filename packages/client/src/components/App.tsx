@@ -14,6 +14,7 @@ import Join from './Join';
 import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
+import Test from './SuggestTest';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
 import useGoogleTagManager from '../hooks/useGoogleTagManager';
@@ -230,7 +231,7 @@ const App = ({ children, history }: any) => {
           roles={[1, 2]}
         />
         <Web3Route
-          marketplace
+          marketplaceSuggesteds
           layout={Layout}
           exact
           path="/create-loan"
@@ -238,6 +239,7 @@ const App = ({ children, history }: any) => {
           roles={[1]}
         />
 
+        <LayoutV2 exact path="/test" component={Test} />
         {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />
         <LayoutV2 exact path="/join" component={Join} />

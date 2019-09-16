@@ -6,6 +6,10 @@ interface RowContentProps {
   contentColor?: string;
 }
 
+interface RowWrapperProps {
+  small?: boolean | null;
+}
+
 interface GridProps {
   noGraph?: boolean;
   spaceBetween: boolean;
@@ -23,12 +27,15 @@ export const HeroCard = styled.div`
   border-radius: 4px;
   background-color: #ffffff;
   box-shadow: ${theme.shadow};
-  padding: 20px;
   box-sizing: border-box;
   position: relative;
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
+`;
+
+export const CardContent = styled.div`
+  padding: 20px;
 `;
 
 export const Grid: any = styled.div<GridProps>`
@@ -39,8 +46,8 @@ export const Grid: any = styled.div<GridProps>`
   margin: ${({ noGraph }) => (!noGraph ? '10px 0px' : '30px 0px 10px')};
 `;
 
-export const Row = styled.div`
-  flex: 1 0 33%;
+export const Row = styled.div<RowWrapperProps>`
+  flex: ${({ small }) => (small ? '1 0 25%' : '1 0 33%')};
   text-align: center;
   display: flex;
   flex-direction: column;
