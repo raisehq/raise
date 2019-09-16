@@ -47,11 +47,11 @@ Cypress.Commands.add('addCards', function (type) {
 */
 Cypress.Commands.add('addLoanAndCard', function (type) {
   cy.window().then(async (win) => {
-
+    const user = Cypress.env('user');
     const web3 = win.web3;
     const netId = await web3.eth.net.getId();
     const LoanDispatcher = new web3.eth.Contract(contracts.abi.LoanDispatcher, contracts.address[netId].LoanDispatcher);
-    const tx = await LoanDispatcher.deploy(8000, 10000, 10, 300, false);
+    const tx = await LoanDispatcher.deploy(8000, 10000, 10, 300, false, { from: user['borrower'].address });
     console.log(' TX : ', tx);
     const newCard = createCard(type);
     cards.users[0].loanRequests.push(newCard);

@@ -1,12 +1,12 @@
 
 import MockAdapter from 'axios-mock-adapter';
+
 let Cache;
 const MockAxios = (axios: any) => {
   // @ts-ignore
   const AxiosMock = new MockAdapter(axios);
   // @ts-ignore
   Cache = Cache !== undefined ? Cache : window.AxiosMockResponses;
-  console.log('CACHE ==========> ', Cache)
   const responses = Cache;
   // Match ALL requests
   AxiosMock.onAny().reply((config: any) => {
