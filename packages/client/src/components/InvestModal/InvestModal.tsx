@@ -9,7 +9,7 @@ import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
 
 import { LenderButton, Modal, ExitButton } from './InvestModal.styles';
-import { match, ANY } from 'pampy';
+import { match, ANY, _ } from 'pampy';
 
 const UI = daggy.taggedSum('UI', {
   Confirm: [],
@@ -29,14 +29,17 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
   const invested = loan.lenderAmount && Number(fromWei(loan.lenderAmount));
   const notConnected = !hasProvider || !unlocked || !accountMatches || !networkMatches;
 
-  const buttonText = match([notConnected, invested],
+  const buttonText = match(
+    [notConnected, invested],
     [true, ANY],
     () => 'Connect wallet',
     [false, true],
     () => 'INVEST MORE',
     [false, false],
     () => 'INVEST',
-  )
+    _,
+    () => {}
+  );
 
   const openModal = () => {
     setStage(UI.Confirm);

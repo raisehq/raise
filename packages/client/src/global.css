@@ -19,7 +19,7 @@ body.hidescroll {
 #root {
   padding: 0;
   margin: 0;
-  height: 100%;
+  height: auto;
   font-size: 14px;
   line-height: 1.4285em;
   color: rgba(0, 0, 0, 0.6) !important;

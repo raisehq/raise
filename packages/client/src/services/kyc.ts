@@ -22,10 +22,7 @@ export const connect = async (userId, email, token) => {
   const config: any = {
     url: `${HOST}/connect/${userId}/${email}/${token}`,
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
+    headers: { ...COMMON_HEADERS, ...Header.getHeaderAuth() }
   };
 
   const request = await to(axios(config));

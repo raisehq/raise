@@ -86,7 +86,8 @@ export const NoResults = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 26px;
+  font-size: 16px;
+  border: 1px solid #cfd0d4;
 `;
 
 export const AmountComponent = styled.div`

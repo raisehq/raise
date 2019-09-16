@@ -1,22 +1,22 @@
 import styled from 'styled-components';
-import theme from '../../theme';
-import { device } from '../LayoutV2/breakpoints';
+//import theme from '../../theme';
+//import { device } from '../LayoutV2/breakpoints';
 
 export const HeroLayout = styled('div')`
   width: 100%;
   height: 100%;
+`;
 
-  > .content {
-    width: 100%;
-    background: ${theme.colors.background};
-    box-sizing: border-box;
-    padding: 0;
-    @media ${device.laptop} {
-      height: 100vh;
-      overflow-y: scroll;
-      padding 0px 0px 0px 280px;
-    }
-  }
+export const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+export const Content = styled.div`
+  width: 1172px;
+  padding-top: 105px;
+  box-sizing: border-box;
 `;
 
 export const Separator = styled('div')`
