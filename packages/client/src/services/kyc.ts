@@ -1,16 +1,16 @@
 import axios from 'axios';
+import Header from '../helpers/header';
 import { to, getHost } from '../utils';
 
 const HOST = `${getHost('CORE')}/kyc`;
+
+const COMMON_HEADERS = { Accept: 'application/json', 'Content-Type': 'application/json' };
 
 export const initKyc = async id => {
   const config: any = {
     url: `${HOST}/auth/${id}`,
     method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
+    headers: { ...COMMON_HEADERS, ...Header.getHeaderAuth() }
   };
 
   const request = await to(axios(config));
@@ -37,10 +37,7 @@ export const isKYCVerified = async (userId, token) => {
   const config: any = {
     url: `${HOST}/isverified/${userId}/${token}`,
     method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
+    headers: { ...COMMON_HEADERS, ...Header.getHeaderAuth() }
   };
 
   const request = await to(axios(config));
