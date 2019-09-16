@@ -29,14 +29,17 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
   const invested = loan.lenderAmount && Number(fromWei(loan.lenderAmount));
   const notConnected = !hasProvider || !unlocked || !accountMatches || !networkMatches;
 
-  const buttonText = match([notConnected, invested],
+  const buttonText = match(
+    [!!notConnected, !!invested],
     [true, ANY],
     () => 'Connect wallet',
     [false, true],
     () => 'INVEST MORE',
     [false, false],
     () => 'INVEST',
-  )
+    ANY,
+    () => 'INVEST'
+  );
 
   const openModal = () => {
     setStage(UI.Confirm);
