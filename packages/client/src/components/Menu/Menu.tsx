@@ -76,8 +76,9 @@ const Menu = () => {
 
   const getMenu = useCallback(
     links =>
-      !links || !links.length ? [] : links.map(item => (
+      !links || !links.length ? [] : links.map((item, i) => (
         <li
+          id={`menu-${i}`}
           key={item.link}
           className={pathname === item.link ? 'active' : 'non-active'}
         >
@@ -123,11 +124,11 @@ const Menu = () => {
       <CloseButton onClick={closeMenu} icon>
         <Icon name="close" size="big" />
       </CloseButton>
-      <MenuList>
+      <MenuList id='options-menu'>
         {getMenu(Menus[accounttype_id])}
       </MenuList>
       <div style={{ flex: 2 }} />
-      <MenuSubList>
+      <MenuSubList >
         {getMenu(commonRoutes)}
       </MenuSubList>
       <MenuLogout />

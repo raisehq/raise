@@ -76,6 +76,8 @@ export default (dispatch: any, state: any) => {
       await verifyAuth();
       dispatch({ type: 'AUTH_TOKEN_VERIFIED' });
     } catch (error) {
+
+      console.error(error);
       LocalData.remove('user');
       LocalData.remove('auth');
       Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });

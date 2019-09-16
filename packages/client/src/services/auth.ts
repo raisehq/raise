@@ -197,7 +197,6 @@ export const verifyAuth = async () => {
 
   try {
     const rawResponse = await axios(config);
-
     switch (rawResponse.status) {
       case 200:
         return rawResponse.data.data;

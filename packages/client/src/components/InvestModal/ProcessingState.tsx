@@ -76,8 +76,6 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
 
   useAsyncEffect(async () => {
     if (approved) {
-      console.log('investment:: ', investment)
-      console.log(loan)
       const { DAIProxy } = contracts;
       try {
         await DAIProxy.methods
@@ -194,9 +192,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
       </Fragment>
       {
         errors
-        && (errors.approvalError !== null
-        || errors.transactionError !== null)
-        ? printRetry() : <BlankSpace />
+          && (errors.approvalError !== null
+            || errors.transactionError !== null)
+          ? printRetry() : <BlankSpace />
       }
     </>
   );

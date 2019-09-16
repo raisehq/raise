@@ -1,6 +1,6 @@
 const getUnixTimestamp = (plus = 0) => {
-  const round = Math.round(Date.now() / 10000);
-  return (round + plus).toString().substr(0, 11);
+  const round = Math.round(Date.now() / 1000);
+  return (round + plus).toString().substr(0, 12);
 };
 /*
   0: 'CREATED', // accepts bids until timelimit initial state
@@ -15,7 +15,6 @@ export const createCard = type => {
   switch (type) {
     case 'CREATED':
       return {
-        mock: 1,
         auctionEndTimestamp: getUnixTimestamp(300),
         auctionEnded: false,
         auctionLength: '300',

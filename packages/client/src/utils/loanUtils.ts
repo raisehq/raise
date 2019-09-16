@@ -76,7 +76,7 @@ export const calculateTimes = auction => {
     const loanTermLeft = getDesiredTime(Number(auction.termEndTimestamp) - today, 'loan');
     return { loanTerm, auctionTimeLeft, loanTermLeft };
   } catch (error) {
-    console.log(error);
+    console.error("[LOANUTILS][CalculateFromWei]", error);
     return error;
   }
 };
@@ -209,8 +209,8 @@ export const getActiveAuctions = (auctions, states) => {
   const updatedAuctions = auctions ? auctions.map(auction => assumeStateMachine(auction)) : [];
   const activeAuctions = updatedAuctions
     ? updatedAuctions.filter(
-        auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
-      )
+      auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
+    )
     : [];
   return activeAuctions;
 };

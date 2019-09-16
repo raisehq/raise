@@ -106,8 +106,6 @@ const App = ({ children, history }: any) => {
   }, [webSocket, network]);
 
   useAsyncEffect(async () => {
-    console.log(logged);
-
     if (logged) {
       onGetCryptoAddressByUser();
       onGetUser();
@@ -162,28 +160,30 @@ const App = ({ children, history }: any) => {
     // prettier-ignore
     match(conditions,
       { isLoading: true },
-        () => {},
+      () => { },
       { logged: true, web3Pass: true, deposited: false },
-        () => setTimeout(() => {
-          TagManager();
-          history.push('/deposit')}, 3000),
+      () => setTimeout(() => {
+        TagManager();
+        history.push('/deposit')
+      }, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: true },
-        () => setTimeout(() => {
-          TagManager();
-          history.push('/referral')}, 3000),
+      () => setTimeout(() => {
+        TagManager();
+        history.push('/referral')
+      }, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
-        () => {
-          setTimeout(() => {
-            const params = new URLSearchParams(window['location']['search']);
-            if (params.has('redirect')) {
-              history.push(params.get('redirect'));
-            }
-          }, 3000)
-        },
+      () => {
+        setTimeout(() => {
+          const params = new URLSearchParams(window['location']['search']);
+          if (params.has('redirect')) {
+            history.push(params.get('redirect'));
+          }
+        }, 3000)
+      },
       { logged: false, isJoin: false },
-        () => history.push('/join'),
+      () => history.push('/join'),
       _,
-        () => {}
+      () => { }
     );
   }, [isLoading, logged, web3Pass, deposited]);
 

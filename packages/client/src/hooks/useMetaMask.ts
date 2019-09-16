@@ -20,9 +20,10 @@ const useMetaMask = () => {
   const contracts = useRef({});
 
   useAsyncEffect(async () => {
-    const contracts = await axios.get(HERO_CONTRACTS);
-
-    setHeroContracts(contracts.data);
+    const remoteContracts = await axios.get(HERO_CONTRACTS);
+    // @ts-ignore
+    const contractsDef = window.Cypress ? window.contracts : remoteContracts.data;
+    setHeroContracts(contractsDef);
   }, []);
 
   useEffect(() => {

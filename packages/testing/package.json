@@ -21,13 +21,15 @@
   "scripts": {
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "cypress run",
-    "cy:run": "node cypress/scripts/cypress.js",
-    "la": "node cypress/scripts/show_errors.js"
+    "cypress:test": "sh cypress/scripts/ganache.sh",
+    "test": "npm run cypress:test",
+    "ganache:run": "ganache-cli --gasLimit 0xfffffffffff -i 42 -m \"stamp polar cup smart ill agree human episode reform trigger text forget\" --db .gcache --port 8545",
+    "cy:run": "node cypress/scripts/cypress.js"
   },
   "dependencies": {
     "@cypress/webpack-preprocessor": "^4.1.0",
     "cypress": "^3.4.1",
+    "ganache-cli": "^6.7.0",
     "node-slack-upload": "^2.0.0",
     "request": "^2.88.0",
     "sinon": "^7.4.2",

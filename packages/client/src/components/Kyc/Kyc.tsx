@@ -16,8 +16,6 @@ const KYC = () => {
     }
   }: any = useContext(AppContext);
 
-  console.log(store);
-
   useAsyncEffect(async () => {
     if (history.location.pathname === '/kyc' && token) {
       const { id } = store.user.details;
@@ -31,7 +29,7 @@ const KYC = () => {
           externalUserId: id,
           accessToken: token
         },
-        function(messageType, payload) {
+        function (messageType, payload) {
           console.log('[IDENSIC DEMO] Idensic message:', messageType, payload);
         }
       );

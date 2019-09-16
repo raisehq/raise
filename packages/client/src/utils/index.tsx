@@ -109,7 +109,3 @@ export const parseNetwork = id => {
       return 'private';
   }
 };
-
-export const putavida = () => {
-  console.log('puta vida');
-};

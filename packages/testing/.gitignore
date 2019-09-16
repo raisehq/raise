@@ -3,3 +3,4 @@ cypress/screenshots/*
 cypress/videos/*
 cypress/snapshots/*
 cypress/results
+contracts
