@@ -1,7 +1,8 @@
 import Web3 from 'web3';
 import PrivateKeyProvider from 'truffle-privatekey-provider';
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
-import cards from '../fixtures/cards.json';
+import cardsBorrower from '../fixtures/cards_borrower.json';
+import cardsLender from '../fixtures/cards_lender.json';
 import { createCard } from './cardManager';
 
 // Require only when start test
@@ -35,9 +36,9 @@ Cypress.Commands.add('web3', function (type) {
 Cypress.Commands.add('addCards', function (type) {
   cy.window().then(win => {
     const newCard = createCard(type);
-    cards.users[0].loanRequests.push(newCard);
-    win.UseWebsocket.trigger('loansByAccount', cards);
-    win.UseWebsocket.trigger('liveAuctionsByAccount', cards);
+    cardsBorrower.users[0].loanRequests.push(newCard);
+    win.UseWebsocket.trigger('loansByAccount', cardsBorrower);
+    win.UseWebsocket.trigger('liveAuctionsByAccount', cardsBorrower);
   });
 });
 
@@ -48,15 +49,20 @@ Cypress.Commands.add('addCards', function (type) {
 Cypress.Commands.add('addLoanAndCard', function (type) {
   cy.window().then(async (win) => {
     const user = Cypress.env('user');
-    const web3 = win.web3;
+    const provider = new PrivateKeyProvider(user['borrower'].private_key, Cypress.env('eth_provider'), 0, 10);
+    const web3 = new Web3(provider); // eslint-disable-line no-param-reassign
+
     const netId = await web3.eth.net.getId();
+    const params = ["10000000000000000000000", "10000000000000000000000", "10000000000000000000", "300", "2592000"];
     const LoanDispatcher = new web3.eth.Contract(contracts.abi.LoanDispatcher, contracts.address[netId].LoanDispatcher);
-    const tx = await LoanDispatcher.deploy(8000, 10000, 10, 300, false, { from: user['borrower'].address });
-    console.log(' TX : ', tx);
-    const newCard = createCard(type);
-    cards.users[0].loanRequests.push(newCard);
-    win.UseWebsocket.trigger('loansByAccount', cards);
-    win.UseWebsocket.trigger('liveAuctionsByAccount', cards);
+    console.log(' LOAN DISPACHER : ', LoanDispatcher);
+    const tx = await LoanDispatcher.methods.deploy(...params).send({ from: user['borrower'].address });
+    console.log('>>> TX : ', tx);
+    const newCard = createCard(type, tx.to);
+    cardsLender.loans.push(newCard);
+    console.log('CARDS :', cardsLender);
+    win.UseWebsocket.trigger('suggestedLender', cardsLender);
+
   });
 });
 

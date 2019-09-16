@@ -66,6 +66,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
             .send({ from: account });
           setAproved(true);
         } catch (error) {
+          console.error('[DAIProxy ERROR ]', 'approve :', DAIProxy.options.address, ' stacktrace: ', error);
           setError({ approvalError: error });
         }
       } else {
@@ -83,6 +84,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
           .send({ from: account });
         setStage(ui.Success);
       } catch (error) {
+        console.error('[DAIProxy ERROR]', 'address:', loan.id, ' stacktrace: ', error);
         setError({ transactionError: error });
       }
     }

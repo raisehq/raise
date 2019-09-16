@@ -12,7 +12,8 @@ const getUnixTimestamp = (plus = 0) => {
   5: 'CLOSED', // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
   6: 'FROZEN' // when admin unlocks withdrawals
 */
-export const createCard = (type, address = '0xf98f42a68a7fec388b93189889774a' + getUnixTimestamp()) => {
+export const createCard = (type, address) => {
+  if (!address) address = '0xf98f42a68a7fec388b93189889774a' + getUnixTimestamp();
   switch (type) {
     case 'CREATED':
       return {

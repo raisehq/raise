@@ -16,35 +16,34 @@ export default (dispatch: any, state: any) => {
     );
   };
 
-  const onGetSuggestedAuctionsSubscription = (error, data) => {
-    if (error) {
-      console.log('error on get sugg subs :: ', error);
-    } else {
-      dispatch({ type: 'SET_SUGGESTED_AUCTIONS', data: data.loans });
-    }
-  };
 
   const onGetLiveAuctionsByAccountSubscription = (error, data) => {
-    if (error) {
-      console.log('error on get live auction subs :: ', error);
-    } else {
-      dispatch({ type: 'SET_LIVE_AUCTIONS', data: data.users[0].loanRequests });
-    }
+    if (error) return console.log('error on get live auction subs :: ', error);
+    console.log('------> ', data);
+    dispatch({ type: 'SET_LIVE_AUCTIONS', data: data.users[0].loanRequests });
+  };
+
+  /** LENDER **/
+
+  const onGetSuggestedAuctionsSubscription = (error, data) => {
+    if (error) return console.log('error on get sugg subs :: ', error);
+    console.log('LLEGA????', data)
+    dispatch({ type: 'SET_SUGGESTED_AUCTIONS', data: data.loans });
+
   };
 
   const onGetLenderInvestmentSubscription = (error, data) => {
-    if (error) {
-      console.log('error on get live auction subs :: ', error);
-    } else {
-      dispatch({
-        type: 'SET_LENDER_INVESTMENTS',
-        data: data.users[0].loanFundings.map(({ withdrawn, amount, loan }) => ({
-          ...loan,
-          withdrawn,
-          lenderAmount: amount
-        }))
-      });
-    }
+    if (error) return console.log('error on get live auction subs :: ', error);
+
+    dispatch({
+      type: 'SET_LENDER_INVESTMENTS',
+      data: data.users[0].loanFundings.map(({ withdrawn, amount, loan }) => ({
+        ...loan,
+        withdrawn,
+        lenderAmount: amount
+      }))
+    });
+
   };
 
   const onGetLoansByAccountSubscription = (error, data) => {
