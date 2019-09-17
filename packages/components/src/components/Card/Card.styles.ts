@@ -127,6 +127,24 @@ export const HeaderContent = styled.div`
   font-weight: bold;
 `;
 
+export const SubHeader = styled.div`
+  margin-top: 0px;
+  margin-bottom: 5px;
+`;
+export const SubHeaderTitle = styled.h1`
+  color: #5a5a5a;
+  font-size: 10px;
+  font-weight: lighter;
+  margin-bottom: 4px;
+  line-height: 14px;
+`;
+export const SubHeaderContent = styled.div`
+  color: #3c4251;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 28px;
+`;
+
 export const Graph: any = styled.div`
   width: 90%;
   height: 10px;
@@ -192,6 +210,13 @@ export const Badge = styled.div`
 export const Separator = styled.div`
   width: 100%;
   height: 1px;
+  background: #ecedee;
+  margin: 0px;
+`;
+
+export const SeparatorVertical = styled.div`
+  width: 1px;
+  height: 100%;
   background: #ecedee;
   margin: 0px;
 `;

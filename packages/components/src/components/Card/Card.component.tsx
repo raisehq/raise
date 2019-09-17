@@ -21,7 +21,11 @@ import {
   CardContent,
   TimeLeft,
   ProgressBar,
-  ProgressPercent
+  ProgressPercent,
+  SeparatorVertical,
+  SubHeader,
+  SubHeaderContent,
+  SubHeaderTitle
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -48,6 +52,13 @@ const HeaderComponent = ({ title, amount, ...rest }) => (
     <HeaderTitle>{title}</HeaderTitle>
     <HeaderContent>{amount}</HeaderContent>
   </Header>
+);
+
+const SubHeaderComponent = ({ title, amount, ...rest }) => (
+  <SubHeader {...rest}>
+    <SubHeaderTitle>{title}</SubHeaderTitle>
+    <SubHeaderContent>{amount}</SubHeaderContent>
+  </SubHeader>
 );
 
 const Card = ({ children }) => {
@@ -124,9 +135,11 @@ Card.Badge = BadgeComponent;
 Card.Row = RowComponent;
 Card.Grid = Grid;
 Card.Header = HeaderComponent;
+Card.SubHeader = SubHeaderComponent;
 Card.Graph = GraphComponent;
 Card.Progress = ProgressComponent;
 Card.Separator = Separator;
+Card.SeparatorVertical = SeparatorVertical;
 Card.Tooltip = TooltipComponent;
 
 export default Card;
