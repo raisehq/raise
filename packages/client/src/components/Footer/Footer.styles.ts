@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { maxDevice } from '../LayoutV2/breakpoints';
 
 export const Footer = styled.div`
   width: 100%;
@@ -13,6 +14,10 @@ export const FooterWrapper = styled.div`
   margin: 0 auto;
   padding: 75px 25px 25px 25px;
   box-sizing: border-box;
+
+  @media ${maxDevice.laptop} {
+    width: 100%;
+  }
 `;
 
 export const FooterMenu = styled.div`

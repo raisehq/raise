@@ -15,7 +15,8 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
   width: 1172px;
-  padding-top: 105px;
+  padding-top: 75px;
+  padding-bottom: 50px;
   box-sizing: border-box;
 `;
 
