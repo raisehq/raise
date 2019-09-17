@@ -8,11 +8,11 @@ export const HeroLayout = styled('div')`
 
   > .content {
     width: 100%;
-    height: 100vh;
     background: ${theme.colors.background};
     box-sizing: border-box;
     padding: 0;
     @media ${device.laptop} {
+      height: 100vh;
       overflow-y: scroll;
       padding 0px 0px 0px 280px;
     }
