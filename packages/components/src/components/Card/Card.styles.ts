@@ -35,9 +35,13 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
 `;
 
 export const CardLogo: any = styled(Image)`
-  width: 70px;
-  height: 70px;
-  border-radius: 6px;
+  &&& {
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #cfd0d4;
+  }
 `;
 
 export const HeroCard = styled.div`
