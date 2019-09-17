@@ -22,7 +22,8 @@ export const createCard = (type, address) => {
         auctionLength: '300',
         auctionStartTimestamp: getUnixTimestamp(),
         borrowerDebt: '0',
-        id: address,
+        id: address.toString(),
+        address,
         interestRate: null,
         investorCount: 0,
         loanRepaid: false,
@@ -31,11 +32,11 @@ export const createCard = (type, address) => {
         minimumReached: false,
         netBalance: null,
         operatorBalance: '0',
-        operatorFee: '2592000',
+        operatorFee: '1000000000000000000',
         principal: '0',
         state: 0,
         termEndTimestamp: '0',
-        termLength: '300'
+        termLength: '2592000'
       };
   }
   return;
