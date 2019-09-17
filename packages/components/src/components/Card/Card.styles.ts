@@ -12,7 +12,10 @@ interface RowWrapperProps {
 
 interface GridProps {
   noGraph?: boolean;
-  spaceBetween: boolean;
+  spaceBetween?: boolean;
+  alignCenter?: boolean;
+  alignBottom?: boolean;
+  alignTop?: boolean;
 }
 
 interface ImageCropProps {
@@ -32,6 +35,7 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
   background-repeat: no-repeat;
   background-image: ${({ src }) => `url(${src})`};
   border-radius: 6px 6px 0 0;
+  border: 1px solid #cfd0d4;
 `;
 
 export const CardLogo: any = styled(Image)`
@@ -49,7 +53,7 @@ export const HeroCard = styled.div`
   min-height: 100%;
   border-radius: 6px;
   background-color: #ffffff;
-  box-shadow: ${theme.shadow};
+  border: 1px solid #cfd0d4;
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -71,14 +75,15 @@ export const CardBorrowerTitle = styled.div`
 
 export const CardDescription = styled.div`
   max-height: 76px;
-  height: 100%;
+  height: 76px;
   color: #5a5a5a;
   font-size: 14px;
+  display: block;
 `;
 export const CardContent = styled.div<{ children?: any; logo?: any }>`
   padding: 20px;
   position: relative;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
@@ -98,13 +103,16 @@ export const CardContent = styled.div<{ children?: any; logo?: any }>`
 export const Grid: any = styled.div<GridProps>`
   display: flex;
   justify-content: ${({ spaceBetween }) => (spaceBetween ? 'space-between' : 'unset')};
+  ${({ alignCenter }) => alignCenter && 'align-items: center;'}
+  ${({ alignBottom }) => alignBottom && 'align-items: flex-end;'}
+  ${({ alignTop }) => alignTop && 'align-items: flex-start;'}
   box-sizing: border-box;
   flex-wrap: wrap;
   margin: ${({ noGraph }) => (!noGraph ? '10px 0px' : '30px 0px 10px')};
 `;
 
 export const Row = styled.div<RowWrapperProps>`
-  flex: ${({ small }) => (small ? '1 0 25%' : '1 0 33%')};
+  flex: ${({ small }) => (small ? '1 0 25%' : '1 0 32.5%')};
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -147,6 +155,24 @@ export const HeaderContent = styled.div`
   font-weight: bold;
 `;
 
+export const SubHeader = styled.div`
+  margin-top: 0px;
+  margin-bottom: 5px;
+`;
+export const SubHeaderTitle = styled.h1`
+  color: #5a5a5a;
+  font-size: 10px;
+  font-weight: lighter;
+  margin-bottom: 4px;
+  line-height: 14px;
+`;
+export const SubHeaderContent = styled.div`
+  color: #3c4251;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 28px;
+`;
+
 export const Graph: any = styled.div`
   width: 90%;
   height: 10px;
@@ -185,7 +211,7 @@ export const ProgressBar: any = styled.div`
   &&:before {
     content: '';
     position: absolute;
-    width: ${(props: any) => (props.width * 100) / 90}%;
+    width: ${(props: any) => props.width}%;
     height: 100%;
     top: 0;
     border-radius: 4px;
@@ -217,8 +243,8 @@ export const Separator = styled.div`
 `;
 
 export const Vertical = styled.div`
-  width: 1px;
-  height: 100%;
+  width: 2px;
+  height: 35px;
   background: #ecedee;
   margin: 0px;
 `;

@@ -40,7 +40,7 @@ export const LenderButton = styled(Button)`
     background-color: #eb3f93;
     text-transform: uppercase;
     border-radius: 4px;
-    height: 48px;
+    height: 56px;
     font-size: 16px;
     font-weight: bold;
     width: 100%;
