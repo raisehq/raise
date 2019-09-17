@@ -21,7 +21,7 @@
   "scripts": {
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "cypress:test": "sh cypress/scripts/ganache.sh",
+    "cypress:test": "sh cypress/scripts/start.sh",
     "test": "npm run cypress:test",
     "ganache:run": "ganache-cli --gasLimit 0xfffffffffff -m \"stamp polar cup smart ill agree human episode reform trigger text forget\" --db .gcache --port 8545",
     "cy:run": "node cypress/scripts/cypress.js"

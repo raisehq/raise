@@ -1,4 +1,3 @@
-cypress.env.json
 cypress/screenshots/*
 cypress/videos/*
 cypress/snapshots/*

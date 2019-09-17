@@ -16,5 +16,3 @@ kill all
 
 ```
 
-
-CONTRACTS window.contract esta vacio ???!!!

@@ -95,7 +95,7 @@ export const averageBlockTime = async () => {
 };
 
 export const parseNetwork = id => {
-  console.log(' NETWORK ---> ', id)
+  console.log(' NETWORK ---> ', id);
   switch (id) {
     case 1:
       return 'mainnet';
@@ -108,16 +108,17 @@ export const parseNetwork = id => {
     case 42:
       return 'kovan';
     case 6969:
-      return 'test'
+      return 'test';
     default:
       return 'private';
   }
 };
-const HERO_CONTRACTS = 'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
+const HERO_CONTRACTS =
+  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
 
 export const getContractsDefinition = async () => {
   const remoteContracts = await axios.get(HERO_CONTRACTS);
   // @ts-ignore
-  const contractsDef = window.Cypress ? window.contracts : remoteContracts;
+  const contractsDef = window.Cypress ? window.contracts : remoteContracts.data;
   return contractsDef;
-}
+};
