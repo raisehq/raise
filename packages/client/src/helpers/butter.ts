@@ -34,8 +34,10 @@ const findOne = async (collection: string, fields: any) => {
       data: { [collection]: arrResponse }
     }
   } = await butter.content.retrieve([collection], params);
-  const response = arrResponse.length ? arrResponse[0] : null;
-  const camelResponse = mapKeys(response, (v, key) => camelCase(key));
+  if (!arrResponse.length) {
+    throw Error('404 Not found');
+  }
+  const camelResponse = mapKeys(arrResponse[0], (v, key) => camelCase(key));
 
   return camelResponse;
 };

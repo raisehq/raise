@@ -26,6 +26,8 @@ import {
   SubHeader,
   SubHeaderContent,
   SubHeaderTitle
+  CardDescription,
+  CardBorrowerTitle
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -128,6 +130,8 @@ const ContentWithLogo = ({
   </CardContent>
 );
 
+Card.BorrowerTitle = CardBorrowerTitle;
+Card.Description = CardDescription;
 Card.Image = CardImageCrop;
 Card.Logo = CardLogo;
 Card.Content = ContentWithLogo;
