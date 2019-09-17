@@ -216,6 +216,13 @@ export const Separator = styled.div`
   margin: 0px;
 `;
 
+export const Vertical = styled.div`
+  width: 1px;
+  height: 100%;
+  background: #ecedee;
+  margin: 0px;
+`;
+
 export const InfoIcon = styled.div`
   position: absolute;
   top: 16px;

@@ -23,7 +23,8 @@ import {
   ProgressBar,
   ProgressPercent,
   CardDescription,
-  CardBorrowerTitle
+  CardBorrowerTitle,
+  Vertical
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -131,6 +132,7 @@ Card.Header = HeaderComponent;
 Card.Graph = GraphComponent;
 Card.Progress = ProgressComponent;
 Card.Separator = Separator;
+Card.Vertical = Vertical;
 Card.Tooltip = TooltipComponent;
 
 export default Card;

@@ -25,8 +25,11 @@ const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
         <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
         <Card.Grid>
           <Card.Row small title="DAI Target" content={maxAmount} />
+          <Card.Vertical />
           <Card.Row small title="Loan Term" content={times.loanTerm} />
+          <Card.Vertical />
           <Card.Row small title="Investors" content={auction.investorCount} />
+          <Card.Vertical />
           <Card.Row small title="Min APR" content={currentAPR} />
         </Card.Grid>
         <InvestModal loan={auction} />
