@@ -63,9 +63,25 @@ export const TimeLeft = styled.div`
   font-size: 14px;
 `;
 
+export const CardBorrowerTitle = styled.div`
+  color: #5a5a5a;
+  font-size: 14px;
+  font-weight: bold;
+`;
+
+export const CardDescription = styled.div`
+  max-height: 76px;
+  height: 100%;
+  color: #5a5a5a;
+  font-size: 14px;
+`;
 export const CardContent = styled.div<{ children?: any; logo?: any }>`
   padding: 20px;
   position: relative;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
   padding-top: ${({ logo }) => (logo ? '55px' : '0')};
   &&& > ${CardLogo} {
     position: absolute;

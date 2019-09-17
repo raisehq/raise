@@ -19,10 +19,8 @@ const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
     <Card>
       <Card.Image src={background} />
       <Card.Content topRight={auctionTimeLeft} logo={logo}>
-        <div>
-          <b>{companyName}</b>
-        </div>
-        <div>{description}</div>
+        <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+        <Card.Description>{description}</Card.Description>
         <Card.Header title="Raised so far" amount={<Amount principal={principal} />} />
         <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
         <Card.Grid>
