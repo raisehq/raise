@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, createContext, useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 import { AnimatedSwitch, spring } from 'react-router-transition';
-import { match, _ } from 'pampy';
+import { match as matches, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { Web3Route } from './Web3Check';
 import Layout from './Layout';
@@ -15,6 +15,7 @@ import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
 import Test from './SuggestTest';
+import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
 import useGoogleTagManager from '../hooks/useGoogleTagManager';
@@ -47,10 +48,11 @@ export const AppContext = createContext({
   history: {},
   web3Status: {},
   modalRefs: {},
-  webSocket: {}
+  webSocket: {},
+  match: {}
 });
 
-const App = ({ children, history }: any) => {
+const App = ({ children, history, match }: any) => {
   const refMode = process.env.REACT_APP_REFERAL == 'true';
   const [isLoading, setLoading] = useState(true);
   const {
@@ -161,30 +163,32 @@ const App = ({ children, history }: any) => {
     };
 
     // prettier-ignore
-    match(conditions,
+    matches(conditions,
       { isLoading: true },
-        () => {},
+      () => { },
       { logged: true, web3Pass: true, deposited: false },
-        () => setTimeout(() => {
-          TagManager();
-          history.push('/deposit')}, 3000),
+      () => setTimeout(() => {
+        TagManager();
+        history.push('/deposit')
+      }, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: true },
-        () => setTimeout(() => {
-          TagManager();
-          history.push('/referral')}, 3000),
+      () => setTimeout(() => {
+        TagManager();
+        history.push('/referral')
+      }, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
-        () => {
-          setTimeout(() => {
-            const params = new URLSearchParams(window['location']['search']);
-            if (params.has('redirect')) {
-              history.push(params.get('redirect'));
-            }
-          }, 3000)
-        },
+      () => {
+        setTimeout(() => {
+          const params = new URLSearchParams(window['location']['search']);
+          if (params.has('redirect')) {
+            history.push(params.get('redirect'));
+          }
+        }, 3000)
+      },
       { logged: false, isJoin: false },
-        () => history.push('/join'),
+      () => history.push('/join'),
       _,
-        () => {}
+      () => { }
     );
   }, [isLoading, logged, web3Pass, deposited]);
 
@@ -198,7 +202,9 @@ const App = ({ children, history }: any) => {
   };
 
   return (
-    <AppContext.Provider value={{ store, actions, history, web3Status, modalRefs, webSocket }}>
+    <AppContext.Provider
+      value={{ store, actions, history, match, web3Status, modalRefs, webSocket }}
+    >
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
@@ -238,6 +244,7 @@ const App = ({ children, history }: any) => {
           component={CreateLoan}
           roles={[1]}
         />
+        <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
 
         <LayoutV2 exact path="/test" component={Test} />
         {/* Onboarding */}

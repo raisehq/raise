@@ -2,11 +2,17 @@ import React from 'react';
 import { Card } from '@raisehq/components';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
+import { InvestModal } from '../InvestModal';
 
-const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
+interface LoanProps {
+  auction: any;
+}
+
+const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
   const calculations = getCalculations(auction);
   const { currentAmount, totalAmount, maxAmount, times, currentAPR, principal } = calculations;
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
+
   return (
     <Card>
       <Card.Image src="https://images.unsplash.com/photo-1564758565507-be8ddfc5d015?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80" />
@@ -29,7 +35,7 @@ const Loan = ({ auction, cta }: { auction: any; cta?: any }) => {
           <Card.Row small title="Investors" content={auction.investorCount} />
           <Card.Row small title="Min APR" content={currentAPR} />
         </Card.Grid>
-        {cta}
+        <InvestModal loan={auction} />
       </Card.Content>
     </Card>
   );
