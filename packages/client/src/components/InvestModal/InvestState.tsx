@@ -111,7 +111,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       <ConfirmButton
         id="btn-invest-confirm"
         onClick={onConfirm}
-        disabled={value === 0 || !termsCond}
+        disabled={value === 0 || value === undefined || !termsCond}
       >
         CONFIRM
       </ConfirmButton>
