@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Image } from 'semantic-ui-react';
 import theme from '../../../theme';
 
 interface RowContentProps {
@@ -15,16 +15,35 @@ interface GridProps {
   spaceBetween: boolean;
 }
 
+interface ImageCropProps {
+  src?: string | null;
+}
+
 export const GraphContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
 `;
 
+export const CardImageCrop: any = styled.div<ImageCropProps>`
+  width: 100%;
+  height: 120px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: ${({ src }) => `url(${src})`};
+  border-radius: 6px 6px 0 0;
+`;
+
+export const CardLogo: any = styled(Image)`
+  width: 70px;
+  height: 70px;
+  border-radius: 6px;
+`;
+
 export const HeroCard = styled.div`
-  width: 350px;
+  width: 372px;
   min-height: 100%;
-  border-radius: 4px;
+  border-radius: 6px;
   background-color: #ffffff;
   box-shadow: ${theme.shadow};
   box-sizing: border-box;
@@ -34,8 +53,26 @@ export const HeroCard = styled.div`
   justify-content: flex-start;
 `;
 
-export const CardContent = styled.div`
+export const TimeLeft = styled.div`
+  font-weight: bold;
+  color: #5a5a5a;
+  font-size: 14px;
+`;
+
+export const CardContent = styled.div<{ children?: any; logo?: any }>`
   padding: 20px;
+  position: relative;
+  padding-top: ${({ logo }) => (logo ? '55px' : '0')};
+  &&& > ${CardLogo} {
+    position: absolute;
+    top: -35px;
+    left: 14px;
+  }
+  &&& > ${TimeLeft} {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+  }
 `;
 
 export const Grid: any = styled.div<GridProps>`
@@ -57,7 +94,7 @@ export const Row = styled.div<RowWrapperProps>`
 
 export const RowContent = styled.div<RowContentProps>`
   color: ${({ contentColor }) => (contentColor ? contentColor : '#5a5a5a')};
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
 `;
@@ -108,6 +145,34 @@ export const Graph: any = styled.div`
   }
 `;
 
+export const ProgressPercent = styled.div`
+  font-weight: bold;
+  color: white;
+  position: absolute;
+  font-size: 14px;
+  top: 2px;
+  left: 5px;
+`;
+
+export const ProgressBar: any = styled.div`
+  width: 100%;
+  height: 23px;
+  background: #ecedee;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+
+  &&:before {
+    content: '';
+    position: absolute;
+    width: ${(props: any) => (props.width * 100) / 90}%;
+    height: 100%;
+    top: 0;
+    border-radius: 4px;
+    left: 0;
+    background: ${(props: any) => props.color};
+  }
+`;
 export const Badge = styled.div`
   width: 80px;
   height: 20px;

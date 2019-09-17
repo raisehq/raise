@@ -5,10 +5,12 @@ import {
   Grid,
   Row,
   Header,
+  CardImageCrop,
   HeaderTitle,
   HeaderContent,
   RowTitle,
   RowContent,
+  CardLogo,
   Graph,
   Badge,
   InfoIconCmp,
@@ -16,7 +18,10 @@ import {
   Separator,
   GraphContainer,
   GraphTitle,
-  CardContent
+  CardContent,
+  TimeLeft,
+  ProgressBar,
+  ProgressPercent
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -72,6 +77,18 @@ const GraphComponent = ({ color, currentAmount, totalAmount }) => {
   );
 };
 
+const ProgressComponent = ({ color, currentAmount, totalAmount }) => {
+  const { ref }: any = React.useContext(Context);
+  const config = useGraphWidth(ref, currentAmount, totalAmount);
+
+  return (
+    <GraphContainer>
+      <ProgressBar color={color} width={config.width} />
+      <ProgressPercent>{Math.floor(config.width)}%</ProgressPercent>
+    </GraphContainer>
+  );
+};
+
 const TooltipComponent = () => (
   <Popup
     content="blablabablalbabalabl"
@@ -84,12 +101,31 @@ const TooltipComponent = () => (
   />
 );
 
-Card.Content = CardContent;
+const ContentWithLogo = ({
+  children,
+  logo,
+  topRight
+}: {
+  children?: any;
+  logo?: any;
+  topRight?: any;
+}) => (
+  <CardContent logo={logo}>
+    {logo && <CardLogo src={logo} />}
+    {topRight && <TimeLeft>{topRight}</TimeLeft>}
+    {children}
+  </CardContent>
+);
+
+Card.Image = CardImageCrop;
+Card.Logo = CardLogo;
+Card.Content = ContentWithLogo;
 Card.Badge = BadgeComponent;
 Card.Row = RowComponent;
 Card.Grid = Grid;
 Card.Header = HeaderComponent;
 Card.Graph = GraphComponent;
+Card.Progress = ProgressComponent;
 Card.Separator = Separator;
 Card.Tooltip = TooltipComponent;
 
