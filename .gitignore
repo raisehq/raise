@@ -4,5 +4,3 @@ packages/*/lib
 lerna-debug*
 .vscode/
 packages/testing/package-lock.json
-
-packages/testing/cypress.env.json
