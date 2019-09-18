@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from '../../theme';
 import { maxDevice } from '../LayoutV2/breakpoints';
 
 export const Footer = styled.div`
@@ -20,9 +21,27 @@ export const FooterWrapper = styled.div`
   }
 `;
 
-export const FooterMenu = styled.div`
+export const FooterFirst = styled.div`
   flex: 0 1 33%;
+  position: relative;
+`;
+
+export const FooterMenu = styled.div`
+  width: 100%;
   display: flex;
+`;
+
+export const FooterIcons = styled.div`
+  width: 100%;
+  display: flex;
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+
+  .icon {
+    font-size: 25px !important;
+    margin-right: 15px;
+  }
 `;
 
 export const FooterLogo = styled.div`
@@ -36,6 +55,7 @@ export const FooterImage = styled.div`
   flex: 0 1 33%;
   display: flex;
   justify-content: flex-end;
+  background: url(${theme.resources}/images/img_city.svg) center center no-repeat;
 `;
 
 export const FooterDisclaimer = styled.div`

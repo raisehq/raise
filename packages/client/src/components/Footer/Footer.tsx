@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'semantic-ui-react';
 import {
   Footer,
   FooterLogo,
@@ -7,26 +8,37 @@ import {
   FooterImage,
   FooterDisclaimer,
   FooterList,
-  FooterItem
+  FooterItem,
+  FooterIcons,
+  FooterFirst
 } from './Footer.styles';
 
 const FooterCmp = () => (
   <Footer>
     <FooterWrapper>
-      <FooterMenu>
-        <FooterList>
-          <FooterItem>About us</FooterItem>
-          <FooterItem>Help</FooterItem>
-        </FooterList>
-        <FooterList>
-          <FooterItem>Privacy policy</FooterItem>
-          <FooterItem>Terms and conditions</FooterItem>
-        </FooterList>
-      </FooterMenu>
+      <FooterFirst>
+        <FooterMenu>
+          <FooterList>
+            <FooterItem>About us</FooterItem>
+            <FooterItem>Help</FooterItem>
+          </FooterList>
+          <FooterList>
+            <FooterItem>Privacy policy</FooterItem>
+            <FooterItem>Terms and conditions</FooterItem>
+          </FooterList>
+        </FooterMenu>
+        <FooterIcons>
+          <Icon name="mail outline"></Icon>
+          <Icon name="facebook"></Icon>
+          <Icon name="github"></Icon>
+          <Icon name="medium"></Icon>
+          <Icon name="twitter"></Icon>
+        </FooterIcons>
+      </FooterFirst>
       <FooterLogo>
         <img src="https://static.herodev.es/images/logo.svg" />
       </FooterLogo>
-      <FooterImage>dsd</FooterImage>
+      <FooterImage />
     </FooterWrapper>
     <FooterDisclaimer>
       <p>Version : Release 2.0.0.38</p>

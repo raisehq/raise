@@ -23,7 +23,9 @@ const DesktopHeader = () => {
           </HeaderLogo>
           <HeaderMenu>
             <HeaderMenuItem>Get Started</HeaderMenuItem>
-            <HeaderMenuItem>My activity</HeaderMenuItem>
+            <HeaderMenuItem onClick={() => history.push('/create-loan')}>
+              My activity
+            </HeaderMenuItem>
           </HeaderMenu>
         </HeaderGroup>
         <HeaderGroup className="right">

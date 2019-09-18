@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-//import theme from '../../theme';
+import theme from '../../theme';
 //import { device } from '../LayoutV2/breakpoints';
 
 export const HeroLayout = styled('div')`
@@ -11,6 +11,10 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-bottom: 60px;
+  background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
+    url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
+    url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;
 `;
 
 export const Content = styled.div`
