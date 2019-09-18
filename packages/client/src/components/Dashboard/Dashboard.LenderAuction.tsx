@@ -10,15 +10,7 @@ import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 const Auction = ({ auction }: { auction: any }) => {
   const { companyName, background, logo } = useBorrowerInfo(auction.originator);
   const calcs = getCalculations(auction);
-  const {
-    maxAmount,
-    expectedRoiFormated,
-    times,
-    currentAmount,
-    totalAmount,
-    // currentAPR,
-    principal
-  } = calcs;
+  const { maxAmount, expectedRoiFormated, times, currentAmount, totalAmount, principal } = calcs;
 
   const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
