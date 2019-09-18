@@ -55,6 +55,9 @@ export const HeaderGroup = styled.div`
   width: 50%;
   display: flex;
   align-items: center;
+  &.right > * {
+    margin-left: 20px;
+  }
 `;
 
 export const HeaderLogo = styled.button`

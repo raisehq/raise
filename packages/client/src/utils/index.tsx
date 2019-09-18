@@ -17,12 +17,21 @@ const THEGRAPH_IDS: any = {
   GOERLI: process.env.REACT_APP_THEGRAPH_ID_GOERLI
 };
 
+const THEGRAPH_DAI_IDS: any = {
+  KOVAN: process.env.REACT_APP_THEGRAPH_ID_DAI_KOVAN,
+  MAINNET: process.env.REACT_APP_THEGRAPH_ID_DAI_MAINNET
+};
+
 export function getGraphEndpoint(network: string) {
   return `${HOSTS.THEGRAPH}${THEGRAPH_IDS[network.toUpperCase()]}`;
 }
 
 export function getGraphWSEndpoint(network: string) {
   return `${HOSTS.THEGRAPHWS}${THEGRAPH_IDS[network.toUpperCase()]}`;
+}
+
+export function getDaiWSEndpoint(network: string) {
+  return `${HOSTS.THEGRAPHWS}${THEGRAPH_DAI_IDS[network.toUpperCase()]}`;
 }
 
 export function getHost(name: string) {
