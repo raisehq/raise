@@ -11,7 +11,7 @@ export const ExpectedROI = styled(Card.Header)`
 `;
 export const DashboardWrapper = styled.div`
   width: 100%;
-  padding: 25px;
+  padding: 0 25px 0 25px;
   box-sizing: border-box;
 
   .heroCard {
@@ -86,7 +86,8 @@ export const NoResults = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 26px;
+  font-size: 16px;
+  border: 1px solid #cfd0d4;
 `;
 
 export const AmountComponent = styled.div`
