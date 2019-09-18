@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import daggy from 'daggy';
-import { Modal as SemanticModal } from 'semantic-ui-react';
+// import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
 import { fromWei } from 'web3-utils';
 import { AppContext } from '../App';
@@ -8,7 +8,7 @@ import InvestState from './InvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
 
-import { LenderButton, Modal, ExitButton } from './InvestModal.styles';
+import { LenderButton, Modal, ExitButton, ModalContet } from './InvestModal.styles';
 import { match, ANY } from 'pampy';
 
 const UI = daggy.taggedSum('UI', {
@@ -68,10 +68,10 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
         {buttonText}
       </LenderButton>
       <Modal open={open} size="small" onClose={closeModal} mountNode={modalRefs.current}>
-        <SemanticModal.Content>
+        <ModalContet>
           {getInvestAction(stage)}
           <ExitButton name="close" color="black" onClick={closeModal} />
-        </SemanticModal.Content>
+        </ModalContet>
       </Modal>
     </>
   );
