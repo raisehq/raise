@@ -25,7 +25,7 @@ import useWeb3Checker from '../hooks/useWeb3Checker';
 import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import LogRocket from 'logrocket';
-import { getGraphWSEndpoint } from '../utils';
+import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 
 export const AppContext = createContext({
   store: {},
@@ -34,6 +34,7 @@ export const AppContext = createContext({
   web3Status: {},
   modalRefs: {},
   webSocket: {},
+  daiWebSocket: {},
   match: {}
 });
 
@@ -85,6 +86,7 @@ const App = ({ children, history, match }: any) => {
   };
 
   const [webSocket, setWebSocket] = useState({});
+  const [daiWebSocket, setDaiWebSocket] = useState({});
 
   useEffect(() => {
     if (Object.keys(webSocket).length === 0 && network !== 'Not connected') {
@@ -92,6 +94,13 @@ const App = ({ children, history, match }: any) => {
       setWebSocket({ webSocket: webSocketInstance });
     }
   }, [webSocket, network]);
+
+  useEffect(() => {
+    if (Object.keys(daiWebSocket).length === 0 && network !== 'Not connected') {
+      const webSocketInstance = new UseWebSockets(getDaiWSEndpoint(network), 'graphql-ws');
+      setDaiWebSocket({ webSocket: webSocketInstance });
+    }
+  }, [daiWebSocket, network]);
 
   useAsyncEffect(async () => {
     if (logged) {
@@ -186,7 +195,7 @@ const App = ({ children, history, match }: any) => {
 
   return (
     <AppContext.Provider
-      value={{ store, actions, history, match, web3Status, modalRefs, webSocket }}
+      value={{ store, actions, history, match, web3Status, modalRefs, webSocket, daiWebSocket }}
     >
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>

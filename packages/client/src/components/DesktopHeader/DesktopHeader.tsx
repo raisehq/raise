@@ -8,6 +8,8 @@ import {
   HeaderLogout,
   HeaderMenuItem
 } from './DesktopHeader.styles';
+import Balance from '../Balance';
+import Web3Address from '../Web3Address';
 import theme from '../../theme';
 import { AppContext } from '../App';
 
@@ -27,7 +29,8 @@ const DesktopHeader = () => {
           </HeaderMenu>
         </HeaderGroup>
         <HeaderGroup className="right">
-          WIDGET
+          <Balance />
+          <Web3Address />
           <HeaderLogout />
         </HeaderGroup>
       </HeaderWrapper>
