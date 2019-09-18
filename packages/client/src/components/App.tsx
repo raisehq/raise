@@ -1,7 +1,11 @@
 import React, { useContext, useEffect, createContext, useState, useRef } from 'react';
-import { withRouter } from 'react-router-dom';
-import { AnimatedSwitch, spring } from 'react-router-transition';
-import { match, _ } from 'pampy';
+/**
+ * NOTE: Once AnimatedSwitch is done again, remove the Switch import and use AnimatedSwitch as a React Router switcher
+ * import { withRouter } from 'react-router-dom';
+ * import { AnimatedSwitch, spring } from 'react-router-transition';
+ */
+import { withRouter, Switch } from 'react-router-dom';
+import { match as matches, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { Web3Route } from './Web3Check';
 import Layout from './Layout';
@@ -14,31 +18,14 @@ import Join from './Join';
 import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
+import Test from './SuggestTest';
+import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
 import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import LogRocket from 'logrocket';
-import { getGraphWSEndpoint } from '../utils';
-
-function glide(val) {
-  return spring(val, {
-    stiffness: 174,
-    damping: 24
-  });
-}
-
-const pageTransitions = {
-  atEnter: {
-    offset: 100
-  },
-  atLeave: {
-    offset: glide(-100)
-  },
-  atActive: {
-    offset: glide(0)
-  }
-};
+import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 
 export const AppContext = createContext({
   store: {},
@@ -46,10 +33,12 @@ export const AppContext = createContext({
   history: {},
   web3Status: {},
   modalRefs: {},
-  webSocket: {}
+  webSocket: {},
+  daiWebSocket: {},
+  match: {}
 });
 
-const App = ({ children, history }: any) => {
+const App = ({ children, history, match }: any) => {
   const refMode = process.env.REACT_APP_REFERAL == 'true';
   const [isLoading, setLoading] = useState(true);
   const {
@@ -97,6 +86,7 @@ const App = ({ children, history }: any) => {
   };
 
   const [webSocket, setWebSocket] = useState({});
+  const [daiWebSocket, setDaiWebSocket] = useState({});
 
   useEffect(() => {
     if (Object.keys(webSocket).length === 0 && network !== 'Not connected') {
@@ -105,9 +95,14 @@ const App = ({ children, history }: any) => {
     }
   }, [webSocket, network]);
 
-  useAsyncEffect(async () => {
-    console.log(logged);
+  useEffect(() => {
+    if (Object.keys(daiWebSocket).length === 0 && network !== 'Not connected') {
+      const webSocketInstance = new UseWebSockets(getDaiWSEndpoint(network), 'graphql-ws');
+      setDaiWebSocket({ webSocket: webSocketInstance });
+    }
+  }, [daiWebSocket, network]);
 
+  useAsyncEffect(async () => {
     if (logged) {
       onGetCryptoAddressByUser();
       onGetUser();
@@ -160,30 +155,32 @@ const App = ({ children, history }: any) => {
     };
 
     // prettier-ignore
-    match(conditions,
+    matches(conditions,
       { isLoading: true },
-        () => {},
+      () => { },
       { logged: true, web3Pass: true, deposited: false },
-        () => setTimeout(() => {
-          TagManager();
-          history.push('/deposit')}, 3000),
+      () => setTimeout(() => {
+        TagManager();
+        history.push('/deposit')
+      }, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: true },
-        () => setTimeout(() => {
-          TagManager();
-          history.push('/referral')}, 3000),
+      () => setTimeout(() => {
+        TagManager();
+        history.push('/referral')
+      }, 3000),
       { logged: true, web3Pass: true, deposited: true, refMode: false },
-        () => {
-          setTimeout(() => {
-            const params = new URLSearchParams(window['location']['search']);
-            if (params.has('redirect')) {
-              history.push(params.get('redirect'));
-            }
-          }, 3000)
-        },
+      () => {
+        setTimeout(() => {
+          const params = new URLSearchParams(window['location']['search']);
+          if (params.has('redirect')) {
+            history.push(params.get('redirect'));
+          }
+        }, 3000)
+      },
       { logged: false, isJoin: false },
-        () => history.push('/join'),
+      () => history.push('/join'),
       _,
-        () => {}
+      () => { }
     );
   }, [isLoading, logged, web3Pass, deposited]);
 
@@ -197,18 +194,14 @@ const App = ({ children, history }: any) => {
   };
 
   return (
-    <AppContext.Provider value={{ store, actions, history, web3Status, modalRefs, webSocket }}>
+    <AppContext.Provider
+      value={{ store, actions, history, match, web3Status, modalRefs, webSocket, daiWebSocket }}
+    >
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
-      <AnimatedSwitch
-        className="switch-wrapper"
-        {...pageTransitions}
-        mapStyles={styles => ({
-          transform: `translateX(${styles.offset}%)`
-        })}
-      >
-        {/** Referral */}
+      {/** Referral */}
+      <Switch>
         <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[2]} />
         <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} roles={[1, 2]} />
 
@@ -230,14 +223,16 @@ const App = ({ children, history }: any) => {
           roles={[1, 2]}
         />
         <Web3Route
-          marketplace
+          marketplaceSuggesteds
           layout={Layout}
           exact
           path="/create-loan"
           component={CreateLoan}
           roles={[1]}
         />
+        <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
 
+        <LayoutV2 exact path="/test" component={Test} />
         {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />
         <LayoutV2 exact path="/join" component={Join} />
@@ -245,7 +240,7 @@ const App = ({ children, history }: any) => {
         <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
         <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
         <LayoutV2 exact path="/join/activate/:token" component={Join} />
-      </AnimatedSwitch>
+      </Switch>
       <div ref={modalRefs} />
     </AppContext.Provider>
   );

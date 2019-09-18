@@ -194,9 +194,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
       </Fragment>
       {
         errors
-        && (errors.approvalError !== null
-        || errors.transactionError !== null)
-        ? printRetry() : <BlankSpace />
+          && (errors.approvalError !== null
+            || errors.transactionError !== null)
+          ? printRetry() : <BlankSpace />
       }
     </>
   );

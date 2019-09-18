@@ -5,17 +5,29 @@ import {
   Grid,
   Row,
   Header,
+  CardImageCrop,
   HeaderTitle,
   HeaderContent,
   RowTitle,
   RowContent,
+  CardLogo,
   Graph,
   Badge,
   InfoIconCmp,
   InfoIcon,
   Separator,
   GraphContainer,
-  GraphTitle
+  GraphTitle,
+  CardContent,
+  TimeLeft,
+  ProgressBar,
+  ProgressPercent,
+  SubHeader,
+  SubHeaderContent,
+  SubHeaderTitle,
+  CardDescription,
+  CardBorrowerTitle,
+  Vertical
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -23,13 +35,15 @@ interface RowComponentProps {
   title: string;
   content: string | number | null;
   contentColor?: string | null;
+  small?: boolean | null;
 }
+
 const Context = React.createContext({});
 
 const BadgeComponent = ({ children, color }) => <Badge color={color}>{children}</Badge>;
 
-const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentColor }) => (
-  <Row>
+const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentColor, small }) => (
+  <Row small={small}>
     <RowContent contentColor={contentColor}>{content}</RowContent>
     <RowTitle>{title}</RowTitle>
   </Row>
@@ -40,6 +54,13 @@ const HeaderComponent = ({ title, amount, ...rest }) => (
     <HeaderTitle>{title}</HeaderTitle>
     <HeaderContent>{amount}</HeaderContent>
   </Header>
+);
+
+const SubHeaderComponent = ({ title, amount, ...rest }) => (
+  <SubHeader {...rest}>
+    <SubHeaderTitle>{title}</SubHeaderTitle>
+    <SubHeaderContent>{amount}</SubHeaderContent>
+  </SubHeader>
 );
 
 const Card = ({ children }) => {
@@ -69,6 +90,18 @@ const GraphComponent = ({ color, currentAmount, totalAmount }) => {
   );
 };
 
+const ProgressComponent = ({ color, currentAmount, totalAmount }) => {
+  const { ref }: any = React.useContext(Context);
+  const config = useGraphWidth(ref, currentAmount, totalAmount);
+
+  return (
+    <GraphContainer>
+      <ProgressBar color={color} width={config.width} />
+      <ProgressPercent>{Math.floor(config.width)}%</ProgressPercent>
+    </GraphContainer>
+  );
+};
+
 const TooltipComponent = () => (
   <Popup
     content="blablabablalbabalabl"
@@ -81,12 +114,36 @@ const TooltipComponent = () => (
   />
 );
 
+const ContentWithLogo = ({
+  children,
+  logo,
+  topRight
+}: {
+  children?: any;
+  logo?: any;
+  topRight?: any;
+}) => (
+  <CardContent logo={logo}>
+    {logo && <CardLogo src={logo} />}
+    {topRight && <TimeLeft>{topRight}</TimeLeft>}
+    {children}
+  </CardContent>
+);
+
+Card.BorrowerTitle = CardBorrowerTitle;
+Card.Description = CardDescription;
+Card.Image = CardImageCrop;
+Card.Logo = CardLogo;
+Card.Content = ContentWithLogo;
 Card.Badge = BadgeComponent;
 Card.Row = RowComponent;
 Card.Grid = Grid;
 Card.Header = HeaderComponent;
+Card.SubHeader = SubHeaderComponent;
 Card.Graph = GraphComponent;
+Card.Progress = ProgressComponent;
 Card.Separator = Separator;
+Card.Vertical = Vertical;
 Card.Tooltip = TooltipComponent;
 
 export default Card;

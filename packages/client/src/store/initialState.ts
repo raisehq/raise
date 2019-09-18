@@ -112,6 +112,9 @@ const initialState = {
     suggested: null,
     lenderInvestments: null,
     active: []
+  },
+  dai: {
+    balance: '0.00'
   }
 };
 

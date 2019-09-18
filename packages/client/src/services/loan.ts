@@ -43,9 +43,9 @@ export const getLiveAuctionsByAccount = async (address, network) => {
     () => Left(null),
     response => {
       if (response.data.errors) {
-        return Left(response.data.errors)
+        return Left(response.data.errors);
       }
-      return Right(response.data.data.users[0].loanRequests)
+      return Right(response.data.data.users[0].loanRequests);
     }
   );
 };
@@ -90,9 +90,9 @@ export const getSuggestedAuctions = async network => {
     () => Left(null),
     response => {
       if (response.data.errors) {
-        return Left(response.data.errors)
+        return Left(response.data.errors);
       }
-      return Right(response.data.data.loans)
+      return Right(response.data.data.loans);
     }
   );
 };

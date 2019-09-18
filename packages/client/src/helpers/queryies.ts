@@ -126,6 +126,17 @@ const queryies = {
       }`,
       variables: {},
       subscriptionName: 'loansByAccount'
+    },
+    daiBalance: {
+      query: `subscription daiBalance($address: String)
+      {
+        balances(where:{address:$address}) {
+          address,
+          wad
+        }
+      }`,
+      variables: {},
+      subscriptionName: 'daiBalance'
     }
   },
   queryies: {}
