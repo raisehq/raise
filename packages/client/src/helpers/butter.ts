@@ -23,6 +23,25 @@ const requestPage = async (pageType: string, slug: string) => {
   return camelResponse;
 };
 
+const findOne = async (collection: string, fields: any) => {
+  const params = {
+    page: 1,
+    page_size: 1,
+    ...fields
+  };
+  const {
+    data: {
+      data: { [collection]: arrResponse }
+    }
+  } = await butter.content.retrieve([collection], params);
+  if (!arrResponse.length) {
+    throw Error('404 Not found');
+  }
+  const camelResponse = mapKeys(arrResponse[0], (v, key) => camelCase(key));
+
+  return camelResponse;
+};
+
 export default butter;
 
-export { requestPage, butter };
+export { requestPage, findOne, butter };

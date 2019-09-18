@@ -38,28 +38,30 @@ const Loan = ({ auction }: { auction: any }) => {
 
   return (
     <BorrowerLoanCard>
-      <Card.Header
-        title="Investment return"
-        amount={<Amount principal={lenderRoiAmount} roi={roi} />}
-      />
-      {state > 0 && (
-        <Fragment>
-          <Card.Tooltip />
-          <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
-        </Fragment>
-      )}
-      <Card.Grid noGraph>
-        <Card.Row title="Amount invested" content={lenderAmount} />
-        <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="Time left" contentColor={contentColor} content={times.loanTermLeft} />
-      </Card.Grid>
-      <Card.Separator />
-      <Card.Grid>
-        <Card.Row title="Borrower" content="Company A" />
-        <Card.Row title="Loan amount" content={maxAmount} />
-        <Card.Row title="Loan term" content={times.loanTerm} />
-      </Card.Grid>
-      {cta}
+      <Card.Content>
+        <Card.Header
+          title="Investment return"
+          amount={<Amount principal={lenderRoiAmount} roi={roi} />}
+        />
+        {state > 0 && (
+          <Fragment>
+            <Card.Tooltip />
+            <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
+          </Fragment>
+        )}
+        <Card.Grid noGraph>
+          <Card.Row title="Amount invested" content={lenderAmount} />
+          <Card.Row title="Investors" content={auction.investorCount} />
+          <Card.Row title="Time left" contentColor={contentColor} content={times.loanTermLeft} />
+        </Card.Grid>
+        <Card.Separator />
+        <Card.Grid>
+          <Card.Row title="Borrower" content="Company A" />
+          <Card.Row title="Loan amount" content={maxAmount} />
+          <Card.Row title="Loan term" content={times.loanTerm} />
+        </Card.Grid>
+        {cta}
+      </Card.Content>
     </BorrowerLoanCard>
   );
 };

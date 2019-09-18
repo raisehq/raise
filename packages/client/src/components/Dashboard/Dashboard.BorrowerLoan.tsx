@@ -39,23 +39,25 @@ const Loan = ({ auction }: { auction: any }) => {
 
   return (
     <BorrowerLoanCard>
-      <Card.Header title="Loan amount" amount={<Amount principal={principal} />} />
-      <Fragment>
-        <Card.Tooltip />
-        <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
-      </Fragment>
-      <Card.Grid noGraph>
-        <Card.Row title="System Fees" content={systemFees} />
-        <Card.Row title="APR" content={finalAPR} />
-        <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0} DAI`} />
-      </Card.Grid>
-      <Card.Separator />
-      <Card.Grid>
-        <Card.Row title="Repayment amount" content={borrowerDebt} />
-        <Card.Row title="Investors" content={auction.investorCount} />
-        <Card.Row title="Loan Term" contentColor={contentColor} content={times.loanTermLeft} />
-      </Card.Grid>
-      {cta}
+      <Card.Content>
+        <Card.Header title="Loan amount" amount={<Amount principal={principal} />} />
+        <Fragment>
+          <Card.Tooltip />
+          <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
+        </Fragment>
+        <Card.Grid noGraph>
+          <Card.Row title="System Fees" content={systemFees} />
+          <Card.Row title="APR" content={finalAPR} />
+          <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0} DAI`} />
+        </Card.Grid>
+        <Card.Separator />
+        <Card.Grid>
+          <Card.Row title="Repayment amount" content={borrowerDebt} />
+          <Card.Row title="Investors" content={auction.investorCount} />
+          <Card.Row title="Loan Term" contentColor={contentColor} content={times.loanTermLeft} />
+        </Card.Grid>
+        {cta}
+      </Card.Content>
     </BorrowerLoanCard>
   );
 };

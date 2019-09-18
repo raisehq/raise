@@ -14,6 +14,7 @@ import Join from './Join';
 import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
+import Test from './SuggestTest';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
@@ -201,7 +202,9 @@ const App = ({ children, history, match }: any) => {
   };
 
   return (
-    <AppContext.Provider value={{ store, actions, history, match, web3Status, modalRefs, webSocket }}>
+    <AppContext.Provider
+      value={{ store, actions, history, match, web3Status, modalRefs, webSocket }}
+    >
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
@@ -234,19 +237,16 @@ const App = ({ children, history, match }: any) => {
           roles={[1, 2]}
         />
         <Web3Route
-          marketplace
+          marketplaceSuggesteds
           layout={Layout}
           exact
           path="/create-loan"
           component={CreateLoan}
           roles={[1]}
         />
-        <Layout
-          exact
-          path="/borrowers/:slug"
-          component={BorrowerProfile}
-        />
+        <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
 
+        <LayoutV2 exact path="/test" component={Test} />
         {/* Onboarding */}
         <LayoutV2 exact path="/verify-web3" component={Web3Check} />
         <LayoutV2 exact path="/join" component={Join} />
