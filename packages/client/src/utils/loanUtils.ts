@@ -157,6 +157,7 @@ export const getCalculations = auction => {
   const maxAPR = numeral((Number(fromWei(auction.maxInterestRate.toString())) / 100) * 12).format(
     '0.00%'
   );
+  const expectedRoiFormated = numeral(expectedROI).format('0.00%');
 
   let lenderAmount;
   let lenderRoiAmount;
@@ -199,7 +200,8 @@ export const getCalculations = auction => {
     calculatedInterest,
     expectedROI,
     lenderAmount,
-    lenderRoiAmount
+    lenderRoiAmount,
+    expectedRoiFormated
   };
 
   return newCalcs;

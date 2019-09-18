@@ -19,7 +19,9 @@ import {
   InputContainer,
   RaisedAmountContent,
   Amount,
-  FundAllLabel
+  FundAllLabel,
+  LoanTermsCheckbox,
+  CheckContainer
 } from './InvestModal.styles';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
@@ -63,6 +65,13 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
     setStage(ui.Processing);
   };
 
+  const [termsCond, setTermsCond] = useState(false);
+
+  const onToggleTerms = () => {
+    const toggleTerms = !termsCond;
+    setTermsCond(toggleTerms);
+  };
+
   return (
     <>
       <Header>How much would you like to invest?</Header>
@@ -95,7 +104,15 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
           <ResumeItem title="Min APR" value={`${currentAPR}`} />
         </FlexSpacedLayout>
       </InvestResume>
-      <ConfirmButton id="btn-invest-confirm" onClick={onConfirm} disabled={value === 0}>
+      <CheckContainer>
+        <LoanTermsCheckbox onChange={onToggleTerms} />I agree to the Terms and Conditions of the
+        Loan Agreement
+      </CheckContainer>
+      <ConfirmButton
+        id="btn-invest-confirm"
+        onClick={onConfirm}
+        disabled={value === 0 || value === undefined || !termsCond}
+      >
         CONFIRM
       </ConfirmButton>
     </>
