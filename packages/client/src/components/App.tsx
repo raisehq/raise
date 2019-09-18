@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, createContext, useState, useRef } from 'react';
-import { withRouter } from 'react-router-dom';
-//import { AnimatedSwitch, spring } from 'react-router-transition';
+/**
+ * NOTE: Once AnimatedSwitch is done again, remove the Switch import and use AnimatedSwitch as a React Router switcher
+ * import { withRouter } from 'react-router-dom';
+ * import { AnimatedSwitch, spring } from 'react-router-transition';
+ */
+import { withRouter, Switch } from 'react-router-dom';
 import { match as matches, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { Web3Route } from './Web3Check';
@@ -188,43 +192,45 @@ const App = ({ children, history, match }: any) => {
         <Loader>Loading app</Loader>
       </Dimmer>
       {/** Referral */}
-      <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[1, 2]} />
-      <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} roles={[1, 2]} />
+      <Switch>
+        <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[1, 2]} />
+        <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} roles={[1, 2]} />
 
-      <Web3Route marketplace layout={Layout} exact path="/kyc" component={Kyc} roles={[1, 2]} />
-      <Web3Route
-        marketplace
-        layout={Layout}
-        exact
-        path="/dashboard"
-        component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
-        roles={[1, 2]}
-      />
-      <Web3Route
-        marketplace
-        layout={Layout}
-        exact
-        path="/"
-        component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
-        roles={[1, 2]}
-      />
-      <Web3Route
-        marketplaceSuggesteds
-        layout={Layout}
-        exact
-        path="/create-loan"
-        component={CreateLoan}
-        roles={[1]}
-      />
-      <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
+        <Web3Route marketplace layout={Layout} exact path="/kyc" component={Kyc} roles={[1, 2]} />
+        <Web3Route
+          marketplace
+          layout={Layout}
+          exact
+          path="/dashboard"
+          component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
+          roles={[1, 2]}
+        />
+        <Web3Route
+          marketplace
+          layout={Layout}
+          exact
+          path="/"
+          component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
+          roles={[1, 2]}
+        />
+        <Web3Route
+          marketplaceSuggesteds
+          layout={Layout}
+          exact
+          path="/create-loan"
+          component={CreateLoan}
+          roles={[1]}
+        />
+        <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
 
-      <LayoutV2 exact path="/test" component={Test} />
-      {/* Onboarding */}
-      <LayoutV2 exact path="/verify-web3" component={Web3Check} />
-      <LayoutV2 exact path="/join" component={Join} />
-      <LayoutV2 exact path="/login" component={Join} />
-      <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
-      <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+        <LayoutV2 exact path="/test" component={Test} />
+        {/* Onboarding */}
+        <LayoutV2 exact path="/verify-web3" component={Web3Check} />
+        <LayoutV2 exact path="/join" component={Join} />
+        <LayoutV2 exact path="/login" component={Join} />
+        <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
+        <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+      </Switch>
       <div ref={modalRefs} />
     </AppContext.Provider>
   );
