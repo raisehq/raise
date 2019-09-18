@@ -65,10 +65,12 @@ body.hidescroll {
 
 .fade-enter {
   opacity: 0;
+  transform: translateX(-1%);
   z-index: 1;
 }
 
 .fade-enter.fade-enter-active {
   opacity: 1;
-  transition: opacity 250ms ease-in;
+  transform: translateX(0%);
+  transition: all 250ms ease-in;
 }
