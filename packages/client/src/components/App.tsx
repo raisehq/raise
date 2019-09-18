@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, createContext, useState, useRef } from 'react';
-import { withRouter } from 'react-router-dom';
-import { AnimatedSwitch, spring } from 'react-router-transition';
+/**
+ * NOTE: Once AnimatedSwitch is done again, remove the Switch import and use AnimatedSwitch as a React Router switcher
+ * import { withRouter } from 'react-router-dom';
+ * import { AnimatedSwitch, spring } from 'react-router-transition';
+ */
+import { withRouter, Switch } from 'react-router-dom';
 import { match as matches, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { Web3Route } from './Web3Check';
@@ -22,25 +26,6 @@ import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import LogRocket from 'logrocket';
 import { getGraphWSEndpoint } from '../utils';
-
-function glide(val) {
-  return spring(val, {
-    stiffness: 174,
-    damping: 24
-  });
-}
-
-const pageTransitions = {
-  atEnter: {
-    offset: 100
-  },
-  atLeave: {
-    offset: glide(-100)
-  },
-  atActive: {
-    offset: glide(0)
-  }
-};
 
 export const AppContext = createContext({
   store: {},
@@ -109,8 +94,6 @@ const App = ({ children, history, match }: any) => {
   }, [webSocket, network]);
 
   useAsyncEffect(async () => {
-    console.log(logged);
-
     if (logged) {
       onGetCryptoAddressByUser();
       onGetUser();
@@ -208,14 +191,8 @@ const App = ({ children, history, match }: any) => {
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
-      <AnimatedSwitch
-        className="switch-wrapper"
-        {...pageTransitions}
-        mapStyles={styles => ({
-          transform: `translateX(${styles.offset}%)`
-        })}
-      >
-        {/** Referral */}
+      {/** Referral */}
+      <Switch>
         <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[1, 2]} />
         <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} roles={[1, 2]} />
 
@@ -253,7 +230,7 @@ const App = ({ children, history, match }: any) => {
         <LayoutV2 exact path="/login" component={Join} />
         <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
         <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
-      </AnimatedSwitch>
+      </Switch>
       <div ref={modalRefs} />
     </AppContext.Provider>
   );
