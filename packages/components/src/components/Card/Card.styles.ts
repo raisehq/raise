@@ -50,7 +50,7 @@ export const CardLogo: any = styled(Image)`
 
 export const HeroCard = styled.div`
   width: 372px;
-  min-height: 100%;
+  min-height: 335px;
   border-radius: 6px;
   background-color: #ffffff;
   border: 1px solid #cfd0d4;
@@ -84,6 +84,26 @@ export const CardContent = styled.div<{ children?: any; logo?: any }>`
   padding: 20px;
   position: relative;
   height: auto;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  padding-top: ${({ logo }) => (logo ? '55px' : '0')};
+  &&& > ${CardLogo} {
+    position: absolute;
+    top: -35px;
+    left: 14px;
+  }
+  &&& > ${TimeLeft} {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+  }
+`;
+
+export const SmallCardContent = styled.div<{ children?: any; logo?: any }>`
+  padding: 20px;
+  position: relative;
+  height: 100%;
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
@@ -155,6 +175,22 @@ export const HeaderContent = styled.div`
   font-weight: bold;
 `;
 
+export const RoiHeader = styled.div`
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 12px;
+  align-self: flex-end;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const RoiContent = styled.div`
+  color: #5a5a5a;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 21px;
+`;
+
 export const SubHeader = styled.div`
   margin-top: 0px;
   margin-bottom: 5px;
@@ -224,7 +260,6 @@ export const Badge = styled.div`
   height: 20px;
   color: #fff;
   position: absolute;
-  top: 15px;
   right: 15px;
   text-align: center;
   padding: 3px 0 3px 0;
@@ -251,7 +286,6 @@ export const Vertical = styled.div`
 
 export const InfoIcon = styled.div`
   position: absolute;
-  top: 16px;
   right: 105px;
   font-size: 9px;
   background: black;

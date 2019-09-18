@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { Header } from 'semantic-ui-react';
-// import gql from 'graphql-tag';
 import { DashboardContainer, DashboardWrapper, DashboardTab } from './Dashboard.styles';
 import KycMessage from '../KycMessage';
 import { AppContext } from '../App';

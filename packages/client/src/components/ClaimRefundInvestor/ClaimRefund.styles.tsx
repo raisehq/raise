@@ -17,6 +17,7 @@ export const LenderButton = styled(Button)`
     color: white;
     background-color: #eb3f93;
     text-transform: uppercase;
+    font-size: 16px;
   }
 
   &&&:hover {
@@ -27,9 +28,15 @@ export const LenderButton = styled(Button)`
 
 export const RefundButton = styled(LenderButton)`
   &&&& {
+    height: 56px;
     border: 1px solid #cfd0d4;
-    background: #fff;
-    color: #5a5a5a;
+    background: #ffffff;
+    color: #3c4251;
+    &&&&:hover {
+      border: 2px solid #cfd0d4;
+      color: #3c4251;
+      background: #ffffff;
+    }
   }
 `;
 

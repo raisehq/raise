@@ -27,7 +27,10 @@ import {
   SubHeaderTitle,
   CardDescription,
   CardBorrowerTitle,
-  Vertical
+  Vertical,
+  RoiHeader,
+  RoiContent,
+  SmallCardContent
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -61,6 +64,12 @@ const SubHeaderComponent = ({ title, amount, ...rest }) => (
     <SubHeaderTitle>{title}</SubHeaderTitle>
     <SubHeaderContent>{amount}</SubHeaderContent>
   </SubHeader>
+);
+
+const RoiHeaderComponent = ({ roi }) => (
+  <RoiHeader>
+    <RoiContent>{`${roi}ROI`}</RoiContent>
+  </RoiHeader>
 );
 
 const Card = ({ children }) => {
@@ -130,6 +139,22 @@ const ContentWithLogo = ({
   </CardContent>
 );
 
+const SmallContentWithLogo = ({
+  children,
+  logo,
+  topRight
+}: {
+  children?: any;
+  logo?: any;
+  topRight?: any;
+}) => (
+  <SmallCardContent logo={logo}>
+    {logo && <CardLogo src={logo} />}
+    {topRight && <TimeLeft>{topRight}</TimeLeft>}
+    {children}
+  </SmallCardContent>
+);
+
 Card.BorrowerTitle = CardBorrowerTitle;
 Card.Description = CardDescription;
 Card.Image = CardImageCrop;
@@ -145,5 +170,7 @@ Card.Progress = ProgressComponent;
 Card.Separator = Separator;
 Card.Vertical = Vertical;
 Card.Tooltip = TooltipComponent;
+Card.RoiHeader = RoiHeaderComponent;
+Card.SmallContent = SmallContentWithLogo;
 
 export default Card;

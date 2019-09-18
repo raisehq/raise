@@ -9,6 +9,7 @@ import { getCalculations } from '../../utils/loanUtils';
 // import { GetInTouch } from '../GetInTouch';
 // import { ClaimRefund } from '../ClaimRefundInvestor';
 import LenderACU from '../Cards/LenderACU';
+import LenderExpired from '../Cards/LenderExpired';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
@@ -18,24 +19,20 @@ const Loan = ({ auction }: { auction: any }) => {
 
     return match(
       conditions,
-      [4, false],
+      [1, false],
+      () => <LenderExpired auction={auction} calcs={calcs} />,
+      [2, false],
       () => <LenderACU auction={auction} calcs={calcs} />,
       [3, ANY],
       () => <LenderACU auction={auction} calcs={calcs} />,
-      [1, false],
+      [4, false],
+      () => <LenderACU auction={auction} calcs={calcs} />,
+      [5, ANY],
       () => <LenderACU auction={auction} calcs={calcs} />,
       ANY,
       () => null
     );
   }, [auction.state, auction.withdrawn]);
-
-  // const state = useMemo(() => {
-  //   if (auction.loanRepaid) {
-  //     return 5;
-  //   }
-  //   return auction.state;
-  // }, [auction.state, auction.loanRepaid]);
-  // const contentColor = state === 3 ? 'red' : null;
 
   return card;
 };
