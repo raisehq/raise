@@ -8,7 +8,8 @@ import {
   Label,
   Loader,
   Segment,
-  Grid
+  Grid,
+  Checkbox
 } from 'semantic-ui-react';
 import { device } from '../LayoutV2/breakpoints';
 
@@ -23,6 +24,31 @@ interface InputLabelProps {
 interface LabelPaddingProps {
   color?: string;
 }
+
+export const ModalContet: any = styled(SemanticModal.Content)`
+  padding: 40px 50px !important;
+`;
+
+export const LoanTermsCheckbox: any = styled(Checkbox)`
+  &&& {
+    position: relative;
+    margin-right: 4px;
+    top: 3px;
+    font-size: 12px;
+    line-height: 21px;
+    color: red;
+    @media ${device.laptop} {
+      font-size: 14px;
+    }
+  }
+`;
+
+export const CheckContainer = styled.div`
+  line-height: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+`;
 
 export const ExitButton = styled(Icon)`
   &&& {
