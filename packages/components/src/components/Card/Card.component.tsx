@@ -24,7 +24,7 @@ import {
   ProgressPercent,
   SubHeader,
   SubHeaderContent,
-  SubHeaderTitle
+  SubHeaderTitle,
   CardDescription,
   CardBorrowerTitle,
   Vertical
