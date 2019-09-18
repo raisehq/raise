@@ -3,6 +3,8 @@ export const defaultContext = {
   onSetCredentials: () => null,
   onSendCredentials: () => null,
   onResetPassword: () => null,
+  onSetPasswordBorrower: () => null,
+  onActivateAccount: () => null,
   onLogin: () => null,
   error: false,
   onLoginURL: null,

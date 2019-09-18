@@ -37,15 +37,11 @@ export interface IContext {
   mountNode?: any | null;
   credentials: ICredentials;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
-  onSetCredentials: (
-    input: string,
-    value: string | boolean
-  ) => null | void | Promise<any>;
+  onSetCredentials: (input: string, value: string | boolean) => null | void | Promise<any>;
   onSendCredentials: () => null | void | Promise<any>;
-  onResetPassword: (
-    token: string,
-    password: string
-  ) => null | void | Promise<any>;
+  onResetPassword: (token: string, password: string) => null | void | Promise<any>;
+  onSetPasswordBorrower: (token: string, password: string) => null | void | Promise<any>;
+  onActivateAccount: (token: string) => null | void | Promise<any>;
   onLogin: () => null | void | Promise<any>;
   setLoginError: (x: boolean) => null | void | Promise<any>;
   error: boolean;

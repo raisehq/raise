@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Form, Modal, Button, Checkbox } from 'semantic-ui-react';
-import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from 'react-google-recaptcha';
 import theme from '../theme';
 
 export const commonModal = {
@@ -126,6 +126,11 @@ export const OnboardingWrapper = styled.div`
 `;
 
 export const OnboardHeader = styled.h1`
+  color: #3c4251;
+`;
+
+export const OnboardHeaderBorrower = styled.h1`
+  font-size: 23px;
   color: #3c4251;
 `;
 
@@ -308,8 +313,7 @@ export const OnboardLogo = styled.div`
   width: 25px;
   height: 25px;
   border: none;
-  background: url(${theme.resources}/favicons/ms-icon-150x150.png) center center
-    no-repeat;
+  background: url(${theme.resources}/favicons/ms-icon-150x150.png) center center no-repeat;
   background-size: cover;
 `;
 
@@ -323,8 +327,7 @@ export const MyRecapcha = styled(ReCAPTCHA)`
 `;
 
 export const GoogleCaptchaPolicies = styled.div`
-width: 100%;
-text-align: center;
-padding-top: 20px;
-
-`
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+`;
