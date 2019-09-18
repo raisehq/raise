@@ -30,10 +30,10 @@ export const OrangeMessage = styled(Message)`
 `;
 
 export const KycMessageButton = styled.button`
-  border: 2px solid white;
+  border: 1px solid #8a6300;
   padding: 15px;
   border-radius: 5px;
-  color: white;
-  background: #f0712c;
+  color: #8a6300;
+  background: #ffb62b;
   cursor: pointer;
 `;

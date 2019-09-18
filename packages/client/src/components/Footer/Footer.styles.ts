@@ -21,19 +21,19 @@ export const FooterWrapper = styled.div`
 `;
 
 export const FooterMenu = styled.div`
-  width: 33%;
+  flex: 0 1 33%;
   display: flex;
 `;
 
 export const FooterLogo = styled.div`
-  width: 33%;
+  flex: 0 1 33%;
   height: 40px;
   display: flex;
   justify-content: center;
 `;
 
 export const FooterImage = styled.div`
-  width: 33%;
+  flex: 0 1 33%;
   display: flex;
   justify-content: flex-end;
 `;

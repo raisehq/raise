@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Logout from '../Logout';
+import { maxDevice } from '../LayoutV2/breakpoints';
 
 export const Header = styled.div`
   top: 0;
@@ -15,6 +16,10 @@ export const Header = styled.div`
   border: none;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   background: white;
+
+  @media ${maxDevice.laptop} {
+    display: none;
+  }
 `;
 
 export const HeaderLogout = styled(Logout)`
@@ -26,6 +31,7 @@ export const HeaderLogout = styled(Logout)`
     color: #3c4251;
     border-radius: 4px;
     font-size: 18px;
+    margin-left: 25px;
   }
 `;
 

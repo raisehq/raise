@@ -8,6 +8,7 @@ import {
   HeaderLogout,
   HeaderMenuItem
 } from './DesktopHeader.styles';
+import theme from '../../theme';
 import { AppContext } from '../App';
 
 const DesktopHeader = () => {
@@ -18,7 +19,7 @@ const DesktopHeader = () => {
       <HeaderWrapper>
         <HeaderGroup>
           <HeaderLogo onClick={() => history.push('/')}>
-            <img src="https://static.herodev.es/images/logo.svg" />
+            <img src={`${theme.resources}/images/logo.svg`} />
           </HeaderLogo>
           <HeaderMenu>
             <HeaderMenuItem>Get Started</HeaderMenuItem>
@@ -26,7 +27,7 @@ const DesktopHeader = () => {
           </HeaderMenu>
         </HeaderGroup>
         <HeaderGroup className="right">
-          lolens molens
+          WIDGET
           <HeaderLogout />
         </HeaderGroup>
       </HeaderWrapper>
