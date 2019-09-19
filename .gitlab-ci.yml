@@ -1,0 +1,84 @@
+image: node:11
+stages:
+  - prepare
+  - build
+  - review
+  - cleanup
+
+variables:
+  AWS_DEFAULT_REGION: eu-west-1
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm
+    - packages/client/build
+    - node_modules
+    - packages/client/node_modules
+    - packages/components/node_modules
+    - packages/onboarding/node_modules
+    - packages/testing/node_modules
+
+lerna:
+  stage: prepare
+  script:
+    - npx lerna bootstrap
+    - npx lerna run compile:components
+    - npx lerna bootstrap
+    - npx lerna run compile:onboarding
+    - npx lerna bootstrap
+    - cd packages/testing/ && npm i
+  only:
+    - merge_requests
+    - master
+
+build-front-review:
+  stage: build
+  script:
+    - npm run client:build:integration
+  only:
+    - merge_requests
+  except:
+    - master
+
+build-front-production:
+  stage: build
+  script:
+    - npm run client:build:production
+  only:
+    - master
+
+review:
+  image: "python:latest"  
+  stage: review
+  before_script:
+    - pip install awscli
+  script:
+    - mv packages/client/build $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
+    - aws s3 sync $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+    on_stop: stop-review
+  only:
+    - merge_requests
+  except:
+    - master
+
+stop-review:
+  image: "python:latest"  
+  stage: cleanup
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z) --recursive
+  when: manual
+  variables:
+    GIT_STRATEGY: none
+  environment:
+    name: review/$CI_BUILD_REF_NAME
+    action: stop
+  only:
+    - merge_requests
+  except:
+    - master
