@@ -93,7 +93,7 @@ export const CardContent = styled.div<{ children?: any; logo?: any; size?: any }
   flex-flow: column;
   justify-content: flex-start;
   padding-top: ${({ logo }) => (logo ? '55px' : '0')};
-  &&& > ${CardLogo} {
+  &&& > .logoWrap {
     position: absolute;
     top: -35px;
     left: 14px;
