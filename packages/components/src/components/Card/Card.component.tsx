@@ -30,8 +30,7 @@ import {
   CardBorrowerTitle,
   Vertical,
   RoiHeader,
-  RoiContent,
-  SmallCardContent
+  RoiContent
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -53,10 +52,20 @@ const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentCol
   </Row>
 );
 
-const HeaderComponent = ({ title, amount, ...rest }) => (
+const HeaderComponent = ({
+  title,
+  amount,
+  fontSize,
+  ...rest
+}: {
+  title: any;
+  amount: any;
+  fontSize?: any;
+  rest?: any;
+}) => (
   <Header {...rest}>
     <HeaderTitle>{title}</HeaderTitle>
-    <HeaderContent>{amount}</HeaderContent>
+    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
   </Header>
 );
 
@@ -73,7 +82,7 @@ const RoiHeaderComponent = ({ roi }) => (
   </RoiHeader>
 );
 
-const Card = ({ children }) => {
+const Card = ({ children, size, width }: { children: any; size?: any; width?: any }) => {
   const graph = React.useRef(null);
   const [values, setValues] = React.useState({ ref: null });
 
@@ -81,7 +90,7 @@ const Card = ({ children }) => {
 
   return (
     <Context.Provider value={values}>
-      <HeroCard ref={ref => (graph.current = ref)} className="heroCard">
+      <HeroCard ref={ref => (graph.current = ref)} className="heroCard" size={size} width={width}>
         {children}
       </HeroCard>
     </Context.Provider>
@@ -128,43 +137,31 @@ const ContentWithLogo = ({
   children,
   logo,
   topRight,
+  size,
   to
 }: {
   children?: any;
   logo?: any;
   to?: any;
   topRight?: any;
+  size?: any;
 }) => (
-    <CardContent logo={logo}>
-      {logo && (<Link className="logoWrap" to={to}><CardLogo src={logo} /></Link>)}
-      {topRight && <TimeLeft>{topRight}</TimeLeft>}
-      {children}
-    </CardContent>
-  );
+  <CardContent logo={logo} size={size}>
+    {logo && (
+      <Link className="logoWrap" to={to}>
+        <CardLogo src={logo} />
+      </Link>
+    )}
+    {topRight && <TimeLeft>{topRight}</TimeLeft>}
+    {children}
+  </CardContent>
+);
 
-const SmallContentWithLogo = ({
-  children,
-  logo,
-  topRight,
-  to
-}: {
-  children?: any;
-  to?: any;
-  logo?: any;
-  topRight?: any;
-}) => (
-    <SmallCardContent logo={logo}>
-      {logo && (<Link className="logoWrap" to={to}><CardLogo src={logo} /></Link>)}
-      {topRight && <TimeLeft>{topRight}</TimeLeft>}
-      {children}
-    </SmallCardContent>
-  );
-
-const CardImage = ({ src, to }: { src?: any; to?: any; }) => (
+const CardImage = ({ src, to }: { src?: any; to?: any }) => (
   <Link to={to}>
     <CardImageCrop src={src} />
   </Link>
-)
+);
 
 Card.BorrowerTitle = CardBorrowerTitle;
 Card.Description = CardDescription;
@@ -182,6 +179,6 @@ Card.Separator = Separator;
 Card.Vertical = Vertical;
 Card.Tooltip = TooltipComponent;
 Card.RoiHeader = RoiHeaderComponent;
-Card.SmallContent = SmallContentWithLogo;
+Card.TimeLeft = TimeLeft;
 
 export default Card;

@@ -11,4 +11,5 @@ export interface Loan {
   borrowerDebt: string;
   lenderAmount?: string | null;
   investorCount: number;
+  originator?: string;
 }

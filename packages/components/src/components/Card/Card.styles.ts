@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Icon, Image } from 'semantic-ui-react';
 import theme from '../../../theme';
+import { device } from '../../utils/breakpoints';
 
 interface RowContentProps {
   contentColor?: string;
@@ -48,9 +49,8 @@ export const CardLogo: any = styled(Image)`
   }
 `;
 
-export const HeroCard = styled.div`
-  width: 372px;
-  min-height: 335px;
+export const HeroCard = styled.div<{ size?: any; width?: any }>`
+  min-height: ${({ size }) => size || '335px'};
   border-radius: 6px;
   background-color: #ffffff;
   border: 1px solid #cfd0d4;
@@ -59,6 +59,11 @@ export const HeroCard = styled.div`
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
+
+  max-width: ${({ width }) => width || '372px'} !important;
+  @media ${device.laptop} {
+    width: ${({ width }) => width || '372px'} !important;
+  }
 `;
 
 export const TimeLeft = styled.div`
@@ -80,30 +85,10 @@ export const CardDescription = styled.div`
   font-size: 14px;
   display: block;
 `;
-export const CardContent = styled.div<{ children?: any; logo?: any }>`
+export const CardContent = styled.div<{ children?: any; logo?: any; size?: any }>`
   padding: 20px;
   position: relative;
-  height: auto;
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-start;
-  padding-top: ${({ logo }) => (logo ? '55px' : '0')};
-  &&& > .logoWrap {
-    position: absolute;
-    top: -35px;
-    left: 14px;
-  }
-  &&& > ${TimeLeft} {
-    position: absolute;
-    top: 10px;
-    right: 8px;
-  }
-`;
-
-export const SmallCardContent = styled.div<{ children?: any; logo?: any }>`
-  padding: 20px;
-  position: relative;
-  height: 100%;
+  height: ${({ size }) => size || 'auto'};
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
@@ -167,12 +152,13 @@ export const HeaderTitle = styled.h1`
   color: #5a5a5a;
   font-size: 12px;
   font-weight: lighter;
-  margin-bottom: 4px;
+  line-height: 14px;
 `;
-export const HeaderContent = styled.div`
+export const HeaderContent = styled.div<{ fontSize?: any }>`
   color: #3c4251;
-  font-size: 26px;
+  font-size: ${({ fontSize }) => fontSize || '26px'};
   font-weight: bold;
+  line-height: 32px;
 `;
 
 export const RoiHeader = styled.div`
