@@ -38,7 +38,7 @@ const Loan = ({ auction }: { auction: any }) => {
   const contentColor = state === 3 ? 'red' : null;
 
   return (
-    <BorrowerLoanCard>
+    <BorrowerLoanCard width="350px" size="325px">
       <Card.Content>
         <Card.Header title="Loan amount" amount={<Amount principal={principal} />} />
         <Fragment>

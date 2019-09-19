@@ -27,7 +27,7 @@ const Auction = ({ auction }: { auction: any }) => {
   }, [auction.state, auction.loanRepaid]);
 
   return (
-    <Card type="borrowerAuction">
+    <Card width="350px" size="315px">
       <Card.Content>
         {state >= 1 && <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>}
         <Card.Header title="Raised amount" amount={<Amount principal={principal} />} />
