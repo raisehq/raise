@@ -9,7 +9,6 @@ import { ClaimRepay } from '../ClaimRepay';
 import { ClaimRefund } from '../ClaimRefundInvestor';
 import { GetInTouch } from '../GetInTouch';
 
-
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, slug } = useBorrowerInfo(auction.originator);
   const { expectedRoiFormated, times, maxAmount, lenderRoiAmount } = calcs;
@@ -38,11 +37,11 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
 
   const contentColor = state === 3 ? 'red' : null;
   const loanTermLeft = state === 5 ? '-' : times.timeloanTermLeft;
-  const borrowerUrl = `/borrowers/${slug}`
+  const borrowerUrl = `/borrowers/${slug}`;
 
   return (
     <Card>
-      <Card.SmallContent>
+      <Card.Content size="100%">
         <Card.Grid>
           <Link to={borrowerUrl}>
             <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
@@ -64,7 +63,7 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
           <Card.Row title="Investors" content={auction.investorCount} />
         </Card.Grid>
         {cta}
-      </Card.SmallContent>
+      </Card.Content>
     </Card>
   );
 };

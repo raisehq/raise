@@ -72,12 +72,23 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
           <InputLabel>Expected ROI</InputLabel>
         </InputContainer>
       </ModalInputContainer>
-      <Card>
-        <Card.InvestContent topRight={auctionTimeLeft}>
-          <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+      <Card size="230px" width="400px">
+        <Card.Content>
           <Card.Grid spaceBetween>
-            <Card.SubHeader title="Raised amount" amount={<Amount principal={calcPrincipal} />} />
-            <Card.SubHeader title="Target" amount={<Amount principal={calcMaxAmount} />} />
+            <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+            <Card.TimeLeft>{auctionTimeLeft}</Card.TimeLeft>
+          </Card.Grid>
+          <Card.Grid spaceBetween>
+            <Card.Header
+              fontSize="22px"
+              title="Raised amount"
+              amount={<Amount principal={calcPrincipal} />}
+            />
+            <Card.Header
+              fontSize="22px"
+              title="Target"
+              amount={<Amount principal={calcMaxAmount} />}
+            />
           </Card.Grid>
           <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
           <Card.Grid>
@@ -87,7 +98,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
             <Card.Vertical />
             <Card.Row title="Expected ROI" content={expectedRoiFormated} />
           </Card.Grid>
-        </Card.InvestContent>
+        </Card.Content>
       </Card>
       <CheckContainer>
         <LoanTermsCheckbox onChange={onToggleTerms} />I agree to the Terms and Conditions of the

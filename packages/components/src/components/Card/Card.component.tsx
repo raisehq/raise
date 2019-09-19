@@ -29,9 +29,7 @@ import {
   CardBorrowerTitle,
   Vertical,
   RoiHeader,
-  RoiContent,
-  SmallCardContent,
-  InvestCardContent
+  RoiContent
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -53,10 +51,20 @@ const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentCol
   </Row>
 );
 
-const HeaderComponent = ({ title, amount, ...rest }) => (
+const HeaderComponent = ({
+  title,
+  amount,
+  fontSize,
+  ...rest
+}: {
+  title: any;
+  amount: any;
+  fontSize?: any;
+  rest?: any;
+}) => (
   <Header {...rest}>
     <HeaderTitle>{title}</HeaderTitle>
-    <HeaderContent>{amount}</HeaderContent>
+    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
   </Header>
 );
 
@@ -73,7 +81,7 @@ const RoiHeaderComponent = ({ roi }) => (
   </RoiHeader>
 );
 
-const Card = ({ children }) => {
+const Card = ({ children, size, width }: { children: any; size?: any; width?: any }) => {
   const graph = React.useRef(null);
   const [values, setValues] = React.useState({ ref: null });
 
@@ -81,7 +89,7 @@ const Card = ({ children }) => {
 
   return (
     <Context.Provider value={values}>
-      <HeroCard ref={ref => (graph.current = ref)} className="heroCard">
+      <HeroCard ref={ref => (graph.current = ref)} className="heroCard" size={size} width={width}>
         {children}
       </HeroCard>
     </Context.Provider>
@@ -127,49 +135,19 @@ const TooltipComponent = () => (
 const ContentWithLogo = ({
   children,
   logo,
-  topRight
+  topRight,
+  size
 }: {
   children?: any;
   logo?: any;
   topRight?: any;
+  size?: any;
 }) => (
-  <CardContent logo={logo}>
+  <CardContent logo={logo} size={size}>
     {logo && <CardLogo src={logo} />}
     {topRight && <TimeLeft>{topRight}</TimeLeft>}
     {children}
   </CardContent>
-);
-
-const InvestContentWithLogo = ({
-  children,
-  logo,
-  topRight
-}: {
-  children?: any;
-  logo?: any;
-  topRight?: any;
-}) => (
-  <InvestCardContent logo={logo}>
-    {logo && <CardLogo src={logo} />}
-    {topRight && <TimeLeft>{topRight}</TimeLeft>}
-    {children}
-  </InvestCardContent>
-);
-
-const SmallContentWithLogo = ({
-  children,
-  logo,
-  topRight
-}: {
-  children?: any;
-  logo?: any;
-  topRight?: any;
-}) => (
-  <SmallCardContent logo={logo}>
-    {logo && <CardLogo src={logo} />}
-    {topRight && <TimeLeft>{topRight}</TimeLeft>}
-    {children}
-  </SmallCardContent>
 );
 
 Card.BorrowerTitle = CardBorrowerTitle;
@@ -188,7 +166,6 @@ Card.Separator = Separator;
 Card.Vertical = Vertical;
 Card.Tooltip = TooltipComponent;
 Card.RoiHeader = RoiHeaderComponent;
-Card.SmallContent = SmallContentWithLogo;
-Card.InvestContent = InvestContentWithLogo;
+Card.TimeLeft = TimeLeft;
 
 export default Card;
