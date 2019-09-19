@@ -4,7 +4,7 @@ import { Card } from '@raisehq/components';
 import { BorrowerLoanCard } from './BorrowerLoan.styles';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import { getCalculations } from '../../utils/loanUtils';
-import Amount from './Dashboard.Amount';
+import Amount from '../Dashboard/Dashboard.Amount';
 import { ClaimLoan } from '../ClaimLoan';
 import { RepayLoan } from '../RepayLoan';
 import { GetInTouch } from '../GetInTouch';
@@ -38,11 +38,10 @@ const Loan = ({ auction }: { auction: any }) => {
   const contentColor = state === 3 ? 'red' : null;
 
   return (
-    <BorrowerLoanCard>
+    <BorrowerLoanCard width="350px" size="325px">
       <Card.Content>
         <Card.Header title="Loan amount" amount={<Amount principal={principal} />} />
         <Fragment>
-          <Card.Tooltip />
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Fragment>
         <Card.Grid noGraph>
@@ -51,7 +50,7 @@ const Loan = ({ auction }: { auction: any }) => {
           <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0} DAI`} />
         </Card.Grid>
         <Card.Separator />
-        <Card.Grid>
+        <Card.Grid notop>
           <Card.Row title="Repayment amount" content={borrowerDebt} />
           <Card.Row title="Investors" content={auction.investorCount} />
           <Card.Row title="Loan Term" contentColor={contentColor} content={times.loanTermLeft} />

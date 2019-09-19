@@ -8,11 +8,14 @@ interface RowContentProps {
 }
 
 interface RowWrapperProps {
+  notop?: boolean | null;
   small?: boolean | null;
 }
 
 interface GridProps {
   noGraph?: boolean;
+  nobottom?: boolean;
+  notop?: boolean;
   spaceBetween?: boolean;
   alignCenter?: boolean;
   alignBottom?: boolean;
@@ -21,6 +24,10 @@ interface GridProps {
 
 interface ImageCropProps {
   src?: string | null;
+}
+
+interface HeroCardProps {
+  type?: string | null;
 }
 
 export const GraphContainer = styled.div`
@@ -88,7 +95,7 @@ export const CardDescription = styled.div`
 export const CardContent = styled.div<{ children?: any; logo?: any; size?: any }>`
   padding: 20px;
   position: relative;
-  height: ${({ size }) => size || 'auto'};
+  height: ${({ size }) => size || '100%'};
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
@@ -107,17 +114,21 @@ export const CardContent = styled.div<{ children?: any; logo?: any; size?: any }
 
 export const Grid: any = styled.div<GridProps>`
   display: flex;
+  margin: 20px 0px;
   justify-content: ${({ spaceBetween }) => (spaceBetween ? 'space-between' : 'unset')};
+  ${({ nobottom }) => nobottom && 'margin-bottom: 0;'}
+  ${({ notop }) => notop && 'margin-top: 0;'}
   ${({ alignCenter }) => alignCenter && 'align-items: center;'}
   ${({ alignBottom }) => alignBottom && 'align-items: flex-end;'}
   ${({ alignTop }) => alignTop && 'align-items: flex-start;'}
   box-sizing: border-box;
   flex-wrap: wrap;
-  margin: ${({ noGraph }) => (!noGraph ? '10px 0px' : '30px 0px 10px')};
 `;
 
 export const Row = styled.div<RowWrapperProps>`
   flex: ${({ small }) => (small ? '1 0 25%' : '1 0 32.5%')};
+  margin: 20px 0px 0px 0px;
+  ${({ notop }) => notop && 'margin-top: 0;'}
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -246,6 +257,7 @@ export const Badge = styled.div`
   height: 20px;
   color: #fff;
   position: absolute;
+  top: 15px;
   right: 15px;
   text-align: center;
   padding: 3px 0 3px 0;

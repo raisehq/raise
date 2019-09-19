@@ -41,7 +41,7 @@ const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
   }, [auction.state, auction.loanRepaid]);
   const borrowerUrl = `/borrowers/${slug}`;
   return (
-    <Card>
+    <Card width="350px">
       <Card.Content size="100%">
         <Card.Grid>
           <Link to={borrowerUrl}>
@@ -59,9 +59,9 @@ const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
         </Card.Grid>
         <Card.Progress color="#5A5A5A" currentAmount={currentAmount} totalAmount={totalAmount} />
         <Card.Grid>
-          <Card.Row title="Loan Term" content={times.loanTerm} />
+          <Card.Row notop title="Loan Term" content={times.loanTerm} />
           <Card.Vertical />
-          <Card.Row title="Investors" content={auction.investorCount} />
+          <Card.Row notop title="Investors" content={auction.investorCount} />
         </Card.Grid>
         {cta}
       </Card.Content>
