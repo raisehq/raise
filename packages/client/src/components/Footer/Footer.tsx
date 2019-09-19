@@ -28,11 +28,21 @@ const FooterCmp = () => (
           </FooterList>
         </FooterMenu>
         <FooterIcons>
-          <Icon name="mail outline"></Icon>
-          <Icon name="facebook"></Icon>
-          <Icon name="github"></Icon>
-          <Icon name="medium"></Icon>
-          <Icon name="twitter"></Icon>
+          <a href="mailto:help@raise.it">
+            <Icon name="mail outline" />
+          </a>
+          <a href="https://www.facebook.com/raisehq/">
+            <Icon name="facebook"></Icon>
+          </a>
+          <a href="https://github.com/raisehq">
+            <Icon name="github"></Icon>
+          </a>
+          <a href="https://medium.com/@raiseHQ">
+            <Icon name="medium"></Icon>
+          </a>
+          <a href="https://twitter.com/raise_hq">
+            <Icon name="twitter"></Icon>
+          </a>
         </FooterIcons>
       </FooterFirst>
       <FooterLogo>

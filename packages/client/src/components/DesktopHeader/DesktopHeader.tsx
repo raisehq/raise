@@ -10,11 +10,13 @@ import {
 } from './DesktopHeader.styles';
 import theme from '../../theme';
 import { AppContext } from '../App';
+import useMenuVisibility from '../../hooks/useMenuVisibility';
 
 const DesktopHeader = () => {
   const { history }: any = useContext(AppContext);
+  const visible = useMenuVisibility();
 
-  return (
+  return visible ? (
     <Header>
       <HeaderWrapper>
         <HeaderGroup>
@@ -34,7 +36,7 @@ const DesktopHeader = () => {
         </HeaderGroup>
       </HeaderWrapper>
     </Header>
-  );
+  ) : null;
 };
 
 export default DesktopHeader;

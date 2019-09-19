@@ -6,6 +6,13 @@ export const Footer = styled.div`
   width: 100%;
   height: 355px;
   background: linear-gradient(180deg, #f9f9f9 0%, #ffffff 100%);
+
+  a {
+    color: rgba(0, 0, 0, 0.6) !important;
+    border: none;
+    background: none;
+    text-decoration: none;
+  }
 `;
 
 export const FooterWrapper = styled.div`

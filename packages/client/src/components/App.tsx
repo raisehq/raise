@@ -191,11 +191,10 @@ const App = ({ children, history, match }: any) => {
       </Dimmer>
       <TopMobileMenu />
       <DesktopHeader />
-      <TransitionGroup>
-        <CSSTransition key={history.location.key} classNames="fade" timeout={3000}>
-          {/** Referral */}
+      <TransitionGroup component={null}>
+        <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
           <Switch>
-            <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[1, 2]} />
+            <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[2]} />
             <Web3Route
               layout={LayoutV2}
               exact
@@ -236,14 +235,7 @@ const App = ({ children, history, match }: any) => {
               component={CreateLoan}
               roles={[1, 2]}
             />
-            <Web3Route
-              layout={Layout}
-              exact
-              path="/borrowers/:slug"
-              component={BorrowerProfile}
-              roles={[1, 2]}
-            />
-
+            <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
             <LayoutV2 exact path="/test" component={Test} />
             {/* Onboarding */}
             <LayoutV2 exact path="/verify-web3" component={Web3Check} />
@@ -251,10 +243,10 @@ const App = ({ children, history, match }: any) => {
             <LayoutV2 exact path="/login" component={Join} />
             <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
             <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+            <LayoutV2 exact path="/join/activate/:token" component={Join} />
           </Switch>
         </CSSTransition>
       </TransitionGroup>
-
       <div ref={modalRefs} />
     </AppContext.Provider>
   );
