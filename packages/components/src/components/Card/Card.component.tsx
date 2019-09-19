@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Icon, Popup } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import {
   HeroCard,
   Grid,
@@ -24,10 +25,13 @@ import {
   ProgressPercent,
   SubHeader,
   SubHeaderContent,
-  SubHeaderTitle
+  SubHeaderTitle,
   CardDescription,
   CardBorrowerTitle,
-  Vertical
+  Vertical,
+  RoiHeader,
+  RoiContent,
+  SmallCardContent
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -61,6 +65,12 @@ const SubHeaderComponent = ({ title, amount, ...rest }) => (
     <SubHeaderTitle>{title}</SubHeaderTitle>
     <SubHeaderContent>{amount}</SubHeaderContent>
   </SubHeader>
+);
+
+const RoiHeaderComponent = ({ roi }) => (
+  <RoiHeader>
+    <RoiContent>{`${roi}ROI`}</RoiContent>
+  </RoiHeader>
 );
 
 const Card = ({ children }) => {
@@ -117,22 +127,48 @@ const TooltipComponent = () => (
 const ContentWithLogo = ({
   children,
   logo,
-  topRight
+  topRight,
+  to
 }: {
   children?: any;
   logo?: any;
+  to?: any;
   topRight?: any;
 }) => (
-  <CardContent logo={logo}>
-    {logo && <CardLogo src={logo} />}
-    {topRight && <TimeLeft>{topRight}</TimeLeft>}
-    {children}
-  </CardContent>
-);
+    <CardContent logo={logo}>
+      {logo && (<Link className="logoWrap" to={to}><CardLogo src={logo} /></Link>)}
+      {topRight && <TimeLeft>{topRight}</TimeLeft>}
+      {children}
+    </CardContent>
+  );
+
+const SmallContentWithLogo = ({
+  children,
+  logo,
+  topRight,
+  to
+}: {
+  children?: any;
+  to?: any;
+  logo?: any;
+  topRight?: any;
+}) => (
+    <SmallCardContent logo={logo}>
+      {logo && (<Link className="logoWrap" to={to}><CardLogo src={logo} /></Link>)}
+      {topRight && <TimeLeft>{topRight}</TimeLeft>}
+      {children}
+    </SmallCardContent>
+  );
+
+const CardImage = ({ src, to }: { src?: any; to?: any; }) => (
+  <Link to={to}>
+    <CardImageCrop src={src} />
+  </Link>
+)
 
 Card.BorrowerTitle = CardBorrowerTitle;
 Card.Description = CardDescription;
-Card.Image = CardImageCrop;
+Card.Image = CardImage;
 Card.Logo = CardLogo;
 Card.Content = ContentWithLogo;
 Card.Badge = BadgeComponent;
@@ -145,5 +181,7 @@ Card.Progress = ProgressComponent;
 Card.Separator = Separator;
 Card.Vertical = Vertical;
 Card.Tooltip = TooltipComponent;
+Card.RoiHeader = RoiHeaderComponent;
+Card.SmallContent = SmallContentWithLogo;
 
 export default Card;
