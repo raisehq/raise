@@ -29,7 +29,7 @@ const useLoanDispatcher = () => {
               termSecondsLength,
               auctionSecondsLength
             ];
-            console.log('CREATE LOAN DISPACHER > ', params);
+
             return contract.methods.deploy(...params).send({ from: account[0] });
           }
         });

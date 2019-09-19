@@ -1,4 +1,3 @@
-
 import MockAdapter from 'axios-mock-adapter';
 
 let Cache;
@@ -15,7 +14,7 @@ const MockAxios = (axios: any) => {
       if (config.url === url && config.method.toUpperCase() === method) return true;
       return false;
     });
-    console.log(' MATCH : ', match)
+    console.log(' MATCH : ', match);
 
     if (match && match.length > 0) {
       const resp = match.pop();

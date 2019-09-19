@@ -38,12 +38,16 @@ const defaultBorrower = {
 };
 
 type SlugParam = {
-  slug: string,
-}
+  slug: string;
+};
 
-type BorrowerParams = RouteComponentProps<SlugParam>
+type BorrowerParams = RouteComponentProps<SlugParam>;
 
-const BorrowerProfile: React.SFC<BorrowerParams> = ({ match: { params: { slug } } }) => {
+const BorrowerProfile: React.SFC<BorrowerParams> = ({
+  match: {
+    params: { slug }
+  }
+}) => {
   const [borrower, setPayload]: [BorrowerProfileType, any] = useState(defaultBorrower);
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -71,17 +75,17 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({ match: { params: { slug } 
       setPayload({ ...response, account: userAccount });
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setNotFound(true);
       setLoading(false);
     }
   }, []);
 
   if (loading) {
-    return (<BorrowerLoading />);
+    return <BorrowerLoading />;
   }
   if (notFound) {
-    return (<Borrower404 />);
+    return <Borrower404 />;
   }
   return (
     <Container>
@@ -112,4 +116,3 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({ match: { params: { slug } 
 };
 
 export default withRouter(BorrowerProfile);
-

@@ -16,10 +16,12 @@ export default (dispatch: any, state: any) => {
     );
   };
 
-
   const onGetLiveAuctionsByAccountSubscription = (error, data) => {
     if (error) {
-      console.log('error on get live auction subs :: ', error);
+      console.log(
+        '[onGetLiveAuctionsByAccountSubscription] error on get live auction subs :: ',
+        error
+      );
     } else {
       dispatch({
         type: 'SET_LIVE_AUCTIONS',
@@ -31,10 +33,13 @@ export default (dispatch: any, state: any) => {
   /** LENDER **/
 
   const onGetSuggestedAuctionsSubscription = (error, data) => {
-    if (error) return console.log('error on get sugg subs :: ', error);
-    console.log('LLEGA????', data)
-    dispatch({ type: 'SET_SUGGESTED_AUCTIONS', data: data.loans });
+    if (error)
+      return console.error(
+        '[onGetSuggestedAuctionsSubscription] error on get sugg subs :: ',
+        error
+      );
 
+    dispatch({ type: 'SET_SUGGESTED_AUCTIONS', data: data.loans });
   };
 
   const onGetLenderInvestmentSubscription = (error, data) => {
@@ -48,7 +53,6 @@ export default (dispatch: any, state: any) => {
         lenderAmount: amount
       }))
     });
-
   };
 
   const onGetLoansByAccountSubscription = (error, data) => {

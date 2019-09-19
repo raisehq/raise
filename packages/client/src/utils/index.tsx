@@ -104,7 +104,6 @@ export const averageBlockTime = async () => {
 };
 
 export const parseNetwork = id => {
-  console.log(' NETWORK ---> ', id);
   switch (id) {
     case 1:
       return 'mainnet';

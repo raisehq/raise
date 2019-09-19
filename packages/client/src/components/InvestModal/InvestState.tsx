@@ -20,7 +20,6 @@ import {
 } from './InvestModal.styles';
 
 const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
-  console.log('loan:: ', loan);
   const { principal, investorCount, maxAmount } = loan;
   const {
     times,
