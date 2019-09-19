@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card } from '@raisehq/components';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
+import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 
 const Auction = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
@@ -18,18 +19,26 @@ const Auction = ({ auction }: { auction: any }) => {
     currentAPR
   } = calcs;
 
+  const state = useMemo(() => {
+    if (auction.loanRepaid) {
+      return 5;
+    }
+    return auction.state;
+  }, [auction.state, auction.loanRepaid]);
+
   return (
     <Card type="borrowerAuction">
       <Card.Content>
+        {state >= 1 && <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>}
         <Card.Header title="Raised amount" amount={<Amount principal={principal} />} />
         <Card.Graph color="#00DA9E" currentAmount={currentAmount} totalAmount={totalAmount} />
-        <Card.Grid>
+        <Card.Grid notop>
           <Card.Row title="Investors" content={auction.investorCount} />
           <Card.Row title="Current APR" content={currentAPR} />
           <Card.Row title="Days Left" content={times.auctionTimeLeft} />
         </Card.Grid>
         <Card.Separator />
-        <Card.Grid nobottom>
+        <Card.Grid nobottom notop>
           <Card.Row title="System Fees" content={`${systemFees} DAI`} />
           <Card.Row title="Loan Term" content={`${times.loanTerm} `} />
           <Card.Row title="Net Loan Proceeds" content={`${netBalance} DAI`} />
