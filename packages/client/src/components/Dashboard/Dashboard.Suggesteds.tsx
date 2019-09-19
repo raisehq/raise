@@ -3,7 +3,6 @@ import daggy from 'daggy';
 import Suggested from './Dashboard.Suggested';
 import { getActiveAuctions } from '../../utils/loanUtils';
 import { SuggestedContainer, NoResults } from './Dashboard.styles';
-import { InvestModal } from '../InvestModal';
 import useInterval from '../../hooks/useInterval';
 
 export const Auctions = daggy.taggedSum('Auctions', {
@@ -36,7 +35,7 @@ const Suggesteds = ({ auctions, states }) => {
     Success: () => (
       <SuggestedContainer>
         {suggestedAuctions.slice(0, 3).map(auction => (
-          <Suggested key={auction.id} auction={auction} cta={<InvestModal loan={auction} />} />
+          <Suggested key={auction.id} auction={auction} />
         ))}
       </SuggestedContainer>
     ),

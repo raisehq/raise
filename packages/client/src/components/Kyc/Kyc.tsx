@@ -42,7 +42,7 @@ const KYC = () => {
       <KYCHolder>
         <KYCDisclaimer>
           Please fill in your personal information and upload your documents for our compliance
-          officers to review and approve your account
+          officers to review and approve your account. This process will be held by Sumsub software.
         </KYCDisclaimer>
         <div id="idensic"></div>
       </KYCHolder>

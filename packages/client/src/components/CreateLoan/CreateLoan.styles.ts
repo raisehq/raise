@@ -17,6 +17,26 @@ interface LoanFormValueProps {
   big?: boolean;
 }
 
+export const LoanTermsCheckbox: any = styled(Checkbox)`
+  &&& {
+    position: relative;
+    margin-right: 4px;
+    top: 3px;
+    font-size: 12px;
+    line-height: 21px;
+    color: red;
+    @media ${device.laptop} {
+      font-size: 14px;
+    }
+  }
+`;
+
+export const CheckContainer = styled.div`
+  line-height: 20px;
+  margin-top: 20px;
+  display: flex;
+`;
+
 export const Header = styled(HeaderUI)<HeaderProps>`
   && {
     color: #3c4251;
@@ -211,7 +231,6 @@ export const LoanConfirmation = styled(Card)`
       border-top: 0;
       max-width: 380px;
       margin-left: 35px;
-      margin-top: 30px;
     }
   }
 `;
@@ -369,10 +388,7 @@ export const ConfirmButton: any = styled(Button)<ButtonProps>`
     height: 60px;
     width: 100%;
     background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
-    border-radius: 4px;
-    display: block;
-    align-content: center;
-    justify-content: center;
+    border-radius: 6px !important;
     color: #ffffff;
     padding: 0;
     font-size: 18px;
@@ -381,7 +397,11 @@ export const ConfirmButton: any = styled(Button)<ButtonProps>`
     text-align: center;
     text-transform: uppercase;
     cursor: pointer;
-    margin: 40px 0px 0px 0px;
+    margin: 20px 0px 0px 0px;
+    :disabled {
+      background-color: #00a76f;
+      opacity: 0.4;
+    }
   }
 `;
 

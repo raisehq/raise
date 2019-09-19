@@ -18,9 +18,14 @@ export default (dispatch: any, state: any) => {
 
 
   const onGetLiveAuctionsByAccountSubscription = (error, data) => {
-    if (error) return console.log('error on get live auction subs :: ', error);
-    console.log('------> ', data);
-    dispatch({ type: 'SET_LIVE_AUCTIONS', data: data.users[0].loanRequests });
+    if (error) {
+      console.log('error on get live auction subs :: ', error);
+    } else {
+      dispatch({
+        type: 'SET_LIVE_AUCTIONS',
+        data: data.users.length ? data.users[0].loanRequests : []
+      });
+    }
   };
 
   /** LENDER **/

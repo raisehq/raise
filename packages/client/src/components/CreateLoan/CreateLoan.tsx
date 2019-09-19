@@ -163,6 +163,13 @@ const CreateLoan = () => {
     }
   }, [loan]);
 
+  const [termsCond, setTermsCond] = useState(false);
+
+  const onToggleTerms = () => {
+    const toggleTerms = !termsCond;
+    setTermsCond(toggleTerms);
+  };
+
   const values = {
     loan,
     numberAmount,
@@ -171,9 +178,10 @@ const CreateLoan = () => {
     repaymentAmount,
     netLoan,
     systemFees,
-    totalInterest
+    totalInterest,
+    termsCond
   };
-  const methods = { onSave, onRetry };
+  const methods = { onSave, onRetry, onToggleTerms };
 
   return (
     <LoanContainer>

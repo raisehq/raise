@@ -8,6 +8,7 @@ import { getActiveAuctions } from '../../utils/loanUtils';
 import useInterval from '../../hooks/useInterval';
 import LenderAuction from './Dashboard.LenderAuction';
 import LenderLoan from './Dashboard.LenderLoan';
+import SuggestedAuction from './Dashboard.Suggested';
 
 const renderedLoans = (auctions, type) =>
   auctions.map(auction => {
@@ -22,10 +23,10 @@ const renderedLoans = (auctions, type) =>
       () => BorrowerLoan,
       ['lender', 0],
       () => LenderAuction,
-      ['lender', 1],
-      () => LenderLoan,
       ['lender', ANY],
-      () => LenderLoan
+      () => LenderLoan,
+      ['suggested', ANY],
+      () => SuggestedAuction,
     );
     return <CardComponent key={auction.id} auction={auction} />;
   });

@@ -22,6 +22,7 @@ const queryies = {
             termLength
             maxInterestRate
             operatorBalance
+            originator
           }
         }`,
       variables: {},
@@ -52,6 +53,7 @@ const queryies = {
             termLength
             maxInterestRate
             operatorBalance
+            originator
           }
         }
       }`,
@@ -87,6 +89,7 @@ const queryies = {
               maxInterestRate,
               loanWithdrawn,
               loanRepaid
+              originator
             }
           }
         }
@@ -121,11 +124,23 @@ const queryies = {
             operatorBalance,
             loanWithdrawn,
             loanRepaid
+            originator
           }
         }
       }`,
       variables: {},
       subscriptionName: 'loansByAccount'
+    },
+    daiBalance: {
+      query: `subscription daiBalance($address: String)
+      {
+        balances(where:{address:$address}) {
+          address,
+          wad
+        }
+      }`,
+      variables: {},
+      subscriptionName: 'daiBalance'
     }
   },
   queryies: {}

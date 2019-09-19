@@ -11,7 +11,9 @@ import {
   LoanFormValue,
   LoanResume,
   NewLoanAnchor,
-  WaitingButton
+  WaitingButton,
+  LoanTermsCheckbox,
+  CheckContainer
 } from './CreateLoan.styles';
 
 export const UI = daggy.taggedSum('UI', {
@@ -30,9 +32,11 @@ export const getLoanAction = (stage, values, methods) => {
     repaymentAmount,
     loan,
     amountValidation,
-    numberAmount
+    numberAmount,
+    termsCond
   } = values;
-  const { onSave, onRetry } = methods;
+
+  const { onSave, onRetry, onToggleTerms } = methods;
 
   return stage.cata({
     Confirm: () => (
@@ -60,11 +64,20 @@ export const getLoanAction = (stage, values, methods) => {
             <LoanFormValue big={!isMobile}>{repaymentAmount} DAI</LoanFormValue>
           </div>
         </LoanResume>
+        <Divider vertical={isMobile} />
+        <CheckContainer>
+          <LoanTermsCheckbox onChange={onToggleTerms} />I agree to the Terms and Conditions of the
+          Loan Agreement
+        </CheckContainer>
         <ConfirmButton
           id="btn-create"
           onClick={onSave}
           disabled={
-            amountValidation.error || loan.term === 0 || loan.mir === 0 || numberAmount === 0
+            amountValidation.error ||
+            loan.term === 0 ||
+            loan.mir === 0 ||
+            numberAmount === 0 ||
+            !termsCond
           }
         >
           Confirm
