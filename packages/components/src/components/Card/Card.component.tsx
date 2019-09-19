@@ -30,7 +30,8 @@ import {
   Vertical,
   RoiHeader,
   RoiContent,
-  SmallCardContent
+  SmallCardContent,
+  InvestCardContent
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -139,6 +140,22 @@ const ContentWithLogo = ({
   </CardContent>
 );
 
+const InvestContentWithLogo = ({
+  children,
+  logo,
+  topRight
+}: {
+  children?: any;
+  logo?: any;
+  topRight?: any;
+}) => (
+  <InvestCardContent logo={logo}>
+    {logo && <CardLogo src={logo} />}
+    {topRight && <TimeLeft>{topRight}</TimeLeft>}
+    {children}
+  </InvestCardContent>
+);
+
 const SmallContentWithLogo = ({
   children,
   logo,
@@ -172,5 +189,6 @@ Card.Vertical = Vertical;
 Card.Tooltip = TooltipComponent;
 Card.RoiHeader = RoiHeaderComponent;
 Card.SmallContent = SmallContentWithLogo;
+Card.InvestContent = InvestContentWithLogo;
 
 export default Card;

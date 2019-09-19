@@ -100,6 +100,27 @@ export const CardContent = styled.div<{ children?: any; logo?: any }>`
   }
 `;
 
+export const InvestCardContent = styled.div<{ children?: any; logo?: any }>`
+  padding: 20px;
+  position: relative;
+  height: 230px;
+  width: 100%
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  padding-top: ${({ logo }) => (logo ? '55px' : '0')};
+  &&& > ${CardLogo} {
+    position: absolute;
+    top: -35px;
+    left: 14px;
+  }
+  &&& > ${TimeLeft} {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+  }
+`;
+
 export const SmallCardContent = styled.div<{ children?: any; logo?: any }>`
   padding: 20px;
   position: relative;
