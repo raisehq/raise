@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { match, ANY } from 'pampy';
+import { Link } from 'react-router-dom';
 import { Card } from '@raisehq/components';
 import Amount from '../Dashboard/Dashboard.Amount';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
@@ -8,8 +9,9 @@ import { ClaimRepay } from '../ClaimRepay';
 import { ClaimRefund } from '../ClaimRefundInvestor';
 import { GetInTouch } from '../GetInTouch';
 
+
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
-  const { companyName } = useBorrowerInfo(auction.originator);
+  const { companyName, slug } = useBorrowerInfo(auction.originator);
   const { expectedRoiFormated, times, maxAmount, lenderRoiAmount } = calcs;
 
   const cta = useMemo(() => {
@@ -36,12 +38,15 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
 
   const contentColor = state === 3 ? 'red' : null;
   const loanTermLeft = state === 5 ? '-' : times.timeloanTermLeft;
+  const borrowerUrl = `/borrowers/${slug}`
 
   return (
     <Card>
       <Card.SmallContent>
         <Card.Grid>
-          <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+          <Link to={borrowerUrl}>
+            <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+          </Link>
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Card.Grid>
         <Card.Grid spaceBetween>
