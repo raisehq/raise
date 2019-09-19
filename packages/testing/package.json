@@ -23,7 +23,7 @@
     "cypress:run": "cypress run",
     "cypress:test": "sh cypress/scripts/start.sh",
     "test": "npm run cypress:test",
-    "ganache:run": "ganache-cli --gasLimit 0xfffffffffff -m \"stamp polar cup smart ill agree human episode reform trigger text forget\" --db .gcache --port 8545",
+    "ganache:run": "ganache-cli --gasLimit 0xfffffffffff ---gasPrice 0x01 -i 6969 -m \"stamp polar cup smart ill agree human episode reform trigger text forget\" --db .gcache --port 8545",
     "cy:run": "node cypress/scripts/cypress.js"
   },
   "dependencies": {

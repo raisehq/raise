@@ -33,16 +33,16 @@ start_ganache() {
   echo "Ganache launched!"
 }
 
-rm -rf .gcache
-mkdir .gcache
+# rm -rf .gcache
+# mkdir .gcache
 
-echo "- Check exist ganache"
-if ganache_running; then
-    echo "Using existing ganache instance"
-else
-    echo "Starting our own ganache instance"
-    start_ganache
-fi
+# echo "- Check exist ganache"
+# if ganache_running; then
+#     echo "Using existing ganache instance"
+# else
+#     echo "Starting our own ganache instance"
+#     start_ganache
+# fi
 
 echo "- Clone contracts"
 rm  -rf ./contracts 
