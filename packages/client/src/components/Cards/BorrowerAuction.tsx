@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Card } from '@raisehq/components';
 import { getCalculations } from '../../utils/loanUtils';
-import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
-import Amount from './Dashboard.Amount';
+import Amount from '../Dashboard/Dashboard.Amount';
 
 const Auction = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
@@ -19,15 +18,10 @@ const Auction = ({ auction }: { auction: any }) => {
     currentAPR
   } = calcs;
 
-  const { state } = auction;
   return (
-    <Card>
+    <Card type="borrowerAuction">
       <Card.Content>
         <Card.Header title="Raised amount" amount={<Amount principal={principal} />} />
-        <Fragment>
-          <Card.Tooltip />
-          <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
-        </Fragment>
         <Card.Graph color="#00DA9E" currentAmount={currentAmount} totalAmount={totalAmount} />
         <Card.Grid>
           <Card.Row title="Investors" content={auction.investorCount} />

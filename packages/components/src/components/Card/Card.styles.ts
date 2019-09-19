@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { Icon, Image } from 'semantic-ui-react';
 import theme from '../../../theme';
+import { match, _ } from 'pampy';
+
+const minCardHeight = (type) => match(type,
+  'borrowerAuction', () => 280,
+  _, () => 335
+)
 
 interface RowContentProps {
   contentColor?: string;
@@ -20,6 +26,10 @@ interface GridProps {
 
 interface ImageCropProps {
   src?: string | null;
+}
+
+interface HeroCardProps {
+  type?: string | null;
 }
 
 export const GraphContainer = styled.div`
@@ -48,9 +58,8 @@ export const CardLogo: any = styled(Image)`
   }
 `;
 
-export const HeroCard = styled.div`
+export const HeroCard = styled.div<HeroCardProps>`
   width: 372px;
-  min-height: 335px;
   border-radius: 6px;
   background-color: #ffffff;
   border: 1px solid #cfd0d4;
@@ -59,6 +68,7 @@ export const HeroCard = styled.div`
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
+  min-height: ${({ type }) => `${minCardHeight(type)}px`};
 `;
 
 export const TimeLeft = styled.div`
@@ -133,6 +143,7 @@ export const Grid: any = styled.div<GridProps>`
 
 export const Row = styled.div<RowWrapperProps>`
   flex: ${({ small }) => (small ? '1 0 25%' : '1 0 32.5%')};
+  margin: 10px 0px 0px 0px;
   text-align: center;
   display: flex;
   flex-direction: column;

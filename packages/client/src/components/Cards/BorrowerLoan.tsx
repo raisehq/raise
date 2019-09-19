@@ -4,7 +4,7 @@ import { Card } from '@raisehq/components';
 import { BorrowerLoanCard } from './BorrowerLoan.styles';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import { getCalculations } from '../../utils/loanUtils';
-import Amount from './Dashboard.Amount';
+import Amount from '../Dashboard/Dashboard.Amount';
 import { ClaimLoan } from '../ClaimLoan';
 import { RepayLoan } from '../RepayLoan';
 import { GetInTouch } from '../GetInTouch';

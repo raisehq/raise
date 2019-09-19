@@ -73,7 +73,7 @@ const RoiHeaderComponent = ({ roi }) => (
   </RoiHeader>
 );
 
-const Card = ({ children }) => {
+const Card = ({ children, type }: { children: any; type?: string; }) => {
   const graph = React.useRef(null);
   const [values, setValues] = React.useState({ ref: null });
 
@@ -81,7 +81,7 @@ const Card = ({ children }) => {
 
   return (
     <Context.Provider value={values}>
-      <HeroCard ref={ref => (graph.current = ref)} className="heroCard">
+      <HeroCard type={type} ref={ref => (graph.current = ref)} className="heroCard">
         {children}
       </HeroCard>
     </Context.Provider>
