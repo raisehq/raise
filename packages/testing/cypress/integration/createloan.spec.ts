@@ -1,23 +1,19 @@
 /* tslint:disable */
-const utils = require('../../../client/src/utils/index');
 
-describe('BORROWER', function () {
-  beforeEach(function () {
+describe('BORROWER', function() {
+  beforeEach(function() {
     cy.login('borrower');
     cy.mockAPI('borrower');
     cy.web3('borrower');
   });
 
-  it('Go to create loan', function () {
-
+  it('Go to create loan', function() {
     cy.visit(Cypress.env('url'));
 
     cy.addCards('CREATED');
     cy.wait(4000);
 
-    cy.get('#options-menu > #menu-1 > a')
-      .should('have.length', 1)
-      .then(() => { });
+    cy.get('#options-menu > #menu-1 > a').should('have.length', 1);
 
     cy.wait(2000);
     cy.get('#options-menu > #menu-1 > a').matchImageSnapshot('menu_option_borrower');
