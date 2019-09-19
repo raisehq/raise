@@ -8,7 +8,7 @@ import { InvestModal } from '../InvestModal';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 
 const Auction = ({ auction }: { auction: any }) => {
-  const { companyName, background, logo } = useBorrowerInfo(auction.originator);
+  const { companyName, background, logo, slug } = useBorrowerInfo(auction.originator);
   const calcs = getCalculations(auction);
   const { maxAmount, expectedRoiFormated, times, currentAmount, totalAmount, principal } = calcs;
 
