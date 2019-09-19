@@ -95,7 +95,7 @@ export const CardDescription = styled.div`
 export const CardContent = styled.div<{ children?: any; logo?: any }>`
   padding: 20px;
   position: relative;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
@@ -134,7 +134,7 @@ export const SmallCardContent = styled.div<{ children?: any; logo?: any }>`
 
 export const Grid: any = styled.div<GridProps>`
   display: flex;
-  margin: ${({ noGraph }) => (!noGraph ? '20px 0px' : '30px 0px 20px')};
+  margin: 20px 0px;
   justify-content: ${({ spaceBetween }) => (spaceBetween ? 'space-between' : 'unset')};
   ${({ nobottom }) => nobottom && 'margin-bottom: 0;'}
   ${({ notop }) => notop && 'margin-top: 0;'}

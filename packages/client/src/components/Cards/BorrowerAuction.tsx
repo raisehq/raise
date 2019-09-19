@@ -31,7 +31,7 @@ const Auction = ({ auction }: { auction: any }) => {
       <Card.Content>
         {state >= 1 && <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>}
         <Card.Header title="Raised amount" amount={<Amount principal={principal} />} />
-        <Card.Graph color="#00DA9E" currentAmount={currentAmount} totalAmount={totalAmount} />
+        <Card.Graph color={state === 1 ? '#7e8286' : '#00DA9E'} currentAmount={currentAmount} totalAmount={totalAmount} />
         <Card.Grid notop>
           <Card.Row title="Investors" content={auction.investorCount} />
           <Card.Row title="Current APR" content={currentAPR} />
