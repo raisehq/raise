@@ -388,7 +388,7 @@ export const ConfirmButton: any = styled(Button)<ButtonProps>`
     height: 60px;
     width: 100%;
     background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
-    border-radius: 4px;
+    border-radius: 6px !important;
     color: #ffffff;
     padding: 0;
     font-size: 18px;
