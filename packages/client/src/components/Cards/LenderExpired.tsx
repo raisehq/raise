@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { match, ANY } from 'pampy';
+import { Link } from 'react-router-dom';
 import { Card } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
 import numeral from '../../commons/numeral';
@@ -11,7 +12,7 @@ import { ClaimRefund } from '../ClaimRefundInvestor';
 import { GetInTouch } from '../GetInTouch';
 
 const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
-  const { companyName } = useBorrowerInfo(auction.originator);
+  const { companyName, slug } = useBorrowerInfo(auction.originator);
   const { maxAmount, times, currentAmount, totalAmount, principal } = calcs;
 
   const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
@@ -38,12 +39,14 @@ const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
     }
     return auction.state;
   }, [auction.state, auction.loanRepaid]);
-
+  const borrowerUrl = `/borrowers/${slug}`
   return (
     <Card>
       <Card.SmallContent>
         <Card.Grid>
-          <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+          <Link to={borrowerUrl}>
+            <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+          </Link>
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Card.Grid>
         <Card.Grid>

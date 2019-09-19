@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card } from '@raisehq/components';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
@@ -10,16 +11,19 @@ interface LoanProps {
 }
 
 const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
-  const { companyName, description, background, logo } = useBorrowerInfo(auction.originator);
+  const { companyName, description, background, logo, slug } = useBorrowerInfo(auction.originator);
   const calculations = getCalculations(auction);
   const { currentAmount, totalAmount, maxAmount, times, currentAPR, principal } = calculations;
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
+  const borrowerUrl = `/borrowers/${slug}`
 
   return (
     <Card>
       <Card.Image src={background} />
       <Card.Content topRight={auctionTimeLeft} logo={logo}>
-        <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+        <Link to={borrowerUrl} >
+          <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+        </Link>
         <Card.Description>{description}</Card.Description>
         <Card.Grid spaceBetween alignBottom>
           <Card.Header title="Raised so far" amount={<Amount principal={principal} />} />
