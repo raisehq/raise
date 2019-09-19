@@ -46,7 +46,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   const { times, currentAmount, totalAmount, currentAPR, expectedROI } = getCalculations(loan);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
 
-  const roi = useMemo(() => value + value * expectedROI, [value]);
+  const roi = useMemo(() => value + value * expectedROI, [value, expectedROI]);
 
   const { raised, targetAmount } = useMemo(
     () => ({

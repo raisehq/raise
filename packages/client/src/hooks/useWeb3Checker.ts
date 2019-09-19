@@ -37,12 +37,7 @@ export const web3CheckList = (
 
 const hasDeposited = async (web3, definitions, address) => {
   const netId = await web3.eth.net.getId();
-  if (
-    !definitions ||
-    !address ||
-    !web3 ||
-    !hasIn(definitions, `address.${netId}`)
-  ) {
+  if (!definitions || !address || !web3 || !hasIn(definitions, `address.${netId}`)) {
     return false;
   }
   const contract = new web3.eth.Contract(
@@ -66,14 +61,7 @@ const useWeb3Checker = (): Web3State => {
   const [targetNetwork, setTargetNetwork]: any = useState([]);
   const [definitions, setDefs]: any = useState(null);
   const [web3State, setWeb3State]: [Web3State, any] = useState(
-    web3CheckList(
-      web3,
-      [],
-      targetAddress,
-      'Not connected',
-      targetNetwork,
-      false
-    )
+    web3CheckList(web3, [], targetAddress, 'Not connected', targetNetwork, false)
   );
 
   useAsyncEffect(async () => {
@@ -82,54 +70,50 @@ const useWeb3Checker = (): Web3State => {
     setTargetNetwork(
       Object.keys(contracts.data.address)
         .map(x => parseNetwork(Number(x)))
-        .filter(availableId =>
-          ['mainnet', 'kovan'].find(id => id === availableId)
-        )
+        .filter(availableId => ['mainnet', 'kovan'].find(id => id === availableId))
     );
     setDefs(contracts.data);
   }, []);
 
-  const verifyCheckList = async () => {
-    const web3 = getWeb3()
-    try {
-      const accounts = await web3.eth.getAccounts();
-      const netName = parseNetwork(await web3.eth.net.getId());
-      const hasDeposit =
-        accounts &&
-        !!accounts.length &&
-        (await hasDeposited(web3, definitions, accounts[0]));
-      const newWeb3State = web3CheckList(
-        web3,
-        accounts,
-        targetAddress,
-        netName,
-        targetNetwork,
-        hasDeposit
-      );
-      // Only update state if changes, prevent renders
-      setWeb3State(prevWeb3State =>
-        isEqual(newWeb3State, prevWeb3State) ? prevWeb3State : newWeb3State
-      );
-    } catch (err) {
-      console.error(err);
-      const errorState = web3CheckList(
-        web3,
-        [],
-        targetAddress,
-        'Not connected',
-        targetNetwork,
-        false
-      );
-      // Only update state if changes, prevent renders
-      setWeb3State(prevWeb3State =>
-        isEqual(errorState, prevWeb3State) ? prevWeb3State : errorState
-      );
-    }
-  };
-
   useEffect(() => {
-    let accountInterval
-    const web3 = getWeb3()
+    let accountInterval;
+    const web3 = getWeb3();
+
+    const verifyCheckList = async () => {
+      const web3 = getWeb3();
+      try {
+        const accounts = await web3.eth.getAccounts();
+        const netName = parseNetwork(await web3.eth.net.getId());
+        const hasDeposit =
+          accounts && !!accounts.length && (await hasDeposited(web3, definitions, accounts[0]));
+        const newWeb3State = web3CheckList(
+          web3,
+          accounts,
+          targetAddress,
+          netName,
+          targetNetwork,
+          hasDeposit
+        );
+        // Only update state if changes, prevent renders
+        setWeb3State(prevWeb3State =>
+          isEqual(newWeb3State, prevWeb3State) ? prevWeb3State : newWeb3State
+        );
+      } catch (err) {
+        console.error(err);
+        const errorState = web3CheckList(
+          web3,
+          [],
+          targetAddress,
+          'Not connected',
+          targetNetwork,
+          false
+        );
+        // Only update state if changes, prevent renders
+        setWeb3State(prevWeb3State =>
+          isEqual(errorState, prevWeb3State) ? prevWeb3State : errorState
+        );
+      }
+    };
 
     const defaultCheckList = web3CheckList(
       web3,
@@ -140,17 +124,15 @@ const useWeb3Checker = (): Web3State => {
       false
     );
     setWeb3State(prevWeb3State =>
-      isEqual(defaultCheckList, prevWeb3State)
-        ? prevWeb3State
-        : defaultCheckList
+      isEqual(defaultCheckList, prevWeb3State) ? prevWeb3State : defaultCheckList
     );
 
     if (web3 && web3.givenProvider) {
-      accountInterval = setInterval(verifyCheckList, 500)
+      accountInterval = setInterval(verifyCheckList, 500);
     }
     return () => {
       if (accountInterval) {
-        clearInterval(accountInterval)
+        clearInterval(accountInterval);
       }
     };
   }, [targetAddress, targetNetwork, definitions]);
@@ -159,4 +141,4 @@ const useWeb3Checker = (): Web3State => {
   return { ...web3State, ...contracts };
 };
 
-export default useWeb3Checker
+export default useWeb3Checker;
