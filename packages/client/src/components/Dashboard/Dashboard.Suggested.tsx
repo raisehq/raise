@@ -15,19 +15,19 @@ const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
   const calculations = getCalculations(auction);
   const { currentAmount, totalAmount, maxAmount, times, currentAPR, principal } = calculations;
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
-  const borrowerUrl = `/borrowers/${slug}`
+  const borrowerUrl = `/borrowers/${slug}`;
 
   return (
     <Card>
       <Card.Image to={borrowerUrl} src={background} />
       <Card.Content to={borrowerUrl} topRight={auctionTimeLeft} logo={logo}>
-        <Link to={borrowerUrl} >
+        <Link to={borrowerUrl}>
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
           <Card.Description>{description}</Card.Description>
         </Link>
         <Card.Grid spaceBetween alignBottom>
           <Card.Header title="Raised so far" amount={<Amount principal={principal} />} />
-          <Card.SubHeader title="Target" amount={<Amount principal={maxAmount} />} />
+          <Card.Header title="Target" amount={<Amount principal={maxAmount} />} />
         </Card.Grid>
         <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
         <Card.Grid>
