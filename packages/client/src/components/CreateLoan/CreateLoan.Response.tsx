@@ -66,8 +66,8 @@ export const getLoanAction = (stage, values, methods) => {
         </LoanResume>
         <Divider vertical={isMobile} />
         <CheckContainer>
-          <LoanTermsCheckbox onChange={onToggleTerms} />I agree to the Terms and Conditions of the
-          Loan Agreement
+          <LoanTermsCheckbox id="btn-check-term-conditions" onChange={onToggleTerms} />I agree to
+          the Terms and Conditions of the Loan Agreement
         </CheckContainer>
         <ConfirmButton
           id="btn-create"

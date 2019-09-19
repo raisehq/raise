@@ -13,12 +13,11 @@ describe('BORROWER', function() {
     cy.addCards('CREATED');
     cy.wait(4000);
 
-    cy.get('#options-menu > #menu-1 > a').should('have.length', 1);
+    cy.get('#btn-create-loan').should('have.length', 1);
 
     cy.wait(2000);
-    cy.get('#options-menu > #menu-1 > a').matchImageSnapshot('menu_option_borrower');
-    cy.get('.borderless').matchImageSnapshot('menu_borrower');
-    cy.get('#options-menu > #menu-1 > a').click();
+    cy.get('#btn-create-loan').matchImageSnapshot('menu_option_borrower');
+    cy.get('#btn-create-loan').click();
     cy.wait(2000);
 
     cy.get('#input-amount').should('have.length', 1);
@@ -28,6 +27,7 @@ describe('BORROWER', function() {
     cy.get('#input-amount')
       .clear()
       .type(10);
+    cy.get('input#btn-check-term-conditions').check({ force: true });
 
     cy.wait(2000);
 
