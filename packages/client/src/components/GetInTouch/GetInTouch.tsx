@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-  ContactButton
-} from './GetInTouch.styles';
+import { ContactButtonA } from './GetInTouch.styles';
 
 const GetInTouchCTA: React.SFC = () => {
-  return (
-    <ContactButton>Get in touch</ContactButton>
-  );
-}
+  return <ContactButtonA href="mailto:help@raise.it">Get in touch</ContactButtonA>;
+};
 
 export default GetInTouchCTA;
