@@ -202,7 +202,7 @@ const App = ({ children, history, match }: any) => {
       </Dimmer>
       {/** Referral */}
       <Switch>
-        <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[1, 2]} />
+        <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[2]} />
         <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} roles={[1, 2]} />
 
         <Web3Route marketplace layout={Layout} exact path="/kyc" component={Kyc} roles={[1, 2]} />
@@ -239,6 +239,7 @@ const App = ({ children, history, match }: any) => {
         <LayoutV2 exact path="/login" component={Join} />
         <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
         <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+        <LayoutV2 exact path="/join/activate/:token" component={Join} />
       </Switch>
       <div ref={modalRefs} />
     </AppContext.Provider>
