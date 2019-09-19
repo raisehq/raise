@@ -231,7 +231,6 @@ export const LoanConfirmation = styled(Card)`
       border-top: 0;
       max-width: 380px;
       margin-left: 35px;
-      margin-top: 30px;
     }
   }
 `;

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Icon, Image } from 'semantic-ui-react';
 import theme from '../../../theme';
+import { device } from '../../utils/breakpoints';
 
 interface RowContentProps {
   contentColor?: string;
@@ -48,9 +49,8 @@ export const CardLogo: any = styled(Image)`
   }
 `;
 
-export const HeroCard = styled.div`
-  width: 372px;
-  min-height: 100%;
+export const HeroCard = styled.div<{ size?: any; width?: any }>`
+  min-height: ${({ size }) => size || '335px'};
   border-radius: 6px;
   background-color: #ffffff;
   border: 1px solid #cfd0d4;
@@ -59,6 +59,11 @@ export const HeroCard = styled.div`
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
+
+  max-width: ${({ width }) => width || '372px'} !important;
+  @media ${device.laptop} {
+    width: ${({ width }) => width || '372px'} !important;
+  }
 `;
 
 export const TimeLeft = styled.div`
@@ -80,15 +85,15 @@ export const CardDescription = styled.div`
   font-size: 14px;
   display: block;
 `;
-export const CardContent = styled.div<{ children?: any; logo?: any }>`
+export const CardContent = styled.div<{ children?: any; logo?: any; size?: any }>`
   padding: 20px;
   position: relative;
-  height: auto;
+  height: ${({ size }) => size || 'auto'};
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
   padding-top: ${({ logo }) => (logo ? '55px' : '0')};
-  &&& > ${CardLogo} {
+  &&& > .logoWrap {
     position: absolute;
     top: -35px;
     left: 14px;
@@ -147,12 +152,29 @@ export const HeaderTitle = styled.h1`
   color: #5a5a5a;
   font-size: 12px;
   font-weight: lighter;
-  margin-bottom: 4px;
+  line-height: 14px;
 `;
-export const HeaderContent = styled.div`
+export const HeaderContent = styled.div<{ fontSize?: any }>`
   color: #3c4251;
-  font-size: 26px;
+  font-size: ${({ fontSize }) => fontSize || '26px'};
   font-weight: bold;
+  line-height: 32px;
+`;
+
+export const RoiHeader = styled.div`
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 12px;
+  align-self: flex-end;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const RoiContent = styled.div`
+  color: #5a5a5a;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 21px;
 `;
 
 export const SubHeader = styled.div`
@@ -224,7 +246,6 @@ export const Badge = styled.div`
   height: 20px;
   color: #fff;
   position: absolute;
-  top: 15px;
   right: 15px;
   text-align: center;
   padding: 3px 0 3px 0;
@@ -251,7 +272,6 @@ export const Vertical = styled.div`
 
 export const InfoIcon = styled.div`
   position: absolute;
-  top: 16px;
   right: 105px;
   font-size: 9px;
   background: black;

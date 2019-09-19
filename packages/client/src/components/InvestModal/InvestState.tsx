@@ -2,59 +2,40 @@ import React, { useState, useMemo } from 'react';
 import { fromWei } from 'web3-utils';
 import { Card } from '@raisehq/components';
 import { TokenInput } from '../TokenInput';
-import numeral from '../../commons/numeral';
-import Coin from '../Coin';
-import { ResumeItemProps, RaisedAmountProps, InvestStateProps } from './types';
+import useBorrowerInfo from '../../hooks/useBorrowerInfo';
+import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
+import Amount from '../Dashboard/Dashboard.Amount';
 import {
   Header,
   ModalInputContainer,
   ModalInputBox,
   InputLabel,
-  InvestResume,
-  RaisedAmountBox,
-  FlexSpacedLayout,
-  ResumeItemBox,
   ConfirmButton,
   InputContainer,
-  RaisedAmountContent,
-  Amount,
+  // Amount,
   FundAllLabel,
   LoanTermsCheckbox,
   CheckContainer
 } from './InvestModal.styles';
 
-const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
-  <ResumeItemBox>
-    <p>{value}</p>
-    <p>{title}</p>
-  </ResumeItemBox>
-);
-
-const RaisedAmount: React.SFC<RaisedAmountProps> = ({ value }) => (
-  <RaisedAmountBox>
-    <p>Raised Amount</p>
-    <RaisedAmountContent>
-      <Amount>{numeral(value).format()}</Amount>
-      <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`} name="DAI" />
-    </RaisedAmountContent>
-  </RaisedAmountBox>
-);
-
 const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
+  console.log('loan:: ', loan);
   const { principal, investorCount, maxAmount } = loan;
-  const { times, currentAmount, totalAmount, currentAPR, expectedROI } = getCalculations(loan);
+  const {
+    times,
+    currentAmount,
+    totalAmount,
+    expectedROI,
+    expectedRoiFormated,
+    maxAmount: calcMaxAmount,
+    principal: calcPrincipal
+  } = getCalculations(loan);
+  const auctionTimeLeft = `${times.auctionTimeLeft} left`;
+  const { companyName } = useBorrowerInfo(loan.originator);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
 
   const roi = useMemo(() => value + value * expectedROI, [value]);
-
-  const { raised, targetAmount } = useMemo(
-    () => ({
-      raised: principal ? fromWei(principal) : 0,
-      targetAmount: maxAmount ? numeral(fromWei(maxAmount)).format() : 0
-    }),
-    [principal, maxAmount]
-  );
 
   const fundAll = () => {
     setValue(Number(fromWei(maxAmount)) - Number(fromWei(principal)));
@@ -91,19 +72,34 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
           <InputLabel>Expected ROI</InputLabel>
         </InputContainer>
       </ModalInputContainer>
-      <InvestResume>
-        <RaisedAmount value={raised} />
-        <Card.Graph color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
-        <FlexSpacedLayout>
-          <ResumeItem title="Target Amount" value={`${targetAmount} DAI`} />
-          <ResumeItem title="Investors" value={`${investorCount}`} />
-          <ResumeItem title="Time left" value={`${times.auctionTimeLeft}`} />
-          <Card.Separator />
-          <ResumeItem title="Borrower" value="Company A" />
-          <ResumeItem title="Loan Term" value={`${times.loanTerm}`} />
-          <ResumeItem title="Min APR" value={`${currentAPR}`} />
-        </FlexSpacedLayout>
-      </InvestResume>
+      <Card size="230px" width="400px">
+        <Card.Content>
+          <Card.Grid spaceBetween>
+            <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+            <Card.TimeLeft>{auctionTimeLeft}</Card.TimeLeft>
+          </Card.Grid>
+          <Card.Grid spaceBetween>
+            <Card.Header
+              fontSize="22px"
+              title="Raised amount"
+              amount={<Amount principal={calcPrincipal} />}
+            />
+            <Card.Header
+              fontSize="22px"
+              title="Target"
+              amount={<Amount principal={calcMaxAmount} />}
+            />
+          </Card.Grid>
+          <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
+          <Card.Grid>
+            <Card.Row title="Loan Term" content={times.loanTerm} />
+            <Card.Vertical />
+            <Card.Row title="Investors" content={investorCount} />
+            <Card.Vertical />
+            <Card.Row title="Expected ROI" content={expectedRoiFormated} />
+          </Card.Grid>
+        </Card.Content>
+      </Card>
       <CheckContainer>
         <LoanTermsCheckbox onChange={onToggleTerms} />I agree to the Terms and Conditions of the
         Loan Agreement
