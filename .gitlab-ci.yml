@@ -3,6 +3,7 @@ stages:
   - prepare
   - build
   - deploy
+  - prepare-test
   - test
   - review
   - cleanup
@@ -20,6 +21,7 @@ cache:
     - packages/components/node_modules
     - packages/onboarding/node_modules
     - packages/testing/node_modules
+    - packages/testing/cache/Cypress
 
 lerna:
   stage: prepare
@@ -29,7 +31,7 @@ lerna:
     - npx lerna bootstrap
     - npx lerna run compile:onboarding
     - npx lerna bootstrap
-    - cd packages/testing/ && npm i
+   
   only:
     - merge_requests
     - master
@@ -75,6 +77,22 @@ deploy-prod:
   only:
     - master
 
+# this job installs NPM dependencies and Cypress
+install:
+  image: cypress/base:10
+  stage: prepare-test
+
+  script:
+    - cd packages/testing
+    - npm ci
+    # show where the Cypress test runner binaries are cached
+    - $(npm bin)/cypress cache path
+    # show all installed versions of Cypress binary
+    - $(npm bin)/cypress cache list
+    - $(npm bin)/cypress verify
+  only:
+    - merge_requests
+    - master
 # two jobs that run after "install" job finishes
 # NPM dependencies and Cypress binary should be already installed
 cypress-e2e:
