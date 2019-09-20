@@ -65,7 +65,9 @@ const Dashboard = () => {
     <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
-        <Header as="h1">My Activity</Header>
+        <Header as="h1" id="my-activity">
+          My Activity
+        </Header>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
         <Button onClick={onCreateLoan}>create loan</Button>
       </DashboardContainer>

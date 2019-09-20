@@ -1,7 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { TopMobileMenu } from '../Menu';
-import DesktopHeader from '../DesktopHeader';
 import Footer from '../Footer';
 import { HeroLayout, Content, Wrapper } from './Layout.styles';
 
@@ -18,8 +16,6 @@ const Layout: React.SFC<IDefaultProps> = props => {
       {...rest}
       render={matchProps => (
         <HeroLayout>
-          <TopMobileMenu />
-          <DesktopHeader />
           <Wrapper>
             <Content>
               <Component {...matchProps} />

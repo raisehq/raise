@@ -57,7 +57,9 @@ const Dashboard = () => {
       <DashboardContainer>
         <Header as="h1">Suggested investments</Header>
         <Suggesteds auctions={suggested} states={[0]} />
-        <Header as="h1">My activity</Header>
+        <Header as="h1" id="my-activity">
+          My activity
+        </Header>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
       </DashboardContainer>
     </DashboardWrapper>

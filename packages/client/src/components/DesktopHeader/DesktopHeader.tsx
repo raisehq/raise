@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { NavHashLink } from 'react-router-hash-link';
 import {
   Header,
   HeaderWrapper,
@@ -12,11 +13,13 @@ import Balance from '../Balance';
 import Web3Address from '../Web3Address';
 import theme from '../../theme';
 import { AppContext } from '../App';
+import useMenuVisibility from '../../hooks/useMenuVisibility';
 
 const DesktopHeader = () => {
   const { history }: any = useContext(AppContext);
+  const visible = useMenuVisibility();
 
-  return (
+  return visible ? (
     <Header>
       <HeaderWrapper>
         <HeaderGroup>
@@ -25,7 +28,14 @@ const DesktopHeader = () => {
           </HeaderLogo>
           <HeaderMenu>
             <HeaderMenuItem>Get Started</HeaderMenuItem>
-            <HeaderMenuItem>My activity</HeaderMenuItem>
+            <HeaderMenuItem>
+              <NavHashLink
+                to="/#my-activity"
+                scroll={el => el.scrollIntoView({ behavior: 'instant', block: 'end' })}
+              >
+                My activity
+              </NavHashLink>
+            </HeaderMenuItem>
           </HeaderMenu>
         </HeaderGroup>
         <HeaderGroup className="right">
@@ -35,7 +45,7 @@ const DesktopHeader = () => {
         </HeaderGroup>
       </HeaderWrapper>
     </Header>
-  );
+  ) : null;
 };
 
 export default DesktopHeader;
