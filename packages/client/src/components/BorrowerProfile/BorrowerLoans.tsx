@@ -29,7 +29,7 @@ const BorrowerLoans: React.SFC<BorrowerLoansProps> = ({ account }: BorrowerLoans
       const callback = onGetLiveAuctionsByAccountSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket, account]);
+  }, [webSocket, account, onGetLiveAuctionsByAccountSubscription]);
 
   const activeAuctions =
     auctions && auctions.length ? auctions.filter(({ state }) => state === 0) : null;

@@ -22,7 +22,7 @@ interface IDefaultProps {
 
 const LayoutV2: React.SFC<IDefaultProps> = props => {
   const { component: Component, ...rest } = props;
-  const logoPath = process.env.REACT_APP_HOST_IMAGES+"/images/logo.svg";
+  const logoPath = process.env.REACT_APP_HOST_IMAGES + '/images/logo.svg';
   const {
     store: {
       auth: {
@@ -33,7 +33,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
       location: { pathname }
     }
   }: any = useContext(AppContext);
-  const refMode = process.env.REACT_APP_REFERAL == 'true' ? true : false;
+  const refMode = process.env.REACT_APP_REFERAL === 'true' ? true : false;
   return (
     <Route
       {...rest}
@@ -45,7 +45,14 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 {logged && (
                   <HeaderRow>
                     <Image src={logoPath} />
-                    {!refMode ? <Button basic as={Link} to='/dashboard'>Dashboard 🤖</Button> : null }
+                    {!refMode ? (
+                      <Button basic as={Link} to="/dashboard">
+                        Dashboard{' '}
+                        <span role="img" aria-label="Robot">
+                          🤖
+                        </span>
+                      </Button>
+                    ) : null}
                     <Logout basic floated="right">
                       Logout
                     </Logout>
@@ -57,17 +64,17 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                     <Credits>
                       <span>Copyright ©2019 Hero Fintech Technologies S.L. </span>
                       <AllRights>All Rights Reserved</AllRights>
-                      <LeaveFeedback href='mailto:team@raise.it'>Leave feedback</LeaveFeedback>
+                      <LeaveFeedback href="mailto:team@raise.it">Leave feedback</LeaveFeedback>
                     </Credits>
                   </FooterRow>
-                  )}
-                </Grid>
-              </CenteredContainer>
-            </Grid>
-          </ContainerWrapper>
-        )}
-      />
-    );
-  };
+                )}
+              </Grid>
+            </CenteredContainer>
+          </Grid>
+        </ContainerWrapper>
+      )}
+    />
+  );
+};
 
-  export default LayoutV2;
+export default LayoutV2;

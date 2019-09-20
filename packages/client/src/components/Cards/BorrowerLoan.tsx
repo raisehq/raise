@@ -26,14 +26,14 @@ const Loan = ({ auction }: { auction: any }) => {
       ANY,
       () => null
     );
-  }, [auction.state, auction.loanWithdrawn, auction.loanRepaid]);
+  }, [auction]);
 
   const state = useMemo(() => {
     if (auction.loanRepaid) {
       return 5;
     }
     return auction.state;
-  }, [auction.state, auction.loanRepaid]);
+  }, [auction]);
 
   const contentColor = state === 3 ? 'red' : null;
 

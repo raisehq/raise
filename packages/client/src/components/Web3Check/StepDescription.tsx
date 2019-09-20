@@ -3,14 +3,9 @@ import { AppContext } from '../App';
 import Web3Address from './Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
 import { Href } from '../LayoutV2/Layout.styles';
-import { browserName, MobileView, BrowserView } from "react-device-detect";
+import { browserName, MobileView, BrowserView } from 'react-device-detect';
 import { ButtonGreen, AddressContainer } from './Web3Check.styles';
-import {
-  StyledAddress,
-  CardDescription,
-  HelpMessage,
-  SuccessMessage
-} from './Web3Check.styles';
+import { StyledAddress, CardDescription, HelpMessage, SuccessMessage } from './Web3Check.styles';
 
 const NeedHelp = ({ href }) => (
   <HelpMessage>
@@ -19,23 +14,30 @@ const NeedHelp = ({ href }) => (
     </Href>
   </HelpMessage>
 );
-export const isSupportedBrowser = () => ['brave', 'chrome', 'chromium', 'firefox'].some(supportedBrowser => (browserName.toLowerCase().includes(supportedBrowser)));
+export const isSupportedBrowser = () =>
+  ['brave', 'chrome', 'chromium', 'firefox'].some(supportedBrowser =>
+    browserName.toLowerCase().includes(supportedBrowser)
+  );
 
 const BrowserCompatible = () => (
   <CardDescription>
     <BrowserView>
-      <p>To access Raise you will need a browser that supports MetaMask:
+      <p>
+        To access Raise you will need a browser that supports MetaMask:
         <span>
-          <a href='https://www.mozilla.org/firefox'> Firefox</a>
+          <a href="https://www.mozilla.org/firefox"> Firefox</a>
           <span>, </span>
-          <a href='https://www.google.com/chrome'>Chrome</a>
+          <a href="https://www.google.com/chrome">Chrome</a>
           <span> and </span>
-          <a href='https://brave.com/'>Brave</a>.
+          <a href="https://brave.com/">Brave</a>.
         </span>
       </p>
     </BrowserView>
     <MobileView>
-      <p>To access Raise on mobile please download <a href='https://mobile.metamask.io/Metamask'>Metamask Mobile</a>.</p>
+      <p>
+        To access Raise on mobile please download{' '}
+        <a href="https://mobile.metamask.io/Metamask">Metamask Mobile</a>.
+      </p>
     </MobileView>
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
@@ -44,11 +46,7 @@ const BrowserCompatible = () => (
 const ProviderErrorNotice = () => (
   <CardDescription>
     <p>Install a digital wallet like Metamask to continue.</p>
-    <ButtonGreen
-      target="_blank"
-      href="https://metamask.io/"
-      content="Install Metamask extension"
-    />
+    <ButtonGreen target="_blank" href="https://metamask.io/" content="Install Metamask extension" />
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
@@ -78,8 +76,8 @@ const NetworkNotMatch = ({ targetNetwork, currentNetwork }) => (
 const AccountNotVerified = ({ currentAddress, uploadSignature }) => (
   <CardDescription>
     <p>
-      Check MetaMask and sign a message to bind this address to your Raise
-      account. You will be able to operate only with this address.
+      Check MetaMask and sign a message to bind this address to your Raise account. You will be able
+      to operate only with this address.
     </p>
     <div />
     <ButtonGreen onClick={uploadSignature} double>
@@ -105,7 +103,9 @@ const AccountNotMatchNotice = ({ verifiedAddress }) => (
 
 const Success = () => (
   <CardDescription textAlign="center" style={{ fontSize: '24px' }}>
-    <SuccessMessage>🎉🎉🎉</SuccessMessage>
+    <span role="img" aria-label="party" className={SuccessMessage}>
+      🎉🎉🎉
+    </span>
     All set!
   </CardDescription>
 );
@@ -130,9 +130,9 @@ const CurrentNotice = () => {
       }
     }
   }: any = useContext(AppContext);
-  
+
   if (!isSupportedBrowser()) {
-    return <BrowserCompatible />
+    return <BrowserCompatible />;
   }
 
   if (!hasProvider) {
@@ -142,17 +142,10 @@ const CurrentNotice = () => {
     return <AccountLockedNotice />;
   }
   if (!networkMatches) {
-    return (
-      <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={network} />
-    );
+    return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={network} />;
   }
   if (!verifiedAddress) {
-    return (
-      <AccountNotVerified
-        currentAddress={account}
-        uploadSignature={uploadSignature}
-      />
-    );
+    return <AccountNotVerified currentAddress={account} uploadSignature={uploadSignature} />;
   }
   if (!accountMatches) {
     return <AccountNotMatchNotice verifiedAddress={verifiedAddress} />;
