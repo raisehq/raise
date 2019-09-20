@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const KYCWrapper = styled.div`
   width: 100%;
-  padding: 45px 25px 25px 25px;
+  padding: 0 25px 25px 25px;
   box-sizing: border-box;
 `;
 

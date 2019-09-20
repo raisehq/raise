@@ -73,9 +73,7 @@ export const addAddress = async address => {
     }
   };
 
-  const response = await to(
-    axios.post(`${URL.ADDRESS}/addinfo`, address, config)
-  );
+  const response = await to(axios.post(`${URL.ADDRESS}/addinfo`, address, config));
 
   return response.fold(error => Left(error), ({ data: { data } }) => data);
 };
@@ -121,9 +119,7 @@ export const cryptoAddressByAccount = async (userId, targetAddressId) => {
 
     switch (rawResponse.status) {
       case 200:
-        return rawResponse.data.data.find(
-          d => d.cryptotype_id == targetAddressId
-        );
+        return rawResponse.data.data.find(d => d.cryptotype_id === targetAddressId);
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
@@ -159,11 +155,7 @@ export const updateCryptoAddress = async (cryptoAddressId, body: any) => {
       'Content-Type': 'application/json'
     }
   };
-  const rawResponse = await axios.put(
-    `${URL.CRYPTOADDRESS}/${cryptoAddressId}`,
-    body,
-    config
-  );
+  const rawResponse = await axios.put(`${URL.CRYPTOADDRESS}/${cryptoAddressId}`, body, config);
   try {
     switch (rawResponse.status) {
       case 204:

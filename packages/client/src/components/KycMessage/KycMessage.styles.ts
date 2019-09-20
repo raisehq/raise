@@ -1,16 +1,21 @@
 import styled from 'styled-components';
 import { Message } from 'semantic-ui-react';
 
+//#F8BD2E
+
 export const OrangeMessage = styled(Message)`
   &&& {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background-color: #f0712c;
-    color: white;
-    padding: 10px 15px 10px 15px;
+    border: 1px solid #ffb62b;
+    background-color: #fef2d6;
+    color: #8a6300;
+    padding: 15px;
     box-sizing: border-box;
+    font-weight: 400 !important;
 
     .circle {
-      font-size: 14px !important;
+      font-size: 16px !important;
+      color: #f8bd2e !important;
+      margin-right: 20px;
     }
 
     .caret {
@@ -18,17 +23,17 @@ export const OrangeMessage = styled(Message)`
     }
 
     .header {
-      background-color: #f0712c;
-      color: white;
+      background-color: #fef2d6;
+      color: #8a6300;
     }
   }
 `;
 
 export const KycMessageButton = styled.button`
-  border: 2px solid white;
+  border: 1px solid #8a6300;
   padding: 15px;
   border-radius: 5px;
-  color: white;
-  background: #f0712c;
+  color: #8a6300;
+  background: #ffb62b;
   cursor: pointer;
 `;

@@ -7,13 +7,15 @@ interface Company {
   description: string;
   background: string;
   logo: string;
+  slug: string;
 }
 
 const defaultCompany = {
   companyName: 'Auction',
   description: '',
   background: 'https://source.unsplash.com/372x120/?business',
-  logo: 'https://static.herodev.es/images/logo.svg'
+  logo: 'https://static.herodev.es/images/logo.svg',
+  slug: ''
 };
 
 const useBorrowerInfo = borrowerAddress => {

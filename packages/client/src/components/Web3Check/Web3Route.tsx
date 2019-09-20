@@ -18,11 +18,10 @@ const Route = props => {
   }: any = useContext(AppContext);
 
   const web3Pass = netOk && accMatch;
-  const refMode = process.env.REACT_APP_REFERAL == 'true';
+  const refMode = process.env.REACT_APP_REFERAL === 'true';
   const Layout = layout;
 
-  const acceptedRole =
-    (roles !== undefined && roles.indexOf(accounttype_id) > -1) || false;
+  const acceptedRole = (roles !== undefined && roles.indexOf(accounttype_id) > -1) || false;
 
   if (logged && web3Pass && acceptedRole) {
     if (refMode && marketplace) {

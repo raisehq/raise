@@ -10,10 +10,6 @@ export const ExpectedROI = styled(Card.Header)`
   }
 `;
 export const DashboardWrapper = styled.div`
-  width: 100%;
-  padding: 25px;
-  box-sizing: border-box;
-
   .heroCard {
     margin: 0 15px 15px 0;
   }
@@ -28,8 +24,6 @@ export const DashboardWrapper = styled.div`
 
 export const DashboardContainer = styled.div`
   width: 100%;
-  max-width: 1160px;
-  padding-top: 25px;
 `;
 
 export const DashboardTab: any = styled(Tab)`
@@ -83,11 +77,15 @@ export const SuggestedContainer = styled.div`
 
 export const NoResults = styled.div`
   width: 100%;
-  height: 150px;
+  height: 336px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-size: 26px;
+  align-items: flex-end;
+  padding-bottom: 25px;
+  box-sizing: border-box;
+  font-size: 18px;
+  border: 1px solid #cfd0d4;
+  background: url(${theme.resources}/images/img_cactus.svg) center center no-repeat;
 `;
 
 export const AmountComponent = styled.div`

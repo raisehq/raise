@@ -21,9 +21,7 @@ const switchDepositMethod = async (depositContract, account, referrer_code) => {
   if (!referrer_code) {
     return defaultMethod;
   }
-  const [{ address: referrerAddress }] = await getReferralAddress(
-    referrer_code
-  );
+  const [{ address: referrerAddress }] = await getReferralAddress(referrer_code);
   if (referrerAddress && referrerAddress) {
     return {
       depositMethod: depositContract.depositWithReferral,
@@ -77,10 +75,7 @@ const Deposit = (props: any) => {
         account,
         referrer_code
       );
-      const allowance = new BN(await heroTokenContract.allowance(
-        account,
-        depositContract.address
-      ));
+      const allowance = new BN(await heroTokenContract.allowance(account, depositContract.address));
       if (allowance.lt(new BN(toWei('200')))) {
         await heroTokenContract.approveDeposit(account, 200);
       }
@@ -95,7 +90,7 @@ const Deposit = (props: any) => {
   };
 
   const handleContinue = async () => {
-    const refMode = process.env.REACT_APP_REFERAL == 'true' ? true : false;
+    const refMode = process.env.REACT_APP_REFERAL === 'true' ? true : false;
 
     if (history && refMode) {
       history.push('/referral');
@@ -116,13 +111,7 @@ const Deposit = (props: any) => {
         <CardContent extra>
           <Web3Address />
         </CardContent>
-        {getViewResponse(
-          status,
-          handleDeposit,
-          handleContinue,
-          handleRetry,
-          getImagesUrl
-        )}
+        {getViewResponse(status, handleDeposit, handleContinue, handleRetry, getImagesUrl)}
       </CardSized>
     </Grid.Row>
   );

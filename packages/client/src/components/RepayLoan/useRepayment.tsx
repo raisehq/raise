@@ -25,7 +25,7 @@ const useRepayment = (loan, open) => {
   }, [open]);
 
   useAsyncEffect(async () => {
-    if (open && stage == Stages.Confirm) {
+    if (open && stage === Stages.Confirm) {
       const web3 = getWeb3();
       const {
         utils: { BN }
@@ -41,7 +41,7 @@ const useRepayment = (loan, open) => {
   }, [open, stage, account]);
 
   useAsyncEffect(async () => {
-    if (open && stage == Stages.Processing) {
+    if (open && stage === Stages.Processing) {
       const web3 = getWeb3();
       const {
         utils: { BN }

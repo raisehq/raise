@@ -13,6 +13,9 @@ import ResetPasswordInput from './ResetPassword/Passwords';
 import ResetConfirm from './ResetPassword/Confirm';
 import ResetOK from './ResetPassword/Success';
 import ResetError from './ResetPassword/Error';
+import BorrowerSignUp from './BorrowerSignUp/Passwords';
+import BorrowerSignUpError from './BorrowerSignUp/Error';
+import BorrowerSignUpOK from './BorrowerSignUp/Success';
 import PanelModal from './Modals/Panel';
 import SimpleModal from './Modals/Simple';
 import { IContext, ICredentials, Steps } from './types';
@@ -40,7 +43,10 @@ const Step = daggy.taggedSum('UI', {
   ResetConfirm: [],
   ResetOK: [],
   ResetError: [],
-  ResetPasswordInput: [{}]
+  ResetPasswordInput: [{}],
+  BorrowerSignUp: [{}],
+  BorrowerSignUpError: [],
+  BorrowerSignUpOK: []
 });
 interface IProps {
   history: any;
@@ -95,6 +101,14 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton }: IProps) =
 
       setStep(Step.ResetPasswordInput(token));
     }
+
+    if (pathname.includes('activate')) {
+      const path = pathname.split('/');
+      const token = path[path.length - 1];
+
+      setStep(Step.BorrowerSignUp(token));
+    }
+
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
@@ -119,6 +133,26 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton }: IProps) =
     const resetPassword = await services.changePassword(token, password);
 
     resetPassword.fold(() => setStep(Step.ResetError), () => setStep(Step.ResetOK));
+  };
+
+  const onSetPasswordBorrower = async (token, password) => {
+    const resetPassword = await services.changePassword(token, password);
+
+    resetPassword.fold(
+      () => setStep(Step.BorrowerSignUpError),
+      () => setStep(Step.BorrowerSignUpOK)
+    );
+  };
+
+  const onActivateAccount = async token => {
+    const activateAccount = await validateToken({
+      token
+    });
+
+    activateAccount.fold(
+      () => setStep(Step.BorrowerSignUpError),
+      () => setStep(Step.BorrowerSignUpOK)
+    );
   };
 
   const onRecover = async email => {
@@ -265,6 +299,21 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton }: IProps) =
         <SimpleModal>
           <ResetPasswordInput token={token} />
         </SimpleModal>
+      ),
+      BorrowerSignUp: token => (
+        <SimpleModal>
+          <BorrowerSignUp token={token} />
+        </SimpleModal>
+      ),
+      BorrowerSignUpError: () => (
+        <SimpleModal>
+          <BorrowerSignUpError />
+        </SimpleModal>
+      ),
+      BorrowerSignUpOK: () => (
+        <SimpleModal>
+          <BorrowerSignUpOK />
+        </SimpleModal>
       )
     });
 
@@ -275,6 +324,8 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton }: IProps) =
         onSetCredentials,
         onSendCredentials,
         onResetPassword,
+        onSetPasswordBorrower,
+        onActivateAccount,
         onRecover,
         onLogin,
         onResetToken,
