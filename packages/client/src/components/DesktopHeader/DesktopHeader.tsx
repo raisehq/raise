@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { NavHashLink } from 'react-router-hash-link';
 import {
   Header,
   HeaderWrapper,
@@ -27,8 +28,13 @@ const DesktopHeader = () => {
           </HeaderLogo>
           <HeaderMenu>
             <HeaderMenuItem>Get Started</HeaderMenuItem>
-            <HeaderMenuItem onClick={() => history.push('/create-loan')}>
-              My activity
+            <HeaderMenuItem>
+              <NavHashLink
+                to="/#my-activity"
+                scroll={el => el.scrollIntoView({ behavior: 'instant', block: 'end' })}
+              >
+                My activity
+              </NavHashLink>
             </HeaderMenuItem>
           </HeaderMenu>
         </HeaderGroup>

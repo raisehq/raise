@@ -20,6 +20,10 @@ export const Header = styled.div`
   @media ${maxDevice.laptop} {
     display: none;
   }
+
+  a {
+    color: #3c4251 !important;
+  }
 `;
 
 export const HeaderLogout = styled(Logout)`
