@@ -83,6 +83,8 @@ cypress-e2e:
   variables:
     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
     CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+  before_script:
+    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get clean && rm -rf /var/lib/apt/lists/*
   script:
     - cd packages/testing/ && npm run ci:run
   artifacts:
@@ -102,6 +104,8 @@ cypress-e2e-chrome:
   variables:
     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
     CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+  before_script:
+    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get clean && rm -rf /var/lib/apt/lists/*
   script:
     - cd packages/testing/ && npm run ci:run:chrome
   artifacts:
