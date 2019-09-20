@@ -26,7 +26,7 @@ const Dashboard = () => {
     webSocket: { webSocket }
   }: any = useContext(AppContext);
 
-  const onCreateLoan = useCallback(() => history.push('/create-loan'), []);
+  const onCreateLoan = useCallback(() => history.push('/create-loan'), [history]);
 
   const panes = [
     {
@@ -48,7 +48,7 @@ const Dashboard = () => {
       const callback = onGetLoansByAccountSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket]);
+  }, [webSocket, address, onGetLoansByAccountSubscription]);
 
   useEffect(() => {
     if (webSocket) {
@@ -59,13 +59,15 @@ const Dashboard = () => {
       const callback = onGetLiveAuctionsByAccountSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket]);
+  }, [webSocket, address, onGetLiveAuctionsByAccountSubscription]);
 
   return (
     <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
-        <Header as="h1">My Activity</Header>
+        <Header as="h1" id="my-activity">
+          My Activity
+        </Header>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
         <Button id="btn-create-loan" onClick={onCreateLoan}>
           create loan

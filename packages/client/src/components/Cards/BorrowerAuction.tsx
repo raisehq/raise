@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { useMemo } from 'react';
 import { Card } from '@raisehq/components';
 import { getCalculations } from '../../utils/loanUtils';
+import Amount from '../Dashboard/Dashboard.Amount';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
-import Amount from './Dashboard.Amount';
 
 const Auction = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
@@ -19,23 +19,26 @@ const Auction = ({ auction }: { auction: any }) => {
     currentAPR
   } = calcs;
 
-  const { state } = auction;
+  const state = useMemo(() => {
+    if (auction.loanRepaid) {
+      return 5;
+    }
+    return auction.state;
+  }, [auction.state, auction.loanRepaid]);
+
   return (
-    <Card>
+    <Card width="350px" size="315px">
       <Card.Content>
+        {state >= 1 && <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>}
         <Card.Header title="Raised amount" amount={<Amount principal={principal} />} />
-        <Fragment>
-          <Card.Tooltip />
-          <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
-        </Fragment>
-        <Card.Graph color="#00DA9E" currentAmount={currentAmount} totalAmount={totalAmount} />
-        <Card.Grid>
+        <Card.Graph color={state === 1 ? '#7e8286' : '#00DA9E'} currentAmount={currentAmount} totalAmount={totalAmount} />
+        <Card.Grid notop>
           <Card.Row title="Investors" content={auction.investorCount} />
           <Card.Row title="Current APR" content={currentAPR} />
           <Card.Row title="Days Left" content={times.auctionTimeLeft} />
         </Card.Grid>
         <Card.Separator />
-        <Card.Grid nobottom>
+        <Card.Grid nobottom notop>
           <Card.Row title="System Fees" content={`${systemFees} DAI`} />
           <Card.Row title="Loan Term" content={`${times.loanTerm} `} />
           <Card.Row title="Net Loan Proceeds" content={`${netBalance} DAI`} />

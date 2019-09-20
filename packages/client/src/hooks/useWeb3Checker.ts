@@ -73,46 +73,45 @@ const useWeb3Checker = (): Web3State => {
     setDefs(contractsDef.data);
   }, []);
 
-  const verifyCheckList = async () => {
-    const web3 = getWeb3();
-    try {
-      const accounts = await web3.eth.getAccounts();
-      const netName = parseNetwork(await web3.eth.net.getId());
-      const hasDeposit =
-        accounts && !!accounts.length && (await hasDeposited(web3, definitions, accounts[0]));
-
-      const newWeb3State = web3CheckList(
-        web3,
-        accounts,
-        targetAddress,
-        netName,
-        targetNetwork,
-        hasDeposit
-      );
-      // Only update state if changes, prevent renders
-      setWeb3State(prevWeb3State =>
-        isEqual(newWeb3State, prevWeb3State) ? prevWeb3State : newWeb3State
-      );
-    } catch (err) {
-
-      const errorState = web3CheckList(
-        web3,
-        [],
-        targetAddress,
-        'Not connected',
-        targetNetwork,
-        false
-      );
-      // Only update state if changes, prevent renders
-      setWeb3State(prevWeb3State =>
-        isEqual(errorState, prevWeb3State) ? prevWeb3State : errorState
-      );
-    }
-  };
-
   useEffect(() => {
     let accountInterval;
     const web3 = getWeb3();
+
+    const verifyCheckList = async () => {
+      const web3 = getWeb3();
+      try {
+        const accounts = await web3.eth.getAccounts();
+        const netName = parseNetwork(await web3.eth.net.getId());
+        const hasDeposit =
+          accounts && !!accounts.length && (await hasDeposited(web3, definitions, accounts[0]));
+        const newWeb3State = web3CheckList(
+          web3,
+          accounts,
+          targetAddress,
+          netName,
+          targetNetwork,
+          hasDeposit
+        );
+        // Only update state if changes, prevent renders
+        setWeb3State(prevWeb3State =>
+          isEqual(newWeb3State, prevWeb3State) ? prevWeb3State : newWeb3State
+        );
+      } catch (err) {
+        console.error(err);
+        const errorState = web3CheckList(
+          web3,
+          [],
+          targetAddress,
+          'Not connected',
+          targetNetwork,
+          false
+        );
+        // Only update state if changes, prevent renders
+        setWeb3State(prevWeb3State =>
+          isEqual(errorState, prevWeb3State) ? prevWeb3State : errorState
+        );
+      }
+    };
 
     const defaultCheckList = web3CheckList(
       web3,

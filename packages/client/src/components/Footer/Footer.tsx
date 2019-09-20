@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'semantic-ui-react';
 import {
   Footer,
   FooterLogo,
@@ -7,26 +8,64 @@ import {
   FooterImage,
   FooterDisclaimer,
   FooterList,
-  FooterItem
+  FooterItem,
+  FooterIcons,
+  FooterFirst
 } from './Footer.styles';
+import theme from '../../theme';
 
 const FooterCmp = () => (
   <Footer>
     <FooterWrapper>
-      <FooterMenu>
-        <FooterList>
-          <FooterItem>About us</FooterItem>
-          <FooterItem>Help</FooterItem>
-        </FooterList>
-        <FooterList>
-          <FooterItem>Privacy policy</FooterItem>
-          <FooterItem>Terms and conditions</FooterItem>
-        </FooterList>
-      </FooterMenu>
+      <FooterFirst>
+        <FooterMenu>
+          <FooterList>
+            <FooterItem>
+              <a href="https://raise.it/about" target="_blank">
+                About us
+              </a>
+            </FooterItem>
+            <FooterItem>
+              <a href="https://raise.it/help" target="_blank">
+                Help
+              </a>
+            </FooterItem>
+          </FooterList>
+          <FooterList>
+            <FooterItem>
+              <a href={`${theme.resources}/privacy-policy.pdf`} target="_blank">
+                Privacy policy
+              </a>
+            </FooterItem>
+            <FooterItem>
+              <a href={`${theme.resources}/toc.pdf`} target="_blank">
+                Terms and conditions
+              </a>
+            </FooterItem>
+          </FooterList>
+        </FooterMenu>
+        <FooterIcons>
+          <a href="mailto:help@raise.it">
+            <Icon name="mail outline" />
+          </a>
+          <a href="https://www.facebook.com/raisehq/">
+            <Icon name="facebook"></Icon>
+          </a>
+          <a href="https://github.com/raisehq">
+            <Icon name="github"></Icon>
+          </a>
+          <a href="https://medium.com/@raiseHQ">
+            <Icon name="medium"></Icon>
+          </a>
+          <a href="https://twitter.com/raise_hq">
+            <Icon name="twitter"></Icon>
+          </a>
+        </FooterIcons>
+      </FooterFirst>
       <FooterLogo>
         <img src="https://static.herodev.es/images/logo.svg" />
       </FooterLogo>
-      <FooterImage>dsd</FooterImage>
+      <FooterImage />
     </FooterWrapper>
     <FooterDisclaimer>
       <p>Version : Release 2.0.0.38</p>

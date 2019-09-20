@@ -1,12 +1,8 @@
 import React, { useContext, useEffect, createContext, useState, useRef } from 'react';
-/**
- * NOTE: Once AnimatedSwitch is done again, remove the Switch import and use AnimatedSwitch as a React Router switcher
- * import { withRouter } from 'react-router-dom';
- * import { AnimatedSwitch, spring } from 'react-router-transition';
- */
 import { withRouter, Switch } from 'react-router-dom';
 import { match as matches, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { Web3Route } from './Web3Check';
 import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
@@ -26,6 +22,8 @@ import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import LogRocket from 'logrocket';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
+import { TopMobileMenu } from './Menu';
+import DesktopHeader from './DesktopHeader';
 
 export const AppContext = createContext({
   store: {},
@@ -39,7 +37,7 @@ export const AppContext = createContext({
 });
 
 const App = ({ children, history, match }: any) => {
-  const refMode = process.env.REACT_APP_REFERAL == 'true';
+  const refMode = process.env.REACT_APP_REFERAL === 'true';
   const [isLoading, setLoading] = useState(true);
   const {
     store,
@@ -71,20 +69,6 @@ const App = ({ children, history, match }: any) => {
     network
   } = web3Status;
   const web3Pass = netOk && accMatch;
-
-  const TagManager = () => {
-    return useGoogleTagManager(
-      id,
-      'www.raise.it',
-      'Wallet',
-      '/verify-web3',
-      'TrafficLight',
-      'dataLayer',
-      'Submit',
-      'Wallet Connect Success'
-    );
-  };
-
   const [webSocket, setWebSocket] = useState({});
   const [daiWebSocket, setDaiWebSocket] = useState({});
 
@@ -154,6 +138,19 @@ const App = ({ children, history, match }: any) => {
       isLoading
     };
 
+    const TagManager = () => {
+      return useGoogleTagManager(
+        id,
+        'www.raise.it',
+        'Wallet',
+        '/verify-web3',
+        'TrafficLight',
+        'dataLayer',
+        'Submit',
+        'Wallet Connect Success'
+      );
+    };
+
     // prettier-ignore
     matches(conditions,
       { isLoading: true },
@@ -182,7 +179,7 @@ const App = ({ children, history, match }: any) => {
       _,
       () => { }
     );
-  }, [isLoading, logged, web3Pass, deposited]);
+  }, [isLoading, logged, web3Pass, id, deposited, history, refMode]);
 
   const componentsByRole = {
     1: {
@@ -200,47 +197,64 @@ const App = ({ children, history, match }: any) => {
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
-      {/** Referral */}
-      <Switch>
-        <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[2]} />
-        <Web3Route layout={LayoutV2} exact path="/referral" component={Referral} roles={[1, 2]} />
+      <TopMobileMenu />
+      <DesktopHeader />
+      <TransitionGroup component={null}>
+        <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
+          <Switch>
+            <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[2]} />
+            <Web3Route
+              layout={LayoutV2}
+              exact
+              path="/referral"
+              component={Referral}
+              roles={[1, 2]}
+            />
 
-        <Web3Route marketplace layout={Layout} exact path="/kyc" component={Kyc} roles={[1, 2]} />
-        <Web3Route
-          marketplace
-          layout={Layout}
-          exact
-          path="/dashboard"
-          component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
-          roles={[1, 2]}
-        />
-        <Web3Route
-          marketplace
-          layout={Layout}
-          exact
-          path="/"
-          component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
-          roles={[1, 2]}
-        />
-        <Web3Route
-          marketplaceSuggesteds
-          layout={Layout}
-          exact
-          path="/create-loan"
-          component={CreateLoan}
-          roles={[1]}
-        />
-        <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
-
-        <LayoutV2 exact path="/test" component={Test} />
-        {/* Onboarding */}
-        <LayoutV2 exact path="/verify-web3" component={Web3Check} />
-        <LayoutV2 exact path="/join" component={Join} />
-        <LayoutV2 exact path="/login" component={Join} />
-        <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
-        <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
-        <LayoutV2 exact path="/join/activate/:token" component={Join} />
-      </Switch>
+            <Web3Route
+              marketplace
+              layout={Layout}
+              exact
+              path="/kyc"
+              component={Kyc}
+              roles={[1, 2]}
+            />
+            <Web3Route
+              marketplace
+              layout={Layout}
+              exact
+              path="/dashboard"
+              component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
+              roles={[1, 2]}
+            />
+            <Web3Route
+              marketplace
+              layout={Layout}
+              exact
+              path="/"
+              component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
+              roles={[1, 2]}
+            />
+            <Web3Route
+              marketplaceSuggesteds
+              layout={Layout}
+              exact
+              path="/create-loan"
+              component={CreateLoan}
+              roles={[1, 2]}
+            />
+            <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
+            <LayoutV2 exact path="/test" component={Test} />
+            {/* Onboarding */}
+            <LayoutV2 exact path="/verify-web3" component={Web3Check} />
+            <LayoutV2 exact path="/join" component={Join} />
+            <LayoutV2 exact path="/login" component={Join} />
+            <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
+            <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+            <LayoutV2 exact path="/join/activate/:token" component={Join} />
+          </Switch>
+        </CSSTransition>
+      </TransitionGroup>
       <div ref={modalRefs} />
     </AppContext.Provider>
   );

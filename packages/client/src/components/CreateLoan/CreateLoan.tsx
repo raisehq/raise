@@ -72,6 +72,7 @@ const CreateLoan = () => {
     error: false,
     msg: ''
   });
+  const [termsCond, setTermsCond] = useState(false);
   const [APR, setAPR] = useState(0);
   const [minPercent, setMinPercent] = useState(defaultMinPercent);
   const [loan, setLoan] = useState({
@@ -145,6 +146,7 @@ const CreateLoan = () => {
       accept: false,
       minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
     });
+    setTermsCond(false);
   };
 
   const onBlur = e => {
@@ -162,8 +164,6 @@ const CreateLoan = () => {
       setAPR((((currentAmount * mir * term) / currentAmount) * 12) / term);
     }
   }, [loan]);
-
-  const [termsCond, setTermsCond] = useState(false);
 
   const onToggleTerms = () => {
     const toggleTerms = !termsCond;

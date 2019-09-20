@@ -39,14 +39,15 @@ interface RowComponentProps {
   content: string | number | null;
   contentColor?: string | null;
   small?: boolean | null;
+  notop?: boolean | null;
 }
 
 const Context = React.createContext({});
 
 const BadgeComponent = ({ children, color }) => <Badge color={color}>{children}</Badge>;
 
-const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentColor, small }) => (
-  <Row small={small}>
+const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentColor, small, notop }) => (
+  <Row small={small} notop={notop}>
     <RowContent contentColor={contentColor}>{content}</RowContent>
     <RowTitle>{title}</RowTitle>
   </Row>
@@ -63,11 +64,11 @@ const HeaderComponent = ({
   fontSize?: any;
   rest?: any;
 }) => (
-  <Header {...rest}>
-    <HeaderTitle>{title}</HeaderTitle>
-    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
-  </Header>
-);
+    <Header {...rest}>
+      <HeaderTitle>{title}</HeaderTitle>
+      <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
+    </Header>
+  );
 
 const SubHeaderComponent = ({ title, amount, ...rest }) => (
   <SubHeader {...rest}>
@@ -146,16 +147,16 @@ const ContentWithLogo = ({
   topRight?: any;
   size?: any;
 }) => (
-  <CardContent logo={logo} size={size}>
-    {logo && (
-      <Link className="logoWrap" to={to}>
-        <CardLogo src={logo} />
-      </Link>
-    )}
-    {topRight && <TimeLeft>{topRight}</TimeLeft>}
-    {children}
-  </CardContent>
-);
+    <CardContent logo={logo} size={size}>
+      {logo && (
+        <Link className="logoWrap" to={to}>
+          <CardLogo src={logo} />
+        </Link>
+      )}
+      {topRight && <TimeLeft>{topRight}</TimeLeft>}
+      {children}
+    </CardContent>
+  );
 
 const CardImage = ({ src, to }: { src?: any; to?: any }) => (
   <Link to={to}>

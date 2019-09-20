@@ -66,7 +66,9 @@ const Menu = () => {
       location: { pathname }
     },
     store: {
-      user: { details: { accounttype_id } },
+      user: {
+        details: { accounttype_id }
+      },
       config: { menu }
     }
   }: any = useContext(AppContext);
@@ -79,24 +81,19 @@ const Menu = () => {
 
   const getMenu = useCallback(
     links =>
-      !links || !links.length ? [] : links.map((item, i) => (
-        <li
-          id={`menu-${i}`}
-          key={item.link}
-          className={pathname === item.link ? 'active' : 'non-active'}
-        >
-          <Link
-            to={item.link}
-            onClick={toRoute}
-            target={item.new_tab ? '_blank' : ''}
-          >
-            {item.icon && <MenuIcon name={item.icon} size="large" />}
-            {item.title}
-            {pathname === item.link && <MenuIconActive name="chevron right" />}
-            <Icon name="angle right" />
-          </Link>
-        </li>
-      )),
+      !links || !links.length
+        ? []
+        : links.map(item => (
+            <li key={item.link} className={pathname === item.link ? 'active' : 'non-active'}>
+              <Link to={item.link} onClick={toRoute} target={item.new_tab ? '_blank' : ''}>
+                {item.icon && <MenuIcon name={item.icon} size="large" />}
+                {item.title}
+                {pathname === item.link && <MenuIconActive name="chevron right" />}
+                <Icon name="angle right" />
+              </Link>
+            </li>
+          )),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [accounttype_id, pathname]
   );
 
@@ -116,29 +113,21 @@ const Menu = () => {
   }, [menu]);
 
   return (
-    <RaiseMenu
-      vertical
-      borderless
-      inverted
-      className={menu ? 'open' : 'closed'}
-    >
+    <RaiseMenu vertical borderless inverted className={menu ? 'open' : 'closed'}>
       <Logo src={logoPath} />
       <Web3Address />
       <CloseButton onClick={closeMenu} icon>
         <Icon name="close" size="big" />
       </CloseButton>
-      <MenuList id='options-menu'>
-        {getMenu(Menus[accounttype_id])}
-      </MenuList>
+      <MenuList>{getMenu(Menus[accounttype_id])}</MenuList>
       <div style={{ flex: 2 }} />
-      <MenuSubList >
-        {getMenu(commonRoutes)}
-      </MenuSubList>
-      <ResumeMock />
+      <MenuSubList>{getMenu(commonRoutes)}</MenuSubList>
       <MenuLogout />
       <Credits>
         <p>Version: Release {process.env.REACT_APP_VERSION} (Beta)</p>
-        <p>Hero Fintech Technologies S.L.<br></br>Copyright ©2019</p>
+        <p>
+          Hero Fintech Technologies S.L.<br></br>Copyright ©2019
+        </p>
         <p>All Rights Reserved</p>
       </Credits>
     </RaiseMenu>

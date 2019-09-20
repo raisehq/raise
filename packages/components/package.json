@@ -44,6 +44,8 @@
   },
   "dependencies": {
     "js-cookie": "^2.2.0",
-    "react-iframe": "^1.8.0"
+    "react-iframe": "^1.8.0",
+    "react-router-hash-link": "^1.2.2",
+    "react-transition-group": "^4.3.0"
   }
 }

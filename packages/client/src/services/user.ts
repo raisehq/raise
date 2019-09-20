@@ -118,7 +118,7 @@ export const cryptoAddressByAccount = async (userId, targetAddressId) => {
     const rawResponse = await axios(config);
     switch (rawResponse.status) {
       case 200:
-        return rawResponse.data.data.find(d => d.cryptotype_id == targetAddressId);
+        return rawResponse.data.data.find(d => d.cryptotype_id === targetAddressId);
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
