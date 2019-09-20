@@ -2,6 +2,8 @@ image: node:11
 stages:
   - prepare
   - build
+  - deploy
+  - test
   - review
   - cleanup
 
@@ -48,14 +50,72 @@ build-front-production:
   only:
     - master
 
-review:
-  image: "python:latest"  
-  stage: review
+deploy-review:
+  image: "python:latest"
+  stage: deploy
   before_script:
     - pip install awscli
   script:
     - mv packages/client/build $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
     - aws s3 sync $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
+  only:
+    - merge_requests
+  except:
+    - master
+
+deploy-prod:
+  image: "python:latest"
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - mv packages/client/build build
+    - aws s3 sync build s3://${BUCKET_NAME_INT}/
+    - aws s3 sync build s3://${BUCKET_NAME_PROD}/
+  only:
+    - master
+
+# two jobs that run after "install" job finishes
+# NPM dependencies and Cypress binary should be already installed
+cypress-e2e:
+  image: cypress/base:10
+  stage: test
+  variables:
+    CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+    CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+  script:
+    - cd packages/testing/ && npm run ci:run
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+      - packages/testing/cypress/screenshots
+      - packages/testing/cypress/videos
+      - packages/testing/cypress/snapshots
+  only:
+    - merge_requests
+    - master
+
+cypress-e2e-chrome:
+  image: cypress/browsers:chrome67
+  stage: test
+  script:
+    - cd packages/testing/ && npm run ci:run:chrome
+  artifacts:
+    expire_in: 1 week
+    when: always
+    paths:
+      - packages/testing/cypress/screenshots
+      - packages/testing/cypress/videos
+      - packages/testing/cypress/snapshots
+  only:
+    - merge_requests
+    - master
+
+review:
+  stage: review
+  script:
+    - echo "Review"
   environment:
     name: review/$CI_BUILD_REF_NAME
     url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
@@ -66,7 +126,7 @@ review:
     - master
 
 stop-review:
-  image: "python:latest"  
+  image: "python:latest"
   stage: cleanup
   before_script:
     - pip install awscli
