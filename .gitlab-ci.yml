@@ -115,7 +115,7 @@ cypress-e2e-chrome:
 review:
   stage: review
   script:
-    - echo "Review"
+    - echo "Review Launch"
   environment:
     name: review/$CI_BUILD_REF_NAME
     url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
