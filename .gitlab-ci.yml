@@ -7,6 +7,8 @@ stages:
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1
+  CYPRESS_CACHE_FOLDER: packages/testing/.cache/Cypress
+
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -18,7 +20,7 @@ cache:
     - packages/components/node_modules
     - packages/onboarding/node_modules
     - packages/testing/node_modules
-    - packages/testing/cache/Cypress
+    - packages/testing/.cache/Cypress
 
 # this job installs NPM dependencies and Cypress
 install:
