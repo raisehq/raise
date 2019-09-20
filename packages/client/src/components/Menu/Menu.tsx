@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
-import ResumeMock from '../ResumeMock/ResumeMock';
 
 import {
   RaiseMenu,
