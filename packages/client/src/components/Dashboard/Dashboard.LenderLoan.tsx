@@ -32,7 +32,7 @@ const Loan = ({ auction }: { auction: any }) => {
       ANY,
       () => null
     );
-  }, [auction.state, auction.withdrawn]);
+  }, [auction]);
 
   return card;
 };

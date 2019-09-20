@@ -9,7 +9,6 @@ import { ClaimRepay } from '../ClaimRepay';
 import { ClaimRefund } from '../ClaimRefundInvestor';
 import { GetInTouch } from '../GetInTouch';
 
-
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, slug } = useBorrowerInfo(auction.originator);
   const { expectedRoiFormated, times, maxAmount, lenderRoiAmount } = calcs;
@@ -38,33 +37,33 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
 
   const contentColor = state === 3 ? 'red' : null;
   const loanTermLeft = state === 5 ? '-' : times.timeloanTermLeft;
-  const borrowerUrl = `/borrowers/${slug}`
+  const borrowerUrl = `/borrowers/${slug}`;
 
   return (
-    <Card>
-      <Card.SmallContent>
+    <Card width="350px">
+      <Card.Content size="100%">
         <Card.Grid>
           <Link to={borrowerUrl}>
             <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
           </Link>
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Card.Grid>
-        <Card.Grid spaceBetween>
+        <Card.Grid spaceBetween notop>
           <Card.Header title="Investment return" amount={<Amount principal={lenderRoiAmount} />} />
           <Card.RoiHeader roi={expectedRoiFormated} />
         </Card.Grid>
         <Card.Separator />
         <Card.Grid>
-          <Card.Row title="Amount invested" content={times.loanTerm} />
-          <Card.Row title="Loan amount" content={maxAmount} />
+          <Card.Row notop title="Amount invested" content={times.loanTerm} />
+          <Card.Row notop title="Loan amount" content={maxAmount} />
         </Card.Grid>
         <Card.Grid>
-          <Card.Row title="Days left" content={loanTermLeft} contentColor={contentColor} />
-          <Card.Row title="LoanTerm" content={times.loanTerm} />
-          <Card.Row title="Investors" content={auction.investorCount} />
+          <Card.Row notop title="Days left" content={loanTermLeft} contentColor={contentColor} />
+          <Card.Row notop title="Loan Term" content={times.loanTerm} />
+          <Card.Row notop title="Investors" content={auction.investorCount} />
         </Card.Grid>
         {cta}
-      </Card.SmallContent>
+      </Card.Content>
     </Card>
   );
 };

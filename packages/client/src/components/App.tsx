@@ -37,7 +37,7 @@ export const AppContext = createContext({
 });
 
 const App = ({ children, history, match }: any) => {
-  const refMode = process.env.REACT_APP_REFERAL == 'true';
+  const refMode = process.env.REACT_APP_REFERAL === 'true';
   const [isLoading, setLoading] = useState(true);
   const {
     store,
@@ -69,20 +69,6 @@ const App = ({ children, history, match }: any) => {
     network
   } = web3Status;
   const web3Pass = netOk && accMatch;
-
-  const TagManager = () => {
-    return useGoogleTagManager(
-      id,
-      'www.raise.it',
-      'Wallet',
-      '/verify-web3',
-      'TrafficLight',
-      'dataLayer',
-      'Submit',
-      'Wallet Connect Success'
-    );
-  };
-
   const [webSocket, setWebSocket] = useState({});
   const [daiWebSocket, setDaiWebSocket] = useState({});
 
@@ -152,6 +138,19 @@ const App = ({ children, history, match }: any) => {
       isLoading
     };
 
+    const TagManager = () => {
+      return useGoogleTagManager(
+        id,
+        'www.raise.it',
+        'Wallet',
+        '/verify-web3',
+        'TrafficLight',
+        'dataLayer',
+        'Submit',
+        'Wallet Connect Success'
+      );
+    };
+
     // prettier-ignore
     matches(conditions,
       { isLoading: true },
@@ -180,7 +179,7 @@ const App = ({ children, history, match }: any) => {
       _,
       () => { }
     );
-  }, [isLoading, logged, web3Pass, deposited]);
+  }, [isLoading, logged, web3Pass, id, deposited, history, refMode]);
 
   const componentsByRole = {
     1: {

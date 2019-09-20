@@ -128,6 +128,7 @@ export const ModalInputContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 30px;
+  margin-bottom: 20px;
   -webkit-flex-flow: row wrap;
 `;
 

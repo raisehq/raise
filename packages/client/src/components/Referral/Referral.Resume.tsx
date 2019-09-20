@@ -20,11 +20,7 @@ import { AppContext } from '../App';
 
 const getView = friends => {
   if (friends.length === 0) {
-    return (
-      <RewardMessageSubTitle>
-        Invite friends and start earning
-      </RewardMessageSubTitle>
-    );
+    return <RewardMessageSubTitle>Invite friends and start earning</RewardMessageSubTitle>;
   }
   return (
     <List>
@@ -72,7 +68,7 @@ const Resume = () => {
 
   useEffect(() => {
     network && status === UI.Success && fetchReferrals(network);
-  }, [status, network]);
+  }, [status, network, fetchReferrals]);
   const balanceWei = fromWei(balance.toString(), 'ether');
   return (
     <ResumeContainer>
@@ -98,10 +94,7 @@ const Resume = () => {
       </ContainerListFriends>
       <Grid.Row>
         <Grid.Column>
-          <ButtonGreen
-            onClick={onWithdraw}
-            disabled={Number(balanceWei) > 0 ? false : true}
-          >
+          <ButtonGreen onClick={onWithdraw} disabled={Number(balanceWei) > 0 ? false : true}>
             {Number(balanceWei) > 0 ? `Claim ${balanceWei} Tokens` : 'Claim'}
           </ButtonGreen>
         </Grid.Column>
