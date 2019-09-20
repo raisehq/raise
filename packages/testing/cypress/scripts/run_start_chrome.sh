@@ -64,4 +64,4 @@ PRIVATE_KEY=$test_private_key npm run migration:cypress
  
 cd ..
 
-npm run cypress:run
+npm run cypress:run:chrome
