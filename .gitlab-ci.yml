@@ -99,6 +99,9 @@ cypress-e2e:
 cypress-e2e-chrome:
   image: cypress/browsers:chrome67
   stage: test
+  variables:
+    CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+    CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
   script:
     - cd packages/testing/ && npm run ci:run:chrome
   artifacts:
