@@ -7,7 +7,6 @@ import connector from './store/actions';
 import reducers from './store/reducers';
 import initialState from './store/initialState';
 import LogRocket from 'logrocket';
-import axios from 'axios';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './global.css';
@@ -34,9 +33,5 @@ const Root = () => {
     </RootContext.Provider>
   );
 };
-// @ts-ignore
-if (window.Cypress) {
-  // @ts-ignore
-  window.axios = axios;
-}
+
 ReactDOM.render(<Root />, document.getElementById('root'));
