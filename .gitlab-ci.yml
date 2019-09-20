@@ -7,7 +7,7 @@ stages:
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1
-  CYPRESS_CACHE_FOLDER: packages/testing/.cache/Cypress
+  CYPRESS_CACHE_FOLDER: .cache/Cypress
 
 
 cache:
