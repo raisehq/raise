@@ -14,7 +14,7 @@ const LocalData = {
     return Object.keys(jsonData).length > 0 ? jsonData : null;
   },
   remove: (name: string) => {
-    window.localStorage.removeItem(name);
+    return window.localStorage.removeItem(name);
   }
 };
 export default LocalData;

@@ -17,6 +17,7 @@
     "@types/validator": "^10.9.0",
     "@types/web3": "^1.0.19",
     "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.17.0",
     "bowser": "^2.5.2",
     "buttercms": "^1.1.5",
     "daggy": "^1.4.0",
@@ -25,7 +26,6 @@
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "fork-ts-checker-webpack-plugin": "^0.5.2",
-    "hero-generator-react": "git+https://herolending:N5dMwpevvwyEe5BQBKqk@bitbucket.org/herodevteam/hero-generator-react.git#integration",
     "hero-ui": "git+https://herolending:N5dMwpevvwyEe5BQBKqk@bitbucket.org/herodevteam/hero-ui.git#integration",
     "hoist-non-react-statics": "^3.3.0",
     "html-to-react": "^1.4.1",
@@ -93,8 +93,7 @@
     "build:production": "NODE_ENV=production env-cmd .env.production yarn run build ",
     "test": "jest --coverage --coverageDirectory=output/coverage/jest",
     "test:watch": "jest --watchAll --verbose=false",
-    "lint": "eslint . --ext .js,.ts,.tsx",
-    "generator": "plop --plopfile ./node_modules/hero-generator-react/index.js"
+    "lint": "eslint . --ext .js,.ts,.tsx"
   },
   "browserslist": {
     "production": [

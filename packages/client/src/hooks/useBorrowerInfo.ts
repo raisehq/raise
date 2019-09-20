@@ -28,7 +28,7 @@ const useBorrowerInfo = borrowerAddress => {
       });
       setCompany(response);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }, []);
   return company;

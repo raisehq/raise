@@ -1,11 +1,18 @@
-# `testing`
+# flowtest
 
-> TODO: description
+# kill ganache
 
-## Usage
+List ganache 
 
 ```
-const testing = require('testing');
+    lsof -i :8545
 
-// TODO: DEMONSTRATE API
 ```
+
+kill all
+
+```
+    kill 1234
+
+```
+

@@ -69,7 +69,9 @@ const Dashboard = () => {
           My Activity
         </Header>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
-        <Button onClick={onCreateLoan}>create loan</Button>
+        <Button id="btn-create-loan" onClick={onCreateLoan}>
+          create loan
+        </Button>
       </DashboardContainer>
     </DashboardWrapper>
   );

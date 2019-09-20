@@ -1,3 +1,5 @@
+import WebSocketMock from '../__mocks__/webSocketMocks';
+
 const GQL = {
   CONNECTION_INIT: 'connection_init',
   CONNECTION_ACK: 'connection_ack',
@@ -139,4 +141,4 @@ class UseWebsocket {
   }
 }
 
-export default UseWebsocket;
+export default WebSocketMock || UseWebsocket;

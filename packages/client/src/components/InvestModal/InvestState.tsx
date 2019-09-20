@@ -20,7 +20,6 @@ import {
 } from './InvestModal.styles';
 
 const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
-  console.log('loan:: ', loan);
   const { principal, investorCount, maxAmount } = loan;
   const {
     times,
@@ -101,8 +100,8 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         </Card.Content>
       </Card>
       <CheckContainer>
-        <LoanTermsCheckbox onChange={onToggleTerms} />I agree to the Terms and Conditions of the
-        Loan Agreement
+        <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
+        to the Terms and Conditions of the Loan Agreement
       </CheckContainer>
       <ConfirmButton
         id="btn-invest-confirm"

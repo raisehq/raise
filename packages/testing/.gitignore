@@ -1,1 +1,6 @@
-cypress.env.json
+cypress/screenshots/*
+cypress/videos/*
+cypress/snapshots/*
+cypress/results
+contracts
+.gcache

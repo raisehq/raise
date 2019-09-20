@@ -33,8 +33,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
 
   const [contracts, setContracts] = useState();
   const [approved, setAproved] = useState(false);
-  const [errors, setError] = useState()
-
+  const [errors, setError] = useState();
 
   useAsyncEffect(async () => {
     if (metamask) {
@@ -43,7 +42,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
       setContracts({
         DAIProxy,
         DAI
-      })
+      });
     }
   }, [metamask]);
 
@@ -55,10 +54,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
       const valueBN = new BN(toWei(investment.toString()));
       const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
 
-      const amountApproved = await DAIContract.methods.allowance(
-        account,
-        DAIProxy.options.address,
-      ).call({ from: account });
+      const amountApproved = await DAIContract.methods
+        .allowance(account, DAIProxy.options.address)
+        .call({ from: account });
       if (valueBN.gt(new BN(amountApproved))) {
         try {
           await DAIContract.methods
@@ -66,6 +64,13 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
             .send({ from: account });
           setAproved(true);
         } catch (error) {
+          console.error(
+            '[DAIProxy ERROR ]',
+            'approve :',
+            DAIProxy.options.address,
+            ' stacktrace: ',
+            error
+          );
           setError({ approvalError: error });
         }
       } else {
@@ -76,15 +81,12 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
 
   useAsyncEffect(async () => {
     if (approved) {
-      console.log('investment:: ', investment)
-      console.log(loan)
       const { DAIProxy } = contracts;
       try {
-        await DAIProxy.methods
-          .fund(loan.id, toWei(investment.toString()))
-          .send({ from: account });
+        await DAIProxy.methods.fund(loan.id, toWei(investment.toString())).send({ from: account });
         setStage(ui.Success);
       } catch (error) {
+        console.error('[DAIProxy ERROR]', 'address:', loan.id, ' stacktrace: ', error);
         setError({ transactionError: error });
       }
     }
@@ -92,14 +94,11 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
 
   const onRetry = () => {
     setStage(ui.Confirm);
-  }
+  };
 
   const printRetry = () => {
-    return (
-      <RetryButton onClick={onRetry}>RETRY</RetryButton>
-
-    );
-  }
+    return <RetryButton onClick={onRetry}>RETRY</RetryButton>;
+  };
 
   const stepNumber = (number, action) => {
     let icon = (
@@ -160,13 +159,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
             <List>
               <ListItemPadding>
                 <Grid columns={2}>
-                  <Grid.Column width={2}>
-                    {stepNumber(1, 'aproval')}
-                  </Grid.Column>
+                  <Grid.Column width={2}>{stepNumber(1, 'aproval')}</Grid.Column>
                   <Grid.Column width={14}>
-                    <Action>
-                      Allow Raise to interact with your DAI
-                    </Action>
+                    <Action>Allow Raise to interact with your DAI</Action>
                     <Explanation>
                       Once you give us allowance, you will be able to make investments in DAI
                     </Explanation>
@@ -175,13 +170,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
               </ListItemPadding>
               <ListItemPadding>
                 <Grid columns={2}>
-                  <Grid.Column width={2}>
-                    {stepNumber(2, 'fund')}
-                  </Grid.Column>
+                  <Grid.Column width={2}>{stepNumber(2, 'fund')}</Grid.Column>
                   <Grid.Column width={14}>
-                    <Action>
-                      Confirm the transaction
-                    </Action>
+                    <Action>Confirm the transaction</Action>
                     <Explanation>
                       {`${investment} DAI will be transferred from your wallet to the loan`}
                     </Explanation>

@@ -1,15 +1,18 @@
 import axios from 'axios';
 import LocalData from '../helpers/localData';
 import MemorizeRefresh from '../helpers/memorizeRefresh';
-
+import AxiosMock from '../__mocks__/axiosMocks';
 const DEFAULT_RETRY_TIMES = 1;
 
 const getBearer = (token: string) => {
   return `Bearer ${token}`;
 };
+
 const instance = axios.create({
   headers: { 'X-Custom-Header': 'dashboard' }
 });
+//@ts-ignore
+window.Cypress && AxiosMock(instance);
 
 instance.interceptors.request.use(
   config => {
@@ -76,5 +79,6 @@ instance.interceptors.response.use(
     }
   }
 );
+
 
 export default instance;

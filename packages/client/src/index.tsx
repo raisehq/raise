@@ -7,7 +7,6 @@ import connector from './store/actions';
 import reducers from './store/reducers';
 import initialState from './store/initialState';
 import LogRocket from 'logrocket';
-
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './global.css';

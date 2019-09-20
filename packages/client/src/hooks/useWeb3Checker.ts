@@ -1,18 +1,15 @@
 import { useState, useContext, useEffect } from 'react';
 import useAsyncEffect from './useAsyncEffect';
 import isEqual from 'lodash/isEqual';
-import axios from 'axios';
 import get from 'lodash/get';
 import hasIn from 'lodash/hasIn';
 import { toChecksumAddress } from 'web3-utils';
 import { RootContext } from '../context';
-import { getWeb3, parseNetwork } from '../utils';
+import { getWeb3, parseNetwork, getContractsDefinition } from '../utils';
 import { Web3State } from '../commons/Web3State';
 
-const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
-
-export const web3CheckList = (
+// @ts-ignore
+const web3CheckList = window['web3CheckList'] = (
   web3,
   accounts,
   targetAddress,
@@ -65,14 +62,15 @@ const useWeb3Checker = (): Web3State => {
   );
 
   useAsyncEffect(async () => {
-    const contracts = await axios.get(HERO_CONTRACTS);
-    setContracts(contracts);
+
+    const contractsDef = { data: await getContractsDefinition() };
+    setContracts(contractsDef);
     setTargetNetwork(
-      Object.keys(contracts.data.address)
+      Object.keys(contractsDef.data.address)
         .map(x => parseNetwork(Number(x)))
-        .filter(availableId => ['mainnet', 'kovan'].find(id => id === availableId))
+        .filter(availableId => ['mainnet', 'kovan', 'test'].find(id => id === availableId))
     );
-    setDefs(contracts.data);
+    setDefs(contractsDef.data);
   }, []);
 
   useEffect(() => {

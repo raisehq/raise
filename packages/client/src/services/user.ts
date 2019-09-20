@@ -116,7 +116,6 @@ export const cryptoAddressByAccount = async (userId, targetAddressId) => {
 
   try {
     const rawResponse = await axios(config);
-
     switch (rawResponse.status) {
       case 200:
         return rawResponse.data.data.find(d => d.cryptotype_id === targetAddressId);

@@ -29,7 +29,7 @@ const KYC = () => {
           externalUserId: id,
           accessToken: token
         },
-        function(messageType, payload) {
+        function (messageType, payload) {
           console.log('[IDENSIC DEMO] Idensic message:', messageType, payload);
         }
       );
