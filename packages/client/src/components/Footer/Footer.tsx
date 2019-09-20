@@ -12,6 +12,7 @@ import {
   FooterIcons,
   FooterFirst
 } from './Footer.styles';
+import theme from '../../theme';
 
 const FooterCmp = () => (
   <Footer>
@@ -19,12 +20,28 @@ const FooterCmp = () => (
       <FooterFirst>
         <FooterMenu>
           <FooterList>
-            <FooterItem>About us</FooterItem>
-            <FooterItem>Help</FooterItem>
+            <FooterItem>
+              <a href="https://raise.it/about" target="_blank">
+                About us
+              </a>
+            </FooterItem>
+            <FooterItem>
+              <a href="https://raise.it/help" target="_blank">
+                Help
+              </a>
+            </FooterItem>
           </FooterList>
           <FooterList>
-            <FooterItem>Privacy policy</FooterItem>
-            <FooterItem>Terms and conditions</FooterItem>
+            <FooterItem>
+              <a href={`${theme.resources}/privacy-policy.pdf`} target="_blank">
+                Privacy policy
+              </a>
+            </FooterItem>
+            <FooterItem>
+              <a href={`${theme.resources}/toc.pdf`} target="_blank">
+                Terms and conditions
+              </a>
+            </FooterItem>
           </FooterList>
         </FooterMenu>
         <FooterIcons>
