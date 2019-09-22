@@ -61,7 +61,8 @@ cp cypress/fixtures/contracts.json contracts/contracts.json
 
 cd contracts
   
-rm  -rf ./contracts/build 
+rm  -rf ./build 
+rm  -rf ./contracts.json 
 
 
 echo "- Migration contracts"
