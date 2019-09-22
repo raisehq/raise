@@ -8,7 +8,7 @@ stages:
 variables:
   AWS_DEFAULT_REGION: eu-west-1 
   npm_config_cache: "$CI_PROJECT_DIR/packages/testing/.npm"
-  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/cache/Cypress"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/node_modules/.bin/cache/Cypress"
 
 
 
