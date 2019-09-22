@@ -19,6 +19,7 @@ cache:
     - packages/client/node_modules
     - packages/components/node_modules
     - packages/onboarding/node_modules
+    - packages/testing/contracts
     - "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
 
 # two jobs that run after "install" job finishes

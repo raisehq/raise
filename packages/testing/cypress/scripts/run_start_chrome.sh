@@ -44,19 +44,25 @@ else
     start_ganache
 fi
 
-echo "- Clone contracts"
-rm  -rf ./contracts 
-git clone https://gitlab.com/raisehq/contracts-solidity --branch LP-666-fix-bug ./contracts > "/dev/null" 2>&1
+DIRECTORY="contracts"
+
+if [ ! -d "$DIRECTORY" ]; then
+  # Control will enter here if $DIRECTORY doesn't exist.
+  git clone https://gitlab.com/raisehq/contracts-solidity --branch LP-666-fix-bug ./contracts > "/dev/null" 2>&1
+  cd contracts
+  echo "- Install dependencies"
+  npm i 
+  cd ..
+fi
+ 
 echo "- Adding json accounts to contract migration"
 cp cypress/fixtures/users.json contracts/int.accounts.json
 cp cypress/fixtures/contracts.json contracts/contracts.json
 
+cd contracts
+  
 rm  -rf ./contracts/build 
 
-cd contracts
-
-echo "- Install dependencies"
-npm i 
 
 echo "- Migration contracts"
 test_private_key=d631de5b7e9cf451135896c833187c8b4dc230bf47756a9a2ca4ffccc161175e
@@ -65,3 +71,6 @@ PRIVATE_KEY=$test_private_key npm run migration:cypress
 cd ..
 
 npm run cypress:run:chrome
+
+echo "- Clean build"
+rm  -rf ./contracts/build 
