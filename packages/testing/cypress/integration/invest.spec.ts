@@ -1,4 +1,4 @@
-describe('LENDER', function () {
+xdescribe('LENDER', function () {
   beforeEach(function () {
     cy.web3('lender');
     cy.login('lender');
