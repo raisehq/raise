@@ -21,7 +21,7 @@
   "scripts": {
     "cypress:open": "npx cypress open",
     "cypress:run": "npx cypress run",
-    "cypress:run:chrome": "cypress run --browser chrome",
+    "cypress:run:chrome": "npx cypress run --browser chrome",
     "ci:open": "sh cypress/scripts/open_start.sh",
     "ci:run": "sh cypress/scripts/run_start.sh",
     "ci:run:chrome": "sh cypress/scripts/run_chrome_start.sh",

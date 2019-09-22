@@ -7,6 +7,10 @@ stages:
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1 
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+
+
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -18,6 +22,7 @@ cache:
     - packages/components/node_modules
     - packages/onboarding/node_modules
     - packages/testing/node_modules
+    - cache/Cypress
 
 # this job installs NPM dependencies and Cypress
 install:
@@ -27,6 +32,11 @@ install:
   script:
     - cd packages/testing
     - npm i
+    # show where the Cypress test runner binaries are cached
+    - $(npm bin)/cypress cache path
+    # show all installed versions of Cypress binary
+    - $(npm bin)/cypress cache list
+    - $(npm bin)/cypress verify
   only:
     - merge_requests
     - master
