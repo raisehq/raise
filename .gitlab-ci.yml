@@ -1,6 +1,8 @@
 image: node:11
 stages:
-  - prepare-test
+  - prepare
+  - build
+  - deploy
   - test
   - review
   - cleanup
@@ -21,6 +23,64 @@ cache:
     - packages/onboarding/node_modules
     - packages/testing/contracts
     - "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+
+lerna:
+  stage: prepare
+  script:
+    - npx lerna bootstrap
+    - npx lerna run compile:components
+    - npx lerna bootstrap
+    - npx lerna run compile:onboarding
+    - npx lerna bootstrap
+    - cd packages/testing/ && npm i
+  only:
+    - merge_requests
+    - master
+
+build-front-review:
+  stage: build
+  script:
+    - npm run client:build:integration
+  only:
+    - merge_requests
+  except:
+    - master
+
+build-front-production:
+  stage: build
+  script:
+    - npm run client:build:production
+  only:
+    - master
+
+deploy-review:
+  image: "python:latest"
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - mv packages/client/build $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
+    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)/ --recursive
+    - aws s3 sync $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
+  only:
+    - merge_requests
+  except:
+    - master
+
+deploy-prod:
+  image: "python:latest"
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - mv packages/client/build build
+    - aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
+    - aws s3 rm s3://${BUCKET_NAME_PROD}/ --recursive
+    
+    - aws s3 sync build s3://${BUCKET_NAME_INT}/
+    - aws s3 sync build s3://${BUCKET_NAME_PROD}/
+  only:
+    - master
 
 # two jobs that run after "install" job finishes
 # NPM dependencies and Cypress binary should be already installed
