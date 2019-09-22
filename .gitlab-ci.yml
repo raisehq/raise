@@ -15,8 +15,6 @@ variables:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - .npm
-    - packages/client/build
     - node_modules
     - packages/client/node_modules
     - packages/components/node_modules
@@ -45,6 +43,10 @@ build-front-review:
     - merge_requests
   except:
     - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build
 
 build-front-production:
   stage: build
@@ -52,6 +54,10 @@ build-front-production:
     - npm run client:build:production
   only:
     - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build
 
 deploy-review:
   image: "python:latest"
@@ -113,34 +119,34 @@ cypress-e2e:
     - merge_requests
     - master
 
-cypress-e2e-chrome:
-  image: cypress/browsers:chrome67
-  stage: test
-  variables:
-    CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
-    CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
-    CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
-  before_script:
-    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
-  script:
-    - cd packages/testing
-    - npm i
-    # show where the Cypress test runner binaries are cached
-    - $(npm bin)/cypress cache path
-    # show all installed versions of Cypress binary
-    - $(npm bin)/cypress cache list
-    - $(npm bin)/cypress verify
-    - npm run ci:run
-  artifacts:
-    expire_in: 1 week
-    when: always
-    paths:
-      - packages/testing/cypress/screenshots
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  only:
-    - merge_requests
-    - master
+# cypress-e2e-chrome:
+#   image: cypress/browsers:chrome67
+#   stage: test
+#   variables:
+#     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+#     CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+#     CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+#   before_script:
+#     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+#   script:
+#     - cd packages/testing
+#     - npm i
+#     # show where the Cypress test runner binaries are cached
+#     - $(npm bin)/cypress cache path
+#     # show all installed versions of Cypress binary
+#     - $(npm bin)/cypress cache list
+#     - $(npm bin)/cypress verify
+#     - npm run ci:run
+#   artifacts:
+#     expire_in: 1 week
+#     when: always
+#     paths:
+#       - packages/testing/cypress/screenshots
+#       - packages/testing/cypress/videos
+#       - packages/testing/cypress/snapshots
+#   only:
+#     - merge_requests
+#     - master
 
 review:
   stage: review
