@@ -10,8 +10,6 @@ variables:
   npm_config_cache: "$CI_PROJECT_DIR/packages/testing/.npm"
   CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
 
-
-
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -23,22 +21,6 @@ cache:
     - packages/onboarding/node_modules
     - "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
 
-# this job installs NPM dependencies and Cypress
-install:
-  image: cypress/base:10
-  stage: prepare-test
-
-  script:
-    - cd packages/testing
-    - npm i
-    # show where the Cypress test runner binaries are cached
-    - $(npm bin)/cypress cache path
-    # show all installed versions of Cypress binary
-    - $(npm bin)/cypress cache list
-    - $(npm bin)/cypress verify
-  only:
-    - merge_requests
-    - master
 # two jobs that run after "install" job finishes
 # NPM dependencies and Cypress binary should be already installed
 cypress-e2e:
@@ -47,10 +29,18 @@ cypress-e2e:
   variables:
     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
     CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+    CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
   before_script:
     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
   script:
-    - cd packages/testing/ && npm run ci:run
+    - cd packages/testing
+    - npm i
+    # show where the Cypress test runner binaries are cached
+    - $(npm bin)/cypress cache path
+    # show all installed versions of Cypress binary
+    - $(npm bin)/cypress cache list
+    - $(npm bin)/cypress verify
+    - npm run ci:run
   artifacts:
     expire_in: 1 week
     when: always
@@ -68,10 +58,18 @@ cypress-e2e-chrome:
   variables:
     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
     CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+    CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
   before_script:
     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
   script:
-    - cd packages/testing/ && npm run ci:run:chrome
+    - cd packages/testing
+    - npm i
+    # show where the Cypress test runner binaries are cached
+    - $(npm bin)/cypress cache path
+    # show all installed versions of Cypress binary
+    - $(npm bin)/cypress cache list
+    - $(npm bin)/cypress verify
+    - npm run ci:run
   artifacts:
     expire_in: 1 week
     when: always
