@@ -8,7 +8,7 @@ stages:
 variables:
   AWS_DEFAULT_REGION: eu-west-1 
   npm_config_cache: "$CI_PROJECT_DIR/packages/testing/.npm"
-  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/node_modules/.bin/cache/Cypress"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
 
 
 
@@ -21,8 +21,7 @@ cache:
     - packages/client/node_modules
     - packages/components/node_modules
     - packages/onboarding/node_modules
-    - packages/testing/node_modules
-    - cache/Cypress
+    - "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
 
 # this job installs NPM dependencies and Cypress
 install:
