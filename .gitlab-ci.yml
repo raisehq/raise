@@ -9,17 +9,18 @@ stages:
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1
+  npm_config_cache: "$CI_PROJECT_DIR/packages/testing/.npm"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - .npm
-    - packages/client/build
     - node_modules
     - packages/client/node_modules
     - packages/components/node_modules
     - packages/onboarding/node_modules
-    - packages/testing/node_modules
+    - packages/testing/contracts
+    - "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
 
 lerna:
   stage: prepare
@@ -42,6 +43,10 @@ build-front-review:
     - merge_requests
   except:
     - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build
 
 build-front-production:
   stage: build
@@ -49,6 +54,10 @@ build-front-production:
     - npm run client:build:production
   only:
     - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build
 
 deploy-review:
   image: "python:latest"
@@ -57,6 +66,7 @@ deploy-review:
     - pip install awscli
   script:
     - mv packages/client/build $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
+    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)/ --recursive
     - aws s3 sync $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
   only:
     - merge_requests
@@ -70,21 +80,29 @@ deploy-prod:
     - pip install awscli
   script:
     - mv packages/client/build build
+    - aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
+    - aws s3 rm s3://${BUCKET_NAME_PROD}/ --recursive
     - aws s3 sync build s3://${BUCKET_NAME_INT}/
     - aws s3 sync build s3://${BUCKET_NAME_PROD}/
   only:
     - master
 
-# two jobs that run after "install" job finishes
-# NPM dependencies and Cypress binary should be already installed
 cypress-e2e:
   image: cypress/base:10
   stage: test
   variables:
     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
     CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+    CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+  before_script:
+    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
   script:
-    - cd packages/testing/ && npm run ci:run
+    - cd packages/testing
+    - npm i
+    - $(npm bin)/cypress cache path
+    - $(npm bin)/cypress cache list
+    - $(npm bin)/cypress verify
+    - npm run ci:run
   artifacts:
     expire_in: 1 week
     when: always
@@ -94,16 +112,23 @@ cypress-e2e:
       - packages/testing/cypress/snapshots
   only:
     - merge_requests
-    - master
 
-cypress-e2e-chrome:
-  image: cypress/browsers:chrome67
+cypress-e2e-integration:
+  image: cypress/base:10
   stage: test
   variables:
-    CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
-    CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+    CYPRESS_url: https://int.herodev.es
+    CYPRESS_baseUrl: https://int.herodev.es
+    CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+  before_script:
+    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
   script:
-    - cd packages/testing/ && npm run ci:run:chrome
+    - cd packages/testing
+    - npm i
+    - $(npm bin)/cypress cache path
+    - $(npm bin)/cypress cache list
+    - $(npm bin)/cypress verify
+    - npm run ci:run
   artifacts:
     expire_in: 1 week
     when: always
@@ -112,13 +137,41 @@ cypress-e2e-chrome:
       - packages/testing/cypress/videos
       - packages/testing/cypress/snapshots
   only:
-    - merge_requests
     - master
+
+# cypress-e2e-chrome:
+#   image: cypress/browsers:chrome67
+#   stage: test
+#   variables:
+#     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+#     CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+#     CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+#   before_script:
+#     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+#   script:
+#     - cd packages/testing
+#     - npm i
+#     # show where the Cypress test runner binaries are cached
+#     - $(npm bin)/cypress cache path
+#     # show all installed versions of Cypress binary
+#     - $(npm bin)/cypress cache list
+#     - $(npm bin)/cypress verify
+#     - npm run ci:run
+#   artifacts:
+#     expire_in: 1 week
+#     when: always
+#     paths:
+#       - packages/testing/cypress/screenshots
+#       - packages/testing/cypress/videos
+#       - packages/testing/cypress/snapshots
+#   only:
+#     - merge_requests
+#     - master
 
 review:
   stage: review
   script:
-    - echo "Review"
+    - echo "Review Launch"
   environment:
     name: review/$CI_BUILD_REF_NAME
     url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
