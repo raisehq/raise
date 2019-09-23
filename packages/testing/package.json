@@ -20,8 +20,8 @@
   },
   "scripts": {
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "cypress:run:chrome": "cypress run --browser chrome",
+    "cypress:run": " $(npm bin)/cypress run",
+    "cypress:run:chrome": " $(npm bin)/cypress run --browser chrome",
     "ci:open": "sh cypress/scripts/open_start.sh",
     "ci:run": "sh cypress/scripts/run_start.sh",
     "ci:run:chrome": "sh cypress/scripts/run_chrome_start.sh",
