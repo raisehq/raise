@@ -42,6 +42,10 @@ const findOne = async (collection: string, fields: any) => {
   return camelResponse;
 };
 
+const getStarted = () => {
+  return findOne('get_started', {});
+};
+
 export default butter;
 
-export { requestPage, findOne, butter };
+export { requestPage, getStarted, findOne, butter };
