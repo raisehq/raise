@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { Message } from 'semantic-ui-react';
 
-//#F8BD2E
-
 export const OrangeMessage = styled(Message)`
   &&& {
     border: 1px solid #ffb62b;
@@ -10,8 +8,8 @@ export const OrangeMessage = styled(Message)`
     color: #8a6300;
     padding: 15px;
     box-sizing: border-box;
-    font-weight: 400 !important;
     margin-bottom: 45px;
+    box-shadow: none !important;
 
     .circle {
       font-size: 16px !important;
@@ -26,15 +24,16 @@ export const OrangeMessage = styled(Message)`
     .header {
       background-color: #fef2d6;
       color: #8a6300;
+      font-weight: lighter !important;
     }
   }
 `;
 
 export const KycMessageButton = styled.button`
-  border: 1px solid #8a6300;
-  padding: 15px;
+  border: none;
   border-radius: 5px;
   color: #8a6300;
-  background: #ffb62b;
+  background: none;
   cursor: pointer;
+  text-decoration: underline;
 `;
