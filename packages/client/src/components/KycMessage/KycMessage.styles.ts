@@ -11,6 +11,7 @@ export const OrangeMessage = styled(Message)`
     padding: 15px;
     box-sizing: border-box;
     font-weight: 400 !important;
+    margin-bottom: 45px;
 
     .circle {
       font-size: 16px !important;
