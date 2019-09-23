@@ -236,6 +236,21 @@ export const OnboardDisclaimer = styled.div`
   }
 `;
 
+export const OnboardDisclaimerBorrower = styled.div`
+  padding-top: 43px;
+  line-height: 20px;
+  display: flex;
+
+  .disclaimerBTN {
+    border: none;
+    background: none;
+    padding: 0px 2px 0px 2px;
+    margin: 0;
+    color: ${theme.colors.green};
+    cursor: pointer;
+  }
+`;
+
 export const OnboardMailingList = styled.div`
   line-height: 20px;
   margin-top: 60px;
@@ -330,4 +345,10 @@ export const GoogleCaptchaPolicies = styled.div`
   width: 100%;
   text-align: center;
   padding-top: 20px;
+`;
+
+export const OnboardHeaderSubtitle = styled.div`
+  font-size: 14px;
+  margin-top: 8px;
+  line-height: 21px;
 `;

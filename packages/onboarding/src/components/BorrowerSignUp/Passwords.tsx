@@ -2,7 +2,16 @@ import React, { Fragment, useContext, useState } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
-import { OnboardHeaderBorrower, OnboardInput, OnboardButton } from '../styles';
+import {
+  OnboardHeaderBorrower,
+  OnboardInput,
+  OnboardButton,
+  OnboardHeaderSubtitle,
+  OnboardDisclaimerBorrower,
+  OnboardCheckbox,
+  OnboardingCell
+} from '../styles';
+import theme from '../../theme';
 import validations from '../validations';
 import { AppContext } from '../App';
 import { Either } from '../../utils';
@@ -15,7 +24,8 @@ const BorrowerSignUp = ({ token }) => {
     retyped: {
       notEqueal: false,
       notPassword: false
-    }
+    },
+    terms: true
   });
 
   const [password, setPasswords] = useState<{
@@ -38,6 +48,8 @@ const BorrowerSignUp = ({ token }) => {
       }
     );
   }, 800);
+
+  const onAcceptTerms = () => setErrors({ ...errors, terms: !errors.terms });
 
   const onSetRetypedPassword = debounce((e, data) => {
     const { value } = data;
@@ -87,7 +99,10 @@ const BorrowerSignUp = ({ token }) => {
 
   return (
     <Fragment>
-      <OnboardHeaderBorrower>Set a password for you account</OnboardHeaderBorrower>
+      <OnboardHeaderBorrower>Activate your account</OnboardHeaderBorrower>
+      <OnboardHeaderSubtitle>
+        Set a password and accept Terms and Conditions to continue
+      </OnboardHeaderSubtitle>
       <OnboardInput>
         <Input
           data-testid="loginPassword"
@@ -121,7 +136,28 @@ const BorrowerSignUp = ({ token }) => {
         {errors.retyped.notEqual && <div className="errorText">Passwords do not match</div>}
         <Icon size="big" name="key" />
       </OnboardInput>
-      <OnboardButton onClick={onReset}>Continue</OnboardButton>
+      <OnboardButton disabled={errors.terms || errors.main} onClick={onReset}>
+        Continue
+      </OnboardButton>
+      <OnboardDisclaimerBorrower>
+        <OnboardingCell>
+          <OnboardCheckbox onChange={onAcceptTerms} />
+        </OnboardingCell>
+        <OnboardingCell>
+          By signing up, I agree to Raise
+          <a className="disclaimerBTN" href={`${theme.resources}/toc-b.pdf`} target="_blank">
+            Terms of Service
+          </a>
+          and
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/privacy-policy-b.pdf`}
+            target="_blank"
+          >
+            Privacy Policy
+          </a>
+        </OnboardingCell>
+      </OnboardDisclaimerBorrower>
     </Fragment>
   );
 };
