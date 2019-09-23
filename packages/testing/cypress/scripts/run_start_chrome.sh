@@ -61,10 +61,8 @@ cp cypress/fixtures/contracts.json contracts/contracts.json
 
 cd contracts
   
-
 rm  -rf ./build 
 rm  -rf ./contracts.json 
-
 
 
 echo "- Migration contracts"
@@ -73,7 +71,7 @@ PRIVATE_KEY=$test_private_key npm run migration:cypress
  
 cd ..
 
-npm run cypress:run
+npm run cypress:run:chrome
 
 echo "- Clean build"
 rm  -rf ./contracts/build 
