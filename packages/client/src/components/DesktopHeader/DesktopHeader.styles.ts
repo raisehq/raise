@@ -30,12 +30,16 @@ export const HeaderLogout = styled(Logout)`
   &&&& {
     border: 1px solid #3c4251;
     background: transparent;
-    height: 48px;
-    width: auto;
+    height: 42px;
+    width: 122px;
     color: #3c4251;
     border-radius: 4px;
     font-size: 18px;
     margin-left: 25px;
+    line-height: 24px;
+    padding: 0px;
+    font-weight: lighter;
+    margin-right: 0px !important;
   }
 `;
 
