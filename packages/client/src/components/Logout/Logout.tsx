@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Button } from 'semantic-ui-react';
 import { AppContext } from '../App';
 
-export const Logout = (props) => {
+export const Logout = props => {
   const {
     actions: {
       auth: { onSignout }
@@ -11,7 +11,7 @@ export const Logout = (props) => {
 
   return (
     <Button onClick={onSignout} {...props}>
-      Logout
+      Log out
     </Button>
   );
-} 
+};
