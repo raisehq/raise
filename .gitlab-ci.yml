@@ -1,6 +1,5 @@
 image: node:11
 stages:
-  - prepare
   - build
   - deploy
   - test
@@ -15,29 +14,19 @@ variables:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - node_modules
-    - packages/client/node_modules
-    - packages/components/node_modules
-    - packages/onboarding/node_modules
     - packages/testing/contracts
     - "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
 
-lerna:
-  stage: prepare
+build-front-review:
+  stage: build
+  variables:
+    REACT_APP_COOKIE_DOMAIN: .${CI_BUILD_REF_NAME}.review.$DOMAIN
   script:
     - npx lerna bootstrap
     - npx lerna run compile:components
     - npx lerna bootstrap
     - npx lerna run compile:onboarding
     - npx lerna bootstrap
-    - cd packages/testing/ && npm i
-  only:
-    - merge_requests
-    - master
-
-build-front-review:
-  stage: build
-  script:
     - npm run client:build:integration
   only:
     - merge_requests
@@ -51,6 +40,11 @@ build-front-review:
 build-front-production:
   stage: build
   script:
+    - npx lerna bootstrap
+    - npx lerna run compile:components
+    - npx lerna bootstrap
+    - npx lerna run compile:onboarding
+    - npx lerna bootstrap
     - npm run client:build:production
   only:
     - master
@@ -87,60 +81,8 @@ deploy-prod:
   only:
     - master
 
-cypress-e2e:
-  image: cypress/base:10
-  stage: test
-  variables:
-    CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
-    CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
-    CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
-  before_script:
-    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
-  script:
-    - cd packages/testing
-    - npm i
-    - $(npm bin)/cypress cache path
-    - $(npm bin)/cypress cache list
-    - $(npm bin)/cypress verify
-    - npm run ci:run
-  artifacts:
-    expire_in: 1 week
-    when: always
-    paths:
-      - packages/testing/cypress/screenshots
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  only:
-    - merge_requests
-
-cypress-e2e-integration:
-  image: cypress/base:10
-  stage: test
-  variables:
-    CYPRESS_url: https://int.herodev.es
-    CYPRESS_baseUrl: https://int.herodev.es
-    CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
-  before_script:
-    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
-  script:
-    - cd packages/testing
-    - npm i
-    - $(npm bin)/cypress cache path
-    - $(npm bin)/cypress cache list
-    - $(npm bin)/cypress verify
-    - npm run ci:run
-  artifacts:
-    expire_in: 1 week
-    when: always
-    paths:
-      - packages/testing/cypress/screenshots
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  only:
-    - master
-
-# cypress-e2e-chrome:
-#   image: cypress/browsers:chrome67
+# cypress-e2e:
+#   image: cypress/base:10
 #   stage: test
 #   variables:
 #     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
@@ -151,9 +93,7 @@ cypress-e2e-integration:
 #   script:
 #     - cd packages/testing
 #     - npm i
-#     # show where the Cypress test runner binaries are cached
 #     - $(npm bin)/cypress cache path
-#     # show all installed versions of Cypress binary
 #     - $(npm bin)/cypress cache list
 #     - $(npm bin)/cypress verify
 #     - npm run ci:run
@@ -166,6 +106,31 @@ cypress-e2e-integration:
 #       - packages/testing/cypress/snapshots
 #   only:
 #     - merge_requests
+
+# cypress-e2e-integration:
+#   image: cypress/base:10
+#   stage: test
+#   variables:
+#     CYPRESS_url: https://int.herodev.es
+#     CYPRESS_baseUrl: https://int.herodev.es
+#     CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+#   before_script:
+#     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+#   script:
+#     - cd packages/testing
+#     - npm i
+#     - $(npm bin)/cypress cache path
+#     - $(npm bin)/cypress cache list
+#     - $(npm bin)/cypress verify
+#     - npm run ci:run
+#   artifacts:
+#     expire_in: 1 week
+#     when: always
+#     paths:
+#       - packages/testing/cypress/screenshots
+#       - packages/testing/cypress/videos
+#       - packages/testing/cypress/snapshots
+#   only:
 #     - master
 
 review:
