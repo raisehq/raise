@@ -53,19 +53,24 @@ build-front-production:
     paths:
       - packages/client/build
 
-deploy-review:
-  image: "python:latest"
-  stage: deploy
-  before_script:
-    - pip install awscli
+
+build-front-integration:
+  stage: build
   script:
-    - mv packages/client/build $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
-    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)/ --recursive
-    - aws s3 sync $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
+    - npx lerna bootstrap
+    - npx lerna run compile:components
+    - npx lerna bootstrap
+    - npx lerna run compile:onboarding
+    - npx lerna bootstrap
+    - npm run client:build:integration
+    - mv  packages/client/build  packages/client/build_int
   only:
-    - merge_requests
-  except:
     - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build_int
+
 
 deploy-prod:
   image: "python:latest"
@@ -74,13 +79,14 @@ deploy-prod:
     - pip install awscli
   script:
     - mv packages/client/build build
+    - mv packages/client/build_int build_int
     - aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
     - aws s3 rm s3://${BUCKET_NAME_PROD}/ --recursive
-    - aws s3 sync build s3://${BUCKET_NAME_INT}/
+    - aws s3 sync build_int s3://${BUCKET_NAME_INT}/
     - aws s3 sync build s3://${BUCKET_NAME_PROD}/
   only:
     - master
-
+ 
 # cypress-e2e:
 #   image: cypress/base:10
 #   stage: test
@@ -134,9 +140,14 @@ deploy-prod:
 #     - master
 
 review:
+  image: "python:latest"
   stage: review
+  before_script:
+    - pip install awscli
   script:
-    - echo "Review Launch"
+    - mv packages/client/build $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
+    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)/ --recursive
+    - aws s3 sync $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
   environment:
     name: review/$CI_BUILD_REF_NAME
     url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
