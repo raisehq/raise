@@ -36,7 +36,7 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   }, [auction.state, auction.loanRepaid]);
 
   const contentColor = state === 3 ? 'red' : null;
-  const loanTermLeft = state === 5 ? '-' : times.timeloanTermLeft;
+  const loanTermLeft = state === 5 ? '-' : times.loanTermLeft;
   const borrowerUrl = `/borrowers/${slug}`;
 
   return (
