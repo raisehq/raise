@@ -71,6 +71,7 @@ export const LenderButton = styled(Button)`
     font-weight: bold;
     width: 100%;
     margin-top: auto;
+    margin: 0px;
   }
 
   &&&:hover {
