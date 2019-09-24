@@ -58,7 +58,7 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
           <Card.Row notop title="Loan amount" content={maxAmount} />
         </Card.Grid>
         <Card.Grid>
-          <Card.Row notop title="Days left" content={loanTermLeft} contentColor={contentColor} />
+          <Card.Row notop title="Time left" content={loanTermLeft} contentColor={contentColor} />
           <Card.Row notop title="Loan Term" content={times.loanTerm} />
           <Card.Row notop title="Investors" content={auction.investorCount} />
         </Card.Grid>
