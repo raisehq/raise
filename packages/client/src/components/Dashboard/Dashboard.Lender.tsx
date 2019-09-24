@@ -55,7 +55,7 @@ const Dashboard = () => {
     <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
-        <Header as="h1">Suggested investments</Header>
+        <Header as="h1">Investment opportunities</Header>
         <Suggesteds auctions={suggested} states={[0]} />
         <Header as="h1" id="my-activity">
           My activity
