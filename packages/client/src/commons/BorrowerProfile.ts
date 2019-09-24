@@ -14,13 +14,10 @@ export interface KPI {
   label: string;
 }
 
-export interface BorrowerProfile {
+export interface BorrowerDetails {
   companyName: string;
   description: any;
   logo: string;
-  socialNetworks: SocialNetwork[];
-  extraResources: ExtraResource[];
-  kpis: KPI[];
   url: string;
   urlText: string;
   updated: string;
@@ -28,4 +25,11 @@ export interface BorrowerProfile {
   userId: string;
   account: string;
   foundationDate: string;
+}
+
+export interface BorrowerProfile {
+  companyDetails: BorrowerDetails;
+  kpis: KPI[];
+  socialNetworks: SocialNetwork[];
+  extraResources: ExtraResource[];
 }

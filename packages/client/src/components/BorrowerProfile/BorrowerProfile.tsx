@@ -22,24 +22,26 @@ import Borrower404 from './Borrower404';
 import BorrowerLoading from './BorrowerLoading';
 
 const defaultBorrower = {
-  companyName: 'Loading...',
-  description: '',
-  logo: '',
+  companyDetails: {
+    companyName: 'Loading...',
+    description: '',
+    logo: '',
+    url: '',
+    urlText: '',
+    updated: '',
+    address: '',
+    userId: '',
+    account: '',
+    foundationDate: ''
+  },
   socialNetworks: [],
   extraResources: [],
-  kpis: [],
-  url: '',
-  urlText: '',
-  updated: '',
-  address: '',
-  userId: '',
-  account: '',
-  foundationDate: ''
+  kpis: []
 };
 
-type SlugParam = {
+interface SlugParam {
   slug: string;
-};
+}
 
 type BorrowerParams = RouteComponentProps<SlugParam>;
 
@@ -52,18 +54,20 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);
   const {
-    companyName,
-    description,
-    logo,
-    url,
-    urlText,
-    updated,
-    address,
+    companyDetails: {
+      companyName,
+      description,
+      logo,
+      url,
+      urlText,
+      updated,
+      address,
+      foundationDate,
+      account
+    },
     extraResources,
     socialNetworks,
-    kpis,
-    foundationDate,
-    account
+    kpis
   } = borrower;
   const lastUpdated = new Date(updated).toLocaleDateString('en-GB');
   const createdDate = new Date(foundationDate).toLocaleDateString('en-GB');
@@ -71,7 +75,11 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   useAsyncEffect(async () => {
     try {
       const response = await requestPage('borrower_profile', slug);
-      const { address: userAccount } = await cryptoAddressByAccount(response.userId, 2);
+      console.log(response);
+      const { address: userAccount } = await cryptoAddressByAccount(
+        response.companyDetails.userId,
+        2
+      );
       setPayload({ ...response, account: userAccount });
       setLoading(false);
     } catch (error) {

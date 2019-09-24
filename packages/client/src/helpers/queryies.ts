@@ -32,7 +32,7 @@ const queryies = {
       query: `subscription liveAuctionsByAccount($address: String)
       {
         users(where:{address:$address}) {
-          loanRequests {
+          loanRequests(orderBy: auctionStartTimestamp, orderDirection: desc) {
             state
             principal
             maxAmount
@@ -101,7 +101,7 @@ const queryies = {
       query: `subscription loansByAccount($address: String)
       {
         users(where: {address: $address}) {
-          loanRequests {
+          loanRequests(orderBy: auctionStartTimestamp, orderDirection: desc) {
             state
             principal
             maxAmount
