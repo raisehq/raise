@@ -4,15 +4,10 @@ import { Route } from 'react-router-dom';
 import { Grid, Image } from 'semantic-ui-react';
 // import Logout from '../Logout';
 import { AppContext } from '../App';
-import {
-  ContainerWrapper,
-  CenteredContainerStyled as CenteredContainer,
-  HeaderRow,
-  FooterRow,
-  Credits,
-  AllRights,
-  LeaveFeedback
-} from './Layout.styles';
+import { CenteredContainerStyled as CenteredContainer, HeaderRow } from './Layout.styles';
+
+import { HeroLayout, Content, Wrapper } from '../Layout/Layout.styles';
+import Footer from '../Footer';
 
 import { HeaderLogout } from '../DesktopHeader/DesktopHeader.styles';
 
@@ -40,38 +35,27 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
     <Route
       {...rest}
       render={matchProps => (
-        <ContainerWrapper>
-          <Grid verticalAlign="middle" padded style={{ minHeight: '100%' }}>
-            <CenteredContainer pathname={pathname}>
-              <Grid>
-                {logged && (
-                  <HeaderRow>
-                    <Image src={logoPath} />
-                    {/* {!refMode ? (
-                      <Button basic as={Link} to="/dashboard">
-                        Dashboard{' '}
-                        <span role="img" aria-label="Robot">
-                          🤖
-                        </span>
-                      </Button>
-                    ) : null} */}
-                    <HeaderLogout />
-                  </HeaderRow>
-                )}
-                <Component {...matchProps} />
-                {logged && (
-                  <FooterRow centered>
-                    <Credits>
-                      <span>Copyright ©2019 Hero Fintech Technologies S.L. </span>
-                      <AllRights>All Rights Reserved</AllRights>
-                      <LeaveFeedback href="mailto:team@raise.it">Leave feedback</LeaveFeedback>
-                    </Credits>
-                  </FooterRow>
-                )}
+        <HeroLayout>
+          <Wrapper>
+            <Content>
+              <Grid verticalAlign="middle" padded style={{ minHeight: '100%' }}>
+                <CenteredContainer pathname={pathname}>
+                  <Grid>
+                    {logged && (
+                      <HeaderRow>
+                        <Image src={logoPath} />
+                        <HeaderLogout />
+                      </HeaderRow>
+                    )}
+
+                    <Component {...matchProps} />
+                  </Grid>
+                </CenteredContainer>
               </Grid>
-            </CenteredContainer>
-          </Grid>
-        </ContainerWrapper>
+            </Content>
+          </Wrapper>
+          {logged && <Footer />}
+        </HeroLayout>
       )}
     />
   );

@@ -9,18 +9,9 @@ interface PropsPathname {
 }
 
 const depositWidth = pathname =>
-  match(
-    pathname,
-    '/deposit',
-    () => '425px',
-    '/verify-web3',
-    () => '425px',
-    ANY,
-    () => '1200px'
-  );
+  match(pathname, '/deposit', () => '425px', '/verify-web3', () => '425px', ANY, () => '1200px');
 
 const backgroundImage = getImages('pattern-fdesk-dark.svg');
-
 
 export const AllRights = styled.span``;
 export const LeaveFeedback = styled.a``;
@@ -42,11 +33,8 @@ export const CardContent = styled(Card.Content)`
     border-top: 0 !important;
     margin: 0px;
     @media ${device.tablet} {
-
       margin: ${({ bottom_spacing }) =>
-        bottom_spacing
-          ? '0 2.5em 2.5em 2.5em !important;'
-          : '0 2.5em 0em 2.5em !important;'};
+        bottom_spacing ? '0 2.5em 2.5em 2.5em !important;' : '0 2.5em 0em 2.5em !important;'};
     }
   }
 `;
@@ -70,6 +58,7 @@ export const GridSized = styled(Grid)`
   }
 `;
 export const CenteredContainerStyled = styled('div')<PropsPathname>`
+  box-shadow: 0 5px 26px 0 rgba(6, 52, 40, 0.2);
   @media ${device.tablet} {
     margin-left: auto;
     margin-right: auto;
@@ -138,14 +127,14 @@ export const ImageSized = styled(Image)`
 
 export const Credits = styled.em`
   font-size: 1em;
- 
+
   ${LeaveFeedback} {
     display: block;
     margin: 10px 0px 0px 0px;
   }
   ${AllRights} {
-      display: block;
-      margin: 10px 0px 0px 0px;
+    display: block;
+    margin: 10px 0px 0px 0px;
   }
   @media ${device.tablet} {
     ${AllRights} {
