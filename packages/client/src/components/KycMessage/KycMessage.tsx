@@ -45,7 +45,8 @@ const KycMessage = () => {
           <Icon name="info circle" />
           <Message.Content as={Link} to="/kyc">
             <Message.Header>
-              You need to verify your account before you can start investing
+              You need to <KycMessageButton onClick={onKYC}>verify your account</KycMessageButton>
+              before you can start investing
             </Message.Header>
           </Message.Content>
         </OrangeMessage>
@@ -62,9 +63,11 @@ const KycMessage = () => {
         <OrangeMessage hidden={false} icon>
           <Icon name="info circle" />
           <Message.Content as={Link} to="/kyc">
-            <Message.Header>Someting went wrong, please reinit the process</Message.Header>
+            <Message.Header>
+              Someting went wrong, please
+              <KycMessageButton onClick={onKYC}>reinit your application</KycMessageButton>
+            </Message.Header>
           </Message.Content>
-          <KycMessageButton onClick={onKYC}>Verify your account</KycMessageButton>
         </OrangeMessage>
       ),
       Success: () => null
