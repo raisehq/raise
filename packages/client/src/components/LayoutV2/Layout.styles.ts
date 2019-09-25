@@ -3,6 +3,8 @@ import { Card, Grid, Button, Image } from 'semantic-ui-react';
 import { match, ANY } from 'pampy';
 import { device } from './breakpoints';
 import { getImages } from '../../utils';
+import theme from '../../theme';
+import { maxDevice } from '../LayoutV2/breakpoints';
 
 interface PropsPathname {
   pathname: string;
@@ -58,11 +60,14 @@ export const GridSized = styled(Grid)`
   }
 `;
 export const CenteredContainerStyled = styled('div')<PropsPathname>`
-  box-shadow: 0 5px 26px 0 rgba(6, 52, 40, 0.2);
   @media ${device.tablet} {
     margin-left: auto;
     margin-right: auto;
     max-width: ${({ pathname }) => depositWidth(pathname)};
+  }
+
+  .row {
+    padding-bottom: 0 !important;
   }
 `;
 export const Title = styled.div`
@@ -71,9 +76,13 @@ export const Title = styled.div`
   line-height: 48px;
 `;
 
+export const GridLayout = styled(Grid)`
+  box-shadow: 0 5px 26px 0 rgba(6, 52, 40, 0.2);
+`;
+
 export const HeaderRow = styled(Grid.Row)`
   &&&&& {
-    margin: 20px 0px 0px;
+    margin: 20px 0px 30px;
     padding: 0px 14px 0px 14px;
     display: flex;
     align-items: center;
@@ -140,5 +149,30 @@ export const Credits = styled.em`
     ${AllRights} {
       display: inline;
     }
+  }
+`;
+
+export const HeroLayout = styled('div')`
+  width: 100%;
+  height: 100%;
+`;
+
+export const Wrapper = styled.div`
+  width: auto;
+  background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
+    url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
+    url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;
+`;
+
+export const Content = styled.div`
+  width: 1172px;
+  padding-top: 75px;
+  padding-bottom: 155px;
+  box-sizing: border-box;
+  margin: 0 auto;
+
+  @media ${maxDevice.laptop} {
+    width: 100%;
+    padding: 75px 25px 50px 25px;
   }
 `;

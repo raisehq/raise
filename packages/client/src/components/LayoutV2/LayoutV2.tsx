@@ -2,11 +2,17 @@ import React, { useContext } from 'react';
 import { Route } from 'react-router-dom';
 
 import { Grid, Image } from 'semantic-ui-react';
-// import Logout from '../Logout';
-import { AppContext } from '../App';
-import { CenteredContainerStyled as CenteredContainer, HeaderRow } from './Layout.styles';
 
-import { HeroLayout, Content, Wrapper } from '../Layout/Layout.styles';
+import { AppContext } from '../App';
+import {
+  CenteredContainerStyled as CenteredContainer,
+  HeaderRow,
+  GridLayout,
+  HeroLayout,
+  Content,
+  Wrapper
+} from './Layout.styles';
+
 import Footer from '../Footer';
 
 import { HeaderLogout } from '../DesktopHeader/DesktopHeader.styles';
@@ -30,7 +36,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
       location: { pathname }
     }
   }: any = useContext(AppContext);
-  // const refMode = process.env.REACT_APP_REFERAL === 'true' ? true : false;
+
   return (
     <Route
       {...rest}
@@ -38,18 +44,17 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
         <HeroLayout>
           <Wrapper>
             <Content>
-              <Grid verticalAlign="middle" padded style={{ minHeight: '100%' }}>
+              <Grid verticalAlign="middle" padded style={{ minHeight: '100%', paddingBottom: '0' }}>
                 <CenteredContainer pathname={pathname}>
-                  <Grid>
-                    {logged && (
-                      <HeaderRow>
-                        <Image src={logoPath} />
-                        <HeaderLogout />
-                      </HeaderRow>
-                    )}
-
+                  {logged && (
+                    <HeaderRow>
+                      <Image src={logoPath} />
+                      <HeaderLogout />
+                    </HeaderRow>
+                  )}
+                  <GridLayout>
                     <Component {...matchProps} />
-                  </Grid>
+                  </GridLayout>
                 </CenteredContainer>
               </Grid>
             </Content>
