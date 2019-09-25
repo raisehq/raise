@@ -23,6 +23,7 @@ build-front-review:
     REACT_APP_COOKIE_DOMAIN: .${CI_BUILD_REF_NAME}.review.$DOMAIN
     REACT_APP_HOST_URL: ${CI_BUILD_REF_NAME}.review.$DOMAIN
   script:
+    - echo $REACT_APP_HOST_URL
     - npx lerna bootstrap
     - npx lerna run compile:components
     - npx lerna bootstrap
