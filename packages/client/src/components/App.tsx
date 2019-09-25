@@ -22,7 +22,7 @@ import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import LogRocket from 'logrocket';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
-import { TopMobileMenu } from './Menu';
+import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
 
 export const AppContext = createContext({
@@ -215,6 +215,7 @@ const App = ({ children, history, match }: any) => {
       </Dimmer>
       <TopMobileMenu />
       <DesktopHeader />
+      <Menu />
       <TransitionGroup component={null}>
         <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
           <Switch>
