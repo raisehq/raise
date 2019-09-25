@@ -31,7 +31,7 @@ const Suggesteds = ({ auctions, states }) => {
   }, 1000);
 
   return suggestedState.cata({
-    Loading: () => <SuggestedContainer>loading</SuggestedContainer>,
+    Loading: () => <SuggestedContainer></SuggestedContainer>,
     Success: () => (
       <SuggestedContainer>
         {suggestedAuctions.map(auction => (

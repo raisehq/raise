@@ -229,7 +229,7 @@ export const LoanConfirmation = styled(Card)`
       border-radius: 4px;
       box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
       border-top: 0;
-      max-width: 380px;
+      max-width: 340px;
       margin-left: 35px;
     }
   }

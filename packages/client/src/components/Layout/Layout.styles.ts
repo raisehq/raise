@@ -20,7 +20,7 @@ export const Content = styled.div`
   max-width: 1172px;
   box-sizing: border-box;
   margin: 0 auto;
-  padding: 25px 25px 50px 25px;
+  padding: 55px 25px 125px 25px;
   width: 100%;
 `;
 
