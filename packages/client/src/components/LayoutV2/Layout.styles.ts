@@ -157,6 +157,7 @@ export const HeroLayout = styled('div')`
 `;
 
 export const Wrapper = styled.div`
+  min-height: 100%;
   width: auto;
   background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
     url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
