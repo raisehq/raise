@@ -8,19 +8,20 @@ stages:
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1
-  npm_config_cache: "$CI_PROJECT_DIR/packages/testing/.npm"
-  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+  npm_config_cache: '$CI_PROJECT_DIR/packages/testing/.npm'
+  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/packages/testing/.cache/Cypress'
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - packages/testing/contracts
-    - "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+    - '$CI_PROJECT_DIR/packages/testing/.cache/Cypress'
 
 build-front-review:
   stage: build
   variables:
     REACT_APP_COOKIE_DOMAIN: .${CI_BUILD_REF_NAME}.review.$DOMAIN
+    REACT_APP_HOST_URL: ${CI_BUILD_REF_NAME}.review.$DOMAIN
   script:
     - npx lerna bootstrap
     - npx lerna run compile:components
@@ -53,7 +54,6 @@ build-front-production:
     paths:
       - packages/client/build
 
-
 build-front-integration:
   stage: build
   script:
@@ -71,9 +71,8 @@ build-front-integration:
     paths:
       - packages/client/build_int
 
-
 deploy-prod:
-  image: "python:latest"
+  image: 'python:latest'
   stage: deploy
   before_script:
     - pip install awscli
@@ -86,7 +85,7 @@ deploy-prod:
     - aws s3 sync build s3://${BUCKET_NAME_PROD}/
   only:
     - master
- 
+
 # cypress-e2e:
 #   image: cypress/base:10
 #   stage: test
@@ -140,7 +139,7 @@ deploy-prod:
 #     - master
 
 review:
-  image: "python:latest"
+  image: 'python:latest'
   stage: review
   before_script:
     - pip install awscli
@@ -158,7 +157,7 @@ review:
     - master
 
 stop-review:
-  image: "python:latest"
+  image: 'python:latest'
   stage: cleanup
   before_script:
     - pip install awscli
