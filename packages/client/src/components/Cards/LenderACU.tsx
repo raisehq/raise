@@ -40,7 +40,7 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const borrowerUrl = `/borrowers/${slug}`;
 
   return (
-    <Card width="350px">
+    <Card width="374px">
       <Card.Content size="100%">
         <Card.Grid>
           <Link to={borrowerUrl}>
