@@ -2738,9 +2738,9 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/hero-ui@git+https://herolending:N5dMwpevvwyEe5BQBKqk@bitbucket.org/herodevteam/hero-ui.git#integration", "hero-ui@git+https://herolending:N5dMwpevvwyEe5BQBKqk@bitbucket.org/herodevteam/hero-ui.git#integration":
+"@types/hero-ui@git+https://raise:yCtMgGsvVqzDf9w95mgA@gitlab.com/raisehq/hero-ui#integration", "hero-ui@git+https://raise:yCtMgGsvVqzDf9w95mgA@gitlab.com/raisehq/hero-ui#integration":
   version "1.0.0"
-  resolved "git+https://herolending:N5dMwpevvwyEe5BQBKqk@bitbucket.org/herodevteam/hero-ui.git#243d1e7414c4b74db0e6cd114f4e0cec26d8139f"
+  resolved "git+https://raise:yCtMgGsvVqzDf9w95mgA@gitlab.com/raisehq/hero-ui#243d1e7414c4b74db0e6cd114f4e0cec26d8139f"
   dependencies:
     "@types/jest" "^23.3.13"
     "@types/lodash" "^4.14.121"
