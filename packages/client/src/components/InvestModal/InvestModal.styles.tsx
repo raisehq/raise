@@ -53,8 +53,8 @@ export const CheckContainer = styled.div`
 export const ExitButton = styled(Icon)`
   &&& {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 10px;
+    right: 10px;
     pointer: pointer;
   }
 `;
