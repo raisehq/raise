@@ -87,6 +87,11 @@ export const RaiseMenu = styled(SemanticMenu)`
         width: 100%;
       }
     }
+
+    body &&&.inverted.closed {
+      visibility: hidden;
+      right: 0;
+    }
   }
 `;
 
@@ -120,25 +125,25 @@ export const CloseButton = styled(Button)<ButtonProps>`
 `;
 
 export const MobileMenu = styled(SemanticMenu)`
-&&&& {
-  top: 0;
-  position: sticky;
-  border-radius: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 72px;
-  z-index: 100;
-  margin: 0;
-  border: none;
-  box-shadow: 0 0 10px rgba(0,0,0,0.4);
-  background: white;
+  &&&& {
+    top: 0;
+    position: sticky;
+    border-radius: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 72px;
+    z-index: 100;
+    margin: 0;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    background: white;
 
-  /* @media ${device.laptop} {
-    display: none;
-  } */
-}
+    /* @media ${device.laptop} {
+      display: none;
+    } */
+  }
 `;
 
 export const MenuList = styled('div')`
