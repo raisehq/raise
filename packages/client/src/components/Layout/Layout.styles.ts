@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
-  max-width: 1172px;
+  max-width: 1222px;
   box-sizing: border-box;
   margin: 0 auto;
   padding: 55px 25px 125px 25px;
