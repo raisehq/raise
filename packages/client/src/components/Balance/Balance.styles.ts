@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const BalanceBox = styled.div`
   display: flex;
-  alig-items: center;
+  align-items: center;
   font-size: 16px;
   max-width: 200px;
 `;

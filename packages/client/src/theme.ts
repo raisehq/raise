@@ -1,6 +1,6 @@
 export default {
   colors: {
-    background: '#F5F6FC',
+    background: '#FFFFFF',
     main: '#6851D8',
     menu: '#3C4251;',
     seconday: '#40E0C4',
