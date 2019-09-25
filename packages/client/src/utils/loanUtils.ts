@@ -76,7 +76,7 @@ export const calculateTimes = auction => {
     const loanTermLeft = getDesiredTime(Number(auction.termEndTimestamp) - today, 'loan');
     return { loanTerm, auctionTimeLeft, loanTermLeft };
   } catch (error) {
-    console.error("[LOANUTILS][CalculateFromWei]", error);
+    console.error('[LOANUTILS][CalculateFromWei]', error);
     return error;
   }
 };
@@ -141,12 +141,20 @@ export const calculateInvestmentReturn = auction => {
 
 export const getCalculations = auction => {
   const maxAmount: any = calculateFromWei(auction.maxAmount);
+  const maxAmountNum = Number(fromWei(auction.maxAmount));
   const operatorFee: any = calculateFromWei(auction.operatorFee);
+  const operatorFeeNum = Number(fromWei(auction.operatorFee.toString())) / 100;
   const principal: any = calculateFromWei(auction.principal);
-  const netBalance: any = calculateFromWei(auction.netBalance);
   const borrowerDebt: any = Number(fromWei(auction.borrowerDebt)).toLocaleString('es-ES');
-  const maxSystemFees: any = numeral((maxAmount * operatorFee) / 100).format();
-  const systemFees: any = calculateFromWei(`-${auction.operatorBalance}`);
+  const maxSystemFees: any = numeral(maxAmountNum * operatorFeeNum).format();
+  const systemFees: any = `-${numeral(
+    Number(fromWei(auction.principal)) * operatorFeeNum
+  ).format()}`;
+
+  let netBalance = calculateFromWei(auction.netBalance);
+  if (auction.netBalance) {
+    netBalance = numeral(Number(fromWei(auction.netBalance.toString()))).format();
+  }
 
   const calculatedInterest = calculateInterest(auction);
   const expectedROI = calculatedInterest * (Number(auction.termLength) / 2628000);
@@ -211,8 +219,8 @@ export const getActiveAuctions = (auctions, states) => {
   const updatedAuctions = auctions ? auctions.map(auction => assumeStateMachine(auction)) : [];
   const activeAuctions = updatedAuctions
     ? updatedAuctions.filter(
-      auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
-    )
+        auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
+      )
     : [];
   return activeAuctions;
 };
