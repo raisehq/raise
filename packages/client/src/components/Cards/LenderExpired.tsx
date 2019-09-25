@@ -49,7 +49,7 @@ const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
           </Link>
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Card.Grid>
-        <Card.Grid>
+        <Card.Grid notop>
           <Card.Header title="Amount invested" amount={<Amount principal={lenderAmount} />} />
         </Card.Grid>
         <Card.Separator />
