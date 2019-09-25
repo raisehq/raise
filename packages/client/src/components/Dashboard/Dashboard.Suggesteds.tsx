@@ -34,7 +34,7 @@ const Suggesteds = ({ auctions, states }) => {
     Loading: () => <SuggestedContainer>loading</SuggestedContainer>,
     Success: () => (
       <SuggestedContainer>
-        {suggestedAuctions.slice(0, 3).map(auction => (
+        {suggestedAuctions.map(auction => (
           <Suggested key={auction.id} auction={auction} />
         ))}
       </SuggestedContainer>

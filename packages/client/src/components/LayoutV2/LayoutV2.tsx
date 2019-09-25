@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import { Grid, Image, Button } from 'semantic-ui-react';
-import Logout from '../Logout';
+import { Grid, Image } from 'semantic-ui-react';
+// import Logout from '../Logout';
 import { AppContext } from '../App';
 import {
   ContainerWrapper,
@@ -13,6 +13,8 @@ import {
   AllRights,
   LeaveFeedback
 } from './Layout.styles';
+
+import { HeaderLogout } from '../DesktopHeader/DesktopHeader.styles';
 
 interface IDefaultProps {
   component: any;
@@ -33,7 +35,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
       location: { pathname }
     }
   }: any = useContext(AppContext);
-  const refMode = process.env.REACT_APP_REFERAL === 'true' ? true : false;
+  // const refMode = process.env.REACT_APP_REFERAL === 'true' ? true : false;
   return (
     <Route
       {...rest}
@@ -45,17 +47,15 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 {logged && (
                   <HeaderRow>
                     <Image src={logoPath} />
-                    {!refMode ? (
+                    {/* {!refMode ? (
                       <Button basic as={Link} to="/dashboard">
                         Dashboard{' '}
                         <span role="img" aria-label="Robot">
                           🤖
                         </span>
                       </Button>
-                    ) : null}
-                    <Logout basic floated="right">
-                      Logout
-                    </Logout>
+                    ) : null} */}
+                    <HeaderLogout />
                   </HeaderRow>
                 )}
                 <Component {...matchProps} />

@@ -1,10 +1,23 @@
 import Butter from 'buttercms';
-import { mapKeys, camelCase } from 'lodash';
+import _, { mapKeys, camelCase } from 'lodash';
 import { Parser } from 'html-to-react';
 import DOMPurify from 'dompurify';
 
 const staticHtmlToReact = new Parser();
-const butter = Butter('47066b7559a0513f00c9c927334fe78b773525c9');
+const apiKey = process.env.REACT_APP_BUTTER || '';
+const butter = Butter(apiKey);
+
+const WYSIWYGFields = ['description', 'businessPlan', 'operations', 'competitiveAnalysis'];
+
+const toCamelCase = (v, k: string) => camelCase(k);
+
+const sanitizeValue = fields => (v, k) => {
+  if (fields.includes(k)) {
+    console.log('Sanitizing...');
+    return staticHtmlToReact.parse(DOMPurify.sanitize(v));
+  }
+  return v;
+};
 
 const requestPage = async (pageType: string, slug: string) => {
   const {
@@ -13,12 +26,12 @@ const requestPage = async (pageType: string, slug: string) => {
     }
   } = await butter.page.retrieve(pageType, slug);
 
-  const camelResponse = mapKeys(response, (v, key) => camelCase(key));
-  if (camelResponse.description) {
-    // Description is a WYSIWYG html field, so need to be sanitized to prevent XSS and JS scripts to be rendered
-    camelResponse.description = staticHtmlToReact.parse(
-      DOMPurify.sanitize(camelResponse.description)
-    );
+  const camelResponse: any = mapKeys(response, toCamelCase);
+  if (camelResponse.companyDetails) {
+    camelResponse.companyDetails = _(camelResponse.companyDetails)
+      .mapKeys(toCamelCase)
+      .mapValues(sanitizeValue(WYSIWYGFields))
+      .value();
   }
   return camelResponse;
 };
@@ -37,9 +50,11 @@ const findOne = async (collection: string, fields: any) => {
   if (!arrResponse.length) {
     throw Error('404 Not found');
   }
-  const camelResponse = mapKeys(arrResponse[0], (v, key) => camelCase(key));
 
-  return camelResponse;
+  return _(arrResponse[0])
+    .mapKeys(toCamelCase)
+    .mapValues(sanitizeValue(WYSIWYGFields))
+    .value();
 };
 
 const getStarted = () => {
