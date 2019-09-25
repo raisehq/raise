@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import theme from '../../theme';
-import { maxDevice } from '../LayoutV2/breakpoints';
 
 export const HeroLayout = styled('div')`
   width: 100%;
@@ -18,16 +17,11 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
-  width: 1172px;
-  padding-top: 75px;
-  padding-bottom: 155px;
+  max-width: 1172px;
   box-sizing: border-box;
   margin: 0 auto;
-
-  @media ${maxDevice.laptop} {
-    width: 100%;
-    padding: 75px 25px 50px 25px;
-  }
+  padding: 25px 25px 50px 25px;
+  width: 100%;
 `;
 
 export const Separator = styled('div')`

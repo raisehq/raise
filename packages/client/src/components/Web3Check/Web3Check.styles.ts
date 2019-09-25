@@ -43,6 +43,12 @@ export const CardDescription = styled(Card.Description)`
       font-size: 18px;
       margin: 0px 0px 10px;
     }
+    span.emojis {
+      margin: 20px 0px;
+      height: 60px;
+      font-size: 76px;
+      display: block;
+    }
   }
 `;
 export const CardContent = styled(Card.Content)`

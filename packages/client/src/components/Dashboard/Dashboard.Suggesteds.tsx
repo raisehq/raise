@@ -41,7 +41,7 @@ const Suggesteds = ({ auctions, states }) => {
     ),
     Empty: () => (
       <SuggestedContainer>
-        <NoResults>No results</NoResults>
+        <NoResults>No Results</NoResults>
       </SuggestedContainer>
     )
   });
