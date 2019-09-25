@@ -315,6 +315,7 @@ export const LoanInputBox = styled.div`
 `;
 
 export const NewLoanAnchor = styled.div`
+  cursor: pointer;
   margin-top: 10px;
   text-align: center;
   width: 100%;

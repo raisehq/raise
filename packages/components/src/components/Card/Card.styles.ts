@@ -71,6 +71,7 @@ export const HeroCard = styled.div<{ size?: any; width?: any }>`
   @media ${device.laptop} {
     width: ${({ width }) => width || '372px'} !important;
   }
+  width: 100%;
 `;
 
 export const TimeLeft = styled.div`
