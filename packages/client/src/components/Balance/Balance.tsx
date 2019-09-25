@@ -3,7 +3,7 @@ import { BalanceBox, Title, Value } from './Balance.styles';
 import { AppContext } from '../App';
 import Queryies from '../../helpers/queryies';
 
-const Balance = () => {
+const Balance = props => {
   const {
     web3Status: { account },
     daiWebSocket: { webSocket },
@@ -27,7 +27,7 @@ const Balance = () => {
   }, [account, webSocket]);
 
   return (
-    <BalanceBox>
+    <BalanceBox {...props}>
       <Title>Balance:</Title>
       <Value>{balance} DAI</Value>
     </BalanceBox>

@@ -1,42 +1,17 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
-
 import {
   RaiseMenu,
   Web3Address,
   MenuSubList,
   MenuList,
-  MenuIcon,
-  MenuIconActive,
   CloseButton,
   Logo,
   MenuLogout,
-  Credits
+  BalanceMobile
 } from './Menu.styles';
 import { AppContext } from '../App';
-
-const Menus = {
-  1: [
-    {
-      title: 'My dashboard',
-      link: '/dashboard',
-      icon: 'th large'
-    },
-    {
-      title: 'Request a loan',
-      link: '/create-loan',
-      icon: 'university'
-    }
-  ],
-  2: [
-    {
-      title: 'My dashboard',
-      link: '/dashboard',
-      icon: 'th large'
-    }
-  ]
-};
 
 const commonRoutes = [
   {
@@ -58,6 +33,7 @@ const commonRoutes = [
 
 const Menu = () => {
   const {
+    onSetGetStarted,
     actions: {
       config: { showMenu }
     },
@@ -76,6 +52,40 @@ const Menu = () => {
     showMenu(false);
   };
 
+  const toGetStarted = () => {
+    onSetGetStarted();
+    showMenu(false);
+  };
+
+  const Menus = {
+    1: [
+      {
+        title: 'Get started',
+        link: '/#my-activity',
+        onClick: toGetStarted
+      },
+      {
+        title: 'My activity',
+        link: '/#my-activity'
+      },
+      {
+        title: 'Create a loan',
+        link: '/create-loan'
+      }
+    ],
+    2: [
+      {
+        title: 'Get started',
+        link: '/#my-activity',
+        onClick: toGetStarted
+      },
+      {
+        title: 'My activity',
+        link: '/#my-activity'
+      }
+    ]
+  };
+
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
 
   const getMenu = useCallback(
@@ -84,11 +94,12 @@ const Menu = () => {
         ? []
         : links.map(item => (
             <li key={item.link} className={pathname === item.link ? 'active' : 'non-active'}>
-              <Link to={item.link} onClick={toRoute} target={item.new_tab ? '_blank' : ''}>
-                {item.icon && <MenuIcon name={item.icon} size="large" />}
+              <Link
+                to={item.link}
+                onClick={item.onClick ? item.onClick : toRoute}
+                target={item.new_tab ? '_blank' : ''}
+              >
                 {item.title}
-                {pathname === item.link && <MenuIconActive name="chevron right" />}
-                <Icon name="angle right" />
               </Link>
             </li>
           )),
@@ -115,20 +126,15 @@ const Menu = () => {
     <RaiseMenu vertical borderless inverted className={menu ? 'open' : 'closed'}>
       <Logo src={logoPath} />
       <Web3Address />
+      <BalanceMobile />
       <CloseButton onClick={closeMenu} icon>
         <Icon name="close" size="big" />
       </CloseButton>
+      <div style={{ flex: 2 }} />
       <MenuList>{getMenu(Menus[accounttype_id])}</MenuList>
       <div style={{ flex: 2 }} />
       <MenuSubList>{getMenu(commonRoutes)}</MenuSubList>
       <MenuLogout />
-      <Credits>
-        <p>Version: Release {process.env.REACT_APP_VERSION} (Beta)</p>
-        <p>
-          Hero Fintech Technologies S.L.<br></br>Copyright ©2019
-        </p>
-        <p>All Rights Reserved</p>
-      </Credits>
     </RaiseMenu>
   );
 };

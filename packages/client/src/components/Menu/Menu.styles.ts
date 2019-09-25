@@ -1,16 +1,24 @@
 import styled from 'styled-components';
-import {
-  Icon,
-  Menu as SemanticMenu,
-  Button,
-  ButtonProps,
-  ImageProps,
-  Image
-} from 'semantic-ui-react';
+import { Menu as SemanticMenu, Button, ButtonProps, ImageProps, Image } from 'semantic-ui-react';
 import { AddressStatus as Web3RawAddress } from '../Web3Address';
+import Balance from '../Balance';
+import { Value, Title } from '../Balance/Balance.styles';
 import Logout from '../Logout';
 import theme from '../../theme';
 import { maxDevice, device } from '../LayoutV2/breakpoints';
+
+export const BalanceMobile = styled(Balance)`
+  & {
+    margin-top: 20px;
+    color: #5a5a5a;
+    ${Title} {
+      font-size: 16px;
+    }
+    ${Value} {
+      font-size: 16px;
+    }
+  }
+`;
 
 export const Logo = styled(Image)<ImageProps>`
   &&&&& {
@@ -36,14 +44,8 @@ export const MenuLogout = styled(Logout)`
     width: 240px;
     color: #3c4251;
     border-radius: 4px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
   }
-`;
-export const Credits = styled.div`
-  color: #3c4251;
-  padding: 30px 20px 30px 20px;
-  font-size: 12px;
-  width: 100%;
 `;
 
 export const RaiseMenu = styled(SemanticMenu)`
@@ -65,9 +67,10 @@ export const RaiseMenu = styled(SemanticMenu)`
     transition: 0.2s;
     z-index: 1000;
     ${Logo} {
-      margin: 11px auto 56px;
+      margin: 20px 0px;
     }
   }
+
   @media ${maxDevice.laptop} {
     body &&&.inverted.open {
       visibility: visible;
@@ -133,6 +136,7 @@ export const MobileMenu = styled(SemanticMenu)`
     align-items: center;
     justify-content: center;
     width: 100%;
+    font-size: 16px;
     height: 72px;
     z-index: 100;
     margin: 0;
@@ -157,14 +161,15 @@ export const MenuList = styled('div')`
     box-sizing: border-box;
     list-style-type: none;
     position: relative;
-
+    text-align: center;
     a {
       position: relative;
       display: flex;
-      justify-content: flex-start;
+      justify-content center;
+      font-size: 16px;
       font-weight: 600;
       align-items: center;
-      color: #93969e;
+      color: #3C4251;
       padding: 15px 20px;
 
       .icon:last-child {
@@ -182,12 +187,6 @@ export const MenuList = styled('div')`
       display: block;
     }
   }
-
-  li.active {
-    a {
-      color: #5a5a5a;
-    }
-  }
 `;
 
 export const MenuSubList = styled('div')`
@@ -202,13 +201,13 @@ export const MenuSubList = styled('div')`
     list-style-type: none;
     position: relative;
     font-size: 1em;
-
+    text-align: center;
     a {
       position: relative;
       display: flex;
-      justify-content: flex-start;
-      font-weight: 400;
-      align-items: center;
+      justify-content center;
+      font-size: 16px;
+      font-weight: 600;
       color: #3c4251;
       padding: 15px 20px;
 
@@ -228,19 +227,4 @@ export const MenuSubList = styled('div')`
     }
   }
 
-  li.active {
-    a {
-      color: #3c4251;
-    }
-  }
-`;
-
-export const MenuIcon: any = styled(Icon)`
-  margin-right: 20px !important;
-`;
-
-export const MenuIconActive: any = styled(Icon)`
-  position: absolute;
-  top: 17px;
-  right: 10px;
 `;
