@@ -33,12 +33,15 @@ export const AppContext = createContext({
   modalRefs: {},
   webSocket: {},
   daiWebSocket: {},
-  match: {}
+  match: {},
+  onSetGetStarted: {},
+  getStarted: false
 });
 
 const App = ({ children, history, match }: any) => {
   const refMode = process.env.REACT_APP_REFERAL === 'true';
   const [isLoading, setLoading] = useState(true);
+  const [getStarted, setGetStarted] = useState(false);
   const {
     store,
     store: {
@@ -71,6 +74,8 @@ const App = ({ children, history, match }: any) => {
   const web3Pass = netOk && accMatch;
   const [webSocket, setWebSocket] = useState({});
   const [daiWebSocket, setDaiWebSocket] = useState({});
+
+  const onSetGetStarted = () => setGetStarted(!getStarted);
 
   useEffect(() => {
     if (Object.keys(webSocket).length === 0 && network !== 'Not connected') {
@@ -192,7 +197,18 @@ const App = ({ children, history, match }: any) => {
 
   return (
     <AppContext.Provider
-      value={{ store, actions, history, match, web3Status, modalRefs, webSocket, daiWebSocket }}
+      value={{
+        store,
+        onSetGetStarted,
+        getStarted,
+        actions,
+        history,
+        match,
+        web3Status,
+        modalRefs,
+        webSocket,
+        daiWebSocket
+      }}
     >
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>

@@ -9,6 +9,8 @@ import initialState from './store/initialState';
 import LogRocket from 'logrocket';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import './global.css';
 
 type PropsValueType = {

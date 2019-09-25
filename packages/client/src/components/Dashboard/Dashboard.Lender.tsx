@@ -3,6 +3,7 @@ import { Header } from 'semantic-ui-react';
 import { DashboardContainer, DashboardWrapper, DashboardTab } from './Dashboard.styles';
 import KycMessage from '../KycMessage';
 import { AppContext } from '../App';
+import GetStarted from '../GetStarted';
 import Suggesteds from './Dashboard.Suggesteds';
 import Tab from './Dashboard.Tab';
 import Queryies from '../../helpers/queryies';
@@ -54,6 +55,7 @@ const Dashboard = () => {
   return (
     <DashboardWrapper>
       <KycMessage />
+      <GetStarted />
       <DashboardContainer>
         <Header as="h1">Investment opportunities</Header>
         <Suggesteds auctions={suggested} states={[0]} />

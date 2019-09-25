@@ -16,7 +16,7 @@ import { AppContext } from '../App';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 
 const DesktopHeader = () => {
-  const { history }: any = useContext(AppContext);
+  const { history, onSetGetStarted }: any = useContext(AppContext);
   const visible = useMenuVisibility();
 
   return visible ? (
@@ -27,7 +27,7 @@ const DesktopHeader = () => {
             <img src={`${theme.resources}/images/logo.svg`} />
           </HeaderLogo>
           <HeaderMenu>
-            <HeaderMenuItem>Get Started</HeaderMenuItem>
+            <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
             <HeaderMenuItem>
               <NavHashLink
                 to="/#my-activity"
