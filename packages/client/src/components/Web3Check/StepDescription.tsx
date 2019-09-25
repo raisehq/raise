@@ -5,7 +5,7 @@ import useWeb3 from '../../hooks/useWeb3';
 import { Href } from '../LayoutV2/Layout.styles';
 import { browserName, MobileView, BrowserView } from 'react-device-detect';
 import { ButtonGreen, AddressContainer } from './Web3Check.styles';
-import { StyledAddress, CardDescription, HelpMessage, SuccessMessage } from './Web3Check.styles';
+import { StyledAddress, CardDescription, HelpMessage } from './Web3Check.styles';
 
 const NeedHelp = ({ href }) => (
   <HelpMessage>
@@ -103,7 +103,7 @@ const AccountNotMatchNotice = ({ verifiedAddress }) => (
 
 const Success = () => (
   <CardDescription textAlign="center" style={{ fontSize: '24px' }}>
-    <span role="img" aria-label="party" className={SuccessMessage}>
+    <span role="img" aria-label="party" className="emojis">
       🎉🎉🎉
     </span>
     All set!
