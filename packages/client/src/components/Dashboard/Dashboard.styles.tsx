@@ -94,7 +94,6 @@ export const NoResults = styled.div`
   padding-bottom: 25px;
   box-sizing: border-box;
   font-size: 18px;
-  border: 1px solid #cfd0d4;
   background: url(${theme.resources}/images/img_cactus.svg) center center no-repeat;
 `;
 

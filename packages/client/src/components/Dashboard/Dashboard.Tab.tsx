@@ -26,7 +26,7 @@ const renderedLoans = (auctions, type) =>
       ['lender', ANY],
       () => LenderLoan,
       ['suggested', ANY],
-      () => SuggestedAuction,
+      () => SuggestedAuction
     );
     return <CardComponent key={auction.id} auction={auction} />;
   });
@@ -61,7 +61,7 @@ const Tab = ({ auctions, states, type }) => {
     Success: () => <DashboardTab.Pane>{renderedLoans(filteredAuctions, type)}</DashboardTab.Pane>,
     Empty: () => (
       <DashboardTab.Pane>
-        <NoResults>No results</NoResults>
+        <NoResults>Start bidding on the live auctions and see your portfolio grow</NoResults>
       </DashboardTab.Pane>
     )
   });
