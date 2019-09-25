@@ -87,12 +87,12 @@
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "react-start": "react-scripts start ",
-    "dev": "env-cmd .env npm run react-start",
-    "dev:int": "env-cmd .env.local npm run react-start",
-    "int": "env-cmd .env.integration npm run react-start",
+    "dev": "env-cmd --no-override .env npm run react-start",
+    "dev:int": "env-cmd --no-override .env.local npm run react-start",
+    "int": "env-cmd --no-override .env.integration npm run react-start",
     "build": "NODE_OPTIONS='--max-old-space-size=2048' react-scripts build",
-    "build:integration": "env-cmd .env.integration yarn run build",
-    "build:production": "NODE_ENV=production env-cmd .env.production yarn run build ",
+    "build:integration": "env-cmd --no-override .env.integration yarn run build",
+    "build:production": "NODE_ENV=production env-cmd --no-override .env.production yarn run build ",
     "test": "jest --coverage --coverageDirectory=output/coverage/jest",
     "test:watch": "jest --watchAll --verbose=false",
     "lint": "eslint . --ext .js,.ts,.tsx"
