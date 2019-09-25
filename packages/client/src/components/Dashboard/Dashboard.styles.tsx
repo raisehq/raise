@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Card } from '@raisehq/components';
 import { Tab, Header as SemanticHeader } from 'semantic-ui-react';
-import { maxDevice } from '../LayoutV2/breakpoints';
+import { maxDevice, device } from '../LayoutV2/breakpoints';
 import theme from '../../theme';
 
 export const ExpectedROI = styled(Card.Header)`
@@ -53,6 +53,12 @@ export const DashboardTab: any = styled(Tab)`
     flex-wrap: wrap;
     border: none;
   }
+  &&& .tab {
+    justify-content: center;
+    @media ${device.tablet} {
+      justify-content: flex-start;
+    }
+  }
 `;
 
 export const Button = styled.button`
@@ -73,6 +79,10 @@ export const SuggestedContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 15px 0 15px 0;
+  justify-content: center;
+  @media ${device.tablet} {
+    justify-content: flex-start;
+  }
 `;
 
 export const NoResults = styled.div`

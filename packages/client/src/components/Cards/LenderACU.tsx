@@ -11,7 +11,7 @@ import { GetInTouch } from '../GetInTouch';
 
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, slug } = useBorrowerInfo(auction.originator);
-  const { expectedRoiFormated, times, maxAmount, lenderRoiAmount } = calcs;
+  const { roi, times, maxAmount, lenderRoiAmount } = calcs;
 
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
@@ -50,7 +50,7 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
         </Card.Grid>
         <Card.Grid spaceBetween notop>
           <Card.Header title="Investment return" amount={<Amount principal={lenderRoiAmount} />} />
-          <Card.RoiHeader roi={expectedRoiFormated} />
+          <Card.RoiHeader roi={roi} />
         </Card.Grid>
         <Card.Separator />
         <Card.Grid>
@@ -58,7 +58,12 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
           <Card.Row notop title="Loan amount" content={maxAmount} />
         </Card.Grid>
         <Card.Grid>
-          <Card.Row notop title="Time left" content={loanTermLeft} contentColor={contentColor} />
+          <Card.Row
+            notop
+            title="Time left"
+            content={loanTermLeft || '-'}
+            contentColor={contentColor}
+          />
           <Card.Row notop title="Loan Term" content={times.loanTerm} />
           <Card.Row notop title="Investors" content={auction.investorCount} />
         </Card.Grid>

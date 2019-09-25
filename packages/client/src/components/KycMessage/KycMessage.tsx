@@ -45,10 +45,9 @@ const KycMessage = () => {
           <Icon name="info circle" />
           <Message.Content as={Link} to="/kyc">
             <Message.Header>
-              Before you can lend money you first need to verify you account
+              You need to verify your account before you can start investing
             </Message.Header>
           </Message.Content>
-          <KycMessageButton onClick={onKYC}>Verify your account</KycMessageButton>
         </OrangeMessage>
       ),
       Pending: () => (
