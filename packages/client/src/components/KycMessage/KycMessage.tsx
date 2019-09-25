@@ -26,7 +26,7 @@ const KycMessage = () => {
     history,
     store: {
       user: {
-        details: { kyc_status }
+        details: { kyc_status, accounttype_id }
       }
     }
   }: any = useContext(AppContext);
@@ -70,7 +70,7 @@ const KycMessage = () => {
       Success: () => null
     });
 
-  return getView();
+  return accounttype_id === 2 && getView();
 };
 
 export default KycMessage;
