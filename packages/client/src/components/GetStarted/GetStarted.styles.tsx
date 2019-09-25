@@ -47,6 +47,7 @@ export const SlideContent = styled.div`
 
 export const SlideDescription = styled.p`
   padding: 15px 0 15px 0;
+  font-size: 16px;
 `;
 
 export const SlideImage = styled.img`
@@ -63,5 +64,16 @@ export const SliderClose = styled.button`
 
   i.icon {
     font-size: 18px;
+  }
+`;
+
+export const SlideLink = styled.a`
+  background: none;
+  border: none;
+  color: #00a76f;
+  text-decoration: none;
+
+  &:hover {
+    color: #00a76f;
   }
 `;

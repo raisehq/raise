@@ -57,10 +57,19 @@ const findOne = async (collection: string, fields: any) => {
     .value();
 };
 
-const getStarted = () => {
-  return findOne('get_started', {});
+const getGetStarted = async () => {
+  const {
+    data: {
+      data: { ['get_started']: arrResponse }
+    }
+  } = await butter.content.retrieve(['get_started']);
+  if (!arrResponse.length) {
+    throw Error('404 Not found');
+  }
+
+  return arrResponse;
 };
 
 export default butter;
 
-export { requestPage, getStarted, findOne, butter };
+export { requestPage, getGetStarted, findOne, butter };
