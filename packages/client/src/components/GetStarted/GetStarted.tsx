@@ -7,7 +7,8 @@ import {
   SlideDescription,
   SlideImage,
   SliderClose,
-  SlideLink
+  SlideLink,
+  NoSlider
 } from './GetStarted.styles';
 import { Wrapper } from './GetStarted.styles';
 import { AppContext } from '../App';
@@ -23,6 +24,24 @@ const settings = {
   arrows: false
 };
 
+const getSlides = slides =>
+  slides.map(slide => (
+    <div key={slide.title}>
+      <Slide className="slides">
+        <SlideContent className="images">
+          <SlideImage src={slide.image}></SlideImage>
+        </SlideContent>
+        <SlideContent>
+          <Header as="h1">{slide.title}</Header>
+          <SlideDescription>{slide.description}</SlideDescription>
+          <SlideLink href="https://raise.it/help" target="_blank">
+            Learn more
+          </SlideLink>
+        </SlideContent>
+      </Slide>
+    </div>
+  ));
+
 const GetStarted = () => {
   const { getStarted, onSetGetStarted }: any = useContext(AppContext);
   const [slides, setSlides]: any = useState([]);
@@ -30,7 +49,7 @@ const GetStarted = () => {
   useAsyncEffect(async () => {
     const content = await getGetStarted();
 
-    setSlides(content);
+    setSlides(getSlides(content));
   }, []);
 
   return (
@@ -38,24 +57,10 @@ const GetStarted = () => {
       <SliderClose onClick={onSetGetStarted}>
         <Icon name="cancel" />
       </SliderClose>
-      <Slider {...settings}>
-        {slides.map(slide => (
-          <div key={slide.title}>
-            <Slide>
-              <SlideContent className="images">
-                <SlideImage src={slide.image}></SlideImage>
-              </SlideContent>
-              <SlideContent>
-                <Header as="h1">{slide.title}</Header>
-                <SlideDescription>{slide.description}</SlideDescription>
-                <SlideLink href="https://raise.it/help" target="_blank">
-                  Learn more
-                </SlideLink>
-              </SlideContent>
-            </Slide>
-          </div>
-        ))}
+      <Slider className="slider" {...settings}>
+        {slides}
       </Slider>
+      <NoSlider>{slides}</NoSlider>
     </Wrapper>
   );
 };

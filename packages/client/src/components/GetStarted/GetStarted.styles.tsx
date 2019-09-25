@@ -9,6 +9,12 @@ export const Wrapper: any = styled.div`
   position: relative;
   display: ${(props: any) => (props.visible ? 'block' : 'none')};
 
+  .slider {
+    @media (max-width: 563px) {
+      display: none !important;
+    }
+  }
+
   .images {
     width: 40% !important;
 
@@ -75,5 +81,20 @@ export const SlideLink = styled.a`
 
   &:hover {
     color: #00a76f;
+  }
+`;
+
+export const NoSlider = styled.div`
+  .slides {
+    flex-direction: column;
+    justify-content: center;
+
+    .images {
+      width: 100% !important;
+    }
+  }
+
+  @media (min-width: 563px) {
+    display: none !important;
   }
 `;
