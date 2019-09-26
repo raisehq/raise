@@ -61,7 +61,11 @@ const Tab = ({ auctions, states, type }) => {
     Success: () => <DashboardTab.Pane>{renderedLoans(filteredAuctions, type)}</DashboardTab.Pane>,
     Empty: () => (
       <DashboardTab.Pane>
-        <NoResults>Start bidding on the live auctions and see your portfolio grow</NoResults>
+        <NoResults>
+          {type === 'borrower'
+            ? 'You don’t have any open auction, create a loan and start funding your projects'
+            : 'Start bidding on the live auctions and see your portfolio grow'}
+        </NoResults>
       </DashboardTab.Pane>
     )
   });
