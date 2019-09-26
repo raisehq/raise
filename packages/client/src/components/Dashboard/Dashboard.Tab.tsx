@@ -56,8 +56,6 @@ const Tab = ({ auctions, states, type }) => {
     setFilteredAuctions(filtered);
   }, 1000);
 
-  console.log(type);
-
   return tabState.cata({
     Loading: () => <DashboardTab.Pane loading />,
     Success: () => <DashboardTab.Pane>{renderedLoans(filteredAuctions, type)}</DashboardTab.Pane>,
