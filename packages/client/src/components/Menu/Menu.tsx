@@ -60,26 +60,31 @@ const Menu = () => {
   const Menus = {
     1: [
       {
+        id: 'borrower-get-started',
         title: 'Get started',
         link: '/#my-activity',
         onClick: toGetStarted
       },
       {
+        id: 'borrower-my-activity',
         title: 'My activity',
         link: '/#my-activity'
       },
       {
+        id: 'borrower-create-loan',
         title: 'Create a loan',
         link: '/create-loan'
       }
     ],
     2: [
       {
+        id: 'lender-get-started',
         title: 'Get started',
         link: '/#my-activity',
         onClick: toGetStarted
       },
       {
+        id: 'lender-my-activity',
         title: 'My activity',
         link: '/#my-activity'
       }
@@ -93,7 +98,7 @@ const Menu = () => {
       !links || !links.length
         ? []
         : links.map(item => (
-            <li key={item.link} className={pathname === item.link ? 'active' : 'non-active'}>
+            <li key={item.id} className={pathname === item.link ? 'active' : 'non-active'}>
               <Link
                 to={item.link}
                 onClick={item.onClick ? item.onClick : toRoute}

@@ -62,14 +62,15 @@ export const DashboardTab: any = styled(Tab)`
 `;
 
 export const Button = styled.button`
-  width: 100%;
-  display: block-inline;
-  padding: 15px;
+  width: auto;
+  margin: 0 auto;
+  background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
+  display: block;
+  padding: 15px 65px 15px 65px;
   font-size: 16px;
   border-radius: 4px;
-  border: 1px solid #8c96a9;
-  color: #3c4251;
-  background: none;
+  border: none;
+  color: white;
   text-transform: uppercase;
   cursor: pointer;
 `;
