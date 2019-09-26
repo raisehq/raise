@@ -4,7 +4,7 @@ export const Wrapper: any = styled.div`
   border: 1px solid #cfd0d4;
   border-radius: 6px;
   margin: 25px 0 25px 0;
-  padding: 45px 45px 75px 45px;
+  padding: 15px;
   box-sizing: border-box;
   position: relative;
   display: ${(props: any) => (props.visible ? 'block' : 'none')};
@@ -16,11 +16,15 @@ export const Wrapper: any = styled.div`
   }
 
   .images {
-    width: 40% !important;
+    width: 40%;
 
     img {
       float: right;
     }
+  }
+
+  .slick-list {
+    margin-bottom: 45px;
   }
 
   .slick-dots li {
@@ -89,8 +93,13 @@ export const NoSlider = styled.div`
     flex-direction: column;
     justify-content: center;
 
-    .images {
-      width: 100% !important;
+    ${SlideContent} {
+      width: 100%;
+      text-align: center;
+
+      img {
+        float: none;
+      }
     }
   }
 
