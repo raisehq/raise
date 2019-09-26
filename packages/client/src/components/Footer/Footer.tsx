@@ -69,7 +69,10 @@ const FooterCmp = () => (
     </FooterWrapper>
     <FooterDisclaimer>
       <p>Version : Release 2.0.0.38</p>
-      <p>Hero Fintech Technologies S.L. · Copyright ©2019 · All rights reserved</p>
+      <p>
+        Raise Labs OÜ. Registered office address: Maakri 19-1, 10145 Tallinn, Estonia. Reg. code:
+        14802358 · Copyright ©2019 · All rights reserved
+      </p>
     </FooterDisclaimer>
   </Footer>
 );
