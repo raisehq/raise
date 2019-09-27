@@ -21,7 +21,14 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
   const {
     web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
   }: any = useContext(AppContext);
-  const { modalRefs }: any = useContext(AppContext);
+  const {
+    modalRefs,
+    store: {
+      user: {
+        details: { kyc_status }
+      }
+    }
+  }: any = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Confirm);
   const [investment, setInvestment] = useState(0);
@@ -64,7 +71,12 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
   };
   return (
     <>
-      <LenderButton id="btn-lender-open" fluid onClick={openModal} disabled={notConnected}>
+      <LenderButton
+        id="btn-lender-open"
+        fluid
+        onClick={openModal}
+        disabled={notConnected || kyc_status !== 3}
+      >
         {buttonText}
       </LenderButton>
       <Modal open={open} size="small" onClose={closeModal} mountNode={modalRefs.current}>

@@ -141,6 +141,19 @@ const queryies = {
       }`,
       variables: {},
       subscriptionName: 'daiBalance'
+    },
+    userStatus: {
+      query: `subscription userStatus($address: String)
+      {
+        users(where:{address:$address}) {
+          id
+          address
+          deposited
+          kyced
+        }
+      }`,
+      variables: {},
+      subscriptionName: 'userStatus'
     }
   },
   queryies: {}

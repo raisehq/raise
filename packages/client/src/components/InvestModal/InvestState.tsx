@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import { fromWei } from 'web3-utils';
 import { Card } from '@raisehq/components';
 import { TokenInput } from '../TokenInput';
@@ -6,6 +6,8 @@ import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
+
+import { AppContext } from '../App';
 import {
   Header,
   ModalInputContainer,
@@ -30,6 +32,15 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
     maxAmount: calcMaxAmount,
     principal: calcPrincipal
   } = getCalculations(loan);
+
+  const {
+    store: {
+      user: {
+        details: { kyc_status }
+      }
+    }
+  }: any = useContext(AppContext);
+
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
   const { companyName } = useBorrowerInfo(loan.originator);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
@@ -106,7 +117,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       <ConfirmButton
         id="btn-invest-confirm"
         onClick={onConfirm}
-        disabled={value === 0 || value === undefined || !termsCond}
+        disabled={value === 0 || value === undefined || !termsCond || kyc_status !== 3}
       >
         CONFIRM
       </ConfirmButton>
