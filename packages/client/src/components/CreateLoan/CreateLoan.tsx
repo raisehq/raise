@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+import { AppContext } from '../App';
 import numeral, { numeralFormat } from '../../commons/numeral';
 import { BrowserView } from 'react-device-detect';
 import { UI, getLoanAction } from './CreateLoan.Response';
@@ -46,7 +47,7 @@ const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
 const defaultMir = 10;
-const defaultTerm = 300;
+const defaultTerm = 2592000;
 const defaultMinPercent = 20;
 const minMir = 0;
 const maxMir = 20;
@@ -66,6 +67,9 @@ const calculateMinAmount = (value, percent) => {
 };
 
 const CreateLoan = () => {
+  const {
+    web3Status: { network }
+  }: any = useContext(AppContext);
   const [stage, setStage] = useState(UI.Confirm);
   const loanDispatcher = useLoanDispatcher();
   const [amountValidation, setAmountValidation] = useState({
@@ -104,6 +108,8 @@ const CreateLoan = () => {
     });
   };
 
+  const monthOptions = useMemo(() => months(network), [network]);
+
   const onSetTerm = (e, data) => setLoan({ ...loan, term: data.value });
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
@@ -126,7 +132,13 @@ const CreateLoan = () => {
       await loanDispatcher.deploy(loan.minAmount, loan.amount, loan.mir, loan.term, loan.accept);
       setStage(UI.Success);
     } catch (error) {
-      console.error('[LOAN DISPACHER]', ` MinAmount: ${loan.minAmount} Amount: ${loan.amount} Mir: ${loan.mir} Term: ${loan.term} Accept: ${loan.accept.toString()} `, error);
+      console.error(
+        '[LOAN DISPACHER]',
+        ` MinAmount: ${loan.minAmount} Amount: ${loan.amount} Mir: ${loan.mir} Term: ${
+          loan.term
+        } Accept: ${loan.accept.toString()} `,
+        error
+      );
       setStage(UI.Error);
     }
   };
@@ -244,10 +256,10 @@ const CreateLoan = () => {
           </LoanDescription>
           <LoanFormInput>
             <LoanSelect
-              value={loan.term}
+              value={defaultTerm}
               onChange={onSetTerm}
               placeholder="Select term"
-              options={months}
+              options={monthOptions}
             />
           </LoanFormInput>
         </LoanTerm>
