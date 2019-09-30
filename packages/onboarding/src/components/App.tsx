@@ -25,6 +25,7 @@ import { validateToken } from '../services';
 import { to, getHost } from '../utils';
 import useCookie from '../hooks/useCookie';
 import * as services from '../services';
+import LocalData from './localData';
 import useGoogleTagManager from '../hooks/useGoogleTagManager';
 
 const { useState, useEffect, createContext } = React;
@@ -191,6 +192,16 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton }: IProps) =
             }
           }
         } = response;
+
+        const login = LocalData.get('firstLogin');
+
+        if (login) {
+          if (login === 'first') {
+            LocalData.set('firstLogin', 'passed');
+          }
+        } else {
+          LocalData.set('firstLogin', 'first');
+        }
 
         setAuthCookie(
           {
