@@ -16,7 +16,7 @@ export const Wrapper: any = styled.div`
   }
 
   .images {
-    width: 40%;
+    width: 164px;
 
     img {
       float: right;
@@ -50,7 +50,7 @@ export const Slide = styled.div`
 `;
 
 export const SlideContent = styled.div`
-  width: 60%;
+  width: 418px;
   padding: 15px 15px 35px 15px;
   box-sizing: border-box;
 `;
@@ -61,7 +61,7 @@ export const SlideDescription = styled.p`
 `;
 
 export const SlideImage = styled.img`
-  width: 150px;
+  width: 122px;
 `;
 
 export const SliderClose = styled.button`
