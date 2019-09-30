@@ -27,9 +27,30 @@ const KYC = () => {
         {
           clientId: 'hero',
           externalUserId: id,
-          accessToken: token
+          accessToken: token,
+          excludedCountries: [
+            'IRN',
+            'IRQ',
+            'COD',
+            'BIH',
+            'SDN',
+            'SYR',
+            'ZWE',
+            'LBR',
+            'ALB',
+            'MKD',
+            'XKX',
+            'SRB',
+            'MNE',
+            'BLR',
+            'MMR',
+            'CIV',
+            'CUB',
+            'USA',
+            'UMI'
+          ]
         },
-        function (messageType, payload) {
+        function(messageType, payload) {
           console.log('[IDENSIC DEMO] Idensic message:', messageType, payload);
         }
       );
