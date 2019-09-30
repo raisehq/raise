@@ -11,7 +11,7 @@ import { GetInTouch } from '../GetInTouch';
 
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, slug } = useBorrowerInfo(auction.originator);
-  const { roi, times, maxAmount, lenderRoiAmount } = calcs;
+  const { roi, times, maxAmount, lenderRoiAmount, lenderAmount } = calcs;
 
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
@@ -54,7 +54,7 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
         </Card.Grid>
         <Card.Separator />
         <Card.Grid>
-          <Card.Row notop title="Amount invested" content={times.loanTerm} />
+          <Card.Row notop title="Amount invested" content={lenderAmount} />
           <Card.Row notop title="Loan amount" content={maxAmount} />
         </Card.Grid>
         <Card.Grid>
