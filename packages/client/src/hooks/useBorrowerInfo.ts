@@ -5,6 +5,7 @@ import { findOne } from '../helpers/butter';
 interface Company {
   companyName: string;
   description: string;
+  shortDescription: string;
   background: string;
   logo: string;
   slug: string;
@@ -13,6 +14,7 @@ interface Company {
 const defaultCompany = {
   companyName: 'Auction',
   description: '',
+  shortDescription: '',
   background: 'https://source.unsplash.com/372x120/?business',
   logo: 'https://static.herodev.es/images/logo.svg',
   slug: ''
@@ -26,6 +28,7 @@ const useBorrowerInfo = borrowerAddress => {
       const response = await findOne('companies', {
         'fields.ethereum_address': borrowerAddress
       });
+      console.log(response);
       setCompany(response);
     } catch (error) {
       console.error(error);

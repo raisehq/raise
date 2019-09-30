@@ -41,7 +41,7 @@ export default (dispatch: any, state: Store) => {
       return console.error('[onGetUserFromBC] error on get user subs :: ', error);
     }
 
-    if (data.users[0].kyced) {
+    if (data && data.users && data.users.length > 0 && data.users[0].kyced) {
       dispatch({ type: 'SET_USER_DETAILS', data: { kyc_status: 3 } });
     }
   };

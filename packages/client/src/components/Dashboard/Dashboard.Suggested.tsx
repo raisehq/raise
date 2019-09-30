@@ -11,7 +11,9 @@ interface LoanProps {
 }
 
 const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
-  const { companyName, description, background, logo, slug } = useBorrowerInfo(auction.originator);
+  const { companyName, shortDescription, background, logo, slug } = useBorrowerInfo(
+    auction.originator
+  );
   const calculations = getCalculations(auction);
   const { currentAmount, totalAmount, maxAmount, times, currentAPR, principal } = calculations;
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
@@ -23,14 +25,14 @@ const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
       <Card.Content to={borrowerUrl} topRight={auctionTimeLeft} logo={logo}>
         <Link to={borrowerUrl}>
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
-          <Card.Description>{description}</Card.Description>
+          <Card.Description>{shortDescription}</Card.Description>
         </Link>
         <Card.Grid spaceBetween alignBottom nobottom>
           <Card.Header title="Raised so far" amount={<Amount principal={principal} />} />
           <Card.Header title="Target" amount={<Amount principal={maxAmount} />} />
         </Card.Grid>
         <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
-        <Card.Grid >
+        <Card.Grid>
           <Card.Row notop small title="Loan Term" content={times.loanTerm} />
           <Card.Vertical />
           <Card.Row notop small title="Investors" content={auction.investorCount} />
