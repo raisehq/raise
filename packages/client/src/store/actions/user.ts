@@ -36,6 +36,16 @@ export default (dispatch: any, state: Store) => {
     }
   };
 
+  const onGetUserFromBC = async (error, data) => {
+    if (error) {
+      return console.error('[onGetUserFromBC] error on get user subs :: ', error);
+    }
+
+    if (data.users[0].kyced) {
+      dispatch({ type: 'SET_USER_DETAILS', data: { kyc_status: 3 } });
+    }
+  };
+
   const onGetUser = async () => {
     try {
       const data = await getUser(id);
@@ -169,6 +179,7 @@ export default (dispatch: any, state: Store) => {
     onAddNewCryptoAddress,
     updateCryptoAddress,
     onGetCryptoAddressByUser,
-    onGetUser
+    onGetUser,
+    onGetUserFromBC
   };
 };

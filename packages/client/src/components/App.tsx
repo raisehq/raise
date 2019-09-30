@@ -25,6 +25,7 @@ import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
 import LocalData from '../helpers/localData';
+import Queryies from '../helpers/queryies';
 
 export const AppContext = createContext({
   store: {},
@@ -59,7 +60,7 @@ const App = ({ children, history, match }: any) => {
     actions,
     actions: {
       auth: { onVerifyAuth },
-      user: { onGetCryptoAddressByUser, onGetUser },
+      user: { onGetCryptoAddressByUser, onGetUser, onGetUserFromBC },
       blockchain: { fetchReferrals },
       kyc: { onInitKyc }
     }
@@ -74,7 +75,7 @@ const App = ({ children, history, match }: any) => {
     network
   } = web3Status;
   const web3Pass = netOk && accMatch;
-  const [webSocket, setWebSocket] = useState({});
+  const [webSocket, setWebSocket]: any = useState({});
   const [daiWebSocket, setDaiWebSocket] = useState({});
 
   const onSetGetStarted = () => setGetStarted(!getStarted);
@@ -92,6 +93,17 @@ const App = ({ children, history, match }: any) => {
       setDaiWebSocket({ webSocket: webSocketInstance });
     }
   }, [daiWebSocket, network]);
+
+  useEffect(() => {
+    if (Object.keys(webSocket).length !== 0 && address) {
+      const { query, subscriptionName } = Queryies.subscriptions.userStatus;
+      const variables = {
+        address
+      };
+      const callback = onGetUserFromBC;
+      webSocket.webSocket.subscribe(query, variables, subscriptionName, callback);
+    }
+  }, [webSocket, onGetUserFromBC, address]);
 
   useAsyncEffect(async () => {
     if (logged) {
