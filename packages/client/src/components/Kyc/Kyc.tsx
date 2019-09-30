@@ -47,7 +47,9 @@ const KYC = () => {
             'CIV',
             'CUB',
             'USA',
-            'UMI'
+            'UMI',
+            'SSD',
+            'PRK'
           ]
         },
         function(messageType, payload) {
