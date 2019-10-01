@@ -89,11 +89,11 @@ export const Web3Card = styled(Card)`
 export const NoticeSegment = styled(Segment)``;
 
 export const NoticeValue = styled.span`
-&&& {
-  color: ${(props: OnlyActive) => (props.active ? 'green' : 'red')}
-  margin-right: 8px;
-  font-size: 1.3rem;
-}
+  &&& {
+    color: ${(props: OnlyActive) => (props.active ? 'green' : 'red')};
+    margin-right: 8px;
+    font-size: 1.3rem;
+  }
 `;
 export const AddressContainer = styled.div`
   margin: 6px;
@@ -106,17 +106,20 @@ export const ButtonGreen = styled(Button)`
       double === true
         ? ' height: 90px;'
         : 'height: 45px;'}
-    background: linear-gradient(134.72deg, #188E9B 0%, #6DD7C7 100%);
-    color: white !important;
+    background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
+    color: white;
     font: 18px bold;
     @media ${device.mobileL} {
-      padding: 0;
+      padding: 11px;
     }
   }
-  ,
   &&&:hover {
-    background: linear-gradient(134.72deg, #5aafb8 0%, #78d8ca 100%);
-    color: white;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border: 1px solid #00a870;
+    border-radius: 4px;
+    color: #00a76f;
+    font-weight: bold;
   }
   &&&:active {
     background-color: #188e9b;

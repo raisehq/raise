@@ -1,14 +1,5 @@
 import styled from 'styled-components';
-import {
-  Grid,
-  Button,
-  Image,
-  Loader,
-  Segment,
-  Label,
-  List,
-  Icon
-} from 'semantic-ui-react';
+import { Grid, Button, Image, Loader, Segment, Label, List, Icon } from 'semantic-ui-react';
 import Web3Address from '../Web3Address';
 import { device } from '../LayoutV2/breakpoints';
 
@@ -181,20 +172,23 @@ export const ButtonGreen = styled(Button)`
     height: 62px;
     width: 100%;
     ${({ blocked }) => (blocked ? 'opacity: 0.4 !important;' : '')}
-    background:linear-gradient(134.72deg, #188E9B 0%, #6DD7C7 100%);
+    background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
     color: white;
     font: 18px bold;
     line-height: 24px;
   }
   &&&:hover {
-    background: linear-gradient(134.72deg, #5aafb8 0%, #78d8ca 100%);
-    color: white;
-    font-weith: bold;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border: 1px solid #00a870;
+    border-radius: 4px;
+    color: #00a76f;
+    font-weight: bold;
   }
   &&&:active {
-    background-color: #188e9b;
+    background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
     color: white;
-    font-weith: bold;
+    font-weight: bold;
   }
 `;
 
@@ -202,14 +196,15 @@ export const ButtonRetry = styled(Button)`
   &&& {
     height: 62px;
     width: 100%;
-    background: linear-gradient(0deg, #1991eb 0%, #2da1f8 100%);
+    background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
     color: white;
     font: 18px bold;
     line-height: 24px;
   }
   &&&:hover {
-    background: linear-gradient(0deg, #35a0f0 0%, #43aaf7 100%);
+    background-color: #ffffff;
     color: white;
+    font-weight: bold;
   }
 `;
 
