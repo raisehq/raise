@@ -25,7 +25,7 @@ const KYC = () => {
       window['idensic'].init(
         '#idensic',
         {
-          clientId: 'hero',
+          clientId: process.env.REACT_APP_SUMSUB_CLIENTID,
           externalUserId: id,
           accessToken: token,
           excludedCountries: [
