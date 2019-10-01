@@ -76,6 +76,16 @@ const Signin = () => {
     setRecaptcha(captchaResponse);
   };
 
+  const onCaptchaExpired = captchaResponse => {
+    console.log('Captcha expired: ', captchaResponse);
+    recaptchaRef.current.reset();
+  };
+
+  const onCaptchaErrored = captchaError => {
+    console.error('Captcha error. You should check the network and retry: ', captchaError);
+    recaptchaRef.current.reset();
+  };
+
   const onLoginCaptcha = () => {
     recaptchaRef.current.reset();
     recaptchaRef.current.execute();
@@ -119,6 +129,8 @@ const Signin = () => {
         sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
         render="explicit"
         onChange={onCaptchaCallback}
+        onExpired={onCaptchaExpired}
+        onErrored={onCaptchaErrored}
       />
       <OnboardButton
         id="btn-login"
