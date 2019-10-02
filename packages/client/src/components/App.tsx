@@ -24,6 +24,7 @@ import LogRocket from 'logrocket';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
+import LocalData from '../helpers/localData';
 import Queryies from '../helpers/queryies';
 
 export const AppContext = createContext({
@@ -41,8 +42,9 @@ export const AppContext = createContext({
 
 const App = ({ children, history, match }: any) => {
   const refMode = process.env.REACT_APP_REFERAL === 'true';
+  const firstLogin = LocalData.get('firstLogin');
   const [isLoading, setLoading] = useState(true);
-  const [getStarted, setGetStarted] = useState(false);
+  const [getStarted, setGetStarted] = useState(firstLogin === 'first');
   const {
     store,
     store: {
