@@ -64,7 +64,7 @@ const KycMessage = () => {
         <OrangeMessage hidden={false} icon>
           <Icon name="info circle" />
           <Message.Content>
-            <Message.Header>Your application is accepted and is it has begun to processed in Blockchain.</Message.Header>
+            <Message.Header>Give us a few more minutes. The blockchain needs to catch up 🍆.</Message.Header>
           </Message.Content>
         </OrangeMessage>
       ),
