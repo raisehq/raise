@@ -10,14 +10,15 @@ const Status = daggy.taggedSum('UI', {
   Pending: [],
   Success: [],
   Error: [],
+  PendingRegistry: [],
   Start: []
 });
 
 const StatusSet = {
-  1: 'Pending',
-  2: 'Error',
+  1: 'Error',
+  2: 'Pending',
   3: 'Success',
-  4: 'Error',
+  4: 'PendingRegistry',
   5: 'Start'
 };
 
@@ -56,6 +57,14 @@ const KycMessage = () => {
           <Icon name="info circle" />
           <Message.Content>
             <Message.Header>Your application is under review</Message.Header>
+          </Message.Content>
+        </OrangeMessage>
+      ),
+      PendingRegistry: () => (
+        <OrangeMessage hidden={false} icon>
+          <Icon name="info circle" />
+          <Message.Content>
+            <Message.Header>Your application is accepted and is it has begun to processed in Blockchain.</Message.Header>
           </Message.Content>
         </OrangeMessage>
       ),
