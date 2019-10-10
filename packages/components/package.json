@@ -46,6 +46,7 @@
     "react-iframe": "^1.8.0",
     "react-router-hash-link": "^1.2.2",
     "react-slick": "^0.25.2",
+    "react-toastify": "^5.4.0",
     "react-transition-group": "^4.3.0",
     "slick-carousel": "^1.8.1"
   }

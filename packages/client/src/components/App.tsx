@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, createContext, useState, useRef } from 'react';
 import { withRouter, Switch } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import { match as matches, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -26,6 +27,7 @@ import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
 import LocalData from '../helpers/localData';
 import Queryies from '../helpers/queryies';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const AppContext = createContext({
   store: {},
@@ -37,7 +39,8 @@ export const AppContext = createContext({
   daiWebSocket: {},
   match: {},
   onSetGetStarted: {},
-  getStarted: false
+  getStarted: false,
+  onNotify: () => null
 });
 
 const App = ({ children, history, match }: any) => {
@@ -96,6 +99,8 @@ const App = ({ children, history, match }: any) => {
 
   useEffect(() => {
     if (Object.keys(webSocket).length !== 0 && address) {
+      console.log(Queryies.subscriptions);
+
       const { query, subscriptionName } = Queryies.subscriptions.userStatus;
       const variables = {
         address
@@ -200,6 +205,8 @@ const App = ({ children, history, match }: any) => {
     );
   }, [isLoading, logged, web3Pass, id, deposited, history, refMode]);
 
+  const onNotify: any = msg => toast(msg);
+
   const componentsByRole = {
     1: {
       dashboard: DashboardBorrower
@@ -221,7 +228,8 @@ const App = ({ children, history, match }: any) => {
         web3Status,
         modalRefs,
         webSocket,
-        daiWebSocket
+        daiWebSocket,
+        onNotify
       }}
     >
       <Dimmer active={isLoading} inverted>
@@ -230,6 +238,7 @@ const App = ({ children, history, match }: any) => {
       <TopMobileMenu />
       <DesktopHeader />
       <Menu />
+      <ToastContainer position={toast.POSITION.TOP_LEFT} />
       <TransitionGroup component={null}>
         <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
           <Switch>

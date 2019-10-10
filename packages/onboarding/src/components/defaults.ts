@@ -16,6 +16,7 @@ export const defaultContext = {
   open: false,
   closeButton: false,
   mountNode: null,
+  onNotify: () => null,
   credentials: {
     email: '',
     password: '',
