@@ -41,6 +41,10 @@ export const Wrapper: any = styled.div`
       color: #eb3f93 !important;
     }
   }
+
+  .slide-wrapper{
+      outline:none;
+  }
 `;
 
 export const Slide = styled.div`
@@ -66,10 +70,12 @@ export const SlideImage = styled.img`
 
 export const SliderClose = styled.button`
   position: absolute;
+  z-index:1000;
   top: 12px;
   right: 5px;
   background: none;
   border: none;
+  outline:none;
   cursor: pointer;
 
   i.icon {

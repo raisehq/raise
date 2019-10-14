@@ -26,7 +26,7 @@ const settings = {
 
 const getSlides = slides =>
   slides.map(slide => (
-    <div key={slide.title}>
+    <div key={slide.title} className="slide-wrapper">
       <Slide className="slides">
         <SlideContent className="images">
           <SlideImage src={slide.image}></SlideImage>
