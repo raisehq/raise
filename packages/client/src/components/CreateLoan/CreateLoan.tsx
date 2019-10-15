@@ -86,6 +86,7 @@ const CreateLoan = () => {
     accept: false,
     minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
   });
+  const [selectedMonth, setSelectedMonth] = useState(defaultTerm);
   const termMonths = loan.term / 60 / 60 / 24 / 30;
 
   // Calculations
@@ -110,7 +111,7 @@ const CreateLoan = () => {
 
   const monthOptions = useMemo(() => months(network), [network]);
 
-  const onSetTerm = (e, data) => setLoan({ ...loan, term: data.value });
+  const onSetTerm = (e, data) => {setSelectedMonth(data.value); setLoan({ ...loan, term: data.value })};
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
 
@@ -256,7 +257,7 @@ const CreateLoan = () => {
           </LoanDescription>
           <LoanFormInput>
             <LoanSelect
-              value={defaultTerm}
+              value={selectedMonth}
               onChange={onSetTerm}
               placeholder="Select term"
               options={monthOptions}
@@ -294,3 +295,4 @@ const CreateLoan = () => {
 };
 
 export default CreateLoan;
+
