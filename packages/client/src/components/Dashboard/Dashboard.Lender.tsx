@@ -7,6 +7,7 @@ import GetStarted from '../GetStarted';
 import Suggesteds from './Dashboard.Suggesteds';
 import Tab from './Dashboard.Tab';
 import Queryies from '../../helpers/queryies';
+import { Element } from 'react-scroll';
 
 const Dashboard = () => {
   const {
@@ -59,9 +60,11 @@ const Dashboard = () => {
       <DashboardContainer>
         <Header as="h1">Investment opportunities</Header>
         <Suggesteds auctions={suggested} states={[0]} />
+       <Element name="myActivity" className="element">
         <Header as="h1" id="my-activity">
-          My activity
+          My Activity
         </Header>
+        </Element>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
       </DashboardContainer>
     </DashboardWrapper>

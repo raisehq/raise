@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-scroll';
 import { Icon } from 'semantic-ui-react';
 import {
   RaiseMenu,
@@ -62,13 +62,13 @@ const Menu = () => {
       {
         id: 'borrower-get-started',
         title: 'Get started',
-        link: '/#my-activity',
+        link: 'myActivity',
         onClick: toGetStarted
       },
       {
         id: 'borrower-my-activity',
         title: 'My activity',
-        link: '/#my-activity'
+        link: 'myActivity'
       },
       {
         id: 'borrower-create-loan',
@@ -80,13 +80,13 @@ const Menu = () => {
       {
         id: 'lender-get-started',
         title: 'Get started',
-        link: '/#my-activity',
+        link: 'myActivity',
         onClick: toGetStarted
       },
       {
         id: 'lender-my-activity',
         title: 'My activity',
-        link: '/#my-activity'
+        link: 'myActivity'
       }
     ]
   };
@@ -103,9 +103,10 @@ const Menu = () => {
                 to={item.link}
                 onClick={item.onClick ? item.onClick : toRoute}
                 target={item.new_tab ? '_blank' : ''}
+                offset={-100}
               >
                 {item.title}
-              </Link>
+                </Link>
             </li>
           )),
     // eslint-disable-next-line react-hooks/exhaustive-deps

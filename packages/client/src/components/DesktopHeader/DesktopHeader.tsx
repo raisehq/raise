@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavHashLink } from 'react-router-hash-link';
+import { Link } from 'react-scroll';
 import {
   Header,
   HeaderWrapper,
@@ -39,12 +39,9 @@ const DesktopHeader = () => {
               <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
             )}
             <HeaderMenuItem>
-              <NavHashLink
-                to="/#my-activity"
-                scroll={el => el.scrollIntoView({ behavior: 'instant', block: 'end' })}
-              >
+             <Link to="myActivity" spy smooth duration={500} offset={-100}>
                 My activity
-              </NavHashLink>
+              </Link>
             </HeaderMenuItem>
           </HeaderMenu>
         </HeaderGroup>
