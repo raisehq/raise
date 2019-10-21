@@ -13,21 +13,28 @@ import {
 } from './Menu.styles';
 import { AppContext } from '../App';
 
+const navigateToOutsideNewTab = route => () => {
+  window.open(route, '_blank');
+}
+
 const commonRoutes = [
   {
     title: 'Help',
     link: '/help',
-    new_tab: true
+    new_tab: true,
+    onClick: navigateToOutsideNewTab('/help')
   },
   {
     title: 'Privacy Policy',
     link: '/privacy-policy',
-    new_tab: true
+    new_tab: true,
+    onClick: navigateToOutsideNewTab('/privacy-policy')
   },
   {
     title: 'Terms and Conditions',
     link: '/terms',
-    new_tab: true
+    new_tab: true,
+    onClick: navigateToOutsideNewTab('/terms')
   }
 ];
 
@@ -102,7 +109,6 @@ const Menu = () => {
               <Link
                 to={item.link}
                 onClick={item.onClick ? item.onClick : toRoute}
-                target={item.new_tab ? '_blank' : ''}
                 offset={-100}
               >
                 {item.title}
