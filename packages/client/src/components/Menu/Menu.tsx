@@ -48,6 +48,7 @@ const Menu = () => {
     history: {
       location: { pathname }
     },
+    history,
     store: {
       user: {
         details: { accounttype_id }
@@ -65,12 +66,17 @@ const Menu = () => {
     showMenu(false);
   };
 
+  const toCreateLoan = route => () => {
+    history.push(route);
+    showMenu(false);
+};
+
   const Menus = {
     1: [
       {
         id: 'borrower-get-started',
         title: 'Get started',
-        link: 'myActivity',
+        link: 'toGetStarted',
         onClick: toGetStarted
       },
       {
@@ -81,7 +87,8 @@ const Menu = () => {
       {
         id: 'borrower-create-loan',
         title: 'Create a loan',
-        link: '/create-loan'
+        link: '/create-loan',
+        onClick: toCreateLoan('/create-loan')
       }
     ],
     2: [
