@@ -111,6 +111,7 @@ const Menu = () => {
                 to={item.link}
                 onClick={item.onClick ? item.onClick : toRoute}
                 offset={HEADER_MENU_SIZE.myActivity}
+                smooth
               >
                 {item.title}
                 </Link>
