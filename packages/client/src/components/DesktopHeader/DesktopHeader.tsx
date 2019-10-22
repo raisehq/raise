@@ -14,6 +14,7 @@ import Web3Address from '../Web3Address';
 import theme from '../../theme';
 import { AppContext } from '../App';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
+import { HEADER_MENU_SIZE } from '../../commons/constants';
 
 const DesktopHeader = () => {
   const {
@@ -39,7 +40,7 @@ const DesktopHeader = () => {
               <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
             )}
             <HeaderMenuItem>
-             <Link to="myActivity" spy smooth duration={500} offset={-100}>
+             <Link to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
                 My activity
               </Link>
             </HeaderMenuItem>

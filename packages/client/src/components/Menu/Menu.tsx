@@ -12,6 +12,7 @@ import {
   BalanceMobile
 } from './Menu.styles';
 import { AppContext } from '../App';
+import { HEADER_MENU_SIZE } from '../../commons/constants';
 
 const navigateToOutsideNewTab = route => () => {
   window.open(route, '_blank');
@@ -109,6 +110,7 @@ const Menu = () => {
               <Link
                 to={item.link}
                 onClick={item.onClick ? item.onClick : toRoute}
+                offset={HEADER_MENU_SIZE.myActivity}
               >
                 {item.title}
                 </Link>
