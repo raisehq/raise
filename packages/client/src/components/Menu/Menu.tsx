@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useCallback } from 'react';
-import { Link } from 'react-scroll';
+import { Link, animateScroll as scroll } from 'react-scroll';
 import { Icon } from 'semantic-ui-react';
 import {
   RaiseMenu,
@@ -71,12 +71,21 @@ const Menu = () => {
     showMenu(false);
 };
 
+const toMyActivity = () => {
+  if(history.location.pathname !== '/'){
+    history.push('/');
+    scroll.scrollToTop();
+  }
+  showMenu(false);
+}
+
   const Menus = {
     1: [
       {
         id: 'borrower-my-activity',
         title: 'My activity',
-        link: 'myActivity'
+        link: 'myActivity',
+        onClick: toMyActivity
       },
       {
         id: 'borrower-create-loan',
