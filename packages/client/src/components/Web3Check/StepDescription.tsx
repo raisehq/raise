@@ -15,7 +15,7 @@ const NeedHelp = ({ href }) => (
   </HelpMessage>
 );
 export const isSupportedBrowser = () =>
-  ['brave', 'chrome', 'chromium', 'firefox'].some(supportedBrowser =>
+  ['brave', 'chrome', 'chromium', 'firefox', 'opera'].some(supportedBrowser =>
     browserName.toLowerCase().includes(supportedBrowser)
   );
 
