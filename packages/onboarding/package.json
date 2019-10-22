@@ -1,8 +1,8 @@
 {
   "name": "@raisehq/onboarding",
   "private": false,
-  "version": "1.0.22",
-  "description": "> TODO: description",
+  "version": "1.0.23",
+  "description": "Raise signup/login modal",
   "author": "Raul Vallespin <raul@herotoken.io>",
   "homepage": "http://www.raise.it",
   "license": "AGPL",
