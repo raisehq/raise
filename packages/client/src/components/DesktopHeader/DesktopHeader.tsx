@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-scroll';
+import { Link, animateScroll as scroll } from 'react-scroll';
 import {
   Header,
   HeaderWrapper,
@@ -24,6 +24,10 @@ const DesktopHeader = () => {
   }: any = useContext(AppContext);
   const visible = useMenuVisibility();
 
+  const scrollToTop = () => scroll.scrollToTop();
+
+  const naviagateAndScroll = () => {history.push('/');  scrollToTop()};
+
   return visible ? (
     <Header>
       <HeaderWrapper>
@@ -42,7 +46,7 @@ const DesktopHeader = () => {
               </Link>
             )}
             <HeaderMenuItem>
-             <Link onClick={() => history.location.pathname !== '/' && history.push('/')} to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
+             <Link onClick={() => history.location.pathname !== '/' && naviagateAndScroll()} to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
                 My activity
               </Link>
             </HeaderMenuItem>
