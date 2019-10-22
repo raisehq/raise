@@ -7,6 +7,7 @@ import { getWeb3, getContractsDefinition } from '../utils';
 import useAsyncEffect from './useAsyncEffect';
 import { AppContext } from '../components/App';
 
+import { browserName } from 'react-device-detect';
 //
 const useMetaMask = () => {
   const {
@@ -55,7 +56,7 @@ const useMetaMask = () => {
         getContracts: () => contracts.current,
         getAccounts: web3.eth.getAccounts,
         getCurrentProviderName: () => {
-          if (!web3) return 'unknown';
+          if (!web3) return 'web3-unknown';
 
           if (web3.currentProvider.isMetaMask) return 'metamask';
 
@@ -87,7 +88,8 @@ const useMetaMask = () => {
             // eslint-disable-next-line
             return 'localhost';
           }
-
+          console.log('BROWSER NAME : ', browserName);
+          if (browserName && browserName.includes('Opera')) return 'opera-wallet';
           return 'unknown';
         }
       });
