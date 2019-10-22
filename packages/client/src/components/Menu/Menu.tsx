@@ -109,7 +109,6 @@ const Menu = () => {
               <Link
                 to={item.link}
                 onClick={item.onClick ? item.onClick : toRoute}
-                offset={-100}
               >
                 {item.title}
                 </Link>
