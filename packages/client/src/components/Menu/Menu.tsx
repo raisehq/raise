@@ -74,12 +74,6 @@ const Menu = () => {
   const Menus = {
     1: [
       {
-        id: 'borrower-get-started',
-        title: 'Get started',
-        link: 'toGetStarted',
-        onClick: toGetStarted
-      },
-      {
         id: 'borrower-my-activity',
         title: 'My activity',
         link: 'myActivity'
