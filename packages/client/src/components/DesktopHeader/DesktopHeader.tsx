@@ -42,7 +42,7 @@ const DesktopHeader = () => {
               </Link>
             )}
             <HeaderMenuItem>
-             <Link to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
+             <Link onClick={() => history.push('/')} to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
                 My activity
               </Link>
             </HeaderMenuItem>
