@@ -134,7 +134,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
           disabled={credentials.email === '' || error.validation || error.exist || error.terms}
           onClick={onSetTagManagerAndStep}
         >
-          Next
+          Sign up
         </OnboardButton>
       </MiniBody>
     );
