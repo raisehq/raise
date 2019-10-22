@@ -37,7 +37,9 @@ const DesktopHeader = () => {
                 Create loan
               </HeaderMenuItem>
             ) : (
-              <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+              <Link to="toGetStarted" spy smooth duration={500} offset={HEADER_MENU_SIZE.toGetStarted}>
+                   <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+              </Link>
             )}
             <HeaderMenuItem>
              <Link to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
