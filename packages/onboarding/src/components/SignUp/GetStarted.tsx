@@ -58,11 +58,10 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
     );
   }, 500);
 
-  const onAcceptTerms = () => setError({ ...error, terms: !error.terms });
+  const onAcceptTerms = (e, { checked }) => setError({ ...error, terms: !checked });
 
-  const onAcceptMailingList = () => {
-    const mailingChecked = !credentials.mailingChecked;
-    onSetCredentials('mailingChecked', mailingChecked);
+  const onAcceptMailingList = (e, { checked }) => {
+    onSetCredentials('mailingChecked', checked);
   };
 
   const onKeyPress = event => {
