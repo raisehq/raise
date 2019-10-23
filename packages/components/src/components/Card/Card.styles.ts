@@ -49,7 +49,7 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
 export const CardLogo: any = styled(Image)`
   &&& {
     width: 70px;
-    height: 70px;
+    height: auto;
     background-color: white;
     border-radius: 6px;
     border: 1px solid #cfd0d4;

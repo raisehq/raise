@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, animateScroll as scroll } from 'react-scroll';
 import { Icon } from 'semantic-ui-react';
 import {
   RaiseMenu,
@@ -12,22 +12,30 @@ import {
   BalanceMobile
 } from './Menu.styles';
 import { AppContext } from '../App';
+import { HEADER_MENU_SIZE } from '../../commons/constants';
+
+const navigateToOutsideNewTab = route => () => {
+  window.open(route, '_blank');
+}
 
 const commonRoutes = [
   {
     title: 'Help',
     link: '/help',
-    new_tab: true
+    new_tab: true,
+    onClick: navigateToOutsideNewTab('/help')
   },
   {
     title: 'Privacy Policy',
     link: '/privacy-policy',
-    new_tab: true
+    new_tab: true,
+    onClick: navigateToOutsideNewTab('/privacy-policy')
   },
   {
     title: 'Terms and Conditions',
     link: '/terms',
-    new_tab: true
+    new_tab: true,
+    onClick: navigateToOutsideNewTab('/terms')
   }
 ];
 
@@ -40,6 +48,7 @@ const Menu = () => {
     history: {
       location: { pathname }
     },
+    history,
     store: {
       user: {
         details: { accounttype_id }
@@ -57,36 +66,45 @@ const Menu = () => {
     showMenu(false);
   };
 
+  const toCreateLoan = route => () => {
+    history.push(route);
+    showMenu(false);
+};
+
+const toMyActivity = () => {
+  if(history.location.pathname !== '/'){
+    history.push('/');
+    scroll.scrollToTop();
+  }
+  showMenu(false);
+}
+
   const Menus = {
     1: [
       {
-        id: 'borrower-get-started',
-        title: 'Get started',
-        link: '/#my-activity',
-        onClick: toGetStarted
-      },
-      {
         id: 'borrower-my-activity',
         title: 'My activity',
-        link: '/#my-activity'
+        link: 'myActivity',
+        onClick: toMyActivity
       },
       {
         id: 'borrower-create-loan',
         title: 'Create a loan',
-        link: '/create-loan'
+        link: '/create-loan',
+        onClick: toCreateLoan('/create-loan')
       }
     ],
     2: [
       {
         id: 'lender-get-started',
         title: 'Get started',
-        link: '/#my-activity',
+        link: 'myActivity',
         onClick: toGetStarted
       },
       {
         id: 'lender-my-activity',
         title: 'My activity',
-        link: '/#my-activity'
+        link: 'myActivity'
       }
     ]
   };
@@ -102,10 +120,11 @@ const Menu = () => {
               <Link
                 to={item.link}
                 onClick={item.onClick ? item.onClick : toRoute}
-                target={item.new_tab ? '_blank' : ''}
+                offset={HEADER_MENU_SIZE.myActivity}
+                smooth
               >
                 {item.title}
-              </Link>
+                </Link>
             </li>
           )),
     // eslint-disable-next-line react-hooks/exhaustive-deps
