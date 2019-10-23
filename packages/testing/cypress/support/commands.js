@@ -146,6 +146,7 @@ Cypress.Commands.add('mockAPI', function(type) {
   cy.on('window:before:load', win => {
     const user = Cypress.env('user');
 
+    
     win.AxiosMockResponses = [
       ['POST', 'https://api.herodev.es/api/jwt/verify', 200, { mock: true, success: true }],
       [
