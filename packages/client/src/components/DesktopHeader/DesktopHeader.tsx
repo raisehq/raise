@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavHashLink } from 'react-router-hash-link';
+import { Link, animateScroll as scroll } from 'react-scroll';
 import {
   Header,
   HeaderWrapper,
@@ -14,6 +14,7 @@ import Web3Address from '../Web3Address';
 import theme from '../../theme';
 import { AppContext } from '../App';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
+import { HEADER_MENU_SIZE } from '../../commons/constants';
 
 const DesktopHeader = () => {
   const {
@@ -22,6 +23,10 @@ const DesktopHeader = () => {
     store: { user }
   }: any = useContext(AppContext);
   const visible = useMenuVisibility();
+
+  const scrollToTop = () => scroll.scrollToTop();
+
+  const naviagateAndScroll = () => {history.push('/');  scrollToTop()};
 
   return visible ? (
     <Header>
@@ -36,15 +41,14 @@ const DesktopHeader = () => {
                 Create loan
               </HeaderMenuItem>
             ) : (
-              <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+              <Link to="toGetStarted" spy smooth duration={500} offset={HEADER_MENU_SIZE.toGetStarted}>
+                   <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+              </Link>
             )}
             <HeaderMenuItem>
-              <NavHashLink
-                to="/#my-activity"
-                scroll={el => el.scrollIntoView({ behavior: 'instant', block: 'end' })}
-              >
+             <Link onClick={() => history.location.pathname !== '/' && naviagateAndScroll()} to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
                 My activity
-              </NavHashLink>
+              </Link>
             </HeaderMenuItem>
           </HeaderMenu>
         </HeaderGroup>
