@@ -367,7 +367,7 @@ export const MiniBody = styled.div`
 
   ${OnboardInput} {
     margin-top: 0px;
-    margin-bottom: 32px;
+    margin-bottom: 55px;
   }
 
   ${OnboardDisclaimer}, ${OnboardMailingList} {
