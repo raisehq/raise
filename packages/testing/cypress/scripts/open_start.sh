@@ -46,7 +46,7 @@ fi
 
 echo "- Clone contracts"
 rm  -rf ./contracts 
-git clone https://gitlab.com/raisehq/contracts-solidity --branch LP-666-fix-bug ./contracts > "/dev/null" 2>&1
+git clone https://gitlab.com/raisehq/contracts-solidity --branch integration ./contracts > "/dev/null" 2>&1
 echo "- Adding json accounts to contract migration"
 cp cypress/fixtures/users.json contracts/int.accounts.json
 cp cypress/fixtures/contracts.json contracts/contracts.json
