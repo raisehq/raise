@@ -1,8 +1,9 @@
 describe('LENDER', function () {
   beforeEach(function () {
+    cy.mockAPI('lender');
     cy.web3('lender');
     cy.login('lender');
-    cy.mockAPI('lender');
+  
   });
   it('Invest', function () {
     cy.visit(Cypress.env('url'));
