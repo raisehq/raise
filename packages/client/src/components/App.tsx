@@ -43,6 +43,7 @@ const App = ({ children, history, match }: any) => {
       kyc: { token },
       user: {
         details: { id, accounttypeId, email, status },
+        cryptoAddress,
         cryptoAddress: { address }
       }
     },
@@ -54,7 +55,7 @@ const App = ({ children, history, match }: any) => {
     }
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
-  //console.log(' NETWORK : ', logged, network);
+  console.log(' NETWORK : ', cryptoAddress);
   // const web3Status = useWeb3Checker(address, network);
   // const { hasDeposit: deposited, accountMatches: accMatch, networkMatches: netOk } = web3Status;
   // const web3Pass = netOk && accMatch;

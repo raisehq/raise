@@ -104,6 +104,19 @@ export const updateUser = async (userId, data: any) => {
   return response.fold(error => Left(error), ({ data: { data } }) => data);
 };
 
+/*
+{
+  id: "cryptoaddress:2b012587-7090-42e8-8158-55148f2f633f", 
+  herouser_id: "user:772424bb-4a15-4643-8578-c848ea78e3ab", address: "0x251Ab686cf1A62Cee98bE2510955Cf68eB93E7a0", cryptotype_id: 2, site: null, …}
+address: "0x251Ab686cf1A62Cee98bE2510955Cf68eB93E7a0"
+created_on: "2019-10-22T03:33:16.429Z"
+cryptotype_id: 2
+deleted: 0
+herouser_id: "user:772424bb-4a15-4643-8578-c848ea78e3ab"
+id: "cryptoaddress:2b012587-7090-42e8-8158-55148f2f633f"
+site: null
+
+*/
 export const cryptoAddressByAccount = async (userId, targetAddressId) => {
   const config: any = {
     url: `${URL.CRYPTOADDRESS}/user/${userId}`,
@@ -118,7 +131,15 @@ export const cryptoAddressByAccount = async (userId, targetAddressId) => {
     const rawResponse = await axios(config);
     switch (rawResponse.status) {
       case 200:
-        return rawResponse.data.data.find(d => d.cryptotype_id === targetAddressId);
+        // eslint-disable-next-line
+        const {
+          id,
+          herouser_id: herouserId,
+          address,
+          cryprotype_id: cryptotypeId
+        } = rawResponse.data.data.find(d => d.cryptotype_id === targetAddressId);
+
+        return { id, herouserId, address, cryptotypeId };
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
@@ -169,49 +190,49 @@ export const updateCryptoAddress = async (cryptoAddressId, body: any) => {
 
 // TODO : Deprecated
 export const getReferralAddress = async referrerCode => {
-  // const config: any = {
-  //   params: {
-  //     referrerCode
-  //   },
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   }
-  // };
-  // const rawResponse = await axios.get(`${URL.USER}/referral/lookup`, config);
-  // try {
-  //   switch (rawResponse.status) {
-  //     case 200:
-  //       return rawResponse.data.data;
-  //     default:
-  //       throw new Error(rawResponse.data.message || 'User Unauthorized');
-  //   }
-  // } catch (error) {
-  //   throw new Error('Error request client to server stack : ' + error.message);
-  // }
+  const config: any = {
+    params: {
+      referrerCode
+    },
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const rawResponse = await axios.get(`${URL.USER}/referral/lookup`, config);
+  try {
+    switch (rawResponse.status) {
+      case 200:
+        return rawResponse.data.data;
+      default:
+        throw new Error(rawResponse.data.message || 'User Unauthorized');
+    }
+  } catch (error) {
+    throw new Error('Error request client to server stack : ' + error.message);
+  }
 };
 
 // TODO: Deprecated
 export const getUsersReferrerByCryptoAddress = async (address: string[]) => {
-  // const config: any = {
-  //   url: `${URL.USER}/referrer`,
-  //   method: 'POST',
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Content-Type': 'application/json'
-  //   },
-  //   data: {
-  //     address
-  //   }
-  // };
-  // const rawResponse = await axios(config);
-  // try {
-  //   switch (rawResponse.status) {
-  //     case 200:
-  //       return rawResponse.data.data;
-  //     default:
-  //       throw new Error(rawResponse.data.message || 'User Unauthorized');
-  //   }
-  // } catch (error) {
-  //   throw new Error('Error request client to server stack : ' + error.message);
-  // }
+  const config: any = {
+    url: `${URL.USER}/referrer`,
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    data: {
+      address
+    }
+  };
+  const rawResponse = await axios(config);
+  try {
+    switch (rawResponse.status) {
+      case 200:
+        return rawResponse.data.data;
+      default:
+        throw new Error(rawResponse.data.message || 'User Unauthorized');
+    }
+  } catch (error) {
+    throw new Error('Error request client to server stack : ' + error.message);
+  }
 };
