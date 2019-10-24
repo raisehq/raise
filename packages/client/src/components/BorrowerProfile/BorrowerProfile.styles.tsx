@@ -8,7 +8,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
   height: fit-content;
   @media screen and ${device.laptop} {
-    padding: 50px 40px;
+    padding: 0px 40px;
   }
 `;
 
