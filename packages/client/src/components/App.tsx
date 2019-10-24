@@ -16,8 +16,8 @@ import { Web3Check } from '../components/Web3Check';
 //import Test from './SuggestTest';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
-import useWeb3Checker from '../hooks/useWeb3Checker';
-import useWallet from '../hooks/useWallet';
+//import useWeb3Checker from '../hooks/useWeb3Checker';
+//import useWallet from '../hooks/useWallet';
 // import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import LogRocket from 'logrocket';
@@ -39,6 +39,7 @@ const App = ({ children, history, match }: any) => {
       auth: {
         login: { logged }
       },
+      config: { network },
       kyc: { token },
       user: {
         details: { id, accounttypeId, email, status },
@@ -53,29 +54,25 @@ const App = ({ children, history, match }: any) => {
     }
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
-  const wallet = useWallet();
-  let network = 'Not connected';
-  if (wallet) network = wallet.getNetwork();
-  console.log(' NETWORK : ', network);
-  const web3Status = useWeb3Checker(address, network);
-
-  const { hasDeposit: deposited, accountMatches: accMatch, networkMatches: netOk } = web3Status;
-  const web3Pass = netOk && accMatch;
+  //console.log(' NETWORK : ', logged, network);
+  // const web3Status = useWeb3Checker(address, network);
+  // const { hasDeposit: deposited, accountMatches: accMatch, networkMatches: netOk } = web3Status;
+  // const web3Pass = netOk && accMatch;
   const [webSocket, setWebSocket]: any = useState({});
   const [daiWebSocket, setDaiWebSocket] = useState({});
-
+  const [web3Status, setWeb3Status] = useState({});
   const onSetGetStarted = () => setGetStarted(!getStarted);
 
   // Enabling connections
   useEffect(() => {
-    if (Object.keys(webSocket).length === 0 && network !== 'Not connected') {
+    if (Object.keys(webSocket).length === 0) {
       const webSocketInstance = new UseWebSockets(getGraphWSEndpoint(network), 'graphql-ws');
       setWebSocket({ webSocket: webSocketInstance });
     }
   }, [webSocket, network]);
 
   useEffect(() => {
-    if (Object.keys(daiWebSocket).length === 0 && network !== 'Not connected') {
+    if (Object.keys(daiWebSocket).length === 0) {
       const webSocketInstance = new UseWebSockets(getDaiWSEndpoint(network), 'graphql-ws');
       setDaiWebSocket({ webSocket: webSocketInstance });
     }
@@ -134,6 +131,10 @@ const App = ({ children, history, match }: any) => {
   // }, [logged, address, network, netOk]);
 
   useEffect(() => {
+    setWeb3Status({
+      network,
+      hasDeposit: false,
+    });
     // const isJoin =
     //   history.location.pathname.includes('/join') || history.location.pathname.includes('/login');
     // const conditions = {
@@ -189,9 +190,9 @@ const App = ({ children, history, match }: any) => {
   }, [
     isLoading,
     logged,
-    web3Pass,
+    //    web3Pass,
     id,
-    deposited,
+    //   deposited,
     history,
     refMode
   ]);
@@ -211,10 +212,10 @@ const App = ({ children, history, match }: any) => {
         store,
         onSetGetStarted,
         getStarted,
+        web3Status,
         actions,
         history,
         match,
-        web3Status,
         modalRefs,
         webSocket,
         daiWebSocket
@@ -223,57 +224,67 @@ const App = ({ children, history, match }: any) => {
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
-      <TopMobileMenu />
-      <DesktopHeader />
-      <Menu />
-      <TransitionGroup component={null}>
-        <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
-          <Switch>
-            <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[2]} />
 
-            <Web3Route
-              marketplace
-              layout={Layout}
-              exact
-              path="/kyc"
-              component={Kyc}
-              roles={[1, 2]}
-            />
-            <Web3Route
-              marketplace
-              layout={Layout}
-              exact
-              path="/dashboard"
-              component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
-              roles={[1, 2]}
-            />
-            <Web3Route
-              marketplace
-              layout={Layout}
-              exact
-              path="/"
-              component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
-              roles={[1, 2]}
-            />
-            <Web3Route
-              marketplaceSuggesteds
-              layout={Layout}
-              exact
-              path="/create-loan"
-              component={CreateLoan}
-              roles={[1, 2]}
-            />
-            <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
-            {/* Onboarding */}
-            <LayoutV2 exact path="/verify-web3" component={Web3Check} />
-            <LayoutV2 exact path="/join" component={Join} />
-            <LayoutV2 exact path="/login" component={Join} />
-            <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
-            <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
-            <LayoutV2 exact path="/join/activate/:token" component={Join} />
-          </Switch>
-        </CSSTransition>
-      </TransitionGroup>
+      {!isLoading && (
+        <>
+          <TopMobileMenu />
+          <DesktopHeader />
+          <Menu />
+          <TransitionGroup component={null}>
+            <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
+              <Switch>
+                <Web3Route
+                  layout={LayoutV2}
+                  exact
+                  path="/deposit"
+                  component={Deposit}
+                  roles={[2]}
+                />
+                <Web3Route
+                  marketplace
+                  layout={Layout}
+                  exact
+                  path="/kyc"
+                  component={Kyc}
+                  roles={[1, 2]}
+                />
+                <Web3Route
+                  marketplace
+                  layout={Layout}
+                  exact
+                  path="/dashboard"
+                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
+                  roles={[1, 2]}
+                />
+                <Web3Route
+                  marketplace
+                  layout={Layout}
+                  exact
+                  path="/"
+                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
+                  roles={[1, 2]}
+                />
+                <Web3Route
+                  marketplaceSuggesteds
+                  layout={Layout}
+                  exact
+                  path="/create-loan"
+                  component={CreateLoan}
+                  roles={[1, 2]}
+                />
+                <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
+                {/* Onboarding */}
+                <LayoutV2 exact path="/verify-web3" component={Web3Check} />
+                <LayoutV2 exact path="/join" component={Join} />
+                <LayoutV2 exact path="/login" component={Join} />
+                <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
+                <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
+                <LayoutV2 exact path="/join/activate/:token" component={Join} />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        </>
+      )}
       <div ref={modalRefs} />
     </AppContext.Provider>
   );

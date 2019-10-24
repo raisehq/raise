@@ -128,6 +128,7 @@ export default (dispatch: any, state: Store) => {
   const onGetCryptoAddressByUser = async () => {
     try {
       const cryptoaddress = await cryptoAddressByAccount(id, targetAddressId);
+      console.log(' CRYPTO ADDRESS RESPONSE : ', cryptoaddress);
       if (!!cryptoaddress) {
         dispatch({
           type: 'SET_CRYPTO_ADDRESS_BY_ACCOUNT',

@@ -14,10 +14,12 @@ const Web3Route = ({ history, layout: Layout, exact, roles, marketplace, ...rest
     },
     web3Status: { accountMatches: accMatch, networkMatches: netOk }
   }: any = useContext(AppContext);
-
+  console.log('#### LOGGED : ', logged);
   const web3Pass = netOk && accMatch;
 
   const acceptedRole = (roles !== undefined && roles.indexOf(accounttypeId) > -1) || false;
+
+  if (!logged) return <Redirect to="/join" />;
 
   if (logged && web3Pass && acceptedRole) {
     return <Layout exact {...rest} />;

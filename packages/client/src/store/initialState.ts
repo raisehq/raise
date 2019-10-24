@@ -44,6 +44,7 @@ const initialState = {
   config: {
     menu: false,
     targetNetwork: 42,
+    network: process.env.REACT_APP_DEFAULT_NETWORK,
     targetAddressId: 2
   },
   auth: {

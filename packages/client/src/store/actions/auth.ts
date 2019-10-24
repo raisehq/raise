@@ -61,6 +61,7 @@ export default (dispatch: any, state: any) => {
         type: user.accounttype_id
       });
       const response = { user };
+      console.log(' AUTH ', user);
       dispatch({ type: 'SET_USER_SESSION', response });
     } catch (error) {
       console.error('ERROR : ', error);
@@ -76,7 +77,6 @@ export default (dispatch: any, state: any) => {
       await verifyAuth();
       dispatch({ type: 'AUTH_TOKEN_VERIFIED' });
     } catch (error) {
-
       console.error(error);
       LocalData.remove('user');
       LocalData.remove('auth');

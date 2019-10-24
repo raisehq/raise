@@ -167,49 +167,51 @@ export const updateCryptoAddress = async (cryptoAddressId, body: any) => {
   }
 };
 
+// TODO : Deprecated
 export const getReferralAddress = async referrerCode => {
-  const config: any = {
-    params: {
-      referrerCode
-    },
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  const rawResponse = await axios.get(`${URL.USER}/referral/lookup`, config);
-  try {
-    switch (rawResponse.status) {
-      case 200:
-        return rawResponse.data.data;
-      default:
-        throw new Error(rawResponse.data.message || 'User Unauthorized');
-    }
-  } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
-  }
+  // const config: any = {
+  //   params: {
+  //     referrerCode
+  //   },
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // };
+  // const rawResponse = await axios.get(`${URL.USER}/referral/lookup`, config);
+  // try {
+  //   switch (rawResponse.status) {
+  //     case 200:
+  //       return rawResponse.data.data;
+  //     default:
+  //       throw new Error(rawResponse.data.message || 'User Unauthorized');
+  //   }
+  // } catch (error) {
+  //   throw new Error('Error request client to server stack : ' + error.message);
+  // }
 };
 
+// TODO: Deprecated
 export const getUsersReferrerByCryptoAddress = async (address: string[]) => {
-  const config: any = {
-    url: `${URL.USER}/referrer`,
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    data: {
-      address
-    }
-  };
-  const rawResponse = await axios(config);
-  try {
-    switch (rawResponse.status) {
-      case 200:
-        return rawResponse.data.data;
-      default:
-        throw new Error(rawResponse.data.message || 'User Unauthorized');
-    }
-  } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
-  }
+  // const config: any = {
+  //   url: `${URL.USER}/referrer`,
+  //   method: 'POST',
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json'
+  //   },
+  //   data: {
+  //     address
+  //   }
+  // };
+  // const rawResponse = await axios(config);
+  // try {
+  //   switch (rawResponse.status) {
+  //     case 200:
+  //       return rawResponse.data.data;
+  //     default:
+  //       throw new Error(rawResponse.data.message || 'User Unauthorized');
+  //   }
+  // } catch (error) {
+  //   throw new Error('Error request client to server stack : ' + error.message);
+  // }
 };
