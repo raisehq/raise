@@ -103,6 +103,7 @@ Cypress.Commands.add('login', function(type, env = 'local') {
       firstname: null,
       lastname: null,
       kyc_status: 3,
+      status: 2,
       accounttype_id: type === 'lender' ? 2 : 1,
       delete: 0,
       referral_code: 'TEST01'
