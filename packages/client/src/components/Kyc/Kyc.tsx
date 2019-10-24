@@ -3,6 +3,7 @@ import { Header } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { KYCWrapper, KYCHolder, KYCDisclaimer } from './Kyc.styles';
 import { AppContext } from '../App';
+import GetStarted from '../GetStarted';
 
 const KYC = () => {
   const {
@@ -61,11 +62,20 @@ const KYC = () => {
 
   return (
     <KYCWrapper>
+      <GetStarted />
       <Header as="h2">Verify your account</Header>
       <KYCHolder>
         <KYCDisclaimer>
-          Please fill in your personal information and upload your documents for our compliance
-          officers to review and approve your account. This process will be held by a third party.
+          <p>
+            The objective of verifying your account is to prevent Raise from being used by criminal
+            elements for money laundering activities.
+          </p>
+          <p>
+            This process will take approximately 3 minutes to complete and it will be verified by a
+            third-party organization. After submission, you will receive an email confirming your
+            approval or to verify further information. The time-frame for approval can vary on a
+            user to user basis.
+          </p>
         </KYCDisclaimer>
         <div id="idensic"></div>
       </KYCHolder>
