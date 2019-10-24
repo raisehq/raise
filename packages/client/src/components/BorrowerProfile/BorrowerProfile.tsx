@@ -12,7 +12,11 @@ import {
   SideInfo,
   Container,
   CompanyName,
-  HeaderBox
+  HeaderBox,
+  HeaderImage,
+  Icon,
+  AddressInfo,
+  CompanyDetails
 } from './BorrowerProfile.styles';
 import { Resources } from './Resource';
 import { KPIList } from './KPI';
@@ -32,7 +36,8 @@ const defaultBorrower = {
     address: '',
     userId: '',
     account: '',
-    foundationDate: ''
+    foundationDate: '',
+    background: ''
   },
   socialNetworks: [],
   extraResources: [],
@@ -63,7 +68,8 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
       updated,
       address,
       foundationDate,
-      account
+      account,
+      background
     },
     extraResources,
     socialNetworks,
@@ -98,24 +104,35 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   return (
     <Container>
       <BorrowerCard>
-        <HeaderBox>
-          <div>
-            <Image size="small" src={logo} />
-            <a href={url} rel="noopener noreferrer" target="_blank">
-              {urlText}
-            </a>
-          </div>
-          <KPIList kpis={kpis} />
-        </HeaderBox>
-        <CompanyName>{companyName}</CompanyName>
-        <p>Last updated: {lastUpdated}</p>
-        <b>About</b>
-        {description}
-        <Socials socialNetworks={socialNetworks} />
+        <HeaderImage>
+          <Image size="massive" src={background} />
+        </HeaderImage>
+        <CompanyDetails>
+          <HeaderBox>
+            <div>
+              <Image size="small" src={logo} />
+              <a href={url} rel="noopener noreferrer" target="_blank">
+                {urlText}
+              </a>
+            </div>
+            <KPIList kpis={kpis} />
+          </HeaderBox>
+          <CompanyName>{companyName}</CompanyName>
+          <p>Last updated: {lastUpdated}</p>
+          <b>About</b>
+          {description}
+          <Socials socialNetworks={socialNetworks} />
+        </CompanyDetails>
       </BorrowerCard>
       <SideInfo>
-        <p>{address}</p>
-        <p>Founded on {createdDate}</p>
+        <p className="borrowerInfo">
+          <Icon className="map marker alternate icon"></Icon>
+          <AddressInfo>{address}</AddressInfo>
+        </p>
+        <p>
+          <Icon className="calendar alternate icon"></Icon>
+          Founded on {createdDate}
+        </p>
         <Resources extraResources={extraResources} />
       </SideInfo>
       <BorrowerLoans account={account} />

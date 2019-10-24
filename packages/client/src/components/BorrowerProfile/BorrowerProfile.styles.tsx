@@ -15,18 +15,36 @@ export const Container = styled.div`
 export const BorrowerCard = styled(Card)`
   &&& {
     box-shadow: none;
-    padding: 32px 10px 32px 10px;
     width: 100%;
     height: fit-content;
     background: none;
     @media screen and ${device.laptop} {
       min-height: 410px;
       box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
-      padding: 50px 65px 50px 50px;
       max-width: 715px;
       background: #ffffff;
     }
   }
+`;
+
+export const Icon = styled.i`
+  &&&& {
+    height: 21px;
+    width: 24.15px;
+    color: #5a5a5a;
+    font-size: 24px;
+    line-height: 21px;
+    text-align: center;
+    margin-right: 10px;
+  }
+`;
+
+export const AddressInfo = styled.span`
+  height: 63px;
+  width: 169px;
+  color: #5a5a5a;
+  font-size: 14px;
+  line-height: 21px;
 `;
 
 export const SideInfo = styled(Card)`
@@ -39,11 +57,14 @@ export const SideInfo = styled(Card)`
     @media screen and ${device.laptop} {
       min-height: 407px;
       margin-left: 15px;
-      margin-top: 30px;
+      margin-top: 0px;
       box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
       padding: 50px;
       max-width: 350px;
       background: #ffffff;
+    }
+    .borrowerInfo {
+      display: flex;
     }
   }
 `;
@@ -89,6 +110,26 @@ export const ResourceBox = styled.div`
 `;
 
 export const HeaderBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  @media screen and ${device.mobileM} {
+    justify-content: space-between;
+  }
+`;
+
+export const CompanyDetails = styled.div`
+  padding: 32px 10px 32px 10px;
+  @media screen and ${device.mobileM} {
+    justify-content: space-between;
+  }
+  @media screen and ${device.laptop} {
+    padding: 50px 65px 50px 50px;
+  }
+`;
+
+export const HeaderImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
