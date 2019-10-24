@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 
 import { Grid, Image } from 'semantic-ui-react';
 // import Logout from '../Logout';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import {
   CenteredContainerStyled as CenteredContainer,
   HeaderRow,

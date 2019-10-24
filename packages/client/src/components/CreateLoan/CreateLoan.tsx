@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { AppContext } from '../App';
-import numeral, { numeralFormat } from '../../commons/numeral';
 import { BrowserView } from 'react-device-detect';
+import AppContext from '../AppContext';
+import numeral, { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
 import Coin from '../Coin';
 import LoanInput from './LoanInput';
@@ -111,7 +111,10 @@ const CreateLoan = () => {
 
   const monthOptions = useMemo(() => months(network), [network]);
 
-  const onSetTerm = (e, data) => {setSelectedMonth(data.value); setLoan({ ...loan, term: data.value })};
+  const onSetTerm = (e, data) => {
+    setSelectedMonth(data.value);
+    setLoan({ ...loan, term: data.value });
+  };
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
 
@@ -295,4 +298,3 @@ const CreateLoan = () => {
 };
 
 export default CreateLoan;
-

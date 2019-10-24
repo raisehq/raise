@@ -11,7 +11,7 @@ import {
   MenuLogout,
   BalanceMobile
 } from './Menu.styles';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 
 const commonRoutes = [
   {

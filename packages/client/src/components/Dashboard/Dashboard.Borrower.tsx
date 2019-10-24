@@ -7,7 +7,7 @@ import {
   Header
 } from './Dashboard.styles';
 import KycMessage from '../KycMessage';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import Tab from './Dashboard.Tab';
 import Queryies from '../../helpers/queryies';
 

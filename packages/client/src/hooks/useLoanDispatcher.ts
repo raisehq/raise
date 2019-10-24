@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
-import { AppContext } from '../components/App';
-import useMetaMask from './useMetaMask';
+import AppContext from '../components/AppContext';
+import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
 
 const useLoanDispatcher = () => {
@@ -8,7 +8,7 @@ const useLoanDispatcher = () => {
   const {
     web3Status: { network }
   }: any = useContext(AppContext);
-  const metamask = useMetaMask();
+  const metamask = useWallet();
   useAsyncEffect(async () => {
     if (metamask) {
       try {

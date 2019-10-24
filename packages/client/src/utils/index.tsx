@@ -1,6 +1,7 @@
 import LocalData from '../helpers/localData';
 import Web3 from 'web3';
-import { match, ANY } from 'pampy';
+import { browserName } from 'react-device-detect';
+// import { match, ANY } from 'pampy';
 import axios from 'axios';
 
 const HOSTS: any = {
@@ -90,18 +91,19 @@ export const getWeb3 = () => {
     ? window['ethereum']
     : (window['web3'] && window['web3'].currentProvider) || null;
   const web3Instance = new Web3(provider);
-  if (!!web3Instance.currentProvider) {
+
+  if (web3Instance.currentProvider) {
     window['web3Instance'] = web3Instance;
     return web3Instance;
   }
   return null;
 };
 
-export const averageBlockTime = async () => {
+/*export const averageBlockTime = async () => {
   const web3 = getWeb3();
   const network = parseNetwork(await web3.eth.net.getId());
   return match(network, 'kovan', () => 4, ANY, () => 15);
-};
+};*/
 
 export const parseNetwork = id => {
   switch (id) {
@@ -121,6 +123,12 @@ export const parseNetwork = id => {
       return 'private';
   }
 };
+
+export const isSupportedBrowser = () =>
+  ['brave', 'chrome', 'chromium', 'firefox', 'opera'].some(supportedBrowser =>
+    browserName.toLowerCase().includes(supportedBrowser)
+  );
+
 const HERO_CONTRACTS =
   'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
 

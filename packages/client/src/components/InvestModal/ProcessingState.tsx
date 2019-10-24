@@ -2,7 +2,7 @@ import React, { useContext, useState, Fragment } from 'react';
 import { toWei } from 'web3-utils';
 import { List, Grid } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import useMetamask from '../../hooks/useMetaMask';
+import useWallet from '../../hooks/useWallet';
 import { getWeb3 } from '../../utils';
 import ERC20 from '../../commons/erc20';
 import { MAX_VALUE } from '../../commons/constants';
@@ -23,13 +23,13 @@ import {
   RetryButton,
   BlankSpace
 } from './InvestModal.styles';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui, setStage }) => {
   const {
     web3Status: { account }
   }: any = useContext(AppContext);
-  const metamask = useMetamask();
+  const metamask = useWallet();
 
   const [contracts, setContracts] = useState();
   const [approved, setAproved] = useState(false);
@@ -183,12 +183,11 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
           </SegmentPadded>
         </CardCenteredText>
       </Fragment>
-      {
-        errors
-          && (errors.approvalError !== null
-            || errors.transactionError !== null)
-          ? printRetry() : <BlankSpace />
-      }
+      {errors && (errors.approvalError !== null || errors.transactionError !== null) ? (
+        printRetry()
+      ) : (
+        <BlankSpace />
+      )}
     </>
   );
 };

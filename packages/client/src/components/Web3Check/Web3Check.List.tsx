@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../App';
 import { List, Icon } from 'semantic-ui-react';
 import { match, ANY, TAIL } from 'pampy';
-import { isSupportedBrowser } from './StepDescription';
+import AppContext from '../AppContext';
+import { isSupportedBrowser } from '../../utils';
 
-const Check = ({ value, message }) => {
+const Check = ({ value, message }: any) => {
   const iconProps = match(
     value,
     'error',
@@ -31,33 +31,31 @@ const capitalize = s => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-const Checklist = () => {
+const CheckList = () => {
   const {
-    web3Status: {
-      hasProvider,
-      unlocked,
-      accountMatches,
-      networkMatches,
-      targetNetwork
-    }
+    web3Status: { hasProvider, unlocked, accountMatches, networkMatches, targetNetwork }
   }: any = useContext(AppContext);
 
-
+  const matchConditions = [
+    isSupportedBrowser(),
+    hasProvider && unlocked,
+    networkMatches,
+    accountMatches
+  ];
   // prettier-ignore
-  const steps = match([isSupportedBrowser(), hasProvider && unlocked, networkMatches, accountMatches],
-    [false, TAIL],
-      () => ['error', 'pending', 'pending', 'pending'],
+  const steps = match(matchConditions,
+    [false, TAIL], 
+    () => ['error', 'pending', 'pending', 'pending'],
     [true, false, TAIL],
-      () => ['pass', 'user-action', 'pending', 'pending'],
+    () => ['pass', 'user-action', 'pending', 'pending'],
     [true, true, false, TAIL],
-      () => ['pass', 'pass', 'user-action', 'pending'],
+    () => ['pass', 'pass', 'user-action', 'pending'],
     [true, true, true, false],
-      () => ['pass', 'pass', 'pass', 'user-action'],
+    () => ['pass', 'pass', 'pass', 'user-action'],
     [true, true, true, true],
-      () => ['pass', 'pass', 'pass', 'pass'],
+    () => ['pass', 'pass', 'pass', 'pass'],
     ANY,
-      () => ['pending', 'pending', 'pending', 'pending']
-  );
+    () => ['pending', 'pending', 'pending', 'pending']);
 
   const stepsMessage = [
     'Detecting compatible browser',
@@ -66,11 +64,12 @@ const Checklist = () => {
     'Sign message and bind your wallet to your account'
   ];
 
-  const StepsDOM = steps.map((value, index) => (
-    <Check key={index} value={value} message={stepsMessage[index]} />
+  const StepsDOM = steps.map((value, i) => (
+    // eslint-disable-next-line
+    <Check key={`check-${i}`} value={value} message={stepsMessage[i]} />
   ));
 
   return <List>{StepsDOM}</List>;
 };
 
-export default Checklist;
+export default CheckList;

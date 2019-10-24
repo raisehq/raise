@@ -12,7 +12,7 @@ import {
 import Balance from '../Balance';
 import Web3Address from '../Web3Address';
 import theme from '../../theme';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 
 const DesktopHeader = () => {

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { BalanceBox, Title, Value } from './Balance.styles';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import Queryies from '../../helpers/queryies';
 
 const Balance = props => {

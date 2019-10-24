@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Either } from '../utils';
-import useMetaMask from './useMetaMask';
+import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
 
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const metamask = useMetaMask();
+  const metamask = useWallet();
 
   useAsyncEffect(async () => {
     const ready = Either.either(metamask);
@@ -21,9 +21,9 @@ const useDepositContract = () => {
               const HeroTokenContract = await metamask.addContract('HeroToken');
               const DepositContract = await metamask.addContract('Deposit');
               setActiveContract({
-                allowance: (account, spender) => HeroTokenContract.methods.allowance(account, spender).call(),
-                balance: (account) =>
-                  HeroTokenContract.methods.balanceOf(account).call(),
+                allowance: (account, spender) =>
+                  HeroTokenContract.methods.allowance(account, spender).call(),
+                balance: account => HeroTokenContract.methods.balanceOf(account).call(),
                 approveDeposit: async (account, amount) => {
                   return HeroTokenContract.methods
                     .approve(

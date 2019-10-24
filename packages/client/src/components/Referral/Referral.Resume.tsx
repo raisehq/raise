@@ -16,7 +16,7 @@ import {
   RewardMessageSubTitle,
   RewardMessageFriends
 } from './Referral.styles';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 
 const getView = friends => {
   if (friends.length === 0) {

@@ -1,23 +1,25 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../App';
-import Web3Address from './Web3Address';
+import { BrowserView, MobileView } from 'react-device-detect';
+import AppContext from '../AppContext';
+import Web3Address from '../Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
 import { Href } from '../LayoutV2/Layout.styles';
-import { browserName, MobileView, BrowserView } from 'react-device-detect';
-import { ButtonGreen, AddressContainer } from './Web3Check.styles';
-import { StyledAddress, CardDescription, HelpMessage } from './Web3Check.styles';
+import {
+  StyledAddress,
+  CardDescription,
+  HelpMessage,
+  ButtonGreen,
+  AddressContainer
+} from './Web3Check.styles';
+import { isSupportedBrowser } from '../../utils';
 
-const NeedHelp = ({ href }) => (
+const NeedHelp = ({ href }: any) => (
   <HelpMessage>
     <Href target="_blank" href={href}>
       Need help?
     </Href>
   </HelpMessage>
 );
-export const isSupportedBrowser = () =>
-  ['brave', 'chrome', 'chromium', 'firefox', 'opera'].some(supportedBrowser =>
-    browserName.toLowerCase().includes(supportedBrowser)
-  );
 
 const BrowserCompatible = () => (
   <CardDescription>
@@ -67,7 +69,7 @@ const NetworkNotMatch = ({ targetNetwork, currentNetwork }) => (
     <h6>Change the network</h6>
     <p>
       Please switch to one of the following networks in Metamask wallet:
-      <b> {targetNetwork.join(', ')}</b>
+      <b></b>
     </p>
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>

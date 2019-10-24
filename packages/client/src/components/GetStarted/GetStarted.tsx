@@ -11,7 +11,7 @@ import {
   NoSlider
 } from './GetStarted.styles';
 import { Wrapper } from './GetStarted.styles';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import { getGetStarted } from '../../helpers/butter';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 

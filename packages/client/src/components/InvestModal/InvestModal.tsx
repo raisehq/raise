@@ -3,7 +3,7 @@ import daggy from 'daggy';
 // import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
 import { fromWei } from 'web3-utils';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import InvestState from './InvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';

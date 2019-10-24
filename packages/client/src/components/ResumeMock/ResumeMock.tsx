@@ -2,8 +2,7 @@ import React, { useState, useContext } from 'react';
 import get from 'lodash/get';
 import { getWeb3, getContractsDefinition } from '../../utils';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { AppContext } from '../App';
-
+import AppContext from '../AppContext';
 
 const ResumeMock = () => {
   const {
@@ -20,7 +19,6 @@ const ResumeMock = () => {
   }, []);
 
   useAsyncEffect(async () => {
-
     if (web3 && network && heroContracts && account) {
       const netId = await web3.eth.net.getId();
       const BalanceETH = await web3.eth.getBalance(account);
@@ -59,20 +57,20 @@ const ResumeMock = () => {
         kyc: hasKyc,
         dep: hasDeposit
       });
-
     }
   }, [web3, network, heroContracts, account]);
   if (!show) return <></>;
-  return (<>
-    <ul>
-      <li> ETH {info.eth} </li>
-      <li> HTO {info.hto} </li>
-      <li> DAI {info.dai} </li>
-      <li> KYC {info.kyc.toString()} </li>
-      <li> DEP {info.dep.toString()} </li>
-    </ul>
-  </>);
+  return (
+    <>
+      <ul>
+        <li> ETH {info.eth} </li>
+        <li> HTO {info.hto} </li>
+        <li> DAI {info.dai} </li>
+        <li> KYC {info.kyc.toString()} </li>
+        <li> DEP {info.dep.toString()} </li>
+      </ul>
+    </>
+  );
 };
 
 export default ResumeMock;
-

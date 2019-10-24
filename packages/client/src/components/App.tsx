@@ -1,24 +1,24 @@
-import React, { useContext, useEffect, createContext, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { withRouter, Switch } from 'react-router-dom';
-import { match as matches, _ } from 'pampy';
+// import { match as matches, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import { Web3Route } from './Web3Check';
+import { Web3Route } from './Routers';
 import Layout from './Layout';
 import LayoutV2 from './LayoutV2';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
-import Referral from './Referral/index';
 import CreateLoan from './CreateLoan';
 import { RootContext } from '../context';
 import Join from './Join';
 import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
-import Test from './SuggestTest';
+//import Test from './SuggestTest';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
-import useGoogleTagManager from '../hooks/useGoogleTagManager';
+import useWallet from '../hooks/useWallet';
+// import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import LogRocket from 'logrocket';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
@@ -26,19 +26,7 @@ import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
 import LocalData from '../helpers/localData';
 import Queryies from '../helpers/queryies';
-
-export const AppContext = createContext({
-  store: {},
-  actions: {},
-  history: {},
-  web3Status: {},
-  modalRefs: {},
-  webSocket: {},
-  daiWebSocket: {},
-  match: {},
-  onSetGetStarted: {},
-  getStarted: false
-});
+import AppContext from './AppContext';
 
 const App = ({ children, history, match }: any) => {
   const refMode = process.env.REACT_APP_REFERAL === 'true';
@@ -53,7 +41,7 @@ const App = ({ children, history, match }: any) => {
       },
       kyc: { token },
       user: {
-        details: { id, accounttype_id, email, status },
+        details: { id, accounttypeId, email, status },
         cryptoAddress: { address }
       }
     },
@@ -61,25 +49,24 @@ const App = ({ children, history, match }: any) => {
     actions: {
       auth: { onVerifyAuth },
       user: { onGetCryptoAddressByUser, onGetUser, onGetUserFromBC },
-      blockchain: { fetchReferrals },
       kyc: { onInitKyc }
     }
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
-  const web3Status = useWeb3Checker();
+  const wallet = useWallet();
+  let network = 'Not connected';
+  if (wallet) network = wallet.getNetwork();
+  console.log(' NETWORK : ', network);
+  const web3Status = useWeb3Checker(address, network);
 
-  const {
-    hasDeposit: deposited,
-    accountMatches: accMatch,
-    networkMatches: netOk,
-    network
-  } = web3Status;
+  const { hasDeposit: deposited, accountMatches: accMatch, networkMatches: netOk } = web3Status;
   const web3Pass = netOk && accMatch;
   const [webSocket, setWebSocket]: any = useState({});
   const [daiWebSocket, setDaiWebSocket] = useState({});
 
   const onSetGetStarted = () => setGetStarted(!getStarted);
 
+  // Enabling connections
   useEffect(() => {
     if (Object.keys(webSocket).length === 0 && network !== 'Not connected') {
       const webSocketInstance = new UseWebSockets(getGraphWSEndpoint(network), 'graphql-ws');
@@ -126,7 +113,7 @@ const App = ({ children, history, match }: any) => {
         LogRocket.identify(id, {
           id,
           email,
-          accounttype_id,
+          accounttypeId,
           status,
           availWidth: window.innerWidth,
           availHeight: window.innerHeight
@@ -139,66 +126,75 @@ const App = ({ children, history, match }: any) => {
         });
       }
     }
-  }, [logged, id, accounttype_id, email, status]);
+  }, [logged, id, accounttypeId, email, status]);
 
-  useAsyncEffect(async () => {
-    logged && address && network && netOk && fetchReferrals(network);
-  }, [logged, address, network, netOk]);
+  // TODO : DEPRECATED ?
+  // useAsyncEffect(async () => {
+  //   logged && address && network && netOk && fetchReferrals(network);
+  // }, [logged, address, network, netOk]);
 
   useEffect(() => {
-    const isJoin =
-      history.location.pathname.includes('/join') || history.location.pathname.includes('/login');
-    const conditions = {
-      logged,
-      deposited: !!deposited,
-      web3Pass,
-      refMode,
-      isJoin,
-      isLoading
-    };
+    // const isJoin =
+    //   history.location.pathname.includes('/join') || history.location.pathname.includes('/login');
+    // const conditions = {
+    //   logged,
+    //   deposited: !!deposited,
+    //   web3Pass,
+    //   refMode,
+    //   isJoin,
+    //   isLoading
+    // };
 
-    const TagManager = () => {
-      return useGoogleTagManager(
-        id,
-        'www.raise.it',
-        'Wallet',
-        '/verify-web3',
-        'TrafficLight',
-        'dataLayer',
-        'Submit',
-        'Wallet Connect Success'
-      );
-    };
+    // const TagManager = () => {
+    //   return useGoogleTagManager(
+    //     id,
+    //     'www.raise.it',
+    //     'Wallet',
+    //     '/verify-web3',
+    //     'TrafficLight',
+    //     'dataLayer',
+    //     'Submit',
+    //     'Wallet Connect Success'
+    //   );
+    // };
 
     // prettier-ignore
-    matches(conditions,
-      { isLoading: true },
-      () => { },
-      { logged: true, web3Pass: true, deposited: false },
-      () => setTimeout(() => {
-        TagManager();
-        history.push('/deposit')
-      }, 3000),
-      { logged: true, web3Pass: true, deposited: true, refMode: true },
-      () => setTimeout(() => {
-        TagManager();
-        history.push('/referral')
-      }, 3000),
-      { logged: true, web3Pass: true, deposited: true, refMode: false },
-      () => {
-        setTimeout(() => {
-          const params = new URLSearchParams(window['location']['search']);
-          if (params.has('redirect')) {
-            history.push(params.get('redirect'));
-          }
-        }, 3000)
-      },
-      { logged: false, isJoin: false },
-      () => history.push('/join'),
-      _,
-      () => { }
-    );
-  }, [isLoading, logged, web3Pass, id, deposited, history, refMode]);
+    // matches(conditions,
+    //   { isLoading: true },
+    //   () => { },
+    //   { logged: true, web3Pass: true, deposited: false },
+    //   () => setTimeout(() => {
+    //     TagManager();
+    //     history.push('/deposit')
+    //   }, 3000),
+    //   { logged: true, web3Pass: true, deposited: true, refMode: true },
+    //   () => setTimeout(() => {
+    //     TagManager();
+    //     history.push('/referral')
+    //   }, 3000),
+    //   { logged: true, web3Pass: true, deposited: true, refMode: false },
+    //   () => {
+    //     setTimeout(() => {
+    //       const params = new URLSearchParams(window['location']['search']);
+    //       if (params.has('redirect')) {
+    //         history.push(params.get('redirect'));
+    //       }
+    //     }, 3000)
+    //   },
+    //   { logged: false, isJoin: false },
+    //   () => history.push('/join'),
+    //   _,
+    //   () => { }
+    // );
+  }, [
+    isLoading,
+    logged,
+    web3Pass,
+    id,
+    deposited,
+    history,
+    refMode
+  ]);
 
   const componentsByRole = {
     1: {
@@ -234,13 +230,6 @@ const App = ({ children, history, match }: any) => {
         <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
           <Switch>
             <Web3Route layout={LayoutV2} exact path="/deposit" component={Deposit} roles={[2]} />
-            <Web3Route
-              layout={LayoutV2}
-              exact
-              path="/referral"
-              component={Referral}
-              roles={[1, 2]}
-            />
 
             <Web3Route
               marketplace
@@ -255,7 +244,7 @@ const App = ({ children, history, match }: any) => {
               layout={Layout}
               exact
               path="/dashboard"
-              component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
+              component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
               roles={[1, 2]}
             />
             <Web3Route
@@ -263,7 +252,7 @@ const App = ({ children, history, match }: any) => {
               layout={Layout}
               exact
               path="/"
-              component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
+              component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
               roles={[1, 2]}
             />
             <Web3Route
@@ -275,7 +264,6 @@ const App = ({ children, history, match }: any) => {
               roles={[1, 2]}
             />
             <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
-            <LayoutV2 exact path="/test" component={Test} />
             {/* Onboarding */}
             <LayoutV2 exact path="/verify-web3" component={Web3Check} />
             <LayoutV2 exact path="/join" component={Join} />

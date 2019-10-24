@@ -1,19 +1,19 @@
 import { useContext, useState, useEffect } from 'react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import useMetamask from '../../hooks/useMetaMask';
+import useWallet from '../../hooks/useWallet';
 import { getWeb3 } from '../../utils';
 import ERC20 from '../../commons/erc20';
 import { MAX_VALUE } from '../../commons/constants';
 
 import { Stages } from './RepayLoan';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 
 const useRepayment = (loan, open) => {
   const { borrowerDebt, id }: any = loan;
   const {
     web3Status: { account }
   }: any = useContext(AppContext);
-  const metamask = useMetamask();
+  const metamask = useWallet();
   const [approved, setApproved] = useState(false);
   const [error, setError] = useState();
   const [stage, setStage] = useState(Stages.Confirm);

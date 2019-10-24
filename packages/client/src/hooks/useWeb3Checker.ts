@@ -1,142 +1,126 @@
-import { useState, useContext, useEffect } from 'react';
-import useAsyncEffect from './useAsyncEffect';
-import isEqual from 'lodash/isEqual';
+import { useState, useEffect } from 'react';
 import get from 'lodash/get';
-import hasIn from 'lodash/hasIn';
 import { toChecksumAddress } from 'web3-utils';
-import { RootContext } from '../context';
-import { getWeb3, parseNetwork, getContractsDefinition } from '../utils';
-import { Web3State } from '../commons/Web3State';
+import { NULL_ADDRESS } from '../commons/constants';
+// import useAsyncEffect from './useAsyncEffect';
+// import { RootContext } from '../context';
+//
+//import { Web3State } from '../commons/Web3State';
+import useWeb3 from './useWeb3';
+// import useWallet from './useWallet';
+
+// Matches
+const matchAccount = (walledAccount, storedAccount) =>
+  walledAccount &&
+  storedAccount &&
+  toChecksumAddress(walledAccount) === toChecksumAddress(storedAccount);
+const matchNetwork = (targetNetwork, network) => targetNetwork.indexOf(network) !== -1;
 
 // @ts-ignore
-const web3CheckList = window['web3CheckList'] = (
+const web3CheckList = (
   web3,
-  accounts,
-  targetAddress,
+  walletAccounts,
+  storedAccount,
   network,
   targetNetwork,
   hasDeposit
 ) => ({
-  hasProvider: !!get(web3, 'currentProvider', false),
-  isMetamask: !!get(web3, 'currentProvider.isMetaMask', false),
-  unlocked: accounts && !!accounts.length,
-  account: get(accounts, '[0]', null),
-  accountMatches:
-    !!targetAddress &&
-    !!accounts &&
-    !!accounts.length &&
-    toChecksumAddress(accounts[0]) === toChecksumAddress(targetAddress),
+  hasProvider: get(web3, 'currentProvider', false),
+  unlocked: walletAccounts !== undefined && walletAccounts !== NULL_ADDRESS,
+  account: walletAccounts,
+  accountMatches: matchAccount(walletAccounts, storedAccount),
   network,
-  networkMatches: !!targetNetwork.find(x => x === network),
-  targetNetwork, // this need to be set by config/env
+  networkMatches: matchNetwork(targetNetwork, network),
   hasDeposit
 });
 
-const hasDeposited = async (web3, definitions, address) => {
-  const netId = await web3.eth.net.getId();
-  if (!definitions || !address || !web3 || !hasIn(definitions, `address.${netId}`)) {
-    return false;
-  }
-  const contract = new web3.eth.Contract(
-    get(definitions, `abi.Deposit`),
-    get(definitions, `address.${netId}.Deposit`)
-  );
-  const deposited = await contract.methods.hasDeposited(address).call();
-  return deposited;
-};
+// /*const hasDeposited = async (web3, definitions, address) => {
+//   const netId = await web3.eth.net.getId();
+//   if (!definitions || !address || !web3 || !hasIn(definitions, `address.${netId}`)) {
+//     return false;
+//   }
+//   const contract = new web3.eth.Contract(
+//     get(definitions, 'abi.Deposit'),
+//     get(definitions, `address.${netId}.Deposit`)
+//   );
+//   const deposited = await contract.methods.hasDeposited(address).call();
+//   return deposited;
+// };*/
 
-const useWeb3Checker = (): Web3State => {
-  const {
-    store: {
-      user: {
-        cryptoAddress: { address: targetAddress }
-      }
-    }
-  }: any = useContext(RootContext);
-  const web3 = getWeb3();
-  const [contracts, setContracts]: any = useState(null);
-  const [targetNetwork, setTargetNetwork]: any = useState([]);
-  const [definitions, setDefs]: any = useState(null);
-  const [web3State, setWeb3State]: [Web3State, any] = useState(
-    web3CheckList(web3, [], targetAddress, 'Not connected', targetNetwork, false)
+const useWeb3Checker = (storedAccount, targetNetwork) => {
+  const { web3, getPrimaryAccount } = useWeb3();
+  const [web3State, setWeb3State] = useState(
+    web3CheckList(web3, [], NULL_ADDRESS, 'Not connected', 'Not connected', false)
   );
 
-  useAsyncEffect(async () => {
-
-    const contractsDef = { data: await getContractsDefinition() };
-    setContracts(contractsDef);
-    setTargetNetwork(
-      Object.keys(contractsDef.data.address)
-        .map(x => parseNetwork(Number(x)))
-        .filter(availableId => ['mainnet', 'kovan', 'test'].find(id => id === availableId))
-    );
-    setDefs(contractsDef.data);
-  }, []);
+  // useAsyncEffect(async () => {
+  //   const contractsDef = { data: await getContractsDefinition() };
+  //   setContracts(contractsDef);
+  //   setTargetNetwork(
+  //     Object.keys(contractsDef.data.address)
+  //       .map(x => parseNetwork(Number(x)))
+  //       .filter(availableId => ['mainnet', 'kovan', 'test'].find(id => id === availableId))
+  //   );
+  //   setDefs(contractsDef.data);
+  // }, []);
 
   useEffect(() => {
     let accountInterval;
-    const web3 = getWeb3();
 
     const verifyCheckList = async () => {
-      const web3 = getWeb3();
-      try {
-        const accounts = await web3.eth.getAccounts();
-        const netName = parseNetwork(await web3.eth.net.getId());
-        const hasDeposit =
-          accounts && !!accounts.length && (await hasDeposited(web3, definitions, accounts[0]));
-        const newWeb3State = web3CheckList(
-          web3,
-          accounts,
-          targetAddress,
-          netName,
-          targetNetwork,
-          hasDeposit
-        );
-        // Only update state if changes, prevent renders
-        setWeb3State(prevWeb3State =>
-          isEqual(newWeb3State, prevWeb3State) ? prevWeb3State : newWeb3State
-        );
-      } catch (err) {
-        console.error(err);
-        const errorState = web3CheckList(
-          web3,
-          [],
-          targetAddress,
-          'Not connected',
-          targetNetwork,
-          false
-        );
-        // Only update state if changes, prevent renders
-        setWeb3State(prevWeb3State =>
-          isEqual(errorState, prevWeb3State) ? prevWeb3State : errorState
-        );
+      if (web3) {
+        try {
+          // @ts-ignore
+          const walletAccount = await getPrimaryAccount();
+          // const hasDeposit =
+          //   accounts && !!accounts.length && (await hasDeposited(web3, definitions, accounts[0]));
+          const newState = web3CheckList(
+            web3,
+            [],
+            walletAccount,
+            'Not connected',
+            targetNetwork,
+            false
+          );
+          setWeb3State(newState);
+        } catch (err) {
+          console.error('[useWeb3Checker]', err);
+          const errorState = web3CheckList(
+            web3,
+            [],
+            NULL_ADDRESS,
+            'Not connected',
+            targetNetwork,
+            false
+          );
+          setWeb3State(errorState);
+        }
       }
     };
-
-    const defaultCheckList = web3CheckList(
-      web3,
-      [],
-      targetAddress,
-      'Not connected',
-      targetNetwork,
-      false
-    );
-    setWeb3State(prevWeb3State =>
-      isEqual(defaultCheckList, prevWeb3State) ? prevWeb3State : defaultCheckList
-    );
-
-    if (web3 && web3.givenProvider) {
-      accountInterval = setInterval(verifyCheckList, 500);
+    if (targetNetwork) {
+      const defaultCheckList = web3CheckList(
+        web3,
+        [],
+        storedAccount,
+        'Not connected',
+        targetNetwork,
+        false
+      );
+      setWeb3State(defaultCheckList);
+      // @ts-ignore
+      if (web3 && web3.currentProvider) {
+        accountInterval = setInterval(verifyCheckList, 500);
+      }
     }
     return () => {
       if (accountInterval) {
         clearInterval(accountInterval);
       }
     };
-  }, [targetAddress, targetNetwork, definitions]);
+  }, [storedAccount, targetNetwork, web3]);
 
   // return a "check list" to operate with web3
-  return { ...web3State, ...contracts };
+  return web3State;
 };
 
 export default useWeb3Checker;

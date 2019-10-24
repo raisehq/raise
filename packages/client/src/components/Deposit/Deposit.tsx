@@ -6,7 +6,8 @@ import { CardSized } from '../LayoutV2/Layout.styles';
 import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
-import { AppContext } from '../App';
+import useWallet from '../../hooks/useWallet';
+import AppContext from '../AppContext';
 import useImages from '../../hooks/useImages';
 import { toWei } from 'web3-utils';
 import { getWeb3 } from '../../utils';
@@ -44,13 +45,16 @@ const Deposit = (props: any) => {
   const [status, setStatus] = useState(UI.Deposit);
   const heroTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
+  const connection = useWallet();
 
   useEffect(() => {
     if (status !== UI.Success && hasDeposited) {
       setStatus(UI.Success);
     }
   }, [status, hasDeposited]);
-
+  useEffect(() => {
+    connection && console.log(' -----> ', connection.getCurrentProviderName());
+  }, [connection]);
   const TagManager = label => {
     return useGoogleTagManager(
       id,

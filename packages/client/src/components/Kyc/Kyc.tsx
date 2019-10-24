@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Header } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { KYCWrapper, KYCHolder, KYCDisclaimer } from './Kyc.styles';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 
 const KYC = () => {
   const {

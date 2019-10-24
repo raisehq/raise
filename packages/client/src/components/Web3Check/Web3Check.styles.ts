@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { Card, Segment, Button } from 'semantic-ui-react';
 import { OnlyActive } from '../../commons/OnlyActive';
-import Web3Address from './Web3Address';
-
+import Web3Address from '../Web3Address';
 import { device } from '../LayoutV2/breakpoints';
+
 export const StyledAddress = styled(Web3Address)`
   font-size: 14px;
   margin: 0px 0px 0px 10px;
