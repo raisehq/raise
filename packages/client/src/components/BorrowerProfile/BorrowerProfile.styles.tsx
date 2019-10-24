@@ -133,6 +133,8 @@ export const HeaderImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  height: 267px;
+  overflow: hidden;
   flex-wrap: wrap;
   @media screen and ${device.mobileM} {
     justify-content: space-between;

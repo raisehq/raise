@@ -105,7 +105,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
     <Container>
       <BorrowerCard>
         <HeaderImage>
-          <Image size="massive" src={background} />
+          <Image src={background} />
         </HeaderImage>
         <CompanyDetails>
           <HeaderBox>
