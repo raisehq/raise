@@ -1,12 +1,12 @@
 import { useContext, useState, useEffect } from 'react';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
-import useWallet from '../../hooks/useWallet';
-import { getWeb3 } from '../../utils';
-import ERC20 from '../../commons/erc20';
-import { MAX_VALUE } from '../../commons/constants';
+import useAsyncEffect from './useAsyncEffect';
+import useWallet from './useWallet';
+import { getWeb3 } from '../utils';
+import ERC20 from '../commons/erc20';
+import { MAX_VALUE } from '../commons/constants';
 
-import { Stages } from './RepayLoan';
-import AppContext from '../AppContext';
+import { Stages } from '../components/RepayLoan';
+import AppContext from '../components/AppContext';
 
 const useRepayment = (loan, open) => {
   const { borrowerDebt, id }: any = loan;
@@ -61,7 +61,8 @@ const useRepayment = (loan, open) => {
             .approve(DAIProxy.options.address, MAX_VALUE)
             .send({ from: account });
           setApproved(true);
-        } catch (error) {
+        } catch (err) {
+          console.error('[useRepayment] Error: ', err);
           setStage(Stages.Error);
         }
       } else {
@@ -76,7 +77,8 @@ const useRepayment = (loan, open) => {
       try {
         await DAIProxy.methods.repay(id, borrowerDebt).send({ from: account });
         setStage(Stages.Success);
-      } catch (error) {
+      } catch (err) {
+        console.error('[useRepayment] Error: ', err);
         setStage(Stages.Error);
       }
     }

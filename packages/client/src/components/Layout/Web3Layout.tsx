@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import AppContext from '../AppContext';
 
-const Web3Route = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
+const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
   const {
     store: {
       auth: {
@@ -14,7 +14,6 @@ const Web3Route = ({ history, layout: Layout, exact, roles, marketplace, ...rest
     },
     web3Status: { accountMatches: accMatch, networkMatches: netOk }
   }: any = useContext(AppContext);
-  console.log('#### LOGGED : ', logged);
   const web3Pass = netOk && accMatch;
 
   const acceptedRole = (roles !== undefined && roles.indexOf(accounttypeId) > -1) || false;
@@ -36,4 +35,4 @@ const Web3Route = ({ history, layout: Layout, exact, roles, marketplace, ...rest
   return null;
 };
 
-export default withRouter(Web3Route);
+export default withRouter(Web3Layout);

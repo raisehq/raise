@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button, Modal as SemanticModal, Icon } from 'semantic-ui-react';
-import { device } from '../LayoutV2/breakpoints';
+import { device } from '../../commons/breakpoints';
 
 export const ExitButton = styled(Icon)`
   &&& {

@@ -10,7 +10,7 @@ import {
   HeaderProps,
   DividerProps
 } from 'semantic-ui-react';
-import { device, size } from '../LayoutV2/breakpoints';
+import { device, size } from '../../commons/breakpoints';
 import theme from '../../theme';
 
 interface LoanFormValueProps {

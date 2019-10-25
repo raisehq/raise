@@ -1,7 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { browserName } from 'react-device-detect';
 import Web3 from 'web3';
-import { useEffect } from 'react';
 
 const useWeb3 = () => {
   const [connection, setConnection]: any = useState(null);

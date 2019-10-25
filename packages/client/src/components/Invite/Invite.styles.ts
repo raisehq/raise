@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Web3Address from '../Web3Address';
-import { device } from '../LayoutV2/breakpoints';
+import { device } from '../../commons/breakpoints';
 import { Grid } from 'semantic-ui-react';
 
 export const StyledAddress = styled(Web3Address)`

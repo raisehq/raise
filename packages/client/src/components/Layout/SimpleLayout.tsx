@@ -22,10 +22,9 @@ interface IDefaultProps {
   path?: string;
   exact?: boolean;
 }
+const LOGO_PATH = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
 
-const LayoutV2: React.SFC<IDefaultProps> = props => {
-  const { component: Component, ...rest } = props;
-  const logoPath = process.env.REACT_APP_HOST_IMAGES + '/images/logo.svg';
+const SimpleLayout: React.SFC<IDefaultProps> = ({ component: Component, ...rest }: any) => {
   const {
     store: {
       auth: {
@@ -48,7 +47,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 <CenteredContainer pathname={pathname}>
                   {logged && (
                     <HeaderRow>
-                      <Image src={logoPath} />
+                      <Image src={LOGO_PATH} />
                       <HeaderLogout />
                     </HeaderRow>
                   )}
@@ -66,4 +65,4 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
   );
 };
 
-export default LayoutV2;
+export default SimpleLayout;

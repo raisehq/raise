@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { device } from '../LayoutV2/breakpoints';
+import { device } from '../../commons/breakpoints';
 
+// eslint-disable-next-line
 export const LoanInputBox = styled.div`
   background-color: transparent;
   display: flex;

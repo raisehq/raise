@@ -1,9 +1,10 @@
-import React, { useState, createContext } from 'react';
+import React, { useState } from 'react';
 import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
-
-import useRepayment from './useRepayment';
+import RepayLoanContext from './RepayLoan.context';
+// eslint-disable-next-line
+import useRepayment from '../../hooks/useRepayment';
 import ConfirmStage from './stages/Confirm';
 import ProcessingStage from './stages/Processing';
 import ErrorStage from './stages/Retry';
@@ -12,8 +13,6 @@ import SuccessStage from './stages/Success';
 import { Modal } from '../ClaimLoan/ClaimLoan.styles';
 
 import { BorrowerButton, ExitButton } from '../InvestModal/InvestModal.styles';
-
-export const RepayLoanContext = createContext({});
 
 export const Stages = daggy.taggedSum('UI', {
   Confirm: [],

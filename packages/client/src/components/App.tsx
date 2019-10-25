@@ -3,9 +3,9 @@ import { withRouter, Switch } from 'react-router-dom';
 // import { match as matches, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import { Web3Route } from './Routers';
-import Layout from './Layout';
-import LayoutV2 from './LayoutV2';
+import { Web3Route } from './Layout';
+import { MainLayout, SimpleLayout, Web3Layout } from './Layout';
+
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import CreateLoan from './CreateLoan';
 import { RootContext } from '../context';
@@ -16,8 +16,8 @@ import { Web3Check } from '../components/Web3Check';
 //import Test from './SuggestTest';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
-//import useWeb3Checker from '../hooks/useWeb3Checker';
-//import useWallet from '../hooks/useWallet';
+// import useWeb3Checker from '../hooks/useWeb3Checker';
+// import useWallet from '../hooks/useWallet';
 // import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import LogRocket from 'logrocket';
@@ -234,53 +234,53 @@ const App = ({ children, history, match }: any) => {
           <TransitionGroup component={null}>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
               <Switch>
-                <Web3Route
-                  layout={LayoutV2}
+                <Web3Layout
+                  layout={SimpleLayout}
                   exact
                   path="/deposit"
                   component={Deposit}
                   roles={[2]}
                 />
-                <Web3Route
+                <Web3Layout
                   marketplace
-                  layout={Layout}
+                  layout={MainLayout}
                   exact
                   path="/kyc"
                   component={Kyc}
                   roles={[1, 2]}
                 />
-                <Web3Route
+                <Web3Layout
                   marketplace
-                  layout={Layout}
+                  layout={MainLayout}
                   exact
                   path="/dashboard"
                   component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
                   roles={[1, 2]}
                 />
-                <Web3Route
+                <Web3Layout
                   marketplace
-                  layout={Layout}
+                  layout={MainLayout}
                   exact
                   path="/"
                   component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
                   roles={[1, 2]}
                 />
-                <Web3Route
+                <Web3Layout
                   marketplaceSuggesteds
-                  layout={Layout}
+                  layout={MainLayout}
                   exact
                   path="/create-loan"
                   component={CreateLoan}
                   roles={[1, 2]}
                 />
-                <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
+                <MainLayout exact path="/borrowers/:slug" component={BorrowerProfile} />
                 {/* Onboarding */}
-                <LayoutV2 exact path="/verify-web3" component={Web3Check} />
-                <LayoutV2 exact path="/join" component={Join} />
-                <LayoutV2 exact path="/login" component={Join} />
-                <LayoutV2 exact path="/join/verify/token/:token" component={Join} />
-                <LayoutV2 exact path="/join/password/reset/:token" component={Join} />
-                <LayoutV2 exact path="/join/activate/:token" component={Join} />
+                <SimpleLayout exact path="/verify-web3" component={Web3Check} />
+                <SimpleLayout exact path="/join" component={Join} />
+                <SimpleLayout exact path="/login" component={Join} />
+                <SimpleLayout exact path="/join/verify/token/:token" component={Join} />
+                <SimpleLayout exact path="/join/password/reset/:token" component={Join} />
+                <SimpleLayout exact path="/join/activate/:token" component={Join} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>

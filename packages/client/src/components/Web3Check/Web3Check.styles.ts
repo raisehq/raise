@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Card, Segment, Button } from 'semantic-ui-react';
-import { OnlyActive } from '../../commons/OnlyActive';
+import { OnlyActive } from '../../interfaces/OnlyActive';
 import Web3Address from '../Web3Address';
-import { device } from '../LayoutV2/breakpoints';
+import { device } from '../../commons/breakpoints';
 
 export const StyledAddress = styled(Web3Address)`
   font-size: 14px;
@@ -98,14 +98,12 @@ export const NoticeValue = styled.span`
 export const AddressContainer = styled.div`
   margin: 6px;
 `;
+// prettier-ignore
 export const ButtonGreen = styled(Button)`
   &&& {
     width: 100%;
     ${({ disabled }) => (disabled === 'true' ? 'opacity: 0.4 !important;' : '')}
-    ${({ double }) =>
-      double === true
-        ? ' height: 90px;'
-        : 'height: 45px;'}
+    ${({ double }) => (double === true ? ' height: 90px;' : 'height: 45px;')}
     background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
     color: white;
     font: 18px bold;

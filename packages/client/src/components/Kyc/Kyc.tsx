@@ -22,7 +22,7 @@ const KYC = () => {
 
       await onConnect();
 
-      window['idensic'].init(
+      window.idensic.init(
         '#idensic',
         {
           clientId: process.env.REACT_APP_SUMSUB_CLIENTID,

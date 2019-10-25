@@ -66,9 +66,11 @@ const Resume = () => {
     }
   };
 
-  useEffect(() => {
-    network && status === UI.Success && fetchReferrals(network);
-  }, [status, network, fetchReferrals]);
+  useEffect(() => network && status === UI.Success && fetchReferrals(network), [
+    status,
+    network,
+    fetchReferrals
+  ]);
   const balanceWei = fromWei(balance.toString(), 'ether');
   return (
     <ResumeContainer>
@@ -76,7 +78,7 @@ const Resume = () => {
         <Grid.Column>
           <RewardMessage>
             You have earned:
-            <RewardAmount> {balanceWei}</RewardAmount>
+            <RewardAmount>{balanceWei}</RewardAmount>
             <MessageCoin> HERO</MessageCoin>
           </RewardMessage>
         </Grid.Column>
@@ -94,7 +96,7 @@ const Resume = () => {
       </ContainerListFriends>
       <Grid.Row>
         <Grid.Column>
-          <ButtonGreen onClick={onWithdraw} disabled={Number(balanceWei) > 0 ? false : true}>
+          <ButtonGreen onClick={onWithdraw} disabled={!(Number(balanceWei) > 0)}>
             {Number(balanceWei) > 0 ? `Claim ${balanceWei} Tokens` : 'Claim'}
           </ButtonGreen>
         </Grid.Column>
