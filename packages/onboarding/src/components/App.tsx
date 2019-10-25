@@ -34,6 +34,7 @@ export const AppContext = createContext<IContext>(defaultContext);
 
 const Step = daggy.taggedSum('UI', {
   Start: [],
+  StartMini: [],
   Register: [],
   SignIn: [],
   Confirm: [],
@@ -56,15 +57,22 @@ interface IProps {
   mountNode?: any;
   onClose?: () => null;
   closeButton?: boolean;
+  initStep?: number;
 }
 
-const App = ({ history, open, mountNode, blur, onClose, closeButton }: IProps) => {
+const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(defaultContext.credentials);
   const [referralCode, setRefCode] = useState<string>('');
   const [user, setuserCookie] = useCookie('user', {});
   const [auth, setAuthCookie] = useCookie('auth', {});
+
+  useEffect(() => {
+    if (initStep) {
+      setStep(initStep);
+    }
+  }, []);
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
@@ -245,8 +253,14 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton }: IProps) =
   }, []);
 
   const onOnClose = () => {
-    setStep(Step.Start);
-    onClose();
+    if (initStep) {
+      setStep(initStep);
+    } else {
+      setStep(Step.Start);
+    }
+    if (onClose) {
+      onClose();
+    }
   };
 
   const getStep = () =>
@@ -261,6 +275,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton }: IProps) =
           <Register />
         </PanelModal>
       ),
+      StartMini: () => <GetStarted mini />,
       SignIn: () => (
         <SimpleModal>
           <SignIn />
@@ -358,3 +373,5 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton }: IProps) =
 
 //PROVIDE HISTORY PROP
 export default App;
+
+export { Step, App };

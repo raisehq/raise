@@ -25,6 +25,7 @@ export interface BorrowerDetails {
   userId: string;
   account: string;
   foundationDate: string;
+  background: string;
 }
 
 export interface BorrowerProfile {

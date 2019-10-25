@@ -11,7 +11,8 @@ import {
   OnboardLogo,
   OnboardCheckbox,
   OnboardMailingList,
-  OnboardingCell
+  OnboardingCell,
+  MiniBody
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
@@ -20,10 +21,10 @@ import theme from '../../theme';
 import { checkEmail } from '../../services';
 import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
-const GetStarted = () => {
-  const { onSetStep, credentials, onSetCredentials, referralCode } = useContext<
-    IContext
-  >(AppContext);
+const GetStarted = ({ mini }: { mini?: boolean }) => {
+  const { onSetStep, credentials, onSetCredentials, referralCode } = useContext<IContext>(
+    AppContext
+  );
 
   useEffect(() => {
     onSetCredentials('mailingChecked', false);
@@ -57,18 +58,14 @@ const GetStarted = () => {
     );
   }, 500);
 
-  const onAcceptTerms = () => setError({ ...error, terms: !error.terms });
+  const onAcceptTerms = (e, { checked }) => setError({ ...error, terms: !checked });
 
-  const onAcceptMailingList = () => {
-    const mailingChecked = !credentials.mailingChecked;
-    onSetCredentials('mailingChecked', mailingChecked);
+  const onAcceptMailingList = (e, { checked }) => {
+    onSetCredentials('mailingChecked', checked);
   };
 
   const onKeyPress = event => {
-    if (
-      event.key === 'Enter' &&
-      (credentials.email !== '' && !error.validation && !error.exist)
-    ) {
+    if (event.key === 'Enter' && (credentials.email !== '' && !error.validation && !error.exist)) {
       onSetStep('Register')();
     }
   };
@@ -88,10 +85,59 @@ const GetStarted = () => {
     );
   };
 
-  const header = !!referralCode
-    ? 'True friends invited you to Raise'
-    : 'Get started';
+  const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
 
+  if (mini) {
+    return (
+      <MiniBody>
+        <OnboardHeader>Join</OnboardHeader>
+        <OnboardInput>
+          <Input
+            placeholder="Email address"
+            onChange={onChangeEmail}
+            error={error.validation || error.exist}
+            onKeyPress={onKeyPress}
+          />
+          <Icon size="big" name="mail outline" />
+          {error.validation && (
+            <div className="errorText">
+              That format doesn't look right. Make sure there aren't any typos.
+            </div>
+          )}
+          {error.exist && <div className="errorText">This email already exists.</div>}
+        </OnboardInput>
+
+        <OnboardMailingList>
+          <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
+        </OnboardMailingList>
+        <OnboardDisclaimer>
+          <OnboardingCell>
+            <OnboardCheckbox onChange={onAcceptTerms} />
+          </OnboardingCell>
+          <OnboardingCell>
+            By signing up, I agree to Raise
+            <a className="disclaimerBTN" href={`${theme.resources}/toc.pdf`} target="_blank">
+              Terms of Service
+            </a>
+            and
+            <a
+              className="disclaimerBTN"
+              href={`${theme.resources}/privacy-policy.pdf`}
+              target="_blank"
+            >
+              Privacy Policy
+            </a>
+          </OnboardingCell>
+        </OnboardDisclaimer>
+        <OnboardButton
+          disabled={credentials.email === '' || error.validation || error.exist || error.terms}
+          onClick={onSetTagManagerAndStep}
+        >
+          Sign up
+        </OnboardButton>
+      </MiniBody>
+    );
+  }
   return (
     <Fragment>
       <OnboardHeader>
@@ -111,24 +157,16 @@ const GetStarted = () => {
             That format doesn't look right. Make sure there aren't any typos.
           </div>
         )}
-        {error.exist && (
-          <div className="errorText">This email already exists.</div>
-        )}
+        {error.exist && <div className="errorText">This email already exists.</div>}
       </OnboardInput>
       <OnboardButton
-        disabled={
-          credentials.email === '' ||
-          error.validation ||
-          error.exist ||
-          error.terms
-        }
+        disabled={credentials.email === '' || error.validation || error.exist || error.terms}
         onClick={onSetTagManagerAndStep}
       >
         Next
       </OnboardButton>
       <OnboardMailingList>
-        <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive
-        Raise latest updates
+        <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
       </OnboardMailingList>
       <OnboardDisclaimer>
         <OnboardingCell>
@@ -136,11 +174,7 @@ const GetStarted = () => {
         </OnboardingCell>
         <OnboardingCell>
           By signing up, I agree to Raise
-          <a
-            className="disclaimerBTN"
-            href={`${theme.resources}/toc.pdf`}
-            target="_blank"
-          >
+          <a className="disclaimerBTN" href={`${theme.resources}/toc.pdf`} target="_blank">
             Terms of Service
           </a>
           and
