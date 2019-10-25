@@ -1,5 +1,6 @@
 import React from 'react';
 import daggy from 'daggy';
+import 'url-search-params-polyfill';
 import { AccountType } from '@raisehq/components';
 import GetStarted from './SignUp/GetStarted';
 import Register from './SignUp/Register';
