@@ -130,13 +130,13 @@ deploy-prod:
      - npm run ci:run
    artifacts:
      expire_in: 1 week
-    when: always
+     when: always
      paths:
        - packages/testing/cypress/screenshots
        - packages/testing/cypress/videos
        - packages/testing/cypress/snapshots
    only:
-    - LP-814
+     - LP-814
 
 review:
   image: 'python:latest'
