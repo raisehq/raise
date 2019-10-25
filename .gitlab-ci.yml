@@ -136,7 +136,7 @@ cypress-e2e-integration:
        - packages/testing/cypress/videos
        - packages/testing/cypress/snapshots
    only:
-     - master
+     - merge_requests
 
 review:
   image: 'python:latest'
