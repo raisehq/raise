@@ -137,7 +137,7 @@ deploy-prod:
        - packages/testing/cypress/videos
        - packages/testing/cypress/snapshots
    only:
-    - LP-814
+    -LP-814
 
 review:
   image: 'python:latest'
