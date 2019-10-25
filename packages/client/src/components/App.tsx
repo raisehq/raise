@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, createContext, useState, useRef } from 'react';
 import { withRouter, Switch } from 'react-router-dom';
 import { match as matches, _ } from 'pampy';
+import 'url-search-params-polyfill';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { Web3Route } from './Web3Check';
