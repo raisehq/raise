@@ -1,14 +1,13 @@
 describe('LENDER', function () {
   beforeEach(function () {
+    cy.login('lender');
     cy.mockAPI('lender');
     cy.web3('lender');
-    cy.login('lender');
-  
   });
   it('Invest', function () {
     cy.visit(Cypress.env('url'));
     cy.addLoanAndCard('CREATED');
-    cy.wait(8000);
+    cy.wait(4000);
     cy.get('#btn-lender-open').should('have.length', 1);
     cy.get('#btn-lender-open').click();
     cy.wait(4000);
