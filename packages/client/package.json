@@ -93,7 +93,7 @@
     "int": "env-cmd --no-override .env.integration npm run react-start",
     "build": "NODE_OPTIONS='--max-old-space-size=2048' react-scripts build",
     "build:integration": "env-cmd --no-override .env.integration yarn run build",
-    "build:production": "NODE_ENV=production env-cmd --no-override .env.production yarn run build ",
+    "build:production": "env-cmd --no-override .env.production yarn run build ",
     "test": "jest --coverage --coverageDirectory=output/coverage/jest",
     "test:watch": "jest --watchAll --verbose=false",
     "lint": "eslint . --ext .js,.ts,.tsx"
