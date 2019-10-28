@@ -185,6 +185,7 @@ Cypress.Commands.add('mockAPI', function(type) {
             firstname: null,
             lastname: null,
             status: 2,
+            kyc_status: 3,
             accounttype_id: type === 'lender' ? 2 : 1,
             delete: 0,
             phone: null,
