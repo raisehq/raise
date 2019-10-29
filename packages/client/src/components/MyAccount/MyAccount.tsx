@@ -1,5 +1,5 @@
 import React from 'react';
-import { Content, Side, Line, Main } from './MyAccount.styles';
+import { Content, Side, Line, Main, EmailInput } from './MyAccount.styles';
 import { Icon, Button, Input } from 'semantic-ui-react';
 
 const MyAccount = () => {
@@ -15,10 +15,10 @@ const MyAccount = () => {
             Account verified
             <Icon name="circle" />
           </p>
-          <div>
+          <EmailInput>
             <p>Email</p>
             <Input />
-          </div>
+          </EmailInput>
           <p>Username</p>
           <Input />
           <Button>Update account</Button>

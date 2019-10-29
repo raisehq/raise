@@ -41,4 +41,6 @@ export const Line = styled.div`
 
 export const EmailInput = styled.div`
   background: grey;
+  width: 100%;
+  padding: 2px 0px 2px 2px;
 `;
