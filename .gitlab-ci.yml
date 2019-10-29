@@ -1,7 +1,5 @@
 image: node:11
 stages:
-  - build
-  - deploy
   - test
   - review
   - cleanup
@@ -119,8 +117,8 @@ cypress-e2e-integration:
    image: cypress/base:10
    stage: test
    variables:
-     CYPRESS_url: https://app.herodev.es
-     CYPRESS_baseUrl: https://app.herodev.es
+     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+     CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
      CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
    before_script:
      - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
