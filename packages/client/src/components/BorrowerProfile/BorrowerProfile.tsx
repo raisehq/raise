@@ -81,7 +81,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   useAsyncEffect(async () => {
     try {
       const response = await requestPage('borrower_profile', slug);
-      console.log(response);
       const { address: userAccount } = await cryptoAddressByAccount(
         response.companyDetails.userId,
         2

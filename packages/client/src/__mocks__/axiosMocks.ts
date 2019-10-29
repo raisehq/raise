@@ -14,11 +14,9 @@ const MockAxios = (axios: any) => {
       if (config.url === url && config.method.toUpperCase() === method) return true;
       return false;
     });
-    console.log(' MATCH : ', match);
 
     if (match && match.length > 0) {
       const resp = match.pop();
-      console.log(' ### ', resp);
       return [resp[2], resp[3]];
     }
     // Unexpected request, error out

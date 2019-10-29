@@ -10,6 +10,7 @@ interface RowContentProps {
 interface RowWrapperProps {
   notop?: boolean | null;
   small?: boolean | null;
+  big?: boolean | null;
 }
 
 interface GridProps {
@@ -49,7 +50,7 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
 export const CardLogo: any = styled(Image)`
   &&& {
     width: 70px;
-    height: auto;
+    height: 70px;
     background-color: white;
     border-radius: 6px;
     border: 1px solid #cfd0d4;
@@ -93,6 +94,7 @@ export const CardDescription = styled.div`
   font-size: 14px;
   display: block;
 `;
+
 export const CardContent = styled.div<{ children?: any; logo?: any; size?: any }>`
   padding: 20px;
   position: relative;
@@ -144,9 +146,9 @@ export const RowContent = styled.div<RowContentProps>`
   text-align: center;
 `;
 
-export const RowTitle = styled.div`
+export const RowTitle = styled.div<RowWrapperProps>`
+  font-size: ${({ big }) => (big ? '14px' : '10px')};
   color: #5c5d5d;
-  font-size: 10px;
   text-align: center;
 `;
 
@@ -160,12 +162,14 @@ export const Header = styled.div`
   margin-top: 20px;
   margin-bottom: 12px;
 `;
+
 export const HeaderTitle = styled.h1`
   color: #5a5a5a;
   font-size: 12px;
   font-weight: lighter;
   line-height: 14px;
 `;
+
 export const HeaderContent = styled.div<{ fontSize?: any }>`
   color: #3c4251;
   font-size: ${({ fontSize }) => fontSize || '26px'};
@@ -193,6 +197,7 @@ export const SubHeader = styled.div`
   margin-top: 0px;
   margin-bottom: 5px;
 `;
+
 export const SubHeaderTitle = styled.h1`
   color: #5a5a5a;
   font-size: 10px;
@@ -200,6 +205,7 @@ export const SubHeaderTitle = styled.h1`
   margin-bottom: 4px;
   line-height: 14px;
 `;
+
 export const SubHeaderContent = styled.div`
   color: #3c4251;
   font-size: 16px;
@@ -253,6 +259,7 @@ export const ProgressBar: any = styled.div`
     background: ${(props: any) => props.color};
   }
 `;
+
 export const Badge = styled.div`
   width: 80px;
   height: 20px;

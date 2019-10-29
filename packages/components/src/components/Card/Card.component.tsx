@@ -34,11 +34,12 @@ import {
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
-interface RowComponentProps {
+interface RowComponentProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   content: string | number | null;
   contentColor?: string | null;
   small?: boolean | null;
+  big?: boolean | null;
   notop?: boolean | null;
 }
 
@@ -46,10 +47,17 @@ const Context = React.createContext({});
 
 const BadgeComponent = ({ children, color }) => <Badge color={color}>{children}</Badge>;
 
-const RowComponent: React.SFC<RowComponentProps> = ({ title, content, contentColor, small, notop }) => (
-  <Row small={small} notop={notop}>
+const RowComponent: React.SFC<RowComponentProps> = ({
+  title,
+  content,
+  contentColor,
+  small,
+  big,
+  notop
+}) => (
+  <Row small={small} big={big} notop={notop}>
     <RowContent contentColor={contentColor}>{content}</RowContent>
-    <RowTitle>{title}</RowTitle>
+    <RowTitle big={big}>{title}</RowTitle>
   </Row>
 );
 
@@ -64,11 +72,11 @@ const HeaderComponent = ({
   fontSize?: any;
   rest?: any;
 }) => (
-    <Header {...rest}>
-      <HeaderTitle>{title}</HeaderTitle>
-      <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
-    </Header>
-  );
+  <Header {...rest}>
+    <HeaderTitle>{title}</HeaderTitle>
+    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
+  </Header>
+);
 
 const SubHeaderComponent = ({ title, amount, ...rest }) => (
   <SubHeader {...rest}>
@@ -83,7 +91,7 @@ const RoiHeaderComponent = ({ roi }) => (
   </RoiHeader>
 );
 
-const Card = ({ children, size, width }: { children: any; size?: any; width?: any }) => {
+const Card = ({ children, size, width, ...props }: any) => {
   const graph = React.useRef(null);
   const [values, setValues] = React.useState({ ref: null });
 
@@ -91,7 +99,13 @@ const Card = ({ children, size, width }: { children: any; size?: any; width?: an
 
   return (
     <Context.Provider value={values}>
-      <HeroCard ref={ref => (graph.current = ref)} className="heroCard" size={size} width={width}>
+      <HeroCard
+        ref={ref => (graph.current = ref)}
+        {...props}
+        className="heroCard"
+        size={size}
+        width={width}
+      >
         {children}
       </HeroCard>
     </Context.Provider>
@@ -139,24 +153,28 @@ const ContentWithLogo = ({
   logo,
   topRight,
   size,
-  to
+  to,
+  className,
+  style
 }: {
   children?: any;
   logo?: any;
   to?: any;
   topRight?: any;
   size?: any;
+  className?: any;
+  style?: any;
 }) => (
-    <CardContent logo={logo} size={size}>
-      {logo && (
-        <Link className="logoWrap" to={to}>
-          <CardLogo src={logo} />
-        </Link>
-      )}
-      {topRight && <TimeLeft>{topRight}</TimeLeft>}
-      {children}
-    </CardContent>
-  );
+  <CardContent logo={logo} size={size} className={className} style={style}>
+    {logo && (
+      <Link className="logoWrap" to={to}>
+        <CardLogo src={logo} />
+      </Link>
+    )}
+    {topRight && <TimeLeft>{topRight}</TimeLeft>}
+    {children}
+  </CardContent>
+);
 
 const CardImage = ({ src, to }: { src?: any; to?: any }) => (
   <Link to={to}>

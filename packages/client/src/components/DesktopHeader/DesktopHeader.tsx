@@ -26,7 +26,10 @@ const DesktopHeader = () => {
 
   const scrollToTop = () => scroll.scrollToTop();
 
-  const naviagateAndScroll = () => {history.push('/');  scrollToTop()};
+  const naviagateAndScroll = () => {
+    history.push('/');
+    scrollToTop();
+  };
 
   return visible ? (
     <Header>
@@ -41,12 +44,25 @@ const DesktopHeader = () => {
                 Create loan
               </HeaderMenuItem>
             ) : (
-              <Link to="toGetStarted" spy smooth duration={500} offset={HEADER_MENU_SIZE.toGetStarted}>
-                   <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+              <Link
+                to="toGetStarted"
+                spy
+                smooth
+                duration={500}
+                offset={HEADER_MENU_SIZE.toGetStarted}
+              >
+                <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
               </Link>
             )}
             <HeaderMenuItem>
-             <Link onClick={() => history.location.pathname !== '/' && naviagateAndScroll()} to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
+              <Link
+                onClick={() => history.location.pathname !== '/' && naviagateAndScroll()}
+                to="myActivity"
+                spy
+                smooth
+                duration={500}
+                offset={HEADER_MENU_SIZE.myActivity}
+              >
                 My activity
               </Link>
             </HeaderMenuItem>
