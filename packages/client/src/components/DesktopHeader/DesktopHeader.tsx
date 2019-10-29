@@ -14,6 +14,7 @@ import Web3Address from '../Web3Address';
 import theme from '../../theme';
 import { AppContext } from '../App';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
+import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
 
 const DesktopHeader = () => {
@@ -26,7 +27,10 @@ const DesktopHeader = () => {
 
   const scrollToTop = () => scroll.scrollToTop();
 
-  const naviagateAndScroll = () => {history.push('/');  scrollToTop()};
+  const naviagateAndScroll = () => {
+    history.push('/');
+    scrollToTop();
+  };
 
   return visible ? (
     <Header>
@@ -41,12 +45,25 @@ const DesktopHeader = () => {
                 Create loan
               </HeaderMenuItem>
             ) : (
-              <Link to="toGetStarted" spy smooth duration={500} offset={HEADER_MENU_SIZE.toGetStarted}>
-                   <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+              <Link
+                to="toGetStarted"
+                spy
+                smooth
+                duration={500}
+                offset={HEADER_MENU_SIZE.toGetStarted}
+              >
+                <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
               </Link>
             )}
             <HeaderMenuItem>
-             <Link onClick={() => history.location.pathname !== '/' && naviagateAndScroll()} to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
+              <Link
+                onClick={() => history.location.pathname !== '/' && naviagateAndScroll()}
+                to="myActivity"
+                spy
+                smooth
+                duration={500}
+                offset={HEADER_MENU_SIZE.myActivity}
+              >
                 My activity
               </Link>
             </HeaderMenuItem>
@@ -55,6 +72,7 @@ const DesktopHeader = () => {
         <HeaderGroup className="right">
           <Balance />
           <Web3Address />
+          <MyAccountButton />
           <HeaderLogout />
         </HeaderGroup>
       </HeaderWrapper>
