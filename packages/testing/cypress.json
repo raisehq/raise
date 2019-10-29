@@ -6,7 +6,6 @@
   "defaultCommandTimeout": 60000,
   "viewportHeight": 900,
   "viewportWidth": 1440,
-  "reporter": "mochawesome",
   "reporterOptions": {
     "reportDir": "cypress/results",
     "overwrite": false,
