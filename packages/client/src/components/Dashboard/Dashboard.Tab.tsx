@@ -8,7 +8,7 @@ import { getActiveAuctions } from '../../utils/loanUtils';
 import useInterval from '../../hooks/useInterval';
 import LenderAuction from './Dashboard.LenderAuction';
 import LenderLoan from './Dashboard.LenderLoan';
-import SuggestedAuction from './Dashboard.Suggested';
+import SuggestedAuction from '../Cards/Suggested';
 
 const renderedLoans = (auctions, type) =>
   auctions.map(auction => {

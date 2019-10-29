@@ -16,22 +16,25 @@ import { HEADER_MENU_SIZE } from '../../commons/constants';
 
 const navigateToOutsideNewTab = route => () => {
   window.open(route, '_blank');
-}
+};
 
 const commonRoutes = [
   {
+    id: 'help',
     title: 'Help',
     link: '/help',
     new_tab: true,
     onClick: navigateToOutsideNewTab('/help')
   },
   {
+    id: 'privacy-policy',
     title: 'Privacy Policy',
     link: '/privacy-policy',
     new_tab: true,
     onClick: navigateToOutsideNewTab('/privacy-policy')
   },
   {
+    id: 'terms',
     title: 'Terms and Conditions',
     link: '/terms',
     new_tab: true,
@@ -69,15 +72,15 @@ const Menu = () => {
   const toCreateLoan = route => () => {
     history.push(route);
     showMenu(false);
-};
+  };
 
-const toMyActivity = () => {
-  if(history.location.pathname !== '/'){
-    history.push('/');
-    scroll.scrollToTop();
-  }
-  showMenu(false);
-}
+  const toMyActivity = () => {
+    if (history.location.pathname !== '/') {
+      history.push('/');
+      scroll.scrollToTop();
+    }
+    showMenu(false);
+  };
 
   const Menus = {
     1: [
@@ -124,7 +127,7 @@ const toMyActivity = () => {
                 smooth
               >
                 {item.title}
-                </Link>
+              </Link>
             </li>
           )),
     // eslint-disable-next-line react-hooks/exhaustive-deps
