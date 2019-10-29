@@ -1,5 +1,8 @@
 import styled from 'styled-components';
+import { Icon, Input } from 'semantic-ui-react';
 import { device } from '../LayoutV2/breakpoints';
+import { match, _ } from 'pampy';
+import { KycStatus } from '../../commons/kycStatus';
 
 export const Main = styled.div`
   padding: 20px;
@@ -39,8 +42,28 @@ export const Line = styled.div`
   }
 `;
 
-export const EmailInput = styled.div`
-  background: grey;
+export const KYCIcon = styled(Icon)`
+  &&&& {
+    margin-left: 6px;
+  }
+  color: ${value =>
+    match(
+      value,
+      KycStatus.Completed,
+      () => 'rgba(0,218,158,1)',
+      KycStatus.Pending,
+      () => 'rgba(249,188,46,1)',
+      KycStatus.Validating,
+      () => 'rgba(249,188,46,1)',
+      KycStatus.Uncompleted,
+      () => 'red',
+      KycStatus.Error,
+      () => 'red',
+      _,
+      () => 'red'
+    )};
+`;
+
+export const FormInput = styled(Input)`
   width: 100%;
-  padding: 2px 0px 2px 2px;
 `;

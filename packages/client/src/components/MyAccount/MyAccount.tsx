@@ -1,6 +1,7 @@
 import React from 'react';
-import { Content, Side, Line, Main, EmailInput } from './MyAccount.styles';
-import { Icon, Button, Input } from 'semantic-ui-react';
+import { Content, Side, Line, Main, KYCIcon, FormInput } from './MyAccount.styles';
+import { Button } from 'semantic-ui-react';
+import { KycStatus } from '../../commons/kycStatus';
 
 const MyAccount = () => {
   return (
@@ -13,14 +14,12 @@ const MyAccount = () => {
           <p>KYC status</p>
           <p>
             Account verified
-            <Icon name="circle" />
+            <KYCIcon name="circle" value={KycStatus.Error} />
           </p>
-          <EmailInput>
-            <p>Email</p>
-            <Input />
-          </EmailInput>
+          <p>Email</p>
+          <FormInput />
           <p>Username</p>
-          <Input />
+          <FormInput />
           <Button>Update account</Button>
         </Side>
         <Line />
@@ -28,11 +27,11 @@ const MyAccount = () => {
           <h3>Change Password</h3>
           <p>Choose a new password and protect your account.</p>
           <p>Current password</p>
-          <Input />
+          <FormInput placeholder="Type your current password" />
           <p>New password</p>
-          <Input />
+          <FormInput placeholder="Type your new password" />
           <p>Repeat new password</p>
-          <Input />
+          <FormInput placeholder="Type again your new password" />
           <Button>Save</Button>
         </Side>
       </Content>
