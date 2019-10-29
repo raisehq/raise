@@ -1,6 +1,8 @@
 image: node:11
 stages:
   - test
+  - build
+  - deploy
   - review
   - cleanup
 
