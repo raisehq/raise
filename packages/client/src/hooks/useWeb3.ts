@@ -1,24 +1,18 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { browserName } from 'react-device-detect';
 import Web3 from 'web3';
 
 const useWeb3 = () => {
-  const [connection, setConnection]: any = useState(null);
-  const defaultProvider: any = useRef(
+  const connection: any = useRef(
     // @ts-ignore
     window.ethereum ? window.ethereum : (window.web3 && window.web3.currentProvider) || null
   );
 
-  useEffect(() => {
-    // Default connection
-    if (connection === null) setConnection(new Web3(defaultProvider));
-  }, [defaultProvider.current]);
-
   const enableWeb3 = async () => {
-    if (connection.currentProvider) {
+    if (connection.current.currentProvider) {
       try {
-        await connection.currentProvider.enable();
-        connection.currentProvider.autoRefreshOnNetworkChange = false; // prevent Metamask refresh webpage
+        await connection.current.currentProvider.enable();
+        connection.current.currentProvider.autoRefreshOnNetworkChange = false; // prevent Metamask refresh webpage
       } catch (error) {
         console.error('[useWeb3] Error connecting to the wallet.', error);
       }
@@ -28,7 +22,7 @@ const useWeb3 = () => {
     const newWeb3 = new Web3(provider);
     // @ts-ignore
     window.web3 = newWeb3; // Set the new connection to window element
-    setConnection(newWeb3);
+    connection.current = newWeb3;
   };
   const getCurrentProviderName = () => {
     if (!connection) return 'web3-unknown';

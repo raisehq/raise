@@ -5,6 +5,7 @@ import AppContext from '../AppContext';
 import { isSupportedBrowser } from '../../utils';
 
 const Check = ({ value, message }: any) => {
+  console.log(' --------------- > ', value);
   const iconProps = match(
     value,
     'error',
@@ -16,6 +17,7 @@ const Check = ({ value, message }: any) => {
     'pending',
     () => ({ name: 'minus', color: 'grey' })
   );
+
   return (
     <List.Item>
       <List.Content verticalAlign="middle">
@@ -35,13 +37,19 @@ const CheckList = () => {
   const {
     web3Status: { hasProvider, unlocked, accountMatches, networkMatches, targetNetwork }
   }: any = useContext(AppContext);
-
+  console.log();
   const matchConditions = [
     isSupportedBrowser(),
     hasProvider && unlocked,
     networkMatches,
     accountMatches
   ];
+  console.log(' MATCH : ', [
+    isSupportedBrowser(),
+    hasProvider && unlocked,
+    networkMatches,
+    accountMatches
+  ]);
   // prettier-ignore
   const steps = match(matchConditions,
     [false, TAIL], 

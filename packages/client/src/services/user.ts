@@ -131,15 +131,19 @@ export const cryptoAddressByAccount = async (userId, targetAddressId) => {
     const rawResponse = await axios(config);
     switch (rawResponse.status) {
       case 200:
+        console.log('RESPONSE: ', rawResponse.data.data);
+        console.log('targetAddressId: ', targetAddressId);
         // eslint-disable-next-line
-        const {
-          id,
-          herouser_id: herouserId,
-          address,
-          cryprotype_id: cryptotypeId
-        } = rawResponse.data.data.find(d => d.cryptotype_id === targetAddressId);
+        const { id, address, herouser_id: herouserId } = rawResponse.data.data.find(
+          d => d.cryptotype_id === targetAddressId
+        );
 
-        return { id, herouserId, address, cryptotypeId };
+        return {
+          id,
+          herouserId,
+          address,
+          cryptotypeId: targetAddressId
+        };
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }

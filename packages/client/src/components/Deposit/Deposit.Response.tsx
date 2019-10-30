@@ -18,7 +18,7 @@ import {
   ListItemPadding,
   IconSuccess
 } from './Deposit.styles';
-import { CardContent } from '../LayoutV2/Layout.styles';
+import { CardContent } from '../Layout/Layout.styles';
 
 const UI = daggy.taggedSum('UI', {
   Success: [{}],
@@ -56,13 +56,7 @@ const StepNumber = props => {
   }
 };
 
-const getViewResponse = (
-  ui: any,
-  onDeposit,
-  onContinue,
-  onRetry,
-  getImagesUrl
-) =>
+const getViewResponse = (ui: any, onDeposit, onContinue, onRetry, getImagesUrl) =>
   ui.cata({
     Success: () => (
       <Fragment>
@@ -92,9 +86,8 @@ const getViewResponse = (
             <CardTitle>Lender Subscription</CardTitle>
             <CardSubtitle>
               <p>
-                In order to access Raise, you will need to complete the
-                membership deposit. You will be able to unlock the deposit at
-                anytime.
+                In order to access Raise, you will need to complete the membership deposit. You will
+                be able to unlock the deposit at anytime.
               </p>
             </CardSubtitle>
           </CardCenteredText>

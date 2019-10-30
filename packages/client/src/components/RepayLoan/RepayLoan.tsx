@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
-import RepayLoanContext from './RepayLoan.context';
-// eslint-disable-next-line
+import { RepayLoanContext, Stages } from './RepayLoan.context';
 import useRepayment from '../../hooks/useRepayment';
 import ConfirmStage from './stages/Confirm';
 import ProcessingStage from './stages/Processing';
@@ -14,14 +12,7 @@ import { Modal } from '../ClaimLoan/ClaimLoan.styles';
 
 import { BorrowerButton, ExitButton } from '../InvestModal/InvestModal.styles';
 
-export const Stages = daggy.taggedSum('UI', {
-  Confirm: [],
-  Processing: [],
-  Success: [],
-  Error: []
-});
-
-const RepayLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
+const RepayLoanCTA: React.SFC<InvestModalProps> = ({ loan }: any) => {
   const [open, setOpen] = useState(false);
   const { approved, stage, setStage, ...rest }: any = useRepayment(loan, open);
 
@@ -33,8 +24,8 @@ const RepayLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
     setOpen(false);
   };
 
-  const getStage = stage => {
-    return stage.cata({
+  const getStage = currentStage => {
+    return currentStage.cata({
       Confirm: () => <ConfirmStage />,
       Processing: () => <ProcessingStage />,
       Success: () => <SuccessStage />,

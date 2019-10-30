@@ -4,8 +4,7 @@ import useWallet from './useWallet';
 import { getWeb3 } from '../utils';
 import ERC20 from '../commons/erc20';
 import { MAX_VALUE } from '../commons/constants';
-
-import { Stages } from '../components/RepayLoan';
+import { Stages } from '../components/RepayLoan/RepayLoan.context';
 import AppContext from '../components/AppContext';
 
 const useRepayment = (loan, open) => {

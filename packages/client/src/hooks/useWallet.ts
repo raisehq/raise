@@ -9,32 +9,32 @@ import { parseNetwork } from '../utils';
 
 const useWallet = () => {
   const [wallet, setWallet]: any = useState(null);
-  const [heroContracts, setHeroContracts]: any = useState(null);
+  const heroContracts: any = useRef(null);
   const contracts = useRef({});
   const { web3, getPrimaryAccount } = useWeb3();
   useAsyncEffect(async () => {
-    setHeroContracts(await getContractsDefinition());
+    heroContracts.current = await getContractsDefinition();
   }, []);
 
   useEffect(() => {
     if (web3 && heroContracts) {
       setWallet({
-        heroContracts,
+        heroContracts: heroContracts.current,
         isConnected: web3.eth.net.isListening,
         getNetwork: () => {
-          console.log(' GET NETWORK ', heroContracts);
-          return Object.keys(heroContracts.address)
+          console.log(' GET NETWORK ', heroContracts.current);
+          return Object.keys(heroContracts.current.address)
             .map(x => parseNetwork(Number(x)))
             .filter(availableId => ['mainnet', 'kovan', 'test'].find(id => id === availableId));
         },
         addContract: async (name: string) => {
           const netId = await web3.eth.net.getId();
-          if (!hasIn(heroContracts, `address.${netId}.${name}`)) {
+          if (!hasIn(heroContracts.current, `address.${netId}.${name}`)) {
             throw new Error(`contract not found in current network ${netId}`);
           }
           const contract = new web3.eth.Contract(
-            get(heroContracts, `abi.${name}`),
-            get(heroContracts, `address.${netId}.${name}`)
+            get(heroContracts.current, `abi.${name}`),
+            get(heroContracts.current, `address.${netId}.${name}`)
           );
           contracts.current = { ...contract.current, [name]: contract };
           return contract;
@@ -43,10 +43,13 @@ const useWallet = () => {
           if (!address || !isAddress(address)) {
             throw new Error('address not valid or null');
           }
-          if (!hasIn(heroContracts, `abi.${name}`)) {
+          if (!hasIn(heroContracts.current, `abi.${name}`)) {
             throw new Error(`contract not found in abi metadata list`);
           }
-          const contract = new web3.eth.Contract(get(heroContracts, `abi.${name}`), address);
+          const contract = new web3.eth.Contract(
+            get(heroContracts.current, `abi.${name}`),
+            address
+          );
           contracts.current = { ...contract.current, [name]: contract };
           return contract;
         },
@@ -57,7 +60,7 @@ const useWallet = () => {
         getPrimaryAccount
       });
     }
-  }, [web3, heroContracts]);
+  }, [web3, heroContracts.current]);
 
   return wallet;
 };

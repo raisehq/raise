@@ -82,6 +82,7 @@ export default (dispatch: any, state: any) => {
       LocalData.remove('auth');
       Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
       Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
+      dispatch({ type: 'AUTH_TOKEN_VERIFIED_FAILED' });
     }
   };
 

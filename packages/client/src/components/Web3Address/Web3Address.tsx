@@ -5,16 +5,21 @@ import AppContext from '../AppContext';
 
 const Web3Address = props => {
   const {
-    web3Status: { networkMatches, network, account }
+    store: {
+      config: { network },
+      user: {
+        cryptoAddress: { address }
+      }
+    }
   }: any = useContext(AppContext);
-  console.log('ADDRESS ', account);
-  const iconColor = networkMatches ? 'green' : 'red';
+  // console.log('ADDRESS ', address);
+  const iconColor = true ? 'green' : 'red';
   const getShortAddress = useCallback(
     () =>
-      account && account.lenght > 0
-        ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}`
+      address && address.lenght > 0
+        ? `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
         : '0x0000...0000',
-    [account]
+    [address]
   );
 
   return (

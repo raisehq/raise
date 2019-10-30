@@ -21,7 +21,7 @@ const KYC = () => {
       const { id } = store.user.details;
 
       await onConnect();
-
+      // @ts-ignore
       window.idensic.init(
         '#idensic',
         {
@@ -52,9 +52,8 @@ const KYC = () => {
             'PRK'
           ]
         },
-        function(messageType, payload) {
-          console.log('[IDENSIC DEMO] Idensic message:', messageType, payload);
-        }
+        (messageType, payload) =>
+          console.log('[IDENSIC DEMO] Idensic message:', messageType, payload)
       );
     }
   }, [history, token]);
@@ -67,7 +66,7 @@ const KYC = () => {
           Please fill in your personal information and upload your documents for our compliance
           officers to review and approve your account. This process will be held by a third party.
         </KYCDisclaimer>
-        <div id="idensic"></div>
+        <div id="idensic" />
       </KYCHolder>
     </KYCWrapper>
   );

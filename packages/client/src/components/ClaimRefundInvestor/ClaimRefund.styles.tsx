@@ -120,7 +120,7 @@ export const ResumeItemBoxBig = styled.div`
     color: #3c4251;
   }
 `;
-
+// eslint-disable-next-line
 export const ClaimButton = styled(LenderButton)`
   &&& {
     margin: 20px 0px 0px 0px;
@@ -128,6 +128,7 @@ export const ClaimButton = styled(LenderButton)`
     width: 100%;
     font-size: 16px;
     color: #ffffff;
+
     background: ${({ loading }) =>
       loading ? '#eff4f7' : 'linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%)'};
   }

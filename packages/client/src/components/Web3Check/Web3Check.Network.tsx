@@ -5,9 +5,9 @@ import AppContext from '../AppContext';
 // Minor draft, waiting until UI prototype
 const Web3Network = () => {
   const {
-    web3Status: { networkMatches, network }
+    web3Status: { network }
   }: any = useContext(AppContext);
-  const iconColor = networkMatches ? 'green' : 'red';
+  const iconColor = !network ? 'green' : 'red';
 
   return (
     <Label>

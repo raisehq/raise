@@ -4,7 +4,6 @@ const AppContext = createContext({
   store: {},
   actions: {},
   history: {},
-  web3Status: {},
   modalRefs: {},
   webSocket: {},
   daiWebSocket: {},

@@ -3,7 +3,7 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import AppContext from '../AppContext';
 import Web3Address from '../Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
-import { Href } from '../LayoutV2/Layout.styles';
+import { Href } from '../Layout/Layout.styles';
 import {
   StyledAddress,
   CardDescription,
@@ -44,7 +44,7 @@ const BrowserCompatible = () => (
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
-
+// @ts-ignore
 const ProviderErrorNotice = () => (
   <CardDescription>
     <p>Install a digital wallet like Metamask to continue.</p>
@@ -52,7 +52,7 @@ const ProviderErrorNotice = () => (
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
-
+// @ts-ignore
 const AccountLockedNotice = () => {
   const { enableWeb3 } = useWeb3();
   return (
@@ -64,7 +64,8 @@ const AccountLockedNotice = () => {
   );
 };
 
-const NetworkNotMatch = ({ targetNetwork, currentNetwork }) => (
+// @ts-ignore
+const NetworkNotMatch = ({ targetNetwork, currentNetwork }: any) => (
   <CardDescription>
     <h6>Change the network</h6>
     <p>
@@ -74,8 +75,8 @@ const NetworkNotMatch = ({ targetNetwork, currentNetwork }) => (
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
-
-const AccountNotVerified = ({ currentAddress, uploadSignature }) => (
+// @ts-ignore
+const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
   <CardDescription>
     <p>
       Check MetaMask and sign a message to bind this address to your Raise account. You will be able
@@ -91,8 +92,8 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }) => (
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
-
-const AccountNotMatchNotice = ({ verifiedAddress }) => (
+// @ts-ignore
+const AccountNotMatchNotice = ({ verifiedAddress }: any) => (
   <CardDescription>
     <h6>Address does not match</h6>
     <p>Change your current address to your binded Raise address below.</p>
@@ -113,21 +114,15 @@ const Success = () => (
 );
 
 const CurrentNotice = () => {
+  // @ts-ignore
   const {
-    web3Status: {
-      hasProvider,
-      unlocked,
-      accountMatches,
-      networkMatches,
-      network,
-      targetNetwork,
-      account
-    },
     actions: {
+      // @ts-ignore
       blockchain: { uploadSignature }
     },
     store: {
       user: {
+        // @ts-ignore
         cryptoAddress: { address: verifiedAddress }
       }
     }
@@ -137,21 +132,21 @@ const CurrentNotice = () => {
     return <BrowserCompatible />;
   }
 
-  if (!hasProvider) {
-    return <ProviderErrorNotice />;
-  }
-  if (!unlocked) {
-    return <AccountLockedNotice />;
-  }
-  if (!networkMatches) {
-    return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={network} />;
-  }
-  if (!verifiedAddress) {
-    return <AccountNotVerified currentAddress={account} uploadSignature={uploadSignature} />;
-  }
-  if (!accountMatches) {
-    return <AccountNotMatchNotice verifiedAddress={verifiedAddress} />;
-  }
+  // if (!hasProvider) {
+  //   return <ProviderErrorNotice />;
+  // }
+  // if (!unlocked) {
+  //   return <AccountLockedNotice />;
+  // }
+  // if (!networkMatches) {
+  //   return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={network} />;
+  // }
+  // if (!verifiedAddress) {
+  //   return <AccountNotVerified currentAddress={account} uploadSignature={uploadSignature} />;
+  // }
+  // if (!accountMatches) {
+  //   return <AccountNotMatchNotice verifiedAddress={verifiedAddress} />;
+  // }
   return <Success />;
 };
 

@@ -94,21 +94,22 @@ const Menu = () => {
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
 
   const getMenu = useCallback(
-    links =>
-      !links || !links.length
-        ? []
-        : links.map(item => (
-            <li key={item.id} className={pathname === item.link ? 'active' : 'non-active'}>
-              <Link
-                to={item.link}
-                onClick={item.onClick ? item.onClick : toRoute}
-                target={item.new_tab ? '_blank' : ''}
-              >
-                {item.title}
-              </Link>
-            </li>
-          )),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    (links = []) =>
+      links.map((item, i) => (
+        // eslint-disable-next-line
+        <li key={`menu-li-${i}`} className={pathname === item.link ? 'active' : 'non-active'}>
+          <Link
+            // eslint-disable-next-line
+            key={`menu-link-${i}`}
+            to={item.link}
+            onClick={item.onClick ? item.onClick : toRoute}
+            target={item.new_tab ? '_blank' : ''}
+          >
+            {item.title}
+          </Link>
+        </li>
+      )),
+    // eslint-disable-next-line
     [accounttype_id, pathname]
   );
 

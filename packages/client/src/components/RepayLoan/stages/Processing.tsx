@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import { match, ANY } from 'pampy';
 import { List, Grid } from 'semantic-ui-react';
-import RepayLoanContext from '../RepayLoan.context';
+import { RepayLoanContext } from '../RepayLoan.context';
 import { getCalculations } from '../../../utils/loanUtils';
 import {
   Header,

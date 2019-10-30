@@ -1,28 +1,27 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
+import { toWei } from 'web3-utils';
 import { getReferralAddress } from '../../services/user';
 import { StyledAddress as Web3Address } from './Deposit.styles';
-import { CardSized } from '../LayoutV2/Layout.styles';
+import { CardSized, CardContent } from '../Layout/Layout.styles';
 import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
-import useWallet from '../../hooks/useWallet';
 import AppContext from '../AppContext';
 import useImages from '../../hooks/useImages';
-import { toWei } from 'web3-utils';
 import { getWeb3 } from '../../utils';
-import { CardContent } from '../LayoutV2/Layout.styles';
+// eslint-disable-next-line
 import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
-const switchDepositMethod = async (depositContract, account, referrer_code) => {
+const switchDepositMethod = async (depositContract, account, referrerCode) => {
   const defaultMethod = {
     depositMethod: depositContract.deposit,
     params: [account]
   };
-  if (!referrer_code) {
+  if (!referrerCode) {
     return defaultMethod;
   }
-  const [{ address: referrerAddress }] = await getReferralAddress(referrer_code);
+  const [{ address: referrerAddress }] = await getReferralAddress(referrerCode);
   if (referrerAddress && referrerAddress) {
     return {
       depositMethod: depositContract.depositWithReferral,
@@ -32,11 +31,12 @@ const switchDepositMethod = async (depositContract, account, referrer_code) => {
   return defaultMethod;
 };
 
-const Deposit = (props: any) => {
+const Deposit = () => {
   const {
     history,
     store: {
       user: {
+        // eslint-disable-next-line
         details: { id, referrer_code }
       }
     },
@@ -45,16 +45,13 @@ const Deposit = (props: any) => {
   const [status, setStatus] = useState(UI.Deposit);
   const heroTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
-  const connection = useWallet();
 
   useEffect(() => {
     if (status !== UI.Success && hasDeposited) {
       setStatus(UI.Success);
     }
   }, [status, hasDeposited]);
-  useEffect(() => {
-    connection && console.log(' -----> ', connection.getCurrentProviderName());
-  }, [connection]);
+
   const TagManager = label => {
     return useGoogleTagManager(
       id,
@@ -94,7 +91,7 @@ const Deposit = (props: any) => {
   };
 
   const handleContinue = async () => {
-    const refMode = process.env.REACT_APP_REFERAL === 'true' ? true : false;
+    const refMode = process.env.REACT_APP_REFERAL === 'true';
 
     if (history && refMode) {
       history.push('/referral');
