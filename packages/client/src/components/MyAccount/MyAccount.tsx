@@ -1,6 +1,16 @@
 import React from 'react';
-import { Content, Side, Line, Main, KYCIcon, FormInput } from './MyAccount.styles';
-import { Button } from 'semantic-ui-react';
+import {
+  Content,
+  Side,
+  Line,
+  Main,
+  KYCIcon,
+  FormInput,
+  EmailBox,
+  Label,
+  Submit,
+  KycTitle
+} from './MyAccount.styles';
 import { KycStatus } from '../../commons/kycStatus';
 
 const MyAccount = () => {
@@ -11,28 +21,30 @@ const MyAccount = () => {
         <Side>
           <h3>Profile</h3>
           <p>Edit and update your information.</p>
-          <p>KYC status</p>
+          <KycTitle>KYC status</KycTitle>
           <p>
             Account verified
             <KYCIcon name="circle" value={KycStatus.Error} />
           </p>
-          <p>Email</p>
+          <EmailBox>
+            <p>Email</p>
+            <p>test@hero-fintech.com</p>
+          </EmailBox>
+          <Label>Username</Label>
           <FormInput />
-          <p>Username</p>
-          <FormInput />
-          <Button>Update account</Button>
+          <Submit>Update account</Submit>
         </Side>
         <Line />
         <Side>
           <h3>Change Password</h3>
           <p>Choose a new password and protect your account.</p>
-          <p>Current password</p>
+          <Label>Current password</Label>
           <FormInput placeholder="Type your current password" />
-          <p>New password</p>
+          <Label>New password</Label>
           <FormInput placeholder="Type your new password" />
-          <p>Repeat new password</p>
+          <Label>Repeat new password</Label>
           <FormInput placeholder="Type again your new password" />
-          <Button>Save</Button>
+          <Submit>Save</Submit>
         </Side>
       </Content>
     </Main>

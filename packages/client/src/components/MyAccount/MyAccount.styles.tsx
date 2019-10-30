@@ -3,14 +3,22 @@ import { Icon, Input } from 'semantic-ui-react';
 import { device } from '../LayoutV2/breakpoints';
 import { match, _ } from 'pampy';
 import { KycStatus } from '../../commons/kycStatus';
+import { ButtonGreen } from '../ClaimLoan/ClaimLoan.styles';
 
 export const Main = styled.div`
+  color: rgba(90, 90, 90, 1);
   padding: 20px;
   background: white;
   border-radius: 4px;
   margin: 0px 0px;
 
-  @media screen and ${device.laptopS} {
+  h1,
+  h2,
+  h3 {
+    color: rgba(60, 66, 81, 1);
+  }
+
+  @media screen and ${device.tablet} {
     margin: 0px 20vh;
   }
 `;
@@ -21,23 +29,27 @@ export const Content = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
 
-  @media screen and ${device.laptopS} {
+  @media screen and ${device.tablet} {
     justify-content: space-between;
   }
 `;
 
 export const Side = styled.div`
-  width: 260px;
+  width: 100%;
+  padding: 0px 10px;
+  @media screen and ${device.tablet} {
+    width: 260px;
+  }
 `;
 
 export const Line = styled.div`
   display: none;
-  height: 300px;
+  height: 400px;
   width: 1px;
   margin: 0px 10px;
   background: rgba(209, 210, 214, 1);
 
-  @media screen and ${device.laptopS} {
+  @media screen and ${device.laptop} {
     display: block;
   }
 `;
@@ -66,4 +78,33 @@ export const KYCIcon = styled(Icon)`
 
 export const FormInput = styled(Input)`
   width: 100%;
+`;
+
+export const EmailBox = styled.div`
+  padding: 4px;
+  background-color: rgba(245, 245, 245, 1);
+  p:first-child {
+    margin-bottom: 4px;
+  }
+`;
+
+export const KycTitle = styled.p`
+  font-size: 12px;
+  margin-bottom: 4px;
+`;
+
+export const Label = styled.p`
+  margin-top: 24px;
+  margin-bottom: 4px;
+  font-weight: bold;
+`;
+
+export const Submit = styled(ButtonGreen)`
+  &&&& {
+    width: 155px;
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    font-weight: 300;
+    margin: 30px 0px;
+  }
 `;
