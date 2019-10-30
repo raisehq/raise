@@ -18,8 +18,16 @@ export const Main = styled.div`
     color: rgba(60, 66, 81, 1);
   }
 
+  h1:first-child {
+    margin-bottom: 19px;
+  }
+
+  h3 {
+    margin-bottom: 4px;
+  }
+
   @media screen and ${device.tablet} {
-    margin: 0px 20vh;
+    margin: 0px 10vh;
   }
 `;
 
@@ -31,14 +39,15 @@ export const Content = styled.div`
 
   @media screen and ${device.tablet} {
     justify-content: space-between;
+    align-items: flex-start;
   }
 `;
 
 export const Side = styled.div`
   width: 100%;
-  padding: 0px 10px;
-  @media screen and ${device.tablet} {
-    width: 260px;
+
+  @media screen and ${device.laptop} {
+    width: 347px;
   }
 `;
 
@@ -46,7 +55,7 @@ export const Line = styled.div`
   display: none;
   height: 400px;
   width: 1px;
-  margin: 0px 10px;
+  margin: 0px 1vh;
   background: rgba(209, 210, 214, 1);
 
   @media screen and ${device.laptop} {
@@ -88,9 +97,13 @@ export const EmailBox = styled.div`
   }
 `;
 
-export const KycTitle = styled.p`
+export const ReadTitle = styled.p`
   font-size: 12px;
   margin-bottom: 4px;
+
+  & + p {
+    margin-bottom: 19px;
+  }
 `;
 
 export const Label = styled.p`
