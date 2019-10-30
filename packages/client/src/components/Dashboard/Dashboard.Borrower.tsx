@@ -49,7 +49,7 @@ const Dashboard = () => {
       const callback = onGetLoansByAccountSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket, address, onGetLoansByAccountSubscription]);
+  }, [webSocket, address]);
 
   useEffect(() => {
     if (webSocket) {
@@ -60,7 +60,7 @@ const Dashboard = () => {
       const callback = onGetLiveAuctionsByAccountSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket, address, onGetLiveAuctionsByAccountSubscription]);
+  }, [webSocket, address]);
 
   return (
     <DashboardWrapper>

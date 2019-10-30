@@ -65,7 +65,7 @@ export const getDesiredTime = (seconds, type?) =>
 const defaultZero = numeral(0).format();
 
 export const calculateFromWei = number =>
-  number ? numeral(fromWei(number.toString(), 'ether')).format(numeralFormat) : defaultZero;
+  number ? numeral(Number(fromWei(number.toString(), 'ether'))).format(numeralFormat) : defaultZero;
 
 export const calculateTimes = auction => {
   try {

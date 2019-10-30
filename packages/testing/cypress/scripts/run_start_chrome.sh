@@ -48,7 +48,7 @@ DIRECTORY="contracts"
 
 if [ ! -d "$DIRECTORY" ]; then
   # Control will enter here if $DIRECTORY doesn't exist.
-  git clone https://gitlab.com/raisehq/contracts-solidity --branch LP-666-fix-bug ./contracts > "/dev/null" 2>&1
+  git clone https://gitlab.com/raisehq/contracts-solidity --branch integration ./contracts > "/dev/null" 2>&1
   cd contracts
   echo "- Install dependencies"
   npm i 

@@ -13,7 +13,6 @@ const toCamelCase = (v, k: string) => camelCase(k);
 
 const sanitizeValue = fields => (v, k) => {
   if (fields.includes(k)) {
-    console.log('Sanitizing...');
     return staticHtmlToReact.parse(DOMPurify.sanitize(v));
   }
   return v;

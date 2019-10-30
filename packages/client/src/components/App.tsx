@@ -104,7 +104,7 @@ const App = ({ children, history, match }: any) => {
       const callback = onGetUserFromBC;
       webSocket.webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket, onGetUserFromBC, address]);
+  }, [webSocket, address]);
 
   useAsyncEffect(async () => {
     if (logged) {
