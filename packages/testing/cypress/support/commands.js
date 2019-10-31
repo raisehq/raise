@@ -102,6 +102,7 @@ Cypress.Commands.add('login', function(type, env = 'local') {
       email: 'noreply@raise.it',
       firstname: null,
       lastname: null,
+      kyc_status: 3,
       status: 2,
       accounttype_id: type === 'lender' ? 2 : 1,
       delete: 0,
@@ -147,10 +148,10 @@ Cypress.Commands.add('mockAPI', function(type) {
     const user = Cypress.env('user');
 
     win.AxiosMockResponses = [
-      ['POST', 'https://int.herodev.es/api/jwt/verify', 200, { mock: true, success: true }],
+      ['POST', 'https://api.herodev.es/api/jwt/verify', 200, { mock: true, success: true }],
       [
         'GET',
-        'https://int.herodev.es/api/cryptoaddress/user/user:12345',
+        'https://api.herodev.es/api/cryptoaddress/user/user:12345',
         200,
         {
           mock: true,
@@ -170,7 +171,7 @@ Cypress.Commands.add('mockAPI', function(type) {
       ],
       [
         'PUT',
-        'https://int.herodev.es/api/users/user:12345',
+        'https://api.herodev.es/api/users/user:12345',
         200,
         {
           mock: true,
@@ -184,6 +185,7 @@ Cypress.Commands.add('mockAPI', function(type) {
             firstname: null,
             lastname: null,
             status: 2,
+            kyc_status: 3,
             accounttype_id: type === 'lender' ? 2 : 1,
             delete: 0,
             phone: null,

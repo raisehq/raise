@@ -3,3 +3,5 @@ export const MAX_VALUE =
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 export const HEADER_MENU_SIZE = { myActivity: -100, toGetStarted: -80 };
+
+export const DAI_ADDRESS = '0xf5dce57282a584d2746faf1593d3121fcac444dc';

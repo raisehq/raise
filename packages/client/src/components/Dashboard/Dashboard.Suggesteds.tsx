@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import daggy from 'daggy';
-import Suggested from './Dashboard.Suggested';
+import Suggested from '../Cards/Suggested';
 import { getActiveAuctions } from '../../utils/loanUtils';
 import { SuggestedContainer, NoResults } from './Dashboard.styles';
 import useInterval from '../../hooks/useInterval';

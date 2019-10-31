@@ -28,7 +28,6 @@ const useBorrowerInfo = borrowerAddress => {
       const response = await findOne('companies', {
         'fields.ethereum_address': borrowerAddress
       });
-      console.log(response);
       setCompany(response);
     } catch (error) {
       console.error(error);
