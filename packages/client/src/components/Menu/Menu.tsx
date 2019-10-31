@@ -13,6 +13,7 @@ import {
 } from './Menu.styles';
 import { AppContext } from '../App';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
+import theme from '../../theme';
 
 const navigateToOutsideNewTab = route => () => {
   window.open(route, '_blank');
@@ -24,21 +25,21 @@ const commonRoutes = [
     title: 'Help',
     link: '/help',
     new_tab: true,
-    onClick: navigateToOutsideNewTab('/help')
+    onClick: navigateToOutsideNewTab('https://raise.it/help')
   },
   {
     id: 'privacy-policy',
     title: 'Privacy Policy',
     link: '/privacy-policy',
     new_tab: true,
-    onClick: navigateToOutsideNewTab('/privacy-policy')
+    onClick: navigateToOutsideNewTab(`${theme.resources}/privacy-policy.pdf`)
   },
   {
     id: 'terms',
     title: 'Terms and Conditions',
     link: '/terms',
     new_tab: true,
-    onClick: navigateToOutsideNewTab('/terms')
+    onClick: navigateToOutsideNewTab(`${theme.resources}/toc.pdf`)
   }
 ];
 
