@@ -77,7 +77,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
       >
         {buttonText}
       </LenderButton>
-      <Modal open={open} onClose={closeModal} mountNode={modalRefs.current}>
+      <Modal open={open} size="small" onClose={closeModal} mountNode={modalRefs.current}>
         <ModalContent>{getInvestAction(stage)}</ModalContent>
       </Modal>
     </>
