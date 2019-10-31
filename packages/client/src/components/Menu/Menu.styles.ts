@@ -53,7 +53,7 @@ export const RaiseMenu = styled(SemanticMenu)`
     visibility: hidden;
     background: ${theme.colors.background};
     color: white;
-    position: absolute;
+    position: fixed;
     top: 0px;
     right: 60em;
     height: 100%;
