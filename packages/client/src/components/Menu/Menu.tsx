@@ -101,7 +101,7 @@ const Menu = () => {
       {
         id: 'lender-get-started',
         title: 'Get started',
-        link: 'myActivity',
+        link: 'toGetStarted',
         onClick: toGetStarted
       },
       {

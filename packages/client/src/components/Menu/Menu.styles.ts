@@ -138,7 +138,7 @@ export const MobileMenu = styled(SemanticMenu)`
     width: 100%;
     font-size: 16px;
     height: 72px;
-    z-index: 100;
+    z-index: 999;
     margin: 0;
     border: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
@@ -165,7 +165,7 @@ export const MenuList = styled('div')`
     a {
       position: relative;
       display: flex;
-      justify-content center;
+      justify-content: center;
       font-size: 16px;
       font-weight: 600;
       align-items: center;
