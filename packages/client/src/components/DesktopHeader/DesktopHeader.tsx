@@ -26,7 +26,7 @@ const DesktopHeader = () => {
 
   const scrollToTop = () => scroll.scrollToTop();
 
-  const naviagateAndScroll = () => {history.push('/');  scrollToTop()};
+  const navigateAndScroll = () => {history.push('/');  scrollToTop()};
 
   return visible ? (
     <Header>
@@ -46,7 +46,7 @@ const DesktopHeader = () => {
               </Link>
             )}
             <HeaderMenuItem>
-             <Link onClick={() => history.location.pathname !== '/' && naviagateAndScroll()} to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
+             <Link onClick={() => history.location.pathname !== '/' && navigateAndScroll()} to="myActivity" spy smooth duration={500} offset={HEADER_MENU_SIZE.myActivity}>
                 My activity
               </Link>
             </HeaderMenuItem>

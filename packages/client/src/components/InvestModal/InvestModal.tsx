@@ -8,7 +8,7 @@ import InvestState from './InvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
 
-import { LenderButton, Modal, ExitButton, ModalContet } from './InvestModal.styles';
+import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
 import { match, ANY } from 'pampy';
 
 const UI = daggy.taggedSum('UI', {
@@ -65,8 +65,6 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
         <ProcessingState loan={loan} investment={investment} ui={UI} setStage={setStage} />
       ),
       Success: () => <SuccessState setStage={setStage} ui={UI} closeModal={closeModal} />
-      // Error: () => (
-      // )
     });
   };
   return (
@@ -79,11 +77,8 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
       >
         {buttonText}
       </LenderButton>
-      <Modal open={open} size="small" onClose={closeModal} mountNode={modalRefs.current}>
-        <ModalContet>
-          {getInvestAction(stage)}
-          <ExitButton name="close" color="black" onClick={closeModal} />
-        </ModalContet>
+      <Modal open={open} onClose={closeModal} mountNode={modalRefs.current}>
+        <ModalContent>{getInvestAction(stage)}</ModalContent>
       </Modal>
     </>
   );
