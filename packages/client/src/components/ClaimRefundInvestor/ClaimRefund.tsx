@@ -8,7 +8,6 @@ import ProcessingStage from './stages/Processing';
 import SuccessStage from './stages/Success';
 import ErrorStage from './stages/Error';
 import { RefundButton } from './ClaimRefund.styles';
-// import { Modal, ExitButton } from '../InvestModal/InvestModal.styles';
 import { Modal, ExitButton } from './ClaimRefund.styles';
 import { getCalculations } from '../../utils/loanUtils';
 

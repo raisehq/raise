@@ -26,7 +26,7 @@ const DesktopHeader = () => {
 
   const scrollToTop = () => scroll.scrollToTop();
 
-  const naviagateAndScroll = () => {
+  const navigateAndScroll = () => {
     history.push('/');
     scrollToTop();
   };
@@ -56,7 +56,7 @@ const DesktopHeader = () => {
             )}
             <HeaderMenuItem>
               <Link
-                onClick={() => history.location.pathname !== '/' && naviagateAndScroll()}
+                onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
                 to="myActivity"
                 spy
                 smooth

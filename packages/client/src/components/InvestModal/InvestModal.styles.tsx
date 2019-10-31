@@ -25,10 +25,6 @@ interface LabelPaddingProps {
   color?: string;
 }
 
-export const ModalContet: any = styled(SemanticModal.Content)`
-  padding: 40px 50px !important;
-`;
-
 export const LoanTermsCheckbox: any = styled(Checkbox)`
   &&& {
     position: relative;
@@ -55,7 +51,7 @@ export const ExitButton = styled(Icon)`
     position: absolute;
     top: 10px;
     right: 10px;
-    pointer: pointer;
+    cursor: pointer;
   }
 `;
 
@@ -99,20 +95,50 @@ export const BorrowerButton = styled(LenderButton)`
   }
 `;
 export const Modal = styled(SemanticModal)`
-  width: 100%;
-  height: fit-content;
   background-color: #fcfcfc;
   border-radius: 4px;
   box-shadow: 0 10px 26px 0 rgba(6, 52, 40, 0.1);
-  &&& .content {
-    padding: 40px 75px;
-  }
+
   @media ${device.laptop} {
     max-width: 500px;
   }
   @media ${device.tablet} {
     max-width: 500px;
   }
+
+  @media (max-width: 500px) {
+    &.ui.modal {
+      width: 100%;
+      border-radius: 0;
+    }
+    height: 100%;
+    box-shadow: none;
+    margin: 0;
+  }
+`;
+
+export const ModalContent: any = styled(SemanticModal.Content)`
+  &&&.content {
+    padding: 40px 50px;
+  }
+
+  @media (max-width: 500px) {
+    border-radius: 0;
+    margin: 0;
+    height: 100%;
+    overflow: auto;
+  }
+`;
+
+export const ModalFlexWrapper = styled.div`
+  min-height: 612px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
+
+export const ButtonWrapper = styled.div`
+  width: 100%;
 `;
 
 export const Header = styled.h2`
@@ -346,29 +372,47 @@ export const CardCenteredText = styled.div`
     text-align: center;
   }
 `;
+
 export const CardTitle = styled.div`
   color: #3c4251;
-  font: 26px bold;
+  font-family: Lato;
+  font-size: 26px;
+  font-weight: bold;
   line-height: 36px;
   text-align: center;
-  margin: 10px;
+  width: 100%;
 `;
+
 export const CardSubtitle = styled.div`
-  &&& {
-    color: #99a6b6;
-    font-size: 16px;
-    line-height: 22px;
-    text-align: center;
-    margin: 19px;
-  }
+  color: #99a6b8;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  margin: 10px 0;
+  width: 100%;
 `;
 
 export const ButtonGreen = styled(Button)`
   &&& {
     height: 58px;
     width: 100%;
-    background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
+    background: #eb3f93;
     color: white;
+  }
+`;
+
+export const ButtonPink = styled(Button)`
+  &&& {
+    height: 58px;
+    width: 100%;
+    background: #eb3f93;
+    color: white;
+  }
+
+  &&&:hover,
+  &&&:focus {
+    background-color: #ff047f;
+    color: #ffffff;
   }
 `;
 
