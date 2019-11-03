@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import { Grid, Image } from 'semantic-ui-react';
 // import Logout from '../Logout';
@@ -21,10 +21,15 @@ interface IDefaultProps {
   component: any;
   path?: string;
   exact?: boolean;
+  checkLogged?: boolean;
 }
 const LOGO_PATH = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
 
-const SimpleLayout: React.SFC<IDefaultProps> = ({ component: Component, ...rest }: any) => {
+const SimpleLayout: React.SFC<IDefaultProps> = ({
+  checkLogged = false,
+  component: Component,
+  ...rest
+}: any) => {
   const {
     store: {
       auth: {
@@ -35,6 +40,12 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({ component: Component, ...rest 
       location: { pathname }
     }
   }: any = useContext(AppContext);
+
+  // Check if is Logged
+  if (!logged && checkLogged) {
+    console.log('REDIRECT TO JOIN ');
+    return <Redirect to="/join" />;
+  }
 
   return (
     <Route

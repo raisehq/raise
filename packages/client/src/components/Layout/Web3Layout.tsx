@@ -22,9 +22,12 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   // const web3Pass = netOk && accMatch;
 
   const acceptedRole = (roles !== undefined && roles.indexOf(accounttypeId) > -1) || false;
-
+  console.log(' IS LOGGED ', isLogged);
   // Check if is Logged
-  if (!isLogged && !address) return <Redirect to="/join" />;
+  if (!isLogged) {
+    console.log('REDIRECT TO JOIN ');
+    return <Redirect to="/join" />;
+  }
 
   if (accountMatches && networkMatches) {
     if (!hasDeposit) return <Redirect to="/deposit" />;

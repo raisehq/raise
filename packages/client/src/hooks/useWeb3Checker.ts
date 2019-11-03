@@ -48,6 +48,7 @@ const web3CheckList = (
 
 const useWeb3Checker = (storedAccount = NULL_ADDRESS, targetNetwork) => {
   const { web3, getPrimaryAccount } = useWeb3();
+
   const depositContract = useDepositContract();
   const wallet = useWallet();
   const [web3State, setWeb3State] = useState(
@@ -61,9 +62,10 @@ const useWeb3Checker = (storedAccount = NULL_ADDRESS, targetNetwork) => {
       if (web3) {
         try {
           const walletAccount = await getPrimaryAccount();
-          const hasDeposit = await depositContract.hasDeposited();
-          const walletNetwork = await wallet.getNetwork();
-
+          const hasDeposit = depositContract ? await depositContract.hasDeposited() : false;
+          console.log(' WALLET : ', wallet);
+          const walletNetwork = wallet ? await wallet.getNetwork() : 'NO_NETWORK';
+          console.log(web3, walletAccount, storedAccount, walletNetwork, targetNetwork, hasDeposit);
           const newState = web3CheckList(
             web3,
             walletAccount,
@@ -72,6 +74,7 @@ const useWeb3Checker = (storedAccount = NULL_ADDRESS, targetNetwork) => {
             targetNetwork,
             hasDeposit
           );
+          console.log('STATE: ', newState);
           setWeb3State(newState);
         } catch (err) {
           console.error('[useWeb3Checker]', err);
@@ -92,13 +95,13 @@ const useWeb3Checker = (storedAccount = NULL_ADDRESS, targetNetwork) => {
     if (web3 && web3.currentProvider) {
       accountInterval = setInterval(verifyCheckList, 500);
     }
-
+    console.log('@@@@@@@@@@@@@@@@@@@@@ USEWEB3CHECKER :', web3);
     return () => {
       if (accountInterval) {
         clearInterval(accountInterval);
       }
     };
-  }, [storedAccount, targetNetwork, web3]);
+  }, [storedAccount, targetNetwork, web3, wallet]);
 
   return web3State;
 };

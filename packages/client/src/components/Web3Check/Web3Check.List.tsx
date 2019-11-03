@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import { List, Icon } from 'semantic-ui-react';
 import { match, ANY, TAIL } from 'pampy';
-import AppContext from '../AppContext';
+import useWeb3Checker from '../../hooks/useWeb3Checker';
 import { isSupportedBrowser } from '../../utils';
+
+import AppContext from '../AppContext';
 
 const Check = ({ value, message }: any) => {
   console.log(' --------------- > ', value);
@@ -35,9 +37,19 @@ const capitalize = s => {
 
 const CheckList = () => {
   const {
-    web3Status: { hasProvider, unlocked, accountMatches, networkMatches, targetNetwork }
+    store: {
+      config: { network },
+      user: {
+        cryptoAddress: { address }
+      }
+    }
   }: any = useContext(AppContext);
-  console.log();
+
+  const { hasProvider, unlocked, networkMatches, accountMatches }: any = useWeb3Checker(
+    address,
+    network
+  );
+
   const matchConditions = [
     isSupportedBrowser(),
     hasProvider && unlocked,
@@ -68,7 +80,7 @@ const CheckList = () => {
   const stepsMessage = [
     'Detecting compatible browser',
     'Connect your wallet with Raise',
-    `Select ${capitalize(targetNetwork)} network in your wallet`,
+    `Select ${capitalize(network)} network in your wallet`,
     'Sign message and bind your wallet to your account'
   ];
 
@@ -76,7 +88,6 @@ const CheckList = () => {
     // eslint-disable-next-line
     <Check key={`check-${i}`} value={value} message={stepsMessage[i]} />
   ));
-
   return <List>{StepsDOM}</List>;
 };
 

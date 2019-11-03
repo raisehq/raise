@@ -123,7 +123,7 @@ const App = ({ history, match }: any) => {
   }, [isLogged, id, accounttypeId, email, status]);
   useEffect(() => {
     if (isChecked) {
-      console.log('LOGGED !!! ');
+      console.log('LOGGED !!! ', isLogged);
       setLoading(false);
     }
   }, [isChecked]);
@@ -273,7 +273,7 @@ const App = ({ history, match }: any) => {
                 />
                 <MainLayout exact path="/borrowers/:slug" component={BorrowerProfile} />
                 {/* Onboarding */}
-                <SimpleLayout exact path="/verify-web3" component={Web3Check} />
+                <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
                 <SimpleLayout exact path="/join" component={Join} />
                 <SimpleLayout exact path="/login" component={Join} />
                 <SimpleLayout exact path="/join/verify/token/:token" component={Join} />

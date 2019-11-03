@@ -5,7 +5,11 @@ import Web3 from 'web3';
 const useWeb3 = () => {
   const connection: any = useRef(
     // @ts-ignore
-    window.ethereum ? window.ethereum : (window.web3 && window.web3.currentProvider) || null
+    window.web3 ? window.web3 : null
+  );
+  const defaultWeb3: any = useRef(
+    // @ts-ignore
+    window.web3 ? window.web3 : null
   );
 
   const enableWeb3 = async () => {
@@ -18,48 +22,48 @@ const useWeb3 = () => {
       }
     }
   };
-  const setNewProvider = provider => {
+
+  const setNewProvider = async provider => {
     const newWeb3 = new Web3(provider);
     // @ts-ignore
     window.web3 = newWeb3; // Set the new connection to window element
     connection.current = newWeb3;
+    await connection.current.currentProvider.enable();
+    connection.current.currentProvider.autoRefreshOnNetworkChange = false; // prevent Metamask refresh webpage
   };
-  const getCurrentProviderName = () => {
-    if (!connection) return 'web3-unknown';
 
-    if (connection.currentProvider.isMetaMask) return 'metamask';
+  const getCurrentProviderName = (defaultConn?: any) => {
+    const conn = defaultConn || connection.current;
+    console.log(' CONNECTION : ', conn);
+    if (!conn || !conn.currentProvider) return 'web3-unknown';
 
-    if (connection.currentProvider.isDapper) return 'dapper';
+    if (conn.currentProvider.isMetaMask) return 'metamask';
 
-    if (connection.currentProvider.isTrust) return 'trust';
+    if (conn.currentProvider.isDapper) return 'dapper';
 
-    if (connection.currentProvider.isGoWallet) return 'goWallet';
+    if (conn.currentProvider.isTrust) return 'trust';
 
-    if (connection.currentProvider.isAlphaWallet) return 'alphaWallet';
+    if (conn.currentProvider.isGoWallet) return 'goWallet';
 
-    if (connection.currentProvider.isStatus) return 'status';
+    if (conn.currentProvider.isAlphaWallet) return 'alphaWallet';
 
-    if (connection.currentProvider.isToshi) return 'coinbase';
+    if (conn.currentProvider.isStatus) return 'status';
+
+    if (conn.currentProvider.isToshi) return 'coinbase';
     //  @ts-ignore
     // eslint-disable-next-line
     if (typeof window.__CIPHER__ !== 'undefined') return 'cipher';
 
-    if (connection.currentProvider.constructor.name === 'EthereumProvider') return 'mist';
+    if (conn.currentProvider.constructor.name === 'EthereumProvider') return 'mist';
 
-    if (connection.currentProvider.constructor.name === 'Web3FrameProvider') return 'parity';
+    if (conn.currentProvider.constructor.name === 'Web3FrameProvider') return 'parity';
     // eslint-disable-next-line
-    if (
-      connection.currentProvider.host &&
-      connection.currentProvider.host.indexOf('infura') !== -1
-    ) {
+    if (conn.currentProvider.host && conn.currentProvider.host.indexOf('infura') !== -1) {
       // eslint-disable-next-line
       return 'infura';
     }
 
-    if (
-      connection.currentProvider.host &&
-      connection.currentProvider.host.indexOf('localhost') !== -1
-    ) {
+    if (conn.currentProvider.host && conn.currentProvider.host.indexOf('localhost') !== -1) {
       // eslint-disable-next-line
       return 'localhost';
     }
@@ -69,17 +73,23 @@ const useWeb3 = () => {
   };
   const getPrimaryAccount = async () => {
     if (connection) {
-      const accounts = await connection.eth.getAccounts();
+      const accounts = await connection.current.eth.getAccounts();
       if (accounts && accounts.length > 0) return accounts[0];
     }
     return false;
   };
+
+  const getDefaultWeb3 = () => {
+    return { conn: defaultWeb3.current, name: getCurrentProviderName(defaultWeb3.current) };
+  };
+
   return {
-    web3: connection,
+    web3: connection.current,
     enableWeb3,
     setNewProvider,
     getCurrentProviderName,
-    getPrimaryAccount
+    getPrimaryAccount,
+    getDefaultWeb3
   };
 };
 

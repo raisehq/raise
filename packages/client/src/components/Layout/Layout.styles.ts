@@ -35,7 +35,6 @@ export const CardContent = styled(Card.Content)`
     border-top: 0 !important;
     margin: 0px;
     @media ${device.tablet} {
-      // eslint-disable-next-line
       margin: ${({ bottom_spacing }) =>
         bottom_spacing ? '0 2.5em 2.5em 2.5em !important;' : '0 2.5em 0em 2.5em !important;'};
     }
