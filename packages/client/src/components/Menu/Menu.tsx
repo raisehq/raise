@@ -25,7 +25,7 @@ const commonRoutes = [
     title: 'Help',
     link: '/help',
     new_tab: true,
-    onClick: navigateToOutsideNewTab('https://raise.it/help')
+    onClick: navigateToOutsideNewTab(`${process.env.PUBLIC_URL}/help`)
   },
   {
     id: 'privacy-policy',
