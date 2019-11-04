@@ -25,7 +25,7 @@ const commonRoutes = [
     title: 'Help',
     link: '/help',
     new_tab: true,
-    onClick: navigateToOutsideNewTab(`${process.env.PUBLIC_URL}/help`)
+    onClick: navigateToOutsideNewTab(`${process.env.REACT_WEB_PUBLIC_URL}/help`)
   },
   {
     id: 'privacy-policy',
