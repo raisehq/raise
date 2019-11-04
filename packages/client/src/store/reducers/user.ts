@@ -19,6 +19,24 @@ export default (state: any, { type, data }: any) => {
         ...state,
         details: { ...state.details, ...data }
       };
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        updateUser: {
+          message: data.success ? 'Success' : data.message
+        },
+        details: {
+          ...state.details,
+          ...data.details
+        }
+      };
+    case 'UPDATE_PASSWORD':
+      return {
+        ...state,
+        updatePassword: {
+          message: data.success ? 'Success' : data.message
+        }
+      };
     default:
       return state;
   }

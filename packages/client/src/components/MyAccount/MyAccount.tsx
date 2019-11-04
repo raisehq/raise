@@ -19,12 +19,17 @@ const MyAccount = () => {
   const [username, setUsername] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [newAgainPassword, setNewAgainPassword] = useState('');
+  const [newPasswordRepeat, setNewPasswordRepeat] = useState('');
 
   const {
+    actions: {
+      user: { onUpdateUser, onUpdatePassword }
+    },
     store: {
       user: {
-        details: { username: storedUsername }
+        updateUser: { message: userMessage },
+        updatePassword: { message: passMessage },
+        details: { id, username: storedUsername }
       }
     }
   }: any = useContext(AppContext);
@@ -44,16 +49,16 @@ const MyAccount = () => {
         'new-password',
         () => setNewPassword(value),
         'new-password-repeat',
-        () => setNewAgainPassword(value)
+        () => setNewPasswordRepeat(value)
       ),
     []
   );
 
-  const saveUsername = () => {
-    console.log('POST to save username', username);
+  const saveUsername = async () => {
+    await onUpdateUser(id, { username });
   };
-  const savePassword = () => {
-    console.log('POST to save password', oldPassword, newPassword, newAgainPassword);
+  const savePassword = async () => {
+    await onUpdatePassword(id, { oldPassword, newPassword, newPasswordRepeat });
   };
 
   return (
@@ -75,6 +80,7 @@ const MyAccount = () => {
           <Label>Username</Label>
           <FormInput name="username" value={username} onChange={updateState} />
           <Submit onClick={saveUsername}>Update account</Submit>
+          {userMessage && <div>{userMessage}</div>}
         </Side>
         <Line />
         <Side>
@@ -101,10 +107,11 @@ const MyAccount = () => {
             name="new-password-repeat"
             placeholder="Type again your new password"
             type="password"
-            value={newAgainPassword}
+            value={newPasswordRepeat}
             onChange={updateState}
           />
           <Submit onClick={savePassword}>Save</Submit>
+          {passMessage && <div>{passMessage}</div>}
         </Side>
       </Content>
     </Main>

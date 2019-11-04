@@ -1,4 +1,4 @@
-import axios from './common';
+import axios, { authAxios } from './common';
 import { AddressTypes } from '../store/store.types';
 import { getHost, to, Left } from '../utils/index';
 
@@ -93,15 +93,26 @@ export const removeAddress = async addressId => {
   return response.fold(error => Left(error), ({ data: { data } }) => data);
 };
 
-export const updateUser = async (userId, data: any) => {
+export const updateUser = async (userId, body: any) => {
+  const config: any = {
+    url: `${URL.USER}/${userId}`,
+    method: 'PUT',
+    data: body,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  return to(authAxios(config));
+};
+
+export const updatePassword = async (userId, data: any) => {
   const config: any = {
     headers: {
       'Content-Type': 'application/json'
     }
   };
 
-  const response = await to(axios.put(`${URL.USER}/${userId}`, data, config));
-  return response.fold(error => Left(error), ({ data: { data } }) => data);
+  return to(authAxios.put(`${URL.USER}/password/change/${userId}`, data, config));
 };
 
 export const cryptoAddressByAccount = async (userId, targetAddressId) => {

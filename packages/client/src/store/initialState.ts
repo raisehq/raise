@@ -59,6 +59,12 @@ const initialState = {
     accounttype_id
   },
   user: {
+    updateUser: {
+      errorMessage: ''
+    },
+    updatePassword: {
+      errorMessage: ''
+    },
     details,
     addressTypes: [
       {

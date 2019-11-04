@@ -11,21 +11,28 @@ const getBearer = (token: string) => {
 const instance = axios.create({
   headers: { 'X-Custom-Header': 'dashboard' }
 });
+
+const authAxios = axios.create({
+  headers: { 'X-Custom-Header': 'dashboard' }
+});
+
 //@ts-ignore
 window.Cypress && AxiosMock(instance);
 
-instance.interceptors.request.use(
-  config => {
-    const { token } = LocalData.getObj('auth') || '{}';
-    if (token) {
-      config.headers['Authorization'] = getBearer(token);
-    }
-    return config;
-  },
-  error => {
-    return Promise.reject(error);
+const useBearer = config => {
+  const { token } = LocalData.getObj('auth') || '{}';
+  if (token) {
+    config.headers['Authorization'] = getBearer(token);
   }
-);
+  return config;
+};
+
+const useError = error => {
+  return Promise.reject(error);
+};
+
+instance.interceptors.request.use(useBearer, useError);
+authAxios.interceptors.request.use(useBearer, error => error);
 
 instance.interceptors.response.use(
   response => response,
@@ -80,5 +87,6 @@ instance.interceptors.response.use(
   }
 );
 
-
 export default instance;
+
+export { authAxios, instance };

@@ -8,7 +8,9 @@ import {
   allAddressesByUser,
   removeAddress,
   updateCryptoAddress,
-  cryptoAddressByAccount
+  cryptoAddressByAccount,
+  updateUser,
+  updatePassword
 } from '../../services/user';
 
 export default (dispatch: any, state: Store) => {
@@ -60,75 +62,10 @@ export default (dispatch: any, state: Store) => {
     dispatch({ type: 'SET_ALL_ADDRESSES_BY_USER', data: addresses });
   };
 
-  const onAddNewAddress = async address => {
-    /*const newAddress = {
-      ...address,
-      herouser_id: id,
-      datajson: JSON.stringify({
-        ...address.datajson,
-        address2: '',
-        country: countries.filter(({ key }) => key === address.country_id)[0]
-      })
-    };
-
-    const response = await to(addAddress(newAddress));
-
-    response.fold(() => null, () => onGetAllAddressesByUser());*/
-  };
-
-  const onAddNewCryptoAddress = async cryptoaddress => {
-    /*if (
-      initialState.user.details.cryptoAddress.address ===
-      state.user.details.cryptoAddress.address
-    ) {
-      const body = {
-        account_id: state.account.details.account.id,
-        address,
-        cryptotype_id: state.account.details.cryptoAddress.cryptoTypeId,
-        signature
-      };
-
-      const response = await to(addCryptoAddress(body));
-
-      response.fold(
-        () => null,
-        data => {
-          dispatch({
-            type: 'SET_CRYPTO_ADDRESS_BY_ACCOUNT',
-            data
-          });
-        }
-      );
-    } else {
-      const body = {
-        account_id: state.account.details.account.id,
-        address,
-        signature
-      };
-
-      const response = await to(
-        updateCryptoAddress(
-          state.account.details.cryptoAddress.id,
-          body
-        )
-      );
-
-      response.fold(
-        () => null,
-        data => {
-          dispatch({
-            type: 'SET_CRYPTO_ADDRESS_BY_ACCOUNT',
-            data
-          });
-        }
-      );
-    }*/
-  };
-
   const onGetCryptoAddressByUser = async () => {
     try {
       const cryptoaddress = await cryptoAddressByAccount(id, targetAddressId);
-      if (!!cryptoaddress) {
+      if (cryptoaddress) {
         dispatch({
           type: 'SET_CRYPTO_ADDRESS_BY_ACCOUNT',
           data: cryptoaddress
@@ -149,34 +86,43 @@ export default (dispatch: any, state: Store) => {
     dispatch({ type: 'SET_INITIAL_USER_DATA', data });
   };
 
-  const onUpdateUser = async (field, value) => {
-    /*const data: any = { ...user, [field]: value };
-
-    const response = await to(updateUser(id, data));
-
+  const onUpdateUser = async (userId, body) => {
+    const response = await updateUser(userId, body);
     response.fold(
-      () => null,
-      data => {
-        dispatch({ type: 'SET_USER_DETAILS', data });
+      ({
+        response: {
+          data: { message }
+        }
+      }) => {
+        dispatch({ type: 'UPDATE_USER', data: { success: false, message } });
+      },
+      ({
+        data: {
+          data: { user }
+        }
+      }) => dispatch({ type: 'UPDATE_USER', data: { success: true, user } })
+    );
+  };
 
-        LocalData.setObj('user', {
-          email: data.user.email,
-          firstname: data.user.firstname,
-          lastname: data.user.lastname,
-          id: data.user.id
-        });
-      }
-    );*/
+  const onUpdatePassword = async (userId, body) => {
+    const response = await updatePassword(userId, body);
+    response.fold(
+      ({
+        response: {
+          data: { message }
+        }
+      }) => dispatch({ type: 'UPDATE_PASSWORD', data: { success: false, message } }),
+      () => dispatch({ type: 'UPDATE_PASSWORD', data: { success: true } })
+    );
   };
 
   return {
-    onAddNewAddress,
     onGetAddressTypes,
     onUpdateUser,
+    onUpdatePassword,
     onGetUserDetails,
     onSetInitialUserData,
     onRemoveAddress,
-    onAddNewCryptoAddress,
     updateCryptoAddress,
     onGetCryptoAddressByUser,
     onGetUser,
