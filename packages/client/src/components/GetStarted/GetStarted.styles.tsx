@@ -70,7 +70,7 @@ export const SlideImage = styled.img`
 
 export const SliderClose = styled.button`
   position: absolute;
-  z-index:1000;
+  z-index:900;
   top: 12px;
   right: 5px;
   background: none;
