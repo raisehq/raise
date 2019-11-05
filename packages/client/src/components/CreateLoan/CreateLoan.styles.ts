@@ -15,6 +15,13 @@ import theme from '../../theme';
 
 interface LoanFormValueProps {
   big?: boolean;
+  alignment: string;
+  isMobile: boolean;
+}
+
+interface LoanFormInfoProps {
+  alignment: string;
+  isMobile: boolean;
 }
 
 export const LoanTermsCheckbox: any = styled(Checkbox)`
@@ -35,6 +42,13 @@ export const CheckContainer = styled.div`
   line-height: 20px;
   margin-top: 20px;
   display: flex;
+
+  @media ${device.mobileS} {
+    color: #5a5a5a;
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 21px;
+  }
 `;
 
 export const Header = styled(HeaderUI)<HeaderProps>`
@@ -186,14 +200,25 @@ export const SliderWrapper = styled.div`
     }
   }
 `;
+
+export const LoanFormContainer = styled.div`
+  margin-bottom: 8px;
+`;
+
 export const LoanConfirmation = styled(Card)`
   &&& {
     position: sticky;
+    left: 0px;
     bottom: 0px;
     height: fit-content;
     width: 100%;
     padding: 30px 20px 20px 20px;
     box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
+
+    @media ${device.mobileS} {
+      padding: 20px 15px 10px 15px;
+      z-index: 2;
+    }
   }
 
   @media ${device.laptopM} {
@@ -264,17 +289,32 @@ export const LoanResume = styled.div`
   }
 `;
 
-export const LoanFormInfo = styled.p`
-  text-align: right;
+export const LoanFormInfo = styled('p')<LoanFormInfoProps>`
+  text-align: ${({ isMobile, alignment }) => (isMobile ? alignment : 'right')};
   font-size: 12px;
   margin: 0;
+
+  @media ${device.mobileL} {
+    color: #5a5a5a;
+    font-family: Lato;
+    font-size: 12px;
+    line-height: 21px;
+  }
 `;
 
 export const LoanFormValue = styled('p')<LoanFormValueProps>`
-  text-align: right;
+  text-align: ${({ isMobile, alignment }) => (isMobile ? alignment : 'right')};
   font-size: ${({ big }) => (big ? '26px' : '18px')};
   font-weight: bold;
   margin: 0px 0px 17px 0px;
+
+  @media ${device.mobileS} {
+    margin: 0;
+    color: #3c4251;
+    font-family: Lato;
+    line-height: 24px;
+    font-weight: normal;
+  }
 `;
 
 export const InputDescription = styled.div`
@@ -402,6 +442,12 @@ export const ConfirmButton: any = styled(Button)<ButtonProps>`
     :disabled {
       background-color: #00a76f;
       opacity: 0.4;
+    }
+    @media ${device.mobileS} {
+      height: 48px;
+      font-size: 14px;
+      line-height: 21px;
+      border-radius: 4px !important;
     }
   }
 `;
