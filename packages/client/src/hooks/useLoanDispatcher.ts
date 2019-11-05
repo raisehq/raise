@@ -17,11 +17,10 @@ const useLoanDispatcher = () => {
             maxInterestRate,
             termMonthsLength,
             acceptMinimum,
-            termAuctionDaysLength
+            auctionTermLength
           ) => {
-            const auctionSecondsLength = (1 * 30 * 24 * 60 * 60).toString();
+            const auctionSecondsLength = auctionTermLength.toString();
             const termSecondsLength = termMonthsLength.toString();
-            const termAuctionSecondsLength = termAuctionDaysLength.toString();
             const params = [
               metamask.utils.toWei(
                 acceptMinimum ? minAmount.toString() : amount.toString(),
@@ -30,7 +29,6 @@ const useLoanDispatcher = () => {
               metamask.utils.toWei(amount.toString(), 'ether'),
               metamask.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,
-              termAuctionSecondsLength,
               auctionSecondsLength
             ];
 
