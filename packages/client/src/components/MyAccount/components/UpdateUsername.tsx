@@ -8,11 +8,11 @@ import {
   Message
 } from '../MyAccount.styles';
 
-const UpdateUsername = ({ username, storedUsername, updateState, userMessage, saveUsername, loading }) => {
+const UpdateUsername = ({ username, storedUsername, usernameExists, updateState, userMessage, saveUsername, loading }) => {
   const message = userMessage.includes('body') ? `${userMessage.split(': ')[1].split(' ')[0].split('-').join(' ')} not valid` : userMessage;
   const usernameExistsMessage = 'Username already exists';
   const isEqual = storedUsername === username;
-  const isDisabled = !username || !username.length || storedUsername || isEqual;
+  const isDisabled = !username || !username.length || isEqual || usernameExists;
   return (
     <>
       <Label>Username</Label>
@@ -21,7 +21,7 @@ const UpdateUsername = ({ username, storedUsername, updateState, userMessage, sa
         <Submit disabled={isDisabled} onClick={saveUsername}>Update account</Submit>
         <Loader inline active={loading} />
         {userMessage && <Message>{message}</Message>}
-        {isEqual && <Message>{usernameExistsMessage}</Message>}
+        {(isEqual || usernameExists) && <Message>{usernameExistsMessage}</Message>}
       </FlexBox>
     </>
   )

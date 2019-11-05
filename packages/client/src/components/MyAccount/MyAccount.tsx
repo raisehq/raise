@@ -1,6 +1,8 @@
 import React, { useState, useContext, useCallback } from 'react';
-import { AppContext } from '../App';
 import { match } from 'pampy';
+import debounce from 'lodash/debounce'
+import { checkUsername } from '../../services/auth';
+import { AppContext } from '../App';
 import {
   Content,
   Side,
@@ -12,6 +14,7 @@ import UpdateUsername from './components/UpdateUsername';
 import UpdatePassword from './components/UpdatePassword';
 
 const MyAccount = () => {
+  const [usernameExists, setUsernameExists] = useState(false);
   const [username, setUsername] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -31,12 +34,28 @@ const MyAccount = () => {
     }
   }: any = useContext(AppContext);
 
+  const changeUsername = debounce(async (value) => {
+    setUsernameExists(false);
+    const userExists = await checkUsername(value);
+
+    userExists.fold(
+      () => {
+        setUsernameExists(true);
+        setUsername(value);
+      },
+      () => {
+        setUsernameExists(false);
+        setUsername(value);
+      }
+    )
+  }, 80);
+
   const updateState = useCallback(
     (e, { value, name }) =>
       match(
         name,
         'username',
-        () => setUsername(value),
+        () => changeUsername(value),
         'old-password',
         () => setOldPassword(value),
         'new-password',
@@ -55,7 +74,7 @@ const MyAccount = () => {
   };
 
   const profileProps = { email, kyc_status, storedUsername }
-  const updateUsernameProps = { username, storedUsername, saveUsername, updateState, userMessage, loading: userLoading };
+  const updateUsernameProps = { username, storedUsername, usernameExists, saveUsername, updateState, userMessage, loading: userLoading };
   const updatePasswordProps = { oldPassword, updateState, newPassword, newPasswordRepeat, savePassword, passMessage, loading: passLoading };
 
   return (
