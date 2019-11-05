@@ -30,7 +30,7 @@ import {
   SliderWrapper
 } from './CreateLoan.styles';
 import Slider from '../Slider';
-import months from '../../commons/months';
+import { getMonths, getLoanAuctionInterval } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 
 /** Start of defaults */
@@ -48,6 +48,7 @@ const max = 2500000;
 const defaultAmount = 10000;
 const defaultMir = 10;
 const defaultTerm = 2592000;
+const defaultTermAuction = 2592000;
 const defaultMinPercent = 20;
 const minMir = 0;
 const maxMir = 20;
@@ -87,6 +88,7 @@ const CreateLoan = () => {
     minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
   });
   const [selectedMonth, setSelectedMonth] = useState(defaultTerm);
+  const [selectedLoanAuction, setSelectedLoanAuction] = useState(defaultTermAuction);
   const termMonths = loan.term / 60 / 60 / 24 / 30;
 
   // Calculations
@@ -109,9 +111,17 @@ const CreateLoan = () => {
     });
   };
 
-  const monthOptions = useMemo(() => months(network), [network]);
+  const monthOptions = useMemo(() => getMonths(network), [network]);
+  const loanAuctionInterval = useMemo(() => getLoanAuctionInterval(network), [network]);
 
-  const onSetTerm = (e, data) => {setSelectedMonth(data.value); setLoan({ ...loan, term: data.value })};
+  const onSetTerm = (e, data) => {
+    setSelectedMonth(data.value);
+    setLoan({ ...loan, term: data.value });
+  };
+
+  const onSetTermAuction = (e, { value }) => {
+    setSelectedLoanAuction(value);
+  };
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
 
@@ -248,6 +258,23 @@ const CreateLoan = () => {
         </BrowserView>
         <LoanTerm>
           <LoanDescription>
+            <Header as="h2">Loan Auction</Header>
+            <p>Select how long do you want for your loan auction to be open.</p>
+          </LoanDescription>
+          <LoanFormInput>
+            <LoanSelect
+              value={selectedLoanAuction}
+              onChange={onSetTermAuction}
+              placeholder="Select auction time"
+              options={loanAuctionInterval}
+            />
+          </LoanFormInput>
+        </LoanTerm>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
+        <LoanTerm>
+          <LoanDescription>
             <Header as="h2">Loan term</Header>
             <p>
               The loan term will start after the loan auction is finished. This process could take
@@ -295,4 +322,3 @@ const CreateLoan = () => {
 };
 
 export default CreateLoan;
-
