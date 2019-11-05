@@ -6,14 +6,10 @@ import {
   Side,
   Line,
   Main,
-  KYCIcon,
-  FormInput,
-  EmailBox,
-  Label,
-  Submit,
-  ReadTitle
 } from './MyAccount.styles';
-import { KycStatus } from '../../commons/kycStatus';
+import ProfileInfo from './components/ProfileInfo';
+import UpdateUsername from './components/UpdateUsername';
+import UpdatePassword from './components/UpdatePassword';
 
 const MyAccount = () => {
   const [username, setUsername] = useState('');
@@ -21,15 +17,16 @@ const MyAccount = () => {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordRepeat, setNewPasswordRepeat] = useState('');
 
+
   const {
     actions: {
       user: { onUpdateUser, onUpdatePassword }
     },
     store: {
       user: {
-        updateUser: { message: userMessage },
-        updatePassword: { message: passMessage },
-        details: { id, username: storedUsername }
+        updateUser: { message: userMessage, loading: userLoading },
+        updatePassword: { message: passMessage, loading: passLoading },
+        details: { id, email, username: storedUsername, kyc_status }
       }
     }
   }: any = useContext(AppContext);
@@ -61,6 +58,10 @@ const MyAccount = () => {
     await onUpdatePassword(id, { oldPassword, newPassword, newPasswordRepeat });
   };
 
+  const profileProps = { email, kyc_status }
+  const updateUsernameProps = { username, saveUsername, updateState, userMessage, loading: userLoading };
+  const updatePasswordProps = { oldPassword, updateState, newPassword, newPasswordRepeat, savePassword, passMessage, loading: passLoading };
+
   return (
     <Main>
       <h1>My Account</h1>
@@ -68,50 +69,12 @@ const MyAccount = () => {
         <Side>
           <h3>Profile</h3>
           <p>Edit and update your information.</p>
-          <ReadTitle>KYC status</ReadTitle>
-          <p>
-            Account verified
-            <KYCIcon name="circle" value={KycStatus.Error} />
-          </p>
-          <EmailBox>
-            <ReadTitle>Email</ReadTitle>
-            <p>test@hero-fintech.com</p>
-          </EmailBox>
-          <Label>Username</Label>
-          <FormInput name="username" value={username} onChange={updateState} />
-          <Submit onClick={saveUsername}>Update account</Submit>
-          {userMessage && <div>{userMessage}</div>}
+          <ProfileInfo {...profileProps} />
+          <UpdateUsername {...updateUsernameProps} />
         </Side>
         <Line />
         <Side>
-          <h3>Change Password</h3>
-          <p>Choose a new password and protect your account.</p>
-          <Label>Current password</Label>
-          <FormInput
-            name="old-password"
-            placeholder="Type your current password"
-            type="password"
-            value={oldPassword}
-            onChange={updateState}
-          />
-          <Label>New password</Label>
-          <FormInput
-            name="new-password"
-            placeholder="Type your new password"
-            type="password"
-            value={newPassword}
-            onChange={updateState}
-          />
-          <Label>Repeat new password</Label>
-          <FormInput
-            name="new-password-repeat"
-            placeholder="Type again your new password"
-            type="password"
-            value={newPasswordRepeat}
-            onChange={updateState}
-          />
-          <Submit onClick={savePassword}>Save</Submit>
-          {passMessage && <div>{passMessage}</div>}
+          <UpdatePassword {...updatePasswordProps} />
         </Side>
       </Content>
     </Main>
