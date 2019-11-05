@@ -13,18 +13,16 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
         details: { accounttypeId }
       }
     },
-    web3State: { hasDeposit, accountMatches, networkMatches }
+    web3Status: { hasDeposit, accountMatches, networkMatches }
   }: any = useContext(AppContext);
-  console.log('#################', hasDeposit, accountMatches, networkMatches);
-  const acceptedRole = (roles !== undefined && roles.indexOf(accounttypeId) > -1) || false;
 
+  const acceptedRole = (roles !== undefined && roles.indexOf(accounttypeId) > -1) || false;
   // Check if is Logged
   if (!isLogged) {
     return <Redirect to="/join" />;
   }
 
   if (accountMatches && networkMatches) {
-    console.log('COMPONETNT', rest.component);
     if (rest.path === history.location.pathname) return <Layout {...rest} />;
     if (!hasDeposit) return <Redirect to="/deposit" />;
     if (!acceptedRole) return <Redirect to="/dashboard" />; // TODO: What is this ??

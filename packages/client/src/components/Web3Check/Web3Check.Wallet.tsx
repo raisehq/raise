@@ -13,7 +13,8 @@ const Wallet = ({ onSelect }: any) => {
   const [nameWallet, setNameWallet] = useState();
   const [provider, setProvider] = useState();
   const [defaultWallet, setDefaultWallet] = useState();
-  const { web3, setNewProvider, getCurrentProviderName, getDefaultWeb3 } = useWeb3();
+  const { getWeb3, setNewProvider, getCurrentProviderName, getDefaultWeb3 }: any = useWeb3();
+  const web3 = getWeb3();
 
   useEffect(() => {
     setNameWallet(getCurrentProviderName());
@@ -51,7 +52,8 @@ const Wallet = ({ onSelect }: any) => {
     <List>
       <List.Item>
         <List.Content verticalAlign="middle">
-          {nameWallet}
+          Connected : {nameWallet}
+          Default : {defaultWallet && defaultWallet.name}
           <Button basic color="black" fluid onClick={handlerCoinbase}>
             Coinbase
           </Button>

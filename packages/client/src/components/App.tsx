@@ -40,7 +40,7 @@ const App = ({ history, match }: any) => {
       config: { network },
       kyc: { token },
       user: {
-        details: { id, accounttypeId, email, status },
+        details: { id, accounttype_id: accounttypeId, email, status },
         cryptoAddress: { address }
       }
     },
@@ -95,7 +95,6 @@ const App = ({ history, match }: any) => {
 
   useAsyncEffect(async () => {
     if (isLogged) {
-      console.log('HOLLA???');
       onGetCryptoAddressByUser();
       onGetUser();
 
@@ -129,11 +128,12 @@ const App = ({ history, match }: any) => {
     }
   }, [isLogged, id, accounttypeId, email, status]);
 
-  // useEffect(() => {
-  //   if (isChecked && hasProvider !== undefined) {
-  //     if (isLogged) accounttypeId && setLoading(false);
-  //   }
-  // }, [isChecked, hasProvider, accounttypeId]);
+  useEffect(() => {
+    console.log(' isChecked :', isChecked, ' hasProvider : ', hasProvider);
+    if (isChecked && hasProvider !== undefined) {
+      setLoading(false);
+    }
+  }, [isChecked, hasProvider]);
 
   const componentsByRole = {
     1: {
@@ -143,7 +143,7 @@ const App = ({ history, match }: any) => {
       dashboard: DashboardLender
     }
   };
-  console.log(' ACCOUNT TYPE : ', accounttypeId);
+
   return (
     <AppContext.Provider
       value={{
@@ -156,7 +156,7 @@ const App = ({ history, match }: any) => {
         modalRefs,
         webSocket,
         daiWebSocket,
-        web3State: {
+        web3Status: {
           hasProvider,
           unlocked,
           networkMatches,
@@ -207,7 +207,7 @@ const App = ({ history, match }: any) => {
                   layout={MainLayout}
                   exact
                   path="/"
-                  component={componentsByRole[accounttypeId].dashboard}
+                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
                   roles={[1, 2]}
                 />
                 <Web3Layout

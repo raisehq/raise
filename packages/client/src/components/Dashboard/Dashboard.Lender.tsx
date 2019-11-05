@@ -31,7 +31,7 @@ const Dashboard = () => {
       const callback = onGetLenderInvestmentSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket, address, onGetLenderInvestmentSubscription]);
+  }, [webSocket, address]);
 
   useEffect(() => {
     if (webSocket) {
@@ -40,7 +40,7 @@ const Dashboard = () => {
       const callback = onGetSuggestedAuctionsSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket, onGetSuggestedAuctionsSubscription]);
+  }, [webSocket]);
 
   const panes = [
     {

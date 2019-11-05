@@ -32,19 +32,9 @@ export const getUser = async (userId: string | undefined) => {
       'Content-Type': 'application/json'
     }
   };
-  const rawResponse = await axios(config);
-  switch (rawResponse.status) {
-    case 200:
-      // eslint-disable-next-line
-      console.log('USER', rawResponse.data.data);
+  const response = await to(axios(config));
 
-      return rawResponse.data.data;
-    default:
-      console.log('ERROR M(');
-      throw new Error(rawResponse.data.message || 'User Unauthorized');
-  }
-  // console.log(' DATA USERS : ', response.data);
-  // return response.fold(error => Left(error), ({ data: { data } }) => data);
+  return response.fold(error => Left(error), ({ data: { data } }) => data);
 };
 
 export const getUserDetails = async (userId: string | undefined) => {

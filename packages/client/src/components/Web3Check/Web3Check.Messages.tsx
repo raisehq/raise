@@ -25,7 +25,7 @@ const BrowserCompatible = () => (
   <CardDescription>
     <BrowserView>
       <p>
-        To access Raise you will need a browser that supports MetaMask:
+        To access Raise you will need a browser that supports CryptoWallets:
         <span>
           <a href="https://www.mozilla.org/firefox"> Firefox</a>
           <span>, </span>
@@ -44,21 +44,25 @@ const BrowserCompatible = () => (
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
 );
-// @ts-ignore
-const ProviderErrorNotice = () => (
-  <CardDescription>
-    <p>Install a digital wallet like Metamask to continue.</p>
-    <ButtonGreen target="_blank" href="https://metamask.io/" content="Install Metamask extension" />
-    <NeedHelp href="https://www.raise.it/help" />
-  </CardDescription>
-);
+
 // @ts-ignore
 const AccountLockedNotice = () => {
-  const { enableWeb3 } = useWeb3();
+  const { getCurrentProviderName } = useWeb3();
+  const providerName = getCurrentProviderName();
+  if (providerName === 'opera-wallet') {
+    return (
+      <CardDescription>
+        <p>Raise needs to connect with your wallet</p>
+        <p>Please, pair the wallet mobile with Opera</p>
+        <NeedHelp href="https://www.raise.it/help" />
+        <ButtonGreen onClick={() => {}} content="Back to wallet selector" />
+      </CardDescription>
+    );
+  }
   return (
     <CardDescription>
-      <p>Raise needs to connect with your MetaMask wallet</p>
-      <ButtonGreen onClick={enableWeb3} content="Approve" />
+      <p>Raise needs to connect with your wallet</p>
+      <ButtonGreen onClick={() => {}} content="Back to wallet selector" />
       <NeedHelp href="https://www.raise.it/help" />
     </CardDescription>
   );
@@ -69,7 +73,7 @@ const NetworkNotMatch = ({ targetNetwork, currentNetwork }: any) => (
   <CardDescription>
     <h6>Change the network</h6>
     <p>
-      Please switch to one of the following networks in Metamask wallet:
+      Please switch to one of the following networks in your wallet:
       <b></b>
     </p>
     <NeedHelp href="https://www.raise.it/help" />
@@ -79,8 +83,8 @@ const NetworkNotMatch = ({ targetNetwork, currentNetwork }: any) => (
 const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
   <CardDescription>
     <p>
-      Check MetaMask and sign a message to bind this address to your Raise account. You will be able
-      to operate only with this address.
+      Check you Wallet and sign a message to bind this address to your Raise account. You will be
+      able to operate only with this address.
     </p>
     <div />
     <ButtonGreen onClick={uploadSignature}>
@@ -126,8 +130,7 @@ const CurrentNotice = () => {
         cryptoAddress: { address: verifiedAddress }
       }
     },
-    web3State: {
-      hasProvider,
+    web3Status: {
       unlocked,
       networkMatches,
       accountMatches,
@@ -140,18 +143,14 @@ const CurrentNotice = () => {
   if (!isSupportedBrowser()) {
     return <BrowserCompatible />;
   }
-
-  if (!hasProvider) {
-    return <ProviderErrorNotice />;
-  }
   if (!unlocked) {
     return <AccountLockedNotice />;
   }
-  if (!networkMatches) {
-    return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={walletNetwork} />;
-  }
   if (!verifiedAddress) {
     return <AccountNotVerified currentAddress={walletAccount} uploadSignature={uploadSignature} />;
+  }
+  if (!networkMatches) {
+    return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={walletNetwork} />;
   }
   if (!accountMatches) {
     return <AccountNotMatchNotice verifiedAddress={verifiedAddress} />;

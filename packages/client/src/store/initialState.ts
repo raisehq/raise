@@ -1,6 +1,6 @@
 import * as Cookies from 'js-cookie';
 import LocalData from '../helpers/localData';
-import { NULL_ADDRESS } from '../commons/constants';
+// import { NULL_ADDRESS } from '../commons/constants';
 const authCookie = Cookies.get('auth');
 const userCookie = Cookies.get('user');
 
@@ -69,7 +69,7 @@ const initialState = {
       }
     ],
     cryptoAddress: {
-      address: NULL_ADDRESS, // Set your address to bypass address check until backend work is done
+      address: null, // Set your address to bypass address check until backend work is done
       cryptoTypeId: 1,
       site: '',
       createdOn: ''

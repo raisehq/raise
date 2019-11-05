@@ -1,80 +1,95 @@
-import { useRef } from 'react';
 import { browserName } from 'react-device-detect';
 import Web3 from 'web3';
 
-const getConnection = ({ raiseWeb3, ethereum, web3 }) => {
-  let conn: any = null;
-  if (raiseWeb3) {
-    conn = raiseWeb3;
-  } else if (ethereum) {
-    conn = new Web3(ethereum);
-  } else if (web3) {
-    conn = web3;
+const Connection = {
+  get: () => {
+    // @ts-ignore
+    const { instance } = window as any;
+    if (instance) {
+      return instance;
+    }
+    // @ts-ignore
+    const defaultProv = Connection.getDefaultProvider();
+    if (defaultProv) {
+      // @ts-ignore
+      window.instance = new Web3(defaultProv);
+    }
+    // @ts-ignore
+    return window.instance;
+  },
+  getDefaultProvider: () => {
+    // @ts-ignore
+    const { ethereum } = window as any;
+    if (ethereum) {
+      return new Web3(ethereum);
+    }
+
+    // 2. Try getting legacy provider
+    const { web3 } = window as any;
+    if (web3 && web3.currentProvider) {
+      return web3.currentProvider;
+    }
+
+    return null;
+  },
+  getProvider: () => {
+    const { currentProvider }: any = Connection.get() || {};
+    return currentProvider;
+  },
+  set: conn => {
+    // @ts-ignore
+    window.instance = conn;
+  },
+  getPrevious: () => {
+    // @ts-ignore
+    const previous = Connection.getDefaultProvider();
+    return new Web3(previous);
   }
-  return conn;
 };
 
 const useWeb3 = () => {
-  const connection: any = useRef(
-    // @ts-ignore
-    getConnection(window)
-  );
-  const defaultWeb3: any = useRef(
-    // @ts-ignore
-    getConnection(window)
-  );
-
   const enableWeb3 = async () => {
-    if (connection.current.currentProvider) {
+    const connection = Connection.get();
+    if (connection.currentProvider) {
       try {
-        await connection.current.currentProvider.enable();
-        connection.current.currentProvider.autoRefreshOnNetworkChange = false; // prevent Metamask refresh webpage
+        await connection.currentProvider.enable();
+        connection.currentProvider.autoRefreshOnNetworkChange = false;
       } catch (error) {
         console.error('[useWeb3] Error connecting to the wallet.', error);
       }
     }
   };
+  const getCurrentProviderName = (provider?: any) => {
+    const conn = provider || Connection.getProvider();
+    if (!conn) return 'not_connected';
 
-  const setNewProvider = async provider => {
-    const newWeb3 = new Web3(provider);
-    // @ts-ignore
-    window.raiseWeb3 = newWeb3; // Set the new connection to window element
-    connection.current = newWeb3;
-    await connection.current.currentProvider.enable();
-    connection.current.currentProvider.autoRefreshOnNetworkChange = false; // prevent Metamask refresh webpage
-  };
+    if (conn.isMetaMask) return 'metamask';
 
-  const getCurrentProviderName = (defaultConn?: any) => {
-    const conn = defaultConn || connection.current;
-    if (!conn || !conn.currentProvider) return 'web3-unknown';
+    if (conn.isDapper) return 'dapper';
 
-    if (conn.currentProvider.isMetaMask) return 'metamask';
+    if (conn.isTrust) return 'trust';
 
-    if (conn.currentProvider.isDapper) return 'dapper';
+    if (conn.isGoWallet) return 'goWallet';
 
-    if (conn.currentProvider.isTrust) return 'trust';
+    if (conn.isAlphaWallet) return 'alphaWallet';
 
-    if (conn.currentProvider.isGoWallet) return 'goWallet';
+    if (conn.isStatus) return 'status';
 
-    if (conn.currentProvider.isAlphaWallet) return 'alphaWallet';
-
-    if (conn.currentProvider.isStatus) return 'status';
-
-    if (conn.currentProvider.isToshi) return 'coinbase';
+    if (conn.isWalletLink) return 'coinbase';
     //  @ts-ignore
     // eslint-disable-next-line
     if (typeof window.__CIPHER__ !== 'undefined') return 'cipher';
 
-    if (conn.currentProvider.constructor.name === 'EthereumProvider') return 'mist';
+    if (conn.constructor.name === 'EthereumProvider') return 'mist';
 
-    if (conn.currentProvider.constructor.name === 'Web3FrameProvider') return 'parity';
+    if (conn.constructor.name === 'Web3FrameProvider') return 'parity';
     // eslint-disable-next-line
-    if (conn.currentProvider.host && conn.currentProvider.host.indexOf('infura') !== -1) {
+    if (conn.host && conn.host.indexOf('infura') !== -1) {
       // eslint-disable-next-line
       return 'infura';
     }
 
-    if (conn.currentProvider.host && conn.currentProvider.host.indexOf('localhost') !== -1) {
+    if (conn.host && conn.host.indexOf('localhost') !== -1) {
       // eslint-disable-next-line
       return 'localhost';
     }
@@ -82,20 +97,52 @@ const useWeb3 = () => {
 
     return 'unknown';
   };
-  const getPrimaryAccount = async () => {
-    if (connection) {
-      const accounts = await connection.current.eth.getAccounts();
-      if (accounts && accounts.length > 0) return accounts[0];
+
+  const setNewProvider = async provider => {
+    try {
+      console.log(
+        ' NEW PROVIDER  : ',
+        getCurrentProviderName(provider),
+        ' OLD PROVIDER : ',
+        getCurrentProviderName()
+      );
+      if (
+        getCurrentProviderName() !== 'opera-wallet' ||
+        getCurrentProviderName(provider) !== getCurrentProviderName()
+      ) {
+        const newWeb3 = new Web3(provider);
+        // @ts-ignore
+        Connection.set(newWeb3);
+      }
+      await enableWeb3();
+    } catch (error) {
+      console.error('[useWeb3] Error connecting to the wallet.', error);
     }
-    return null;
+  };
+
+  const getPrimaryAccount = async () => {
+    try {
+      const connection = Connection.get();
+      if (connection && connection.eth) {
+        const accounts = await connection.eth.getAccounts();
+        if (accounts && accounts.length > 0) return accounts[0];
+      }
+      return null;
+    } catch (error) {
+      return null;
+    }
   };
 
   const getDefaultWeb3 = () => {
-    return { conn: defaultWeb3.current, name: getCurrentProviderName(defaultWeb3.current) };
+    const prevWeb3 = Connection.getPrevious();
+    return {
+      conn: prevWeb3,
+      name: prevWeb3 ? getCurrentProviderName(prevWeb3.currentProvider) : 'unknow'
+    };
   };
 
   return {
-    web3: connection.current,
+    getWeb3: Connection.get,
     enableWeb3,
     setNewProvider,
     getCurrentProviderName,

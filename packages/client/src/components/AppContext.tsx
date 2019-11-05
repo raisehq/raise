@@ -10,7 +10,7 @@ const AppContext = createContext({
   match: {},
   onSetGetStarted: {},
   getStarted: false,
-  web3State: {}
+  web3Status: {}
 });
 
 export default AppContext;

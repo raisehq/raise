@@ -43,20 +43,22 @@ export default (dispatch: any, state: any) => {
   };
 
   const onGetLenderInvestmentSubscription = (error, data) => {
-    if (error)
+    if (error) {
       return console.error(
         '[onGetLenderInvestmentSubscription] error on get live auction subs :: ',
         error
       );
-
-    dispatch({
-      type: 'SET_LENDER_INVESTMENTS',
-      data: data.users[0].loanFundings.map(({ withdrawn, amount, loan }) => ({
-        ...loan,
-        withdrawn,
-        lenderAmount: amount
-      }))
-    });
+    }
+    if (data && data.users && data.users.length > 0) {
+      dispatch({
+        type: 'SET_LENDER_INVESTMENTS',
+        data: data.users[0].loanFundings.map(({ withdrawn, amount, loan }) => ({
+          ...loan,
+          withdrawn,
+          lenderAmount: amount
+        }))
+      });
+    }
   };
 
   const onGetLoansByAccountSubscription = (error, data) => {

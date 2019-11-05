@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { List, Icon } from 'semantic-ui-react';
+import { List, Icon, Dimmer, Loader } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import { match, ANY, TAIL } from 'pampy';
-// import useWeb3Checker from '../../hooks/useWeb3Checker';
 import { isSupportedBrowser } from '../../utils';
 import Messages from './Web3Check.Messages';
 import AppContext from '../AppContext';
@@ -37,7 +36,7 @@ const capitalize = s => {
 
 const CheckList = () => {
   const {
-    web3State: { hasProvider, unlocked, networkMatches, accountMatches, targetNetwork }
+    web3Status: { hasProvider, unlocked, networkMatches, accountMatches, targetNetwork }
   }: any = useContext(AppContext);
 
   const matchConditions = [
@@ -67,13 +66,20 @@ const CheckList = () => {
     `Select ${capitalize(targetNetwork ? targetNetwork[0] : 'NONE')} network in your wallet`,
     'Sign message and bind your wallet to your account'
   ];
-  console.log(' SUCCESS : ', steps);
+
   const StepsDOM = steps.map((value, i) => (
-    // eslint-disable-next-line
     <Check key={`check-${i}`} value={value} message={stepsMessage[i]} />
   ));
   if (matchConditions.every((el: any) => el)) {
     return <Redirect to="/" />;
+  }
+
+  if (!hasProvider) {
+    return (
+      <Dimmer active={!hasProvider} inverted>
+        <Loader>Checking wallet ...</Loader>
+      </Dimmer>
+    );
   }
 
   return (

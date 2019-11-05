@@ -11,17 +11,28 @@ const useWallet = () => {
   const [wallet, setWallet]: any = useState(null);
   const heroContracts: any = useRef(null);
   const contracts = useRef({});
-  const { web3, getPrimaryAccount } = useWeb3();
+  const { getWeb3, getPrimaryAccount } = useWeb3();
+  const web3 = getWeb3();
   useAsyncEffect(async () => {
     heroContracts.current = await getContractsDefinition();
   }, []);
 
   useEffect(() => {
     if (web3 && heroContracts.current) {
+      // console.log(' NEW WEB3 ', web3.currentProvider.isWalletLink);
       setWallet({
+        web3,
         heroContracts: heroContracts.current,
         getNetwork: async () => {
-          return parseNetwork(await web3.eth.net.getId());
+          try {
+            if (web3) {
+              return parseNetwork(await web3.eth.net.getId());
+            }
+            return process.env.REACT_APP_DEFAULT_NETWORK;
+          } catch (err) {
+            console.error('[useWallet] Error detect network');
+            return process.env.REACT_APP_DEFAULT_NETWORK;
+          }
         },
         getContractsNetwork: () => {
           return Object.keys(heroContracts.current.address)
@@ -57,11 +68,10 @@ const useWallet = () => {
         utils: web3.utils,
         getContract: (name: string) => contracts.current[name],
         getContracts: () => contracts.current,
-        getAccounts: web3.eth.getAccounts,
         getPrimaryAccount
       });
     }
-  }, [web3, heroContracts.current]);
+  }, [heroContracts.current]);
 
   return wallet;
 };
