@@ -11,9 +11,17 @@ const useLoanDispatcher = () => {
         const contract = await metamask.addContract('LoanDispatcher');
         const account = await metamask.getAccounts();
         setActiveContract({
-          deploy: async (minAmount, amount, maxInterestRate, termMonthsLength, acceptMinimum) => {
+          deploy: async (
+            minAmount,
+            amount,
+            maxInterestRate,
+            termMonthsLength,
+            acceptMinimum,
+            termAuctionDaysLength
+          ) => {
             const auctionSecondsLength = (1 * 30 * 24 * 60 * 60).toString();
             const termSecondsLength = termMonthsLength.toString();
+            const termAuctionSecondsLength = termAuctionDaysLength.toString();
             const params = [
               metamask.utils.toWei(
                 acceptMinimum ? minAmount.toString() : amount.toString(),
@@ -22,6 +30,7 @@ const useLoanDispatcher = () => {
               metamask.utils.toWei(amount.toString(), 'ether'),
               metamask.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,
+              termAuctionSecondsLength,
               auctionSecondsLength
             ];
 

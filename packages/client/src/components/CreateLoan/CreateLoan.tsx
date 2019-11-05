@@ -83,6 +83,7 @@ const CreateLoan = () => {
   const [loan, setLoan] = useState({
     amount: defaultAmount,
     term: defaultTerm,
+    auctionTerm: defaultTermAuction,
     mir: defaultMir,
     accept: false,
     minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
@@ -121,6 +122,7 @@ const CreateLoan = () => {
 
   const onSetTermAuction = (e, { value }) => {
     setSelectedLoanAuction(value);
+    setLoan({ ...loan, auctionTerm: value });
   };
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
@@ -140,7 +142,7 @@ const CreateLoan = () => {
   const onSave = async () => {
     setStage(UI.Waiting);
     try {
-      await loanDispatcher.deploy(loan.minAmount, loan.amount, loan.mir, loan.term, loan.accept);
+      await loanDispatcher.deploy(loan.minAmount, loan.amount, loan.mir, loan.term, loan.accept, loan.auctionTerm);
       setStage(UI.Success);
     } catch (error) {
       console.error(
@@ -165,6 +167,7 @@ const CreateLoan = () => {
     setLoan({
       amount: defaultAmount,
       term: defaultTerm,
+      auctionTerm: defaultTermAuction,
       mir: defaultMir,
       accept: false,
       minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
