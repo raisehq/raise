@@ -9,7 +9,8 @@ const AppContext = createContext({
   daiWebSocket: {},
   match: {},
   onSetGetStarted: {},
-  getStarted: false
+  getStarted: false,
+  web3State: {}
 });
 
 export default AppContext;

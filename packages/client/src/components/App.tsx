@@ -7,7 +7,7 @@ import LogRocket from 'logrocket';
 import { MainLayout, SimpleLayout, Web3Layout } from './Layout';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import CreateLoan from './CreateLoan';
-import { RootContext } from '../context';
+import RootContext from '../context';
 import Join from './Join';
 import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
@@ -15,7 +15,7 @@ import { Web3Check } from '../components/Web3Check';
 //import Test from './SuggestTest';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
-// import useWeb3Checker from '../hooks/useWeb3Checker';
+import useWeb3Checker from '../hooks/useWeb3Checker';
 // import useWallet from '../hooks/useWallet';
 // import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
@@ -52,12 +52,19 @@ const App = ({ history, match }: any) => {
     }
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
-  // const web3Status = useWeb3Checker(address, network);
-  // const { hasDeposit: deposited, accountMatches: accMatch, networkMatches: netOk } = web3Status;
-  // const web3Pass = netOk && accMatch;
   const [webSocket, setWebSocket]: any = useState({});
   const [daiWebSocket, setDaiWebSocket] = useState({});
-  // const [web3Status, setWeb3Status] = useState({ address: null, network });
+
+  const {
+    hasProvider,
+    unlocked,
+    networkMatches,
+    accountMatches,
+    targetNetwork,
+    walletAccount,
+    storedAccount
+  } = useWeb3Checker(address);
+  // console.log('################# STORED ACCOUNT CHECK APP: ', address);
   const onSetGetStarted = () => setGetStarted(!getStarted);
 
   // Enabling connections
@@ -87,8 +94,8 @@ const App = ({ history, match }: any) => {
   }, [webSocket, onGetUserFromBC, address]);
 
   useAsyncEffect(async () => {
-    console.log(' IS LOGGED ', isLogged);
     if (isLogged) {
+      console.log('HOLLA???');
       onGetCryptoAddressByUser();
       onGetUser();
 
@@ -121,81 +128,12 @@ const App = ({ history, match }: any) => {
       }
     }
   }, [isLogged, id, accounttypeId, email, status]);
-  useEffect(() => {
-    if (isChecked) {
-      console.log('LOGGED !!! ', isLogged);
-      setLoading(false);
-    }
-  }, [isChecked]);
+
   // useEffect(() => {
-  //   // if (address && network) {
-  //   //   setWeb3Status({
-  //   //     network,
-  //   //     address
-  //   //   });
-  //   //   console.log(' ADDRESS!!! ', address);
-  //   //   // if(isLogged && web3Status) {
-  //   //   //   setLoading(false);
-  //   //   // }
-  //   // }
-  //   // const isJoin =
-  //   //   history.location.pathname.includes('/join') || history.location.pathname.includes('/login');
-  //   // const conditions = {
-  //   //   logged,
-  //   //   deposited: !!deposited,
-  //   //   web3Pass,
-  //   //   refMode,
-  //   //   isJoin,
-  //   //   isLoading
-  //   // };
-
-  //   // const TagManager = () => {
-  //   //   return useGoogleTagManager(
-  //   //     id,
-  //   //     'www.raise.it',
-  //   //     'Wallet',
-  //   //     '/verify-web3',
-  //   //     'TrafficLight',
-  //   //     'dataLayer',
-  //   //     'Submit',
-  //   //     'Wallet Connect Success'
-  //   //   );
-  //   // };
-
-  //   // prettier-ignore
-  //   // matches(conditions,
-  //   //   { isLoading: true },
-  //   //   () => { },
-  //   //   { logged: true, web3Pass: true, deposited: false },
-  //   //   () => setTimeout(() => {
-  //   //     TagManager();
-  //   //     history.push('/deposit')
-  //   //   }, 3000),
-  //   //   { logged: true, web3Pass: true, deposited: true, refMode: true },
-  //   //   () => setTimeout(() => {
-  //   //     TagManager();
-  //   //     history.push('/referral')
-  //   //   }, 3000),
-  //   //   { logged: true, web3Pass: true, deposited: true, refMode: false },
-  //   //   () => {
-  //   //     setTimeout(() => {
-  //   //       const params = new URLSearchParams(window['location']['search']);
-  //   //       if (params.has('redirect')) {
-  //   //         history.push(params.get('redirect'));
-  //   //       }
-  //   //     }, 3000)
-  //   //   },
-  //   //   { logged: false, isJoin: false },
-  //   //   () => history.push('/join'),
-  //   //   _,
-  //   //   () => { }
-  //   // );
-  // }, [
-  //   isLoading,
-  //   isLogged,
-  //   address,
-  //   network
-  // ]);
+  //   if (isChecked && hasProvider !== undefined) {
+  //     if (isLogged) accounttypeId && setLoading(false);
+  //   }
+  // }, [isChecked, hasProvider, accounttypeId]);
 
   const componentsByRole = {
     1: {
@@ -205,7 +143,7 @@ const App = ({ history, match }: any) => {
       dashboard: DashboardLender
     }
   };
-  //console.log(' ############### ', web3Status);
+  console.log(' ACCOUNT TYPE : ', accounttypeId);
   return (
     <AppContext.Provider
       value={{
@@ -217,7 +155,16 @@ const App = ({ history, match }: any) => {
         match,
         modalRefs,
         webSocket,
-        daiWebSocket
+        daiWebSocket,
+        web3State: {
+          hasProvider,
+          unlocked,
+          networkMatches,
+          accountMatches,
+          targetNetwork,
+          walletAccount,
+          storedAccount
+        }
       }}
     >
       <Dimmer active={isLoading} inverted>
@@ -260,7 +207,7 @@ const App = ({ history, match }: any) => {
                   layout={MainLayout}
                   exact
                   path="/"
-                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
+                  component={componentsByRole[accounttypeId].dashboard}
                   roles={[1, 2]}
                 />
                 <Web3Layout

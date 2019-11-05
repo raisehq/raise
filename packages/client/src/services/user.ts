@@ -32,9 +32,19 @@ export const getUser = async (userId: string | undefined) => {
       'Content-Type': 'application/json'
     }
   };
-  const response = await to(axios(config));
+  const rawResponse = await axios(config);
+  switch (rawResponse.status) {
+    case 200:
+      // eslint-disable-next-line
+      console.log('USER', rawResponse.data.data);
 
-  return response.fold(error => Left(error), ({ data: { data } }) => data);
+      return rawResponse.data.data;
+    default:
+      console.log('ERROR M(');
+      throw new Error(rawResponse.data.message || 'User Unauthorized');
+  }
+  // console.log(' DATA USERS : ', response.data);
+  // return response.fold(error => Left(error), ({ data: { data } }) => data);
 };
 
 export const getUserDetails = async (userId: string | undefined) => {
@@ -131,8 +141,11 @@ export const cryptoAddressByAccount = async (userId, targetAddressId) => {
     const rawResponse = await axios(config);
     switch (rawResponse.status) {
       case 200:
-        console.log('RESPONSE: ', rawResponse.data.data);
-        console.log('targetAddressId: ', targetAddressId);
+        if (rawResponse.data.data.length === 0) {
+          return {
+            address: null
+          };
+        }
         // eslint-disable-next-line
         const { id, address, herouser_id: herouserId } = rawResponse.data.data.find(
           d => d.cryptotype_id === targetAddressId

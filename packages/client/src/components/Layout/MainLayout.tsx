@@ -16,7 +16,7 @@ const Layout: React.SFC<IDefaultProps> = ({ component: Component, ...rest }: any
       <HeroLayout>
         <Wrapper>
           <Content>
-            <Component {...matchProps} />
+            <h1>ROUTER {console.log('COMPONENT?', Component)}</h1>>
           </Content>
         </Wrapper>
         <Footer />

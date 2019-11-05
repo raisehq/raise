@@ -47,7 +47,6 @@ const Wallet = ({ onSelect }: any) => {
       });
     }
   }, [provider]);
-  console.log('DEFAULT WALLET : ', defaultWallet);
   return (
     <List>
       <List.Item>

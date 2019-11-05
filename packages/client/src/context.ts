@@ -1,3 +1,4 @@
 import { createContext } from 'react';
 
-export const RootContext = createContext({});
+const RootContext = createContext({});
+export default RootContext;

@@ -17,16 +17,13 @@ const useWallet = () => {
   }, []);
 
   useEffect(() => {
-    console.log('[USEWALLET] WEB3 ', web3);
-    console.log('[USEWALLET] heroContracts ', heroContracts);
-    console.log('[USEWALLET] condition: ', !!(web3 && heroContracts.current && web3.eth.net));
     if (web3 && heroContracts.current) {
-      console.log('-------------------------> SET WALLET !!! ');
       setWallet({
         heroContracts: heroContracts.current,
-
-        getNetwork: () => {
-          console.log(' GET NETWORK ', heroContracts.current);
+        getNetwork: async () => {
+          return parseNetwork(await web3.eth.net.getId());
+        },
+        getContractsNetwork: () => {
           return Object.keys(heroContracts.current.address)
             .map(x => parseNetwork(Number(x)))
             .filter(availableId => ['mainnet', 'kovan', 'test'].find(id => id === availableId));

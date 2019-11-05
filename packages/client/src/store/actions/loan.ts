@@ -43,7 +43,11 @@ export default (dispatch: any, state: any) => {
   };
 
   const onGetLenderInvestmentSubscription = (error, data) => {
-    if (error) return console.log('error on get live auction subs :: ', error);
+    if (error)
+      return console.error(
+        '[onGetLenderInvestmentSubscription] error on get live auction subs :: ',
+        error
+      );
 
     dispatch({
       type: 'SET_LENDER_INVESTMENTS',
@@ -57,7 +61,7 @@ export default (dispatch: any, state: any) => {
 
   const onGetLoansByAccountSubscription = (error, data) => {
     if (error) {
-      console.log('error on get loans subs :: ', error);
+      console.error('[onGetLoansByAccountSubscription] error on get loans subs :: ', error);
     } else {
       dispatch({ type: 'SET_BORROWER_LOANS', data: data.users[0].loanRequests });
     }

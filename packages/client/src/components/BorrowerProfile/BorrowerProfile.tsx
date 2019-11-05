@@ -75,7 +75,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   useAsyncEffect(async () => {
     try {
       const response = await requestPage('borrower_profile', slug);
-      console.log(response);
       // TODO: Remove this call and get the account from the CONTEXT
       const { address: userAccount } = await cryptoAddressByAccount(
         response.companyDetails.userId,
@@ -84,7 +83,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
       setPayload({ ...response, account: userAccount });
       setLoading(false);
     } catch (error) {
-      console.error(error);
       setNotFound(true);
       setLoading(false);
     }

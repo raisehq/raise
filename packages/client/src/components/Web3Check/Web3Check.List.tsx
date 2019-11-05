@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { List, Icon } from 'semantic-ui-react';
+import { Redirect } from 'react-router-dom';
 import { match, ANY, TAIL } from 'pampy';
-import useWeb3Checker from '../../hooks/useWeb3Checker';
+// import useWeb3Checker from '../../hooks/useWeb3Checker';
 import { isSupportedBrowser } from '../../utils';
-
+import Messages from './Web3Check.Messages';
 import AppContext from '../AppContext';
 
 const Check = ({ value, message }: any) => {
-  console.log(' --------------- > ', value);
   const iconProps = match(
     value,
     'error',
@@ -37,18 +37,8 @@ const capitalize = s => {
 
 const CheckList = () => {
   const {
-    store: {
-      config: { network },
-      user: {
-        cryptoAddress: { address }
-      }
-    }
+    web3State: { hasProvider, unlocked, networkMatches, accountMatches, targetNetwork }
   }: any = useContext(AppContext);
-
-  const { hasProvider, unlocked, networkMatches, accountMatches }: any = useWeb3Checker(
-    address,
-    network
-  );
 
   const matchConditions = [
     isSupportedBrowser(),
@@ -56,12 +46,6 @@ const CheckList = () => {
     networkMatches,
     accountMatches
   ];
-  console.log(' MATCH : ', [
-    isSupportedBrowser(),
-    hasProvider && unlocked,
-    networkMatches,
-    accountMatches
-  ]);
   // prettier-ignore
   const steps = match(matchConditions,
     [false, TAIL], 
@@ -80,15 +64,24 @@ const CheckList = () => {
   const stepsMessage = [
     'Detecting compatible browser',
     'Connect your wallet with Raise',
-    `Select ${capitalize(network)} network in your wallet`,
+    `Select ${capitalize(targetNetwork ? targetNetwork[0] : 'NONE')} network in your wallet`,
     'Sign message and bind your wallet to your account'
   ];
-
+  console.log(' SUCCESS : ', steps);
   const StepsDOM = steps.map((value, i) => (
     // eslint-disable-next-line
     <Check key={`check-${i}`} value={value} message={stepsMessage[i]} />
   ));
-  return <List>{StepsDOM}</List>;
+  if (matchConditions.every((el: any) => el)) {
+    return <Redirect to="/" />;
+  }
+
+  return (
+    <>
+      <List>{StepsDOM}</List>
+      <Messages />
+    </>
+  );
 };
 
 export default CheckList;

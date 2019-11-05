@@ -61,10 +61,9 @@ export default (dispatch: any, state: any) => {
         type: user.accounttype_id
       });
       const response = { user };
-      console.log(' AUTH ', user);
       dispatch({ type: 'SET_USER_SESSION', response });
     } catch (error) {
-      console.error('ERROR : ', error);
+      console.error('[getUserAuth] ERROR : ', error);
     }
   };
 

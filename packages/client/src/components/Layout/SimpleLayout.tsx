@@ -43,7 +43,6 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
 
   // Check if is Logged
   if (!logged && checkLogged) {
-    console.log('REDIRECT TO JOIN ');
     return <Redirect to="/join" />;
   }
 

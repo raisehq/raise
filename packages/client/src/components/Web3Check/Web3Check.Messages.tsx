@@ -83,7 +83,7 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
       to operate only with this address.
     </p>
     <div />
-    <ButtonGreen onClick={uploadSignature} double>
+    <ButtonGreen onClick={uploadSignature}>
       Sign message with
       <AddressContainer>
         <StyledAddress account={currentAddress} />
@@ -125,6 +125,15 @@ const CurrentNotice = () => {
         // @ts-ignore
         cryptoAddress: { address: verifiedAddress }
       }
+    },
+    web3State: {
+      hasProvider,
+      unlocked,
+      networkMatches,
+      accountMatches,
+      walletNetwork,
+      targetNetwork,
+      walletAccount
     }
   }: any = useContext(AppContext);
 
@@ -132,21 +141,21 @@ const CurrentNotice = () => {
     return <BrowserCompatible />;
   }
 
-  // if (!hasProvider) {
-  //   return <ProviderErrorNotice />;
-  // }
-  // if (!unlocked) {
-  //   return <AccountLockedNotice />;
-  // }
-  // if (!networkMatches) {
-  //   return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={network} />;
-  // }
-  // if (!verifiedAddress) {
-  //   return <AccountNotVerified currentAddress={account} uploadSignature={uploadSignature} />;
-  // }
-  // if (!accountMatches) {
-  //   return <AccountNotMatchNotice verifiedAddress={verifiedAddress} />;
-  // }
+  if (!hasProvider) {
+    return <ProviderErrorNotice />;
+  }
+  if (!unlocked) {
+    return <AccountLockedNotice />;
+  }
+  if (!networkMatches) {
+    return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={walletNetwork} />;
+  }
+  if (!verifiedAddress) {
+    return <AccountNotVerified currentAddress={walletAccount} uploadSignature={uploadSignature} />;
+  }
+  if (!accountMatches) {
+    return <AccountNotMatchNotice verifiedAddress={verifiedAddress} />;
+  }
   return <Success />;
 };
 
