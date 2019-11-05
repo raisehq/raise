@@ -8,12 +8,7 @@ const Connection = {
     if (instance) {
       return instance;
     }
-    // @ts-ignore
-    const defaultProv = Connection.getDefaultProvider();
-    if (defaultProv) {
-      // @ts-ignore
-      window.instance = new Web3(defaultProv);
-    }
+
     // @ts-ignore
     return window.instance;
   },
@@ -24,7 +19,6 @@ const Connection = {
       return new Web3(ethereum);
     }
 
-    // 2. Try getting legacy provider
     const { web3 } = window as any;
     if (web3 && web3.currentProvider) {
       return web3.currentProvider;
@@ -62,39 +56,20 @@ const useWeb3 = () => {
   const getCurrentProviderName = (provider?: any) => {
     const conn = provider || Connection.getProvider();
     if (!conn) return 'not_connected';
-
     if (conn.isMetaMask) return 'metamask';
-
     if (conn.isDapper) return 'dapper';
-
     if (conn.isTrust) return 'trust';
-
     if (conn.isGoWallet) return 'goWallet';
-
     if (conn.isAlphaWallet) return 'alphaWallet';
-
     if (conn.isStatus) return 'status';
-
     if (conn.isWalletLink) return 'coinbase';
-    //  @ts-ignore
-    // eslint-disable-next-line
-    if (typeof window.__CIPHER__ !== 'undefined') return 'cipher';
-
+    const { __CIPHER__ } = window as any;
+    if (typeof __CIPHER__ !== 'undefined') return 'cipher';
     if (conn.constructor.name === 'EthereumProvider') return 'mist';
-
     if (conn.constructor.name === 'Web3FrameProvider') return 'parity';
-    // eslint-disable-next-line
-    if (conn.host && conn.host.indexOf('infura') !== -1) {
-      // eslint-disable-next-line
-      return 'infura';
-    }
-
-    if (conn.host && conn.host.indexOf('localhost') !== -1) {
-      // eslint-disable-next-line
-      return 'localhost';
-    }
+    if (conn.host && conn.host.indexOf('infura') !== -1) return 'infura';
+    if (conn.host && conn.host.indexOf('localhost') !== -1) return 'localhost';
     if (browserName && browserName.includes('Opera')) return 'opera-wallet';
-
     return 'unknown';
   };
 

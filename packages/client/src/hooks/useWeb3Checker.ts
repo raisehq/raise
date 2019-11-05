@@ -1,21 +1,12 @@
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect } from 'react';
 import _ from 'underscore';
 import { toChecksumAddress } from 'web3-utils';
 import { NULL_ADDRESS } from '../commons/constants';
-
-// import useAsyncEffect from './useAsyncEffect';
-
+import useForceUpdate from './useForceUpdate';
 import useWeb3 from './useWeb3';
 import useDepositContract from './useDepositContract';
 import useWallet from './useWallet';
 
-function useForceUpdate() {
-  const [, setTick] = useState(0);
-  const update = useCallback(() => {
-    setTick(tick => tick + 1);
-  }, []);
-  return update;
-}
 // Matches
 const matchAccount = (walledAccount, storedAccount) => {
   try {
@@ -39,13 +30,12 @@ const matchProvider = web3 => {
 
 const checkHasDeposit = async (depositContract, walletAccount) => {
   if (walletAccount && walletAccount !== NULL_ADDRESS) {
-    console.log('WALLET ACCOUNT : ', walletAccount);
     const hasDeposit = depositContract ? await depositContract.hasDeposited(walletAccount) : false;
     return hasDeposit;
   }
   return false;
 };
-// @ts-ignore
+
 const web3CheckList = (
   web3, // Web3 object
   walletAccount, // Wallet Account
@@ -84,7 +74,7 @@ const useWeb3Checker = storedAccount => {
           const hasDeposit = await checkHasDeposit(depositContract, walletAccount);
           const walletNetwork = wallet ? await wallet.getNetwork() : 'NO_NETWORK';
           const targetNetwork = wallet ? await wallet.getContractsNetwork() : 'NO_NETWORK';
-
+          console.log('NETWORK ', walletNetwork, wallet);
           const newState = web3CheckList(
             web3,
             walletAccount,
@@ -93,13 +83,12 @@ const useWeb3Checker = storedAccount => {
             targetNetwork,
             hasDeposit
           );
-          console.log(' STATE : ', newState);
+          console.log('NETWORK ', newState);
           if (!_.isEqual(newState, web3State.current)) {
             web3State.current = newState;
             forceUpdate();
           }
         } catch (err) {
-          console.error('[useWeb3Checker] ERROR: ', err);
           const errorState = web3CheckList(
             web3,
             null,
@@ -112,10 +101,7 @@ const useWeb3Checker = storedAccount => {
         }
       }
     };
-    // @ts-ignore
-
     const accountInterval = setInterval(check, 1000);
-
     return () => {
       if (accountInterval) {
         clearInterval(accountInterval);

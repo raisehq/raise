@@ -71,7 +71,7 @@ const useWallet = () => {
         getPrimaryAccount
       });
     }
-  }, [heroContracts.current]);
+  }, [heroContracts.current, web3]);
 
   return wallet;
 };

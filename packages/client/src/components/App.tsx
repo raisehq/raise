@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { withRouter, Switch } from 'react-router-dom';
-// import { match as matches, _ } from 'pampy';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import LogRocket from 'logrocket';
@@ -12,14 +11,11 @@ import Join from './Join';
 import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
-//import Test from './SuggestTest';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
-// import useWallet from '../hooks/useWallet';
 // import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
-
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
@@ -48,12 +44,13 @@ const App = ({ history, match }: any) => {
     actions: {
       auth: { onVerifyAuth },
       user: { onGetCryptoAddressByUser, onGetUser, onGetUserFromBC },
-      kyc: { onInitKyc }
+      kyc: { onInitKyc },
+      config: { updateNetwork }
     }
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
   const [webSocket, setWebSocket]: any = useState({});
-  const [daiWebSocket, setDaiWebSocket] = useState({});
+  const [daiWebSocket, setDaiWebSocket]: any = useState({});
 
   const {
     hasProvider,
@@ -61,12 +58,23 @@ const App = ({ history, match }: any) => {
     networkMatches,
     accountMatches,
     targetNetwork,
+    walletNetwork,
     walletAccount,
     storedAccount
   } = useWeb3Checker(address);
-  // console.log('################# STORED ACCOUNT CHECK APP: ', address);
-  const onSetGetStarted = () => setGetStarted(!getStarted);
 
+  const onSetGetStarted = () => setGetStarted(!getStarted);
+  // Enabling connections
+  useEffect(() => {
+    if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {
+      setLoading(false);
+      setWebSocket({});
+      setDaiWebSocket({});
+
+      updateNetwork(walletNetwork);
+    }
+  }, [network, networkMatches, walletNetwork]);
+  console.log(' NETWORK CHANGE ???? ', network, walletNetwork);
   // Enabling connections
   useEffect(() => {
     if (Object.keys(webSocket).length === 0) {
@@ -105,7 +113,7 @@ const App = ({ history, match }: any) => {
     } else {
       await onVerifyAuth();
     }
-  }, [isLogged, token, address]);
+  }, [isLogged, token, address, network]);
 
   useEffect(() => {
     if (process.env.REACT_APP_LOGROCKET === 'true') {
@@ -129,7 +137,6 @@ const App = ({ history, match }: any) => {
   }, [isLogged, id, accounttypeId, email, status]);
 
   useEffect(() => {
-    console.log(' isChecked :', isChecked, ' hasProvider : ', hasProvider);
     if (isChecked && hasProvider !== undefined) {
       setLoading(false);
     }

@@ -40,7 +40,8 @@ module.exports = {
     'implicit-arrow-linebreak': 0,
     'react/jsx-first-prop-new-line': 0,
     'object-curly-newline': 0,
-    'react/no-array-index-key': 0
+    'react/no-array-index-key': 0,
+    'import/no-useless-path-segments': 0
   },
   settings: {
     react: {
