@@ -12,10 +12,10 @@ const Web3Address = ({ account = null }: any) => {
       user: {
         cryptoAddress: { address }
       }
-    }
+    },
+    web3Status: { networkMatches }
   }: any = useContext(AppContext);
-  // const { networkMatches }: any = useWeb3Checker(address);
-  const networkMatches = true;
+
   const iconColor = networkMatches ? 'green' : 'red';
   const currentAddress = account || address || NULL_ADDRESS;
 

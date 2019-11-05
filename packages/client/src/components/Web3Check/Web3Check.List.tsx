@@ -63,7 +63,7 @@ const CheckList = () => {
   const stepsMessage = [
     'Detecting compatible browser',
     'Connect your wallet with Raise',
-    `Select ${capitalize(targetNetwork ? targetNetwork[0] : 'NONE')} network in your wallet`,
+    `Select ${capitalize(targetNetwork ? targetNetwork : 'NONE')} network in your wallet`,
     'Sign message and bind your wallet to your account'
   ];
 

@@ -70,11 +70,9 @@ const App = ({ history, match }: any) => {
       setLoading(false);
       setWebSocket({});
       setDaiWebSocket({});
-
       updateNetwork(walletNetwork);
     }
   }, [network, networkMatches, walletNetwork]);
-  console.log(' NETWORK CHANGE ???? ', network, walletNetwork);
   // Enabling connections
   useEffect(() => {
     if (Object.keys(webSocket).length === 0) {
