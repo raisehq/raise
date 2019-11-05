@@ -10,14 +10,18 @@ import {
 
 const UpdatePassword = ({ oldPassword, updateState, newPassword, newPasswordRepeat, savePassword, passMessage, loading }) => {
   const message = passMessage.includes('body') ? `${passMessage.split(': ')[1].split(' ')[0].split('-').join(' ')} not valid` : passMessage;
+  const passwordNotMatch = newPassword && newPasswordRepeat && newPassword !== newPasswordRepeat;
   const passLength = 6;
+  const newPasswordLength = newPassword && newPassword.length < passLength;
   const isDisabled =
     !oldPassword || !oldPassword.length ||
-    !newPassword || !newPassword.length || newPassword.length < passLength ||
-    !newPasswordRepeat || !newPasswordRepeat.length || newPasswordRepeat.length < passLength ||
-    newPassword !== newPasswordRepeat;
+    !newPassword || !newPassword.length || newPasswordLength ||
+    !newPasswordRepeat || !newPasswordRepeat ||
+    passwordNotMatch
 
-  // TODO: Show min char length message, show msg when passwords not equal.
+  const passwordNotMatchMessage = 'Passwords does not match';
+  const passwordLessMinLength = `Password should have a minimum of ${passLength} characters`;
+
   return (
     <>
       <h3>Change Password</h3>
@@ -37,7 +41,7 @@ const UpdatePassword = ({ oldPassword, updateState, newPassword, newPasswordRepe
         type="password"
         value={newPassword}
         onChange={updateState}
-        error={newPassword && newPassword.length < passLength}
+        error={newPasswordLength}
       />
       <Label>Repeat new password</Label>
       <FormInput
@@ -46,7 +50,7 @@ const UpdatePassword = ({ oldPassword, updateState, newPassword, newPasswordRepe
         type="password"
         value={newPasswordRepeat}
         onChange={updateState}
-        error={newPasswordRepeat && newPasswordRepeat.length < passLength || newPasswordRepeat !== newPassword}
+        error={passwordNotMatch}
       />
       <FlexBox>
         <Submit
@@ -54,6 +58,8 @@ const UpdatePassword = ({ oldPassword, updateState, newPassword, newPasswordRepe
           onClick={savePassword}>Save</Submit>
         <Loader inline active={loading} />
         {passMessage && <Message>{message}</Message>}
+        {passwordNotMatch && <Message>{passwordNotMatchMessage}</Message>}
+        {(newPasswordLength) && <Message>{passwordLessMinLength}</Message>}
       </FlexBox>
     </>
   )

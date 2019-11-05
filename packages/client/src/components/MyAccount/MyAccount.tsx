@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback, useEffect } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { AppContext } from '../App';
 import { match } from 'pampy';
 import {
@@ -31,10 +31,6 @@ const MyAccount = () => {
     }
   }: any = useContext(AppContext);
 
-  useEffect(() => {
-    setUsername(storedUsername);
-  }, [storedUsername]);
-
   const updateState = useCallback(
     (e, { value, name }) =>
       match(
@@ -58,8 +54,8 @@ const MyAccount = () => {
     await onUpdatePassword(id, { oldPassword, newPassword, newPasswordRepeat });
   };
 
-  const profileProps = { email, kyc_status }
-  const updateUsernameProps = { username, saveUsername, updateState, userMessage, loading: userLoading };
+  const profileProps = { email, kyc_status, storedUsername }
+  const updateUsernameProps = { username, storedUsername, saveUsername, updateState, userMessage, loading: userLoading };
   const updatePasswordProps = { oldPassword, updateState, newPassword, newPasswordRepeat, savePassword, passMessage, loading: passLoading };
 
   return (

@@ -6,7 +6,7 @@ import {
 } from '../MyAccount.styles';
 import { KycStatus } from '../../../commons/kycStatus';
 
-const ProfileInfo = ({ email, kyc_status }) => {
+const ProfileInfo = ({ email, kyc_status, storedUsername }) => {
   const kycStatus = kyc_status === null || kyc_status === undefined ? KycStatus.Error : KycStatus[kyc_status];
 
   return (
@@ -19,6 +19,8 @@ const ProfileInfo = ({ email, kyc_status }) => {
       <EmailBox>
         <ReadTitle>Email</ReadTitle>
         <p>{email}</p>
+        <ReadTitle>Username</ReadTitle>
+        <p>{storedUsername}</p>
       </EmailBox>
     </>
   )

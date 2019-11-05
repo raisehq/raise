@@ -131,5 +131,7 @@ export const Submit = styled(ButtonGreen)`
 `;
 
 export const Message = styled.div`
-  text-transform: capitalize;
+&::first-letter {
+  text-transform: uppercase;
+}
 `
