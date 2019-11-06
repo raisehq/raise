@@ -142,7 +142,14 @@ const CreateLoan = () => {
   const onSave = async () => {
     setStage(UI.Waiting);
     try {
-      await loanDispatcher.deploy(loan.minAmount, loan.amount, loan.mir, loan.term, loan.accept, loan.auctionTerm);
+      await loanDispatcher.deploy(
+        loan.minAmount,
+        loan.amount,
+        loan.mir,
+        loan.term,
+        loan.accept,
+        loan.auctionTerm
+      );
       setStage(UI.Success);
     } catch (error) {
       console.error(
@@ -262,7 +269,10 @@ const CreateLoan = () => {
         <LoanTerm>
           <LoanDescription>
             <Header as="h2">Loan Auction</Header>
-            <p>Select how long do you want for your loan auction to be open.</p>
+            <p>
+              Select how long you want for your loan auction to be open. You will be able to check
+              the loan auction progress from your dashboard.
+            </p>
           </LoanDescription>
           <LoanFormInput>
             <LoanSelect
@@ -279,11 +289,7 @@ const CreateLoan = () => {
         <LoanTerm>
           <LoanDescription>
             <Header as="h2">Loan term</Header>
-            <p>
-              The loan term will start after the loan auction is finished. This process could take
-              from a few days up to 30 days. You will be able to check the auction progress from
-              your dashboard.
-            </p>
+            <p>The loan term will start after the loan auction is finished.</p>
           </LoanDescription>
           <LoanFormInput>
             <LoanSelect
