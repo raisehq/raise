@@ -87,33 +87,43 @@ export default (dispatch: any, state: Store) => {
   };
 
   const onUpdateUser = async (userId, body) => {
-    const response = await updateUser(userId, body);
-    response.fold(
-      ({
-        response: {
-          data: { message }
-        }
-      }) => {
-        dispatch({ type: 'UPDATE_USER', data: { success: false, message } });
-      },
-      ({
-        data: {
-          data: { user }
-        }
-      }) => dispatch({ type: 'UPDATE_USER', data: { success: true, user } })
-    );
+    dispatch({ type: 'SET_USER_LOADING', data: true });
+    try {
+      const response = await updateUser(userId, body);
+      response.fold(
+        ({
+          response: {
+            data: { message }
+          }
+        }) => {
+          dispatch({ type: 'UPDATE_USER', data: { success: false, message, loading: false } });
+        },
+        ({
+          data: {
+            data: { user }
+          }
+        }) => dispatch({ type: 'UPDATE_USER', data: { success: true, user, loading: false } })
+      );
+    } catch {
+      dispatch({ type: 'SET_PASS_LOADING', data: true });
+    }
   };
 
   const onUpdatePassword = async (userId, body) => {
-    const response = await updatePassword(userId, body);
-    response.fold(
-      ({
-        response: {
-          data: { message }
-        }
-      }) => dispatch({ type: 'UPDATE_PASSWORD', data: { success: false, message } }),
-      () => dispatch({ type: 'UPDATE_PASSWORD', data: { success: true } })
-    );
+    dispatch({ type: 'SET_PASS_LOADING', data: true });
+    try {
+      const response = await updatePassword(userId, body);
+      response.fold(
+        ({
+          response: {
+            data: { message }
+          }
+        }) => dispatch({ type: 'UPDATE_PASSWORD', data: { success: false, message, loading: false } }),
+        () => dispatch({ type: 'UPDATE_PASSWORD', data: { success: true, loading: false } })
+      );
+    } catch {
+      dispatch({ type: 'SET_PASS_LOADING', data: true });
+    }
   };
 
   return {

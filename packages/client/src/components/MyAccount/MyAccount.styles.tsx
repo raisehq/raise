@@ -31,6 +31,10 @@ export const Main = styled.div`
   }
 `;
 
+export const FlexBox = styled.div`
+  display: flex;
+  align-items: center;
+`
 export const Content = styled.div`
   display: flex;
   align-items: center;
@@ -67,7 +71,7 @@ export const KYCIcon = styled(Icon)`
   &&&& {
     margin-left: 6px;
   }
-  color: ${value =>
+  color: ${({ value }: any) =>
     match(
       value,
       KycStatus.Completed,
@@ -118,6 +122,16 @@ export const Submit = styled(ButtonGreen)`
     color: rgba(255, 255, 255, 1);
     font-size: 14px;
     font-weight: 300;
-    margin: 30px 0px;
+    margin: 30px 20px 30px 0px;
+  }
+
+  &&&&&&&&&:disabled, &&&&&&&.disabled {
+    background: #e0e1e2 none !important;
   }
 `;
+
+export const Message = styled.div`
+&::first-letter {
+  text-transform: uppercase;
+}
+`

@@ -23,7 +23,8 @@ export default (state: any, { type, data }: any) => {
       return {
         ...state,
         updateUser: {
-          message: data.success ? 'Success' : data.message
+          message: data.success ? 'Success' : data.message,
+          loading: data.loading
         },
         details: {
           ...state.details,
@@ -34,7 +35,24 @@ export default (state: any, { type, data }: any) => {
       return {
         ...state,
         updatePassword: {
-          message: data.success ? 'Success' : data.message
+          message: data.success ? 'Success' : data.message,
+          loading: data.loading
+        }
+      };
+    case 'SET_USER_LOADING':
+      return {
+        ...state,
+        updateUser: {
+          message: '',
+          loading: data
+        }
+      };
+    case 'SET_PASS_LOADING':
+      return {
+        ...state,
+        updatePassword: {
+          message: '',
+          loading: data
         }
       };
     default:
