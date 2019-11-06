@@ -69,10 +69,21 @@ const MyAccount = () => {
   );
 
   const saveUsername = async () => {
-    await onUpdateUser(id, { username });
+    try {
+      await onUpdateUser(id, { username });
+    } catch {}
+    // Reset
+    changeUsername('');
   };
+
   const savePassword = async () => {
-    await onUpdatePassword(id, { oldPassword, newPassword, newPasswordRepeat });
+    try {
+      await onUpdatePassword(id, { oldPassword, newPassword, newPasswordRepeat });
+    } catch {}
+    // Reset
+    setOldPassword('');
+    setNewPassword('');
+    setNewPasswordRepeat('');
   };
 
   const profileProps = { email, kyc_status, storedUsername };

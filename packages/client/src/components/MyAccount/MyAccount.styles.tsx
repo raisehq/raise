@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import { Icon, Input } from 'semantic-ui-react';
+import { Button, Icon, Input } from 'semantic-ui-react';
 import { device } from '../LayoutV2/breakpoints';
 import { match, _ } from 'pampy';
 import { KycStatus } from '../../commons/kycStatus';
-import { ButtonGreen } from '../ClaimLoan/ClaimLoan.styles';
 
 export const Main = styled.div`
   color: rgba(90, 90, 90, 1);
@@ -34,7 +33,7 @@ export const Main = styled.div`
 export const FlexBox = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 export const Content = styled.div`
   display: flex;
   align-items: center;
@@ -116,22 +115,26 @@ export const Label = styled.p`
   font-weight: bold;
 `;
 
-export const Submit = styled(ButtonGreen)`
+export const Submit = styled(Button)`
   &&&& {
     width: 155px;
+    padding: 17px;
     color: rgba(255, 255, 255, 1);
     font-size: 14px;
     font-weight: 300;
+    border-radius: 4px;
+    background-color: rgba(0, 167, 111, 1);
     margin: 30px 20px 30px 0px;
   }
 
-  &&&&&&&&&:disabled, &&&&&&&.disabled {
-    background: #e0e1e2 none !important;
+  &&&&&&&&&:disabled,
+  &&&&&&&.disabled {
+    opacity: 0.4 !important;
   }
 `;
 
 export const Message = styled.div`
-&::first-letter {
-  text-transform: uppercase;
-}
-`
+  &::first-letter {
+    text-transform: uppercase;
+  }
+`;

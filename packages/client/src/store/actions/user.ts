@@ -98,10 +98,14 @@ export default (dispatch: any, state: Store) => {
     dispatch({ type: 'SET_USER_LOADING', data: true });
     try {
       const {
-        data: { success, message }
+        data: {
+          success,
+          message,
+          data: { user: details }
+        }
       } = await updateUser(userId, body);
 
-      dispatch({ type: 'UPDATE_USER', data: { success, message, loading: false } });
+      dispatch({ type: 'UPDATE_USER', data: { success, message, loading: false, details } });
     } catch (error) {
       dispatch({ type: 'SET_PASS_LOADING', data: false });
       if (error.response) {
