@@ -10,7 +10,7 @@ import {
   HeaderProps,
   DividerProps
 } from 'semantic-ui-react';
-import { device, size } from '../LayoutV2/breakpoints';
+import { device, maxDevice, size } from '../LayoutV2/breakpoints';
 import theme from '../../theme';
 
 interface LoanFormValueProps {
@@ -443,7 +443,7 @@ export const ConfirmButton: any = styled(Button)<ButtonProps>`
       background-color: #00a76f;
       opacity: 0.4;
     }
-    @media ${device.mobileS} {
+    @media ${maxDevice.mobileL} {
       height: 48px;
       font-size: 14px;
       line-height: 21px;
