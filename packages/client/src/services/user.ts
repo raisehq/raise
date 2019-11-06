@@ -102,7 +102,7 @@ export const updateUser = async (userId, body: any) => {
       'Content-Type': 'application/json'
     }
   };
-  return to(axios(config));
+  return axios(config);
 };
 
 export const updatePassword = async (userId, data: any) => {
@@ -112,7 +112,7 @@ export const updatePassword = async (userId, data: any) => {
     }
   };
 
-  return to(axios.put(`${URL.USER}/password/change/${userId}`, data, config));
+  return axios.put(`${URL.USER}/password/change/${userId}`, data, config);
 };
 
 export const cryptoAddressByAccount = async (userId, targetAddressId) => {

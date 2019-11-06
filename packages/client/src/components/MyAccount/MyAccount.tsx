@@ -1,14 +1,8 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { match } from 'pampy';
-import debounce from 'lodash/debounce'
 import { checkUsername } from '../../services/auth';
 import { AppContext } from '../App';
-import {
-  Content,
-  Side,
-  Line,
-  Main,
-} from './MyAccount.styles';
+import { Content, Side, Line, Main } from './MyAccount.styles';
 import ProfileInfo from './components/ProfileInfo';
 import UpdateUsername from './components/UpdateUsername';
 import UpdatePassword from './components/UpdatePassword';
@@ -20,10 +14,9 @@ const MyAccount = () => {
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordRepeat, setNewPasswordRepeat] = useState('');
 
-
   const {
     actions: {
-      user: { onUpdateUser, onUpdatePassword }
+      user: { onUpdateUser, onUpdatePassword, clearUser, clearPass }
     },
     store: {
       user: {
@@ -34,21 +27,21 @@ const MyAccount = () => {
     }
   }: any = useContext(AppContext);
 
-  const changeUsername = debounce(async (value) => {
+  const changeUsername = async value => {
+    clearUser();
     setUsernameExists(false);
+    setUsername(value);
     const userExists = await checkUsername(value);
 
     userExists.fold(
-      () => {
+      res => {
         setUsernameExists(true);
-        setUsername(value);
       },
       () => {
         setUsernameExists(false);
-        setUsername(value);
       }
-    )
-  }, 80);
+    );
+  };
 
   const updateState = useCallback(
     (e, { value, name }) =>
@@ -57,11 +50,20 @@ const MyAccount = () => {
         'username',
         () => changeUsername(value),
         'old-password',
-        () => setOldPassword(value),
+        () => {
+          clearPass();
+          setOldPassword(value);
+        },
         'new-password',
-        () => setNewPassword(value),
+        () => {
+          clearPass();
+          setNewPassword(value);
+        },
         'new-password-repeat',
-        () => setNewPasswordRepeat(value)
+        () => {
+          clearPass();
+          setNewPasswordRepeat(value);
+        }
       ),
     []
   );
@@ -73,9 +75,25 @@ const MyAccount = () => {
     await onUpdatePassword(id, { oldPassword, newPassword, newPasswordRepeat });
   };
 
-  const profileProps = { email, kyc_status, storedUsername }
-  const updateUsernameProps = { username, storedUsername, usernameExists, saveUsername, updateState, userMessage, loading: userLoading };
-  const updatePasswordProps = { oldPassword, updateState, newPassword, newPasswordRepeat, savePassword, passMessage, loading: passLoading };
+  const profileProps = { email, kyc_status, storedUsername };
+  const updateUsernameProps = {
+    username,
+    storedUsername,
+    usernameExists,
+    saveUsername,
+    updateState,
+    userMessage,
+    loading: userLoading
+  };
+  const updatePasswordProps = {
+    oldPassword,
+    updateState,
+    newPassword,
+    newPasswordRepeat,
+    savePassword,
+    passMessage,
+    loading: passLoading
+  };
 
   return (
     <Main>

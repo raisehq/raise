@@ -86,43 +86,56 @@ export default (dispatch: any, state: Store) => {
     dispatch({ type: 'SET_INITIAL_USER_DATA', data });
   };
 
+  const clearUser = () => {
+    dispatch({ type: 'SET_USER_LOADING', data: false });
+  };
+
+  const clearPass = () => {
+    dispatch({ type: 'SET_PASS_LOADING', data: false });
+  };
+
   const onUpdateUser = async (userId, body) => {
     dispatch({ type: 'SET_USER_LOADING', data: true });
     try {
-      const response = await updateUser(userId, body);
-      response.fold(
-        ({
+      const {
+        data: { success, message }
+      } = await updateUser(userId, body);
+
+      dispatch({ type: 'UPDATE_USER', data: { success, message, loading: false } });
+    } catch (error) {
+      dispatch({ type: 'SET_PASS_LOADING', data: false });
+      if (error.response) {
+        const {
           response: {
-            data: { message }
+            data: {
+              data: { success, message }
+            }
           }
-        }) => {
-          dispatch({ type: 'UPDATE_USER', data: { success: false, message, loading: false } });
-        },
-        ({
-          data: {
-            data: { user }
-          }
-        }) => dispatch({ type: 'UPDATE_USER', data: { success: true, user, loading: false } })
-      );
-    } catch {
-      dispatch({ type: 'SET_PASS_LOADING', data: true });
+        } = error;
+        dispatch({ type: 'UPDATE_USER', data: { success, message, loading: false } });
+      }
     }
   };
 
   const onUpdatePassword = async (userId, body) => {
     dispatch({ type: 'SET_PASS_LOADING', data: true });
     try {
-      const response = await updatePassword(userId, body);
-      response.fold(
-        ({
+      const {
+        data: { success, message }
+      } = await updatePassword(userId, body);
+      dispatch({ type: 'UPDATE_PASSWORD', data: { success, message, loading: false } });
+    } catch (error) {
+      dispatch({ type: 'SET_PASS_LOADING', data: { loading: false } });
+      if (error.response) {
+        const {
           response: {
-            data: { message }
+            data: {
+              data: { success, message }
+            }
           }
-        }) => dispatch({ type: 'UPDATE_PASSWORD', data: { success: false, message, loading: false } }),
-        () => dispatch({ type: 'UPDATE_PASSWORD', data: { success: true, loading: false } })
-      );
-    } catch {
-      dispatch({ type: 'SET_PASS_LOADING', data: true });
+        } = error;
+        dispatch({ type: 'UPDATE_PASSWORD', data: { success, message, loading: false } });
+      }
     }
   };
 
@@ -136,6 +149,8 @@ export default (dispatch: any, state: Store) => {
     updateCryptoAddress,
     onGetCryptoAddressByUser,
     onGetUser,
-    onGetUserFromBC
+    onGetUserFromBC,
+    clearPass,
+    clearUser
   };
 };
