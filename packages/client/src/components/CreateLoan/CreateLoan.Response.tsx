@@ -13,7 +13,8 @@ import {
   NewLoanAnchor,
   WaitingButton,
   LoanTermsCheckbox,
-  CheckContainer
+  CheckContainer,
+  LoanFormContainer
 } from './CreateLoan.styles';
 
 export const UI = daggy.taggedSum('UI', {
@@ -43,28 +44,60 @@ export const getLoanAction = (stage, values, methods) => {
       <LoanConfirmation>
         <LoanResume>
           <div>
-            <LoanFormInfo>Loan amount</LoanFormInfo>
-            <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
-
-            <LoanFormInfo>System fees (1%)</LoanFormInfo>
-            <LoanFormValue>-{systemFees} DAI</LoanFormValue>
-
-            <LoanFormInfo>Net loan proceeds</LoanFormInfo>
-            <LoanFormValue big={!isMobile}>{netLoan} DAI</LoanFormValue>
+            <LoanFormContainer>
+              <LoanFormInfo alignment="left" isMobile={isMobile}>
+                Loan amount
+              </LoanFormInfo>
+              <LoanFormValue alignment="left" isMobile={isMobile}>
+                {formattedAmount} DAI
+              </LoanFormValue>
+            </LoanFormContainer>
+            <LoanFormContainer>
+              <LoanFormInfo alignment="left" isMobile={isMobile}>
+                System fees (1%)
+              </LoanFormInfo>
+              <LoanFormValue alignment="left" isMobile={isMobile}>
+                -{systemFees} DAI
+              </LoanFormValue>
+            </LoanFormContainer>
+            <LoanFormContainer>
+              <LoanFormInfo alignment="left" isMobile={isMobile}>
+                Net loan proceeds
+              </LoanFormInfo>
+              <LoanFormValue alignment="left" isMobile={isMobile} big={!isMobile} className="bold">
+                {netLoan} DAI
+              </LoanFormValue>
+            </LoanFormContainer>
           </div>
-          <Divider vertical={isMobile} />
+          {!isMobile && <Divider />}
           <div>
-            <LoanFormInfo>Principal</LoanFormInfo>
-            <LoanFormValue>{formattedAmount} DAI</LoanFormValue>
-
-            <LoanFormInfo>Interest</LoanFormInfo>
-            <LoanFormValue>{totalInterest} DAI</LoanFormValue>
-
-            <LoanFormInfo>Total repayment amount</LoanFormInfo>
-            <LoanFormValue big={!isMobile}>{repaymentAmount} DAI</LoanFormValue>
+            <LoanFormContainer>
+              <LoanFormInfo alignment="right" isMobile={isMobile}>
+                Principal
+              </LoanFormInfo>
+              <LoanFormValue alignment="right" isMobile={isMobile}>
+                {formattedAmount} DAI
+              </LoanFormValue>
+            </LoanFormContainer>
+            <LoanFormContainer>
+              <LoanFormInfo alignment="right" isMobile={isMobile}>
+                Interest
+              </LoanFormInfo>
+              <LoanFormValue alignment="right" isMobile={isMobile}>
+                {totalInterest} DAI
+              </LoanFormValue>
+            </LoanFormContainer>
+            <LoanFormContainer>
+              <LoanFormInfo alignment="right" isMobile={isMobile}>
+                Total repayment amount
+              </LoanFormInfo>
+              <LoanFormValue alignment="right" isMobile={isMobile} big={!isMobile} className="bold">
+                {repaymentAmount} DAI
+              </LoanFormValue>
+            </LoanFormContainer>
           </div>
         </LoanResume>
-        <Divider vertical={isMobile} />
+        {!isMobile && <Divider />}
         <CheckContainer>
           <LoanTermsCheckbox id="btn-check-term-conditions" onChange={onToggleTerms} />I agree to
           the Terms and Conditions of the Loan Agreement

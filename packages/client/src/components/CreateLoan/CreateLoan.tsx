@@ -30,7 +30,7 @@ import {
   SliderWrapper
 } from './CreateLoan.styles';
 import Slider from '../Slider';
-import months from '../../commons/months';
+import { getMonths, getLoanAuctionInterval } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 
 /** Start of defaults */
@@ -48,6 +48,7 @@ const max = 2500000;
 const defaultAmount = 10000;
 const defaultMir = 10;
 const defaultTerm = 2592000;
+const defaultTermAuction = 2592000;
 const defaultMinPercent = 20;
 const minMir = 0;
 const maxMir = 20;
@@ -82,11 +83,13 @@ const CreateLoan = () => {
   const [loan, setLoan] = useState({
     amount: defaultAmount,
     term: defaultTerm,
+    auctionTerm: defaultTermAuction,
     mir: defaultMir,
     accept: false,
     minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
   });
   const [selectedMonth, setSelectedMonth] = useState(defaultTerm);
+  const [selectedLoanAuction, setSelectedLoanAuction] = useState(defaultTermAuction);
   const termMonths = loan.term / 60 / 60 / 24 / 30;
 
   // Calculations
@@ -109,9 +112,18 @@ const CreateLoan = () => {
     });
   };
 
-  const monthOptions = useMemo(() => months(network), [network]);
+  const monthOptions = useMemo(() => getMonths(network), [network]);
+  const loanAuctionInterval = useMemo(() => getLoanAuctionInterval(network), [network]);
 
-  const onSetTerm = (e, data) => {setSelectedMonth(data.value); setLoan({ ...loan, term: data.value })};
+  const onSetTerm = (e, data) => {
+    setSelectedMonth(data.value);
+    setLoan({ ...loan, term: data.value });
+  };
+
+  const onSetTermAuction = (e, { value }) => {
+    setSelectedLoanAuction(value);
+    setLoan({ ...loan, auctionTerm: value });
+  };
 
   const onSetMIR = mir => setLoan({ ...loan, mir });
 
@@ -130,7 +142,14 @@ const CreateLoan = () => {
   const onSave = async () => {
     setStage(UI.Waiting);
     try {
-      await loanDispatcher.deploy(loan.minAmount, loan.amount, loan.mir, loan.term, loan.accept);
+      await loanDispatcher.deploy(
+        loan.minAmount,
+        loan.amount,
+        loan.mir,
+        loan.term,
+        loan.accept,
+        loan.auctionTerm
+      );
       setStage(UI.Success);
     } catch (error) {
       console.error(
@@ -155,11 +174,16 @@ const CreateLoan = () => {
     setLoan({
       amount: defaultAmount,
       term: defaultTerm,
+      auctionTerm: defaultTermAuction,
       mir: defaultMir,
       accept: false,
       minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
     });
     setTermsCond(false);
+
+    //Reseting control values to default in case of create a new loan without refreshing the screen
+    onSetTermAuction(null, { value: defaultTermAuction });
+    onSetTerm(null, { value: defaultTerm });
   };
 
   const onBlur = e => {
@@ -248,12 +272,28 @@ const CreateLoan = () => {
         </BrowserView>
         <LoanTerm>
           <LoanDescription>
-            <Header as="h2">Loan term</Header>
+            <Header as="h2">Loan Auction</Header>
             <p>
-              The loan term will start after the loan auction is finished. This process could take
-              from a few days up to 30 days. You will be able to check the auction progress from
-              your dashboard.
+              Select how long you want for your loan auction to be open. You will be able to check
+              the loan auction progress from your dashboard.
             </p>
+          </LoanDescription>
+          <LoanFormInput>
+            <LoanSelect
+              value={selectedLoanAuction}
+              onChange={onSetTermAuction}
+              placeholder="Select auction time"
+              options={loanAuctionInterval}
+            />
+          </LoanFormInput>
+        </LoanTerm>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
+        <LoanTerm>
+          <LoanDescription>
+            <Header as="h2">Loan term</Header>
+            <p>The loan term will start after the loan auction is finished.</p>
           </LoanDescription>
           <LoanFormInput>
             <LoanSelect
@@ -295,4 +335,3 @@ const CreateLoan = () => {
 };
 
 export default CreateLoan;
-

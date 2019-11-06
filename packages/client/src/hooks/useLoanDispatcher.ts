@@ -11,8 +11,15 @@ const useLoanDispatcher = () => {
         const contract = await metamask.addContract('LoanDispatcher');
         const account = await metamask.getAccounts();
         setActiveContract({
-          deploy: async (minAmount, amount, maxInterestRate, termMonthsLength, acceptMinimum) => {
-            const auctionSecondsLength = (1 * 30 * 24 * 60 * 60).toString();
+          deploy: async (
+            minAmount,
+            amount,
+            maxInterestRate,
+            termMonthsLength,
+            acceptMinimum,
+            auctionTermLength
+          ) => {
+            const auctionSecondsLength = auctionTermLength.toString();
             const termSecondsLength = termMonthsLength.toString();
             const params = [
               metamask.utils.toWei(
