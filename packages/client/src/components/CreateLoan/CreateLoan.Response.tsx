@@ -64,7 +64,7 @@ export const getLoanAction = (stage, values, methods) => {
               <LoanFormInfo alignment="left" isMobile={isMobile}>
                 Net loan proceeds
               </LoanFormInfo>
-              <LoanFormValue alignment="left" isMobile={isMobile} big={!isMobile}>
+              <LoanFormValue alignment="left" isMobile={isMobile} big={!isMobile} className="bold">
                 {netLoan} DAI
               </LoanFormValue>
             </LoanFormContainer>
@@ -91,7 +91,7 @@ export const getLoanAction = (stage, values, methods) => {
               <LoanFormInfo alignment="right" isMobile={isMobile}>
                 Total repayment amount
               </LoanFormInfo>
-              <LoanFormValue alignment="right" isMobile={isMobile} big={!isMobile}>
+              <LoanFormValue alignment="right" isMobile={isMobile} big={!isMobile} className="bold">
                 {repaymentAmount} DAI
               </LoanFormValue>
             </LoanFormContainer>

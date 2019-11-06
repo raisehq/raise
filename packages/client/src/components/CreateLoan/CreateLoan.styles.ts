@@ -294,7 +294,7 @@ export const LoanFormInfo = styled('p')<LoanFormInfoProps>`
   font-size: 12px;
   margin: 0;
 
-  @media ${device.mobileL} {
+  @media ${maxDevice.mobileL} {
     color: #5a5a5a;
     font-family: Lato;
     font-size: 12px;
@@ -305,15 +305,17 @@ export const LoanFormInfo = styled('p')<LoanFormInfoProps>`
 export const LoanFormValue = styled('p')<LoanFormValueProps>`
   text-align: ${({ isMobile, alignment }) => (isMobile ? alignment : 'right')};
   font-size: ${({ big }) => (big ? '26px' : '18px')};
-  font-weight: bold;
   margin: 0px 0px 17px 0px;
 
-  @media ${device.mobileS} {
+  &.bold {
+    font-weight: bold;
+  }
+
+  @media ${maxDevice.mobileL} {
     margin: 0;
     color: #3c4251;
     font-family: Lato;
     line-height: 24px;
-    font-weight: normal;
   }
 `;
 
