@@ -180,6 +180,10 @@ const CreateLoan = () => {
       minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
     });
     setTermsCond(false);
+
+    //Reseting control values to default in case of create a new loan without refreshing the screen
+    onSetTermAuction(null, { value: defaultTermAuction });
+    onSetTerm(null, { value: defaultTerm });
   };
 
   const onBlur = e => {
