@@ -1,4 +1,4 @@
-import axios, { authAxios } from './common';
+import axios from './common';
 import { AddressTypes } from '../store/store.types';
 import { getHost, to, Left } from '../utils/index';
 
@@ -102,7 +102,7 @@ export const updateUser = async (userId, body: any) => {
       'Content-Type': 'application/json'
     }
   };
-  return to(authAxios(config));
+  return to(axios(config));
 };
 
 export const updatePassword = async (userId, data: any) => {
@@ -112,7 +112,7 @@ export const updatePassword = async (userId, data: any) => {
     }
   };
 
-  return to(authAxios.put(`${URL.USER}/password/change/${userId}`, data, config));
+  return to(axios.put(`${URL.USER}/password/change/${userId}`, data, config));
 };
 
 export const cryptoAddressByAccount = async (userId, targetAddressId) => {
