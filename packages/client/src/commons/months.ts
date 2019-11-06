@@ -12,7 +12,7 @@ export const getMonths = (network: string) => [
 ];
 
 export const getLoanAuctionInterval = (network: string) => [
-  ...(['kovan'].includes(network) ? [{ key: '0', value: 120, text: '2 minutes' }] : []),
+  ...(['kovan'].includes(network) ? [{ key: '0', value: 300, text: '5 minutes' }] : []),
   ...[7, 15, 30, 45].map((item, index) => ({
     key: `${index + 1}`,
     value: daysToSecond(item),
