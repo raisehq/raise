@@ -104,20 +104,7 @@ export const updateUser = async (userId, data: any) => {
   return response.fold(error => Left(error), ({ data: { data } }) => data);
 };
 
-/*
-{
-  id: "cryptoaddress:2b012587-7090-42e8-8158-55148f2f633f", 
-  herouser_id: "user:772424bb-4a15-4643-8578-c848ea78e3ab", address: "0x251Ab686cf1A62Cee98bE2510955Cf68eB93E7a0", cryptotype_id: 2, site: null, …}
-address: "0x251Ab686cf1A62Cee98bE2510955Cf68eB93E7a0"
-created_on: "2019-10-22T03:33:16.429Z"
-cryptotype_id: 2
-deleted: 0
-herouser_id: "user:772424bb-4a15-4643-8578-c848ea78e3ab"
-id: "cryptoaddress:2b012587-7090-42e8-8158-55148f2f633f"
-site: null
-
-*/
-export const cryptoAddressByAccount = async (userId, targetAddressId) => {
+export const cryptoAddressByAccount = async userId => {
   const config: any = {
     url: `${URL.CRYPTOADDRESS}/user/${userId}`,
     method: 'GET',
@@ -137,15 +124,18 @@ export const cryptoAddressByAccount = async (userId, targetAddressId) => {
           };
         }
         // eslint-disable-next-line
-        const { id, address, herouser_id: herouserId } = rawResponse.data.data.find(
-          d => d.cryptotype_id === targetAddressId
-        );
+        const {
+          id,
+          address,
+          herouser_id: herouserId,
+          cryptotype_id: walletId
+        } = rawResponse.data.data.pop();
 
         return {
           id,
           herouserId,
           address,
-          cryptotypeId: targetAddressId
+          cryptotypeId: walletId
         };
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');

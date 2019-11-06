@@ -6,10 +6,11 @@ import { StyledAddress as Web3Address } from './Deposit.styles';
 import { CardSized, CardContent } from '../Layout/Layout.styles';
 import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
+import useWeb3 from '../../hooks/useWeb3';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
 import AppContext from '../AppContext';
 import useImages from '../../hooks/useImages';
-import { getWeb3 } from '../../utils';
+
 // eslint-disable-next-line
 import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
@@ -45,7 +46,7 @@ const Deposit = () => {
   const [status, setStatus] = useState(UI.Deposit);
   const heroTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
-
+  const { getWeb3 } = useWeb3();
   useEffect(() => {
     if (status !== UI.Success && hasDeposited) {
       setStatus(UI.Success);

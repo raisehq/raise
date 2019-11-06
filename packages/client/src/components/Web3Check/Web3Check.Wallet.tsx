@@ -3,6 +3,7 @@ import WalletLink from 'walletlink';
 import { List, Button } from 'semantic-ui-react';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
+import CryptoWallets from '../../commons/cryptoWallets';
 
 const Wallet = ({ onSelect }: any) => {
   const {
@@ -10,14 +11,12 @@ const Wallet = ({ onSelect }: any) => {
       config: { network }
     }
   }: any = useContext(AppContext);
-  const [nameWallet, setNameWallet] = useState();
   const [provider, setProvider] = useState();
   const [defaultWallet, setDefaultWallet] = useState();
-  const { getWeb3, setNewProvider, getCurrentProviderName, getDefaultWeb3 }: any = useWeb3();
+  const { getWeb3, setNewProvider, getDefaultWeb3 }: any = useWeb3();
   const web3 = getWeb3();
 
   useEffect(() => {
-    setNameWallet(getCurrentProviderName());
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
 
@@ -52,17 +51,15 @@ const Wallet = ({ onSelect }: any) => {
     <List>
       <List.Item>
         <List.Content verticalAlign="middle">
-          Connected : {nameWallet}
-          Default : {defaultWallet && defaultWallet.name}
           <Button basic color="black" fluid onClick={handlerCoinbase}>
             Coinbase
           </Button>
-          {defaultWallet && defaultWallet.name === 'metamask' && (
+          {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
             <Button basic color="black" fluid onClick={handlerMetamask}>
               Metamask
             </Button>
           )}
-          {defaultWallet && defaultWallet.name === 'opera-wallet' && (
+          {defaultWallet && defaultWallet.name === CryptoWallets.Opera && (
             <Button basic color="black" fluid onClick={handlerOpera}>
               Opera Wallet
             </Button>

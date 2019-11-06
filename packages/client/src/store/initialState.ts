@@ -43,8 +43,7 @@ const details =
 const initialState = {
   config: {
     menu: false,
-    network: process.env.REACT_APP_DEFAULT_NETWORK,
-    targetAddressId: 2
+    network: process.env.REACT_APP_DEFAULT_NETWORK
   },
   auth: {
     login: {

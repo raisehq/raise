@@ -1,7 +1,5 @@
 export default (state: any, { type, data }: any) => {
   switch (type) {
-    // case 'GET_ADDRESS_TYPES':
-    //   return { ...state, addressTypes: data };
     case 'SET_INITIAL_USER_DATA':
       return { ...state, details: { ...state.details, user: { ...data } } };
     case 'SET_ALL_ADDRESSES_BY_USER':

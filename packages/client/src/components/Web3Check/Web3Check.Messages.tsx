@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import AppContext from '../AppContext';
 import Web3Address from '../Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
 import { Href } from '../Layout/Layout.styles';
+import CryptoWallets from '../../commons/cryptoWallets';
 import {
   StyledAddress,
   CardDescription,
@@ -46,10 +47,8 @@ const BrowserCompatible = () => (
 );
 
 // @ts-ignore
-const AccountLockedNotice = () => {
-  const { getCurrentProviderName } = useWeb3();
-  const providerName = getCurrentProviderName();
-  if (providerName === 'opera-wallet') {
+const AccountLockedNotice = ({ provider }: any) => {
+  if (provider === CryptoWallets.Opera) {
     return (
       <CardDescription>
         <p>Raise needs to connect with your wallet</p>
@@ -139,15 +138,28 @@ const CurrentNotice = () => {
       walletAccount
     }
   }: any = useContext(AppContext);
+  const { getCurrentProviderName, requestSignature } = useWeb3();
+  const [providerId]: any = useState(getCurrentProviderName());
+
+  const handleUploadSignature = async () => {
+    try {
+      const { address, signature } = await requestSignature();
+      await uploadSignature(address, providerId, signature);
+    } catch (error) {
+      console.error('[Web3Check.Message][HandleUploadSignature] Error : ', error);
+    }
+  };
 
   if (!isSupportedBrowser()) {
     return <BrowserCompatible />;
   }
   if (!unlocked) {
-    return <AccountLockedNotice />;
+    return <AccountLockedNotice provider={providerId} />;
   }
   if (!verifiedAddress) {
-    return <AccountNotVerified currentAddress={walletAccount} uploadSignature={uploadSignature} />;
+    return (
+      <AccountNotVerified currentAddress={walletAccount} uploadSignature={handleUploadSignature} />
+    );
   }
   if (!networkMatches) {
     return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={walletNetwork} />;

@@ -1,7 +1,5 @@
 import LocalData from '../helpers/localData';
-import Web3 from 'web3';
 import { browserName } from 'react-device-detect';
-// import { match, ANY } from 'pampy';
 import axios from 'axios';
 
 const HOSTS: any = {
@@ -82,28 +80,6 @@ export const to = (promise: any) => {
 };
 
 export const checkAuth = () => LocalData.getObj('auth') !== null;
-
-export const getWeb3 = () => {
-  if (!!window['web3Instance'] && !!window['web3Instance'].currentProvider) {
-    return window['web3Instance'];
-  }
-  const provider = window['ethereum']
-    ? window['ethereum']
-    : (window['web3'] && window['web3'].currentProvider) || null;
-  const web3Instance = new Web3(provider);
-
-  if (web3Instance.currentProvider) {
-    window['web3Instance'] = web3Instance;
-    return web3Instance;
-  }
-  return null;
-};
-
-/*export const averageBlockTime = async () => {
-  const web3 = getWeb3();
-  const network = parseNetwork(await web3.eth.net.getId());
-  return match(network, 'kovan', () => 4, ANY, () => 15);
-};*/
 
 export const parseNetwork = id => {
   switch (id) {

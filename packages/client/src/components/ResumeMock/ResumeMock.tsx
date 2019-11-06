@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import get from 'lodash/get';
-import { getWeb3, getContractsDefinition } from '../../utils';
+import { getContractsDefinition } from '../../utils';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
+import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 
 const ResumeMock = () => {
@@ -11,6 +12,7 @@ const ResumeMock = () => {
   const [show] = useState(false);
   const [info, setInfo] = useState({ eth: 0, hto: 0, dai: 0, kyc: false, dep: false });
   const [heroContracts, setHeroContracts]: any = useState(null);
+  const { getWeb3 } = useWeb3();
   const web3 = getWeb3();
 
   useAsyncEffect(async () => {

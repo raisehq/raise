@@ -1,5 +1,6 @@
 import { browserName } from 'react-device-detect';
 import Web3 from 'web3';
+import CryptoWallets from '../commons/cryptoWallets';
 
 const Connection = {
   get: () => {
@@ -55,22 +56,17 @@ const useWeb3 = () => {
   };
   const getCurrentProviderName = (provider?: any) => {
     const conn = provider || Connection.getProvider();
-    if (!conn) return 'not_connected';
-    if (conn.isMetaMask) return 'metamask';
-    if (conn.isDapper) return 'dapper';
-    if (conn.isTrust) return 'trust';
-    if (conn.isGoWallet) return 'goWallet';
-    if (conn.isAlphaWallet) return 'alphaWallet';
-    if (conn.isStatus) return 'status';
-    if (conn.isWalletLink) return 'coinbase';
+    if (!conn) return CryptoWallets.NotConnected;
+    if (conn.isMetaMask) return CryptoWallets.Metamask;
+    if (conn.isWalletLink) return CryptoWallets.Coinbase;
     const { __CIPHER__ } = window as any;
-    if (typeof __CIPHER__ !== 'undefined') return 'cipher';
-    if (conn.constructor.name === 'EthereumProvider') return 'mist';
-    if (conn.constructor.name === 'Web3FrameProvider') return 'parity';
-    if (conn.host && conn.host.indexOf('infura') !== -1) return 'infura';
-    if (conn.host && conn.host.indexOf('localhost') !== -1) return 'localhost';
-    if (browserName && browserName.includes('Opera')) return 'opera-wallet';
-    return 'unknown';
+    if (typeof __CIPHER__ !== 'undefined') return 100;
+    if (conn.constructor.name === 'EthereumProvider') return 101;
+    if (conn.constructor.name === 'Web3FrameProvider') return 102;
+    if (conn.host && conn.host.indexOf('infura') !== -1) return 103;
+    if (conn.host && conn.host.indexOf('localhost') !== -1) return 104;
+    if (browserName && browserName.includes('Opera')) return CryptoWallets.Opera;
+    return CryptoWallets.Unknow;
   };
 
   const setNewProvider = async provider => {
@@ -82,7 +78,7 @@ const useWeb3 = () => {
         getCurrentProviderName()
       );
       if (
-        getCurrentProviderName() !== 'opera-wallet' ||
+        getCurrentProviderName() !== CryptoWallets.Opera ||
         getCurrentProviderName(provider) !== getCurrentProviderName()
       ) {
         const newWeb3 = new Web3(provider);
@@ -112,8 +108,22 @@ const useWeb3 = () => {
     const prevWeb3 = Connection.getPrevious();
     return {
       conn: prevWeb3,
-      name: prevWeb3 ? getCurrentProviderName(prevWeb3.currentProvider) : 'unknow'
+      name: prevWeb3 ? getCurrentProviderName(prevWeb3.currentProvider) : CryptoWallets.Unknow
     };
+  };
+
+  const requestSignature = async () => {
+    try {
+      const connection = Connection.get();
+      const address = await getPrimaryAccount();
+
+      const message = 'Prove to Raise platform that you own this address.';
+      const signature = await connection.eth.personal.sign(message, address, '');
+      return { address, signature };
+    } catch (error) {
+      console.error(`Error making signature: ${error.message}`, error);
+      throw new Error(`Error making signature: ${error.message}`);
+    }
   };
 
   return {
@@ -122,7 +132,8 @@ const useWeb3 = () => {
     setNewProvider,
     getCurrentProviderName,
     getPrimaryAccount,
-    getDefaultWeb3
+    getDefaultWeb3,
+    requestSignature
   };
 };
 
