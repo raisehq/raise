@@ -37,7 +37,7 @@ const App = ({ history, match }: any) => {
       kyc: { token },
       user: {
         details: { id, accounttype_id: accounttypeId, email, status },
-        cryptoAddress: { address }
+        cryptoAddress: { address, cryptotypeId }
       }
     },
     actions,
@@ -101,6 +101,7 @@ const App = ({ history, match }: any) => {
 
   useAsyncEffect(async () => {
     if (isLogged) {
+      console.log(' CHECK ADDRES :');
       onGetCryptoAddressByUser();
       onGetUser();
 
@@ -135,10 +136,26 @@ const App = ({ history, match }: any) => {
   }, [isLogged, id, accounttypeId, email, status]);
 
   useEffect(() => {
+    console.log(
+      ' isChecked : ',
+      isChecked,
+      ' hasProvider: ',
+      hasProvider,
+      ' isLogged: ',
+      isLogged,
+      ' cryptotypeId: ',
+      cryptotypeId
+    );
     if (isChecked && hasProvider !== undefined) {
-      setLoading(false);
+      if (isLogged) {
+        // if is logged we need to wait until we check the cryptotypeId
+        if (cryptotypeId !== null) setLoading(false);
+      } else {
+        // if we are not logged simply disable loading
+        setLoading(false);
+      }
     }
-  }, [isChecked, hasProvider]);
+  }, [isChecked, hasProvider, cryptotypeId]);
 
   const componentsByRole = {
     1: {

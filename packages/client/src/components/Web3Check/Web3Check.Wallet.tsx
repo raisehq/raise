@@ -17,6 +17,8 @@ const Wallet = ({ onSelect }: any) => {
   const web3 = getWeb3();
 
   useEffect(() => {
+    console.log('web3 ------ ', getWeb3());
+    // if (getWeb3()) onSelect();
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
 
@@ -47,6 +49,7 @@ const Wallet = ({ onSelect }: any) => {
       });
     }
   }, [provider]);
+
   return (
     <List>
       <List.Item>

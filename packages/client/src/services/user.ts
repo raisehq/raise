@@ -1,6 +1,7 @@
 import axios from './common';
 import { AddressTypes } from '../store/store.types';
 import { getHost, to, Left } from '../utils/index';
+import CryptoWallets from '../commons/cryptoWallets';
 
 const URL = {
   ADDRESS: `${getHost('CORE')}/address`,
@@ -119,8 +120,10 @@ export const cryptoAddressByAccount = async userId => {
     switch (rawResponse.status) {
       case 200:
         if (rawResponse.data.data.length === 0) {
+          // Empty response
           return {
-            address: null
+            address: null,
+            cryptotypeId: CryptoWallets.NotConnected
           };
         }
         // eslint-disable-next-line
@@ -135,7 +138,7 @@ export const cryptoAddressByAccount = async userId => {
           id,
           herouserId,
           address,
-          cryptotypeId: walletId
+          cryptotypeId: walletId || CryptoWallets.NotConnected
         };
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');

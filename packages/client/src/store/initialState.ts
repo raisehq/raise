@@ -68,7 +68,7 @@ const initialState = {
     ],
     cryptoAddress: {
       address: null, // Set your address to bypass address check until backend work is done
-      cryptoTypeId: 1,
+      cryptotypeId: null,
       site: '',
       createdOn: ''
     }

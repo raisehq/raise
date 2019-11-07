@@ -127,12 +127,10 @@ export default (dispatch: any, state: Store) => {
   const onGetCryptoAddressByUser = async () => {
     try {
       const cryptoaddress = await cryptoAddressByAccount(id);
-      if (cryptoaddress && cryptoaddress.address) {
-        dispatch({
-          type: 'SET_CRYPTO_ADDRESS_BY_ACCOUNT',
-          data: cryptoaddress
-        });
-      }
+      dispatch({
+        type: 'SET_CRYPTO_ADDRESS_BY_ACCOUNT',
+        data: cryptoaddress
+      });
     } catch (error) {
       console.error('ERROR : ', error);
     }

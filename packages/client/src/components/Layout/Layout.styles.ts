@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 // eslint-disable-next-line
-import { Card, Grid, Button, Image } from 'semantic-ui-react';
+import { Card, Grid, Button, Image, Dimmer } from 'semantic-ui-react';
 import { match, ANY } from 'pampy';
 import { getImages } from '../../utils';
 import theme from '../../theme';
@@ -17,6 +17,12 @@ const backgroundImage = getImages('pattern-fdesk-dark.svg');
 
 export const AllRights = styled.span``;
 export const LeaveFeedback = styled.a``;
+
+export const SpecialDimmer = styled(Dimmer)`
+  &&&& {
+    background: white;
+  }
+`;
 
 export const ContainerWrapper = styled.div`
   min-height: 100%;
