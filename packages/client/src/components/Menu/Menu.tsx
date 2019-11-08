@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, animateScroll as scroll } from 'react-scroll';
 import { Icon } from 'semantic-ui-react';
 import {
   RaiseMenu,
@@ -11,23 +11,35 @@ import {
   MenuLogout,
   BalanceMobile
 } from './Menu.styles';
+import theme from '../../theme';
+import { HEADER_MENU_SIZE } from '../../commons/constants';
 import AppContext from '../AppContext';
+
+const navigateToOutsideNewTab = route => () => {
+  window.open(route, '_blank');
+};
 
 const commonRoutes = [
   {
+    id: 'help',
     title: 'Help',
     link: '/help',
-    new_tab: true
+    new_tab: true,
+    onClick: navigateToOutsideNewTab(`${process.env.REACT_APP_WEB_URL}/help`)
   },
   {
+    id: 'privacy-policy',
     title: 'Privacy Policy',
     link: '/privacy-policy',
-    new_tab: true
+    new_tab: true,
+    onClick: navigateToOutsideNewTab(`${theme.resources}/privacy-policy.pdf`)
   },
   {
+    id: 'terms',
     title: 'Terms and Conditions',
     link: '/terms',
-    new_tab: true
+    new_tab: true,
+    onClick: navigateToOutsideNewTab(`${theme.resources}/toc.pdf`)
   }
 ];
 
@@ -40,6 +52,7 @@ const Menu = () => {
     history: {
       location: { pathname }
     },
+    history,
     store: {
       user: {
         details: { accounttype_id }
@@ -57,36 +70,45 @@ const Menu = () => {
     showMenu(false);
   };
 
+  const toCreateLoan = route => () => {
+    history.push(route);
+    showMenu(false);
+  };
+
+  const toMyActivity = () => {
+    if (history.location.pathname !== '/') {
+      history.push('/');
+      scroll.scrollToTop();
+    }
+    showMenu(false);
+  };
+
   const Menus = {
     1: [
       {
-        id: 'borrower-get-started',
-        title: 'Get started',
-        link: '/#my-activity',
-        onClick: toGetStarted
-      },
-      {
         id: 'borrower-my-activity',
         title: 'My activity',
-        link: '/#my-activity'
+        link: 'myActivity',
+        onClick: toMyActivity
       },
       {
         id: 'borrower-create-loan',
         title: 'Create a loan',
-        link: '/create-loan'
+        link: '/create-loan',
+        onClick: toCreateLoan('/create-loan')
       }
     ],
     2: [
       {
         id: 'lender-get-started',
         title: 'Get started',
-        link: '/#my-activity',
+        link: 'toGetStarted',
         onClick: toGetStarted
       },
       {
         id: 'lender-my-activity',
         title: 'My activity',
-        link: '/#my-activity'
+        link: 'myActivity'
       }
     ]
   };
@@ -94,22 +116,22 @@ const Menu = () => {
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
 
   const getMenu = useCallback(
-    (links = []) =>
-      links.map((item, i) => (
-        // eslint-disable-next-line
-        <li key={`menu-li-${i}`} className={pathname === item.link ? 'active' : 'non-active'}>
-          <Link
-            // eslint-disable-next-line
-            key={`menu-link-${i}`}
-            to={item.link}
-            onClick={item.onClick ? item.onClick : toRoute}
-            target={item.new_tab ? '_blank' : ''}
-          >
-            {item.title}
-          </Link>
-        </li>
-      )),
-    // eslint-disable-next-line
+    links =>
+      !links || !links.length
+        ? []
+        : links.map(item => (
+            <li key={item.id} className={pathname === item.link ? 'active' : 'non-active'}>
+              <Link
+                to={item.link}
+                onClick={item.onClick ? item.onClick : toRoute}
+                offset={HEADER_MENU_SIZE.myActivity}
+                smooth
+              >
+                {item.title}
+              </Link>
+            </li>
+          )),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [accounttype_id, pathname]
   );
 

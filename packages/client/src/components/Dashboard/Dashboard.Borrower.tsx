@@ -10,6 +10,7 @@ import KycMessage from '../KycMessage';
 import AppContext from '../AppContext';
 import Tab from './Dashboard.Tab';
 import Queryies from '../../helpers/queryies';
+import { Element } from 'react-scroll';
 
 const Dashboard = () => {
   const {
@@ -48,7 +49,7 @@ const Dashboard = () => {
       const callback = onGetLoansByAccountSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket, address, onGetLoansByAccountSubscription]);
+  }, [webSocket, address]);
 
   useEffect(() => {
     if (webSocket) {
@@ -59,15 +60,17 @@ const Dashboard = () => {
       const callback = onGetLiveAuctionsByAccountSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket, address, onGetLiveAuctionsByAccountSubscription]);
+  }, [webSocket, address]);
 
   return (
     <DashboardWrapper>
       <KycMessage />
       <DashboardContainer>
+       <Element name="myActivity" className="element">
         <Header as="h1" id="my-activity">
           My Activity
         </Header>
+        </Element>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
         <Button id="btn-create-loan" onClick={onCreateLoan}>
           create loan

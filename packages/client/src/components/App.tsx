@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { withRouter, Switch } from 'react-router-dom';
+import 'url-search-params-polyfill';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import LogRocket from 'logrocket';
@@ -97,7 +98,7 @@ const App = ({ history, match }: any) => {
       const callback = onGetUserFromBC;
       webSocket.webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket, onGetUserFromBC, address]);
+  }, [webSocket, address]);
 
   useAsyncEffect(async () => {
     if (isLogged) {

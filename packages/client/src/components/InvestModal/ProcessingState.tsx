@@ -22,7 +22,8 @@ import {
   Action,
   IconSuccess as IconError,
   RetryButton,
-  BlankSpace
+  BlankSpace,
+  ModalFlexWrapper
 } from './InvestModal.styles';
 import AppContext from '../AppContext';
 
@@ -153,7 +154,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   };
 
   return (
-    <>
+    <ModalFlexWrapper>
       <Fragment>
         <CardCenteredText>
           <CardTitle>Processing</CardTitle>
@@ -193,7 +194,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
       ) : (
         <BlankSpace />
       )}
-    </>
+    </ModalFlexWrapper>
   );
 };
 

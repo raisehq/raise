@@ -1,13 +1,13 @@
-import { useState, useContext } from 'react';
-import AppContext from '../components/AppContext';
+import { useState } from 'react';
+// import AppContext from '../components/AppContext';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
 
 const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const {
-    web3Status: { network }
-  }: any = useContext(AppContext);
+  // const {
+  //   web3Status: { network }
+  // }: any = useContext(AppContext);
   const metamask = useWallet();
   useAsyncEffect(async () => {
     if (metamask) {
@@ -15,9 +15,15 @@ const useLoanDispatcher = () => {
         const contract = await metamask.addContract('LoanDispatcher');
         const account = await metamask.getAccounts();
         setActiveContract({
-          deploy: async (minAmount, amount, maxInterestRate, termMonthsLength, acceptMinimum) => {
-            const auctionSecondsLength =
-              network === 'kovan' ? '300' : (1 * 30 * 24 * 60 * 60).toString();
+          deploy: async (
+            minAmount,
+            amount,
+            maxInterestRate,
+            termMonthsLength,
+            acceptMinimum,
+            auctionTermLength
+          ) => {
+            const auctionSecondsLength = auctionTermLength.toString();
             const termSecondsLength = termMonthsLength.toString();
             const params = [
               metamask.utils.toWei(

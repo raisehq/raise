@@ -352,3 +352,26 @@ export const OnboardHeaderSubtitle = styled.div`
   margin-top: 8px;
   line-height: 21px;
 `;
+
+export const MiniBody = styled.div`
+  width: 290px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
+  padding: 16px;
+
+  ${OnboardHeader} {
+    margin-top: 8px;
+    margin-bottom: 24px;
+  }
+
+  ${OnboardInput} {
+    margin-top: 0px;
+    margin-bottom: 55px;
+  }
+
+  ${OnboardDisclaimer}, ${OnboardMailingList} {
+    padding-top: 0px;
+    margin-top: 0px;
+  }
+`;

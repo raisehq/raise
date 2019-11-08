@@ -20,8 +20,8 @@ cache:
 build-front-review:
   stage: build
   variables:
-    REACT_APP_COOKIE_DOMAIN: .${CI_BUILD_REF_NAME}.review.$DOMAIN
-    REACT_APP_HOST_URL: https://${CI_BUILD_REF_NAME}.review.$DOMAIN
+    REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.$DOMAIN
+    REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
   script:
     - echo $REACT_APP_HOST_URL
     - npx lerna bootstrap
@@ -54,6 +54,8 @@ build-front-production:
     when: always
     paths:
       - packages/client/build
+
+
 
 build-front-integration:
   stage: build
@@ -91,8 +93,8 @@ deploy-prod:
 #   image: cypress/base:10
 #   stage: test
 #   variables:
-#     CYPRESS_url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
-#     CYPRESS_baseUrl: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+#     CYPRESS_url: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
+#     CYPRESS_baseUrl: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
 #     CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
 #   before_script:
 #     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -113,31 +115,31 @@ deploy-prod:
 #   only:
 #     - merge_requests
 
-# cypress-e2e-integration:
-#   image: cypress/base:10
-#   stage: test
-#   variables:
-#     CYPRESS_url: https://int.herodev.es
-#     CYPRESS_baseUrl: https://int.herodev.es
-#     CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
-#   before_script:
-#     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
-#   script:
-#     - cd packages/testing
-#     - npm i
-#     - $(npm bin)/cypress cache path
-#     - $(npm bin)/cypress cache list
-#     - $(npm bin)/cypress verify
-#     - npm run ci:run
-#   artifacts:
-#     expire_in: 1 week
-#     when: always
-#     paths:
-#       - packages/testing/cypress/screenshots
-#       - packages/testing/cypress/videos
-#       - packages/testing/cypress/snapshots
-#   only:
-#     - master
+cypress-e2e-integration:
+   image: cypress/base:10
+   stage: test
+   variables:
+     CYPRESS_url: https://app.herodev.es
+     CYPRESS_baseUrl: https://app.herodev.es
+     CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+   before_script:
+     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+   script:
+     - cd packages/testing
+     - npm i
+     - $(npm bin)/cypress cache path
+     - $(npm bin)/cypress cache list
+     - $(npm bin)/cypress verify
+     - npm run ci:run
+   artifacts:
+     expire_in: 1 week
+     when: always
+     paths:
+       - packages/testing/cypress/screenshots
+       - packages/testing/cypress/videos
+       - packages/testing/cypress/snapshots
+   only:
+     - master
 
 review:
   image: 'python:latest'
@@ -145,12 +147,12 @@ review:
   before_script:
     - pip install awscli
   script:
-    - mv packages/client/build $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
-    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)/ --recursive
-    - aws s3 sync $(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z)
+    - mv packages/client/build $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)/ --recursive
+    - aws s3 sync $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
   environment:
-    name: review/$CI_BUILD_REF_NAME
-    url: http://${CI_BUILD_REF_NAME}.review.$DOMAIN
+    name: review/$CI_COMMIT_REF_SLUG
+    url: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
     on_stop: stop-review
   only:
     - merge_requests
@@ -163,12 +165,12 @@ stop-review:
   before_script:
     - pip install awscli
   script:
-    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_BUILD_REF_NAME} | tr A-Z a-z) --recursive
+    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
   when: manual
   variables:
     GIT_STRATEGY: none
   environment:
-    name: review/$CI_BUILD_REF_NAME
+    name: review/$CI_COMMIT_REF_SLUG
     action: stop
   only:
     - merge_requests

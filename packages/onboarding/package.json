@@ -1,8 +1,8 @@
 {
   "name": "@raisehq/onboarding",
   "private": false,
-  "version": "1.0.22",
-  "description": "> TODO: description",
+  "version": "1.0.28",
+  "description": "Raise signup/login modal",
   "author": "Raul Vallespin <raul@herotoken.io>",
   "homepage": "http://www.raise.it",
   "license": "AGPL",
@@ -34,7 +34,8 @@
     "react-slick": "^0.25.2",
     "react-transition-group": "^4.3.0",
     "slick-carousel": "^1.8.1",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "url-search-params-polyfill": "^7.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.11.0",

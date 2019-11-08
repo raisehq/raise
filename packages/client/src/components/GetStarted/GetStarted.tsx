@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Header, Icon } from 'semantic-ui-react';
+import { Element } from 'react-scroll';
 import Slider from 'react-slick';
 import {
   Slide,
@@ -53,6 +54,7 @@ const GetStarted = () => {
   }, []);
 
   return (
+   <Element name="toGetStarted" className="element">
     <Wrapper visible={getStarted}>
       <SliderClose onClick={onSetGetStarted}>
         <Icon name="cancel" />
@@ -62,6 +64,7 @@ const GetStarted = () => {
       </Slider>
       <NoSlider>{slides}</NoSlider>
     </Wrapper>
+    </Element>
   );
 };
 

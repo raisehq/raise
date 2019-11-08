@@ -1,4 +1,4 @@
-xdescribe('Login', function() {
+describe('Login', function() {
   it('Make Login', function() {
     cy.web3('lender');
     cy.visit(Cypress.env('url'));
