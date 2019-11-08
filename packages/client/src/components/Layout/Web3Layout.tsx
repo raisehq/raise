@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 import { SpecialDimmer } from './Layout.styles';
@@ -6,11 +6,13 @@ import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
 import { connectMetamask, connectOpera, connectCoinbase } from '../../helpers/walletConnector';
+import { SupportedBrowser } from '../Web3Check';
+import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
   const {
     store: {
-      config: { network },
+      config: { network, isSupportedBrowser },
       auth: {
         login: { logged: isLogged }
       },
@@ -21,58 +23,60 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     },
     web3Status: { hasProvider, hasDeposit, accountMatches, networkMatches, unlocked }
   }: any = useContext(AppContext);
-  console.log(' Crypto type ID : ', cryptotypeId, ' N ', network, ' hasProvider ', hasProvider);
+
   const { setNewProvider, getDefaultWeb3 }: any = useWeb3();
   const [connectionError, setConnectionError] = useState(false);
+  const {
+    location: { pathname }
+  }: any = history;
 
-  useEffect(() => {
+  useAsyncEffect(async () => {
     try {
-      if (!hasProvider) {
-        console.log(' HAS PROVIDER : ', hasProvider, getDefaultWeb3());
+      if (!hasProvider && isSupportedBrowser && isLogged) {
+        // Check the type of wallet and try to connect to the provider
         const defaultWeb3 = getDefaultWeb3();
         switch (cryptotypeId) {
           case CryptoWallets.Metamask:
             if (defaultWeb3.name !== CryptoWallets.Metamask) throw new Error('Wallet not alowed');
-            connectMetamask(setNewProvider, defaultWeb3.conn.currentProvider);
+            await connectMetamask(setNewProvider, defaultWeb3.conn.currentProvider);
             break;
           case CryptoWallets.Opera:
             if (defaultWeb3.name !== CryptoWallets.Opera) throw new Error('Wallet not alowed');
-            connectOpera(setNewProvider, defaultWeb3.conn.currentProvider);
+            await connectOpera(setNewProvider, defaultWeb3.conn.currentProvider);
             break;
           case CryptoWallets.Coinbase:
-            connectCoinbase(setNewProvider, network);
+            await connectCoinbase(setNewProvider, network);
             break;
           default:
-            console.log('No wallet allowed');
+            setConnectionError(true);
             break;
         }
       }
     } catch (error) {
+      console.log(' ERROR CONNECTION ', error);
       // On case of error on connect redirect to the screen connector
       setConnectionError(true);
     }
-  }, [hasProvider]);
+  }, [hasProvider, isSupportedBrowser, isLogged]);
   const acceptedRole = (roles !== undefined && roles.indexOf(accounttypeId) > -1) || false;
 
+  // Check supported Browser
+  if (!isSupportedBrowser) return <SupportedBrowser />;
+  // Auto wallet connection error
   if (connectionError) {
     return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
   }
   // Check if is Logged
-  if (!isLogged) {
-    return <Redirect to="/join" />;
-  }
+  if (!isLogged) return <Redirect to="/login" />;
+
   if (accountMatches && networkMatches && cryptotypeId !== null) {
-    if (history.location.pathname !== '/deposit' && !hasDeposit) return <Redirect to="/deposit" />;
-    if (rest.path === history.location.pathname && acceptedRole) return <Layout {...rest} />;
+    if (pathname !== '/deposit' && !hasDeposit) return <Redirect to="/deposit" />;
+    if (rest.path === pathname && acceptedRole) return <Layout {...rest} />;
     if (!acceptedRole) return <Redirect to="/" />;
   } else {
     // on case the connection with web3 are not ok or we have the correct conection but are different wallets
     // eslint-disable-next-line
-    if (
-      // eslint-disable-next-line
-      history.location.pathname !== '/verify-web3' &&
-      (cryptotypeId === CryptoWallets.NotConnected || unlocked)
-    ) {
+    if (pathname !== '/verify-web3' && (cryptotypeId === CryptoWallets.NotConnected || unlocked)) {
       return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
     }
   }
@@ -82,7 +86,8 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   return (
     <SpecialDimmer active inverted>
       <Loader>
-        <p>Loading app</p> Checking your wallet connection
+        <p>Loading app</p>
+        Checking your wallet connection
       </Loader>
     </SpecialDimmer>
   );

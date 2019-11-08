@@ -50,7 +50,8 @@ const useWeb3 = () => {
         await connection.currentProvider.enable();
         connection.currentProvider.autoRefreshOnNetworkChange = false;
       } catch (error) {
-        console.error('[useWeb3] Error connecting to the wallet.', error);
+        //console.error('[useWeb3] Error enable wallet.', error);
+        throw error;
       }
     }
   };
@@ -87,7 +88,8 @@ const useWeb3 = () => {
       }
       await enableWeb3();
     } catch (error) {
-      console.error('[useWeb3] Error connecting to the wallet.', error);
+      //console.error('[useWeb3] Error connecting to the wallet.', error);
+      throw error;
     }
   };
 

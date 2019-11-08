@@ -1,5 +1,7 @@
 import * as Cookies from 'js-cookie';
 import LocalData from '../helpers/localData';
+
+import { isSupportedBrowser } from '../utils';
 // import { NULL_ADDRESS } from '../commons/constants';
 const authCookie = Cookies.get('auth');
 const userCookie = Cookies.get('user');
@@ -43,6 +45,7 @@ const details =
 const initialState = {
   config: {
     menu: false,
+    isSupportedBrowser: isSupportedBrowser(),
     network: process.env.REACT_APP_DEFAULT_NETWORK
   },
   auth: {

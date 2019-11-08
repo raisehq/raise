@@ -1,6 +1,6 @@
 import WalletLink from 'walletlink';
 
-export const connectCoinbase = (setProvider, network) => {
+export const connectCoinbase = async (setProvider, network) => {
   const walletLink = new WalletLink({
     appName: 'Raise.it',
     appLogoUrl: `https://${process.env.REACT_APP_HOST_IMAGES}/favicons/favicon.ico`
@@ -9,13 +9,13 @@ export const connectCoinbase = (setProvider, network) => {
     `https://${network}.infura.io/v3/${process.env.REACT_APP_INFURA}`,
     1
   );
-  setProvider(ethereum);
+  await setProvider(ethereum);
 };
 
-export const connectMetamask = (setProvider, conn) => {
-  setProvider(conn);
+export const connectMetamask = async (setProvider, conn) => {
+  await setProvider(conn);
 };
 
-export const connectOpera = (setProvider, conn) => {
-  setProvider(conn);
+export const connectOpera = async (setProvider, conn) => {
+  await setProvider(conn);
 };
