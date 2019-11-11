@@ -79,6 +79,7 @@ deploy-prod:
   stage: deploy
   before_script:
     - pip install awscli
+  when: manual
   script:
     - mv packages/client/build build
     - mv packages/client/build_int build_int
