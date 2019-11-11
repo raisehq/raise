@@ -10,12 +10,12 @@ import LayoutV2 from './LayoutV2';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import Referral from './Referral/index';
 import CreateLoan from './CreateLoan';
+import MyAccount from './MyAccount';
 import { RootContext } from '../context';
 import Join from './Join';
 import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
-import Test from './SuggestTest';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
@@ -255,6 +255,14 @@ const App = ({ children, history, match }: any) => {
               marketplace
               layout={Layout}
               exact
+              path="/account"
+              component={MyAccount}
+              roles={[1, 2]}
+            />
+            <Web3Route
+              marketplace
+              layout={Layout}
+              exact
               path="/dashboard"
               component={accounttype_id ? componentsByRole[accounttype_id].dashboard : null}
               roles={[1, 2]}
@@ -276,7 +284,6 @@ const App = ({ children, history, match }: any) => {
               roles={[1, 2]}
             />
             <Layout exact path="/borrowers/:slug" component={BorrowerProfile} />
-            <LayoutV2 exact path="/test" component={Test} />
             {/* Onboarding */}
             <LayoutV2 exact path="/verify-web3" component={Web3Check} />
             <LayoutV2 exact path="/join" component={Join} />

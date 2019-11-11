@@ -37,7 +37,8 @@ const details =
     birthday: '',
     phone: '',
     referral_code: '',
-    referrer_code: ''
+    referrer_code: '',
+    kyc_status: null
   });
 
 const initialState = {
@@ -59,6 +60,14 @@ const initialState = {
     accounttype_id
   },
   user: {
+    updateUser: {
+      message: '',
+      loading: false
+    },
+    updatePassword: {
+      message: '',
+      loading: false
+    },
     details,
     addressTypes: [
       {
