@@ -1,7 +1,5 @@
 export default (state: any, { type, data }: any) => {
   switch (type) {
-    // case 'GET_ADDRESS_TYPES':
-    //   return { ...state, addressTypes: data };
     case 'SET_INITIAL_USER_DATA':
       return { ...state, details: { ...state.details, user: { ...data } } };
     case 'SET_ALL_ADDRESSES_BY_USER':
@@ -18,6 +16,42 @@ export default (state: any, { type, data }: any) => {
       return {
         ...state,
         details: { ...state.details, ...data }
+      };
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        updateUser: {
+          message: data.success ? 'Success' : data.message,
+          loading: data.loading
+        },
+        details: {
+          ...state.details,
+          ...data.details
+        }
+      };
+    case 'UPDATE_PASSWORD':
+      return {
+        ...state,
+        updatePassword: {
+          message: data.success ? 'Success' : data.message,
+          loading: data.loading
+        }
+      };
+    case 'SET_USER_LOADING':
+      return {
+        ...state,
+        updateUser: {
+          message: '',
+          loading: data
+        }
+      };
+    case 'SET_PASS_LOADING':
+      return {
+        ...state,
+        updatePassword: {
+          message: '',
+          loading: data
+        }
       };
     default:
       return state;

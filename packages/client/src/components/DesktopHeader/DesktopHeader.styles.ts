@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Logout from '../Logout';
 import { maxDevice } from '../LayoutV2/breakpoints';
+import { Link } from 'react-router-dom';
 
 export const Header = styled.div`
   top: 0;
@@ -35,7 +36,7 @@ export const HeaderLogout = styled(Logout)`
     color: #3c4251;
     border-radius: 4px;
     font-size: 18px;
-    margin-left: 25px;
+    margin-left: 10px;
     line-height: 24px;
     padding: 0px;
     font-weight: lighter;
@@ -89,4 +90,8 @@ export const HeaderMenuItem = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+`;
+
+export const LinkContent = styled(Link)`
+  margin: 0px 10px;
 `;
