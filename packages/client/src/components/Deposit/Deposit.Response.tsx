@@ -19,6 +19,7 @@ import {
   IconSuccess
 } from './Deposit.styles';
 import { CardContent } from '../Layout/Layout.styles';
+import { IMAGES_PATH } from '../../commons/constants';
 
 const UI = daggy.taggedSum('UI', {
   Success: [{}],
@@ -56,7 +57,7 @@ const StepNumber = props => {
   }
 };
 
-const getViewResponse = (ui: any, onDeposit, onContinue, onRetry, getImagesUrl) =>
+const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
   ui.cata({
     Success: () => (
       <Fragment>
@@ -65,7 +66,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry, getImagesUrl) 
             <CardTitle>Awesome!</CardTitle>
           </CardCenteredText>
 
-          <Image src={`${getImagesUrl}img_awesome.png`} fluid />
+          <Image src={`${IMAGES_PATH}img_awesome.png`} fluid />
         </CardContent>
         <CardContent bottom_spacing={'true'}>
           <ButtonGreen onClick={onContinue}>Take me home</ButtonGreen>
@@ -157,7 +158,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry, getImagesUrl) 
             <p />
           </CardCenteredText>
           <CardCenteredText>
-            <ImageSized src={`${getImagesUrl}img_error.png`} />
+            <ImageSized src={`${IMAGES_PATH}img_error.png`} />
           </CardCenteredText>
         </CardContent>
         <CardContent bottom_spacing={'true'}>

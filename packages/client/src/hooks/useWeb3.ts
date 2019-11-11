@@ -1,6 +1,7 @@
 import { browserName } from 'react-device-detect';
 import Web3 from 'web3';
 import CryptoWallets from '../commons/cryptoWallets';
+import _ from 'underscore';
 
 const Connection = {
   get: () => {
@@ -15,9 +16,19 @@ const Connection = {
   },
   getDefaultProvider: () => {
     // @ts-ignore
+
+    const { web3Ethereum } = window as any;
+    if (web3Ethereum && web3Ethereum.currentProvider) {
+      // @ts-ignore
+      return web3Ethereum;
+    }
+    // @ts-ignore
     const { ethereum } = window as any;
     if (ethereum) {
-      return new Web3(ethereum);
+      // @ts-ignore
+      window.web3Ethereum = new Web3(ethereum);
+      // @ts-ignore
+      return window.web3Ethereum;
     }
 
     const { web3 } = window as any;
@@ -72,15 +83,11 @@ const useWeb3 = () => {
 
   const setNewProvider = async provider => {
     try {
-      console.log(
-        ' NEW PROVIDER  : ',
-        getCurrentProviderName(provider),
-        ' OLD PROVIDER : ',
-        getCurrentProviderName()
-      );
+      const connection = Connection.get();
       if (
-        getCurrentProviderName() !== CryptoWallets.Opera ||
-        getCurrentProviderName(provider) !== getCurrentProviderName()
+        (getCurrentProviderName() !== CryptoWallets.Opera ||
+          getCurrentProviderName(provider) !== getCurrentProviderName()) &&
+        !_.isEqual(provider, connection ? connection.currentProvider : null)
       ) {
         const newWeb3 = new Web3(provider);
         // @ts-ignore

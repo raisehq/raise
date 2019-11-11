@@ -53,6 +53,7 @@ export const CardDescription = styled(Card.Description)`
 `;
 export const CardContent = styled(Card.Content)`
   &&& {
+    border-top: none !important;
     padding: 50px !important;
     font-size: 14px;
     code {
@@ -122,5 +123,30 @@ export const ButtonGreen = styled(Button)`
   &&&:active {
     background-color: #188e9b;
     color: white;
+  }
+`;
+
+export const BackButton = styled(Button)`
+  &&& {
+    box-shadow: none !important;
+  }
+`;
+
+export const CardHeader = styled(Card.Header)`
+  &&&&&& {
+    border-bottom: none;
+  }
+`;
+
+export const CardTitle = styled.div`
+  color: #3c4251;
+  font: 26px bold;
+  line-height: 36px;
+  text-align: center;
+  margin: 10px;
+`;
+export const CardCenteredText = styled.div`
+  &&& {
+    text-align: center;
   }
 `;

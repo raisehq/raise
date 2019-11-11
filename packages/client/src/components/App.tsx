@@ -15,6 +15,7 @@ import { Web3Check } from '../components/Web3Check';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
+import { SupportedBrowser } from '../components/SupportedBrowser';
 // import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
@@ -34,6 +35,7 @@ const App = ({ history, match }: any) => {
       auth: {
         login: { logged: isLogged, checked: isChecked }
       },
+      blockchain: { contracts },
       config: { network },
       kyc: { token },
       user: {
@@ -45,6 +47,7 @@ const App = ({ history, match }: any) => {
     actions: {
       auth: { onVerifyAuth },
       user: { onGetCryptoAddressByUser, onGetUser, onGetUserFromBC },
+      blockchain: { fetchContracts },
       kyc: { onInitKyc },
       config: { updateNetwork }
     }
@@ -102,7 +105,6 @@ const App = ({ history, match }: any) => {
 
   useAsyncEffect(async () => {
     if (isLogged) {
-      console.log(' CHECK ADDRES :');
       onGetCryptoAddressByUser();
       onGetUser();
 
@@ -113,6 +115,7 @@ const App = ({ history, match }: any) => {
     } else {
       await onVerifyAuth();
     }
+    if (contracts === null) fetchContracts();
   }, [isLogged, token, address, network]);
 
   useEffect(() => {
@@ -137,17 +140,7 @@ const App = ({ history, match }: any) => {
   }, [isLogged, id, accounttypeId, email, status]);
 
   useEffect(() => {
-    console.log(
-      ' isChecked : ',
-      isChecked,
-      ' hasProvider: ',
-      hasProvider,
-      ' isLogged: ',
-      isLogged,
-      ' cryptotypeId: ',
-      cryptotypeId
-    );
-    if (isChecked && hasProvider !== undefined) {
+    if (isChecked && hasProvider !== undefined && contracts) {
       if (isLogged) {
         // if is logged we need to wait until we check the cryptotypeId
         if (cryptotypeId !== null) setLoading(false);
@@ -156,7 +149,7 @@ const App = ({ history, match }: any) => {
         setLoading(false);
       }
     }
-  }, [isChecked, hasProvider, cryptotypeId]);
+  }, [isChecked, hasProvider, cryptotypeId, contracts]);
 
   const componentsByRole = {
     1: {
@@ -186,7 +179,8 @@ const App = ({ history, match }: any) => {
           accountMatches,
           targetNetwork,
           walletAccount,
-          storedAccount
+          storedAccount,
+          account: storedAccount // Old compability
         }
       }}
     >
@@ -243,6 +237,12 @@ const App = ({ history, match }: any) => {
                 />
                 <MainLayout exact path="/borrowers/:slug" component={BorrowerProfile} />
                 {/* Onboarding */}
+                <SimpleLayout
+                  checkLogged
+                  exact
+                  path="/supported-browser"
+                  component={SupportedBrowser}
+                />
                 <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
                 <SimpleLayout exact path="/join" component={Join} />
                 <SimpleLayout exact path="/login" component={Join} />

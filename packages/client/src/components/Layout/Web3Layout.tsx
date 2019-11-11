@@ -6,7 +6,7 @@ import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
 import { connectMetamask, connectOpera, connectCoinbase } from '../../helpers/walletConnector';
-import { SupportedBrowser } from '../Web3Check';
+
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
@@ -61,13 +61,13 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   const acceptedRole = (roles !== undefined && roles.indexOf(accounttypeId) > -1) || false;
 
   // Check supported Browser
-  if (!isSupportedBrowser) return <SupportedBrowser />;
+  if (!isSupportedBrowser) return <Redirect to="/supported-browser" />;
   // Auto wallet connection error
   if (connectionError) {
     return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
   }
   // Check if is Logged
-  if (!isLogged) return <Redirect to="/login" />;
+  if (!isLogged) return <Redirect to="/join" />;
 
   if (accountMatches && networkMatches && cryptotypeId !== null) {
     if (pathname !== '/deposit' && !hasDeposit) return <Redirect to="/deposit" />;
@@ -81,7 +81,6 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     }
   }
   // On case account not match and network not match
-  console.log('>>>> checks : ', hasDeposit, accountMatches, networkMatches);
 
   return (
     <SpecialDimmer active inverted>

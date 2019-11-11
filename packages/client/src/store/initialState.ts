@@ -86,7 +86,8 @@ const initialState = {
     error: '',
     referrals: null,
     totalReferralsCount: 0,
-    totalBountyToWithdraw: 0
+    totalBountyToWithdraw: 0,
+    contracts: null
   },
   loan: {
     auctions: null,

@@ -102,7 +102,7 @@ export const parseNetwork = id => {
 };
 
 export const isSupportedBrowser = () =>
-  ['brave', 'chrome', 'chromium', 'firefox', 'opera'].some(supportedBrowser =>
+  ['brave', 'chrome', 'chromium', 'firefox'].some(supportedBrowser =>
     browserName.toLowerCase().includes(supportedBrowser)
   );
 

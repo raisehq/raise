@@ -74,7 +74,6 @@ const useWeb3Checker = storedAccount => {
           const hasDeposit = await checkHasDeposit(depositContract, walletAccount);
           const walletNetwork = wallet ? await wallet.getNetwork() : 'NO_NETWORK';
           const targetNetwork = wallet ? await wallet.getContractsNetwork() : 'NO_NETWORK';
-          console.log('NETWORK ', walletNetwork, wallet);
           const newState = web3CheckList(
             web3,
             walletAccount,
@@ -83,7 +82,6 @@ const useWeb3Checker = storedAccount => {
             targetNetwork,
             hasDeposit
           );
-          console.log('NETWORK ', newState);
           if (!_.isEqual(newState, web3State.current)) {
             web3State.current = newState;
             forceUpdate();

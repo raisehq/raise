@@ -5,7 +5,6 @@ import useAsyncEffect from './useAsyncEffect';
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const metamask = useWallet();
-
   useAsyncEffect(async () => {
     if (metamask) {
       try {

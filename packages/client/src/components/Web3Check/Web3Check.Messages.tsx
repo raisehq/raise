@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { BrowserView, MobileView } from 'react-device-detect';
 import AppContext from '../AppContext';
 import Web3Address from '../Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
@@ -12,7 +11,6 @@ import {
   ButtonGreen,
   AddressContainer
 } from './Web3Check.styles';
-import { isSupportedBrowser } from '../../utils';
 
 const NeedHelp = ({ href }: any) => (
   <HelpMessage>
@@ -20,30 +18,6 @@ const NeedHelp = ({ href }: any) => (
       Need help?
     </Href>
   </HelpMessage>
-);
-
-const BrowserCompatible = () => (
-  <CardDescription>
-    <BrowserView>
-      <p>
-        To access Raise you will need a browser that supports CryptoWallets:
-        <span>
-          <a href="https://www.mozilla.org/firefox"> Firefox</a>
-          <span>, </span>
-          <a href="https://www.google.com/chrome">Chrome</a>
-          <span> and </span>
-          <a href="https://brave.com/">Brave</a>.
-        </span>
-      </p>
-    </BrowserView>
-    <MobileView>
-      <p>
-        To access Raise on mobile please download{' '}
-        <a href="https://mobile.metamask.io/Metamask">Metamask Mobile</a>.
-      </p>
-    </MobileView>
-    <NeedHelp href="https://www.raise.it/help" />
-  </CardDescription>
 );
 
 // @ts-ignore
@@ -129,14 +103,7 @@ const CurrentNotice = () => {
         cryptoAddress: { address: verifiedAddress }
       }
     },
-    web3Status: {
-      unlocked,
-      networkMatches,
-      accountMatches,
-      walletNetwork,
-      targetNetwork,
-      walletAccount
-    }
+    web3Status: { networkMatches, accountMatches, walletNetwork, targetNetwork, walletAccount }
   }: any = useContext(AppContext);
   const { getCurrentProviderName, requestSignature } = useWeb3();
   const [providerId]: any = useState(getCurrentProviderName());
@@ -150,12 +117,6 @@ const CurrentNotice = () => {
     }
   };
 
-  if (!isSupportedBrowser()) {
-    return <BrowserCompatible />;
-  }
-  if (!unlocked) {
-    return <AccountLockedNotice provider={providerId} />;
-  }
   if (!verifiedAddress) {
     return (
       <AccountNotVerified currentAddress={walletAccount} uploadSignature={handleUploadSignature} />

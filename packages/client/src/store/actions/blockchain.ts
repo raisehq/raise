@@ -1,5 +1,6 @@
 import { getReferralStatus } from '../../services/blockchain';
 import { addCryptoAddress, getUsersReferrerByCryptoAddress } from '../../services/user';
+import { getContractsDefinition } from '../../utils';
 
 export default (dispatch: any, state: any) => {
   const {
@@ -80,6 +81,20 @@ export default (dispatch: any, state: any) => {
       return dispatch({ type: 'ERROR_REFERAL_DATA' });
     }
   };
+
+  const fetchContracts = async () => {
+    try {
+      const contracts = await getContractsDefinition();
+
+      return dispatch({
+        type: 'SET_CONTRACTS_DATA',
+        data: contracts
+      });
+    } catch (error) {
+      return dispatch({ type: 'ERROR_CONTRACTS_DATA' });
+    }
+  };
+
   return {
     setDeposit,
     setErrorDeposit,
@@ -87,6 +102,7 @@ export default (dispatch: any, state: any) => {
     setErrorKyc,
     setCheckBlockchain,
     uploadSignature,
-    fetchReferrals
+    fetchReferrals,
+    fetchContracts
   };
 };
