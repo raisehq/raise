@@ -3,7 +3,8 @@ import AppContext from '../AppContext';
 import Web3Address from '../Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
 import { Href } from '../Layout/Layout.styles';
-import CryptoWallets from '../../commons/cryptoWallets';
+import { getWalletName } from '../../utils';
+
 import {
   StyledAddress,
   CardDescription,
@@ -21,33 +22,12 @@ const NeedHelp = ({ href }: any) => (
 );
 
 // @ts-ignore
-const AccountLockedNotice = ({ provider }: any) => {
-  if (provider === CryptoWallets.Opera) {
-    return (
-      <CardDescription>
-        <p>Raise needs to connect with your wallet</p>
-        <p>Please, pair the wallet mobile with Opera</p>
-        <NeedHelp href="https://www.raise.it/help" />
-        <ButtonGreen onClick={() => {}} content="Back to wallet selector" />
-      </CardDescription>
-    );
-  }
-  return (
-    <CardDescription>
-      <p>Raise needs to connect with your wallet</p>
-      <ButtonGreen onClick={() => {}} content="Back to wallet selector" />
-      <NeedHelp href="https://www.raise.it/help" />
-    </CardDescription>
-  );
-};
-
-// @ts-ignore
 const NetworkNotMatch = ({ targetNetwork, currentNetwork }: any) => (
   <CardDescription>
     <h6>Change the network</h6>
     <p>
       Please switch to one of the following networks in your wallet:
-      <b></b>
+      <b> {targetNetwork.join(', ')}</b>
     </p>
     <NeedHelp href="https://www.raise.it/help" />
   </CardDescription>
@@ -70,10 +50,10 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
   </CardDescription>
 );
 // @ts-ignore
-const AccountNotMatchNotice = ({ verifiedAddress }: any) => (
+const AccountNotMatchNotice = ({ verifiedAddress, walletId }: any) => (
   <CardDescription>
     <h6>Address does not match</h6>
-    <p>Change your current address to your binded Raise address below.</p>
+    <p>Make sure you are using {getWalletName(walletId)} with your registered address:</p>
     <div>
       <Web3Address account={verifiedAddress} />
     </div>
@@ -100,7 +80,7 @@ const CurrentNotice = () => {
     store: {
       user: {
         // @ts-ignore
-        cryptoAddress: { address: verifiedAddress }
+        cryptoAddress: { address: verifiedAddress, cryptotypeId }
       }
     },
     web3Status: { networkMatches, accountMatches, walletNetwork, targetNetwork, walletAccount }
@@ -126,7 +106,7 @@ const CurrentNotice = () => {
     return <NetworkNotMatch targetNetwork={targetNetwork} currentNetwork={walletNetwork} />;
   }
   if (!accountMatches) {
-    return <AccountNotMatchNotice verifiedAddress={verifiedAddress} />;
+    return <AccountNotMatchNotice verifiedAddress={verifiedAddress} walletId={cryptotypeId} />;
   }
   return <Success />;
 };

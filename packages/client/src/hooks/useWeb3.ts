@@ -60,8 +60,13 @@ const useWeb3 = () => {
       try {
         await connection.currentProvider.enable();
         connection.currentProvider.autoRefreshOnNetworkChange = false;
+        const accounts = await connection.eth.getAccounts();
+        if (!accounts || accounts.length === 0) {
+          console.log(' ACCOUNTS FUCK METAMASK ', accounts);
+          throw new Error(' Metamask are not enabled ');
+        }
       } catch (error) {
-        //console.error('[useWeb3] Error enable wallet.', error);
+        console.error('[useWeb3] Error enable wallet.', error);
         throw error;
       }
     }
@@ -93,13 +98,22 @@ const useWeb3 = () => {
         // @ts-ignore
         Connection.set(newWeb3);
       }
-      await enableWeb3();
     } catch (error) {
-      //console.error('[useWeb3] Error connecting to the wallet.', error);
       throw error;
     }
   };
-
+  const setNewProviderAndCheck = async provider => {
+    try {
+      await setNewProvider(provider);
+      const connection = Connection.get();
+      const accounts = await connection.eth.getAccounts();
+      if (!accounts || accounts.length === 0) {
+        throw new Error(' The wallet are not enabled ');
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
   const getPrimaryAccount = async () => {
     try {
       const connection = Connection.get();
@@ -139,6 +153,7 @@ const useWeb3 = () => {
     getWeb3: Connection.get,
     enableWeb3,
     setNewProvider,
+    setNewProviderAndCheck,
     getCurrentProviderName,
     getPrimaryAccount,
     getDefaultWeb3,

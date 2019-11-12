@@ -8,13 +8,10 @@ const SupportedBrowser = () => (
   <Grid.Row>
     <CardSized centered>
       <CardContent>
-        <Image src={`${IMAGES_PATH}img_awesome.png`} fluid />
+        <Image src={`${IMAGES_PATH}img_browser.png`} fluid />
         <CardCenteredText>
           <CardTitle>Your browser is not supported</CardTitle>
-          <p>
-            Install one of the followings to access the website and remember to add Metamask
-            extension
-          </p>
+          <p>To access Raise you need to log using one of the following browsers</p>
         </CardCenteredText>
         <CardBottom>
           <span>

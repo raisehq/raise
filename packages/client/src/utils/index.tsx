@@ -2,6 +2,8 @@ import LocalData from '../helpers/localData';
 import { browserName } from 'react-device-detect';
 import axios from 'axios';
 import moment from 'moment';
+import CryptoWallet from '../commons/cryptoWallets';
+import CryptoWallets from '../commons/cryptoWallets';
 
 const HOSTS: any = {
   AUTH: process.env.REACT_APP_HOST_URL_AUTH,
@@ -102,7 +104,7 @@ export const parseNetwork = id => {
 };
 
 export const isSupportedBrowser = () =>
-  ['brave', 'chrome', 'chromium', 'firefox'].some(supportedBrowser =>
+  ['brave', 'chrome', 'chromium', 'firefox', 'opera'].some(supportedBrowser =>
     browserName.toLowerCase().includes(supportedBrowser)
   );
 
@@ -156,3 +158,16 @@ export const getMediana = numbers => {
 };
 
 export const getAverage = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+
+export const getWalletName = walletId => {
+  switch (walletId) {
+    case CryptoWallet.Metamask:
+      return 'Metamask';
+    case CryptoWallets.Opera:
+      return 'Opera';
+    case CryptoWallets.Coinbase:
+      return 'Coinbase';
+    default:
+      return 'Unknow';
+  }
+};

@@ -52,7 +52,6 @@ const Deposit = () => {
         const { BN } = web3.utils;
         TagManager('Deposit Attempt');
         setStatus(UI.Waiting(UISteps.Approve));
-
         const allowance = new BN(
           await heroTokenContract.allowance(walletAccount, depositContract.address)
         );

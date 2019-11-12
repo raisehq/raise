@@ -82,10 +82,12 @@ const useWeb3Checker = storedAccount => {
             targetNetwork,
             hasDeposit
           );
+          console.log('HAS DEPOSIT : ', hasDeposit);
           if (!_.isEqual(newState, web3State.current)) {
             web3State.current = newState;
             forceUpdate();
           }
+          //console.log(' WEB3STATE : ', web3State.current);
         } catch (err) {
           const errorState = web3CheckList(
             web3,

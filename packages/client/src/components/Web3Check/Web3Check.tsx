@@ -33,7 +33,6 @@ const Web3Check = () => {
   }, []);
 
   useEffect(() => {
-    console.log(' Checks ');
     if (web3 && unlocked && ui !== Stages.Checks && ui !== Stages.WalletSelector) {
       setUI(Stages.Checks);
     }

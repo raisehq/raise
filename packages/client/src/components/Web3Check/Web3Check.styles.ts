@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Card, Segment, Button } from 'semantic-ui-react';
 import { OnlyActive } from '../../interfaces/OnlyActive';
 import Web3Address from '../Web3Address';
-import { device } from '../../commons/breakpoints';
+import { maxDevice, device } from '../../commons/breakpoints';
 
 export const StyledAddress = styled(Web3Address)`
   font-size: 14px;
@@ -54,22 +54,11 @@ export const CardDescription = styled(Card.Description)`
 export const CardContent = styled(Card.Content)`
   &&& {
     border-top: none !important;
-    padding: 50px !important;
+    padding: ${({ box }) => {
+      console.log(' BOOOOOOX ', box);
+      return box === 'separated' ? '20px 50px 60px 50px !important' : '50px !important';
+    }}
     font-size: 14px;
-    code {
-      background: lightgrey;
-      padding: 5px;
-      font-size: 12px;
-      color: black;
-    }
-    .icon {
-      display: inline-block !important;
-      width: 28px !important;
-      height: 28px !important;
-      line-height: 2.8 !important;
-      padding: 0px !important;
-      margin-right: 10px;
-    }
   }
 `;
 
@@ -135,6 +124,7 @@ export const BackButton = styled(Button)`
 export const CardHeader = styled(Card.Header)`
   &&&&&& {
     border-bottom: none;
+    margin-left: 4px;
   }
 `;
 
@@ -149,4 +139,46 @@ export const CardCenteredText = styled.div`
   &&& {
     text-align: center;
   }
+`;
+
+export const CardPadded = styled.div`
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 20px;
+  text-align: center;
+  &&&&&& {
+    .ui.loader.active,
+    .ui.loader.visible {
+      top: 119px;
+      position: relative;
+      left: 66%;
+    }
+
+    @media screen and ${maxDevice.mobileL} {
+      .ui.loader.active,
+      .ui.loader.visible {
+        top: 110px;
+        left: 73%;
+      }
+    }
+    @media screen and ${maxDevice.mobileM} {
+      .ui.loader.active,
+      .ui.loader.visible {
+        top: 90px;
+        left: 73%;
+      }
+    }
+  }
+  img {
+    width: 243px;
+  }
+`;
+export const ImageContainer = styled.div`
+  display: block;
+`;
+export const CardBottom = styled.div`
+  position: absolute;
+  bottom: 22px;
+  text-align: center;
+  width: 324px;
 `;

@@ -4,7 +4,8 @@ import { match, ANY, TAIL } from 'pampy';
 
 import Messages from './Web3Check.Messages';
 import AppContext from '../AppContext';
-import { CardContent, BackButton, CardHeader } from './Web3Check.styles';
+import { CardContent } from './Web3Check.styles';
+import BackButton from './Web3Check.BackButton';
 
 const Check = ({ value, message }: any) => {
   const iconProps = match(
@@ -76,16 +77,11 @@ const CheckList = ({ onBack, onSuccess }) => {
   }
   return (
     <>
-      <CardHeader>
-        <BackButton onClick={onBack} icon basic>
-          <Icon name="long arrow alternate left" />
-        </BackButton>
-      </CardHeader>
-
+      <BackButton onBack={onBack} />
       <CardContent>
         <Card.Group>
-          <Card>
-            <Card.Content>
+          <Card fluid>
+            <Card.Content fluid>
               <List>{StepsDOM}</List>
             </Card.Content>
           </Card>

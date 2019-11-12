@@ -24,7 +24,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     web3Status: { hasProvider, hasDeposit, accountMatches, networkMatches, unlocked }
   }: any = useContext(AppContext);
 
-  const { setNewProvider, getDefaultWeb3 }: any = useWeb3();
+  const { setNewProviderAndCheck, getDefaultWeb3 }: any = useWeb3();
   const [connectionError, setConnectionError] = useState(false);
   const {
     location: { pathname }
@@ -38,14 +38,14 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
         switch (cryptotypeId) {
           case CryptoWallets.Metamask:
             if (defaultWeb3.name !== CryptoWallets.Metamask) throw new Error('Wallet not alowed');
-            await connectMetamask(setNewProvider, defaultWeb3.conn.currentProvider);
+            await connectMetamask(setNewProviderAndCheck, defaultWeb3.conn.currentProvider);
             break;
           case CryptoWallets.Opera:
             if (defaultWeb3.name !== CryptoWallets.Opera) throw new Error('Wallet not alowed');
-            await connectOpera(setNewProvider, defaultWeb3.conn.currentProvider);
+            await connectOpera(setNewProviderAndCheck, defaultWeb3.conn.currentProvider);
             break;
           case CryptoWallets.Coinbase:
-            await connectCoinbase(setNewProvider, network);
+            await connectCoinbase(setNewProviderAndCheck, network);
             break;
           default:
             setConnectionError(true);
@@ -70,12 +70,20 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   if (!isLogged) return <Redirect to="/join" />;
 
   if (accountMatches && networkMatches && cryptotypeId !== null) {
-    if (pathname !== '/deposit' && !hasDeposit) return <Redirect to="/deposit" />;
+    if (pathname !== '/deposit' && hasDeposit !== undefined && !hasDeposit) {
+      return <Redirect to="/deposit" />;
+    }
     if (rest.path === pathname && acceptedRole) return <Layout {...rest} />;
     if (!acceptedRole) return <Redirect to="/" />;
   } else {
     // on case the connection with web3 are not ok or we have the correct conection but are different wallets
     // eslint-disable-next-line
+    console.log(
+      ' UNLOCKED : ',
+      unlocked,
+      ' CONDITION :',
+      cryptotypeId === CryptoWallets.NotConnected || !unlocked
+    );
     if (pathname !== '/verify-web3' && (cryptotypeId === CryptoWallets.NotConnected || unlocked)) {
       return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
     }

@@ -9,6 +9,7 @@ const useDepositContract = () => {
     if (metamask) {
       try {
         const contract = await metamask.addContract('Deposit');
+
         setActiveContract({
           address: contract.options.address,
           hasDeposited: address => contract.methods.hasDeposited(address).call(),
