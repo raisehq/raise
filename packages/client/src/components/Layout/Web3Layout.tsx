@@ -78,12 +78,6 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   } else {
     // on case the connection with web3 are not ok or we have the correct conection but are different wallets
     // eslint-disable-next-line
-    console.log(
-      ' UNLOCKED : ',
-      unlocked,
-      ' CONDITION :',
-      cryptotypeId === CryptoWallets.NotConnected || !unlocked
-    );
     if (pathname !== '/verify-web3' && (cryptotypeId === CryptoWallets.NotConnected || unlocked)) {
       return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
     }

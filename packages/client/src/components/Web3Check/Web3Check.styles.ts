@@ -55,7 +55,6 @@ export const CardContent = styled(Card.Content)`
   &&& {
     border-top: none !important;
     padding: ${({ box }) => {
-      console.log(' BOOOOOOX ', box);
       return box === 'separated' ? '20px 50px 60px 50px !important' : '50px !important';
     }}
     font-size: 14px;
