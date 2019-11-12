@@ -40,7 +40,7 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
       able to operate only with this address.
     </p>
     <div />
-    <ButtonGreen onClick={uploadSignature}>
+    <ButtonGreen onClick={uploadSignature} double>
       Sign message with
       <AddressContainer>
         <StyledAddress account={currentAddress} />
