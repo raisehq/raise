@@ -74,6 +74,18 @@ build-front-integration:
     paths:
       - packages/client/build_int
 
+deploy-int:
+  image: 'python:latest'
+  stage: deploy
+  before_script:
+    - pip install awscli
+  script:
+    - mv packages/client/build_int build_int
+    - aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
+    - aws s3 sync build_int s3://${BUCKET_NAME_INT}/
+  only:
+    - master
+
 deploy-prod:
   image: 'python:latest'
   stage: deploy
@@ -81,11 +93,9 @@ deploy-prod:
     - pip install awscli
   script:
     - mv packages/client/build build
-    - mv packages/client/build_int build_int
-    - aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
     - aws s3 rm s3://${BUCKET_NAME_PROD}/ --recursive
-    - aws s3 sync build_int s3://${BUCKET_NAME_INT}/
     - aws s3 sync build s3://${BUCKET_NAME_PROD}/
+  when: manual
   only:
     - master
 

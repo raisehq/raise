@@ -14,6 +14,7 @@ import Web3Address from '../Web3Address';
 import theme from '../../theme';
 import AppContext from '../AppContext';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
+import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
 
 const DesktopHeader = () => {
@@ -71,6 +72,7 @@ const DesktopHeader = () => {
         <HeaderGroup className="right">
           <Balance />
           <Web3Address />
+          <MyAccountButton />
           <HeaderLogout />
         </HeaderGroup>
       </HeaderWrapper>

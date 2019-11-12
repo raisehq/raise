@@ -8,6 +8,7 @@ import { MainLayout, SimpleLayout, Web3Layout } from './Layout';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import CreateLoan from './CreateLoan';
 import RootContext from '../context';
+import MyAccount from './MyAccount';
 import Join from './Join';
 import Kyc from '../components/Kyc';
 import Deposit from '../components/Deposit';
@@ -209,6 +210,14 @@ const App = ({ history, match }: any) => {
                   exact
                   path="/kyc"
                   component={Kyc}
+                  roles={[1, 2]}
+                />
+                <Web3Layout
+                  marketplace
+                  layout={MainLayout}
+                  exact
+                  path="/account"
+                  component={MyAccount}
                   roles={[1, 2]}
                 />
                 <Web3Layout

@@ -11,6 +11,7 @@ const useMenuVisibility = () => {
       history.location.pathname === '/create-loan' ||
       history.location.pathname === '/dashboard' ||
       history.location.pathname.includes('/borrowers') ||
+      history.location.pathname.includes('/account') ||
       history.location.pathname === '/kyc'
     ) {
       setVisible(true);
