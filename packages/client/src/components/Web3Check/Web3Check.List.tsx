@@ -37,13 +37,15 @@ const capitalize = s => {
 
 const CheckList = ({ onBack, onSuccess }) => {
   const {
+    web3Status,
     web3Status: { hasProvider, unlocked, networkMatches, accountMatches, targetNetwork }
   }: any = useContext(AppContext);
 
   const matchConditions = [hasProvider && unlocked, networkMatches, accountMatches];
+
+  console.log('web3Status', web3Status);
   // prettier-ignore
   const steps = match(matchConditions,
-   
     [ false, TAIL],
     () => ['user-action', 'pending', 'pending'],
     [ true, false, TAIL],

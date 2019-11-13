@@ -82,7 +82,6 @@ const useWeb3Checker = storedAccount => {
             targetNetwork,
             hasDeposit
           );
-
           if (!_.isEqual(newState, web3State.current)) {
             web3State.current = newState;
             forceUpdate();
@@ -101,12 +100,12 @@ const useWeb3Checker = storedAccount => {
       }
     };
 
-    if (!int.current) int.current = setInterval(check, 1000);
+    int.current = setInterval(check, 1000);
     return () => {
-      // if (int.current) {
-      //   clearInterval(int.current);
-      //   int.current = null;
-      // }
+      if (int.current) {
+        clearInterval(int.current);
+        int.current = null;
+      }
     };
   }, [storedAccount, wallet]);
 

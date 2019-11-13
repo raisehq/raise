@@ -8,6 +8,7 @@ export default (state: any, { type, data }: any) => {
         details: { ...state.details, address: data }
       };
     case 'SET_CRYPTO_ADDRESS_BY_ACCOUNT':
+      console.log(' SET CRYPTO ADDRESS : ', data);
       return {
         ...state,
         cryptoAddress: data
