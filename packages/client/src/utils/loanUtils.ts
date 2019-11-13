@@ -180,7 +180,7 @@ export const getCalculations = auction => {
     totalInterestAmount = numeral(calculateTotalInterestAmount(auction)).format();
   }
   if (auction.lenderAmount) {
-    lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
+    lenderAmount = numeral(Number(fromWei(auction.lenderAmount))).format();
     const lenderRoiAmountCalc = calculateInvestmentReturn(auction);
     lenderRoiAmount = numeral(lenderRoiAmountCalc).format();
   }
