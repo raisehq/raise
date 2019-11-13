@@ -21,6 +21,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
         cryptoAddress: { cryptotypeId }
       }
     },
+
     web3Status: { hasProvider, hasDeposit, accountMatches, networkMatches, unlocked }
   }: any = useContext(AppContext);
 

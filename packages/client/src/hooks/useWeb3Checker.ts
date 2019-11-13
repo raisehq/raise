@@ -57,7 +57,7 @@ const web3CheckList = (
 
 const useWeb3Checker = storedAccount => {
   const { getWeb3, getPrimaryAccount } = useWeb3();
-
+  const int: any = useRef();
   const forceUpdate = useForceUpdate();
   const depositContract = useDepositContract();
   const wallet = useWallet();
@@ -82,12 +82,11 @@ const useWeb3Checker = storedAccount => {
             targetNetwork,
             hasDeposit
           );
-          console.log('HAS DEPOSIT : ', hasDeposit);
+
           if (!_.isEqual(newState, web3State.current)) {
             web3State.current = newState;
             forceUpdate();
           }
-          //console.log(' WEB3STATE : ', web3State.current);
         } catch (err) {
           const errorState = web3CheckList(
             web3,
@@ -101,11 +100,13 @@ const useWeb3Checker = storedAccount => {
         }
       }
     };
-    const accountInterval = setInterval(check, 1000);
+
+    if (!int.current) int.current = setInterval(check, 1000);
     return () => {
-      if (accountInterval) {
-        clearInterval(accountInterval);
-      }
+      // if (int.current) {
+      //   clearInterval(int.current);
+      //   int.current = null;
+      // }
     };
   }, [storedAccount, wallet]);
 

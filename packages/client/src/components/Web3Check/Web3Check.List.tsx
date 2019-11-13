@@ -81,7 +81,7 @@ const CheckList = ({ onBack, onSuccess }) => {
       <CardContent>
         <Card.Group>
           <Card fluid>
-            <Card.Content fluid>
+            <Card.Content>
               <List>{StepsDOM}</List>
             </Card.Content>
           </Card>
