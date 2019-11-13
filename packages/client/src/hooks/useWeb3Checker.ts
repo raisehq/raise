@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 import _ from 'underscore';
+import get from 'lodash/get';
+import hasIn from 'lodash/hasIn';
 import { toChecksumAddress } from 'web3-utils';
 import { NULL_ADDRESS } from '../commons/constants';
 import useForceUpdate from './useForceUpdate';
@@ -7,6 +9,21 @@ import useInterval from './useInterval';
 import useWeb3 from './useWeb3';
 import useDepositContract from './useDepositContract';
 import useWallet from './useWallet';
+
+//
+
+const hasDeposited = async (web3, definitions, address) => {
+  const netId = 42; // CHECK COMO SE CONECTA EL WALLET DE COINBASE POR QUE ESTA OBLIGADO A HACERLO CON LA CUENTA DEFGAULT
+  if (!definitions || !address || !web3 || !hasIn(definitions, `address.${netId}`)) {
+    return false;
+  }
+  const contract = new web3.eth.Contract(
+    get(definitions, `abi.Deposit`),
+    get(definitions, `address.${netId}.Deposit`)
+  );
+  const deposited = await contract.methods.hasDeposited(address).call();
+  return deposited;
+};
 
 // Matches
 const matchAccount = (walledAccount, storedAccount) => {
@@ -28,7 +45,7 @@ const matchProvider = web3 => {
   if (web3 && web3.currentProvider) return true;
   return false;
 };
-
+/*
 const checkHasDeposit = async (depositContract, walletAccount) => {
   try {
     if (walletAccount && walletAccount !== NULL_ADDRESS) {
@@ -43,7 +60,7 @@ const checkHasDeposit = async (depositContract, walletAccount) => {
     console.error(' ERROR CHECK DEPOSIT ', error);
     return false;
   }
-};
+};*/
 
 const web3CheckList = (
   web3, // Web3 object
@@ -66,6 +83,7 @@ const web3CheckList = (
 
 const useWeb3Checker = storedAccount => {
   const { getWeb3, getPrimaryAccount } = useWeb3();
+
   const forceUpdate = useForceUpdate();
   const depositContract = useDepositContract();
   const wallet = useWallet();
@@ -80,7 +98,7 @@ const useWeb3Checker = storedAccount => {
       try {
         console.log('DEPOSIT ADDRESS : ', depositContract.address);
         const walletAccount = await getPrimaryAccount();
-        const hasDeposit = await checkHasDeposit(depositContract, walletAccount);
+        const hasDeposit = await hasDeposited(web3, wallet.heroContracts, walletAccount);
         const walletNetwork = wallet ? await wallet.getNetwork() : 'NO_NETWORK';
         const targetNetwork = wallet ? await wallet.getContractsNetwork() : 'NO_NETWORK';
         const newState = web3CheckList(
