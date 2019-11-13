@@ -47,6 +47,7 @@ const useWallet = () => {
           if (!hasIn(heroContracts, `address.${netId}.${name}`)) {
             throw new Error(`contract not found in current network ${netId}`);
           }
+          if (instanceContracts.current[name]) return instanceContracts.current[name];
           const contract = new web3.eth.Contract(
             get(heroContracts, `abi.${name}`),
             get(heroContracts, `address.${netId}.${name}`)

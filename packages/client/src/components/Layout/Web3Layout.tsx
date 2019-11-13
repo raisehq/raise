@@ -54,7 +54,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
         }
       }
     } catch (error) {
-      console.log(' ERROR CONNECTION ', error);
+      console.error(' ERROR CONNECTION ', error);
       // On case of error on connect redirect to the screen connector
       setConnectionError(true);
     }

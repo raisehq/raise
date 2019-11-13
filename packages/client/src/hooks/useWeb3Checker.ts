@@ -1,8 +1,9 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import _ from 'underscore';
 import { toChecksumAddress } from 'web3-utils';
 import { NULL_ADDRESS } from '../commons/constants';
 import useForceUpdate from './useForceUpdate';
+import useInterval from './useInterval';
 import useWeb3 from './useWeb3';
 import useDepositContract from './useDepositContract';
 import useWallet from './useWallet';
@@ -29,11 +30,19 @@ const matchProvider = web3 => {
 };
 
 const checkHasDeposit = async (depositContract, walletAccount) => {
-  if (walletAccount && walletAccount !== NULL_ADDRESS) {
-    const hasDeposit = depositContract ? await depositContract.hasDeposited(walletAccount) : false;
-    return hasDeposit;
+  try {
+    if (walletAccount && walletAccount !== NULL_ADDRESS) {
+      console.log('WALLET ACCOUNT ', walletAccount);
+      const hasDeposit = depositContract
+        ? await depositContract.hasDeposited(walletAccount)
+        : false;
+      return hasDeposit;
+    }
+    return false;
+  } catch (error) {
+    console.error(' ERROR CHECK DEPOSIT ', error);
+    return false;
   }
-  return false;
 };
 
 const web3CheckList = (
@@ -57,7 +66,6 @@ const web3CheckList = (
 
 const useWeb3Checker = storedAccount => {
   const { getWeb3, getPrimaryAccount } = useWeb3();
-  const int: any = useRef();
   const forceUpdate = useForceUpdate();
   const depositContract = useDepositContract();
   const wallet = useWallet();
@@ -65,49 +73,71 @@ const useWeb3Checker = storedAccount => {
     web3CheckList(getWeb3(), null, storedAccount, 'NO_NETWORK', 'NO_NETWORK', false)
   );
 
-  useEffect(() => {
-    const check = async () => {
-      const web3 = getWeb3();
-      if (web3 && web3.currentProvider) {
-        try {
-          const walletAccount = await getPrimaryAccount();
-          const hasDeposit = await checkHasDeposit(depositContract, walletAccount);
-          const walletNetwork = wallet ? await wallet.getNetwork() : 'NO_NETWORK';
-          const targetNetwork = wallet ? await wallet.getContractsNetwork() : 'NO_NETWORK';
-          const newState = web3CheckList(
-            web3,
-            walletAccount,
-            storedAccount,
-            walletNetwork,
-            targetNetwork,
-            hasDeposit
-          );
-          if (!_.isEqual(newState, web3State.current)) {
-            web3State.current = newState;
-            forceUpdate();
-          }
-        } catch (err) {
-          const errorState = web3CheckList(
-            web3,
-            null,
-            NULL_ADDRESS,
-            'NO_NETWORK',
-            'NO_NETWORK',
-            false
-          );
-          web3State.current = errorState;
-        }
-      }
-    };
+  useInterval(async () => {
+    const web3 = getWeb3();
 
-    int.current = setInterval(check, 1000);
+    if (web3 && web3.currentProvider && depositContract) {
+      try {
+        console.log('DEPOSIT ADDRESS : ', depositContract.address);
+        const walletAccount = await getPrimaryAccount();
+        const hasDeposit = await checkHasDeposit(depositContract, walletAccount);
+        const walletNetwork = wallet ? await wallet.getNetwork() : 'NO_NETWORK';
+        const targetNetwork = wallet ? await wallet.getContractsNetwork() : 'NO_NETWORK';
+        const newState = web3CheckList(
+          web3,
+          walletAccount,
+          storedAccount,
+          walletNetwork,
+          targetNetwork,
+          hasDeposit
+        );
+        console.log('NEWSTATE : ', newState);
+        if (!_.isEqual(newState, web3State.current)) {
+          web3State.current = newState;
+          forceUpdate();
+        }
+      } catch (err) {
+        console.error(' SET INTERATE ERROR ', err);
+
+        // const errorState = web3CheckList(
+        //   web3,
+        //   null,
+        //   NULL_ADDRESS,
+        //   'NO_NETWORK',
+        //   'NO_NETWORK',
+        //   false
+        // );
+        // web3State.current = errorState;
+      }
+    }
+  }, 2000);
+  /*
+   useEffect(() => {
+    const check = ;
+    // @ts-ignore
+    if (window.checkInterval) {
+      // @ts-ignore
+      clearInterval(window.checkInterval);
+      // @ts-ignore
+      console.log('################# CLEAR', window.checkInterval);
+    }
+    // @ts-ignore
+    window.checkInterval = setInterval(check, 1000);
+    // @ts-ignore
+    console.log('################# LAUNCH INTERVLA AGAIN ', window.checkInterval);
     return () => {
-      if (int.current) {
-        clearInterval(int.current);
-        int.current = null;
+      // @ts-ignore
+      if (window.checkInterval) {
+        // @ts-ignore
+        console.log('################# CLEAR INTERVLA AGAIN ', window.checkInterval);
+        // @ts-ignore
+        clearInterval(window.checkInterval);
+        // @ts-ignore
+        window.checkInterval = null;
       }
     };
   }, [storedAccount, wallet]);
+  */
 
   return web3State.current;
 };

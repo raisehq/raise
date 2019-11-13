@@ -12,7 +12,12 @@ const useDepositContract = () => {
 
         setActiveContract({
           address: contract.options.address,
-          hasDeposited: address => contract.methods.hasDeposited(address).call(),
+          hasDeposited: async address => {
+            console.log(' ---------------------- > ', contract);
+            const resp = await contract.methods.hasDeposited(address).call();
+            console.log(' RESP ', resp);
+            return resp;
+          },
           deposit: address => contract.methods.depositFor(address).send({ from: address }),
           depositWithReferral: (address, referralAddress) =>
             contract.methods
