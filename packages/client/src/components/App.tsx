@@ -64,8 +64,10 @@ const App = ({ history, match }: any) => {
     accountMatches,
     targetNetwork,
     walletNetwork,
+    walletNetworkId,
     walletAccount,
-    storedAccount
+    storedAccount,
+    hasDeposit
   } = useWeb3Checker(address);
 
   const onSetGetStarted = () => setGetStarted(!getStarted);
@@ -75,7 +77,7 @@ const App = ({ history, match }: any) => {
       setLoading(false);
       setWebSocket({});
       setDaiWebSocket({});
-      updateNetwork(walletNetwork);
+      updateNetwork(walletNetwork, walletNetworkId);
     }
   }, [network, networkMatches, walletNetwork]);
   // Enabling connections
@@ -181,7 +183,8 @@ const App = ({ history, match }: any) => {
           targetNetwork,
           walletAccount,
           storedAccount,
-          account: storedAccount // Old compability
+          account: storedAccount, // Old compability
+          hasDeposit
         }
       }}
     >

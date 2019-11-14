@@ -1,7 +1,7 @@
 import * as Cookies from 'js-cookie';
 import LocalData from '../helpers/localData';
 
-import { isSupportedBrowser } from '../utils';
+import { isSupportedBrowser, parseNetwork } from '../utils';
 // import { NULL_ADDRESS } from '../commons/constants';
 const authCookie = Cookies.get('auth');
 const userCookie = Cookies.get('user');
@@ -47,7 +47,8 @@ const initialState = {
   config: {
     menu: false,
     isSupportedBrowser: isSupportedBrowser(),
-    network: process.env.REACT_APP_DEFAULT_NETWORK
+    networkId: parseInt(process.env.REACT_APP_DEFAULT_NETWORK_ID || '1', 10),
+    network: parseNetwork(parseInt(process.env.REACT_APP_DEFAULT_NETWORK_ID || '1', 10))
   },
   auth: {
     login: {

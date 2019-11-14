@@ -8,7 +8,8 @@ export default (state: any, action: any) => {
     case 'UPDATE_NETWORK':
       return {
         ...state,
-        network: action.data
+        network: action.data.network,
+        networkId: action.data.networkId
       };
     default:
       return {

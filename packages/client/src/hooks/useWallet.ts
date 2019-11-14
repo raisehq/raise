@@ -7,7 +7,7 @@ import RootContext from '../context';
 
 import { parseNetwork } from '../utils';
 
-const useWallet = () => {
+const useWallet = (forceConn?: any) => {
   const {
     store: {
       blockchain: { contracts: heroContracts }
@@ -18,23 +18,31 @@ const useWallet = () => {
 
   const instanceContracts = useRef({});
   const { getWeb3, getPrimaryAccount } = useWeb3();
-  const web3 = getWeb3();
-
+  const web3 = forceConn || getWeb3();
+  console.log('PUTO WALLET ', web3);
   useEffect(() => {
+    console.log(' ################## CHECK WALLET ', web3, getWeb3());
     if (web3 && heroContracts) {
-      // console.log(' NEW WEB3 ', web3.currentProvider.isWalletLink);
+      console.log('###########  SET AGAIN AND AGAIN  ##################');
       setWallet({
         web3,
         heroContracts,
         getNetwork: async () => {
           try {
             if (web3) {
-              return parseNetwork(await web3.eth.net.getId());
+              const id = await web3.eth.net.getId();
+              return { id, name: parseNetwork(id) };
             }
-            return process.env.REACT_APP_DEFAULT_NETWORK;
+            return {
+              id: parseInt(process.env.REACT_APP_DEFAULT_NETWORK_ID || '1', 10),
+              name: parseNetwork(parseInt(process.env.REACT_APP_DEFAULT_NETWORK_ID || '1', 10))
+            };
           } catch (err) {
             console.error('[useWallet] Error detect network');
-            return process.env.REACT_APP_DEFAULT_NETWORK;
+            return {
+              id: parseInt(process.env.REACT_APP_DEFAULT_NETWORK_ID || '1', 10),
+              name: parseNetwork(parseInt(process.env.REACT_APP_DEFAULT_NETWORK_ID || '1', 10))
+            };
           }
         },
         getContractsNetwork: () => {

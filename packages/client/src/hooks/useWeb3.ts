@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { browserName } from 'react-device-detect';
 import Web3 from 'web3';
+import WalletLink from 'walletlink';
 import CryptoWallets from '../commons/cryptoWallets';
+import useForceUpdate from './useForceUpdate';
 import _ from 'underscore';
 
 const Connection = {
@@ -53,7 +56,23 @@ const Connection = {
   }
 };
 
+const getWalletLinkClient = (network, networkId) => {
+  console.log(' CONNECTION WALLETLLIK ; ', network, networkId);
+  const walletLink = new WalletLink({
+    appName: 'Raise.it',
+    appLogoUrl: `https://${process.env.REACT_APP_HOST_IMAGES}/favicons/favicon.ico`
+  });
+
+  const ethereum = walletLink.makeWeb3Provider(
+    `https://${network}.infura.io/v3/${process.env.REACT_APP_INFURA}`,
+    networkId
+  );
+  return ethereum;
+};
+
 const useWeb3 = () => {
+  const forceUpdate: any = useForceUpdate();
+  const [web3, setWeb3]: any = useState(Connection.get());
   const enableWeb3 = async () => {
     const connection = Connection.get();
     if (connection.currentProvider) {
@@ -62,7 +81,6 @@ const useWeb3 = () => {
         connection.currentProvider.autoRefreshOnNetworkChange = false;
         const accounts = await connection.eth.getAccounts();
         if (!accounts || accounts.length === 0) {
-          console.log(' ACCOUNTS FUCK METAMASK ', accounts);
           throw new Error(' Metamask are not enabled ');
         }
       } catch (error) {
@@ -98,22 +116,14 @@ const useWeb3 = () => {
         // @ts-ignore
         Connection.set(newWeb3);
       }
+      setWeb3(Connection.get());
+      forceUpdate();
+      // setWeb3(Connection.get());
     } catch (error) {
       throw error;
     }
   };
-  const setNewProviderAndCheck = async provider => {
-    try {
-      await setNewProvider(provider);
-      const connection = Connection.get();
-      const accounts = await connection.eth.getAccounts();
-      if (!accounts || accounts.length === 0) {
-        throw new Error(' The wallet are not enabled ');
-      }
-    } catch (error) {
-      throw error;
-    }
-  };
+
   const getPrimaryAccount = async () => {
     try {
       const connection = Connection.get();
@@ -149,15 +159,44 @@ const useWeb3 = () => {
     }
   };
 
+  const connectWallet = async (cryptotypeId, network, networkId, checkBlock?) => {
+    // Check the type of wallet and try to connect to the provider
+    const defaultWeb3 = getDefaultWeb3();
+
+    switch (cryptotypeId) {
+      case CryptoWallets.Metamask:
+        if (defaultWeb3.name !== CryptoWallets.Metamask) throw new Error('Wallet not alowed');
+        await setNewProvider(defaultWeb3.conn.currentProvider);
+        break;
+      case CryptoWallets.Opera:
+        if (defaultWeb3.name !== CryptoWallets.Opera) throw new Error('Wallet not alowed');
+        await setNewProvider(defaultWeb3.conn.currentProvider);
+        break;
+      case CryptoWallets.Coinbase:
+        await setNewProvider(getWalletLinkClient(network, networkId));
+        break;
+      default:
+        throw new Error('Wallet not alowed default OPTION');
+    }
+    if (checkBlock) {
+      const connection = Connection.get();
+      const accounts = await connection.eth.getAccounts();
+      if (!accounts || accounts.length === 0) {
+        throw new Error(' The wallet are not enabled ');
+      }
+    }
+  };
+  // console.log(' NEW STATE !!! ',web3)
   return {
+    web3,
     getWeb3: Connection.get,
     enableWeb3,
     setNewProvider,
-    setNewProviderAndCheck,
     getCurrentProviderName,
     getPrimaryAccount,
     getDefaultWeb3,
-    requestSignature
+    requestSignature,
+    connectWallet
   };
 };
 

@@ -12,7 +12,7 @@ import AppContext from '../AppContext';
 
 const getStage = (stage, handleNext, handleBack, handleSuccess) => {
   return stage.cata({
-    WalletSelector: () => <Wallet onSelect={handleNext} />,
+    WalletSelector: () => <Wallet onNext={handleNext} />,
     WalletError: () => <ErrorConnection onBack={handleBack} />,
     WalletConnect: () => <WalletConnect onBack={handleBack} />,
     Checks: () => <List onSuccess={handleSuccess} onBack={handleBack} />
@@ -29,11 +29,11 @@ const Web3Check = () => {
 
   const [ui, setUI] = useState(Stages.WalletSelector);
   useEffect(() => {
-    console.log('--> unlocked', unlocked);
     if (web3 && unlocked) setUI(Stages.Checks);
   }, []);
 
   useEffect(() => {
+    console.log('CHECKS unlocked:', unlocked, ' web3 : ', web3, ' ui : ', ui.toString());
     if (web3 && unlocked && ui !== Stages.Checks && ui !== Stages.WalletSelector) {
       setUI(Stages.Checks);
     }

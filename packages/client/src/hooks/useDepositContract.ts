@@ -2,9 +2,9 @@ import { useState } from 'react';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
 
-const useDepositContract = () => {
+const useDepositContract = (forceConnection?: any) => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const metamask = useWallet();
+  const metamask = useWallet(forceConnection);
   useAsyncEffect(async () => {
     if (metamask) {
       try {
@@ -13,9 +13,7 @@ const useDepositContract = () => {
         setActiveContract({
           address: contract.options.address,
           hasDeposited: async address => {
-            console.log(' ---------------------- > ', contract);
             const resp = await contract.methods.hasDeposited(address).call();
-            console.log(' RESP ', resp);
             return resp;
           },
           deposit: address => contract.methods.depositFor(address).send({ from: address }),

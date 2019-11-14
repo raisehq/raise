@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import { Either } from '../utils';
 import useWallet from './useWallet';
+
+import useWeb3 from './useWeb3';
 import useAsyncEffect from './useAsyncEffect';
 
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const metamask = useWallet();
+  const { getWeb3 } = useWeb3();
+  const web3 = getWeb3();
   console.log(' USE DEPOSIT ', metamask);
   useAsyncEffect(async () => {
     const ready = Either.either(metamask);
@@ -28,7 +32,7 @@ const useDepositContract = () => {
                   return HeroTokenContract.methods
                     .approve(
                       DepositContract.options.address,
-                      metamask.utils.toWei(amount.toString(), 'ether')
+                      web3.utils.toWei(amount.toString(), 'ether')
                     )
                     .send({
                       from: account

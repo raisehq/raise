@@ -1,53 +1,40 @@
 import React, { useEffect, useState, useContext } from 'react';
-import WalletLink from 'walletlink';
+
 import { List, Button, Card } from 'semantic-ui-react';
 import { CardTitle, CardCenteredText, CardPadded } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
 
-const Wallet = ({ onSelect }: any) => {
+const Wallet = ({ onNext }: any) => {
   const {
     store: {
-      config: { network }
+      config: { network, networkId }
     }
   }: any = useContext(AppContext);
-  const [provider, setProvider] = useState();
   const [defaultWallet, setDefaultWallet] = useState();
-  const { getWeb3, setNewProvider, getDefaultWeb3 }: any = useWeb3();
+  const { getWeb3, getDefaultWeb3, connectWallet }: any = useWeb3();
   const web3 = getWeb3();
 
   useEffect(() => {
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
 
-  const handlerCoinbase = () => {
-    const walletLink = new WalletLink({
-      appName: 'Raise.it',
-      appLogoUrl: `https://${process.env.REACT_APP_HOST_IMAGES}/favicons/favicon.ico`
-    });
-    const ethereum = walletLink.makeWeb3Provider(
-      `https://${network}.infura.io/v3/${process.env.REACT_APP_INFURA}`,
-      1
-    );
-    setProvider(ethereum);
+  const handlerCoinbase = async () => {
+    console.log('@@@@@@@@@@@@@@@2 NETWORKS -', network, networkId);
+    await connectWallet(CryptoWallets.Coinbase, network, networkId);
+    onNext();
   };
 
-  const handlerMetamask = () => {
-    setProvider(defaultWallet.conn.currentProvider);
+  const handlerMetamask = async () => {
+    await connectWallet(CryptoWallets.Metamask, network, networkId);
+    onNext();
   };
 
-  const handlerOpera = () => {
-    setProvider(defaultWallet.conn.currentProvider);
+  const handlerOpera = async () => {
+    await connectWallet(CryptoWallets.Opera, network, networkId);
+    onNext();
   };
-
-  useEffect(() => {
-    if (provider) {
-      setNewProvider(provider).then(() => {
-        onSelect();
-      });
-    }
-  }, [provider]);
 
   return (
     <Card.Content>

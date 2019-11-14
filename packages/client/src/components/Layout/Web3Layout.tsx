@@ -5,14 +5,13 @@ import { SpecialDimmer } from './Layout.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
-import { connectMetamask, connectOpera, connectCoinbase } from '../../helpers/walletConnector';
 
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
   const {
     store: {
-      config: { network, isSupportedBrowser },
+      config: { network, networkId, isSupportedBrowser },
       auth: {
         login: { logged: isLogged }
       },
@@ -25,7 +24,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     web3Status: { hasProvider, hasDeposit, accountMatches, networkMatches, unlocked }
   }: any = useContext(AppContext);
 
-  const { setNewProviderAndCheck, getDefaultWeb3 }: any = useWeb3();
+  const { connectWallet }: any = useWeb3();
   const [connectionError, setConnectionError] = useState(false);
   const {
     location: { pathname }
@@ -35,23 +34,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     try {
       if (!hasProvider && isSupportedBrowser && isLogged) {
         // Check the type of wallet and try to connect to the provider
-        const defaultWeb3 = getDefaultWeb3();
-        switch (cryptotypeId) {
-          case CryptoWallets.Metamask:
-            if (defaultWeb3.name !== CryptoWallets.Metamask) throw new Error('Wallet not alowed');
-            await connectMetamask(setNewProviderAndCheck, defaultWeb3.conn.currentProvider);
-            break;
-          case CryptoWallets.Opera:
-            if (defaultWeb3.name !== CryptoWallets.Opera) throw new Error('Wallet not alowed');
-            await connectOpera(setNewProviderAndCheck, defaultWeb3.conn.currentProvider);
-            break;
-          case CryptoWallets.Coinbase:
-            await connectCoinbase(setNewProviderAndCheck, network);
-            break;
-          default:
-            setConnectionError(true);
-            break;
-        }
+        await connectWallet(cryptotypeId, network, networkId, true);
       }
     } catch (error) {
       console.error(' ERROR CONNECTION ', error);
@@ -70,7 +53,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   // Check if is Logged
   if (!isLogged) return <Redirect to="/join" />;
 
-  if (accountMatches && networkMatches && cryptotypeId !== null) {
+  if (accountMatches && networkMatches && cryptotypeId !== null && hasDeposit !== undefined) {
     if (pathname !== '/deposit' && hasDeposit !== undefined && !hasDeposit) {
       return <Redirect to="/deposit" />;
     }

@@ -5,8 +5,8 @@ export default (dispatch: any, state: Store) => {
     showMenu: visibility => {
       return dispatch({ type: 'SHOW_MENU', data: visibility });
     },
-    updateNetwork: network => {
-      return dispatch({ type: 'UPDATE_NETWORK', data: network });
+    updateNetwork: (network, networkId) => {
+      return dispatch({ type: 'UPDATE_NETWORK', data: { network, networkId } });
     }
   };
 };
