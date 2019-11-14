@@ -2,9 +2,9 @@ import { useState } from 'react';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
 
-const useDepositContract = (forceConnection?: any) => {
+const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const metamask = useWallet(forceConnection);
+  const metamask = useWallet();
   useAsyncEffect(async () => {
     if (metamask) {
       try {

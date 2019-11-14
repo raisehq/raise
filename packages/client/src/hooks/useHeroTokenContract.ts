@@ -8,9 +8,8 @@ import useAsyncEffect from './useAsyncEffect';
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const metamask = useWallet();
-  const { getWeb3 } = useWeb3();
-  const web3 = getWeb3();
-  console.log(' USE DEPOSIT ', metamask);
+  const { web3 } = useWeb3();
+
   useAsyncEffect(async () => {
     const ready = Either.either(metamask);
 

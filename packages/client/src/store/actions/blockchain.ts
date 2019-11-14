@@ -9,7 +9,7 @@ export default (dispatch: any, state: any) => {
       cryptoAddress: { address }
     }
   } = state;
-
+  const setWeb3 = newWeb3 => dispatch({ type: 'SET_WEB3', data: newWeb3 });
   const setCheckBlockchain = response => dispatch({ type: 'SET_BLOCKCHAIN_CHECK', response });
   const setDeposit = response => {
     return dispatch({ type: 'SET_BLOCKCHAIN_DEPOSIT', response });
@@ -96,6 +96,7 @@ export default (dispatch: any, state: any) => {
   };
 
   return {
+    setWeb3,
     setDeposit,
     setErrorDeposit,
     setKyc,

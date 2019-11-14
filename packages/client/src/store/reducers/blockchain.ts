@@ -67,6 +67,14 @@ export default (state: any, action: any) => {
         }
       };
     }
+    case 'SET_WEB3': {
+      return {
+        ...state,
+        ...{
+          web3: action.data
+        }
+      };
+    }
     default:
       return state;
   }

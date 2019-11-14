@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useContext } from 'react';
 import _ from 'underscore';
 // import get from 'lodash/get';
 // import hasIn from 'lodash/hasIn';
@@ -10,7 +10,7 @@ import useWeb3 from './useWeb3';
 import useDepositContract from './useDepositContract';
 import useWallet from './useWallet';
 import { useEffect } from 'react';
-
+import RootContext from '../context';
 // const hasDeposited = async (web3, definitions, address) => {
 //   const netId = 42; // CHECK COMO SE CONECTA EL WALLET DE COINBASE POR QUE ESTA OBLIGADO A HACERLO CON LA CUENTA DEFGAULT
 //   if (!definitions || !address || !web3 || !hasIn(definitions, `address.${netId}`)) {
@@ -83,15 +83,19 @@ const web3CheckList = (
 });
 
 const useWeb3Checker = storedAccount => {
-  const { getWeb3, getPrimaryAccount } = useWeb3();
+  const {
+    store: {
+      blockchain: { web3 }
+    }
+  }: any = useContext(RootContext);
+  const { getPrimaryAccount } = useWeb3();
   // const connection = getWeb3();
-  const [connection, setConnection]: any = useState();
   const forceUpdate = useForceUpdate();
-  const wallet = useWallet(connection);
-  const depositContract = useDepositContract(connection);
+  const wallet = useWallet();
+  const depositContract = useDepositContract();
 
   const web3State = useRef(
-    web3CheckList(getWeb3(), null, storedAccount, 'NO_NETWORK', -1, 'NO_NETWORK', false)
+    web3CheckList(web3, null, storedAccount, 'NO_NETWORK', -1, 'NO_NETWORK', false)
   );
   //
   // ON WALLET CONNECTION
@@ -101,7 +105,6 @@ const useWeb3Checker = storedAccount => {
   // }, [getWeb3, wallet]);
 
   const check = async () => {
-    const web3 = getWeb3();
     console.log(' *********** DEPOSIT CONTRACT : ', depositContract);
     if (web3 && web3.currentProvider && depositContract) {
       try {
@@ -143,7 +146,7 @@ const useWeb3Checker = storedAccount => {
         // web3State.current = errorState;
       }
     } else {
-      if (web3 && web3.currentProvider) setConnection(getWeb3());
+      // if (web3 && web3.currentProvider) setConnection(getWeb3());
       console.log(' NOT CONNECTED ', web3, depositContract);
     }
   };
@@ -156,7 +159,7 @@ const useWeb3Checker = storedAccount => {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [wallet]);
+  }, [web3, wallet]);
 
   return web3State.current;
 };

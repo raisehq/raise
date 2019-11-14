@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { browserName } from 'react-device-detect';
 import Web3 from 'web3';
 import WalletLink from 'walletlink';
 import CryptoWallets from '../commons/cryptoWallets';
-import useForceUpdate from './useForceUpdate';
 import _ from 'underscore';
+import RootContext from '../context';
 
 const Connection = {
   get: () => {
@@ -71,8 +71,15 @@ const getWalletLinkClient = (network, networkId) => {
 };
 
 const useWeb3 = () => {
-  const forceUpdate: any = useForceUpdate();
-  const [web3, setWeb3]: any = useState(Connection.get());
+  const {
+    store: {
+      blockchain: { web3 }
+    },
+    actions: {
+      blockchain: { setWeb3 }
+    }
+  }: any = useContext(RootContext);
+
   const enableWeb3 = async () => {
     const connection = Connection.get();
     if (connection.currentProvider) {
@@ -117,7 +124,6 @@ const useWeb3 = () => {
         Connection.set(newWeb3);
       }
       setWeb3(Connection.get());
-      forceUpdate();
       // setWeb3(Connection.get());
     } catch (error) {
       throw error;

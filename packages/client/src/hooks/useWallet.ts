@@ -7,21 +7,21 @@ import RootContext from '../context';
 
 import { parseNetwork } from '../utils';
 
-const useWallet = (forceConn?: any) => {
+const useWallet = () => {
   const {
     store: {
-      blockchain: { contracts: heroContracts }
+      blockchain: { contracts: heroContracts, web3 }
     }
   }: any = useContext(RootContext);
 
   const [wallet, setWallet]: any = useState(null);
 
   const instanceContracts = useRef({});
-  const { getWeb3, getPrimaryAccount } = useWeb3();
-  const web3 = forceConn || getWeb3();
+  const { getPrimaryAccount } = useWeb3();
+
   console.log('PUTO WALLET ', web3);
   useEffect(() => {
-    console.log(' ################## CHECK WALLET ', web3, getWeb3());
+    console.log(' ################## CHECK WALLET ', web3);
     if (web3 && heroContracts) {
       console.log('###########  SET AGAIN AND AGAIN  ##################');
       setWallet({
