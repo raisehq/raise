@@ -123,7 +123,7 @@ export const parseNetwork = id => {
   }
 };
 const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
+  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v5/contracts.json';
 
 export const getContractsDefinition = async () => {
   const remoteContracts = await axios.get(HERO_CONTRACTS);

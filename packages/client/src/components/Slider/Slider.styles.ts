@@ -84,7 +84,7 @@ export const railStyle = {
 export const trackStyle = {
   width: '100%',
   height: '15px',
-  background: 'none',
+  background: 'red',
   borderRadius: '8px'
 }
 

@@ -14,6 +14,7 @@ const useLoanDispatcher = () => {
           deploy: async (
             minAmount,
             amount,
+            minInterestRate,
             maxInterestRate,
             termMonthsLength,
             acceptMinimum,
@@ -27,6 +28,7 @@ const useLoanDispatcher = () => {
                 'ether'
               ),
               metamask.utils.toWei(amount.toString(), 'ether'),
+              metamask.utils.toWei(minInterestRate.toString()),
               metamask.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,
               auctionSecondsLength

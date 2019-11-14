@@ -1,6 +1,6 @@
-import React from 'react'
-import Slider from 'rc-slider'
-import 'rc-slider/assets/index.css'
+import React from 'react';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import {
   Wrapper,
   handleStyle,
@@ -10,14 +10,14 @@ import {
   activeDotStyle,
   LabelLess,
   LabelMore
-} from './Slider.styles'
+} from './Slider.styles';
 
-const createSliderWithTooltip = Slider.createSliderWithTooltip
-const Slide = createSliderWithTooltip(Slider)
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const Range = createSliderWithTooltip(Slider.Range);
 
-const HeroSlider = ({ onChange, ...rest }) => (
+const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }) => (
   <Wrapper>
-    <Slide
+    <Range
       {...rest}
       step={0.1}
       handleStyle={handleStyle}
@@ -27,9 +27,14 @@ const HeroSlider = ({ onChange, ...rest }) => (
       trackStyle={trackStyle}
       onAfterChange={onChange}
     />
-    <LabelLess>Less likely to match</LabelLess>
-    <LabelMore>More likely to match</LabelMore>
-  </Wrapper>
-)
 
-export default HeroSlider
+    <LabelLess>
+      {minAPR.toFixed(2)}% APR ({loan.minMir}% MIR*)
+    </LabelLess>
+    <LabelMore>
+      {maxAPR.toFixed(2)}% APR ({loan.maxMir}% MIR*)
+    </LabelMore>
+  </Wrapper>
+);
+
+export default HeroSlider;
