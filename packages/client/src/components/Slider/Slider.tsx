@@ -19,7 +19,7 @@ const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }) => (
   <Wrapper>
     <Range
       {...rest}
-      step={0.1}
+      step={0.01}
       handleStyle={handleStyle}
       railStyle={railStyle}
       dotStyle={dotStyle}
@@ -29,10 +29,10 @@ const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }) => (
     />
 
     <LabelLess>
-      {minAPR.toFixed(2)}% APR ({loan.minMir}% MIR*)
+      {loan.minMir.toFixed(2)}% MIR* ({minAPR.toFixed(2)}% APR)
     </LabelLess>
     <LabelMore>
-      {maxAPR.toFixed(2)}% APR ({loan.maxMir}% MIR*)
+      {loan.maxMir.toFixed(2)}% MIR* ({maxAPR.toFixed(2)}% APR)
     </LabelMore>
   </Wrapper>
 );

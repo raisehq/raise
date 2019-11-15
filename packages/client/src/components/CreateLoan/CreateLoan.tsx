@@ -45,19 +45,20 @@ const minAmountOptions = [
 const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
-const defaultMinAPR = 10;
-const defaultMaxAPR = 20;
 const defaultTerm = 2592000;
 const defaultTermAuction = 2592000;
 const defaultMinPercent = 20;
-const sliderMinApr = 0;
-const sliderMaxApr = 20;
+const sliderMinMir = 0;
+const sliderMaxMir = 1.67;
+const defaultMinMir = 0.84;
+const defaultMaxMir = 1.67;
+const defaultMinAPR = defaultMinMir * 12;
+const defaultMaxAPR = defaultMaxMir * 12;
 
 const marks = {
-  4: ' ',
-  8: ' ',
-  12: ' ',
-  16: ' '
+  0.41: ' ',
+  0.84: ' ',
+  1.23: ' '
 };
 
 /** End of defaults */
@@ -78,8 +79,8 @@ const CreateLoan = () => {
     msg: ''
   });
   const [termsCond, setTermsCond] = useState(false);
-  const [minAPR, setMinAPR] = useState(10);
-  const [maxAPR, setMaxAPR] = useState(20);
+  const [minAPR, setMinAPR] = useState(defaultMinAPR);
+  const [maxAPR, setMaxAPR] = useState(defaultMaxAPR);
   const [minPercent, setMinPercent] = useState(defaultMinPercent);
   const [loan, setLoan] = useState({
     amount: defaultAmount,
@@ -140,10 +141,13 @@ const CreateLoan = () => {
   };
 
   const onInterestChange = valuesArray => {
-    const minMir = (parseFloat(valuesArray[0]) / 12).toFixed(2);
-    const maxMir = (parseFloat(valuesArray[1]) / 12).toFixed(2);
-    setMinAPR(parseFloat(valuesArray[0]));
-    setMaxAPR(parseFloat(valuesArray[1]));
+    const minMir = parseFloat(valuesArray[0]);
+    const maxMir = parseFloat(valuesArray[1]);
+    const minApr = Number((minMir * 12).toFixed(2));
+    const maxApr = Number((maxMir * 12).toFixed(2));
+
+    setMinAPR(minApr);
+    setMaxAPR(maxApr);
     onSetMIR(minMir)(maxMir);
   };
 
@@ -321,19 +325,16 @@ const CreateLoan = () => {
         </BrowserView>
         <LoanBox>
           <LoanDescription>
-            <Header as="h2">Annual percentage rate</Header>
-            <p>
-              Select the starting APR for your loan auction and the maximum APR you would accept for
-              your loan.
-            </p>
+            <Header as="h2">Monthly interest rate *</Header>
+            <p>Select the maximun interest rate you would accept for your loan.</p>
           </LoanDescription>
           <SliderWrapper>
             <Slider
-              defaultValue={[10, 20]}
+              defaultValue={[0.84, 1.67]}
               onChange={value => onInterestChange(value)}
-              min={sliderMinApr}
+              min={sliderMinMir}
               marks={marks}
-              max={sliderMaxApr}
+              max={sliderMaxMir}
               allowCross={false}
               loan={loan}
               minAPR={minAPR}
