@@ -6,8 +6,7 @@ import useAsyncEffect from './useAsyncEffect';
 
 const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const { getWeb3 } = useWeb3();
-  const web3 = getWeb3();
+  const { web3 } = useWeb3();
   const metamask = useWallet();
   useAsyncEffect(async () => {
     if (metamask) {

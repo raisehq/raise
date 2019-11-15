@@ -149,7 +149,8 @@ export const cryptoAddressByAccount = async userId => {
           id,
           herouserId,
           address,
-          cryptotypeId: walletId || CryptoWallets.NotConnected
+          cryptotypeId:
+            walletId !== null && walletId !== undefined ? walletId : CryptoWallets.NotConnected
         };
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');
@@ -171,7 +172,20 @@ export const addCryptoAddress = async body => {
 
     switch (rawResponse.status) {
       case 201:
-        return rawResponse.data.data;
+        // eslint-disable-next-line
+        const {
+          id,
+          address,
+          herouser_id: herouserId,
+          cryptotype_id: walletId
+        } = rawResponse.data.data;
+
+        return {
+          id,
+          herouserId,
+          address,
+          cryptotypeId: walletId
+        };
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }

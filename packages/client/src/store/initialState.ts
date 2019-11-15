@@ -98,7 +98,8 @@ const initialState = {
     totalReferralsCount: 0,
     totalBountyToWithdraw: 0,
     contracts: null,
-    web3: null
+    web3: null,
+    instances: {}
   },
   loan: {
     auctions: null,

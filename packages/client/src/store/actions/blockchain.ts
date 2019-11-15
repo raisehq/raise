@@ -10,6 +10,7 @@ export default (dispatch: any, state: any) => {
     }
   } = state;
   const setWeb3 = newWeb3 => dispatch({ type: 'SET_WEB3', data: newWeb3 });
+  const setNewInstance = instances => dispatch({ type: 'SET_INSTANCE', data: instances });
   const setCheckBlockchain = response => dispatch({ type: 'SET_BLOCKCHAIN_CHECK', response });
   const setDeposit = response => {
     return dispatch({ type: 'SET_BLOCKCHAIN_DEPOSIT', response });
@@ -24,11 +25,11 @@ export default (dispatch: any, state: any) => {
     return dispatch({ type: 'SET_ERROR_BLOCKCHAIN_KYC', response });
   };
 
-  const uploadSignature = async (walletAddress, wallet, signature) => {
+  const uploadSignature = async (walletAddress, walletId, signature) => {
     try {
       const body = {
         herouser_id: id,
-        cryptotype_id: wallet,
+        cryptotype_id: walletId,
         address: walletAddress,
         signature
       };
@@ -104,6 +105,7 @@ export default (dispatch: any, state: any) => {
     setCheckBlockchain,
     uploadSignature,
     fetchReferrals,
-    fetchContracts
+    fetchContracts,
+    setNewInstance
   };
 };

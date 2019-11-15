@@ -75,6 +75,14 @@ export default (state: any, action: any) => {
         }
       };
     }
+    case 'SET_INSTANCE': {
+      return {
+        ...state,
+        ...{
+          instances: action.data
+        }
+      };
+    }
     default:
       return state;
   }

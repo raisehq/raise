@@ -5,7 +5,6 @@ import { KycStatus } from '../../../commons/kycStatus';
 const ProfileInfo = ({ email, kyc_status, storedUsername }) => {
   const kycStatus =
     kyc_status === null || kyc_status === undefined ? KycStatus.Error : KycStatus[kyc_status];
-  console.log(kycStatus);
   return (
     <>
       <ReadTitle>KYC status</ReadTitle>

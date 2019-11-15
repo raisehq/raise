@@ -12,8 +12,7 @@ const ResumeMock = () => {
   const [show] = useState(false);
   const [info, setInfo] = useState({ eth: 0, hto: 0, dai: 0, kyc: false, dep: false });
   const [heroContracts, setHeroContracts]: any = useState(null);
-  const { getWeb3 } = useWeb3();
-  const web3 = getWeb3();
+  const { web3 } = useWeb3();
 
   useAsyncEffect(async () => {
     const contractsDef = await getContractsDefinition();

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import AppContext from '../AppContext';
 import Web3Address from '../Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
@@ -85,13 +85,13 @@ const CurrentNotice = () => {
     },
     web3Status: { networkMatches, accountMatches, walletNetwork, targetNetwork, walletAccount }
   }: any = useContext(AppContext);
+
   const { getCurrentProviderName, requestSignature } = useWeb3();
-  const [providerId]: any = useState(getCurrentProviderName());
 
   const handleUploadSignature = async () => {
     try {
       const { address, signature } = await requestSignature();
-      await uploadSignature(address, providerId, signature);
+      await uploadSignature(address, getCurrentProviderName(), signature);
     } catch (error) {
       console.error('[Web3Check.Message][HandleUploadSignature] Error : ', error);
     }

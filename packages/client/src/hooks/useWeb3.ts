@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { browserName } from 'react-device-detect';
 import Web3 from 'web3';
 import WalletLink from 'walletlink';
@@ -57,7 +57,6 @@ const Connection = {
 };
 
 const getWalletLinkClient = (network, networkId) => {
-  console.log(' CONNECTION WALLETLLIK ; ', network, networkId);
   const walletLink = new WalletLink({
     appName: 'Raise.it',
     appLogoUrl: `https://${process.env.REACT_APP_HOST_IMAGES}/favicons/favicon.ico`
@@ -79,16 +78,21 @@ const useWeb3 = () => {
       blockchain: { setWeb3 }
     }
   }: any = useContext(RootContext);
+  const [connection, setConnnection]: any = useState(web3);
+
+  useEffect(() => {
+    setConnnection(web3);
+  }, [web3]);
 
   const enableWeb3 = async () => {
-    const connection = Connection.get();
-    if (connection.currentProvider) {
+    // const connection = Connection.get();
+    if (connection && connection.currentProvider) {
       try {
         await connection.currentProvider.enable();
         connection.currentProvider.autoRefreshOnNetworkChange = false;
         const accounts = await connection.eth.getAccounts();
         if (!accounts || accounts.length === 0) {
-          throw new Error(' Metamask are not enabled ');
+          throw new Error('[useWeb3] Metamask are not enabled ');
         }
       } catch (error) {
         console.error('[useWeb3] Error enable wallet.', error);
@@ -97,7 +101,8 @@ const useWeb3 = () => {
     }
   };
   const getCurrentProviderName = (provider?: any) => {
-    const conn = provider || Connection.getProvider();
+    const globalProvider = connection ? connection.currentProvider : undefined;
+    const conn = provider || globalProvider;
     if (!conn) return CryptoWallets.NotConnected;
     if (conn.isMetaMask) return CryptoWallets.Metamask;
     if (conn.isWalletLink) return CryptoWallets.Coinbase;
@@ -113,7 +118,6 @@ const useWeb3 = () => {
 
   const setNewProvider = async provider => {
     try {
-      const connection = Connection.get();
       if (
         (getCurrentProviderName() !== CryptoWallets.Opera ||
           getCurrentProviderName(provider) !== getCurrentProviderName()) &&
@@ -124,7 +128,6 @@ const useWeb3 = () => {
         Connection.set(newWeb3);
       }
       setWeb3(Connection.get());
-      // setWeb3(Connection.get());
     } catch (error) {
       throw error;
     }
@@ -132,7 +135,6 @@ const useWeb3 = () => {
 
   const getPrimaryAccount = async () => {
     try {
-      const connection = Connection.get();
       if (connection && connection.eth) {
         const accounts = await connection.eth.getAccounts();
         if (accounts && accounts.length > 0) return accounts[0];
@@ -153,15 +155,14 @@ const useWeb3 = () => {
 
   const requestSignature = async () => {
     try {
-      const connection = Connection.get();
       const address = await getPrimaryAccount();
 
       const message = 'Prove to Raise platform that you own this address.';
       const signature = await connection.eth.personal.sign(message, address, '');
       return { address, signature };
     } catch (error) {
-      console.error(`Error making signature: ${error.message}`, error);
-      throw new Error(`Error making signature: ${error.message}`);
+      console.error(`[useWeb3] Error making signature: ${error.message}`, error);
+      throw new Error(`[useWeb3] Error making signature: ${error.message}`);
     }
   };
 
@@ -182,19 +183,20 @@ const useWeb3 = () => {
         await setNewProvider(getWalletLinkClient(network, networkId));
         break;
       default:
-        throw new Error('Wallet not alowed default OPTION');
+        throw new Error('[useWeb3] Wallet not alowed default OPTION');
     }
     if (checkBlock) {
-      const connection = Connection.get();
-      const accounts = await connection.eth.getAccounts();
+      // when we update the new provider, we update the window.interface and the context web3
+      // we can not wait until the context was update so we get the web3 from the instance to try to get the accounts
+      const accounts = await Connection.get().eth.getAccounts();
       if (!accounts || accounts.length === 0) {
-        throw new Error(' The wallet are not enabled ');
+        throw new Error('[useWeb3] The wallet are not enabled ');
       }
     }
   };
-  // console.log(' NEW STATE !!! ',web3)
+
   return {
-    web3,
+    web3: connection,
     getWeb3: Connection.get,
     enableWeb3,
     setNewProvider,

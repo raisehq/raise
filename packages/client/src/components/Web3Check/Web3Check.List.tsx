@@ -35,15 +35,13 @@ const capitalize = s => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-const CheckList = ({ onBack, onSuccess }) => {
+const CheckList = ({ onBack, onSuccess }: any) => {
   const {
-    web3Status,
     web3Status: { hasProvider, unlocked, networkMatches, accountMatches, targetNetwork }
   }: any = useContext(AppContext);
 
   const matchConditions = [hasProvider && unlocked, networkMatches, accountMatches];
 
-  console.log('web3Status', web3Status);
   // prettier-ignore
   const steps = match(matchConditions,
     [ false, TAIL],

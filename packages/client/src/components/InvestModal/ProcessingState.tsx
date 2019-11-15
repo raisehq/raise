@@ -32,7 +32,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
     web3Status: { walletAccount }
   }: any = useContext(AppContext);
 
-  const { getWeb3 } = useWeb3();
+  const { web3 } = useWeb3();
   const metamask = useWallet();
 
   const [contracts, setContracts] = useState();
@@ -52,7 +52,6 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
 
   useAsyncEffect(async () => {
     if (contracts) {
-      const web3 = getWeb3();
       const { BN } = web3.utils;
       const { DAIProxy, DAI } = contracts;
       const valueBN = new BN(toWei(investment.toString()));

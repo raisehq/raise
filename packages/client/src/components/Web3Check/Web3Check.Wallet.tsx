@@ -13,15 +13,13 @@ const Wallet = ({ onNext }: any) => {
     }
   }: any = useContext(AppContext);
   const [defaultWallet, setDefaultWallet] = useState();
-  const { getWeb3, getDefaultWeb3, connectWallet }: any = useWeb3();
-  const web3 = getWeb3();
+  const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
 
   useEffect(() => {
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
 
   const handlerCoinbase = async () => {
-    console.log('@@@@@@@@@@@@@@@2 NETWORKS -', network, networkId);
     await connectWallet(CryptoWallets.Coinbase, network, networkId);
     onNext();
   };

@@ -1,28 +1,12 @@
-import { useRef, useContext } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import _ from 'underscore';
-// import get from 'lodash/get';
-// import hasIn from 'lodash/hasIn';
 import { toChecksumAddress } from 'web3-utils';
 import { NULL_ADDRESS } from '../commons/constants';
 import useForceUpdate from './useForceUpdate';
-// import useInterval from './useInterval';
+import useInterval from './useInterval';
 import useWeb3 from './useWeb3';
 import useDepositContract from './useDepositContract';
 import useWallet from './useWallet';
-import { useEffect } from 'react';
-import RootContext from '../context';
-// const hasDeposited = async (web3, definitions, address) => {
-//   const netId = 42; // CHECK COMO SE CONECTA EL WALLET DE COINBASE POR QUE ESTA OBLIGADO A HACERLO CON LA CUENTA DEFGAULT
-//   if (!definitions || !address || !web3 || !hasIn(definitions, `address.${netId}`)) {
-//     return false;
-//   }
-//   const contract = new web3.eth.Contract(
-//     get(definitions, `abi.Deposit`),
-//     get(definitions, `address.${netId}.Deposit`)
-//   );
-//   const deposited = await contract.methods.hasDeposited(address).call();
-//   return deposited;
-// };
 
 // Matches
 const matchAccount = (walledAccount, storedAccount) => {
@@ -48,7 +32,6 @@ const matchProvider = web3 => {
 const checkHasDeposit = async (depositContract, walletAccount) => {
   try {
     if (walletAccount && walletAccount !== NULL_ADDRESS) {
-      console.log('WALLET ACCOUNT ', walletAccount);
       const hasDeposit = depositContract
         ? await depositContract.hasDeposited(walletAccount)
         : false;
@@ -83,29 +66,20 @@ const web3CheckList = (
 });
 
 const useWeb3Checker = storedAccount => {
-  const {
-    store: {
-      blockchain: { web3 }
-    }
-  }: any = useContext(RootContext);
-  const { getPrimaryAccount } = useWeb3();
-  // const connection = getWeb3();
+  const { web3, getPrimaryAccount } = useWeb3();
   const forceUpdate = useForceUpdate();
   const wallet = useWallet();
   const depositContract = useDepositContract();
-
+  const [sAccount, setSAccount]: any = useState(storedAccount);
   const web3State = useRef(
     web3CheckList(web3, null, storedAccount, 'NO_NETWORK', -1, 'NO_NETWORK', false)
   );
-  //
-  // ON WALLET CONNECTION
-  // useEffect(() => {
-  //   console.log('WALLET !!!! ', wallet);
-  //   if (wallet) forceUpdate();
-  // }, [getWeb3, wallet]);
 
-  const check = async () => {
-    console.log(' *********** DEPOSIT CONTRACT : ', depositContract);
+  useEffect(() => {
+    setSAccount(storedAccount);
+  }, [storedAccount]);
+
+  useInterval(async () => {
     if (web3 && web3.currentProvider && depositContract) {
       try {
         const walletAccount = await getPrimaryAccount();
@@ -121,45 +95,24 @@ const useWeb3Checker = storedAccount => {
         const newState = web3CheckList(
           web3,
           walletAccount,
-          storedAccount,
+          sAccount,
           walletNetwork,
           walletNetworkId,
           targetNetwork,
           hasDeposit
         );
-        console.log('NEWSTATE : ', newState);
+        // console.log('CHEKC ', newState);
         if (!_.isEqual(newState, web3State.current)) {
           web3State.current = newState;
           forceUpdate();
         }
       } catch (err) {
-        console.error(' SET INTERATE ERROR ', err);
-
-        // const errorState = web3CheckList(
-        //   web3,
-        //   null,
-        //   NULL_ADDRESS,
-        //   'NO_NETWORK',
-        //   'NO_NETWORK',
-        //   false
-        // );
-        // web3State.current = errorState;
+        console.error('[useWeb3Checker] Error in check Interval ', err);
       }
     } else {
-      // if (web3 && web3.currentProvider) setConnection(getWeb3());
-      console.log(' NOT CONNECTED ', web3, depositContract);
+      console.log(' NOT CONNECTED ');
     }
-  };
-  useEffect(() => {
-    let interval;
-    if (interval) clearInterval(interval);
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~ NEW ITERATION ~~~~~~~~~~~~~~~~ ');
-    console.log('DEPOSIT CONTRACT ', depositContract, wallet);
-    setInterval(check, 2000);
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [web3, wallet]);
+  }, 2000);
 
   return web3State.current;
 };

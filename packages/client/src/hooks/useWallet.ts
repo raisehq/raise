@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import hasIn from 'lodash/hasIn';
 import { isAddress } from 'web3-utils';
 import get from 'lodash/get';
@@ -10,20 +10,21 @@ import { parseNetwork } from '../utils';
 const useWallet = () => {
   const {
     store: {
-      blockchain: { contracts: heroContracts, web3 }
+      config: { networkId },
+      blockchain: { contracts: heroContracts, instances: instanceContracts }
+    },
+    actions: {
+      blockchain: { setNewInstance }
     }
   }: any = useContext(RootContext);
 
   const [wallet, setWallet]: any = useState(null);
 
-  const instanceContracts = useRef({});
-  const { getPrimaryAccount } = useWeb3();
+  // const instanceContracts = useRef({});
+  const { web3, getPrimaryAccount } = useWeb3();
 
-  console.log('PUTO WALLET ', web3);
   useEffect(() => {
-    console.log(' ################## CHECK WALLET ', web3);
     if (web3 && heroContracts) {
-      console.log('###########  SET AGAIN AND AGAIN  ##################');
       setWallet({
         web3,
         heroContracts,
@@ -53,30 +54,41 @@ const useWallet = () => {
         addContract: async (name: string) => {
           const netId = await web3.eth.net.getId();
           if (!hasIn(heroContracts, `address.${netId}.${name}`)) {
-            throw new Error(`contract not found in current network ${netId}`);
+            throw new Error(`[useWallets] Contract not found in current network ${netId}`);
           }
-          if (instanceContracts.current[name]) return instanceContracts.current[name];
+          if (instanceContracts[netId] && instanceContracts[netId][name]) {
+            return instanceContracts[netId][name];
+          }
           const contract = new web3.eth.Contract(
             get(heroContracts, `abi.${name}`),
             get(heroContracts, `address.${netId}.${name}`)
           );
-          instanceContracts.current = { ...contract.current, [name]: contract };
+          if (!instanceContracts[netId]) instanceContracts[netId] = {};
+          instanceContracts[netId] = { ...instanceContracts[netId], [name]: contract };
+          setNewInstance(instanceContracts);
           return contract;
         },
         addContractByAddress: async (name: string, address: string) => {
           if (!address || !isAddress(address)) {
-            throw new Error('address not valid or null');
+            throw new Error('[useWallets] Address not valid or null');
           }
           if (!hasIn(heroContracts, `abi.${name}`)) {
-            throw new Error(`contract not found in abi metadata list`);
+            throw new Error('[useWallets] Contract not found in abi metadata list');
+          }
+          const netId = await web3.eth.net.getId();
+          if (instanceContracts[netId] && instanceContracts[netId][name]) {
+            return instanceContracts[netId][name];
           }
           const contract = new web3.eth.Contract(get(heroContracts, `abi.${name}`), address);
-          instanceContracts.current = { ...contract.current, [name]: contract };
+          if (!instanceContracts[netId]) instanceContracts[netId] = {};
+          instanceContracts[netId] = { ...instanceContracts[netId], [name]: contract };
+          setNewInstance(instanceContracts);
+
           return contract;
         },
         utils: web3.utils,
-        getContract: (name: string) => instanceContracts.current[name],
-        getContracts: () => instanceContracts.current,
+        getContract: (name: string) => instanceContracts[networkId][name], // TODO: DEPRECATED
+        getContracts: () => instanceContracts[networkId], // TODO : DEPRECATED
         getPrimaryAccount
       });
     }

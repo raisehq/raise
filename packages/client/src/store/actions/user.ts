@@ -21,10 +21,7 @@ export default (dispatch: any, state: Store) => {
   const onGetAddressTypes = async () => {
     const response = await to(getAddressTypes());
 
-    return response.fold(
-      () => null,
-      data => dispatch({ type: 'GET_ADDRESS_TYPES', data })
-    );
+    return response.fold(() => null, data => dispatch({ type: 'GET_ADDRESS_TYPES', data }));
   };
 
   const onGetUserDetails = async () => {
@@ -67,7 +64,6 @@ export default (dispatch: any, state: Store) => {
   const onGetCryptoAddressByUser = async () => {
     try {
       const cryptoaddress = await cryptoAddressByAccount(id);
-
       dispatch({
         type: 'SET_CRYPTO_ADDRESS_BY_ACCOUNT',
         data: cryptoaddress
@@ -80,10 +76,7 @@ export default (dispatch: any, state: Store) => {
   const onRemoveAddress = async userId => {
     const response = await removeAddress(userId);
 
-    response.fold(
-      () => null,
-      () => onGetAllAddressesByUser()
-    );
+    response.fold(() => null, () => onGetAllAddressesByUser());
   };
 
   const onSetInitialUserData = data => {

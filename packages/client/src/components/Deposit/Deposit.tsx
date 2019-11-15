@@ -25,8 +25,8 @@ const Deposit = () => {
   const [status, setStatus] = useState(UI.Deposit);
   const heroTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
-  const { getWeb3 } = useWeb3();
-  const web3 = getWeb3();
+  const { web3 } = useWeb3();
+
   useEffect(() => {
     if (status !== UI.Success && hasDeposited) {
       setStatus(UI.Success);

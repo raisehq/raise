@@ -57,8 +57,8 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     if (pathname !== '/deposit' && hasDeposit !== undefined && !hasDeposit) {
       return <Redirect to="/deposit" />;
     }
-    if (rest.path === pathname && acceptedRole) return <Layout {...rest} />;
     if (!acceptedRole) return <Redirect to="/" />;
+    if (rest.path === pathname && acceptedRole) return <Layout {...rest} />;
   } else {
     // on case the connection with web3 are not ok or we have the correct conection but are different wallets
     // eslint-disable-next-line

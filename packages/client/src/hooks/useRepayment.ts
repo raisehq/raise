@@ -12,7 +12,7 @@ const useRepayment = (loan, open) => {
   const {
     web3Status: { account }
   }: any = useContext(AppContext);
-  const { getWeb3 } = useWeb3();
+  const { web3 } = useWeb3();
   const metamask = useWallet();
   const [approved, setApproved] = useState(false);
   const [error, setError] = useState();
@@ -26,7 +26,6 @@ const useRepayment = (loan, open) => {
 
   useAsyncEffect(async () => {
     if (open && stage === Stages.Confirm) {
-      const web3 = getWeb3();
       const {
         utils: { BN }
       } = web3;
@@ -42,7 +41,6 @@ const useRepayment = (loan, open) => {
 
   useAsyncEffect(async () => {
     if (open && stage === Stages.Processing) {
-      const web3 = getWeb3();
       const {
         utils: { BN }
       } = web3;

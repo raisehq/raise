@@ -56,7 +56,6 @@ const App = ({ history, match }: any) => {
   const modalRefs = useRef<HTMLDivElement>(null);
   const [webSocket, setWebSocket]: any = useState({});
   const [daiWebSocket, setDaiWebSocket]: any = useState({});
-
   const {
     hasProvider,
     unlocked,
