@@ -7,7 +7,7 @@ import { fromWei } from 'web3-utils';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getDates, getClosestIndexByDate, getAverage } from '../../utils/index';
 import numeral from '../../commons/numeral';
-import { verticalLinePlugin, chartBackground } from './plugins';
+import { chartBackground, todayVerticalLine } from './plugins';
 import { DAI_ADDRESS } from '../../commons/constants';
 
 // Bypass typescript definitions in react-chartjs, missing Chart definition
@@ -20,7 +20,8 @@ const datasetToGraph = (
   fill: boolean,
   borderWidth: number,
   dashed: boolean,
-  pointHover = Array()
+  pointHover = Array(),
+  pointRadius: number
 ) => ({
   label,
   fill,
@@ -35,7 +36,7 @@ const datasetToGraph = (
   pointBackgroundColor: `rgba(${rgb},1)`,
   pointBorderWidth: 0,
   pointRadius: 0,
-  pointHoverRadius: 5,
+  pointHoverRadius: pointRadius,
   borderWidth: !borderWidth ? 1 : borderWidth,
   pointHoverBackgroundColor: pointHover.length
     ? pointHover.map(x => (x > 0 ? `rgba(${rgb},1)` : `rgba(${rgb},0)`))
@@ -51,7 +52,7 @@ const datasetToGraph = (
 const options = {
   fullCompoundDataset: [0],
   legend: {
-    display: true,
+    display: false,
     position: 'top',
     labels: {
       boxWidth: 22,
@@ -91,7 +92,10 @@ const options = {
     yAxes: [
       {
         ticks: {
-          display: false
+          display: false,
+          min: 0,
+          max: 20,
+          stepSize: 1
         },
         display: false
       }
@@ -125,7 +129,16 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
 
   const raiseDataset = getRaiseDataset(arrayDays, dateStart, dateEnd, maxInterest);
 
-  const raiseGraphData = datasetToGraph(raiseDataset, '0,218,158', 'Raise', false, 3, false);
+  const raiseGraphData = datasetToGraph(
+    raiseDataset,
+    '235,63,147',
+    'Raise',
+    false,
+    3,
+    false,
+    [],
+    5
+  );
 
   const compoundGraphData = datasetToGraph(
     compoundDataset,
@@ -133,7 +146,9 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
     'Compound',
     true,
     1,
-    false
+    false,
+    [],
+    3
   );
 
   const avgGraphData = datasetToGraph(
@@ -143,7 +158,8 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
     false,
     2,
     true,
-    [...Array(nowIndex + 1).fill(0), ...Array(30 - nowIndex - 1).fill(2)]
+    [...Array(nowIndex + 1).fill(0), ...Array(30 - nowIndex - 1).fill(2)],
+    3
   );
 
   const graphData = {
@@ -152,7 +168,8 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
   };
 
   useAsyncEffect(async () => {
-    Chart.Chart.plugins.register(verticalLinePlugin);
+    // Chart.Chart.plugins.register(verticalLinePlugin);
+    Chart.Chart.plugins.register(todayVerticalLine);
     Chart.Chart.plugins.register(chartBackground);
 
     /**
