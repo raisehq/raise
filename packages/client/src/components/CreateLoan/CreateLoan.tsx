@@ -180,8 +180,8 @@ const CreateLoan = () => {
       error: false,
       msg: ''
     });
-    //setMinAPR(defaultMinMir * 12);
-    //setMaxAPR(defaultMaxMir * 12);
+    setMinAPR(defaultMinAPR);
+    setMaxAPR(defaultMaxAPR);
     setMinPercent(defaultMinPercent);
     setLoan({
       amount: defaultAmount,
