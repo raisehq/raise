@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { device } from '../LayoutV2/breakpoints'
+import styled from 'styled-components';
+import { device } from '../LayoutV2/breakpoints';
 
 export const Wrapper = styled.div`
   width: 390px;
@@ -12,10 +12,12 @@ export const Wrapper = styled.div`
     width: 37px;
     margin-top: -18px;
     margin-left: -18px;
+    border: 10px;
   }
   & .rc-slider-dot {
     display: none;
   }
+
   @media ${device.laptop} {
     & .rc-slider-handle {
       height: 24px;
@@ -27,7 +29,7 @@ export const Wrapper = styled.div`
       display: block;
     }
   }
-`
+`;
 
 export const LabelLess = styled.div`
   display: none;
@@ -50,7 +52,7 @@ export const LabelLess = styled.div`
   @media ${device.laptop} {
     display: block;
   }
-`
+`;
 
 export const LabelMore = styled.div`
   display: none;
@@ -69,31 +71,32 @@ export const LabelMore = styled.div`
   @media ${device.laptop} {
     display: block;
   }
-`
+`;
 
-export const handleStyle = {
-  backgroundColor: '#3C4251',
-  border: 'none'
-}
+export const handleStyle = [
+  {
+    backgroundColor: '#3C4251',
+    borderColor: '#3C4251',
+    boxShadow: 'none'
+  }
+];
 
 export const railStyle = {
   border: 'none',
   background: 'none'
-}
+};
 
-export const trackStyle = {
-  width: '100%',
-  height: '15px',
-  background: 'none',
-  borderRadius: '8px'
-}
+export const trackStyle = [
+  {
+    backgroundColor: '#21ba45'
+  }
+];
 
 export const dotStyle = {
-  background: '#9498A0',
+  borderColor: '#21ba45',
   border: '0px'
-}
+};
 
 export const activeDotStyle = {
-  background: '#9498A0',
-  border: '0px'
-}
+  backgroundColor: '#21ba45'
+};

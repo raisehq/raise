@@ -20,7 +20,7 @@ const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }) => (
   <Wrapper>
     <Range
       {...rest}
-      step={0.1}
+      step={0.10}
       handleStyle={handleStyle}
       railStyle={railStyle}
       dotStyle={dotStyle}

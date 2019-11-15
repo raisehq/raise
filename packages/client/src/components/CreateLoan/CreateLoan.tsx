@@ -54,9 +54,9 @@ const defaultMinAPR = 10;
 const defaultMaxAPR = 20;
 
 const marks = {
-  4: ' ',
-  8: ' ',
-  12: ' '
+  5: '',
+  10: '',
+  15: ''
 };
 
 /** End of defaults */
