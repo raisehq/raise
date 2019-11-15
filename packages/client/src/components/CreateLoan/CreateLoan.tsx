@@ -48,17 +48,15 @@ const defaultAmount = 10000;
 const defaultTerm = 2592000;
 const defaultTermAuction = 2592000;
 const defaultMinPercent = 20;
-const sliderMinMir = 0;
-const sliderMaxMir = 1.67;
-const defaultMinMir = 0.84;
-const defaultMaxMir = 1.67;
-const defaultMinAPR = defaultMinMir * 12;
-const defaultMaxAPR = defaultMaxMir * 12;
+const sliderMinAPR = 0;
+const sliderMaxAPR = 20;
+const defaultMinAPR = 10;
+const defaultMaxAPR = 20;
 
 const marks = {
-  0.41: ' ',
-  0.84: ' ',
-  1.23: ' '
+  4: ' ',
+  8: ' ',
+  12: ' '
 };
 
 /** End of defaults */
@@ -86,8 +84,8 @@ const CreateLoan = () => {
     amount: defaultAmount,
     term: defaultTerm,
     auctionTerm: defaultTermAuction,
-    minMir: parseFloat((defaultMinAPR / 12).toFixed(2)),
-    maxMir: parseFloat((defaultMaxAPR / 12).toFixed(2)),
+    minMir: parseFloat((defaultMinAPR / 12).toString()),
+    maxMir: parseFloat((defaultMaxAPR / 12).toString()),
     accept: false,
     minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
   });
@@ -141,10 +139,10 @@ const CreateLoan = () => {
   };
 
   const onInterestChange = valuesArray => {
-    const minMir = parseFloat(valuesArray[0]);
-    const maxMir = parseFloat(valuesArray[1]);
-    const minApr = Number((minMir * 12).toFixed(2));
-    const maxApr = Number((maxMir * 12).toFixed(2));
+    const minApr = parseFloat(valuesArray[0]);
+    const maxApr = parseFloat(valuesArray[1]);
+    const minMir = minApr / 12;
+    const maxMir = maxApr / 12;
 
     setMinAPR(minApr);
     setMaxAPR(maxApr);
@@ -189,8 +187,8 @@ const CreateLoan = () => {
       amount: defaultAmount,
       term: defaultTerm,
       auctionTerm: defaultTermAuction,
-      minMir: parseFloat((defaultMinAPR / 12).toFixed(2)),
-      maxMir: parseFloat((defaultMaxAPR / 12).toFixed(2)),
+      minMir: parseFloat((defaultMinAPR / 12).toString()),
+      maxMir: parseFloat((defaultMaxAPR / 12).toString()),
       accept: false,
       minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
     });
@@ -213,8 +211,8 @@ const CreateLoan = () => {
     const { amount: currentAmount, term: termSeconds, minMir, maxMir } = loan;
     const term = termSeconds / 60 / 60 / 24 / 30;
     if (currentAmount && minMir && maxMir && term) {
-      //setMinAPR(minMir * 12);
-      //setMaxAPR(maxMir * 12);
+      setMinAPR(minMir * 12);
+      setMaxAPR(maxMir * 12);
     }
   }, [loan]);
 
@@ -325,16 +323,19 @@ const CreateLoan = () => {
         </BrowserView>
         <LoanBox>
           <LoanDescription>
-            <Header as="h2">Monthly interest rate *</Header>
-            <p>Select the maximun interest rate you would accept for your loan.</p>
+            <Header as="h2">Annual percentage rate</Header>
+            <p>
+              Select the starting APR for your loan auction and the maximum APR you would accept for
+              your loan.
+            </p>
           </LoanDescription>
           <SliderWrapper>
             <Slider
-              defaultValue={[0.84, 1.67]}
+              defaultValue={[defaultMinAPR, defaultMaxAPR]}
               onChange={value => onInterestChange(value)}
-              min={sliderMinMir}
+              min={sliderMinAPR}
               marks={marks}
-              max={sliderMaxMir}
+              max={sliderMaxAPR}
               allowCross={false}
               loan={loan}
               minAPR={minAPR}

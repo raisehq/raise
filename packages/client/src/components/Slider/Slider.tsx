@@ -11,6 +11,7 @@ import {
   LabelLess,
   LabelMore
 } from './Slider.styles';
+import numeral from '../../commons/numeral';
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
@@ -19,7 +20,7 @@ const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }) => (
   <Wrapper>
     <Range
       {...rest}
-      step={0.01}
+      step={0.1}
       handleStyle={handleStyle}
       railStyle={railStyle}
       dotStyle={dotStyle}
@@ -29,10 +30,10 @@ const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }) => (
     />
 
     <LabelLess>
-      {loan.minMir.toFixed(2)}% MIR* ({minAPR.toFixed(2)}% APR)
+      {numeral(minAPR).format()}% APR ({numeral(loan.minMir).format()}% MIR*)
     </LabelLess>
     <LabelMore>
-      {loan.maxMir.toFixed(2)}% MIR* ({maxAPR.toFixed(2)}% APR)
+      {numeral(maxAPR).format()}% APR ({numeral(loan.maxMir).format()}% MIR*)
     </LabelMore>
   </Wrapper>
 );

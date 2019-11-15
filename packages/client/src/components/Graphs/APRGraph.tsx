@@ -94,7 +94,7 @@ const options = {
         ticks: {
           display: false,
           min: 0,
-          max: 20,
+          max: 21,
           stepSize: 1
         },
         display: false
