@@ -217,7 +217,7 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
     if (datapoint.length) {
       const index = datapoint[0]._index;
       setSelectedDate(arrayDays[index]);
-      setInterest([
+      setInterest([ index === nowIndex? currentAPR :
         numeral(raiseDataset[index] / 100).format('0.00%'),
         index > nowIndex
           ? medianCompoundRateNumeral
