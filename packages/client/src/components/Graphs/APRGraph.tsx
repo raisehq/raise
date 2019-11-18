@@ -105,7 +105,10 @@ const options = {
 
 const getRaiseDataset = (dates, auctionStart, auctionEnd, maxInterest, minInterest) => {
   return dates.map(
-    d => ((maxInterest- minInterest) * Math.abs(d - auctionStart)) / Math.abs(auctionEnd - auctionStart) + minInterest
+    d =>
+      ((maxInterest - minInterest) * Math.abs(d - auctionStart)) /
+        Math.abs(auctionEnd - auctionStart) +
+      minInterest
   );
 };
 
@@ -120,7 +123,9 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { currentAPR } = calcs;
 
   const maxInterest = Number(fromWei(auction.maxInterestRate.toString())) * 12;
-  const minInterest = auction.minInterestRate? Number(fromWei(auction.minInterestRate.toString())) * 12 : 0;
+  const minInterest = auction.minInterestRate
+    ? Number(fromWei(auction.minInterestRate.toString())) * 12
+    : 0;
   const dateStart = new Date(auction.auctionStartTimestamp * 1000);
   const dateEnd = new Date(auction.auctionEndTimestamp * 1000);
   const dateNow = new Date();
@@ -217,8 +222,8 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
     if (datapoint.length) {
       const index = datapoint[0]._index;
       setSelectedDate(arrayDays[index]);
-      setInterest([ index === nowIndex? currentAPR :
-        numeral(raiseDataset[index] / 100).format('0.00%'),
+      setInterest([
+        index === nowIndex ? currentAPR : numeral(raiseDataset[index] / 100).format('0.00%'),
         index > nowIndex
           ? medianCompoundRateNumeral
           : numeral(compoundDataset[index] / 100).format('0.00%')
