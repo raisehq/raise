@@ -1,17 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 import { BalanceBox, Title, Value } from './Balance.styles';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import Queryies from '../../helpers/queryies';
 
 const Balance = props => {
   const {
-    web3Status: { account },
     daiWebSocket: { webSocket },
     actions: {
       dai: { onGetBalance }
     },
     store: {
-      dai: { balance }
+      dai: { balance },
+      user: {
+        cryptoAddress: { address: account }
+      }
     }
   }: any = useContext(AppContext);
 

@@ -15,7 +15,7 @@ export const initKyc = async id => {
 
   const request = await to(axios(config));
 
-  return request.fold(error => console.log(error), success => success.data.data.token);
+  return request.fold(error => console.error(error), success => success.data.data.token);
 };
 
 export const connect = async (userId, email, token) => {
@@ -27,7 +27,7 @@ export const connect = async (userId, email, token) => {
 
   const request = await to(axios(config));
 
-  return request.fold(error => console.log(error), success => console.log(success));
+  return request.fold(error => console.error(error), success => console.log(success));
 };
 
 export const isKYCVerified = async (userId, token) => {
@@ -39,5 +39,5 @@ export const isKYCVerified = async (userId, token) => {
 
   const request = await to(axios(config));
 
-  return request.fold(error => console.log(error), success => console.log(success));
+  return request.fold(error => console.error(error), success => console.log(success));
 };

@@ -1,6 +1,7 @@
 import axios from './common';
 import { AddressTypes } from '../store/store.types';
 import { getHost, to, Left } from '../utils/index';
+import CryptoWallets from '../commons/cryptoWallets';
 
 const URL = {
   ADDRESS: `${getHost('CORE')}/address`,
@@ -115,7 +116,7 @@ export const updatePassword = async (userId, data: any) => {
   return axios.put(`${URL.USER}/password/change/${userId}`, data, config);
 };
 
-export const cryptoAddressByAccount = async (userId, targetAddressId) => {
+export const cryptoAddressByAccount = async userId => {
   const config: any = {
     url: `${URL.CRYPTOADDRESS}/user/${userId}`,
     method: 'GET',
@@ -129,7 +130,28 @@ export const cryptoAddressByAccount = async (userId, targetAddressId) => {
     const rawResponse = await axios(config);
     switch (rawResponse.status) {
       case 200:
-        return rawResponse.data.data.find(d => d.cryptotype_id === targetAddressId);
+        if (rawResponse.data.data.length === 0) {
+          // Empty response
+          return {
+            address: null,
+            cryptotypeId: CryptoWallets.NotConnected
+          };
+        }
+        // eslint-disable-next-line
+        const {
+          id,
+          address,
+          herouser_id: herouserId,
+          cryptotype_id: walletId
+        } = rawResponse.data.data.pop();
+
+        return {
+          id,
+          herouserId,
+          address,
+          cryptotypeId:
+            walletId !== null && walletId !== undefined ? walletId : CryptoWallets.NotConnected
+        };
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
@@ -150,7 +172,20 @@ export const addCryptoAddress = async body => {
 
     switch (rawResponse.status) {
       case 201:
-        return rawResponse.data.data;
+        // eslint-disable-next-line
+        const {
+          id,
+          address,
+          herouser_id: herouserId,
+          cryptotype_id: walletId
+        } = rawResponse.data.data;
+
+        return {
+          id,
+          herouserId,
+          address,
+          cryptotypeId: walletId
+        };
       default:
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
@@ -178,6 +213,7 @@ export const updateCryptoAddress = async (cryptoAddressId, body: any) => {
   }
 };
 
+// TODO : Deprecated
 export const getReferralAddress = async referrerCode => {
   const config: any = {
     params: {
@@ -200,6 +236,7 @@ export const getReferralAddress = async referrerCode => {
   }
 };
 
+// TODO: Deprecated
 export const getUsersReferrerByCryptoAddress = async (address: string[]) => {
   const config: any = {
     url: `${URL.USER}/referrer`,

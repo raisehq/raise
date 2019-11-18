@@ -1,6 +1,8 @@
-import LocalData from '../helpers/localData';
 import * as Cookies from 'js-cookie';
+import LocalData from '../helpers/localData';
 
+import { isSupportedBrowser, parseNetwork } from '../utils';
+// import { NULL_ADDRESS } from '../commons/constants';
 const authCookie = Cookies.get('auth');
 const userCookie = Cookies.get('user');
 
@@ -18,10 +20,10 @@ if (authCookie || userCookie) {
   });
 }
 
-const { id, status, accounttype_id } = LocalData.getObj('auth') || {
+const { id, status, accounttypeId } = LocalData.getObj('auth') || {
   id: '',
   status: 0,
-  accounttype_id: 0
+  accounttypeId: 0
 };
 
 const details =
@@ -44,8 +46,9 @@ const details =
 const initialState = {
   config: {
     menu: false,
-    targetNetwork: 42,
-    targetAddressId: 2
+    isSupportedBrowser: isSupportedBrowser(),
+    networkId: parseInt(process.env.REACT_APP_DEFAULT_NETWORK_ID || '1', 10),
+    network: parseNetwork(parseInt(process.env.REACT_APP_DEFAULT_NETWORK_ID || '1', 10))
   },
   auth: {
     login: {
@@ -57,7 +60,7 @@ const initialState = {
     newPasswordError: false,
     id,
     status,
-    accounttype_id
+    accounttypeId
   },
   user: {
     updateUser: {
@@ -76,30 +79,9 @@ const initialState = {
         description: ''
       }
     ],
-    address: [
-      {
-        address_type: 1,
-        countr_id: '',
-        created_on: '',
-        data: {
-          address: '',
-          address2: '',
-          city: '',
-          country: {
-            flag: '',
-            key: '',
-            label: '',
-            value: ''
-          },
-          cp: ''
-        },
-        deleted: 0,
-        id: ''
-      }
-    ],
     cryptoAddress: {
       address: null, // Set your address to bypass address check until backend work is done
-      cryptoTypeId: 1,
+      cryptotypeId: null,
       site: '',
       createdOn: ''
     }
@@ -114,7 +96,10 @@ const initialState = {
     error: '',
     referrals: null,
     totalReferralsCount: 0,
-    totalBountyToWithdraw: 0
+    totalBountyToWithdraw: 0,
+    contracts: null,
+    web3: null,
+    instances: {}
   },
   loan: {
     auctions: null,

@@ -3,7 +3,7 @@ import { Icon, Message } from 'semantic-ui-react';
 import { OrangeMessage, KycMessageButton } from './KycMessage.styles';
 import { Link } from 'react-router-dom';
 import daggy from 'daggy';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import { useEffect } from 'react';
 
 const Status = daggy.taggedSum('UI', {
@@ -64,7 +64,9 @@ const KycMessage = () => {
         <OrangeMessage hidden={false} icon>
           <Icon name="info circle" />
           <Message.Content>
-            <Message.Header>Give us a few more minutes. The blockchain needs to catch up 🍆.</Message.Header>
+            <Message.Header>
+              Give us a few more minutes. The blockchain needs to catch up 🍆.
+            </Message.Header>
           </Message.Content>
         </OrangeMessage>
       ),

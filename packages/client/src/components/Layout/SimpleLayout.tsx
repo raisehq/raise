@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import { Grid, Image } from 'semantic-ui-react';
 // import Logout from '../Logout';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import {
   CenteredContainerStyled as CenteredContainer,
   HeaderRow,
@@ -21,11 +21,15 @@ interface IDefaultProps {
   component: any;
   path?: string;
   exact?: boolean;
+  checkLogged?: boolean;
 }
+const LOGO_PATH = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
 
-const LayoutV2: React.SFC<IDefaultProps> = props => {
-  const { component: Component, ...rest } = props;
-  const logoPath = process.env.REACT_APP_HOST_IMAGES + '/images/logo.svg';
+const SimpleLayout: React.SFC<IDefaultProps> = ({
+  checkLogged = false,
+  component: Component,
+  ...rest
+}: any) => {
   const {
     store: {
       auth: {
@@ -36,6 +40,11 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
       location: { pathname }
     }
   }: any = useContext(AppContext);
+
+  // Check if is Logged
+  if (!logged && checkLogged) {
+    return <Redirect to="/join" />;
+  }
 
   return (
     <Route
@@ -48,7 +57,7 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
                 <CenteredContainer pathname={pathname}>
                   {logged && (
                     <HeaderRow>
-                      <Image src={logoPath} />
+                      <Image src={LOGO_PATH} />
                       <HeaderLogout />
                     </HeaderRow>
                   )}
@@ -66,4 +75,4 @@ const LayoutV2: React.SFC<IDefaultProps> = props => {
   );
 };
 
-export default LayoutV2;
+export default SimpleLayout;

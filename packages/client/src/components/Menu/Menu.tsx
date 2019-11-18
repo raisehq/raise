@@ -11,9 +11,9 @@ import {
   MenuLogout,
   BalanceMobile
 } from './Menu.styles';
-import { AppContext } from '../App';
-import { HEADER_MENU_SIZE } from '../../commons/constants';
 import theme from '../../theme';
+import { HEADER_MENU_SIZE } from '../../commons/constants';
+import AppContext from '../AppContext';
 
 const navigateToOutsideNewTab = route => () => {
   window.open(route, '_blank');

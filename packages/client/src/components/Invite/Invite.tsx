@@ -30,7 +30,7 @@ import {
 } from './Invite.styles';
 import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
@@ -116,47 +116,27 @@ const Invite = () => {
               <Grid columns={5} stackable>
                 <Grid.Column width={3}>
                   <FacebookShareButton quote={quote} url={shareLink}>
-                    <img
-                      alt="Facebook ico"
-                      src={`${getImagesUrl}ico_facebook.svg`}
-                    />
+                    <img alt="Facebook ico" src={`${getImagesUrl}ico_facebook.svg`} />
                   </FacebookShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <TwitterShareButton title={quote} url={shareLink}>
-                    <img
-                      alt="Twitter ico"
-                      src={`${getImagesUrl}ico_twitter.svg`}
-                    />
+                    <img alt="Twitter ico" src={`${getImagesUrl}ico_twitter.svg`} />
                   </TwitterShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <EmailShareButton
-                    subject="Invitation to Raise"
-                    body={quote}
-                    url={shareLink}
-                  >
+                  <EmailShareButton subject="Invitation to Raise" body={quote} url={shareLink}>
                     <img alt="Email ico" src={`${getImagesUrl}ico_mail.svg`} />
                   </EmailShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <TelegramShareButton title={quote} url={shareLink}>
-                    <img
-                      alt="Telegram ico"
-                      src={`${getImagesUrl}ico_telegram.svg`}
-                    />
+                    <img alt="Telegram ico" src={`${getImagesUrl}ico_telegram.svg`} />
                   </TelegramShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <WhatsappShareButton
-                    title={quote}
-                    separator=" - "
-                    url={shareLink}
-                  >
-                    <img
-                      alt="Whatsapp ico"
-                      src={`${getImagesUrl}ico_whatsapp.svg`}
-                    />
+                  <WhatsappShareButton title={quote} separator=" - " url={shareLink}>
+                    <img alt="Whatsapp ico" src={`${getImagesUrl}ico_whatsapp.svg`} />
                   </WhatsappShareButton>
                 </Grid.Column>
               </Grid>
@@ -200,10 +180,7 @@ const Invite = () => {
                     target="_blank"
                     href={`https://m.facebook.com/sharer/sharer.php?u=${encodedSharedLink}&quote=${encodedText}`}
                   >
-                    <img
-                      alt="Facebook ico"
-                      src={`${getImagesUrl}ico_facebook.svg`}
-                    />
+                    <img alt="Facebook ico" src={`${getImagesUrl}ico_facebook.svg`} />
                   </SocialButtonForMobile>
                 </Grid.Column>
                 <Grid.Column width={3}>
@@ -211,39 +188,22 @@ const Invite = () => {
                     target="_blank"
                     href={`twitter://post?text=${encodedText}${encodedSharedLink}`}
                   >
-                    <img
-                      alt="Twitter ico"
-                      src={`${getImagesUrl}ico_twitter.svg`}
-                    />
+                    <img alt="Twitter ico" src={`${getImagesUrl}ico_twitter.svg`} />
                   </SocialButtonForMobile>
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <EmailShareButton
-                    subject="Invitation to Raise"
-                    body={quote}
-                    url={shareLink}
-                  >
+                  <EmailShareButton subject="Invitation to Raise" body={quote} url={shareLink}>
                     <img alt="Email ico" src={`${getImagesUrl}ico_mail.svg`} />
                   </EmailShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
                   <TelegramShareButton title={quote} url={shareLink}>
-                    <img
-                      alt="Telegram ico"
-                      src={`${getImagesUrl}ico_telegram.svg`}
-                    />
+                    <img alt="Telegram ico" src={`${getImagesUrl}ico_telegram.svg`} />
                   </TelegramShareButton>
                 </Grid.Column>
                 <Grid.Column width={3}>
-                  <WhatsappShareButton
-                    title={quote}
-                    separator=" - "
-                    url={shareLink}
-                  >
-                    <img
-                      alt="Whatsapp ico"
-                      src={`${getImagesUrl}ico_whatsapp.svg`}
-                    />
+                  <WhatsappShareButton title={quote} separator=" - " url={shareLink}>
+                    <img alt="Whatsapp ico" src={`${getImagesUrl}ico_whatsapp.svg`} />
                   </WhatsappShareButton>
                 </Grid.Column>
               </Grid>

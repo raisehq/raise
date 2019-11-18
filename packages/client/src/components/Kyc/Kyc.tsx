@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Header } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { KYCWrapper, KYCHolder, KYCDisclaimer } from './Kyc.styles';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import GetStarted from '../GetStarted';
 
 const KYC = () => {
@@ -22,8 +22,8 @@ const KYC = () => {
       const { id } = store.user.details;
 
       await onConnect();
-
-      window['idensic'].init(
+      // @ts-ignore
+      window.idensic.init(
         '#idensic',
         {
           clientId: process.env.REACT_APP_SUMSUB_CLIENTID,
@@ -53,9 +53,8 @@ const KYC = () => {
             'PRK'
           ]
         },
-        function(messageType, payload) {
-          console.log('[IDENSIC DEMO] Idensic message:', messageType, payload);
-        }
+        (messageType, payload) =>
+          console.log('[IDENSIC DEMO] Idensic message:', messageType, payload)
       );
     }
   }, [history, token]);
@@ -77,7 +76,7 @@ const KYC = () => {
             user to user basis.
           </p>
         </KYCDisclaimer>
-        <div id="idensic"></div>
+        <div id="idensic" />
       </KYCHolder>
     </KYCWrapper>
   );

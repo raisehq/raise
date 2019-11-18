@@ -1,6 +1,7 @@
-import axios from './common';
 import axiosRaw from 'axios';
-import { getWeb3, getHost, getGraphEndpoint } from '../utils';
+import axios from './common';
+
+import { getHost, getGraphEndpoint } from '../utils';
 import Header from '../helpers/header';
 
 const COMMON_HEADERS = {
@@ -11,19 +12,6 @@ export const URL = {
   DEPOSIT_CHECK: `${getHost('CORE')}/blockchain/deposit/check`,
   DEPOSIT_ADDRESS: `${getHost('CORE')}/blockchain/deposit/address`,
   THEGRAPH: `${getHost('THEGRAPH')}`
-};
-
-export const requestSignature = async () => {
-  try {
-    const web3 = getWeb3();
-    const address = (await web3.eth.getAccounts())[0];
-    const message = 'Prove to Raise platform that you own this address.';
-    const signature = await web3.eth.personal.sign(message, address, '');
-    return { address, signature };
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Error making signature: ${error.message}`);
-  }
 };
 
 export const checkDeposit = async () => {

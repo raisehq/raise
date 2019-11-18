@@ -1,49 +1,31 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
-import { getReferralAddress } from '../../services/user';
+import { toWei } from 'web3-utils';
 import { StyledAddress as Web3Address } from './Deposit.styles';
-import { CardSized } from '../LayoutV2/Layout.styles';
+import { CardSized, CardContent } from '../Layout/Layout.styles';
 import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
+import useWeb3 from '../../hooks/useWeb3';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
-import { AppContext } from '../App';
-import useImages from '../../hooks/useImages';
-import { toWei } from 'web3-utils';
-import { getWeb3 } from '../../utils';
-import { CardContent } from '../LayoutV2/Layout.styles';
+import AppContext from '../AppContext';
+// eslint-disable-next-line
 import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
-const switchDepositMethod = async (depositContract, account, referrer_code) => {
-  const defaultMethod = {
-    depositMethod: depositContract.deposit,
-    params: [account]
-  };
-  if (!referrer_code) {
-    return defaultMethod;
-  }
-  const [{ address: referrerAddress }] = await getReferralAddress(referrer_code);
-  if (referrerAddress && referrerAddress) {
-    return {
-      depositMethod: depositContract.depositWithReferral,
-      params: [account, referrerAddress]
-    };
-  }
-  return defaultMethod;
-};
-
-const Deposit = (props: any) => {
+const Deposit = () => {
   const {
     history,
     store: {
       user: {
-        details: { id, referrer_code }
+        // eslint-disable-next-line
+        details: { id }
       }
     },
-    web3Status: { account, hasDeposited }
+    web3Status: { walletAccount, hasDeposited }
   }: any = useContext(AppContext);
   const [status, setStatus] = useState(UI.Deposit);
   const heroTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
+  const { web3 } = useWeb3();
 
   useEffect(() => {
     if (status !== UI.Success && hasDeposited) {
@@ -66,23 +48,23 @@ const Deposit = (props: any) => {
 
   const handleDeposit = async () => {
     try {
-      const web3 = getWeb3();
-      const { BN } = web3.utils;
-      TagManager('Deposit Attempt');
-      setStatus(UI.Waiting(UISteps.Approve));
-      const { depositMethod, params }: any = await switchDepositMethod(
-        depositContract,
-        account,
-        referrer_code
-      );
-      const allowance = new BN(await heroTokenContract.allowance(account, depositContract.address));
-      if (allowance.lt(new BN(toWei('200')))) {
-        await heroTokenContract.approveDeposit(account, 200);
+      if (depositContract && heroTokenContract) {
+        const { BN } = web3.utils;
+        TagManager('Deposit Attempt');
+        setStatus(UI.Waiting(UISteps.Approve));
+        const allowance = new BN(
+          await heroTokenContract.allowance(walletAccount, depositContract.address)
+        );
+        if (allowance.lt(new BN(toWei('200')))) {
+          await heroTokenContract.approveDeposit(walletAccount, 200);
+        }
+        setStatus(UI.Waiting(UISteps.Transaction));
+        await depositContract.deposit(walletAccount);
+        TagManager('Deposit Success');
+        setStatus(UI.Success);
+      } else {
+        console.error(' CONTRACTS ARE NOT ALOWED ', depositContract, heroTokenContract);
       }
-      setStatus(UI.Waiting(UISteps.Transaction));
-      await depositMethod(...params);
-      TagManager('Deposit Success');
-      setStatus(UI.Success);
     } catch (error) {
       console.error(error);
       setStatus(UI.Error);
@@ -90,7 +72,7 @@ const Deposit = (props: any) => {
   };
 
   const handleContinue = async () => {
-    const refMode = process.env.REACT_APP_REFERAL === 'true' ? true : false;
+    const refMode = process.env.REACT_APP_REFERAL === 'true';
 
     if (history && refMode) {
       history.push('/referral');
@@ -103,15 +85,13 @@ const Deposit = (props: any) => {
     setStatus(UI.Deposit);
   };
 
-  const getImagesUrl = useImages();
-
   return (
     <Grid.Row>
       <CardSized centered>
         <CardContent extra>
           <Web3Address />
         </CardContent>
-        {getViewResponse(status, handleDeposit, handleContinue, handleRetry, getImagesUrl)}
+        {getViewResponse(status, handleDeposit, handleContinue, handleRetry)}
       </CardSized>
     </Grid.Row>
   );

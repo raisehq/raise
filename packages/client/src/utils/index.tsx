@@ -1,8 +1,9 @@
 import LocalData from '../helpers/localData';
-import Web3 from 'web3';
-import { match, ANY } from 'pampy';
+import { browserName } from 'react-device-detect';
 import axios from 'axios';
 import moment from 'moment';
+import CryptoWallet from '../commons/cryptoWallets';
+import CryptoWallets from '../commons/cryptoWallets';
 
 const HOSTS: any = {
   AUTH: process.env.REACT_APP_HOST_URL_AUTH,
@@ -83,27 +84,6 @@ export const to = (promise: any) => {
 
 export const checkAuth = () => LocalData.getObj('auth') !== null;
 
-export const getWeb3 = () => {
-  if (!!window['web3Instance'] && !!window['web3Instance'].currentProvider) {
-    return window['web3Instance'];
-  }
-  const provider = window['ethereum']
-    ? window['ethereum']
-    : (window['web3'] && window['web3'].currentProvider) || null;
-  const web3Instance = new Web3(provider);
-  if (!!web3Instance.currentProvider) {
-    window['web3Instance'] = web3Instance;
-    return web3Instance;
-  }
-  return null;
-};
-
-export const averageBlockTime = async () => {
-  const web3 = getWeb3();
-  const network = parseNetwork(await web3.eth.net.getId());
-  return match(network, 'kovan', () => 4, ANY, () => 15);
-};
-
 export const parseNetwork = id => {
   switch (id) {
     case 1:
@@ -122,6 +102,12 @@ export const parseNetwork = id => {
       return 'private';
   }
 };
+
+export const isSupportedBrowser = () =>
+  ['brave', 'chrome', 'chromium', 'firefox', 'opera'].some(supportedBrowser =>
+    browserName.toLowerCase().includes(supportedBrowser)
+  );
+
 const HERO_CONTRACTS =
   'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
 
@@ -172,3 +158,16 @@ export const getMediana = numbers => {
 };
 
 export const getAverage = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+
+export const getWalletName = walletId => {
+  switch (walletId) {
+    case CryptoWallet.Metamask:
+      return 'Metamask';
+    case CryptoWallets.Opera:
+      return 'Opera';
+    case CryptoWallets.Coinbase:
+      return 'Coinbase';
+    default:
+      return 'Unknow';
+  }
+};

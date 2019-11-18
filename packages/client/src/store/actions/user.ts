@@ -15,7 +15,6 @@ import {
 
 export default (dispatch: any, state: Store) => {
   const {
-    config: { targetAddressId },
     auth: { id, status }
   } = state;
 
@@ -64,13 +63,11 @@ export default (dispatch: any, state: Store) => {
 
   const onGetCryptoAddressByUser = async () => {
     try {
-      const cryptoaddress = await cryptoAddressByAccount(id, targetAddressId);
-      if (cryptoaddress) {
-        dispatch({
-          type: 'SET_CRYPTO_ADDRESS_BY_ACCOUNT',
-          data: cryptoaddress
-        });
-      }
+      const cryptoaddress = await cryptoAddressByAccount(id);
+      dispatch({
+        type: 'SET_CRYPTO_ADDRESS_BY_ACCOUNT',
+        data: cryptoaddress
+      });
     } catch (error) {
       console.error('ERROR : ', error);
     }

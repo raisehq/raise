@@ -1,6 +1,6 @@
 import React from 'react';
 import numeral from '../../commons/numeral';
-import { KPI as KPIProps } from '../../commons/BorrowerProfile';
+import { KPI as KPIProps } from '../../interfaces/BorrowerProfile';
 
 import { KPIBox, KPIListBox } from './BorrowerProfile.styles';
 

@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
-import { RootContext } from './context';
+import RootContext from './context';
 import connector from './store/actions';
 import reducers from './store/reducers';
 import initialState from './store/initialState';

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { Card, Segment, Button } from 'semantic-ui-react';
-import { OnlyActive } from '../../commons/OnlyActive';
-import Web3Address from './Web3Address';
+import { OnlyActive } from '../../interfaces/OnlyActive';
+import Web3Address from '../Web3Address';
+import { maxDevice, device } from '../../commons/breakpoints';
 
-import { device } from '../LayoutV2/breakpoints';
 export const StyledAddress = styled(Web3Address)`
   font-size: 14px;
   margin: 0px 0px 0px 10px;
@@ -53,22 +53,11 @@ export const CardDescription = styled(Card.Description)`
 `;
 export const CardContent = styled(Card.Content)`
   &&& {
-    padding: 50px !important;
+    border-top: none !important;
+    padding: ${({ box }) => {
+      return box === 'separated' ? '20px 50px 60px 50px !important' : '50px !important';
+    }}
     font-size: 14px;
-    code {
-      background: lightgrey;
-      padding: 5px;
-      font-size: 12px;
-      color: black;
-    }
-    .icon {
-      display: inline-block !important;
-      width: 28px !important;
-      height: 28px !important;
-      line-height: 2.8 !important;
-      padding: 0px !important;
-      margin-right: 10px;
-    }
   }
 `;
 
@@ -98,14 +87,12 @@ export const NoticeValue = styled.span`
 export const AddressContainer = styled.div`
   margin: 6px;
 `;
+// prettier-ignore
 export const ButtonGreen = styled(Button)`
   &&& {
     width: 100%;
     ${({ disabled }) => (disabled === 'true' ? 'opacity: 0.4 !important;' : '')}
-    ${({ double }) =>
-      double === true
-        ? ' height: 90px;'
-        : 'height: 45px;'}
+    ${({ double }) => (double === true ? ' height: 90px;' : 'height: 45px;')}
     background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
     color: white;
     font: 18px bold;
@@ -125,4 +112,72 @@ export const ButtonGreen = styled(Button)`
     background-color: #188e9b;
     color: white;
   }
+`;
+
+export const BackButton = styled(Button)`
+  &&& {
+    box-shadow: none !important;
+  }
+`;
+
+export const CardHeader = styled(Card.Header)`
+  &&&&&& {
+    border-bottom: none;
+    margin-left: 4px;
+  }
+`;
+
+export const CardTitle = styled.div`
+  color: #3c4251;
+  font: 26px bold;
+  line-height: 36px;
+  text-align: center;
+  margin: 10px;
+`;
+export const CardCenteredText = styled.div`
+  &&& {
+    text-align: center;
+  }
+`;
+
+export const CardPadded = styled.div`
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 20px;
+  text-align: center;
+  &&&&&& {
+    .ui.loader.active,
+    .ui.loader.visible {
+      top: 119px;
+      position: relative;
+      left: 66%;
+    }
+
+    @media screen and ${maxDevice.mobileL} {
+      .ui.loader.active,
+      .ui.loader.visible {
+        top: 110px;
+        left: 73%;
+      }
+    }
+    @media screen and ${maxDevice.mobileM} {
+      .ui.loader.active,
+      .ui.loader.visible {
+        top: 90px;
+        left: 73%;
+      }
+    }
+  }
+  img {
+    width: 243px;
+  }
+`;
+export const ImageContainer = styled.div`
+  display: block;
+`;
+export const CardBottom = styled.div`
+  position: absolute;
+  bottom: 22px;
+  text-align: center;
+  width: 324px;
 `;

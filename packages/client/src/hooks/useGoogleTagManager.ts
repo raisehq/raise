@@ -12,16 +12,16 @@ export function useGoogleTagManager(
 ) {
   const tagManagerArgs = {
     dataLayer: {
-      event: event,
-      userId: userId,
+      event,
+      userId,
+      pagePath,
+      pageTitle,
+      category,
+      label,
       userProject: project,
-      pagePath: pagePath,
-      pageTitle: pageTitle,
-      category: category,
-      action: event,
-      label: label
+      action: event
     },
-    dataLayerName: dataLayerName
+    dataLayerName
   };
 
   return TagManager.dataLayer(tagManagerArgs);
