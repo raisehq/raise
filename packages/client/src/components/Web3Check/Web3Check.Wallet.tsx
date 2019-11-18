@@ -46,7 +46,7 @@ const Wallet = ({ onNext }: any) => {
             <List.Item>
               <List.Content verticalAlign="middle">
                 <Button basic color="black" fluid onClick={handlerCoinbase}>
-                  Coinbase
+                  Coinbase (BETA)
                 </Button>
               </List.Content>
             </List.Item>
