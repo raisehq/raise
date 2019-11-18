@@ -1,5 +1,6 @@
 image: node:11
 stages:
+  - deploy_backend
   - build
   - deploy
   - test
@@ -16,6 +17,15 @@ cache:
   paths:
     - packages/testing/contracts
     - '$CI_PROJECT_DIR/packages/testing/.cache/Cypress'
+
+trigger-deployment:
+  stage: deploy_backend
+  script:
+    - "curl -X POST -F token=${DEPLOYMENT_TOKEN} -F ref=master -F variables[REVIEW_SLUG]=${CI_COMMIT_REF_SLUG} https://gitlab.com/api/v4/projects/15165091/trigger/pipeline"
+  only:
+    - merge_requests
+  except:
+    - master
 
 build-front-review:
   stage: build
