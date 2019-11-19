@@ -92,7 +92,7 @@ const useWallet = () => {
         getPrimaryAccount
       });
     }
-  }, [heroContracts, web3]);
+  }, [heroContracts, web3, networkId]);
 
   return wallet;
 };

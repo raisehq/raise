@@ -71,7 +71,9 @@ const MyAccount = () => {
   const saveUsername = async () => {
     try {
       await onUpdateUser(id, { username });
-    } catch {}
+    } catch (error) {
+      console.error('[saveUsername] Error: ', error);
+    }
     // Reset
     changeUsername('');
   };
@@ -79,7 +81,9 @@ const MyAccount = () => {
   const savePassword = async () => {
     try {
       await onUpdatePassword(id, { oldPassword, newPassword, newPasswordRepeat });
-    } catch {}
+    } catch (error) {
+      console.error('[savePassword] Error: ', error);
+    }
     // Reset
     setOldPassword('');
     setNewPassword('');
