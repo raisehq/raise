@@ -12,7 +12,7 @@ const useLoanDispatcher = () => {
     if (metamask) {
       try {
         const contract = await metamask.addContract('LoanDispatcher');
-        const account = await metamask.getAccounts();
+        const account = await metamask.getPrimaryAccount();
         setActiveContract({
           deploy: async (
             minAmount,
@@ -32,11 +32,11 @@ const useLoanDispatcher = () => {
               auctionSecondsLength
             ];
 
-            return contract.methods.deploy(...params).send({ from: account[0] });
+            return contract.methods.deploy(...params).send({ from: account });
           }
         });
       } catch (error) {
-        console.error('Contract LoanDispatcher not found in current network.');
+        console.error('Contract LoanDispatcher not found in current network.', error);
       }
     }
   }, [metamask]);

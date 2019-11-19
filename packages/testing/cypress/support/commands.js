@@ -30,6 +30,7 @@ Cypress.Commands.add('web3', function(type) {
       0,
       10
     );
+    provider.isMetaMask = true;
     win.web3 = new Web3(provider); // eslint-disable-line no-param-reassign
     win.contracts = contracts;
   });
@@ -161,7 +162,7 @@ Cypress.Commands.add('mockAPI', function(type) {
               id: 'cryptoaddress:eaabbd22-7c22-4be6-9a4d-09dd660ee50c',
               herouser_id: 'user:12345',
               address: user[type].address,
-              cryptotype_id: 2,
+              cryptotype_id: 1,
               site: null,
               created_on: '2019-09-03T15:20:44.038Z',
               deleted: 0
