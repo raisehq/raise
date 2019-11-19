@@ -47,7 +47,7 @@ const findOne = async (collection: string, fields: any) => {
     }
   } = await butter.content.retrieve([collection], params);
   if (!arrResponse.length) {
-    throw Error('404 Not found');
+    throw Error('[Butter][findOne] 404 Not found');
   }
 
   return _(arrResponse[0])
@@ -63,7 +63,7 @@ const getGetStarted = async () => {
     }
   } = await butter.content.retrieve(['get_started']);
   if (!arrResponse.length) {
-    throw Error('404 Not found');
+    throw Error('[Butter][getGetStarted]404 Not found');
   }
 
   return arrResponse;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Logout from '../Logout';
-import { maxDevice } from '../LayoutV2/breakpoints';
 import { Link } from 'react-router-dom';
+import { maxDevice } from '../../commons/breakpoints';
 
 export const Header = styled.div`
   top: 0;

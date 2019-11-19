@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { device } from '../LayoutV2/breakpoints';
-
+// eslint-disable-next-line
 import { Grid, Segment, Button, List, Divider } from 'semantic-ui-react';
+import { device } from '../../commons/breakpoints';
 
 export const CenteredContainer = styled.div`
   margin-left: auto;

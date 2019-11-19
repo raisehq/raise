@@ -1,10 +1,10 @@
 import React, { useContext, useMemo } from 'react';
 import { match, ANY } from 'pampy';
-import { RepayLoanContext } from '../RepayLoan';
-import { getCalculations } from '../../../utils/loanUtils';
-import { Header } from '../../InvestModal/InvestModal.styles';
 import { List, Grid } from 'semantic-ui-react';
+import { RepayLoanContext } from '../RepayLoan.context';
+import { getCalculations } from '../../../utils/loanUtils';
 import {
+  Header,
   LabelPaddingLoader,
   IconSuccess,
   MicroLoader,

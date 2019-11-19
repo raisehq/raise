@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import { MobileMenu, Logo } from './Menu.styles';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 import Burger from './Burger';

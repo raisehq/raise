@@ -7,7 +7,7 @@ export default (state: any, action: any) => {
           hasDeposit: action.response.hasDeposit,
           hasKyc: action.response.hasKyc
         }
-      }
+      };
 
     case 'SET_BLOCKCHAIN_DEPOSIT':
       return {
@@ -15,7 +15,7 @@ export default (state: any, action: any) => {
         ...{
           hasDeposit: action.response
         }
-      }
+      };
 
     case 'SET_ERROR_BLOCKCHAIN_DEPOSIT': {
       return {
@@ -23,7 +23,7 @@ export default (state: any, action: any) => {
         ...{
           error: action.response
         }
-      }
+      };
     }
     case 'SET_BLOCKCHAIN_KYC':
       return {
@@ -31,7 +31,7 @@ export default (state: any, action: any) => {
         ...{
           hasKyc: action.response
         }
-      }
+      };
 
     case 'SET_ERROR_BLOCKCHAIN_KYC': {
       return {
@@ -39,7 +39,7 @@ export default (state: any, action: any) => {
         ...{
           error: action.response
         }
-      }
+      };
     }
     case 'SET_REFERAL_DATA': {
       return {
@@ -49,7 +49,7 @@ export default (state: any, action: any) => {
           totalReferralsCount: action.data.totalReferralsCount || 0,
           totalBountyToWithdraw: action.data.totalBountyToWithdraw || 0
         }
-      }
+      };
     }
     case 'ERROR_REFERAL_DATA': {
       return {
@@ -57,9 +57,33 @@ export default (state: any, action: any) => {
         ...{
           error: action.response
         }
-      }
+      };
+    }
+    case 'SET_CONTRACTS_DATA': {
+      return {
+        ...state,
+        ...{
+          contracts: action.data
+        }
+      };
+    }
+    case 'SET_WEB3': {
+      return {
+        ...state,
+        ...{
+          web3: action.data
+        }
+      };
+    }
+    case 'SET_INSTANCE': {
+      return {
+        ...state,
+        ...{
+          instances: action.data
+        }
+      };
     }
     default:
-      return state
+      return state;
   }
-}
+};

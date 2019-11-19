@@ -177,10 +177,24 @@ export default (state: any, action: any) => {
             logged: true,
             redirect: true,
             error: false,
-            signup: false
-          },
+            signup: false,
+            checked: true
+          }
         }
-      }
+      };
+    case 'AUTH_TOKEN_VERIFIED_FAILED':
+      return {
+        ...state,
+        ...{
+          login: {
+            logged: false,
+            redirect: false,
+            error: true,
+            signup: false,
+            checked: true
+          }
+        }
+      };
     default:
       return state;
   }

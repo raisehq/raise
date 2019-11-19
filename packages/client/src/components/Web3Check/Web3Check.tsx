@@ -1,19 +1,58 @@
-import React from 'react';
-import StepDescription from './StepDescription';
-import { NoticeHeader, CardContent } from './Web3Check.styles';
-import Web3CheckList from './Web3Checklist';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
-import { CardSized } from '../LayoutV2/Layout.styles';
-const Web3Check = () => (
-  <Grid.Row>
-    <CardSized>
-      <CardContent>
-        <NoticeHeader>Logging you in</NoticeHeader>
-        <Web3CheckList />
-      </CardContent>
-      <StepDescription />
-    </CardSized>
-  </Grid.Row>
-);
+import { Redirect } from 'react-router-dom';
+import ErrorConnection from './Web3Check.ErrorConnection';
+import { CardSized } from '../Layout/Layout.styles';
+import Wallet from './Web3Check.Wallet';
+import List from './Web3Check.List';
+import WalletConnect from './Web3Check.WalletConnect';
+import Stages from './Web3Check.stages';
+import useWeb3 from '../../hooks/useWeb3';
+import AppContext from '../AppContext';
+
+const getStage = (stage, handleNext, handleBack, handleSuccess) => {
+  return stage.cata({
+    WalletSelector: () => <Wallet onNext={handleNext} />,
+    WalletError: () => <ErrorConnection onBack={handleBack} />,
+    WalletConnect: () => <WalletConnect onBack={handleBack} />,
+    Checks: () => <List onSuccess={handleSuccess} onBack={handleBack} />
+  });
+};
+
+const Web3Check = () => {
+  const {
+    web3Status: { unlocked }
+  }: any = useContext(AppContext);
+  const { web3 }: any = useWeb3();
+
+  const [ui, setUI] = useState(Stages.WalletSelector);
+  useEffect(() => {
+    if (web3 && unlocked) setUI(Stages.Checks);
+  }, []);
+
+  useEffect(() => {
+    if (web3 && unlocked && ui !== Stages.Checks && ui !== Stages.WalletSelector) {
+      setUI(Stages.Checks);
+    }
+  }, [unlocked, web3, ui]);
+
+  const handleBack = () => {
+    setUI(Stages.WalletSelector);
+  };
+
+  const handleSuccess = () => {
+    return <Redirect to="/" />;
+  };
+
+  const handleNext = () => {
+    setUI(Stages.WalletConnect);
+  };
+
+  return (
+    <Grid.Row>
+      <CardSized>{getStage(ui, handleNext, handleBack, handleSuccess)}</CardSized>
+    </Grid.Row>
+  );
+};
 
 export default Web3Check;

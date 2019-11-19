@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Card } from '@raisehq/components';
 import { Tab, Header as SemanticHeader } from 'semantic-ui-react';
-import { maxDevice, device } from '../LayoutV2/breakpoints';
+import { maxDevice, device } from '../../commons/breakpoints';
 import theme from '../../theme';
 
 export const ExpectedROI = styled(Card.Header)`

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { match } from 'pampy';
 import { checkUsername } from '../../services/auth';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import { Content, Side, Line, Main } from './MyAccount.styles';
 import ProfileInfo from './components/ProfileInfo';
 import UpdateUsername from './components/UpdateUsername';

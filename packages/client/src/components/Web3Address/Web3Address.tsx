@@ -1,24 +1,32 @@
 import React, { useCallback, useContext } from 'react';
 import { Icon } from 'semantic-ui-react';
 import { LabelWeb3 } from './Web3Address.styles';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
+import { NULL_ADDRESS } from '../../commons/constants';
+// import useWeb3Checker from '../../hooks/useWeb3Checker';
 
-// Minor draft, waiting until UI prototype
-const Web3Address = (props) => {
-  const { web3Status: { networkMatches, network, account } } : any = useContext(AppContext);
+const Web3Address = ({ account = null }: any) => {
+  const {
+    store: {
+      config: { network },
+      user: {
+        cryptoAddress: { address }
+      }
+    },
+    web3Status: { networkMatches }
+  }: any = useContext(AppContext);
+
   const iconColor = networkMatches ? 'green' : 'red';
-  const getShortAddress = useCallback(
-    () =>
-      !!account
-        ? `${account.substring(0, 6)}...${account.substring(
-            account.length - 4
-          )}`
-        : '0x0000...0000',
-    [account]
-  );
+  const currentAddress = account || address || NULL_ADDRESS;
+
+  const getShortAddress = useCallback(() => {
+    return `${currentAddress.substring(0, 6)}...${currentAddress.substring(
+      currentAddress.length - 4
+    )}`;
+  }, [currentAddress]);
 
   return (
-    <LabelWeb3 {...props}>
+    <LabelWeb3>
       <Icon name="circle" color={iconColor} alt={network} />
       {getShortAddress()}
     </LabelWeb3>
