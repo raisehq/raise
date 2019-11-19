@@ -1,15 +1,14 @@
 import { useContext, useState, useEffect } from 'react';
-import useMetamask from '../../hooks/useMetaMask';
-
+import useWallet from '../../hooks/useWallet';
 import { Stages } from './ClaimRepay';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 
 const useRepayment = (loan, open) => {
   const { id }: any = loan;
   const {
     web3Status: { account }
   }: any = useContext(AppContext);
-  const metamask = useMetamask();
+  const metamask = useWallet();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState();
   const [stage, setStage] = useState(Stages.Confirm);

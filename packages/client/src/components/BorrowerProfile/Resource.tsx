@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
 import { ResourceBox, ResourcesContainer } from './BorrowerProfile.styles';
-import { ExtraResource } from '../../commons/BorrowerProfile';
+import { ExtraResource } from '../../interfaces/BorrowerProfile';
 
 interface ResourcesProps {
   extraResources: ExtraResource[];

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Header, ConfirmButton } from '../../InvestModal/InvestModal.styles';
-import { RepayLoanContext, Stages } from '../RepayLoan';
+import { RepayLoanContext, Stages } from '../RepayLoan.context';
 
 const Processing = () => {
   const { setStage, setError, setApproved }: any = useContext(RepayLoanContext);

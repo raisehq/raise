@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
-import { AppContext } from '../App';
 import { Header } from 'semantic-ui-react';
 import Queryies from '../../helpers/queryies';
 import Tab from '../Dashboard/Dashboard.Tab';
 import { BorrowerLoansBox } from './BorrowerProfile.styles';
+import AppContext from '../AppContext';
 
 interface BorrowerLoansProps {
   account: string | null | undefined;

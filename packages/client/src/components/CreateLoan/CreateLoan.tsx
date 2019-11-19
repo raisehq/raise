@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { AppContext } from '../App';
-import numeral, { numeralFormat } from '../../commons/numeral';
 import { BrowserView } from 'react-device-detect';
+import AppContext from '../AppContext';
+import numeral, { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
 import Coin from '../Coin';
 import LoanInput from './LoanInput';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { device } from '../LayoutV2/breakpoints';
+import { device } from '../../commons/breakpoints';
 import { Grid } from 'semantic-ui-react';
 
 export const Footer = styled(Grid)`

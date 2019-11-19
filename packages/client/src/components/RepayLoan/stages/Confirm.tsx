@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Header, BorrowerButton } from '../../InvestModal/InvestModal.styles';
-import { RepayLoanContext, Stages } from '../RepayLoan';
+import { RepayLoanContext, Stages } from '../RepayLoan.context';
 import { getCalculations } from '../../../utils/loanUtils';
 import {
   ClaimFundsResume,
@@ -10,14 +10,14 @@ import {
 } from '../../ClaimLoan/ClaimLoan.styles';
 import { ResumeItemProps } from '../../InvestModal/types';
 
-const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
+const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }: any) => (
   <ResumeItemBox>
     <p>{title}</p>
     <p>{value}</p>
   </ResumeItemBox>
 );
 
-const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
+const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }: any) => (
   <ResumeItemBoxBig>
     <p>{title}</p>
     <p>{value}</p>

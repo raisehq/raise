@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import useMetaMask from './useMetaMask';
+// import AppContext from '../components/AppContext';
+import useWallet from './useWallet';
+import useWeb3 from './useWeb3';
 import useAsyncEffect from './useAsyncEffect';
 
 const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const metamask = useMetaMask();
+  const { web3 } = useWeb3();
+  const metamask = useWallet();
   useAsyncEffect(async () => {
     if (metamask) {
       try {
@@ -22,12 +25,9 @@ const useLoanDispatcher = () => {
             const auctionSecondsLength = auctionTermLength.toString();
             const termSecondsLength = termMonthsLength.toString();
             const params = [
-              metamask.utils.toWei(
-                acceptMinimum ? minAmount.toString() : amount.toString(),
-                'ether'
-              ),
-              metamask.utils.toWei(amount.toString(), 'ether'),
-              metamask.utils.toWei(maxInterestRate.toString()),
+              web3.utils.toWei(acceptMinimum ? minAmount.toString() : amount.toString(), 'ether'),
+              web3.utils.toWei(amount.toString(), 'ether'),
+              web3.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,
               auctionSecondsLength
             ];

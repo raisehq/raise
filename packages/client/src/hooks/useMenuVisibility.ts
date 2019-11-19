@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { AppContext } from '../components/App';
+import AppContext from '../components/AppContext';
 
 const useMenuVisibility = () => {
   const { history }: any = useContext(AppContext);

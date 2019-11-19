@@ -1,19 +1,19 @@
 import { useContext, useState, useEffect } from 'react';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
-import useMetamask from '../../hooks/useMetaMask';
-import { getWeb3 } from '../../utils';
-import ERC20 from '../../commons/erc20';
-import { MAX_VALUE } from '../../commons/constants';
-
-import { Stages } from './RepayLoan';
-import { AppContext } from '../App';
+import useAsyncEffect from './useAsyncEffect';
+import useWallet from './useWallet';
+import useWeb3 from './useWeb3';
+import ERC20 from '../commons/erc20';
+import { MAX_VALUE } from '../commons/constants';
+import { Stages } from '../components/RepayLoan/RepayLoan.context';
+import AppContext from '../components/AppContext';
 
 const useRepayment = (loan, open) => {
   const { borrowerDebt, id }: any = loan;
   const {
     web3Status: { account }
   }: any = useContext(AppContext);
-  const metamask = useMetamask();
+  const { web3 } = useWeb3();
+  const metamask = useWallet();
   const [approved, setApproved] = useState(false);
   const [error, setError] = useState();
   const [stage, setStage] = useState(Stages.Confirm);
@@ -26,7 +26,6 @@ const useRepayment = (loan, open) => {
 
   useAsyncEffect(async () => {
     if (open && stage === Stages.Confirm) {
-      const web3 = getWeb3();
       const {
         utils: { BN }
       } = web3;
@@ -42,7 +41,6 @@ const useRepayment = (loan, open) => {
 
   useAsyncEffect(async () => {
     if (open && stage === Stages.Processing) {
-      const web3 = getWeb3();
       const {
         utils: { BN }
       } = web3;
@@ -61,7 +59,8 @@ const useRepayment = (loan, open) => {
             .approve(DAIProxy.options.address, MAX_VALUE)
             .send({ from: account });
           setApproved(true);
-        } catch (error) {
+        } catch (err) {
+          console.error('[useRepayment] Error: ', err);
           setStage(Stages.Error);
         }
       } else {
@@ -76,7 +75,8 @@ const useRepayment = (loan, open) => {
       try {
         await DAIProxy.methods.repay(id, borrowerDebt).send({ from: account });
         setStage(Stages.Success);
-      } catch (error) {
+      } catch (err) {
+        console.error('[useRepayment] Error: ', err);
         setStage(Stages.Error);
       }
     }

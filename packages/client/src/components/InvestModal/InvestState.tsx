@@ -7,7 +7,7 @@ import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
 
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import {
   Header,
   ModalInputContainer,

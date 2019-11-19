@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button, Icon, Input } from 'semantic-ui-react';
-import { device } from '../LayoutV2/breakpoints';
+import { device } from '../../commons/breakpoints';
 import { match, _ } from 'pampy';
 import { KycStatus } from '../../commons/kycStatus';
 

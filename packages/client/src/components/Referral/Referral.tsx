@@ -7,12 +7,13 @@ import {
   SegmentRight,
   // SegmentLeft,
   ColumnRight,
-  ColumnLeft,
+  ColumnLeft
   // ContainerGrid
 } from './Referral.styles';
 import Invite from '../Invite/index';
 import Resume from './Referral.Resume';
 import InviteBottom from '../InviteBottom/index';
+
 const Referal = () => {
   return (
     <div>
@@ -42,28 +43,28 @@ const Referal = () => {
 
       <Responsive as={Grid} maxWidth={1023}>
         <Grid.Row>
-            <ColumnLeft>
-              <Grid>
-                <TopReferal>
-                  <Grid.Column>
-                    <Invite />
-                  </Grid.Column>
-                </TopReferal>
-                <MidReferral>
-                  <Grid.Column>
-                    <Resume />
-                  </Grid.Column>
-                </MidReferral>
-                <BottomReferal>
-                  <Grid.Column>
-                    <InviteBottom />
-                  </Grid.Column>
-                </BottomReferal>
-              </Grid>
-            </ColumnLeft>
-          </Grid.Row>  
+          <ColumnLeft>
+            <Grid>
+              <TopReferal>
+                <Grid.Column>
+                  <Invite />
+                </Grid.Column>
+              </TopReferal>
+              <MidReferral>
+                <Grid.Column>
+                  <Resume />
+                </Grid.Column>
+              </MidReferral>
+              <BottomReferal>
+                <Grid.Column>
+                  <InviteBottom />
+                </Grid.Column>
+              </BottomReferal>
+            </Grid>
+          </ColumnLeft>
+        </Grid.Row>
       </Responsive>
-  </div>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import theme from '../../theme';
-import { maxDevice } from '../LayoutV2/breakpoints';
+import { maxDevice } from '../../commons/breakpoints';
 
 export const Footer = styled.div`
   width: 100%;
