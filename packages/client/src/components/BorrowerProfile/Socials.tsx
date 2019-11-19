@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Icon } from 'semantic-ui-react';
-import { SocialNetwork } from '../../commons/BorrowerProfile';
+import { SocialNetwork } from '../../interfaces/BorrowerProfile';
 import { SocialsBox } from './BorrowerProfile.styles';
 
 interface SocialProps {

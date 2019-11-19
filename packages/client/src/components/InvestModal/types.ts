@@ -1,4 +1,4 @@
-import { Loan } from '../../commons/loan';
+import { Loan } from '../../interfaces/Loan';
 
 export interface InvestModalProps {
   loan: Loan;

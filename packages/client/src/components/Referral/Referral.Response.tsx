@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
-import { Loader} from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 
 const UI = daggy.taggedSum('UI', {
   None: [],
@@ -11,15 +11,10 @@ const UI = daggy.taggedSum('UI', {
 
 const getViewResponse = (ui: any) =>
   ui.cata({
-    None: () => (
-        <Fragment>
-        </Fragment>
-    ),
+    None: () => <></>,
     Success: () => (
       <Fragment>
-        <p>
-            Success!
-        </p>
+        <p>Success!</p>
       </Fragment>
     ),
     Waiting: () => (
@@ -30,7 +25,7 @@ const getViewResponse = (ui: any) =>
     ),
     Error: () => (
       <Fragment>
-          <p>Transaction error. Try again or contact support.</p>
+        <p>Transaction error. Try again or contact support.</p>
       </Fragment>
     )
   });

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Card, Header } from 'semantic-ui-react';
-import { device, maxDevice } from '../LayoutV2/breakpoints';
+import { device, maxDevice } from '../../commons/breakpoints';
 import theme from '../../theme';
 
 export const Container = styled.div`

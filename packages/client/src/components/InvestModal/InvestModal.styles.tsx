@@ -11,7 +11,7 @@ import {
   Grid,
   Checkbox
 } from 'semantic-ui-react';
-import { device } from '../LayoutV2/breakpoints';
+import { device } from '../../commons/breakpoints';
 
 interface ModalInputProps {
   roi?: boolean;

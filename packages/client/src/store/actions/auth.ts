@@ -63,7 +63,7 @@ export default (dispatch: any, state: any) => {
       const response = { user };
       dispatch({ type: 'SET_USER_SESSION', response });
     } catch (error) {
-      console.error('ERROR : ', error);
+      console.error('[getUserAuth] ERROR : ', error);
     }
   };
 
@@ -76,12 +76,12 @@ export default (dispatch: any, state: any) => {
       await verifyAuth();
       dispatch({ type: 'AUTH_TOKEN_VERIFIED' });
     } catch (error) {
-
       console.error(error);
       LocalData.remove('user');
       LocalData.remove('auth');
       Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
       Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
+      dispatch({ type: 'AUTH_TOKEN_VERIFIED_FAILED' });
     }
   };
 

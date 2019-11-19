@@ -76,6 +76,7 @@
     "typescript": "3.5.2",
     "url-search-params-polyfill": "^7.0.0",
     "validator": "^10.11.0",
+    "walletlink": "^1.0.0",
     "web3": "1.2.1",
     "web3-utils": "1.0.0-beta.55"
   },
@@ -87,6 +88,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.14.3",
     "jest": "^24.9.0",
+    "react-use-cookie": "^1.0.2",
     "ts-jest": "^24.0.2"
   },
   "scripts": {

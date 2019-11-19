@@ -7,11 +7,11 @@ import {
   ResumeItemBoxBig,
   ResumeItemBox
 } from '../ClaimLoan.styles';
-import useMetamask from '../../../hooks/useMetaMask';
+import useWallet from '../../../hooks/useWallet';
 import { ClaimLoanContext, Stages } from '../ClaimLoan';
 import { ResumeItemProps } from '../../InvestModal/types';
 import { Loader } from 'semantic-ui-react';
-import { AppContext } from '../../App';
+import AppContext from '../../AppContext';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
   <ResumeItemBox>
@@ -28,7 +28,7 @@ const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
 );
 
 const Confirm = () => {
-  const metamask = useMetamask();
+  const metamask = useWallet();
   const { loan, setStage, calculatedLoan }: any = useContext(ClaimLoanContext);
   const {
     web3Status: { account }

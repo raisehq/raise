@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Grid, Button, Image, Loader, Segment, Label, List, Icon } from 'semantic-ui-react';
 import Web3Address from '../Web3Address';
-import { device } from '../LayoutV2/breakpoints';
+import { device } from '../../commons/breakpoints';
 
 export const StyledAddress = styled(Web3Address)`
   float: right;

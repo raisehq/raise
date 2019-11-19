@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import useMetaMask from './useMetaMask';
+import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
 
 const useKYCContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const metamask = useMetaMask();
+  const metamask = useWallet();
 
   useAsyncEffect(async () => {
     if (metamask) {
@@ -12,11 +12,11 @@ const useKYCContract = () => {
         const contract = await metamask.addContract('KYC');
 
         setActiveContract({
-          add: (account) => contract.methods.add(account).send({ from: account }),
-          isConfirmed: (account) => contract.methods.isConfirmed(account).call()
+          add: account => contract.methods.add(account).send({ from: account }),
+          isConfirmed: account => contract.methods.isConfirmed(account).call()
         });
       } catch (error) {
-        console.error('Ćontract KYC not found in current network.')
+        console.error('Ćontract KYC not found in current network.');
       }
     }
   }, [metamask]);

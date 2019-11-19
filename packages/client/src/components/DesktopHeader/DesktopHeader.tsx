@@ -12,7 +12,7 @@ import {
 import Balance from '../Balance';
 import Web3Address from '../Web3Address';
 import theme from '../../theme';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';

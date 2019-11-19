@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { device } from '../LayoutV2/breakpoints';
+import { device } from '../../commons/breakpoints';
 
 export const Wrapper = styled.div`
   width: 390px;

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Button } from 'semantic-ui-react';
-import { AppContext } from '../App';
+import AppContext from '../AppContext';
 
 export const Logout = props => {
   const {
