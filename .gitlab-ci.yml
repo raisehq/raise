@@ -33,8 +33,14 @@ build-front-review:
   variables:
     REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.$DOMAIN
     REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
+    REACT_APP_HOST_URL_AUTH: https://${CI_COMMIT_REF_SLUG}.api.herodev.es
+    REACT_APP_HOST_URL_CORE: https://${CI_COMMIT_REF_SLUG}.api.herodev.es
+    REACT_APP_HOST_URL_FILE: https://${CI_COMMIT_REF_SLUG}.api.herodev.es
   script:
     - echo $REACT_APP_HOST_URL
+    - echo $REACT_APP_HOST_URL_AUTH
+    - echo $REACT_APP_HOST_URL_CORE
+    - echo $REACT_APP_HOST_URL_FILE
     - npx lerna bootstrap
     - npx lerna run compile:components
     - npx lerna bootstrap
@@ -184,9 +190,15 @@ stop-review:
   image: 'python:latest'
   stage: cleanup
   before_script:
+    - apt-get update && apt-get install -y openssh-client
     - pip install awscli
+    - mkdir -p ~/.ssh
+    - echo -e "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+    - ssh ubuntu@bastion.${DOMAIN} delete_review integration ${CI_COMMIT_REF_SLUG}
   when: manual
   variables:
     GIT_STRATEGY: none
