@@ -1,6 +1,6 @@
-import React from 'react'
-import Slider from 'rc-slider'
-import 'rc-slider/assets/index.css'
+import React from 'react';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import {
   Wrapper,
   handleStyle,
@@ -10,16 +10,17 @@ import {
   activeDotStyle,
   LabelLess,
   LabelMore
-} from './Slider.styles'
+} from './Slider.styles';
+import numeral from '../../commons/numeral';
 
-const createSliderWithTooltip = Slider.createSliderWithTooltip
-const Slide = createSliderWithTooltip(Slider)
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const Range = createSliderWithTooltip(Slider.Range);
 
-const HeroSlider = ({ onChange, ...rest }) => (
+const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }) => (
   <Wrapper>
-    <Slide
+    <Range
       {...rest}
-      step={0.1}
+      step={0.10}
       handleStyle={handleStyle}
       railStyle={railStyle}
       dotStyle={dotStyle}
@@ -27,9 +28,14 @@ const HeroSlider = ({ onChange, ...rest }) => (
       trackStyle={trackStyle}
       onAfterChange={onChange}
     />
-    <LabelLess>Less likely to match</LabelLess>
-    <LabelMore>More likely to match</LabelMore>
-  </Wrapper>
-)
 
-export default HeroSlider
+    <LabelLess>
+      {numeral(minAPR).format()}% APR ({numeral(loan.minMir).format()}% MIR*)
+    </LabelLess>
+    <LabelMore>
+      {numeral(maxAPR).format()}% APR ({numeral(loan.maxMir).format()}% MIR*)
+    </LabelMore>
+  </Wrapper>
+);
+
+export default HeroSlider;

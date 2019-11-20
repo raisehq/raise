@@ -84,13 +84,15 @@ export const calculateTimes = auction => {
 export const calculateInterest = auction => {
   const nowTimestamp = Date.now() / 1000;
   const maxInterestRate = Number(fromWei(auction.maxInterestRate.toString())) / 100;
+  const minInterestRate = auction.minInterestRate? Number(fromWei(auction.minInterestRate.toString())) / 100 : 0;
 
   let interest = 0;
   if (auction.state === LoanState.CREATED && !isAuctionExpired(auction)) {
     interest =
-      maxInterestRate *
-      ((nowTimestamp - auction.auctionStartTimestamp) /
-        (auction.auctionEndTimestamp - auction.auctionStartTimestamp));
+      (maxInterestRate - minInterestRate) *
+        ((nowTimestamp - auction.auctionStartTimestamp) /
+          (auction.auctionEndTimestamp - auction.auctionStartTimestamp)) +
+      minInterestRate;
   } else if (auction.state === LoanState.ACTIVE || auction.state === LoanState.REPAID) {
     interest = maxInterestRate;
   } else {

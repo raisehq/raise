@@ -21,7 +21,6 @@ import {
   LoanDescription,
   LoanDescriptionLowerAmount,
   LoanFormInput,
-  InterestCard,
   SideInfo,
   InputError,
   InputBox,
@@ -46,18 +45,18 @@ const minAmountOptions = [
 const min = 1;
 const max = 2500000;
 const defaultAmount = 10000;
-const defaultMir = 10;
 const defaultTerm = 2592000;
 const defaultTermAuction = 2592000;
 const defaultMinPercent = 20;
-const minMir = 0;
-const maxMir = 20;
+const sliderMinAPR = 0;
+const sliderMaxAPR = 20;
+const defaultMinAPR = 10;
+const defaultMaxAPR = 20;
 
 const marks = {
-  4: ' ',
-  8: ' ',
-  12: ' ',
-  16: ' '
+  5: '',
+  10: '',
+  15: ''
 };
 
 /** End of defaults */
@@ -78,13 +77,15 @@ const CreateLoan = () => {
     msg: ''
   });
   const [termsCond, setTermsCond] = useState(false);
-  const [APR, setAPR] = useState(0);
+  const [minAPR, setMinAPR] = useState(defaultMinAPR);
+  const [maxAPR, setMaxAPR] = useState(defaultMaxAPR);
   const [minPercent, setMinPercent] = useState(defaultMinPercent);
   const [loan, setLoan] = useState({
     amount: defaultAmount,
     term: defaultTerm,
     auctionTerm: defaultTermAuction,
-    mir: defaultMir,
+    minMir: parseFloat((defaultMinAPR / 12).toString()),
+    maxMir: parseFloat((defaultMaxAPR / 12).toString()),
     accept: false,
     minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
   });
@@ -97,11 +98,11 @@ const CreateLoan = () => {
   const formattedAmount = numeral(loan.amount).format();
   const formattedMinAmount = numeral(loan.minAmount).format();
   const repaymentAmount = numeral(
-    numberAmount + (numberAmount * (loan.mir * termMonths)) / 100
+    numberAmount + (numberAmount * (loan.maxMir * termMonths)) / 100
   ).format();
   const netLoan = numeral(numberAmount - (numberAmount * 1) / 100).format();
   const systemFees = numeral((numberAmount * 1) / 100).format();
-  const totalInterest = numeral((numberAmount * (loan.mir * termMonths)) / 100).format();
+  const totalInterest = numeral((numberAmount * (loan.maxMir * termMonths)) / 100).format();
 
   const onSetAmount = ({ floatValue }) => {
     const minAmount = calculateMinAmount(floatValue, minPercent);
@@ -125,7 +126,7 @@ const CreateLoan = () => {
     setLoan({ ...loan, auctionTerm: value });
   };
 
-  const onSetMIR = mir => setLoan({ ...loan, mir });
+  const onSetMIR = minMir => maxMir => setLoan({ ...loan, minMir, maxMir });
 
   const onToggleAccept = () => setLoan({ ...loan, accept: !loan.accept });
 
@@ -137,7 +138,16 @@ const CreateLoan = () => {
     });
   };
 
-  const onInterestChange = value => onSetMIR(parseFloat(value));
+  const onInterestChange = valuesArray => {
+    const minApr = parseFloat(valuesArray[0]);
+    const maxApr = parseFloat(valuesArray[1]);
+    const minMir = minApr / 12;
+    const maxMir = maxApr / 12;
+
+    setMinAPR(minApr);
+    setMaxAPR(maxApr);
+    onSetMIR(minMir)(maxMir);
+  };
 
   const onSave = async () => {
     setStage(UI.Waiting);
@@ -145,7 +155,8 @@ const CreateLoan = () => {
       await loanDispatcher.deploy(
         loan.minAmount,
         loan.amount,
-        loan.mir,
+        loan.minMir,
+        loan.maxMir,
         loan.term,
         loan.accept,
         loan.auctionTerm
@@ -154,7 +165,7 @@ const CreateLoan = () => {
     } catch (error) {
       console.error(
         '[LOAN DISPACHER]',
-        ` MinAmount: ${loan.minAmount} Amount: ${loan.amount} Mir: ${loan.mir} Term: ${
+        ` MinAmount: ${loan.minAmount} Amount: ${loan.amount} Mir: ${loan.maxMir} Term: ${
           loan.term
         } Accept: ${loan.accept.toString()} `,
         error
@@ -169,13 +180,15 @@ const CreateLoan = () => {
       error: false,
       msg: ''
     });
-    setAPR(0);
+    setMinAPR(defaultMinAPR);
+    setMaxAPR(defaultMaxAPR);
     setMinPercent(defaultMinPercent);
     setLoan({
       amount: defaultAmount,
       term: defaultTerm,
       auctionTerm: defaultTermAuction,
-      mir: defaultMir,
+      minMir: parseFloat((defaultMinAPR / 12).toString()),
+      maxMir: parseFloat((defaultMaxAPR / 12).toString()),
       accept: false,
       minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
     });
@@ -195,10 +208,11 @@ const CreateLoan = () => {
   };
 
   useEffect(() => {
-    const { amount: currentAmount, term: termSeconds, mir } = loan;
+    const { amount: currentAmount, term: termSeconds, minMir, maxMir } = loan;
     const term = termSeconds / 60 / 60 / 24 / 30;
-    if (currentAmount && mir && term) {
-      setAPR((((currentAmount * mir * term) / currentAmount) * 12) / term);
+    if (currentAmount && minMir && maxMir && term) {
+      setMinAPR(minMir * 12);
+      setMaxAPR(maxMir * 12);
     }
   }, [loan]);
 
@@ -309,22 +323,25 @@ const CreateLoan = () => {
         </BrowserView>
         <LoanBox>
           <LoanDescription>
-            <Header as="h2">Monthly interest rate *</Header>
-            <p>Select the maximun interest rate you would accept for your loan.</p>
+            <Header as="h2">Annual percentage rate</Header>
+            <p>
+              Select the starting APR for your loan auction and the maximum APR you would accept for
+              your loan.
+            </p>
           </LoanDescription>
           <SliderWrapper>
-            <InterestCard>
-              <span>
-                {loan.mir}% MIR* ({APR.toFixed(2)}% APR)
-              </span>
-            </InterestCard>
             <Slider
-              defaultValue={loan.mir}
-              onChange={onInterestChange}
-              min={minMir}
+              defaultValue={[defaultMinAPR, defaultMaxAPR]}
+              onChange={value => onInterestChange(value)}
+              min={sliderMinAPR}
               marks={marks}
-              max={maxMir}
+              max={sliderMaxAPR}
+              allowCross={false}
+              loan={loan}
+              minAPR={minAPR}
+              maxAPR={maxAPR}
             />
+
             <SideInfo>* MIR : Monthly simple interest rate</SideInfo>
           </SliderWrapper>
         </LoanBox>

@@ -17,6 +17,7 @@ const useLoanDispatcher = () => {
           deploy: async (
             minAmount,
             amount,
+            minInterestRate,
             maxInterestRate,
             termMonthsLength,
             acceptMinimum,
@@ -27,6 +28,7 @@ const useLoanDispatcher = () => {
             const params = [
               web3.utils.toWei(acceptMinimum ? minAmount.toString() : amount.toString(), 'ether'),
               web3.utils.toWei(amount.toString(), 'ether'),
+              web3.utils.toWei(minInterestRate.toString()),
               web3.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,
               auctionSecondsLength
