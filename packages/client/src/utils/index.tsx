@@ -22,7 +22,7 @@ const THEGRAPH_IDS: any = {
 
 const THEGRAPH_DAI_IDS: any = {
   KOVAN: process.env.REACT_APP_THEGRAPH_ID_DAI_KOVAN,
-  MAINNET: process.env.REACT_APP_THEGRAPH_ID_DAI_MAINNET
+  MAINNET: process.env.REACT_APP_THEGRAPH_ID_DAI_MAIN
 };
 
 export function getGraphEndpoint(network: string) {
