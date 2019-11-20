@@ -22,7 +22,10 @@ export const getAddressTypes = async (): Promise<AddressTypes> => {
 
   const response = await to(axios(config));
 
-  return response.fold(error => Left(error), ({ data: { data } }) => data);
+  return response.fold(
+    error => Left(error),
+    ({ data: { data } }) => data
+  );
 };
 
 export const getUser = async (userId: string | undefined) => {
@@ -35,7 +38,10 @@ export const getUser = async (userId: string | undefined) => {
   };
   const response = await to(axios(config));
 
-  return response.fold(error => Left(error), ({ data: { data } }) => data);
+  return response.fold(
+    error => Left(error),
+    ({ data: { data } }) => data
+  );
 };
 
 export const getUserDetails = async (userId: string | undefined) => {
@@ -49,7 +55,10 @@ export const getUserDetails = async (userId: string | undefined) => {
   };
   const response = await to(axios(config));
 
-  return response.fold(error => Left(error), ({ data: { data } }) => data);
+  return response.fold(
+    error => Left(error),
+    ({ data: { data } }) => data
+  );
 };
 
 export const allAddressesByUser = async userId => {
@@ -64,7 +73,10 @@ export const allAddressesByUser = async userId => {
 
   const response = await to(axios(config));
 
-  return response.fold(error => Left(error), ({ data: { data } }) => data);
+  return response.fold(
+    error => Left(error),
+    ({ data: { data } }) => data
+  );
 };
 
 export const addAddress = async address => {
@@ -76,7 +88,10 @@ export const addAddress = async address => {
 
   const response = await to(axios.post(`${URL.ADDRESS}/addinfo`, address, config));
 
-  return response.fold(error => Left(error), ({ data: { data } }) => data);
+  return response.fold(
+    error => Left(error),
+    ({ data: { data } }) => data
+  );
 };
 
 export const removeAddress = async addressId => {
@@ -91,7 +106,10 @@ export const removeAddress = async addressId => {
 
   const response = await to(axios(config));
 
-  return response.fold(error => Left(error), ({ data: { data } }) => data);
+  return response.fold(
+    error => Left(error),
+    ({ data: { data } }) => data
+  );
 };
 
 export const updateUser = async (userId, body: any) => {
