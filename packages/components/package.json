@@ -1,53 +1,43 @@
 {
-  "name": "@raisehq/components",
-  "version": "1.0.0",
-  "description": "> TODO: description",
-  "author": "Raul Vallespin <raul@herotoken.io>",
-  "homepage": "http://www.raise.it",
-  "license": "AGPL",
-  "main": "lib/src/index.js",
-  "typings": "lib/src/index.d.ts",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
+  "name": "components",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Kartojal",
+  "main": "dist/index.js",
+  "module": "dist/components.esm.js",
+  "typings": "dist/index.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "compile:components": "tsc",
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "dev:int": "yarn run dev",
-    "lint": "eslint . --ext .js,.ts,.tsx"
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --env=jsdom",
+    "lint": "tsdx lint"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@storybook/addon-actions": "^5.1.9",
-    "@storybook/addon-info": "^5.1.9",
-    "@storybook/addon-links": "^5.1.9",
-    "@storybook/addons": "^5.1.9",
-    "@storybook/react": "^5.1.9",
-    "@types/storybook__react": "^4.0.2",
-    "@typescript-eslint/eslint-plugin": "^1.11.0",
-    "awesome-typescript-loader": "^5.2.1",
-    "babel-loader": "^8.0.6",
-    "eslint": "^6.2.1",
-    "eslint-config-airbnb-typescript": "^4.0.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.14.3"
-  },
-  "dependencies": {
-    "js-cookie": "^2.2.0",
-    "react-iframe": "^1.8.0",
-    "react-router-hash-link": "^1.2.2",
-    "react-slick": "^0.25.2",
-    "react-transition-group": "^4.3.0",
-    "slick-carousel": "^1.8.1",
-    "url-search-params-polyfill": "^7.0.0"
+    "@types/jest": "^24.0.23",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
+    "husky": "^3.1.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "tsdx": "^0.11.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.2"
   }
 }

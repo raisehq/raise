@@ -1,5 +1,6 @@
 export const Right = (x: any) => ({
   map: (f: any) => Right(f(x)),
+  // @ts-ignore
   fold: (f: any, g: any) => g(x),
   inspect: () => `Right(${x})`
 });

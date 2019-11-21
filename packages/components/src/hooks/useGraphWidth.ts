@@ -1,6 +1,6 @@
-import { Either, to } from '../utils';
+import { Either } from '../utils';
 
-const useGraphWidth = (ref, currentAmount, totalAmount) => {
+const useGraphWidth = (ref: any, currentAmount: number, totalAmount: number) => {
   const config = Either.either(ref);
 
   return config.fold(
