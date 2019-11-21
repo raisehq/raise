@@ -10,10 +10,6 @@ describe('BORROWER', function() {
   it('Go to create loan', function() {
     cy.visit(Cypress.env('url'));
 
-    cy.get('#btn-warning-close').should('have.length', 1);
-    cy.get('#btn-warning-close').click()
-    cy.wait(2000);
-
     cy.addCards('CREATED');
     cy.wait(4000);
 
