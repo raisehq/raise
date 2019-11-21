@@ -38,7 +38,7 @@ const Deposit = () => {
       id,
       'www.raise.it',
       'Deposit',
-      '/deposit',
+      '/deposit2',
       'DepositPage',
       'dataLayer',
       'Submit',

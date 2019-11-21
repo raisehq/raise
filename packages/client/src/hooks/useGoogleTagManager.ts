@@ -8,23 +8,30 @@ export function useGoogleTagManager(
   pageTitle,
   dataLayerName,
   event,
-  label
+  value
 ) {
+  /*
+
+    Esto trackea las pageviews y los eventos a la vez.
+
+  */
+  console.log('SHIT ', dataLayerName);
   const tagManagerArgs = {
+    gtmId: process.env.REACT_APP_GTM_ID,
     dataLayer: {
       event,
       userId,
       pagePath,
       pageTitle,
       category,
-      label,
+      value,
       userProject: project,
       action: event
-    },
-    dataLayerName
+    }
   };
-
-  return TagManager.dataLayer(tagManagerArgs);
+  // Esta funcion sirve para todo.
+  TagManager.initialize(tagManagerArgs);
+  return true;
 }
 
 export default useGoogleTagManager;
