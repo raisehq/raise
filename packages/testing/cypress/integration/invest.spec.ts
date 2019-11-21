@@ -6,6 +6,8 @@ describe('LENDER', function () {
   });
   it('Invest', function () {
     cy.visit(Cypress.env('url'));
+    cy.get('#btn-warning-close').should('have.length', 1);
+    cy.wait(2000);
     cy.addLoanAndCard('CREATED');
     cy.wait(4000);
     cy.get('#btn-lender-open').should('have.length', 1);
