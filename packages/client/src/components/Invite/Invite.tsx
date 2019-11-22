@@ -31,7 +31,7 @@ import {
 import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import AppContext from '../AppContext';
-import useGoogleTagManager from '../../hooks/useGoogleTagManager';
+// import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
 
@@ -41,7 +41,7 @@ const Invite = () => {
   const {
     store: {
       user: {
-        details: { id, referral_code }
+        details: { referral_code }
       }
     }
   }: any = useContext(AppContext);
@@ -55,16 +55,16 @@ const Invite = () => {
   });
 
   const getImagesUrl = useImages();
-  useGoogleTagManager(
-    id,
-    'www.raise.it',
-    'RAF',
-    '/referral',
-    'ReferafriendPage',
-    'dataLayer',
-    'Page View',
-    'RAFriend View'
-  );
+  // useGoogleTagManager(
+  //   id,
+  //   'www.raise.it',
+  //   'RAF',
+  //   '/referral',
+  //   'ReferafriendPage',
+  //   'dataLayer',
+  //   'Page View',
+  //   'RAFriend View'
+  // );
 
   return (
     <Raf>
@@ -156,6 +156,9 @@ const Invite = () => {
           </Grid.Row>
           <Grid.Row>
             <Grid>
+              {' '}
+              // useGoogleTagManager( // id, // 'www.raise.it', // 'RAF', // '/referral', //
+              'ReferafriendPage', // 'dataLayer', // 'Page View', // 'RAFriend View' // );
               <Grid.Column width={9}>
                 <ShareInput>
                   <Input value={shareLink} fluid />

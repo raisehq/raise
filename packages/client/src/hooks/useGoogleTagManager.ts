@@ -1,37 +1,38 @@
 import TagManager from 'react-gtm-module';
 
-export function useGoogleTagManager(
-  userId,
-  project,
-  category,
-  pagePath,
-  pageTitle,
-  dataLayerName,
-  event,
-  value
-) {
-  /*
+export enum TMEvents {
+  Submit = 'submit',
+  Click = 'click',
+  PageView = 'pageview'
+}
 
-    Esto trackea las pageviews y los eventos a la vez.
+const GTMID = process.env.REACT_APP_GTM_ID;
 
-  */
-  console.log('SHIT ', dataLayerName);
-  const tagManagerArgs = {
-    gtmId: process.env.REACT_APP_GTM_ID,
-    dataLayer: {
-      event,
-      userId,
-      pagePath,
-      pageTitle,
-      category,
-      value,
-      userProject: project,
-      action: event
-    }
-  };
+function useGoogleTagManager(category?) {
+  const sendEvent = (event, label, value?) =>
+    TagManager.initialize({
+      gtmId: GTMID,
+      dataLayer: {
+        event,
+        category,
+        value: value || label,
+        label
+      }
+    });
+
+  const pageView = (path, title) =>
+    TagManager.initialize({
+      gtmId: GTMID,
+      dataLayer: {
+        event: TMEvents.PageView,
+        pagePath: path,
+        pageTitle: title
+      }
+    });
+
   // Esta funcion sirve para todo.
-  TagManager.initialize(tagManagerArgs);
-  return true;
+
+  return { sendEvent, pageView };
 }
 
 export default useGoogleTagManager;

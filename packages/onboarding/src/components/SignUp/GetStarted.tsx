@@ -14,12 +14,12 @@ import {
   OnboardingCell,
   MiniBody
 } from '../styles';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 import { IContext } from '../types';
 import validations from '../validations';
 import theme from '../../theme';
 import { checkEmail } from '../../services';
-import useGoogleTagManager from '../../hooks/useGoogleTagManager';
+// import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const GetStarted = ({ mini }: { mini?: boolean }) => {
   const { onSetStep, credentials, onSetCredentials, referralCode } = useContext<IContext>(
@@ -65,7 +65,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
   };
 
   const onKeyPress = event => {
-    if (event.key === 'Enter' && (credentials.email !== '' && !error.validation && !error.exist)) {
+    if (event.key === 'Enter' && credentials.email !== '' && !error.validation && !error.exist) {
       onSetStep('Register')();
     }
   };
@@ -73,7 +73,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
   const onSetTagManagerAndStep = () => {
     onSetStep('Register')();
 
-    return useGoogleTagManager(
+    /*return useGoogleTagManager(
       'new user',
       'www.raise.it',
       'Signup',
@@ -82,7 +82,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
       'dataLayer',
       'Submit',
       'emailform'
-    );
+    );*/
   };
 
   const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
@@ -116,13 +116,19 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
           </OnboardingCell>
           <OnboardingCell>
             By signing up, I agree to Raise
-            <a className="disclaimerBTN" href={`${theme.resources}/toc.pdf`} target="_blank">
+            <a
+              className="disclaimerBTN"
+              href={`${theme.resources}/toc.pdf`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               Terms of Service
             </a>
             and
             <a
               className="disclaimerBTN"
               href={`${theme.resources}/privacy-policy.pdf`}
+              rel="noopener noreferrer"
               target="_blank"
             >
               Privacy Policy
@@ -141,7 +147,8 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
   return (
     <Fragment>
       <OnboardHeader>
-        {header} <OnboardLogo />
+        {header}
+        <OnboardLogo />
       </OnboardHeader>
       <OnboardSubHeader>Create an account</OnboardSubHeader>
       <OnboardInput>
@@ -174,13 +181,19 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
         </OnboardingCell>
         <OnboardingCell>
           By signing up, I agree to Raise
-          <a className="disclaimerBTN" href={`${theme.resources}/toc.pdf`} target="_blank">
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/toc.pdf`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             Terms of Service
           </a>
           and
           <a
             className="disclaimerBTN"
             href={`${theme.resources}/privacy-policy.pdf`}
+            rel="noopener noreferrer"
             target="_blank"
           >
             Privacy Policy
@@ -189,7 +202,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
       </OnboardDisclaimer>
       <CallToSignIn>
         Do you have an account already?
-        <button className="callToSignIn" onClick={onSetStep('SignIn')}>
+        <button className="callToSignIn" type="button" onClick={onSetStep('SignIn')}>
           Sign In
         </button>
       </CallToSignIn>

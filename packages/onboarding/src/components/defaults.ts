@@ -1,4 +1,4 @@
-export const defaultContext = {
+const defaultContext = {
   onSetStep: () => () => null,
   onSetCredentials: () => null,
   onSendCredentials: () => null,
@@ -26,3 +26,4 @@ export const defaultContext = {
   },
   onResetToken: () => null
 };
+export default defaultContext;

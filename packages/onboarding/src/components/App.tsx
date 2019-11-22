@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import daggy from 'daggy';
 import 'url-search-params-polyfill';
 import { AccountType } from '@raisehq/components';
+import AppContext from './App.context';
 import GetStarted from './SignUp/GetStarted';
 import Register from './SignUp/Register';
 import Confirm from './SignUp/Confirm';
@@ -19,19 +20,14 @@ import BorrowerSignUpError from './BorrowerSignUp/Error';
 import BorrowerSignUpOK from './BorrowerSignUp/Success';
 import PanelModal from './Modals/Panel';
 import SimpleModal from './Modals/Simple';
-import { IContext, ICredentials, Steps } from './types';
-import { defaultContext } from './defaults';
+import { ICredentials, Steps } from './types';
 import useAsyncEffect from '../hooks/useAsyncEffect';
-import { validateToken } from '../services';
-import { to, getHost } from '../utils';
-import useCookie from '../hooks/useCookie';
 import * as services from '../services';
+import { getHost } from '../utils';
+import useCookie from '../hooks/useCookie';
 import LocalData from './localData';
-import useGoogleTagManager from '../hooks/useGoogleTagManager';
-
-const { useState, useEffect, createContext } = React;
-
-export const AppContext = createContext<IContext>(defaultContext);
+import useGoogleTagManager, { TMEvents } from '../hooks/useGoogleTagManager';
+import defaultContext from './defaults';
 
 const Step = daggy.taggedSum('UI', {
   Start: [],
@@ -66,17 +62,25 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(defaultContext.credentials);
   const [referralCode, setRefCode] = useState<string>('');
-  const [user, setuserCookie] = useCookie('user', {});
-  const [auth, setAuthCookie] = useCookie('auth', {});
-
+  const [setuserCookie] = useCookie('user', {});
+  const [setAuthCookie] = useCookie('auth', {});
+  const tagManager = useGoogleTagManager();
+  const { host } = history.location;
   useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const refCode = query.get('referralCode');
+
     if (initStep) {
       setStep(initStep);
+    }
+    if (!!refCode) {
+      setRefCode(refCode);
     }
   }, []);
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
+    console.log('');
     if (pathname === '/join') {
       setStep(Step.Start);
     }
@@ -87,22 +91,14 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
 
       setStep(Step.Verifying);
 
-      const verifying = await validateToken({
+      const verifying = await services.validateToken({
         token
       });
 
-      useGoogleTagManager(
-        'newuser',
-        'www.raise.it',
-        'Signup',
-        '/join',
-        'LoginPage',
-        'dataLayer',
-        'Submit',
-        'emailform'
+      verifying.fold(
+        () => setStep(Step.VerifiedError(token)),
+        () => setStep(Step.Verified)
       );
-
-      verifying.fold(() => setStep(Step.VerifiedError(token)), () => setStep(Step.Verified));
     }
 
     if (pathname.includes('password/reset')) {
@@ -124,25 +120,55 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     }
   }, [history.location.pathname, open]);
 
-  const onSetStep = (step: Steps) => () => setStep(Step[step]);
+  const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
 
   const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
   };
 
   const onSendCredentials = async () => {
+    // special case when the users want to register from app.domain
+
+    try {
+      if (host.split('.')[0] === 'app') {
+        tagManager.sendEventCategory('signup', TMEvents.Click, 'dashboard', host);
+      }
+    } catch (err) {
+      console.log('[onSendCredentials] Error tracking analytics ', err);
+    }
+
+    tagManager.sendEventCategory('signup', TMEvents.Click, 'signup_attempt', host);
     const signup = await services.signUp({
       ...credentials,
       ...(!!referralCode ? { referrer_code: referralCode } : {}),
       accounttype_id: AccountType.Lender
     });
-    signup.fold(() => console.log('something went wrong'), () => setStep(Step.Confirm));
+    signup.fold(
+      () => {
+        tagManager.sendEventCategory('signup', TMEvents.Submit, 'signup_error', host);
+        console.log('something went wrong');
+      },
+      () => {
+        tagManager.sendEventCategory('signup', TMEvents.Submit, 'signup_success', host);
+        setStep(Step.Confirm);
+      }
+    );
   };
 
   const onResetPassword = async (token, password) => {
+    tagManager.sendEventCategory('reset', TMEvents.Click, 'reset_attempt', host);
     const resetPassword = await services.changePassword(token, password);
 
-    resetPassword.fold(() => setStep(Step.ResetError), () => setStep(Step.ResetOK));
+    resetPassword.fold(
+      () => {
+        tagManager.sendEventCategory('reset', TMEvents.Submit, 'reset_error', host);
+        setStep(Step.ResetError);
+      },
+      () => {
+        tagManager.sendEventCategory('reset', TMEvents.Submit, 'reset_success', host);
+        setStep(Step.ResetOK);
+      }
+    );
   };
 
   const onSetPasswordBorrower = async (token, password) => {
@@ -155,33 +181,46 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   };
 
   const onActivateAccount = async token => {
-    const activateAccount = await validateToken({
+    tagManager.sendEventCategory('activate_borrower', TMEvents.Click, 'activate_attempt', host);
+    const activateAccount = await services.validateToken({
       token
     });
 
     activateAccount.fold(
-      () => setStep(Step.BorrowerSignUpError),
-      () => setStep(Step.BorrowerSignUpOK)
+      () => {
+        tagManager.sendEventCategory('activate_borrower', TMEvents.Submit, 'activate_error', host);
+        setStep(Step.BorrowerSignUpError);
+      },
+      () => {
+        tagManager.sendEventCategory(
+          'activate_borrower',
+          TMEvents.Submit,
+          'activate_success',
+          host
+        );
+        setStep(Step.BorrowerSignUpOK);
+      }
     );
   };
 
   const onRecover = async email => {
+    tagManager.sendEventCategory('Recover', TMEvents.Click, 'recover_attempt', host);
     const request = await services.recovery(email);
 
-    request.fold(() => console.log('Something went wrong'), () => setStep(Step.ResetConfirm));
+    request.fold(
+      () => {
+        tagManager.sendEventCategory('Recover', TMEvents.Submit, 'recover_error', host);
+        console.log('Something went wrong');
+      },
+      () => {
+        tagManager.sendEventCategory('Recover', TMEvents.Submit, 'recover_success', host);
+        setStep(Step.ResetConfirm);
+      }
+    );
   };
 
   const onLogin = async () => {
-    useGoogleTagManager(
-      credentials.email,
-      'www.raise.it',
-      'Login',
-      '/join',
-      'LoginPage',
-      'dataLayer',
-      'Click',
-      'Login Attempt'
-    );
+    tagManager.sendEventCategory('Login', TMEvents.Click, 'login_attempt', host);
 
     const request = await services.signIn({
       email: credentials.email,
@@ -190,7 +229,10 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     });
 
     request.fold(
-      () => setLoginError(true),
+      () => {
+        tagManager.sendEventCategory('Login', TMEvents.Click, 'login_error', host);
+        setLoginError(true);
+      },
       response => {
         const {
           data: {
@@ -223,18 +265,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
         );
 
         setuserCookie(user, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
-
-        useGoogleTagManager(
-          id,
-          'www.raise.it',
-          'Login',
-          '/join',
-          'LoginPage',
-          'dataLayer',
-          'Submit',
-          'Login Success'
-        );
-
+        tagManager.sendEventCategory('Login', TMEvents.Click, 'login_success', host);
         window.location.href = getHost('APP');
       }
     );
@@ -243,15 +274,6 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   const onResetToken = async () => {
     setStep(Step.Confirm);
   };
-
-  useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const refCode = query.get('referralCode');
-
-    if (!!refCode) {
-      setRefCode(refCode);
-    }
-  }, []);
 
   const onOnClose = () => {
     if (initStep) {
