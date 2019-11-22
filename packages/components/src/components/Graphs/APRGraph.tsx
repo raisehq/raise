@@ -3,7 +3,7 @@ import moment from 'moment';
 import axios from 'axios';
 import BN from 'bn.js'
 import { Line } from 'react-chartjs-2';
-import { Card } from '@raisehq/components';
+import Card from '../Card';
 import { fromWei } from 'web3-utils';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
@@ -19,7 +19,7 @@ interface APRGraphProps {
   minInterestRate: BN;
   auctionStartTimestamp: number;
   auctionEndTimestamp: number;
-  currentAPR: string
+  currentAPR: string;
 }
 
 const datasetToGraph = (

@@ -7,6 +7,12 @@ import { GraphButton, CardContent, CardBottom } from './InvestCard.styles';
 import Card from '../Card';
 import Amount from '../Amount';
 import AuctionAPR from '../Graphs/APRGraph';
+interface times {
+  loanTerm: string;
+  auctionTimeLeft: string;
+  loanTermLeft: string;
+}
+
 interface InvestProps {
   companyName: string;
   shortDescription: string;
@@ -15,8 +21,8 @@ interface InvestProps {
   slug: string;
   currentAmount: number;
   totalAmount: number;
-  maxAmount: number;
-  times: any;
+  maxAmount: string;
+  times: times;
   currentAPR: string;
   principal: string;
   investorCount: string;

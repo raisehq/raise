@@ -7,9 +7,9 @@ interface RowContentProps {
 }
 
 interface RowWrapperProps {
-  notop?: boolean | null;
-  small?: boolean | null;
-  big?: boolean | null;
+  notop?: boolean | null | undefined;
+  small?: boolean | null | undefined;
+  big?: boolean | null | undefined;
 }
 
 interface GridProps {
@@ -46,7 +46,7 @@ export const CardImageCrop: any = styled.div < ImageCropProps > `
   border: 1px solid #cfd0d4;
 `;
 
-export const CardLogo: any = styled(Image) `
+export const CardLogo: any = styled(Image)`
   &&& {
     width: 70px;
     height: 70px;
@@ -305,7 +305,7 @@ export const InfoIcon = styled.div`
   border-radius: 36px;
 `;
 
-export const InfoIconCmp = styled(Icon) `
+export const InfoIconCmp = styled(Icon)`
   &&& {
     position: absolute;
     top: 0;

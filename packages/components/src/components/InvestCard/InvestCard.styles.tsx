@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button } from 'semantic-ui-react';
-import { Card } from '@raisehq/components';
+import Card from '../Card';
 
 export const CardContent = styled(Card.Content)`
   padding: 40px 20px 0px 20px;
