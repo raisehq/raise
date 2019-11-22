@@ -131,13 +131,13 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
 
     try {
       if (host.split('.')[0] === 'app') {
-        tagManager.sendEventCategory('signup', TMEvents.Click, 'dashboard', host);
+        tagManager.sendEventCategory('Signup', TMEvents.Click, 'dashboard', host);
       }
     } catch (err) {
       console.log('[onSendCredentials] Error tracking analytics ', err);
     }
 
-    tagManager.sendEventCategory('signup', TMEvents.Click, 'signup_attempt', host);
+    tagManager.sendEventCategory('Signup', TMEvents.Click, 'signup_attempt', host);
     const signup = await services.signUp({
       ...credentials,
       ...(!!referralCode ? { referrer_code: referralCode } : {}),
@@ -145,27 +145,27 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     });
     signup.fold(
       () => {
-        tagManager.sendEventCategory('signup', TMEvents.Submit, 'signup_error', host);
+        tagManager.sendEventCategory('Signup', TMEvents.Submit, 'signup_error', host);
         console.log('something went wrong');
       },
       () => {
-        tagManager.sendEventCategory('signup', TMEvents.Submit, 'signup_success', host);
+        tagManager.sendEventCategory('Signup', TMEvents.Submit, 'signup_success', host);
         setStep(Step.Confirm);
       }
     );
   };
 
   const onResetPassword = async (token, password) => {
-    tagManager.sendEventCategory('reset', TMEvents.Click, 'reset_attempt', host);
+    tagManager.sendEventCategory('Reset', TMEvents.Click, 'reset_attempt', host);
     const resetPassword = await services.changePassword(token, password);
 
     resetPassword.fold(
       () => {
-        tagManager.sendEventCategory('reset', TMEvents.Submit, 'reset_error', host);
+        tagManager.sendEventCategory('Reset', TMEvents.Submit, 'reset_error', host);
         setStep(Step.ResetError);
       },
       () => {
-        tagManager.sendEventCategory('reset', TMEvents.Submit, 'reset_success', host);
+        tagManager.sendEventCategory('Reset', TMEvents.Submit, 'reset_success', host);
         setStep(Step.ResetOK);
       }
     );
@@ -181,23 +181,18 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   };
 
   const onActivateAccount = async token => {
-    tagManager.sendEventCategory('activate_borrower', TMEvents.Click, 'activate_attempt', host);
+    tagManager.sendEventCategory('ActivateBorrower', TMEvents.Click, 'activate_attempt', host);
     const activateAccount = await services.validateToken({
       token
     });
 
     activateAccount.fold(
       () => {
-        tagManager.sendEventCategory('activate_borrower', TMEvents.Submit, 'activate_error', host);
+        tagManager.sendEventCategory('ActivateBorrower', TMEvents.Submit, 'activate_error', host);
         setStep(Step.BorrowerSignUpError);
       },
       () => {
-        tagManager.sendEventCategory(
-          'activate_borrower',
-          TMEvents.Submit,
-          'activate_success',
-          host
-        );
+        tagManager.sendEventCategory('ActivateBorrower', TMEvents.Submit, 'activate_success', host);
         setStep(Step.BorrowerSignUpOK);
       }
     );
