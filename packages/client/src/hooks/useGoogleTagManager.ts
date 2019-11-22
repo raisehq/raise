@@ -10,12 +10,24 @@ const GTMID = process.env.REACT_APP_GTM_ID;
 
 function useGoogleTagManager(category?) {
   const sendEvent = (event, label, value?) =>
-    TagManager.initialize({
+    TagManager.dataLayer({
       gtmId: GTMID,
       dataLayer: {
         event,
         category,
+        action: event,
         value: value || label,
+        label
+      }
+    });
+  const sendEventCategory = (newCategory, event, label, value?) =>
+    TagManager.dataLayer({
+      gtmId: GTMID,
+      dataLayer: {
+        event,
+        category: newCategory,
+        value: value || label,
+        action: event,
         label
       }
     });
@@ -32,7 +44,7 @@ function useGoogleTagManager(category?) {
 
   // Esta funcion sirve para todo.
 
-  return { sendEvent, pageView };
+  return { sendEvent, pageView, sendEventCategory };
 }
 
 export default useGoogleTagManager;
