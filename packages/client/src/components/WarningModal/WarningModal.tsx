@@ -48,7 +48,7 @@ const WarningModal: React.SFC<WarningModalProps> = ({ warning, open, closeModal,
             </OnboardingCell>
             <OnboardingCell>I'm aware. Don't show this again.</OnboardingCell>
           </OnboardDisclaimerBorrower>
-          <WarningButton onClick={storeCookie}>
+          <WarningButton onClick={storeCookie} id="btn-warning-close">
             <ButtonText>Close</ButtonText>
           </WarningButton>
         </WarningContent>

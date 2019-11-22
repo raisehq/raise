@@ -4,7 +4,10 @@ export default (dispatch: any, state: any) => {
   const onGetLiveAuctionsByAccount = async () => {
     const request = await getLiveAuctionsByAccount(state.user.cryptoAddress.address, 'kovan');
 
-    request.fold(() => null, auctions => dispatch({ type: 'SET_LIVE_AUCTIONS', data: auctions }));
+    request.fold(
+      () => null,
+      auctions => dispatch({ type: 'SET_LIVE_AUCTIONS', data: auctions })
+    );
   };
 
   const onGetSuggestedAuctions = async () => {
@@ -65,7 +68,9 @@ export default (dispatch: any, state: any) => {
     if (error) {
       console.error('[onGetLoansByAccountSubscription] error on get loans subs :: ', error);
     } else {
-      dispatch({ type: 'SET_BORROWER_LOANS', data: data.users[0].loanRequests });
+      if (data.users[0]) {
+        dispatch({ type: 'SET_BORROWER_LOANS', data: data.users[0].loanRequests });
+      }
     }
   };
 
