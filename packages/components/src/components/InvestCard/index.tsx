@@ -1,1 +1,4 @@
-export { default as InvestCard } from './InvestCard';
+import InvestCard from './InvestCard';
+
+export default InvestCard;
+export { InvestCard };

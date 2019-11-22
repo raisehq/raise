@@ -2,7 +2,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable func-names */
 export const verticalLinePlugin = {
-  afterDatasetsDraw: function(chart, easing) {
+  afterDatasetsDraw: function (chart: any, _easing: any) {
     if (chart.tooltip._active && chart.tooltip._active.length) {
       const activePoint = chart.tooltip._active[0];
       const ctx = chart.ctx;
@@ -24,7 +24,7 @@ export const verticalLinePlugin = {
 };
 
 export const chartBackground = {
-  beforeDraw: function(chart, easing) {
+  beforeDraw: function (chart: any, _easing: any) {
     if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
       const ctx = chart.chart.ctx;
       const chartArea = chart.chartArea;
@@ -43,7 +43,7 @@ export const chartBackground = {
 };
 
 export const todayVerticalLine = {
-  afterDatasetsDraw: function(chart, easing) {
+  afterDatasetsDraw: function (chart: any, _easing: any) {
     const meta = chart.getDatasetMeta(0);
     const x = meta.data[chart.options.lineAtIndex[0]]._model.x;
 

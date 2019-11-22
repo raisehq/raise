@@ -1,12 +1,12 @@
 import moment from 'moment';
 
-const addDays = (datetime, days) => {
+const addDays = (datetime: Date, days: number) => {
   const date = new Date(datetime.getTime());
   date.setDate(date.getDate() + days);
   return date;
 };
 
-export const getDates = (startDate: Date, stopDate) => {
+export const getDates = (startDate: Date, stopDate: Date) => {
   const dateArray: Date[] = [];
   let currentDate: Date = new Date(startDate.getTime());
   while (currentDate <= stopDate) {
@@ -16,13 +16,13 @@ export const getDates = (startDate: Date, stopDate) => {
   return dateArray;
 };
 
-export const getClosestIndexByDate = (dateList, targetDate) => {
+export const getClosestIndexByDate = (dateList: Date[], targetDate: Date) => {
   const tempDiff = dateList.map(d => Math.abs(moment(d).diff(moment(targetDate))));
   const index = tempDiff.indexOf(Math.min(...tempDiff));
   return index;
 };
 
-export const getMediana = numbers => {
+export const getMediana = (numbers: number[]) => {
   if (!numbers.length) {
     return 0;
   }
@@ -39,4 +39,4 @@ export const getMediana = numbers => {
   return median;
 };
 
-export const getAverage = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+export const getAverage = (arr: number[]) => arr.reduce((p: number, c: number) => p + c, 0) / arr.length;

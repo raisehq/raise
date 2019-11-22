@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import axios from 'axios';
+import BN from 'bn.js'
 import { Line } from 'react-chartjs-2';
 import { Card } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
@@ -14,11 +15,11 @@ import { DAI_ADDRESS } from '../../commons/constants';
 const Chart = require('react-chartjs-2');
 
 interface APRGraphProps {
-  maxInterestRate?: string;
-  minInterestRate?: string;
-  auctionStartTimestamp?: number;
-  auctionEndTimestamp?: number;
-  currentAPR?: string
+  maxInterestRate: BN;
+  minInterestRate: BN;
+  auctionStartTimestamp: number;
+  auctionEndTimestamp: number;
+  currentAPR: string
 }
 
 const datasetToGraph = (
@@ -57,7 +58,7 @@ const datasetToGraph = (
   data: [...dataset]
 });
 
-const options = {
+const options: any = {
   fullCompoundDataset: [0],
   legend: {
     display: false,
@@ -72,7 +73,7 @@ const options = {
     backgroundColor: 'rgba(248,248,248,1)'
   },
   lineAtIndex: [0],
-  onHover: (e, d) => { },
+  onHover: () => { },
   layout: {
     padding: {
       left: 5,
@@ -111,11 +112,11 @@ const options = {
   }
 };
 
-const getRaiseDataset = (dates, auctionStart, auctionEnd, maxInterest, minInterest) => {
+const getRaiseDataset = (dates: Date[], auctionStart: Date, auctionEnd: Date, maxInterest: number, minInterest: number) => {
   return dates.map(
-    d =>
-      ((maxInterest - minInterest) * Math.abs(d - auctionStart)) /
-      Math.abs(auctionEnd - auctionStart) +
+    (d: Date) =>
+      ((maxInterest - minInterest) * Math.abs(d.valueOf() - auctionStart.valueOf())) /
+      Math.abs(auctionEnd.valueOf() - auctionStart.valueOf()) +
       minInterest
   );
 };
@@ -215,7 +216,7 @@ const APRGraph = ({
         data: { supply_rates: supplyRates }
       } = response;
       const { length } = supplyRates;
-      const estDataset = supplyRates.map(x => x.rate * 100);
+      const estDataset = supplyRates.map(({ rate }: { rate: number }) => rate * 100);
       const currentDataset = estDataset.slice(length - nowIndex - 1);
       setFullCompoundDataset(estDataset);
       setCompoundDataset(currentDataset);
@@ -225,7 +226,7 @@ const APRGraph = ({
 
   options.lineAtIndex = [nowIndex];
 
-  const updateHover = (event, datapoint) => {
+  const updateHover = (_event: any, datapoint: any[]) => {
     // Return current index to be able to show tooltip outside canvas
     if (!datapoint.length) {
       setSelectedDate(dateNow);
