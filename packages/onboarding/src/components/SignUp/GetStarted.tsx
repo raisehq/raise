@@ -1,30 +1,59 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
-import { Icon, Input } from 'semantic-ui-react';
+import { Icon, Input, Select } from 'semantic-ui-react';
 import * as _ from 'lodash';
+import debounce from 'lodash/debounce';
+import { AccountType } from '@raisehq/components';
 import {
   OnboardHeader,
   OnboardSubHeader,
   OnboardInput,
   OnboardButton,
+  OnboardCountries,
   CallToSignIn,
   OnboardDisclaimer,
   OnboardLogo,
   OnboardCheckbox,
   OnboardMailingList,
   OnboardingCell,
-  MiniBody
+  MiniBody,
+  MyRecapcha
 } from '../styles';
 import { AppContext } from '../App';
 import { IContext } from '../types';
+import { countryOptions } from '../../commons/countries';
 import validations from '../validations';
 import theme from '../../theme';
 import { checkEmail } from '../../services';
 import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const GetStarted = ({ mini }: { mini?: boolean }) => {
-  const { onSetStep, credentials, onSetCredentials, referralCode } = useContext<IContext>(
-    AppContext
-  );
+  const { onSetStep, credentials, onSetCredentials, referralCode, onSendCredentials } = useContext<
+    IContext
+  >(AppContext);
+  const [errors, setErrors] = useState<{
+    password: boolean;
+    country: boolean;
+    email: boolean;
+    accounttype_id: number;
+  }>({
+    password: false,
+    country: false,
+    email: false,
+    accounttype_id: AccountType.Lender
+  });
+
+  const [recaptcha, setRecaptcha] = useState(null);
+  const recaptchaRef: any = React.createRef();
+
+  useEffect(() => {
+    if (recaptcha) {
+      onSendCredentials();
+    }
+  }, [recaptcha]);
+
+  const onSetCountry = debounce(async (e, data) => {
+    onSetCredentials('country_id', data.value);
+  }, 800);
 
   useEffect(() => {
     onSetCredentials('mailingChecked', false);
@@ -58,31 +87,55 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
     );
   }, 500);
 
+  const onSetPassword = debounce((e, data) => {
+    const { value } = data;
+    const validatePassword = validations.password(value);
+
+    validatePassword.fold(
+      () => setErrors({ ...errors, password: true }),
+      () => {
+        setErrors({ ...errors, password: false });
+        onSetCredentials('password', value);
+      }
+    );
+  }, 800);
+
   const onAcceptTerms = (e, { checked }) => setError({ ...error, terms: !checked });
 
   const onAcceptMailingList = (e, { checked }) => {
     onSetCredentials('mailingChecked', checked);
   };
 
+  const onSubmitSignUp = () => {
+    recaptchaRef.current.reset();
+    recaptchaRef.current.execute();
+  };
+
   const onKeyPress = event => {
-    if (event.key === 'Enter' && (credentials.email !== '' && !error.validation && !error.exist)) {
-      onSetStep('Register')();
+    useGoogleTagManager(
+      credentials.email,
+      'www.raise.it',
+      'Signup',
+      '/register',
+      'RegisterForm',
+      'dataLayer',
+      'Click',
+      'signup_form_attempt'
+    );
+
+    if (
+      event.key === 'Enter' &&
+      credentials.email !== '' &&
+      credentials.password !== '' &&
+      credentials.country_id !== ''
+    ) {
+      onSubmitSignUp();
     }
   };
 
-  const onSetTagManagerAndStep = () => {
-    onSetStep('Register')();
-
-    return useGoogleTagManager(
-      'new user',
-      'www.raise.it',
-      'Signup',
-      '/confirm',
-      'Register',
-      'dataLayer',
-      'Submit',
-      'emailform'
-    );
+  const onCaptchaCallback = async captchaResponse => {
+    onSetCredentials('g-recaptcha-response', captchaResponse);
+    setRecaptcha(captchaResponse);
   };
 
   const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
@@ -140,10 +193,6 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
   }
   return (
     <Fragment>
-      <OnboardHeader>
-        {header} <OnboardLogo />
-      </OnboardHeader>
-      <OnboardSubHeader>Create an account</OnboardSubHeader>
       <OnboardInput>
         <Input
           placeholder="Email address"
@@ -159,11 +208,52 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
         )}
         {error.exist && <div className="errorText">This email already exists.</div>}
       </OnboardInput>
+      <OnboardInput>
+        <OnboardCountries
+          control={Select}
+          options={countryOptions}
+          search
+          placeholder="Country of residence"
+          onChange={onSetCountry}
+          onKeyPress={onKeyPress}
+        />
+
+        <Icon size="big" name="globe" />
+      </OnboardInput>
+      <OnboardInput>
+        <Input
+          placeholder="Create a password"
+          onChange={onSetPassword}
+          error={errors.password}
+          type="password"
+          onKeyPress={onKeyPress}
+        />
+        {errors.password && (
+          <div className="errorText">
+            Passwords must have at least 8 characters and 1 capital letter.
+          </div>
+        )}
+        <Icon size="big" name="key" />
+      </OnboardInput>
+      <MyRecapcha
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
+        render="explicit"
+        onChange={onCaptchaCallback}
+      />
       <OnboardButton
-        disabled={credentials.email === '' || error.validation || error.exist || error.terms}
-        onClick={onSetTagManagerAndStep}
+        disabled={
+          credentials.email === '' ||
+          credentials.password === '' ||
+          credentials.country_id === '' ||
+          error.validation ||
+          error.exist ||
+          error.terms
+        }
+        onClick={onSubmitSignUp}
       >
-        Next
+        Get Started
       </OnboardButton>
       <OnboardMailingList>
         <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
