@@ -29,7 +29,7 @@ const datasetToGraph = (
   fill: boolean,
   borderWidth: number,
   dashed: boolean,
-  pointHover = [],
+  pointHover: any[],
   pointRadius: number
 ) => ({
   label,
@@ -306,7 +306,7 @@ const APRGraph = ({
           contentColor={compoundGraphData.borderColor}
         />
       </Card.Grid>
-      <Line data={graphData} options={options} height={286} />
+      <Line data={graphData} options={options} height={254} />
     </>
   );
 };
