@@ -20,6 +20,7 @@ const queryies = {
             auctionStartTimestamp
             auctionEndTimestamp
             termLength
+            minInterestRate
             maxInterestRate
             operatorBalance
             originator
@@ -51,6 +52,7 @@ const queryies = {
             auctionStartTimestamp
             auctionEndTimestamp
             termLength
+            minInterestRate
             maxInterestRate
             operatorBalance
             originator
@@ -86,8 +88,9 @@ const queryies = {
               auctionStartTimestamp
               auctionEndTimestamp
               termLength
-              maxInterestRate,
-              loanWithdrawn,
+              minInterestRate
+              maxInterestRate
+              loanWithdrawn
               loanRepaid
               originator
             }
@@ -120,6 +123,7 @@ const queryies = {
             auctionStartTimestamp
             auctionEndTimestamp
             termLength
+            minInterestRate
             maxInterestRate
             operatorBalance,
             loanWithdrawn,

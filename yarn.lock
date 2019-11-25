@@ -15386,7 +15386,7 @@ rc-animate@2.x:
     rc-util "^4.8.0"
     react-lifecycles-compat "^3.0.4"
 
-rc-slider@^8.6.13, rc-slider@^8.6.6:
+rc-slider@^8.6.6:
   version "8.6.13"
   resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.6.13.tgz#88a8150c2dda6709f3f119135de11fba80af765b"
   integrity sha512-fCUe8pPn8n9pq1ARX44nN2nzJoATtna4x/PdskUrxIvZXN8ja7HuceN/hq6kokZjo3FBD2B1yMZvZh6oi68l6Q==
@@ -15397,6 +15397,20 @@ rc-slider@^8.6.13, rc-slider@^8.6.6:
     rc-tooltip "^3.7.0"
     rc-util "^4.0.4"
     shallowequal "^1.0.1"
+    warning "^4.0.3"
+
+rc-slider@^8.7.1:
+  version "8.7.1"
+  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.7.1.tgz#9ed07362dc93489a38e654b21b8122ad70fd3c42"
+  integrity sha512-WMT5mRFUEcrLWwTxsyS8jYmlaMsTVCZIGENLikHsNv+tE8ThU2lCoPfi/xFNUfJFNFSBFP3MwPez9ZsJmNp13g==
+  dependencies:
+    babel-runtime "6.x"
+    classnames "^2.2.5"
+    prop-types "^15.5.4"
+    rc-tooltip "^3.7.0"
+    rc-util "^4.0.4"
+    react-lifecycles-compat "^3.0.4"
+    shallowequal "^1.1.0"
     warning "^4.0.3"
 
 rc-tooltip@^3.7.0:

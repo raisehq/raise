@@ -22,7 +22,7 @@ const THEGRAPH_IDS: any = {
 
 const THEGRAPH_DAI_IDS: any = {
   KOVAN: process.env.REACT_APP_THEGRAPH_ID_DAI_KOVAN,
-  MAINNET: process.env.REACT_APP_THEGRAPH_ID_DAI_MAINNET
+  MAINNET: process.env.REACT_APP_THEGRAPH_ID_DAI_MAIN
 };
 
 export function getGraphEndpoint(network: string) {
@@ -109,7 +109,7 @@ export const isSupportedBrowser = () =>
   );
 
 const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v4/contracts.json';
+  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v5/contracts.json';
 
 export const getContractsDefinition = async () => {
   const remoteContracts = await axios.get(HERO_CONTRACTS);

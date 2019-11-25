@@ -94,7 +94,7 @@ const options = {
         ticks: {
           display: false,
           min: 0,
-          max: 20,
+          max: 21,
           stepSize: 1
         },
         display: false
@@ -103,9 +103,12 @@ const options = {
   }
 };
 
-const getRaiseDataset = (dates, auctionStart, auctionEnd, maxInterest) => {
+const getRaiseDataset = (dates, auctionStart, auctionEnd, maxInterest, minInterest) => {
   return dates.map(
-    d => (maxInterest * Math.abs(d - auctionStart)) / Math.abs(auctionEnd - auctionStart)
+    d =>
+      ((maxInterest - minInterest) * Math.abs(d - auctionStart)) /
+        Math.abs(auctionEnd - auctionStart) +
+      minInterest
   );
 };
 
@@ -120,6 +123,9 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { currentAPR } = calcs;
 
   const maxInterest = Number(fromWei(auction.maxInterestRate.toString())) * 12;
+  const minInterest = auction.minInterestRate
+    ? Number(fromWei(auction.minInterestRate.toString())) * 12
+    : 0;
   const dateStart = new Date(auction.auctionStartTimestamp * 1000);
   const dateEnd = new Date(auction.auctionEndTimestamp * 1000);
   const dateNow = new Date();
@@ -127,7 +133,7 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const arrayDays = getDates(dateStart, dateEnd);
   const nowIndex = getClosestIndexByDate(arrayDays, dateNow);
 
-  const raiseDataset = getRaiseDataset(arrayDays, dateStart, dateEnd, maxInterest);
+  const raiseDataset = getRaiseDataset(arrayDays, dateStart, dateEnd, maxInterest, minInterest);
 
   const raiseGraphData = datasetToGraph(
     raiseDataset,
@@ -216,8 +222,12 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
     if (datapoint.length) {
       const index = datapoint[0]._index;
       setSelectedDate(arrayDays[index]);
+
+      const currentAPRGraph =
+        index === nowIndex ? currentAPR : numeral(raiseDataset[index] / 100).format('0.00%');
+
       setInterest([
-        numeral(raiseDataset[index] / 100).format('0.00%'),
+        currentAPRGraph,
         index > nowIndex
           ? medianCompoundRateNumeral
           : numeral(compoundDataset[index] / 100).format('0.00%')

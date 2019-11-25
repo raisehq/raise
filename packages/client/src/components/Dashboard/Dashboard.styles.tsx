@@ -101,7 +101,7 @@ export const NoResults = styled.div`
 export const AmountComponent = styled.div`
   position: relative;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   height: 22px;
   &&& > div:first-child {
     margin-left: 5px;

@@ -3,12 +3,12 @@ import { CoinBox, CoinImage } from './Coin.styles';
 
 interface CoinProps {
   src: string;
-  name: string;
+  name?: string;
 }
 
-export const Coin: React.SFC<CoinProps> = ({src, name}) => (
+export const Coin: React.SFC<CoinProps> = ({ src, name }) => (
   <CoinBox>
     <CoinImage src={src} />
-    <div>{name}</div>
+    {name ? <div>{name}</div> : null}
   </CoinBox>
-)
+);
