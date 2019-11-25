@@ -30,7 +30,7 @@ const TokenInput: React.SFC<TokenInputProps> = ({
       ) : (
         <LoanInput value={value} onValueChange={onValueChange} {...props} />
       )}
-      <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`} name="DAI" />
+      <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.png`} />
     </LoanInputBox>
   );
 };

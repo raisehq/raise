@@ -39,7 +39,7 @@ const WarningModal: React.SFC<WarningModalProps> = ({ warning, open, closeModal,
           <WarningDescription>{warning.description}</WarningDescription>
           {warning.link ? (
             <WarningLink>
-              <a href={warning.link}>{warning.image}</a>
+              <a href={warning.link}>{warning.link}</a>
             </WarningLink>
           ) : null}
           <OnboardDisclaimerBorrower>
