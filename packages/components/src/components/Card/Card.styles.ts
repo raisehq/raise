@@ -36,7 +36,7 @@ export const GraphContainer = styled.div`
   align-items: center;
 `;
 
-export const CardImageCrop: any = styled.div < ImageCropProps > `
+export const CardImageCrop: any = styled.div<ImageCropProps>`
   width: 100%;
   height: 120px;
   background-position: center center;
@@ -57,12 +57,11 @@ export const CardLogo: any = styled(Image)`
 `;
 
 interface HeroCardProps {
-  size?: string,
-  width?: string
+  size?: string;
+  width?: string;
 }
 
-
-export const HeroCard = styled.div < HeroCardProps > `
+export const HeroCard = styled.div<HeroCardProps>`
   min-height: ${({ size }) => size || '335px'};
   border-radius: 6px;
   background-color: #ffffff;
@@ -100,7 +99,11 @@ export const CardDescription = styled.div`
   display: block;
 `;
 
-export const CardContent = styled.div < { children?: any; logo?: any; size?: any } > `
+export const CardContent = styled.div<{
+  children?: any;
+  logo?: any;
+  size?: any;
+}>`
   padding: 20px;
   position: relative;
   height: ${({ size }) => size || '100%'};
@@ -120,10 +123,11 @@ export const CardContent = styled.div < { children?: any; logo?: any; size?: any
   }
 `;
 
-export const Grid: any = styled.div < GridProps > `
+export const Grid: any = styled.div<GridProps>`
   display: flex;
   margin: 20px 0px;
-  justify-content: ${({ spaceBetween }) => (spaceBetween ? 'space-between' : 'unset')};
+  justify-content: ${({ spaceBetween }) =>
+    spaceBetween ? 'space-between' : 'unset'};
   ${({ nobottom }) => nobottom && 'margin-bottom: 0;'}
   ${({ notop }) => notop && 'margin-top: 0;'}
   ${({ alignCenter }) => alignCenter && 'align-items: center;'}
@@ -133,7 +137,7 @@ export const Grid: any = styled.div < GridProps > `
   flex-wrap: wrap;
 `;
 
-export const Row = styled.div < RowWrapperProps > `
+export const Row = styled.div<RowWrapperProps>`
   flex: ${({ small }) => (small ? '1 0 25%' : '1 0 32.5%')};
   margin: 20px 0px 0px 0px;
   ${({ notop }) => notop && 'margin-top: 0;'}
@@ -144,14 +148,14 @@ export const Row = styled.div < RowWrapperProps > `
   align-items: center;
 `;
 
-export const RowContent = styled.div < RowContentProps > `
+export const RowContent = styled.div<RowContentProps>`
   color: ${({ contentColor }) => (contentColor ? contentColor : '#5a5a5a')};
   font-size: 14px;
   font-weight: bold;
   text-align: center;
 `;
 
-export const RowTitle = styled.div < RowWrapperProps > `
+export const RowTitle = styled.div<RowWrapperProps>`
   font-size: ${({ big }) => (big ? '14px' : '10px')};
   color: #5c5d5d;
   text-align: center;
@@ -175,7 +179,7 @@ export const HeaderTitle = styled.h1`
   line-height: 14px;
 `;
 
-export const HeaderContent = styled.div < { fontSize?: any } > `
+export const HeaderContent = styled.div<{ fontSize?: any }>`
   color: #3c4251;
   font-size: ${({ fontSize }) => fontSize || '26px'};
   font-weight: bold;

@@ -8,6 +8,9 @@ export const CardContent = styled(Card.Content)`
 
 export const CardBottom = styled.div`
   padding: 0px 20px 20px 20px;
+  ${Card.Grid}:first-child {
+    margin-bottom: 0px;
+  }
 `;
 
 export const GraphButton = styled(Button)`

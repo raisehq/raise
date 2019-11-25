@@ -2,7 +2,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable func-names */
 export const verticalLinePlugin = {
-  afterDatasetsDraw: function (chart: any, _easing: any) {
+  afterDatasetsDraw: function(chart: any, _easing: any) {
     if (chart.tooltip._active && chart.tooltip._active.length) {
       const activePoint = chart.tooltip._active[0];
       const ctx = chart.ctx;
@@ -20,12 +20,15 @@ export const verticalLinePlugin = {
       ctx.stroke();
       ctx.restore();
     }
-  }
+  },
 };
 
 export const chartBackground = {
-  beforeDraw: function (chart: any, _easing: any) {
-    if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
+  beforeDraw: function(chart: any, _easing: any) {
+    if (
+      chart.config.options.chartArea &&
+      chart.config.options.chartArea.backgroundColor
+    ) {
       const ctx = chart.chart.ctx;
       const chartArea = chart.chartArea;
 
@@ -39,17 +42,20 @@ export const chartBackground = {
       );
       ctx.restore();
     }
-  }
+  },
 };
 
 export const todayVerticalLine = {
-  afterDatasetsDraw: function (chart: any, _easing: any) {
+  afterDatasetsDraw: function(chart: any, _easing: any) {
     const meta = chart.getDatasetMeta(0);
     const x = meta.data[chart.options.lineAtIndex[0]]._model.x;
 
     let todayX;
     const todayOverX = 25;
-    if (chart.options.lineAtIndex[0] + 1 <= chart.data.datasets[0].data.length / 2) {
+    if (
+      chart.options.lineAtIndex[0] + 1 <=
+      chart.data.datasets[0].data.length / 2
+    ) {
       todayX = x + todayOverX;
     } else {
       todayX = x - todayOverX;
@@ -72,5 +78,5 @@ export const todayVerticalLine = {
     chart.ctx.fillText('Today', todayX, topY + 20);
     chart.ctx.stroke();
     chart.ctx.restore();
-  }
+  },
 };

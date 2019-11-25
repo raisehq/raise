@@ -17,7 +17,9 @@ export const getDates = (startDate: Date, stopDate: Date) => {
 };
 
 export const getClosestIndexByDate = (dateList: Date[], targetDate: Date) => {
-  const tempDiff = dateList.map(d => Math.abs(moment(d).diff(moment(targetDate))));
+  const tempDiff = dateList.map(d =>
+    Math.abs(moment(d).diff(moment(targetDate)))
+  );
   const index = tempDiff.indexOf(Math.min(...tempDiff));
   return index;
 };
@@ -39,4 +41,5 @@ export const getMediana = (numbers: number[]) => {
   return median;
 };
 
-export const getAverage = (arr: number[]) => arr.reduce((p: number, c: number) => p + c, 0) / arr.length;
+export const getAverage = (arr: number[]) =>
+  arr.reduce((p: number, c: number) => p + c, 0) / arr.length;

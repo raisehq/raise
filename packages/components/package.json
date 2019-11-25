@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "start": "tsdx watch",
+    "dev": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --env=jsdom",
     "lint": "tsdx lint",
@@ -54,6 +55,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.19.0",
     "bn.js": "^5.0.0",
+    "dotenv": "^8.2.0",
     "numeral": "^2.0.6",
     "react-docgen-typescript-loader": "^3.5.0",
     "react-router-dom": "^5.1.2",

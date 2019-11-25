@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-const Thing = () => (<div>A wild thing</div>)
+const Thing = () => <div>A wild thing</div>;
 
 describe('it', () => {
   it('renders without crashing', () => {
