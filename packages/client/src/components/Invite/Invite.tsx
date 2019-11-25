@@ -31,7 +31,6 @@ import {
 import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import AppContext from '../AppContext';
-// import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
 
@@ -55,16 +54,6 @@ const Invite = () => {
   });
 
   const getImagesUrl = useImages();
-  // useGoogleTagManager(
-  //   id,
-  //   'www.raise.it',
-  //   'RAF',
-  //   '/referral',
-  //   'ReferafriendPage',
-  //   'dataLayer',
-  //   'Page View',
-  //   'RAFriend View'
-  // );
 
   return (
     <Raf>
