@@ -46,6 +46,9 @@ fi
 
 DIRECTORY="contracts"
 
+echo "- Clone contracts"
+rm  -rf ./contracts 
+
 if [ ! -d "$DIRECTORY" ]; then
   # Control will enter here if $DIRECTORY doesn't exist.
   git clone https://gitlab.com/raisehq/contracts-solidity --branch integration ./contracts > "/dev/null" 2>&1
