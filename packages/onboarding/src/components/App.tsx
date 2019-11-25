@@ -62,6 +62,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(defaultContext.credentials);
   const [referralCode, setRefCode] = useState<string>('');
+  const [startMini, setStartMini] = useState<boolean>(false);
   const [setuserCookie] = useCookie('user', {});
   const [setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
@@ -71,6 +72,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     const refCode = query.get('referralCode');
 
     if (initStep) {
+      if (initStep === Step.StartMini) setStartMini(true);
       setStep(initStep);
     }
     if (!!refCode) {
@@ -80,7 +82,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
-    console.log('');
+
     if (pathname === '/join') {
       setStep(Step.Start);
     }
@@ -120,6 +122,26 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     }
   }, [history.location.pathname, open]);
 
+  useEffect(() => {
+    /*
+      This case is special because this step of the signup or dashboard is already showed in the view
+      because of that we tracking the second step of the process.
+    */
+    if (step === Step.Register) {
+      try {
+        if (startMini) {
+          tagManager.sendEventCategory('Signup', TMEvents.Submit, 'blog_signup_form', host);
+        }
+
+        if (host.split('.')[0] === 'app') {
+          tagManager.sendEventCategory('Signup', TMEvents.Click, 'dashboard_signup_form', host);
+        }
+      } catch (err) {
+        console.log('[onSendCredentials] Error tracking analytics ', err);
+      }
+    }
+  }, [step]);
+
   const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
 
   const onSetCredentials = (input, value) => {
@@ -127,16 +149,6 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   };
 
   const onSendCredentials = async () => {
-    // special case when the users want to register from app.domain
-
-    try {
-      if (host.split('.')[0] === 'app') {
-        tagManager.sendEventCategory('Signup', TMEvents.Click, 'dashboard', host);
-      }
-    } catch (err) {
-      console.log('[onSendCredentials] Error tracking analytics ', err);
-    }
-
     tagManager.sendEventCategory('Signup', TMEvents.Click, 'signup_attempt', host);
     const signup = await services.signUp({
       ...credentials,

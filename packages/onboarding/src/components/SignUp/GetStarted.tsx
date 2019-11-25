@@ -19,7 +19,6 @@ import { IContext } from '../types';
 import validations from '../validations';
 import theme from '../../theme';
 import { checkEmail } from '../../services';
-// import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const GetStarted = ({ mini }: { mini?: boolean }) => {
   const { onSetStep, credentials, onSetCredentials, referralCode } = useContext<IContext>(
@@ -72,17 +71,6 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
 
   const onSetTagManagerAndStep = () => {
     onSetStep('Register')();
-
-    /*return useGoogleTagManager(
-      'new user',
-      'www.raise.it',
-      'Signup',
-      '/confirm',
-      'Register',
-      'dataLayer',
-      'Submit',
-      'emailform'
-    );*/
   };
 
   const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
