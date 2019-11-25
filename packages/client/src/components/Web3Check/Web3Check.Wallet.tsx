@@ -5,6 +5,8 @@ import { CardTitle, CardCenteredText, CardPadded } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import { getWalletName } from '../../utils';
 
 const Wallet = ({ onNext }: any) => {
   const {
@@ -14,22 +16,38 @@ const Wallet = ({ onNext }: any) => {
   }: any = useContext(AppContext);
   const [defaultWallet, setDefaultWallet] = useState();
   const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
-
+  const tagManager = useGoogleTagManager('Wallet');
   useEffect(() => {
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
 
   const handlerCoinbase = async () => {
+    tagManager.sendEvent(
+      TMEvents.Click,
+      'wallet_attempt',
+      getWalletName(CryptoWallets.Coinbase).toLowerCase()
+    );
     await connectWallet(CryptoWallets.Coinbase, network, networkId);
+
     onNext();
   };
 
   const handlerMetamask = async () => {
+    tagManager.sendEvent(
+      TMEvents.Click,
+      'wallet_attempt',
+      getWalletName(CryptoWallets.Metamask).toLowerCase()
+    );
     await connectWallet(CryptoWallets.Metamask, network, networkId);
     onNext();
   };
 
   const handlerOpera = async () => {
+    tagManager.sendEvent(
+      TMEvents.Click,
+      'wallet_attempt',
+      getWalletName(CryptoWallets.Opera).toLowerCase()
+    );
     await connectWallet(CryptoWallets.Opera, network, networkId);
     onNext();
   };
@@ -55,7 +73,7 @@ const Wallet = ({ onNext }: any) => {
                 <List.Content verticalAlign="middle">
                   <Button basic color="black" fluid onClick={handlerMetamask}>
                     Metamask
-                  </Button>{' '}
+                  </Button>
                 </List.Content>
               </List.Item>
             )}
