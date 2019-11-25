@@ -251,7 +251,7 @@ const CreateLoan = () => {
                 onBlur={onBlur}
                 fmt={numeralFormat}
               />
-              <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.svg`} name="DAI" />
+              <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.png`} />
             </LoanInputBox>
             <LoanInputLabel>
               {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
