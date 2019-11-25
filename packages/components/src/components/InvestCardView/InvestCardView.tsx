@@ -2,7 +2,11 @@ import React, { useState, ReactChild } from 'react';
 import BN from 'bn.js';
 import { Icon } from 'semantic-ui-react';
 import { useTransition, animated } from 'react-spring';
-import { GraphButton, CardBottom } from './InvestCardView.styles';
+import {
+  GraphButton,
+  CardBottom,
+  InvestCardBody,
+} from './InvestCardView.styles';
 import Card from '../Card';
 import AuctionAPR from '../Graphs/APRGraph';
 import { times } from '../../types';
@@ -21,15 +25,16 @@ interface InvestProps {
   currentAPR: string;
   principal: string;
   investorCount: string;
-  children?: ReactChild;
   maxInterestRate: BN;
   minInterestRate: BN;
   auctionStartTimestamp: number;
   auctionEndTimestamp: number;
+  className?: string;
+  children?: ReactChild;
 }
 
 const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
-  const { times, currentAPR, investorCount, children } = props;
+  const { times, currentAPR, investorCount, children, className } = props;
   const [viewGraph, setGraphView] = useState(0);
 
   const onOpenGraph = () => {
@@ -62,7 +67,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
   });
   if (viewGraph !== previousTab) setPreviousTab(viewGraph);
   return (
-    <Card style={{ overflow: 'hidden' }}>
+    <InvestCardBody style={{ overflow: 'hidden' }} className={className}>
       <div
         style={{
           overflow: 'hidden',
@@ -100,7 +105,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
         </Card.Grid>
         {children}
       </CardBottom>
-    </Card>
+    </InvestCardBody>
   );
 };
 

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@jetblack/graphql-client": "^4.0.2",
-    "@raisehq/components": "*",
+    "@raisehq/components": "^0.1.8",
     "@raisehq/onboarding": "*",
     "@types/hero-ui": "git+https://raise:yCtMgGsvVqzDf9w95mgA@gitlab.com/raisehq/hero-ui#integration",
     "@types/jest": "24.0.15",

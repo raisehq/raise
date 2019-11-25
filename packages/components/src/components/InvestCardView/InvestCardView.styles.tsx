@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { Button } from 'semantic-ui-react';
-import Card from '../Card';
+import Card, { CardWrapper } from '../Card';
+
+export const InvestCardBody = styled(CardWrapper)`
+  min-height: 480px;
+  width: 372px;
+`;
 
 export const CardContent = styled(Card.Content)`
   padding: 40px 20px 0px 20px;

@@ -1,6 +1,5 @@
 import React, { ReactChild, FunctionComponent } from 'react';
 import { Popup } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import {
   HeroCard,
   Grid,
@@ -100,7 +99,7 @@ const RoiHeaderComponent: FunctionComponent<{ roi: string }> = ({ roi }) => (
   </RoiHeader>
 );
 
-const Card = ({ children, size, width, ...props }: any) => {
+const CardWrapper = ({ children, size, width, ...props }: any) => {
   const graph = React.useRef(null);
   const [values, setValues] = React.useState({ ref: null });
 
@@ -111,7 +110,6 @@ const Card = ({ children, size, width, ...props }: any) => {
       <HeroCard
         ref={(ref: any) => (graph.current = ref)}
         {...props}
-        className="heroCard"
         size={size}
         width={width}
       >
@@ -120,6 +118,8 @@ const Card = ({ children, size, width, ...props }: any) => {
     </Context.Provider>
   );
 };
+
+const Card: any = CardWrapper;
 
 const GraphComponent: FunctionComponent<{
   color: string;
@@ -184,9 +184,9 @@ const ContentWithLogo = ({
 }) => (
   <CardContent logo={logo} size={size} className={className} style={style}>
     {logo && (
-      <Link className="logoWrap" to={to}>
+      <a className="logoWrap" href={to}>
         <CardLogo src={logo} />
-      </Link>
+      </a>
     )}
     {topRight && <TimeLeft>{topRight}</TimeLeft>}
     {children}
@@ -194,9 +194,9 @@ const ContentWithLogo = ({
 );
 
 const CardImage = ({ src, to }: { src?: any; to?: any }) => (
-  <Link to={to}>
+  <a href={to}>
     <CardImageCrop src={src} />
-  </Link>
+  </a>
 );
 
 Card.BorrowerTitle = CardBorrowerTitle;
@@ -218,3 +218,5 @@ Card.RoiHeader = RoiHeaderComponent;
 Card.TimeLeft = TimeLeft;
 
 export default Card;
+
+export { CardWrapper };

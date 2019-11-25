@@ -1,4 +1,4 @@
 import InvestCardView from './InvestCardView';
 
-export default InvestViewCard;
+export default InvestCardView;
 export { InvestCardView };

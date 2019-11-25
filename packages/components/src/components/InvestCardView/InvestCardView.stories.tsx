@@ -6,7 +6,8 @@ import { toWei } from 'web3-utils';
 
 const basicProps = {
   companyName: 'HERO Fintech Solutions Ptd. Ltd.',
-  shortDescription: 'HERO Fintech develops innovative business models ',
+  shortDescription:
+    'Speck SL was funded  in 1997 and have 17 millions  of yearly revenue. The company is focused in offering the best gastronomy  experience. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.',
   background: 'https://cdn.buttercms.com/SnV5NXlFQDmHObRHyU2n',
   logo: 'https://cdn.buttercms.com/YzIsSDsTvCCpZ7pbbaVW',
   slug: 'hero',

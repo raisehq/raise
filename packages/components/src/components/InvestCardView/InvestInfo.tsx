@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Card from '../Card';
 import { CardContent } from './InvestCardView.styles';
 import Amount from '../Amount';
@@ -39,10 +38,10 @@ const InvestInfo = (props: InvestInfoProps) => {
     <>
       <Card.Image to={borrowerUrl} src={background} />
       <CardContent to={borrowerUrl} topRight={auctionTimeLeft} logo={logo}>
-        <Link to={borrowerUrl}>
+        <a href={borrowerUrl}>
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
           <Card.Description>{shortDescription}</Card.Description>
-        </Link>
+        </a>
         <Card.Grid spaceBetween alignBottom nobottom>
           <Card.Header
             title="Raised so far"
