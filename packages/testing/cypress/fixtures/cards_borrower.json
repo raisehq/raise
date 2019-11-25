@@ -14,7 +14,7 @@
           "loanRepaid": false,
           "loanWithdrawn": false,
           "maxAmount": "30000000000000000000000",
-          "minInterestRate": "10000000000000000000",
+          "minInterestRate": "10000",
           "maxInterestRate": "10000",
           "minimumReached": false,
           "netBalance": null,
