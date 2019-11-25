@@ -18,6 +18,7 @@ import BorrowerSignUp from './BorrowerSignUp/Passwords';
 import BorrowerSignUpError from './BorrowerSignUp/Error';
 import BorrowerSignUpOK from './BorrowerSignUp/Success';
 import PanelModal from './Modals/Panel';
+import PanelWithImage from './Modals/PanelWithImage';
 import SimpleModal from './Modals/Simple';
 import { IContext, ICredentials, Steps } from './types';
 import { defaultContext } from './defaults';
@@ -267,9 +268,9 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   const getStep = () =>
     step.cata({
       Start: () => (
-        <PanelModal>
+        <PanelWithImage>
           <GetStarted />
-        </PanelModal>
+        </PanelWithImage>
       ),
       Register: () => (
         <PanelModal>

@@ -278,7 +278,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
         </OnboardingCell>
       </OnboardDisclaimer>
       <CallToSignIn>
-        Do you have an account already?
+        Already have an account?
         <button className="callToSignIn" onClick={onSetStep('SignIn')}>
           Sign In
         </button>
