@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { InvestModal } from '../InvestModal';
 
-import { InvestCardView } from '@raisehq/components';
+import { InvestCard as InvestCardWithHooks } from '@raisehq/components';
 
-export const InvestCard = styled(InvestCardView)`
+export const InvestCard = styled(InvestCardWithHooks)`
   margin-right: 15px;
   margin-bottom: 15px;
 `;

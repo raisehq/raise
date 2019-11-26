@@ -1,6 +1,6 @@
 {
   "name": "@raisehq/components",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "license": "MIT",
   "author": "Raise HQ",
   "main": "dist/index.js",
@@ -51,14 +51,20 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.149",
     "@types/numeral": "^0.0.26",
     "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.19.0",
     "bn.js": "^5.0.0",
     "chart.js": "^2.8.0",
+    "dompurify": "^2.0.7",
     "dotenv": "^8.2.0",
+    "html-to-react": "^1.4.2",
+    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
+    "pampy": "^0.0.6",
     "react-chartjs-2": "^2.8.0",
     "react-docgen-typescript-loader": "^3.5.0",
     "react-router-dom": "^5.1.2",
