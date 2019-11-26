@@ -32,7 +32,7 @@ const PanelWithImage = ({ children }) => {
             <OnboardingTitle>Get started</OnboardingTitle>
             <OnboardingSubTitle>The only marketplace that makes your money grow</OnboardingSubTitle>
           </OnboardingTitleWrapper>
-          <OnboardingImage src={`${getImagesUrl}img_signin_raise.png`} />
+          <OnboardingImage className="visual" src={`${getImagesUrl}img_signin_raise.png`} />
         </OnboardingImageWrapper>
         <OnboardingFormContent>{children}</OnboardingFormContent>
       </OnboardingContentWrapper>
