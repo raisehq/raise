@@ -20,8 +20,13 @@ const defaultCompany = {
   slug: ''
 };
 
+const waitingRequestCompany = {
+  ...defaultCompany,
+  companyName: ''
+}
+
 const useBorrowerInfo = (butter: any, borrowerAddress: string) => {
-  const [company, setCompany]: [Company, any] = useState(defaultCompany);
+  const [company, setCompany]: [Company, any] = useState(waitingRequestCompany);
 
   useAsyncEffect(async () => {
     try {
@@ -30,6 +35,7 @@ const useBorrowerInfo = (butter: any, borrowerAddress: string) => {
       });
       setCompany(response);
     } catch (error) {
+      setCompany(defaultCompany)
       console.error(error);
     }
   }, []);

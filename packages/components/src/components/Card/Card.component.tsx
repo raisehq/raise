@@ -30,6 +30,7 @@ import {
   Vertical,
   RoiHeader,
   RoiContent,
+  CardHref
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -61,11 +62,11 @@ const RowComponent: React.SFC<RowComponentProps> = ({
   big,
   notop,
 }) => (
-  <Row small={small} big={big} notop={notop}>
-    <RowContent contentColor={contentColor}>{content}</RowContent>
-    <RowTitle big={big}>{title}</RowTitle>
-  </Row>
-);
+    <Row small={small} big={big} notop={notop}>
+      <RowContent contentColor={contentColor}>{content}</RowContent>
+      <RowTitle big={big}>{title}</RowTitle>
+    </Row>
+  );
 
 const HeaderComponent = ({
   title,
@@ -73,16 +74,16 @@ const HeaderComponent = ({
   fontSize,
   ...rest
 }: {
-  title: any;
-  amount: any;
-  fontSize?: any;
-  rest?: any;
-}) => (
-  <Header {...rest}>
-    <HeaderTitle>{title}</HeaderTitle>
-    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
-  </Header>
-);
+    title: any;
+    amount: any;
+    fontSize?: any;
+    rest?: any;
+  }) => (
+    <Header {...rest}>
+      <HeaderTitle>{title}</HeaderTitle>
+      <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
+    </Header>
+  );
 const SubHeaderComponent: FunctionComponent<{
   title: string;
   amount: string;
@@ -174,30 +175,43 @@ const ContentWithLogo = ({
   className,
   style,
 }: {
-  children?: any;
-  logo?: any;
-  to?: any;
-  topRight?: any;
-  size?: any;
-  className?: any;
-  style?: any;
-}) => (
-  <CardContent logo={logo} size={size} className={className} style={style}>
-    {logo && (
-      <a className="logoWrap" href={to}>
-        <CardLogo src={logo} />
-      </a>
-    )}
-    {topRight && <TimeLeft>{topRight}</TimeLeft>}
-    {children}
-  </CardContent>
-);
+    children?: any;
+    logo?: any;
+    to?: any;
+    topRight?: any;
+    size?: any;
+    className?: any;
+    style?: any;
+  }) => {
+  const aProps = { href: undefined }
+  if (to) {
+    aProps.href = to;
+  }
+  return (
+    <CardContent logo={logo} size={size} className={className} style={style}>
+      {logo && (
+        <a className="logoWrap" {...aProps}>
+          <CardLogo src={logo} />
+        </a>
+      )}
+      {topRight && <TimeLeft>{topRight}</TimeLeft>}
+      {children}
+    </CardContent>
+  )
+};
 
-const CardImage = ({ src, to }: { src?: any; to?: any }) => (
-  <a href={to}>
+const CardImage = ({ src, to }: { src?: any; to?: any }) => {
+  if (to) {
+    return (
+      <CardHref href={to}>
+        <CardImageCrop src={src} />
+      </CardHref>
+    )
+  }
+  return (
     <CardImageCrop src={src} />
-  </a>
-);
+  )
+}
 
 Card.BorrowerTitle = CardBorrowerTitle;
 Card.Description = CardDescription;

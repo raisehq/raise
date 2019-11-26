@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import InvestCard from './InvestCard';
 import Butter from 'buttercms';
 
-const butterApiKey = process.env.REACT_APP_BUTTER || '';
+const butterApiKey = process.env.STORYBOOK_BUTTER || '';
 
 const butter = new Butter(butterApiKey);
 

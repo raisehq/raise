@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react';
 import Card, { CardWrapper } from '../Card';
 
 export const InvestCardBody = styled(CardWrapper)`
-  min-height: 480px;
+  min-height: 470px;
   width: 372px;
 `;
 

@@ -45,7 +45,10 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
   border-radius: 6px 6px 0 0;
   border: 1px solid #cfd0d4;
 `;
-
+export const CardHref: any = styled.a`
+  width: 100%;
+  display: block;
+`
 export const CardLogo: any = styled(Image)`
   &&& {
     width: 70px;

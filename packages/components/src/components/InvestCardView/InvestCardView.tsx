@@ -11,7 +11,7 @@ import Card from '../Card';
 import AuctionAPR from '../Graphs/APRGraph';
 import { times } from '../../types';
 import InvestInfo from './InvestInfo';
-
+import CardPlaceholder from '../CardPlaceholder';
 interface InvestProps {
   companyName: string;
   shortDescription: string;
@@ -34,7 +34,7 @@ interface InvestProps {
 }
 
 const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
-  const { times, currentAPR, investorCount, children, className } = props;
+  const { companyName, times, currentAPR, investorCount, children, className } = props;
   const [viewGraph, setGraphView] = useState(0);
 
   const onOpenGraph = () => {
@@ -65,7 +65,13 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
       position: 'absolute',
     }),
   });
+
+  if (!companyName) {
+    return <CardPlaceholder />
+  }
+
   if (viewGraph !== previousTab) setPreviousTab(viewGraph);
+
   return (
     <InvestCardBody style={{ overflow: 'hidden' }} className={className}>
       <div
@@ -90,13 +96,13 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
           <GraphButton basic onClick={onOpenGraph}>
             {viewGraph === 0 ? (
               <>
-                <Icon name="line graph" size="large" />
-                <Card.Row
-                  notop
-                  small
-                  title="Current APR"
-                  content={currentAPR}
-                />
+              <Icon name="line graph" size="large" />
+              <Card.Row
+                notop
+                small
+                title="Current APR"
+                content={currentAPR}
+              />
               </>
             ) : (
               <span> Go Back</span>
