@@ -5,7 +5,10 @@ import {
   OnboardingModal,
   OnboardingHeader,
   OnboardingContentWrapper,
-  OnboardingImageWrapper
+  OnboardingImageWrapper,
+  OnboardingImage,
+  OnboardingTitle,
+  OnboardingFormContent
 } from './styles';
 
 const PanelWithImage = ({ children }) => {
@@ -16,12 +19,14 @@ const PanelWithImage = ({ children }) => {
 
   return (
     <OnboardingModal {...dimmer} open={open} mountNode={mountNode}>
-      <OnboardingHeader>Header</OnboardingHeader>
+      <OnboardingHeader>
+        <img src={`${getImagesUrl}/logo.svg`} />
+      </OnboardingHeader>
       <OnboardingContentWrapper>
-        <div>
-          <OnboardingImageWrapper src={`${getImagesUrl}img_signin_raise.png`} />
-        </div>
-        <div>{children}</div>
+        <OnboardingImageWrapper>
+          <OnboardingTitle>Get started</OnboardingTitle>
+        </OnboardingImageWrapper>
+        <OnboardingFormContent>{children}</OnboardingFormContent>
       </OnboardingContentWrapper>
     </OnboardingModal>
   );

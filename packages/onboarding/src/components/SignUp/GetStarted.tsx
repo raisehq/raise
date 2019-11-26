@@ -6,7 +6,7 @@ import { AccountType } from '@raisehq/components';
 import {
   OnboardHeader,
   OnboardSubHeader,
-  OnboardInput,
+  OnboardInputSignUp,
   OnboardButton,
   OnboardCountries,
   CallToSignIn,
@@ -144,7 +144,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
     return (
       <MiniBody>
         <OnboardHeader>Join</OnboardHeader>
-        <OnboardInput>
+        <OnboardInputSignUp>
           <Input
             placeholder="Email address"
             onChange={onChangeEmail}
@@ -158,7 +158,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
             </div>
           )}
           {error.exist && <div className="errorText">This email already exists.</div>}
-        </OnboardInput>
+        </OnboardInputSignUp>
 
         <OnboardMailingList>
           <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
@@ -193,7 +193,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
   }
   return (
     <Fragment>
-      <OnboardInput>
+      <OnboardInputSignUp>
         <Input
           placeholder="Email address"
           onChange={onChangeEmail}
@@ -207,8 +207,8 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
           </div>
         )}
         {error.exist && <div className="errorText">This email already exists.</div>}
-      </OnboardInput>
-      <OnboardInput>
+      </OnboardInputSignUp>
+      <OnboardInputSignUp>
         <OnboardCountries
           control={Select}
           options={countryOptions}
@@ -219,8 +219,8 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
         />
 
         <Icon size="big" name="globe" />
-      </OnboardInput>
-      <OnboardInput>
+      </OnboardInputSignUp>
+      <OnboardInputSignUp>
         <Input
           placeholder="Create a password"
           onChange={onSetPassword}
@@ -234,7 +234,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
           </div>
         )}
         <Icon size="big" name="key" />
-      </OnboardInput>
+      </OnboardInputSignUp>
       <MyRecapcha
         ref={recaptchaRef}
         size="invisible"
@@ -242,19 +242,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
         render="explicit"
         onChange={onCaptchaCallback}
       />
-      <OnboardButton
-        disabled={
-          credentials.email === '' ||
-          credentials.password === '' ||
-          credentials.country_id === '' ||
-          error.validation ||
-          error.exist ||
-          error.terms
-        }
-        onClick={onSubmitSignUp}
-      >
-        Get Started
-      </OnboardButton>
+
       <OnboardMailingList>
         <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
       </OnboardMailingList>
@@ -277,6 +265,19 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
           </a>
         </OnboardingCell>
       </OnboardDisclaimer>
+      <OnboardButton
+        disabled={
+          credentials.email === '' ||
+          credentials.password === '' ||
+          credentials.country_id === '' ||
+          error.validation ||
+          error.exist ||
+          error.terms
+        }
+        onClick={onSubmitSignUp}
+      >
+        Get Started
+      </OnboardButton>
       <CallToSignIn>
         Already have an account?
         <button className="callToSignIn" onClick={onSetStep('SignIn')}>
