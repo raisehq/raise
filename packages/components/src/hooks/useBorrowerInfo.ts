@@ -25,7 +25,7 @@ const waitingRequestCompany = {
   companyName: ''
 }
 
-const useBorrowerInfo = (butter: any, borrowerAddress: string) => {
+const useBorrowerInfo = (butter: any, borrowerAddress: string, link: boolean) => {
   const [company, setCompany]: [Company, any] = useState(waitingRequestCompany);
 
   useAsyncEffect(async () => {
@@ -33,6 +33,9 @@ const useBorrowerInfo = (butter: any, borrowerAddress: string) => {
       const response = await findOne(butter, 'companies', {
         'fields.ethereum_address': borrowerAddress
       });
+      if (!link) {
+        response.slug = '';
+      }
       setCompany(response);
     } catch (error) {
       setCompany(defaultCompany)

@@ -32,6 +32,13 @@ const auction = {
 
 storiesOf('InvestCard', module).add('InvestCard with auction data', () => (
   <div style={{ padding: 10 }}>
+    <InvestCard auction={auction} butter={butter} link />
+  </div>
+));
+
+
+storiesOf('InvestCard', module).add('InvestCard with NO link', () => (
+  <div style={{ padding: 10 }}>
     <InvestCard auction={auction} butter={butter} />
   </div>
 ));
