@@ -24,7 +24,6 @@ import { countryOptions } from '../../commons/countries';
 import validations from '../validations';
 import theme from '../../theme';
 import { checkEmail } from '../../services';
-import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const GetStarted = ({ mini }: { mini?: boolean }) => {
   const { onSetStep, credentials, onSetCredentials, referralCode, onSendCredentials } = useContext<
@@ -112,17 +111,6 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
   };
 
   const onKeyPress = event => {
-    useGoogleTagManager(
-      credentials.email,
-      'www.raise.it',
-      'Signup',
-      '/register',
-      'RegisterForm',
-      'dataLayer',
-      'Click',
-      'signup_form_attempt'
-    );
-
     if (
       event.key === 'Enter' &&
       credentials.email !== '' &&
@@ -280,7 +268,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
       </OnboardButton>
       <CallToSignIn>
         Already have an account?
-        <button className="callToSignIn" onClick={onSetStep('SignIn')}>
+        <button className="callToSignIn" type="button" onClick={onSetStep('SignIn')}>
           Sign In
         </button>
       </CallToSignIn>
