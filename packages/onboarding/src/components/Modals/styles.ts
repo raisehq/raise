@@ -1,5 +1,25 @@
 import styled from 'styled-components';
-import { Modal } from 'semantic-ui-react';
+import { Modal, Button } from 'semantic-ui-react';
+
+export const OnboardingCloseButton = styled(Button)`
+  &&& {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 0;
+    right: -10px;
+    color: rgba(255, 255, 255, 0.7);
+
+    i {
+      font-size: 20px;
+    }
+
+    &:hover {
+      background: none;
+      color: #fff;
+    }
+  }
+`;
 
 export const OnboardingModal: any = styled(Modal)`
   display: flex;
@@ -8,9 +28,13 @@ export const OnboardingModal: any = styled(Modal)`
 
 export const OnboardingHeader: any = styled.div`
   display: flex;
-  height: 110px;
+  height: 100px;
   border-bottom: 1px solid #dfe3e9;
   margin: 0 5px 0 5px;
+
+  img {
+    margin-left: 4%;
+  }
 `;
 
 export const OnboardingContentWrapper: any = styled.div`

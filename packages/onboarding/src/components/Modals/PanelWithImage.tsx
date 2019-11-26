@@ -10,7 +10,8 @@ import {
   OnboardingTitleWrapper,
   OnboardingTitle,
   OnboardingSubTitle,
-  OnboardingFormContent
+  OnboardingFormContent,
+  OnboardingCloseButton
 } from './styles';
 
 const PanelWithImage = ({ children }) => {
@@ -22,13 +23,14 @@ const PanelWithImage = ({ children }) => {
   return (
     <OnboardingModal {...dimmer} open={open} mountNode={mountNode}>
       <OnboardingHeader>
-        <img src={`${getImagesUrl}/logo.svg`} />
+        <img src={`${getImagesUrl}logo.svg`} />
+        {true && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
       </OnboardingHeader>
       <OnboardingContentWrapper>
         <OnboardingImageWrapper>
           <OnboardingTitleWrapper>
             <OnboardingTitle>Get started</OnboardingTitle>
-            <OnboardingSubTitle>The only marketplace that makes your monet grow</OnboardingSubTitle>
+            <OnboardingSubTitle>The only marketplace that makes your money grow</OnboardingSubTitle>
           </OnboardingTitleWrapper>
           <OnboardingImage src={`${getImagesUrl}img_signin_raise.png`} />
         </OnboardingImageWrapper>
