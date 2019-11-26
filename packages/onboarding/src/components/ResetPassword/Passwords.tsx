@@ -2,18 +2,12 @@ import React, { Fragment, useContext, useState } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 
-import {
-  OnboardHeader,
-  OnboardInput,
-  OnboardButton,
-  CallToSignIn,
-  OnboardLogo
-} from '../styles';
+import { OnboardHeader, OnboardInput, OnboardButton, CallToSignIn, OnboardLogo } from '../styles';
 import validations from '../validations';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 import { Either } from '../../utils';
 
-const Reset = ({ token }) => {
+const Reset = ({ token }: any) => {
   const { onSetStep, onResetPassword }: any = useContext(AppContext);
 
   const [errors, setErrors]: any = useState({
@@ -82,7 +76,9 @@ const Reset = ({ token }) => {
   const onKeyPress = event => {
     if (
       event.key === 'Enter' &&
-      (!errors.retyped.notPassword && !errors.retyped.notEqual && !errors.main)
+      !errors.retyped.notPassword &&
+      !errors.retyped.notEqual &&
+      !errors.main
     ) {
       onReset();
     }
@@ -91,7 +87,8 @@ const Reset = ({ token }) => {
   return (
     <Fragment>
       <OnboardHeader>
-        Recover your password <OnboardLogo />
+        Recover your password
+        <OnboardLogo />
       </OnboardHeader>
       <OnboardInput>
         <Input
@@ -123,15 +120,13 @@ const Reset = ({ token }) => {
             Password at least must have 8 characters 1 capital letter.
           </div>
         )}
-        {errors.retyped.notEqual && (
-          <div className="errorText">Passwords do not match</div>
-        )}
+        {errors.retyped.notEqual && <div className="errorText">Passwords do not match</div>}
         <Icon size="big" name="key" />
       </OnboardInput>
       <OnboardButton onClick={onReset}>Reset password</OnboardButton>
       <CallToSignIn>
         You don't have an account?
-        <button className="callToSignIn" onClick={onSetStep('Start')}>
+        <button className="callToSignIn" type="button" onClick={onSetStep('Start')}>
           Get Started
         </button>
       </CallToSignIn>

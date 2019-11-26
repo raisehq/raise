@@ -45,6 +45,7 @@ else
 fi
 
 DIRECTORY="contracts"
+rm  -rf ./contracts 
 
 if [ ! -d "$DIRECTORY" ]; then
   # Control will enter here if $DIRECTORY doesn't exist.
@@ -58,6 +59,8 @@ fi
 echo "- Adding json accounts to contract migration"
 cp cypress/fixtures/users.json contracts/int.accounts.json
 cp cypress/fixtures/contracts.json contracts/contracts.json
+
+rm  -rf ./contracts/build 
 
 cd contracts
   

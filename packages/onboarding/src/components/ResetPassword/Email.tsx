@@ -1,15 +1,9 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
-import {
-  OnboardHeader,
-  OnboardInput,
-  OnboardButton,
-  CallToSignIn,
-  OnboardLogo
-} from '../styles';
+import { OnboardHeader, OnboardInput, OnboardButton, CallToSignIn, OnboardLogo } from '../styles';
 import validations from '../validations';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 
 const Reset = () => {
   const { onSetStep, onRecover }: any = useContext(AppContext);
@@ -29,7 +23,7 @@ const Reset = () => {
   const onSendRecover = () => onRecover(email.value);
 
   const onKeyPress = event => {
-    if (event.key === 'Enter' && (email.value !== '' && !email.error)) {
+    if (event.key === 'Enter' && email.value !== '' && !email.error) {
       onSendRecover();
     }
   };
@@ -57,15 +51,12 @@ const Reset = () => {
         )}
         <Icon size="big" name="globe" />
       </OnboardInput>
-      <OnboardButton
-        onClick={onSendRecover}
-        disabled={email.value === '' || email.error}
-      >
+      <OnboardButton onClick={onSendRecover} disabled={email.value === '' || email.error}>
         Reset password
       </OnboardButton>
       <CallToSignIn>
         You don't have an account?
-        <button className="callToSignIn" onClick={onSetStep('Start')}>
+        <button className="callToSignIn" type="button" onClick={onSetStep('Start')}>
           Get Started
         </button>
       </CallToSignIn>

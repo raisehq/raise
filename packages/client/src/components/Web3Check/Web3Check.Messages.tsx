@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import AppContext from '../AppContext';
 import Web3Address from '../Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { Href } from '../Layout/Layout.styles';
 import { getWalletName } from '../../utils';
 
@@ -85,13 +86,18 @@ const CurrentNotice = () => {
     },
     web3Status: { networkMatches, accountMatches, walletNetwork, targetNetwork, walletAccount }
   }: any = useContext(AppContext);
-
+  const tagManager = useGoogleTagManager('Wallet');
   const { getCurrentProviderName, requestSignature } = useWeb3();
 
   const handleUploadSignature = async () => {
     try {
       const { address, signature } = await requestSignature();
       await uploadSignature(address, getCurrentProviderName(), signature);
+      tagManager.sendEvent(
+        TMEvents.Submit,
+        'new_wallet',
+        getWalletName(cryptotypeId).toLowerCase()
+      );
     } catch (error) {
       console.error('[Web3Check.Message][HandleUploadSignature] Error : ', error);
     }

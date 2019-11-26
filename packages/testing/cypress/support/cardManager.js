@@ -28,6 +28,7 @@ export const createCard = (type, address) => {
         investorCount: 0,
         loanRepaid: false,
         maxAmount: '10000000000000000000000',
+        minInterestRate: '10000000000000000000000',
         maxInterestRate: '10000000000000000000000',
         minimumReached: false,
         netBalance: null,

@@ -12,7 +12,7 @@ import {
   GoogleCaptchaPolicies
 } from '../styles';
 import validations from '../validations';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 
 const Signin = () => {
   const {
@@ -56,10 +56,18 @@ const Signin = () => {
     onSetCredentials('password', e.target.value);
   };
 
+  const onLoginCaptcha = () => {
+    recaptchaRef.current.reset();
+    recaptchaRef.current.execute();
+  };
+
   const onKeyPress = event => {
     if (
       event.key === 'Enter' &&
-      (!error && !errors.email && credentials.email && credentials.password)
+      !error &&
+      !errors.email &&
+      credentials.email &&
+      credentials.password
     ) {
       onLoginCaptcha();
     }
@@ -86,15 +94,11 @@ const Signin = () => {
     recaptchaRef.current.reset();
   };
 
-  const onLoginCaptcha = () => {
-    recaptchaRef.current.reset();
-    recaptchaRef.current.execute();
-  };
-
   return (
     <Fragment>
       <OnboardHeader>
-        Welcome to Raise <OnboardLogo />
+        Welcome to Raise
+        <OnboardLogo />
       </OnboardHeader>
       <OnboardInput>
         <Input
@@ -140,14 +144,14 @@ const Signin = () => {
         Log In
       </OnboardButton>
       <CallToSignIn>
-        <button className="callToSignIn" onClick={onSetStep('Reset')}>
+        <button className="callToSignIn" type="button" onClick={onSetStep('Reset')}>
           Forgot password?
         </button>
       </CallToSignIn>
       <Separator />
       <CallToSignIn>
         You don't have an account?
-        <button className="callToSignIn" onClick={onSetStep('Start')}>
+        <button className="callToSignIn" type="button" onClick={onSetStep('Start')}>
           Get Started
         </button>
       </CallToSignIn>
