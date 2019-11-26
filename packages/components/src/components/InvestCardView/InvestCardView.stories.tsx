@@ -29,7 +29,7 @@ const basicProps = {
     new Date(new Date().setMonth(new Date().getMonth() + 1)).getTime() / 1000,
 };
 
-storiesOf('InvestCard', module).add('Simple', () => (
+storiesOf('InvestCardView', module).add('Simple', () => (
   <div style={{ padding: 10 }}>
     <InvestCard {...basicProps} />
   </div>
