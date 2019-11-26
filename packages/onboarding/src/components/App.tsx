@@ -63,8 +63,10 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   const [credentials, setCredentials] = useState<ICredentials>(defaultContext.credentials);
   const [referralCode, setRefCode] = useState<string>('');
   const [startMini, setStartMini] = useState<boolean>(false);
-  const [setuserCookie] = useCookie('user', {});
-  const [setAuthCookie] = useCookie('auth', {});
+  // @ts-ignore
+  const [user, setuserCookie] = useCookie('user', {});
+  // @ts-ignore
+  const [auth, setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
   useEffect(() => {
