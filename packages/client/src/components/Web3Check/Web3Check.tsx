@@ -9,6 +9,8 @@ import WalletConnect from './Web3Check.WalletConnect';
 import Stages from './Web3Check.stages';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import { getWalletName } from '../../utils';
 
 const getStage = (stage, handleNext, handleBack, handleSuccess) => {
   return stage.cata({
@@ -21,17 +23,35 @@ const getStage = (stage, handleNext, handleBack, handleSuccess) => {
 
 const Web3Check = () => {
   const {
-    web3Status: { unlocked }
+    web3Status: { unlocked },
+    store: {
+      user: {
+        // @ts-ignore
+        cryptoAddress: { cryptotypeId }
+      }
+    }
   }: any = useContext(AppContext);
   const { web3 }: any = useWeb3();
-
+  const tagManager = useGoogleTagManager('Wallet');
   const [ui, setUI] = useState(Stages.WalletSelector);
   useEffect(() => {
-    if (web3 && unlocked) setUI(Stages.Checks);
+    if (web3 && unlocked) {
+      tagManager.sendEvent(
+        TMEvents.Submit,
+        'wallet_success',
+        getWalletName(cryptotypeId).toLowerCase()
+      );
+      setUI(Stages.Checks);
+    }
   }, []);
 
   useEffect(() => {
     if (web3 && unlocked && ui !== Stages.Checks && ui !== Stages.WalletSelector) {
+      tagManager.sendEvent(
+        TMEvents.Submit,
+        'wallet_success',
+        getWalletName(cryptotypeId).toLowerCase()
+      );
       setUI(Stages.Checks);
     }
   }, [unlocked, web3, ui]);

@@ -20,7 +20,7 @@ ganache_running() {
 }
 
 start_ganache() {
-  npx ganache-cli --gasLimit 0xfffffffffff ---gasPrice 0x01 -i 6969 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" > /dev/null &
+  npx ganache-cli --allowUnlimitedContractSize --gasLimit 0xfffffffffff ---gasPrice 0x01 -i 6969 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" > /dev/null &
 
   ganache_pid=$!
 
@@ -45,6 +45,7 @@ else
 fi
 
 DIRECTORY="contracts"
+rm  -rf ./contracts 
 
 if [ ! -d "$DIRECTORY" ]; then
   # Control will enter here if $DIRECTORY doesn't exist.
@@ -58,6 +59,8 @@ fi
 echo "- Adding json accounts to contract migration"
 cp cypress/fixtures/users.json contracts/int.accounts.json
 cp cypress/fixtures/contracts.json contracts/contracts.json
+
+rm  -rf ./contracts/build 
 
 cd contracts
   

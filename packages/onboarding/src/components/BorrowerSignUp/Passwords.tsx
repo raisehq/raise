@@ -13,10 +13,10 @@ import {
 } from '../styles';
 import theme from '../../theme';
 import validations from '../validations';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 import { Either } from '../../utils';
 
-const BorrowerSignUp = ({ token }) => {
+const BorrowerSignUp = ({ token }: any) => {
   const { onSetPasswordBorrower, onActivateAccount }: any = useContext(AppContext);
 
   const [errors, setErrors]: any = useState({
@@ -91,7 +91,9 @@ const BorrowerSignUp = ({ token }) => {
   const onKeyPress = event => {
     if (
       event.key === 'Enter' &&
-      (!errors.retyped.notPassword && !errors.retyped.notEqual && !errors.main)
+      !errors.retyped.notPassword &&
+      !errors.retyped.notEqual &&
+      !errors.main
     ) {
       onReset();
     }
@@ -145,13 +147,19 @@ const BorrowerSignUp = ({ token }) => {
         </OnboardingCell>
         <OnboardingCell>
           By signing up, I agree to Raise
-          <a className="disclaimerBTN" href={`${theme.resources}/toc-b.pdf`} target="_blank">
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/toc-b.pdf`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             Terms of Service
           </a>
           and
           <a
             className="disclaimerBTN"
             href={`${theme.resources}/privacy-policy-b.pdf`}
+            rel="noopener noreferrer"
             target="_blank"
           >
             Privacy Policy

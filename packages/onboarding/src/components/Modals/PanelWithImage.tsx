@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import useImages from '../../hooks/useImages';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 import {
   OnboardingModal,
   OnboardingHeader,

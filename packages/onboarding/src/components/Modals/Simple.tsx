@@ -5,22 +5,15 @@ import {
   commonModal,
   OnboardingCloseButton
 } from '../styles';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 
-const SimpleModal = ({ children }) => {
-  const { blur, mountNode, open, onClose, closeButton }: any = useContext(
-    AppContext
-  );
+const SimpleModal = ({ children }: any) => {
+  const { blur, mountNode, open, onClose, closeButton }: any = useContext(AppContext);
 
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
-    <OnboardingSimpleModal
-      {...dimmer}
-      style={commonModal}
-      open={open}
-      mountNode={mountNode}
-    >
+    <OnboardingSimpleModal {...dimmer} style={commonModal} open={open} mountNode={mountNode}>
       {closeButton && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
       <OnboardingWrapper>
         <div className="process">{children}</div>

@@ -24,6 +24,7 @@ export const OnboardingCloseButton = styled(Button)`
 export const OnboardingModal: any = styled(Modal)`
   display: flex;
   flex-direction: row;
+  min-width: 700px;
 `;
 
 export const OnboardingHeader: any = styled.div`
@@ -40,12 +41,14 @@ export const OnboardingHeader: any = styled.div`
 export const OnboardingContentWrapper: any = styled.div`
   display: flex;
   flex-direction: row;
+  
 `;
 
 export const OnboardingImageWrapper: any = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 1 45%;
+  justify-content: space-between;
 `;
 
 export const OnboardingFormContent: any = styled.div`

@@ -18,7 +18,7 @@ import {
   MiniBody,
   MyRecapcha
 } from '../styles';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 import { IContext } from '../types';
 import { countryOptions } from '../../commons/countries';
 import validations from '../validations';
@@ -157,13 +157,19 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
           </OnboardingCell>
           <OnboardingCell>
             By signing up, I agree to Raise
-            <a className="disclaimerBTN" href={`${theme.resources}/toc.pdf`} target="_blank">
+            <a
+              className="disclaimerBTN"
+              href={`${theme.resources}/toc.pdf`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               Terms of Service
             </a>
             and
             <a
               className="disclaimerBTN"
               href={`${theme.resources}/privacy-policy.pdf`}
+              rel="noopener noreferrer"
               target="_blank"
             >
               Privacy Policy
@@ -240,13 +246,19 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
         </OnboardingCell>
         <OnboardingCell>
           By signing up, I agree to Raise
-          <a className="disclaimerBTN" href={`${theme.resources}/toc.pdf`} target="_blank">
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/toc.pdf`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             Terms of Service
           </a>
           and
           <a
             className="disclaimerBTN"
             href={`${theme.resources}/privacy-policy.pdf`}
+            rel="noopener noreferrer"
             target="_blank"
           >
             Privacy Policy

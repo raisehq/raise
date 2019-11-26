@@ -188,7 +188,7 @@ export const OnboardInput = styled.div`
 `;
 
 export const OnboardInputSignUp = styled(OnboardInput)`
-  margin: 0 0 30px 0;
+  margin: 0 0 40px 0;
 `;
 
 export const OnboardButton = styled.button`
