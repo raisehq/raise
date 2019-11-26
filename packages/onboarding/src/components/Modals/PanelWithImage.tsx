@@ -7,7 +7,9 @@ import {
   OnboardingContentWrapper,
   OnboardingImageWrapper,
   OnboardingImage,
+  OnboardingTitleWrapper,
   OnboardingTitle,
+  OnboardingSubTitle,
   OnboardingFormContent
 } from './styles';
 
@@ -24,7 +26,11 @@ const PanelWithImage = ({ children }) => {
       </OnboardingHeader>
       <OnboardingContentWrapper>
         <OnboardingImageWrapper>
-          <OnboardingTitle>Get started</OnboardingTitle>
+          <OnboardingTitleWrapper>
+            <OnboardingTitle>Get started</OnboardingTitle>
+            <OnboardingSubTitle>The only marketplace that makes your monet grow</OnboardingSubTitle>
+          </OnboardingTitleWrapper>
+          <OnboardingImage src={`${getImagesUrl}img_signin_raise.png`} />
         </OnboardingImageWrapper>
         <OnboardingFormContent>{children}</OnboardingFormContent>
       </OnboardingContentWrapper>
