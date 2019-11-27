@@ -4,7 +4,6 @@ import 'url-search-params-polyfill';
 import { AccountType } from '@raisehq/components';
 import AppContext from './App.context';
 import GetStarted from './SignUp/GetStarted';
-import Register from './SignUp/Register';
 import Confirm from './SignUp/Confirm';
 import SignIn from './SignIn/SignIn';
 import Verified from './Verification/Verified';
@@ -33,7 +32,6 @@ import defaultContext from './defaults';
 const Step = daggy.taggedSum('UI', {
   Start: [],
   StartMini: [],
-  Register: [],
   SignIn: [],
   Confirm: [],
   Verifying: [],
@@ -302,11 +300,6 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
         <PanelWithImage>
           <GetStarted />
         </PanelWithImage>
-      ),
-      Register: () => (
-        <PanelModal>
-          <Register />
-        </PanelModal>
       ),
       StartMini: () => <GetStarted mini />,
       SignIn: () => (
