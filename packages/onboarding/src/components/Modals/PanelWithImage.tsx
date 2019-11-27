@@ -16,12 +16,9 @@ import {
 } from './styles';
 
 const PanelWithImage = ({ children }) => {
-  const [open, setOpen] = useState(true);
-  const { blur, mountNode }: any = useContext(AppContext);
+  const { blur, mountNode, open, onClose, closeButton }: any = useContext(AppContext);
 
   const dimmer = blur ? { dimmer: 'blurring' } : null;
-
-  const onCloseModal = () => setOpen(false);
 
   return (
     <OnboardingModal {...dimmer} open={open} mountNode={mountNode}>
@@ -30,7 +27,7 @@ const PanelWithImage = ({ children }) => {
           <img src={`${IMAGES_PATH}logo.svg`} />
         </OnboardingHeaderItemWrapper>
         <OnboardingHeaderItemWrapper>
-          <OnboardingCloseButton onClick={onCloseModal} icon="cancel" />
+          {closeButton && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
         </OnboardingHeaderItemWrapper>
       </OnboardingHeader>
       <OnboardingContentWrapper>

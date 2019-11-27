@@ -21,7 +21,7 @@ export const OnboardingCloseButton = styled(Button)`
       color: black;
     }
 
-    &:hover {
+    &:hover, &:focus {
       background: none;
       color: #fff;
     }
