@@ -17,7 +17,6 @@ import ResetError from './ResetPassword/Error';
 import BorrowerSignUp from './BorrowerSignUp/Passwords';
 import BorrowerSignUpError from './BorrowerSignUp/Error';
 import BorrowerSignUpOK from './BorrowerSignUp/Success';
-import PanelModal from './Modals/Panel';
 import PanelWithImage from './Modals/PanelWithImage';
 import SimpleModal from './Modals/Simple';
 import { ICredentials, Steps } from './types';
