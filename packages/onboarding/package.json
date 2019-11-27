@@ -1,11 +1,7 @@
 {
   "name": "@raisehq/onboarding",
   "private": false,
-<<<<<<< HEAD
-  "version": "1.0.31",
-=======
   "version": "1.0.32",
->>>>>>> 0a1ea674caec50cbe6a303639251afc134a3fdf0
   "description": "Raise signup/login modal",
   "author": "Raul Vallespin <raul@herotoken.io>",
   "homepage": "http://www.raise.it",
