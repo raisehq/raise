@@ -35,7 +35,6 @@
     "react-transition-group": "^4.3.0",
     "slick-carousel": "^1.8.1",
     "typescript": "^3.5.3",
-    "undefined": "/home/kartojal/hero/raise/packages/components",
     "url-search-params-polyfill": "^7.0.0"
   },
   "devDependencies": {
