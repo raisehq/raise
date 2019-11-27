@@ -48,7 +48,7 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
 export const CardHref: any = styled.a`
   width: 100%;
   display: block;
-`
+`;
 export const CardLogo: any = styled(Image)`
   &&& {
     width: 70px;
@@ -92,6 +92,7 @@ export const CardBorrowerTitle = styled.div`
   color: #5a5a5a;
   font-size: 14px;
   font-weight: bold;
+  text-align: left;
 `;
 
 export const CardDescription = styled.div`
@@ -100,6 +101,7 @@ export const CardDescription = styled.div`
   color: #5a5a5a;
   font-size: 14px;
   display: block;
+  text-align: left;
 `;
 
 export const CardContent = styled.div<{
