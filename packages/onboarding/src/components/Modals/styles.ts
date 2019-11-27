@@ -15,7 +15,7 @@ export const OnboardingCloseButton = styled(Button)`
     border: none;
     position: absolute;
     top: 0;
-    right: -10px;
+    right: -50px;
     color: rgba(255, 255, 255, 0.7);
 
     i {
