@@ -12,6 +12,7 @@ const size = {
 export const OnboardingCloseButton = styled(Button)`
   &&& {
     background: none;
+    color: #fff;
     border: none;
 
     color: rgba(255, 255, 255, 0.7);
@@ -21,7 +22,7 @@ export const OnboardingCloseButton = styled(Button)`
       color: black;
     }
 
-    &:hover {
+    &:hover, &:focus {
       background: none;
       color: #fff;
     }

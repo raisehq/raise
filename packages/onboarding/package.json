@@ -1,7 +1,7 @@
 {
   "name": "@raisehq/onboarding",
   "private": false,
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "Raise signup/login modal",
   "author": "Raul Vallespin <raul@herotoken.io>",
   "homepage": "http://www.raise.it",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@raisehq/components": "^1.0.0",
+    "@raisehq/onboarding": "^1.0.31",
     "js-cookie": "^2.2.0",
     "react-google-recaptcha": "^2.0.0-rc.1",
     "react-gtm-module": "^2.0.7",
