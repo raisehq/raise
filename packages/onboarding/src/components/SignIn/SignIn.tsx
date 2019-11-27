@@ -36,7 +36,7 @@ const Signin = () => {
   const recaptchaRef: any = React.createRef();
 
   const onSetEmail = useCallback(
-    _.debounce((e, data) => {
+    _.debounce((_e: any, data: any) => {
       setLoginError(false);
       const { value } = data;
       const validateEmail = validations.isEmail(value);

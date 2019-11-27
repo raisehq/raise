@@ -25,10 +25,7 @@ build-front-review:
   script:
     - echo $REACT_APP_HOST_URL
     - npx lerna bootstrap
-    - npx lerna run compile:components
-    - npx lerna bootstrap
-    - npx lerna run compile:onboarding
-    - npx lerna bootstrap
+    - npm run build:deps
     - npm run client:build:integration
   only:
     - merge_requests
@@ -43,10 +40,7 @@ build-front-production:
   stage: build
   script:
     - npx lerna bootstrap
-    - npx lerna run compile:components
-    - npx lerna bootstrap
-    - npx lerna run compile:onboarding
-    - npx lerna bootstrap
+    - npm run build:deps
     - npm run client:build:production
   only:
     - master
@@ -61,10 +55,7 @@ build-front-integration:
   stage: build
   script:
     - npx lerna bootstrap
-    - npx lerna run compile:components
-    - npx lerna bootstrap
-    - npx lerna run compile:onboarding
-    - npx lerna bootstrap
+    - npm run build:deps
     - npm run client:build:integration
     - mv  packages/client/build  packages/client/build_int
   only:

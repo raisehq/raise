@@ -6774,6 +6774,11 @@ component-indexof@0.0.3:
   resolved "https://registry.yarnpkg.com/component-indexof/-/component-indexof-0.0.3.tgz#11d091312239eb8f32c8f25ae9cb002ffe8d3c24"
   integrity sha1-EdCRMSI5648yyPJa6csAL/6NPCQ=
 
+components@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/components/-/components-0.1.0.tgz#2057c08e9c7bf2662feec95c49e5ff2a9ab85ed5"
+  integrity sha1-IFfAjpx78mYv7slcSeX/Kpq4XtU=
+
 compressible@~2.0.16:
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.17.tgz#6e8c108a16ad58384a977f3a482ca20bff2f38c1"
@@ -20528,37 +20533,6 @@ unbzip2-stream@^1.0.9:
   dependencies:
     buffer "^5.2.1"
     through "^2.3.8"
-
-"undefined@file:packages/components":
-  version "0.1.16"
-  dependencies:
-    "@types/enzyme-adapter-react-16" "^1.0.5"
-    "@types/lodash" "^4.14.149"
-    "@types/numeral" "^0.0.26"
-    awesome-typescript-loader "^5.2.1"
-    axios "^0.19.0"
-    bn.js "^5.0.0"
-    buttercms "^1.2.1"
-    chart.js "^2.8.0"
-    dompurify "^2.0.7"
-    dotenv "^8.2.0"
-    enzyme "3.8.0"
-    enzyme-adapter-react-16 "1.15.1"
-    html-to-react "^1.4.2"
-    lodash "^4.17.15"
-    lodash-es "^4.17.15"
-    moment "^2.24.0"
-    numeral "^2.0.6"
-    pampy "^0.0.6"
-    react-chartjs-2 "^2.8.0"
-    react-content-loader "^4.3.2"
-    react-docgen-typescript-loader "^3.5.0"
-    react-router-dom "^5.1.2"
-    react-spring "^8.0.27"
-    semantic-ui-react "^0.88.1"
-    storybook-react-router "^1.0.8"
-    styled-components "^4.4.1"
-    web3-utils "^1.2.4"
 
 underscore.string@^3.0.3:
   version "3.3.5"
