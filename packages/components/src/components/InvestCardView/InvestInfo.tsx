@@ -16,9 +16,14 @@ interface InvestInfoProps {
   maxAmount: string;
   times: times;
   principal: string;
+  link?: boolean;
 }
 interface aPropsInterface {
   href: string | undefined;
+}
+
+interface toPropsInterface {
+  to: string | undefined;
 }
 
 const InvestInfo = (props: InvestInfoProps) => {
@@ -33,18 +38,21 @@ const InvestInfo = (props: InvestInfoProps) => {
     maxAmount,
     times,
     principal,
+    link,
   } = props;
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
-  const borrowerUrl = slug ? `/borrowers/${slug}` : '';
-  const aProps: aPropsInterface = { href: undefined }
-  if (borrowerUrl) {
-    aProps.href = borrowerUrl;
+  const aProps: aPropsInterface = { href: undefined };
+  const toProps: toPropsInterface = { to: undefined };
+
+  if (link) {
+    aProps.href = slug;
+    toProps.to = slug;
   }
 
   return (
     <>
-      <Card.Image to={borrowerUrl} src={background} />
-      <CardContent to={borrowerUrl} topRight={auctionTimeLeft} logo={logo}>
+      <Card.Image {...toProps} src={background} />
+      <CardContent {...toProps} topRight={auctionTimeLeft} logo={logo}>
         <a {...aProps}>
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
           <Card.Description>{shortDescription}</Card.Description>

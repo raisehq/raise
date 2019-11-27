@@ -306,7 +306,7 @@ const APRGraph = ({
           contentColor={compoundGraphData.borderColor}
         />
       </Card.Grid>
-      <Line data={graphData} options={options} height={254} />
+      <Line data={graphData} options={options} height={245} />
     </>
   );
 };

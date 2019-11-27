@@ -28,3 +28,10 @@ export const GraphButton = styled(Button)`
     }
   }
 `;
+
+export const SpacedDiv = styled.div`
+  width: 56.293px;
+  height: 27.2px;
+  display: flex;
+  align-items: center;
+`;

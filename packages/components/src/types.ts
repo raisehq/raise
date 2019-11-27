@@ -8,3 +8,12 @@ export interface times {
   auctionTimeLeft: string;
   loanTermLeft: string;
 }
+
+export interface Company {
+  companyName: string;
+  description: string;
+  shortDescription: string;
+  background: string;
+  logo: string;
+  slug: string;
+}

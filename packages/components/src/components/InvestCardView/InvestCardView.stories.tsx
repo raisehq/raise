@@ -5,9 +5,10 @@ import BN from 'bn.js';
 import { toWei } from 'web3-utils';
 
 const basicProps = {
+  link: true,
   companyName: 'HERO Fintech Solutions Ptd. Ltd.',
   shortDescription:
-  'Speck SL was funded  in 1997 and have 17 millions  of yearly revenue. The company is focused in offering the best gastronomy  experience. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.',
+    'Speck SL was funded  in 1997 and have 17 millions  of yearly revenue. The company is focused in offering the best gastronomy  experience. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.',
   background: 'https://cdn.buttercms.com/SnV5NXlFQDmHObRHyU2n',
   logo: 'https://cdn.buttercms.com/YzIsSDsTvCCpZ7pbbaVW',
   slug: 'hero',
@@ -26,27 +27,22 @@ const basicProps = {
   minInterestRate: new BN(toWei('0.40', 'ether')),
   auctionStartTimestamp: new Date().getTime() / 1000,
   auctionEndTimestamp:
-  new Date(new Date().setMonth(new Date().getMonth() + 1)).getTime() / 1000,
+    new Date(new Date().setMonth(new Date().getMonth() + 1)).getTime() / 1000,
 };
 
 const noLink = {
   ...basicProps,
-  slug: ""
-}
+  link: false,
+};
 
-storiesOf('InvestCardView', module)
-  .add('Simple', () => (
-    <div style={{ padding: 10 }}>
-      <InvestCard {...basicProps} />
-    </div>
-  )
-  );
+storiesOf('InvestCardView', module).add('Example with link', () => (
+  <div style={{ padding: 10 }}>
+    <InvestCard {...basicProps} />
+  </div>
+));
 
-storiesOf('InvestCardView', module)
-  .add('No link', () => (
-    <div style={{ padding: 10 }}>
-      <InvestCard {...noLink} />
-    </div>
-  )
-  );
-
+storiesOf('InvestCardView', module).add('Example with no link', () => (
+  <div style={{ padding: 10 }}>
+    <InvestCard {...noLink} />
+  </div>
+));

@@ -1,29 +1,29 @@
 import React, { ReactNode } from 'react';
 import { getCalculations } from '../../utils/loanUtils';
-import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import InvestCardView from '../InvestCardView';
+import { Company } from '../../types';
 
 interface LoanProps {
   auction: any;
-  butter: any;
+  borrower: Company;
   link?: boolean;
   children?: ReactNode;
   className?: string;
 }
 
 const InvestCard: React.SFC<LoanProps> = (props: LoanProps) => {
-  const { auction, butter, className, children } = props;
+  const { auction, className, children, borrower } = props;
   const link = !!props.link;
-  const borrowerInfo = useBorrowerInfo(butter, auction.originator, link);
   const calculations = getCalculations(auction);
 
   const investProps = {
     ...auction,
-    ...borrowerInfo,
-    ...calculations
+    ...borrower,
+    ...calculations,
+    link,
   };
   return (
-    <InvestCardView {...investProps} className={className} >
+    <InvestCardView {...investProps} className={className}>
       {children}
     </InvestCardView>
   );

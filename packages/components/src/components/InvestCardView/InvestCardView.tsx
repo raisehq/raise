@@ -6,6 +6,7 @@ import {
   GraphButton,
   CardBottom,
   InvestCardBody,
+  SpacedDiv,
 } from './InvestCardView.styles';
 import Card from '../Card';
 import AuctionAPR from '../Graphs/APRGraph';
@@ -30,11 +31,19 @@ interface InvestProps {
   auctionStartTimestamp: number;
   auctionEndTimestamp: number;
   className?: string;
+  link?: boolean;
   children?: ReactChild;
 }
 
 const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
-  const { companyName, times, currentAPR, investorCount, children, className } = props;
+  const {
+    companyName,
+    times,
+    currentAPR,
+    investorCount,
+    children,
+    className,
+  } = props;
   const [viewGraph, setGraphView] = useState(0);
 
   const onOpenGraph = () => {
@@ -67,7 +76,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
   });
 
   if (!companyName) {
-    return <CardPlaceholder />
+    return <CardPlaceholder />;
   }
 
   if (viewGraph !== previousTab) setPreviousTab(viewGraph);
@@ -96,16 +105,19 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
           <GraphButton basic onClick={onOpenGraph}>
             {viewGraph === 0 ? (
               <>
-              <Icon name="line graph" size="large" />
-              <Card.Row
-                notop
-                small
-                title="Current APR"
-                content={currentAPR}
-              />
+                <Icon name="line graph" size="large" />
+                <Card.Row
+                  notop
+                  small
+                  title="Current APR"
+                  content={currentAPR}
+                />
               </>
             ) : (
-              <span> Go Back</span>
+              <>
+                <Icon name="line graph" size="large" />
+                <SpacedDiv>Go back</SpacedDiv>
+              </>
             )}
           </GraphButton>
         </Card.Grid>
