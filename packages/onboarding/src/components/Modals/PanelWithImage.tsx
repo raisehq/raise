@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import useImages from '../../hooks/useImages';
 import AppContext from '../App.context';
 import {
@@ -11,20 +11,28 @@ import {
   OnboardingTitle,
   OnboardingSubTitle,
   OnboardingFormContent,
-  OnboardingCloseButton
+  OnboardingCloseButton,
+  OnboardingHeaderItemWrapper
 } from './styles';
 
 const PanelWithImage = ({ children }) => {
-  const { blur, mountNode, open, onClose, closeButton }: any = useContext(AppContext);
+  const [open, setOpen] = useState(true);
+  const { blur, mountNode }: any = useContext(AppContext);
 
   const dimmer = blur ? { dimmer: 'blurring' } : null;
   const getImagesUrl = useImages();
 
+  const onCloseModal = () => setOpen(false);
+
   return (
     <OnboardingModal {...dimmer} open={open} mountNode={mountNode}>
       <OnboardingHeader>
-        <img src={`${getImagesUrl}logo.svg`} />
-        {true && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
+        <OnboardingHeaderItemWrapper>
+          <img src={`${getImagesUrl}logo.svg`} />
+        </OnboardingHeaderItemWrapper>
+        <OnboardingHeaderItemWrapper>
+          <OnboardingCloseButton onClick={onCloseModal} icon="cancel" />
+        </OnboardingHeaderItemWrapper>
       </OnboardingHeader>
       <OnboardingContentWrapper>
         <OnboardingImageWrapper>

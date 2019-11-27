@@ -200,7 +200,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
             That format doesn't look right. Make sure there aren't any typos.
           </div>
         )}
-        {error.exist && <div className="errorText">This email already exists.</div>}
+        {!error.validation && error.exist && <div className="errorText">This email already exists.</div>}
       </OnboardInputSignUp>
       <OnboardInputSignUp>
         <OnboardCountries

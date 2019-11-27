@@ -13,13 +13,12 @@ export const OnboardingCloseButton = styled(Button)`
   &&& {
     background: none;
     border: none;
-    position: absolute;
-    top: 0;
-    right: -50px;
+
     color: rgba(255, 255, 255, 0.7);
 
     i {
-      font-size: 20px;
+      font-size: 15px;
+      color: black;
     }
 
     &:hover {
@@ -34,14 +33,22 @@ export const OnboardingModal: any = styled(Modal)`
   flex-direction: row;
 `;
 
+export const OnboardingHeaderItemWrapper: any = styled.div`
+  display: flex;
+  align-items: stretch;
+`;
+
 export const OnboardingHeader: any = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
   height: 100px;
   border-bottom: 1px solid #dfe3e9;
   margin: 0 5px 0 5px;
 
-  img {
-    margin-left: 4%;
+  div img {
+    padding: 12%;
   }
 
   @media (max-width: ${size.mobileL}) {
