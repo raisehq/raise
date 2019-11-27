@@ -130,7 +130,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
       This case is special because this step of the signup or dashboard is already showed in the view
       because of that we tracking the second step of the process.
     */
-    if (step === Step.Register) {
+    if (step === Step.Start) {
       try {
         if (startMini) {
           tagManager.sendEventCategory('Signup', TMEvents.Submit, 'blog_signup_form', host);

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import useImages from '../../hooks/useImages';
+import { IMAGES_PATH } from '../../commons/constants';
 import AppContext from '../App.context';
 import {
   OnboardingModal,
@@ -20,7 +20,6 @@ const PanelWithImage = ({ children }) => {
   const { blur, mountNode }: any = useContext(AppContext);
 
   const dimmer = blur ? { dimmer: 'blurring' } : null;
-  const getImagesUrl = useImages();
 
   const onCloseModal = () => setOpen(false);
 
@@ -28,7 +27,7 @@ const PanelWithImage = ({ children }) => {
     <OnboardingModal {...dimmer} open={open} mountNode={mountNode}>
       <OnboardingHeader>
         <OnboardingHeaderItemWrapper>
-          <img src={`${getImagesUrl}logo.svg`} />
+          <img src={`${IMAGES_PATH}logo.svg`} />
         </OnboardingHeaderItemWrapper>
         <OnboardingHeaderItemWrapper>
           <OnboardingCloseButton onClick={onCloseModal} icon="cancel" />
@@ -40,7 +39,7 @@ const PanelWithImage = ({ children }) => {
             <OnboardingTitle>Get started</OnboardingTitle>
             <OnboardingSubTitle>The only marketplace that makes your money grow</OnboardingSubTitle>
           </OnboardingTitleWrapper>
-          <OnboardingImage className="visual" src={`${getImagesUrl}img_signin_raise.png`} />
+          <OnboardingImage className="visual" src={`${IMAGES_PATH}img_signin_raise.png`} />
         </OnboardingImageWrapper>
         <OnboardingFormContent>{children}</OnboardingFormContent>
       </OnboardingContentWrapper>

@@ -11,7 +11,6 @@ import {
   OnboardCountries,
   CallToSignIn,
   OnboardDisclaimer,
-  OnboardLogo,
   OnboardCheckbox,
   OnboardMailingList,
   OnboardingCell,
@@ -126,6 +125,8 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
     setRecaptcha(captchaResponse);
   };
 
+  const onSetTagManagerAndStep = () => onSetStep('SignIn')();
+
   const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
 
   if (mini) {
@@ -200,7 +201,9 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
             That format doesn't look right. Make sure there aren't any typos.
           </div>
         )}
-        {!error.validation && error.exist && <div className="errorText">This email already exists.</div>}
+        {!error.validation && error.exist && (
+          <div className="errorText">This email already exists.</div>
+        )}
       </OnboardInputSignUp>
       <OnboardInputSignUp>
         <OnboardCountries
