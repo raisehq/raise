@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@raisehq/components": "^1.0.0",
-    "@raisehq/onboarding": "^1.0.32",
     "js-cookie": "^2.2.0",
     "react-google-recaptcha": "^2.0.0-rc.1",
     "react-gtm-module": "^2.0.7",
