@@ -1,4 +1,4 @@
-image: node:11
+image: node:12
 stages:
   - build
   - deploy
@@ -24,7 +24,7 @@ build-front-review:
     REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
   script:
     - echo $REACT_APP_HOST_URL
-    - npx lerna bootstrap
+    - yarn
     - npm run build:deps
     - npm run client:build:integration
   only:
@@ -39,7 +39,7 @@ build-front-review:
 build-front-production:
   stage: build
   script:
-    - npx lerna bootstrap
+    - yarn
     - npm run build:deps
     - npm run client:build:production
   only:
@@ -54,7 +54,7 @@ build-front-production:
 build-front-integration:
   stage: build
   script:
-    - npx lerna bootstrap
+    - yarn
     - npm run build:deps
     - npm run client:build:integration
     - mv  packages/client/build  packages/client/build_int
