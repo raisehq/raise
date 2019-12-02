@@ -25,6 +25,7 @@ import DesktopHeader from './DesktopHeader';
 import LocalData from '../helpers/localData';
 import Queryies from '../helpers/queryies';
 import AppContext from './AppContext';
+import OnboardingProgressBar from './OnboardingProgressBar';
 
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
@@ -195,6 +196,7 @@ const App = ({ history, match }: any) => {
         <>
           <TopMobileMenu />
           <DesktopHeader />
+          <OnboardingProgressBar hasDeposit walletAccount/>
           <Menu />
           <TransitionGroup component={null}>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
