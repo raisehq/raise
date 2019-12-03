@@ -4,7 +4,6 @@ import 'url-search-params-polyfill';
 import { AccountType } from '@raisehq/components';
 import AppContext from './App.context';
 import GetStarted from './SignUp/GetStarted';
-import Register from './SignUp/Register';
 import Confirm from './SignUp/Confirm';
 import SignIn from './SignIn/SignIn';
 import Verified from './Verification/Verified';
@@ -18,7 +17,7 @@ import ResetError from './ResetPassword/Error';
 import BorrowerSignUp from './BorrowerSignUp/Passwords';
 import BorrowerSignUpError from './BorrowerSignUp/Error';
 import BorrowerSignUpOK from './BorrowerSignUp/Success';
-import PanelModal from './Modals/Panel';
+import PanelWithImage from './Modals/PanelWithImage';
 import SimpleModal from './Modals/Simple';
 import { ICredentials, Steps } from './types';
 import useAsyncEffect from '../hooks/useAsyncEffect';
@@ -32,7 +31,6 @@ import defaultContext from './defaults';
 const Step = daggy.taggedSum('UI', {
   Start: [],
   StartMini: [],
-  Register: [],
   SignIn: [],
   Confirm: [],
   Verifying: [],
@@ -129,7 +127,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
       This case is special because this step of the signup or dashboard is already showed in the view
       because of that we tracking the second step of the process.
     */
-    if (step === Step.Register) {
+    if (step === Step.Start) {
       try {
         if (startMini) {
           tagManager.sendEventCategory('Signup', TMEvents.Submit, 'blog_signup_form', host);
@@ -298,14 +296,9 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   const getStep = () =>
     step.cata({
       Start: () => (
-        <PanelModal>
+        <PanelWithImage>
           <GetStarted />
-        </PanelModal>
-      ),
-      Register: () => (
-        <PanelModal>
-          <Register />
-        </PanelModal>
+        </PanelWithImage>
       ),
       StartMini: () => <GetStarted mini />,
       SignIn: () => (
