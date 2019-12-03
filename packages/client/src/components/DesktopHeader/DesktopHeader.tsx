@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link, animateScroll as scroll } from 'react-scroll';
 import {
   Header,
@@ -7,7 +7,8 @@ import {
   HeaderLogo,
   HeaderMenu,
   HeaderLogout,
-  HeaderMenuItem
+  HeaderMenuItem,
+  RaiseHeader
 } from './DesktopHeader.styles';
 import Balance from '../Balance';
 import Web3Address from '../Web3Address';
@@ -16,8 +17,11 @@ import AppContext from '../AppContext';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
+import KycTopBanner from '../KycTopBanner'
 
 const DesktopHeader = () => {
+  const [isSticky, setSticky]: any = useState(false);
+  const ref: any = useRef(null);
   const {
     history,
     onSetGetStarted,
@@ -27,56 +31,69 @@ const DesktopHeader = () => {
 
   const scrollToTop = () => scroll.scrollToTop();
 
+  const handleScroll = () => {
+    setSticky(ref.current.getBoundingClientRect().top < 0);
+  }
+
   const navigateAndScroll = () => {
     history.push('/');
     scrollToTop();
   };
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', () => handleScroll);
+    }
+  }, [])
   return visible ? (
-    <Header>
-      <HeaderWrapper>
-        <HeaderGroup>
-          <HeaderLogo onClick={() => history.push('/')}>
-            <img src={`${theme.resources}/images/logo.svg`} />
-          </HeaderLogo>
-          <HeaderMenu>
-            {user.details.accounttype_id === 1 ? (
-              <HeaderMenuItem onClick={() => history.push('/create-loan')}>
-                Create loan
+    <HeaderWrapper ref={ref}>
+      <Header sticky={isSticky} >
+        <KycTopBanner />
+        <RaiseHeader>
+          <HeaderGroup>
+            <HeaderLogo onClick={() => history.push('/')}>
+              <img src={`${theme.resources}/images/logo.svg`} />
+            </HeaderLogo>
+            <HeaderMenu>
+              {user.details.accounttype_id === 1 ? (
+                <HeaderMenuItem onClick={() => history.push('/create-loan')}>
+                  Create loan
               </HeaderMenuItem>
-            ) : (
-              <Link
-                to="toGetStarted"
-                spy
-                smooth
-                duration={500}
-                offset={HEADER_MENU_SIZE.toGetStarted}
-              >
-                <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+              ) : (
+                  <Link
+                    to="toGetStarted"
+                    spy
+                    smooth
+                    duration={500}
+                    offset={HEADER_MENU_SIZE.toGetStarted}
+                  >
+                    <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+                  </Link>
+                )}
+              <HeaderMenuItem>
+                <Link
+                  onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
+                  to="myActivity"
+                  spy
+                  smooth
+                  duration={500}
+                  offset={HEADER_MENU_SIZE.myActivity}
+                >
+                  My activity
               </Link>
-            )}
-            <HeaderMenuItem>
-              <Link
-                onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
-                to="myActivity"
-                spy
-                smooth
-                duration={500}
-                offset={HEADER_MENU_SIZE.myActivity}
-              >
-                My activity
-              </Link>
-            </HeaderMenuItem>
-          </HeaderMenu>
-        </HeaderGroup>
-        <HeaderGroup className="right">
-          <Balance />
-          <Web3Address />
-          <MyAccountButton />
-          <HeaderLogout />
-        </HeaderGroup>
-      </HeaderWrapper>
-    </Header>
+              </HeaderMenuItem>
+            </HeaderMenu>
+          </HeaderGroup>
+          <HeaderGroup className="right">
+            <Balance />
+            <Web3Address />
+            <MyAccountButton />
+            <HeaderLogout />
+          </HeaderGroup>
+        </RaiseHeader>
+      </Header>
+    </HeaderWrapper>
   ) : null;
 };
 
