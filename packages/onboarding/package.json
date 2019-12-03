@@ -3,7 +3,7 @@
   "private": false,
   "version": "1.0.33",
   "description": "Raise signup/login modal",
-  "author": "Raul Vallespin <raul@herotoken.io>",
+  "author": "RaiseHQ",
   "homepage": "http://www.raise.it",
   "license": "AGPL",
   "main": "lib/index.js",
