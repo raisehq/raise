@@ -196,7 +196,7 @@ const App = ({ history, match }: any) => {
         <>
           <TopMobileMenu />
           <DesktopHeader />
-          <OnboardingProgressBar hasDeposit walletAccount/>
+          <OnboardingProgressBar hasDeposit/>
           <Menu />
           <TransitionGroup component={null}>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { ProgressBarWrapper, ProgressBarStep, ProgressBarIcon, ProgressBarText } from './styles';
 import { Icon } from 'semantic-ui-react';
 
-export const OnboardingProgressBar = () => {
+export const OnboardingProgressBar = ({hasDeposit}) => {
   return (
     <ProgressBarWrapper>
       <ProgressBarStep completed>
