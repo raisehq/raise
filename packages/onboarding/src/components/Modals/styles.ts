@@ -33,6 +33,33 @@ export const OnboardingCloseButton = styled(Button)`
 export const OnboardingModal: any = styled(Modal)`
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 500px) {
+    &&&&&&.ui.modal {
+      border-radius: 0;
+      width: 100%;
+      position: absolute;
+      top: 0;
+    }
+    &&&&&&.ui.dimmer {
+      padding: 0%;
+    }
+    &&&&&&.ui.scrolling.modal {
+      margin: 0;
+    }
+    height: 100%;
+    box-shadow: none;
+    margin: 0;
+  }
+`;
+
+export const OnboardingModalContent: any = styled(Modal.Content)`
+  @media (max-width: 500px) {
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+  }
 `;
 
 export const OnboardingHeaderItemWrapper: any = styled.div`
@@ -64,6 +91,7 @@ export const OnboardingContentWrapper: any = styled.div`
 
   @media (max-width: ${size.mobileL}) {
     flex-wrap: wrap;
+    height: 100%;
   }
 `;
 
@@ -85,6 +113,7 @@ export const OnboardingFormContent: any = styled.div`
 
   @media (max-width: ${size.mobileL}) {
     flex: 0 1 100%;
+    border-left: none;
   }
 `;
 

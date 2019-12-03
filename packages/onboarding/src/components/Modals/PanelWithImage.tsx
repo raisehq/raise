@@ -12,7 +12,8 @@ import {
   OnboardingSubTitle,
   OnboardingFormContent,
   OnboardingCloseButton,
-  OnboardingHeaderItemWrapper
+  OnboardingHeaderItemWrapper,
+  OnboardingModalContent
 } from './styles';
 
 const PanelWithImage = ({ children }) => {
@@ -22,24 +23,28 @@ const PanelWithImage = ({ children }) => {
 
   return (
     <OnboardingModal {...dimmer} open={open} mountNode={mountNode}>
-      <OnboardingHeader>
-        <OnboardingHeaderItemWrapper>
-          <img src={`${IMAGES_PATH}logo.svg`} />
-        </OnboardingHeaderItemWrapper>
-        <OnboardingHeaderItemWrapper>
-          {closeButton && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
-        </OnboardingHeaderItemWrapper>
-      </OnboardingHeader>
-      <OnboardingContentWrapper>
-        <OnboardingImageWrapper>
-          <OnboardingTitleWrapper>
-            <OnboardingTitle>Get started</OnboardingTitle>
-            <OnboardingSubTitle>The only marketplace that makes your money grow</OnboardingSubTitle>
-          </OnboardingTitleWrapper>
-          <OnboardingImage className="visual" src={`${IMAGES_PATH}img_signin_raise.png`} />
-        </OnboardingImageWrapper>
-        <OnboardingFormContent>{children}</OnboardingFormContent>
-      </OnboardingContentWrapper>
+      <OnboardingModalContent>
+        <OnboardingHeader>
+          <OnboardingHeaderItemWrapper>
+            <img src={`${IMAGES_PATH}logo.svg`} />
+          </OnboardingHeaderItemWrapper>
+          <OnboardingHeaderItemWrapper>
+            {closeButton && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
+          </OnboardingHeaderItemWrapper>
+        </OnboardingHeader>
+        <OnboardingContentWrapper>
+          <OnboardingImageWrapper>
+            <OnboardingTitleWrapper>
+              <OnboardingTitle>Get started</OnboardingTitle>
+              <OnboardingSubTitle>
+                The only marketplace that makes your money grow
+              </OnboardingSubTitle>
+            </OnboardingTitleWrapper>
+            <OnboardingImage className="visual" src={`${IMAGES_PATH}img_signin_raise.png`} />
+          </OnboardingImageWrapper>
+          <OnboardingFormContent>{children}</OnboardingFormContent>
+        </OnboardingContentWrapper>
+      </OnboardingModalContent>
     </OnboardingModal>
   );
 };
