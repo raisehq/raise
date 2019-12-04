@@ -17,7 +17,7 @@ import AppContext from '../AppContext';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
-import KycTopBanner from '../KycTopBanner'
+import KycTopBanner from '../KycTopBanner';
 
 const DesktopHeader = () => {
   const [isSticky, setSticky]: any = useState(false);
@@ -27,13 +27,19 @@ const DesktopHeader = () => {
     onSetGetStarted,
     store: { user }
   }: any = useContext(AppContext);
-  const visible = useMenuVisibility();
+  const {
+    details: { kyc_status, accounttype_id }
+  } = user;
+  const enableKyc = accounttype_id === 2;
+  const enabledHeight = kyc_status !== 3;
 
+  const visible = useMenuVisibility();
+  const onKYC = () => history.push('/kyc');
   const scrollToTop = () => scroll.scrollToTop();
 
   const handleScroll = () => {
     setSticky(ref.current.getBoundingClientRect().top < 0);
-  }
+  };
 
   const navigateAndScroll = () => {
     history.push('/');
@@ -44,12 +50,13 @@ const DesktopHeader = () => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', () => handleScroll);
-    }
-  }, [])
+    };
+  }, []);
+
   return visible ? (
-    <HeaderWrapper ref={ref}>
-      <Header sticky={isSticky} >
-        <KycTopBanner />
+    <HeaderWrapper ref={ref} enabledHeight={enabledHeight}>
+      <Header sticky={isSticky} enabledHeight={enabledHeight}>
+        <KycTopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} />
         <RaiseHeader>
           <HeaderGroup>
             <HeaderLogo onClick={() => history.push('/')}>
@@ -59,18 +66,18 @@ const DesktopHeader = () => {
               {user.details.accounttype_id === 1 ? (
                 <HeaderMenuItem onClick={() => history.push('/create-loan')}>
                   Create loan
-              </HeaderMenuItem>
+                </HeaderMenuItem>
               ) : (
-                  <Link
-                    to="toGetStarted"
-                    spy
-                    smooth
-                    duration={500}
-                    offset={HEADER_MENU_SIZE.toGetStarted}
-                  >
-                    <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
-                  </Link>
-                )}
+                <Link
+                  to="toGetStarted"
+                  spy
+                  smooth
+                  duration={500}
+                  offset={HEADER_MENU_SIZE.toGetStarted}
+                >
+                  <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+                </Link>
+              )}
               <HeaderMenuItem>
                 <Link
                   onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
@@ -81,7 +88,7 @@ const DesktopHeader = () => {
                   offset={HEADER_MENU_SIZE.myActivity}
                 >
                   My activity
-              </Link>
+                </Link>
               </HeaderMenuItem>
             </HeaderMenu>
           </HeaderGroup>

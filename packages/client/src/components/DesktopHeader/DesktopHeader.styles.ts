@@ -3,12 +3,12 @@ import Logout from '../Logout';
 import { Link } from 'react-router-dom';
 import { maxDevice } from '../../commons/breakpoints';
 
-export const HeaderWrapper = styled.div`
-  height: 160px;
+export const HeaderWrapper: any = styled.div<any>`
+  height: ${({ enabledHeight }) => (enabledHeight ? '160px' : '90px')};
   position: relative;
-`
+`;
 export const Header: any = styled.div<any>`
-  height: 160px;
+  height: ${({ enabledHeight }) => (enabledHeight ? '160px' : '90px')};
   border-radius: 0px;
   width: 100%;
   z-index: 999;
@@ -29,7 +29,7 @@ export const Header: any = styled.div<any>`
       return `
         top: 0;
         position: fixed;
-      `
+      `;
     }
     return;
   }}
