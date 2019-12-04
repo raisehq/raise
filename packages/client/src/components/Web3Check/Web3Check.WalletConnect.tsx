@@ -3,6 +3,7 @@ import { Image, Loader } from 'semantic-ui-react';
 import CryptoWallets from '../../commons/cryptoWallets';
 import { IMAGES_PATH } from '../../commons/constants';
 import BackButton from './Web3Check.BackButton';
+import OnboardingProgressBar from '../OnboardingProgressBar';
 import {
   CardContent,
   CardCenteredText,
@@ -49,6 +50,7 @@ const WalletConnect = ({ onBack }: any) => {
 
   return (
     <>
+         <OnboardingProgressBar step={1} />
       <BackButton onBack={onBack} />
       <CardContent box="separated">
         {getMessage(getCurrentProviderName())}

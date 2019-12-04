@@ -7,7 +7,6 @@ import AppContext from '../AppContext';
 import {
   CenteredContainerStyled as CenteredContainer,
   HeaderRow,
-  GridLayout,
   HeroLayout,
   Content,
   Wrapper
@@ -61,9 +60,7 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
                       <HeaderLogout />
                     </HeaderRow>
                   )}
-                  <GridLayout>
                     <Component {...matchProps} />
-                  </GridLayout>
                 </CenteredContainer>
               </Grid>
             </Content>

@@ -6,6 +6,7 @@ import Messages from './Web3Check.Messages';
 import AppContext from '../AppContext';
 import { CardContent } from './Web3Check.styles';
 import BackButton from './Web3Check.BackButton';
+import OnboardingProgressBar from '../OnboardingProgressBar';
 
 const Check = ({ value, message }: any) => {
   const iconProps = match(
@@ -77,6 +78,7 @@ const CheckList = ({ onBack, onSuccess }: any) => {
   }
   return (
     <>
+     <OnboardingProgressBar step={1} />
       <BackButton onBack={onBack} />
       <CardContent>
         <Card.Group>

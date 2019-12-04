@@ -7,6 +7,7 @@ import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
+import OnboardingProgressBar from '../OnboardingProgressBar';
 
 const Wallet = ({ onNext }: any) => {
   const {
@@ -53,43 +54,46 @@ const Wallet = ({ onNext }: any) => {
   };
 
   return (
-    <Card.Content>
-      <CardCenteredText>
-        <CardTitle>Select your wallet </CardTitle>
-        <p>Get started by connecting one of the wallets below</p>
-      </CardCenteredText>
+    <>
+      <OnboardingProgressBar step={1}/>
       <Card.Content>
-        <CardPadded>
-          <List>
-            <List.Item>
-              <List.Content verticalAlign="middle">
-                <Button basic color="black" fluid onClick={handlerCoinbase}>
-                  Coinbase (BETA)
-                </Button>
-              </List.Content>
-            </List.Item>
-            {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
+        <CardCenteredText>
+          <CardTitle>Select your wallet </CardTitle>
+          <p>Get started by connecting one of the wallets below</p>
+        </CardCenteredText>
+        <Card.Content>
+          <CardPadded>
+            <List>
               <List.Item>
                 <List.Content verticalAlign="middle">
-                  <Button basic color="black" fluid onClick={handlerMetamask}>
-                    Metamask
+                  <Button basic color="black" fluid onClick={handlerCoinbase}>
+                    Coinbase (BETA)
                   </Button>
                 </List.Content>
               </List.Item>
-            )}
-            {defaultWallet && defaultWallet.name === CryptoWallets.Opera && (
-              <List.Item>
-                <List.Content verticalAlign="middle">
-                  <Button basic color="black" fluid onClick={handlerOpera}>
-                    Opera Wallet
-                  </Button>
-                </List.Content>
-              </List.Item>
-            )}
-          </List>
-        </CardPadded>
+              {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
+                <List.Item>
+                  <List.Content verticalAlign="middle">
+                    <Button basic color="black" fluid onClick={handlerMetamask}>
+                      Metamask
+                    </Button>
+                  </List.Content>
+                </List.Item>
+              )}
+              {defaultWallet && defaultWallet.name === CryptoWallets.Opera && (
+                <List.Item>
+                  <List.Content verticalAlign="middle">
+                    <Button basic color="black" fluid onClick={handlerOpera}>
+                      Opera Wallet
+                    </Button>
+                  </List.Content>
+                </List.Item>
+              )}
+            </List>
+          </CardPadded>
+        </Card.Content>
       </Card.Content>
-    </Card.Content>
+    </>
   );
 };
 export default Wallet;
