@@ -1,53 +1,92 @@
 {
   "name": "@raisehq/components",
-  "version": "1.0.0",
-  "description": "> TODO: description",
-  "author": "Raul Vallespin <raul@herotoken.io>",
-  "homepage": "http://www.raise.it",
-  "license": "AGPL",
-  "main": "lib/src/index.js",
-  "typings": "lib/src/index.d.ts",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
+  "version": "0.1.16",
+  "license": "MIT",
+  "author": "Raise HQ",
+  "main": "dist/index.js",
+  "module": "dist/components.esm.js",
+  "typings": "dist/index.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1",
+    "start": "tsdx watch",
+    "dev": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --env=jsdom",
+    "lint": "tsdx lint",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "compile:components": "tsc",
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "dev:int": "yarn run dev",
-    "lint": "eslint . --ext .js,.ts,.tsx"
+    "build-storybook": "build-storybook"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "alias": {
+    "react": "../../../node_modules/react",
+    "react-dom": "../../../node_modules/react-dom"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@storybook/addon-actions": "^5.1.9",
-    "@storybook/addon-info": "^5.1.9",
-    "@storybook/addon-links": "^5.1.9",
-    "@storybook/addons": "^5.1.9",
-    "@storybook/react": "^5.1.9",
-    "@types/storybook__react": "^4.0.2",
-    "@typescript-eslint/eslint-plugin": "^1.11.0",
-    "awesome-typescript-loader": "^5.2.1",
+    "@babel/core": "^7.7.2",
+    "@storybook/addon-actions": "^5.2.6",
+    "@storybook/addon-knobs": "^5.2.6",
+    "@storybook/addon-links": "^5.2.6",
+    "@storybook/addons": "^5.2.6",
+    "@storybook/react": "^5.2.6",
+    "@truffle-types/web3-utils": "^0.1.1",
+    "@types/enzyme": "^3.10.3",
+    "@types/jest": "^24.0.23",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
     "babel-loader": "^8.0.6",
-    "eslint": "^6.2.1",
-    "eslint-config-airbnb-typescript": "^4.0.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.14.3"
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "husky": "^3.1.0",
+    "react": "16.9.0",
+    "react-docgen-typescript-loader": "^3.6.0",
+    "react-dom": "16.9.0",
+    "react-test-renderer": "16.9.0",
+    "tsdx": "^0.11.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.2"
   },
   "dependencies": {
-    "js-cookie": "^2.2.0",
-    "react-iframe": "^1.8.0",
-    "react-router-hash-link": "^1.2.2",
-    "react-slick": "^0.25.2",
-    "react-transition-group": "^4.3.0",
-    "slick-carousel": "^1.8.1",
-    "url-search-params-polyfill": "^7.0.0"
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/lodash": "^4.14.149",
+    "@types/numeral": "^0.0.26",
+    "awesome-typescript-loader": "^5.2.1",
+    "axios": "^0.19.0",
+    "bn.js": "^5.0.0",
+    "buttercms": "^1.2.1",
+    "chart.js": "^2.8.0",
+    "dompurify": "^2.0.7",
+    "dotenv": "^8.2.0",
+    "enzyme": "3.8.0",
+    "enzyme-adapter-react-16": "1.15.1",
+    "html-to-react": "^1.4.2",
+    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.15",
+    "moment": "^2.24.0",
+    "numeral": "^2.0.6",
+    "pampy": "^0.0.6",
+    "react-chartjs-2": "^2.8.0",
+    "react-content-loader": "^4.3.2",
+    "react-docgen-typescript-loader": "^3.5.0",
+    "react-router-dom": "^5.1.2",
+    "react-spring": "^8.0.27",
+    "semantic-ui-react": "^0.88.1",
+    "storybook-react-router": "^1.0.8",
+    "styled-components": "^4.4.1",
+    "web3-utils": "^1.2.4"
   }
 }

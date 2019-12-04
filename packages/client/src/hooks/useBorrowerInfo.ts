@@ -2,6 +2,8 @@ import { useState } from 'react';
 import useAsyncEffect from './useAsyncEffect';
 import { findOne } from '../helpers/butter';
 
+const APP_URL = process.env.REACT_APP_HOST_URL;
+
 interface Company {
   companyName: string;
   description: string;
@@ -28,6 +30,7 @@ const useBorrowerInfo = borrowerAddress => {
       const response = await findOne('companies', {
         'fields.ethereum_address': borrowerAddress
       });
+      response.slug = `${APP_URL}/borrowers/${response.slug}`;
       setCompany(response);
     } catch (error) {
       console.error(error);

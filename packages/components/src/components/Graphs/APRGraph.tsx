@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import axios from 'axios';
+import BN from 'bn.js';
 import { Line } from 'react-chartjs-2';
-import { Card } from '@raisehq/components';
+import Card from '../Card';
 import { fromWei } from 'web3-utils';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { getDates, getClosestIndexByDate, getAverage } from '../../utils/index';
+import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
 import numeral from '../../commons/numeral';
 import { chartBackground, todayVerticalLine } from './plugins';
 import { DAI_ADDRESS } from '../../commons/constants';
 
 // Bypass typescript definitions in react-chartjs, missing Chart definition
 const Chart = require('react-chartjs-2');
+
+interface APRGraphProps {
+  maxInterestRate: BN;
+  minInterestRate: BN;
+  auctionStartTimestamp: number;
+  auctionEndTimestamp: number;
+  currentAPR: string;
+}
 
 const datasetToGraph = (
   dataset: number[],
@@ -20,7 +29,7 @@ const datasetToGraph = (
   fill: boolean,
   borderWidth: number,
   dashed: boolean,
-  pointHover = Array(),
+  pointHover: any[],
   pointRadius: number
 ) => ({
   label,
@@ -46,10 +55,10 @@ const datasetToGraph = (
     : `rgba(${rgb},1)`,
   pointHoverBorderWidth: pointHover.length ? pointHover : 2,
   pointHitRadius: 10,
-  data: [...dataset]
+  data: [...dataset],
 });
 
-const options = {
+const options: any = {
   fullCompoundDataset: [0],
   legend: {
     display: false,
@@ -57,37 +66,37 @@ const options = {
     labels: {
       boxWidth: 22,
       fontSize: 12,
-      padding: 5
-    }
+      padding: 5,
+    },
   },
   chartArea: {
-    backgroundColor: 'rgba(248,248,248,1)'
+    backgroundColor: 'rgba(248,248,248,1)',
   },
   lineAtIndex: [0],
-  onHover: (e, d) => {},
+  onHover: () => {},
   layout: {
     padding: {
       left: 5,
-      right: 5
-    }
+      right: 5,
+    },
   },
   tooltips: {
     mode: 'index',
     intersect: false,
-    enabled: false
+    enabled: false,
   },
   hover: {
     mode: 'index',
-    intersect: false
+    intersect: false,
   },
   scales: {
     xAxes: [
       {
         ticks: {
-          display: false
+          display: false,
         },
-        display: false
-      }
+        display: false,
+      },
     ],
     yAxes: [
       {
@@ -95,45 +104,67 @@ const options = {
           display: false,
           min: 0,
           max: 21,
-          stepSize: 1
+          stepSize: 1,
         },
-        display: false
-      }
-    ]
-  }
+        display: false,
+      },
+    ],
+  },
 };
 
-const getRaiseDataset = (dates, auctionStart, auctionEnd, maxInterest, minInterest) => {
+const getRaiseDataset = (
+  dates: Date[],
+  auctionStart: Date,
+  auctionEnd: Date,
+  maxInterest: number,
+  minInterest: number
+) => {
   return dates.map(
-    d =>
-      ((maxInterest - minInterest) * Math.abs(d - auctionStart)) /
-        Math.abs(auctionEnd - auctionStart) +
+    (d: Date) =>
+      ((maxInterest - minInterest) *
+        Math.abs(d.valueOf() - auctionStart.valueOf())) /
+        Math.abs(auctionEnd.valueOf() - auctionStart.valueOf()) +
       minInterest
   );
 };
 
-const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
+const APRGraph = ({
+  maxInterestRate,
+  minInterestRate,
+  auctionStartTimestamp,
+  auctionEndTimestamp,
+  currentAPR,
+}: APRGraphProps) => {
   const [compoundDataset, setCompoundDataset] = useState([0]);
   const [fullCompoundDataset, setFullCompoundDataset] = useState([0]);
-  const [[currentLoanInterest, compoundInterest], setInterest] = useState(['0%', '0%']);
+  const [[currentLoanInterest, compoundInterest], setInterest] = useState([
+    '0%',
+    '0%',
+  ]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const medianCompoundRate = getAverage(fullCompoundDataset);
-  const medianCompoundRateNumeral = numeral(medianCompoundRate / 100).format('0.00%');
+  const medianCompoundRateNumeral = numeral(medianCompoundRate / 100).format(
+    '0.00%'
+  );
 
-  const { currentAPR } = calcs;
-
-  const maxInterest = Number(fromWei(auction.maxInterestRate.toString())) * 12;
-  const minInterest = auction.minInterestRate
-    ? Number(fromWei(auction.minInterestRate.toString())) * 12
+  const maxInterest = Number(fromWei(maxInterestRate.toString())) * 12;
+  const minInterest = minInterestRate
+    ? Number(fromWei(minInterestRate.toString())) * 12
     : 0;
-  const dateStart = new Date(auction.auctionStartTimestamp * 1000);
-  const dateEnd = new Date(auction.auctionEndTimestamp * 1000);
+  const dateStart = new Date(auctionStartTimestamp * 1000);
+  const dateEnd = new Date(auctionEndTimestamp * 1000);
   const dateNow = new Date();
 
   const arrayDays = getDates(dateStart, dateEnd);
   const nowIndex = getClosestIndexByDate(arrayDays, dateNow);
 
-  const raiseDataset = getRaiseDataset(arrayDays, dateStart, dateEnd, maxInterest, minInterest);
+  const raiseDataset = getRaiseDataset(
+    arrayDays,
+    dateStart,
+    dateEnd,
+    maxInterest,
+    minInterest
+  );
 
   const raiseGraphData = datasetToGraph(
     raiseDataset,
@@ -170,27 +201,29 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
 
   const graphData = {
     labels: arrayDays,
-    datasets: [raiseGraphData, compoundGraphData, avgGraphData]
+    datasets: [raiseGraphData, compoundGraphData, avgGraphData],
   };
 
   useAsyncEffect(async () => {
-    // Chart.Chart.plugins.register(verticalLinePlugin);
     Chart.Chart.plugins.register(todayVerticalLine);
     Chart.Chart.plugins.register(chartBackground);
 
     /**
      * Compound DAI rate api call, latest 30 day
      */
-    const response = await axios.get('https://api.compound.finance/api/v2/market_history/graph', {
-      params: {
-        asset: DAI_ADDRESS,
-        min_block_timestamp: moment()
-          .subtract(30, 'day')
-          .unix(),
-        max_block_timestamp: moment().unix(),
-        num_buckets: 30
+    const response = await axios.get(
+      'https://api.compound.finance/api/v2/market_history/graph',
+      {
+        params: {
+          asset: DAI_ADDRESS,
+          min_block_timestamp: moment()
+            .subtract(30, 'day')
+            .unix(),
+          max_block_timestamp: moment().unix(),
+          num_buckets: 30,
+        },
       }
-    });
+    );
 
     if (
       response.status === 200 &&
@@ -198,24 +231,32 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
       response.data.supply_rates.length
     ) {
       const {
-        data: { supply_rates: supplyRates }
+        data: { supply_rates: supplyRates },
       } = response;
       const { length } = supplyRates;
-      const estDataset = supplyRates.map(x => x.rate * 100);
+      const estDataset = supplyRates.map(
+        ({ rate }: { rate: number }) => rate * 100
+      );
       const currentDataset = estDataset.slice(length - nowIndex - 1);
       setFullCompoundDataset(estDataset);
       setCompoundDataset(currentDataset);
-      setInterest([currentAPR, numeral(currentDataset[nowIndex] / 100).format('0.00%')]);
+      setInterest([
+        currentAPR,
+        numeral(currentDataset[nowIndex] / 100).format('0.00%'),
+      ]);
     }
   }, []);
 
   options.lineAtIndex = [nowIndex];
 
-  const updateHover = (event, datapoint) => {
+  const updateHover = (_event: any, datapoint: any[]) => {
     // Return current index to be able to show tooltip outside canvas
     if (!datapoint.length) {
       setSelectedDate(dateNow);
-      setInterest([currentAPR, numeral(compoundDataset[nowIndex] / 100).format('0.00%')]);
+      setInterest([
+        currentAPR,
+        numeral(compoundDataset[nowIndex] / 100).format('0.00%'),
+      ]);
       return;
     }
     // Return current index to be able to show tooltip outside canvas
@@ -224,13 +265,15 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
       setSelectedDate(arrayDays[index]);
 
       const currentAPRGraph =
-        index === nowIndex ? currentAPR : numeral(raiseDataset[index] / 100).format('0.00%');
+        index === nowIndex
+          ? currentAPR
+          : numeral(raiseDataset[index] / 100).format('0.00%');
 
       setInterest([
         currentAPRGraph,
         index > nowIndex
           ? medianCompoundRateNumeral
-          : numeral(compoundDataset[index] / 100).format('0.00%')
+          : numeral(compoundDataset[index] / 100).format('0.00%'),
       ]);
     }
   };
@@ -240,7 +283,12 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
   return (
     <>
       <Card.Grid>
-        <Card.Row notop big title="Date" content={selectedDate.toLocaleDateString('es')} />
+        <Card.Row
+          notop
+          big
+          title="Date"
+          content={selectedDate.toLocaleDateString('es')}
+        />
         <Card.Vertical />
         <Card.Row
           notop
@@ -258,7 +306,7 @@ const APRGraph = ({ auction, calcs }: { auction: any; calcs: any }) => {
           contentColor={compoundGraphData.borderColor}
         />
       </Card.Grid>
-      <Line data={graphData} options={options} height={286} />
+      <Line data={graphData} options={options} height={245} />
     </>
   );
 };

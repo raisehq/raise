@@ -1,12 +1,16 @@
-import { Either, to } from '../utils';
+import { Either } from '../utils';
 
-const useGraphWidth = (ref, currentAmount, totalAmount) => {
+const useGraphWidth = (
+  ref: any,
+  currentAmount: number,
+  totalAmount: number
+) => {
   const config = Either.either(ref);
 
   return config.fold(
     () => ({
       width: 0,
-      originalWidth: 0
+      originalWidth: 0,
     }),
     () => {
       const width = ref.getBoundingClientRect().width - 50;
@@ -14,7 +18,7 @@ const useGraphWidth = (ref, currentAmount, totalAmount) => {
 
       return {
         width: percent,
-        originalWidth: width
+        originalWidth: width,
       };
     }
   );
