@@ -19,6 +19,7 @@ export const ProgressBarStep = styled.div<ProgressBarStep>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: baseline;
   font-size: 15px;
   color: ${({ completed, current }) => (completed || current ? '#00DA9E' : '#3C4251')};
