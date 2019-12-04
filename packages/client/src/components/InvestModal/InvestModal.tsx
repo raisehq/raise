@@ -17,7 +17,7 @@ const UI = daggy.taggedSum('UI', {
   Success: []
 });
 
-const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
+const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const {
     web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
   }: any = useContext(AppContext);
@@ -71,6 +71,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan }) => {
     <>
       <LenderButton
         id="btn-lender-open"
+        className={className}
         fluid
         onClick={openModal}
         disabled={notConnected || kyc_status !== 3}
