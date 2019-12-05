@@ -14,13 +14,13 @@ const TopMobileMenu = () => {
     }
   }: any = useContext(AppContext);
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
-  const visible = useMenuVisibility();
+  const visibility = useMenuVisibility();
 
   const onClick = () => {
     showMenu(!menu);
   };
 
-  return visible ? (
+  return visibility.visible ? (
     <MobileMenu>
       <Burger onClick={onClick} />
       <Logo src={logoPath} />
