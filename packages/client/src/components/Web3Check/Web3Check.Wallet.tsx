@@ -1,7 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
 
-import { List, Button, Card } from 'semantic-ui-react';
-import { CardTitle, CardCenteredText, CardPadded } from './Web3Check.styles';
+import {
+  CardTitle,
+  CardSubTitle,
+  SelectYourWalletTitle,
+  Web3CheckWalletWrapper,
+  SelectYourWalletContainer,
+  SelectYourWalletList,
+  SelectWalletOptionButton,
+  SelectWalletOptionItem
+} from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
@@ -55,46 +63,36 @@ const Wallet = ({ onNext }: any) => {
   };
 
   return (
-    <>
-      <OnboardingProgressBar step={1} isMobile={isMobile}/>
-      <Card.Content>
-        <CardCenteredText>
+    <Web3CheckWalletWrapper>
+      <OnboardingProgressBar step={1} isMobile={isMobile} />
+      <SelectYourWalletContainer>
+        <SelectYourWalletTitle>
           <CardTitle>Select your wallet </CardTitle>
-          <p>Get started by connecting one of the wallets below</p>
-        </CardCenteredText>
-        <Card.Content>
-          <CardPadded>
-            <List>
-              <List.Item>
-                <List.Content verticalAlign="middle">
-                  <Button basic color="black" fluid onClick={handlerCoinbase}>
-                    Coinbase (BETA)
-                  </Button>
-                </List.Content>
-              </List.Item>
-              {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
-                <List.Item>
-                  <List.Content verticalAlign="middle">
-                    <Button basic color="black" fluid onClick={handlerMetamask}>
-                      Metamask
-                    </Button>
-                  </List.Content>
-                </List.Item>
-              )}
-              {defaultWallet && defaultWallet.name === CryptoWallets.Opera && (
-                <List.Item>
-                  <List.Content verticalAlign="middle">
-                    <Button basic color="black" fluid onClick={handlerOpera}>
-                      Opera Wallet
-                    </Button>
-                  </List.Content>
-                </List.Item>
-              )}
-            </List>
-          </CardPadded>
-        </Card.Content>
-      </Card.Content>
-    </>
+          <CardSubTitle>Get started by connecting one of the wallets below</CardSubTitle>
+        </SelectYourWalletTitle>
+        <SelectYourWalletList>
+          <SelectWalletOptionItem>
+            <SelectWalletOptionButton basic color="black" onClick={handlerCoinbase}>
+              Coinbase (BETA)
+            </SelectWalletOptionButton>
+          </SelectWalletOptionItem>
+          {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
+            <SelectWalletOptionItem>
+              <SelectWalletOptionButton basic color="black" onClick={handlerMetamask}>
+                Metamask
+              </SelectWalletOptionButton>
+            </SelectWalletOptionItem>
+          )}
+          {defaultWallet && defaultWallet.name === CryptoWallets.Opera && (
+            <SelectWalletOptionItem>
+              <SelectWalletOptionButton basic color="black" onClick={handlerOpera}>
+                Opera Wallet
+              </SelectWalletOptionButton>
+            </SelectWalletOptionItem>
+          )}
+        </SelectYourWalletList>
+      </SelectYourWalletContainer>
+    </Web3CheckWalletWrapper>
   );
 };
 export default Wallet;
