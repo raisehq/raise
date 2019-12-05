@@ -31,6 +31,10 @@ const BorrowerLoans: React.SFC<BorrowerLoansProps> = ({ account }: BorrowerLoans
     }
   }, [webSocket, account]);
 
+  if (!account) {
+    return null;
+  }
+
   const activeAuctions =
     auctions && auctions.length ? auctions.filter(({ state }) => state === 0) : null;
   return activeAuctions && activeAuctions.length > 0 ? (
