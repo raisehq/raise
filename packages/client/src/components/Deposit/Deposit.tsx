@@ -10,6 +10,7 @@ import useWeb3 from '../../hooks/useWeb3';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
 import AppContext from '../AppContext';
 import OnboardingProgressBar from '../OnboardingProgressBar';
+import { isMobile } from 'react-device-detect';
 
 const Deposit = () => {
   const {
@@ -70,7 +71,7 @@ const Deposit = () => {
 
   return (
     <>
-      <OnboardingProgressBar step={2} />
+      <OnboardingProgressBar step={2} isMobile={isMobile} />
       <Grid.Row>
         <CardSized centered>
           <CardContent extra>

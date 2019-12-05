@@ -1,8 +1,15 @@
 import React from 'react';
-import { ProgressBarWrapper, ProgressBarStep, ProgressBarIcon, ProgressBarText } from './styles';
+import {
+  ProgressBarWrapper,
+  ProgressBarStep,
+  ProgressBarIcon,
+  ProgressBarText,
+  MobileProgressSteps,
+  MobileProgressBarWrapper
+} from './styles';
 import { Icon } from 'semantic-ui-react';
 
-export const OnboardingProgressBar = ({ step, isMobile = false }) => {
+export const OnboardingProgressBar = ({ step, isMobile }) => {
   const steps = [
     { 0: 'Get Started' },
     { 1: 'Connect Wallet' },
@@ -10,21 +17,21 @@ export const OnboardingProgressBar = ({ step, isMobile = false }) => {
     { 3: 'Verify Account' }
   ];
   return (
-    <ProgressBarWrapper>
-      {isMobile
-        ? steps.map((item, index) => {
-            return index === step ? (
-              <>
-                <div>
-                  {`Step ${step + 1} of ${steps.length}`}
-                </div>
-                <ProgressBarStep completed current>
-                  <ProgressBarText>{item[index]}</ProgressBarText>
-                </ProgressBarStep>
-              </>
-            ) : null;
-          })
-        : steps.map((item, index) => (
+    <>
+      {isMobile ? (
+        steps.map((item, index) => {
+          return index === step ? (
+            <MobileProgressBarWrapper>
+              <MobileProgressSteps>{`Step ${step + 1} of ${steps.length}`}</MobileProgressSteps>
+              <ProgressBarStep completed current>
+                <ProgressBarText>{item[index]}</ProgressBarText>
+              </ProgressBarStep>
+            </MobileProgressBarWrapper>
+          ) : null;
+        })
+      ) : (
+        <ProgressBarWrapper>
+          {steps.map((item, index) => (
             <ProgressBarStep completed={index < step} current={step === index}>
               <ProgressBarText>{item[index]}</ProgressBarText>
               {index + 1 < steps.length && (
@@ -34,6 +41,8 @@ export const OnboardingProgressBar = ({ step, isMobile = false }) => {
               )}
             </ProgressBarStep>
           ))}
-    </ProgressBarWrapper>
+        </ProgressBarWrapper>
+      )}
+    </>
   );
 };

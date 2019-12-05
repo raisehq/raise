@@ -12,6 +12,7 @@ import {
   ImageContainer
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
+import { isMobile } from 'react-device-detect';
 
 const getMessage = walletId => {
   switch (walletId) {
@@ -50,7 +51,7 @@ const WalletConnect = ({ onBack }: any) => {
 
   return (
     <>
-         <OnboardingProgressBar step={1} />
+      <OnboardingProgressBar step={1} isMobile={isMobile}/>
       <BackButton onBack={onBack} />
       <CardContent box="separated">
         {getMessage(getCurrentProviderName())}

@@ -8,6 +8,7 @@ import CryptoWallets from '../../commons/cryptoWallets';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 import OnboardingProgressBar from '../OnboardingProgressBar';
+import { isMobile } from 'react-device-detect';
 
 const Wallet = ({ onNext }: any) => {
   const {
@@ -55,7 +56,7 @@ const Wallet = ({ onNext }: any) => {
 
   return (
     <>
-      <OnboardingProgressBar step={1}/>
+      <OnboardingProgressBar step={1} isMobile={isMobile}/>
       <Card.Content>
         <CardCenteredText>
           <CardTitle>Select your wallet </CardTitle>

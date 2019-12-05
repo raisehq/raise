@@ -7,6 +7,7 @@ import AppContext from '../AppContext';
 import { CardContent } from './Web3Check.styles';
 import BackButton from './Web3Check.BackButton';
 import OnboardingProgressBar from '../OnboardingProgressBar';
+import { isMobile } from 'react-device-detect';
 
 const Check = ({ value, message }: any) => {
   const iconProps = match(
@@ -78,7 +79,7 @@ const CheckList = ({ onBack, onSuccess }: any) => {
   }
   return (
     <>
-     <OnboardingProgressBar step={1} />
+     <OnboardingProgressBar step={1} isMobile={isMobile}/>
       <BackButton onBack={onBack} />
       <CardContent>
         <Card.Group>

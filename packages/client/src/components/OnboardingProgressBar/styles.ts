@@ -15,6 +15,21 @@ export const ProgressBarText = styled.div`
   padding: 2px;
 `;
 
+export const MobileProgressSteps = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+`;
+
+export const MobileProgressBarWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const ProgressBarStep = styled.div<ProgressBarStep>`
   display: flex;
   flex-direction: row;
