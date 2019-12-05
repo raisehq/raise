@@ -110,7 +110,7 @@ const useWeb3Checker = storedAccount => {
         console.error('[useWeb3Checker] Error in check Interval ', err);
       }
     } else {
-      console.log(' NOT CONNECTED ');
+      // NOT CONNECTED
     }
   }, 2000);
 

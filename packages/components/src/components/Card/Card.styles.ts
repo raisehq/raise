@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 import { Icon, Image } from 'semantic-ui-react';
-import theme from '../../../theme';
 import { device } from '../../utils/breakpoints';
 
 interface RowContentProps {
-  contentColor?: string;
+  contentColor?: string | null;
 }
 
 interface RowWrapperProps {
-  notop?: boolean | null;
-  small?: boolean | null;
-  big?: boolean | null;
+  notop?: boolean | null | undefined;
+  small?: boolean | null | undefined;
+  big?: boolean | null | undefined;
 }
 
 interface GridProps {
@@ -46,7 +45,10 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
   border-radius: 6px 6px 0 0;
   border: 1px solid #cfd0d4;
 `;
-
+export const CardHref: any = styled.a`
+  width: 100%;
+  display: block;
+`;
 export const CardLogo: any = styled(Image)`
   &&& {
     width: 70px;
@@ -57,7 +59,12 @@ export const CardLogo: any = styled(Image)`
   }
 `;
 
-export const HeroCard = styled.div<{ size?: any; width?: any }>`
+interface HeroCardProps {
+  size?: string;
+  width?: string;
+}
+
+export const HeroCard = styled.div<HeroCardProps>`
   min-height: ${({ size }) => size || '335px'};
   border-radius: 6px;
   background-color: #ffffff;
@@ -85,6 +92,7 @@ export const CardBorrowerTitle = styled.div`
   color: #5a5a5a;
   font-size: 14px;
   font-weight: bold;
+  text-align: left;
 `;
 
 export const CardDescription = styled.div`
@@ -93,9 +101,14 @@ export const CardDescription = styled.div`
   color: #5a5a5a;
   font-size: 14px;
   display: block;
+  text-align: left;
 `;
 
-export const CardContent = styled.div<{ children?: any; logo?: any; size?: any }>`
+export const CardContent = styled.div<{
+  children?: any;
+  logo?: any;
+  size?: any;
+}>`
   padding: 20px;
   position: relative;
   height: ${({ size }) => size || '100%'};
@@ -118,7 +131,8 @@ export const CardContent = styled.div<{ children?: any; logo?: any; size?: any }
 export const Grid: any = styled.div<GridProps>`
   display: flex;
   margin: 20px 0px;
-  justify-content: ${({ spaceBetween }) => (spaceBetween ? 'space-between' : 'unset')};
+  justify-content: ${({ spaceBetween }) =>
+    spaceBetween ? 'space-between' : 'unset'};
   ${({ nobottom }) => nobottom && 'margin-bottom: 0;'}
   ${({ notop }) => notop && 'margin-top: 0;'}
   ${({ alignCenter }) => alignCenter && 'align-items: center;'}
