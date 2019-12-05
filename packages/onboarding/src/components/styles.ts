@@ -187,9 +187,13 @@ export const OnboardInput = styled.div`
   }
 `;
 
+export const OnboardInputSignUp = styled(OnboardInput)`
+  margin: 0 0 40px 0;
+`;
+
 export const OnboardButton = styled.button`
+  height: 60px;
   width: 100%;
-  height: auto;
   padding: 15px 0px;
   border-radius: 4px;
   border: none;
@@ -208,7 +212,7 @@ export const OnboardButton = styled.button`
 export const CallToSignIn = styled.div`
   width: 100%;
   text-align: center;
-  padding-top: 20px;
+  padding-top: 10%;
 
   .callToSignIn {
     background: none;
@@ -221,7 +225,6 @@ export const CallToSignIn = styled.div`
 export const OnboardingCell: any = styled.div``;
 
 export const OnboardDisclaimer = styled.div`
-  border-bottom: 1px solid #dfe3e9;
   padding-bottom: 20px;
   line-height: 20px;
   display: flex;
@@ -238,7 +241,6 @@ export const OnboardDisclaimer = styled.div`
 
 export const OnboardMailingList = styled.div`
   line-height: 20px;
-  margin-top: 60px;
   padding-bottom: 20px;
   .disclaimerBTN {
     border: none;
@@ -256,9 +258,8 @@ export const OnboardCountries: any = styled(Form.Field)`
   }
 
   .search {
-    height: 53px !important;
     width: 100% !important;
-    padding: 20px !important;
+    padding: 16px !important;
     border: 1px solid #dfe3e9;
     box-sizing: border-box !important;
     color: #5a5a5a !important;
