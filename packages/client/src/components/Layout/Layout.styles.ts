@@ -164,13 +164,14 @@ export const HeroLayout = styled('div')`
 
 export const Content = styled.div`
   width: 1172px;
+  padding: 40px 25px 155px 25px;
   padding-bottom: 155px;
   box-sizing: border-box;
   margin: 0 auto;
 
   @media ${maxDevice.laptop} {
     width: 100%;
-    padding: 75px 25px 50px 25px;
+    padding: 40px 25px 50px 25px;
   }
 `;
 

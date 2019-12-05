@@ -3,7 +3,7 @@ import { WarningBanner } from '../KycTopBanner.styles';
 import { WarningSight, RightArrow, VerifyButton } from '../misc';
 
 export const MissingKycMobile = ({ action }) => (
-  <WarningBanner>
+  <WarningBanner mobile>
     <WarningSight />
     <div>
       Step 4 of 4

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import AppContext from '../AppContext';
-import { MobileWrapper, MobileMenu, Logo } from './Menu.styles';
+import { MobileMenu, Logo } from './Menu.styles';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 import TopBanner from '../TopBanner';
 import Burger from './Burger';
@@ -28,13 +28,14 @@ const TopMobileMenu = () => {
   };
 
   return visible ? (
-    <MobileWrapper>
+    // If there is a parent here it will break the sticky css rule and menu will not get fixed once scroll
+    <>
       <TopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} mobile />
       <MobileMenu>
         <Burger onClick={onClick} />
         <Logo src={logoPath} />
       </MobileMenu>
-    </MobileWrapper>
+    </>
   ) : null;
 };
 

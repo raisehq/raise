@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext } from 'react';
 import { Link, animateScroll as scroll } from 'react-scroll';
 import {
-  Header,
   HeaderWrapper,
   HeaderGroup,
   HeaderLogo,
@@ -20,8 +19,6 @@ import { HEADER_MENU_SIZE } from '../../commons/constants';
 import TopBanner from '../TopBanner';
 
 const DesktopHeader = () => {
-  const [isSticky, setSticky]: any = useState(false);
-  const ref: any = useRef(null);
   const {
     history,
     onSetGetStarted,
@@ -31,32 +28,22 @@ const DesktopHeader = () => {
     details: { kyc_status, accounttype_id }
   } = user;
   const enableKyc = accounttype_id === 2;
-  const enabledHeight = kyc_status !== 3;
 
   const visible = useMenuVisibility();
+
   const onKYC = () => history.push('/kyc');
   const scrollToTop = () => scroll.scrollToTop();
-
-  const handleScroll = () => {
-    setSticky(ref.current.getBoundingClientRect().top < 0);
-  };
 
   const navigateAndScroll = () => {
     history.push('/');
     scrollToTop();
   };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', () => handleScroll);
-    };
-  }, []);
-
+  // If there is a parent for TopBanner and HeaderWrapper, it will break the sticky css rule and menu will not get fixed once scroll
   return visible ? (
-    <HeaderWrapper ref={ref} enabledHeight={enabledHeight}>
-      <Header sticky={isSticky} enabledHeight={enabledHeight}>
-        <TopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} />
+    <>
+      <TopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} />
+      <HeaderWrapper>
         <RaiseHeader>
           <HeaderGroup>
             <HeaderLogo onClick={() => history.push('/')}>
@@ -99,8 +86,8 @@ const DesktopHeader = () => {
             <HeaderLogout />
           </HeaderGroup>
         </RaiseHeader>
-      </Header>
-    </HeaderWrapper>
+      </HeaderWrapper>
+    </>
   ) : null;
 };
 
