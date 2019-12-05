@@ -6,6 +6,10 @@ import { maxDevice } from '../../commons/breakpoints';
 export const HeaderWrapper: any = styled.div<any>`
   height: ${({ enabledHeight }) => (enabledHeight ? '160px' : '90px')};
   position: relative;
+
+  @media ${maxDevice.laptop} {
+    display: none;
+  }
 `;
 export const Header: any = styled.div<any>`
   height: ${({ enabledHeight }) => (enabledHeight ? '160px' : '90px')};

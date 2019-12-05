@@ -17,7 +17,7 @@ import AppContext from '../AppContext';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
-import KycTopBanner from '../KycTopBanner';
+import TopBanner from '../TopBanner';
 
 const DesktopHeader = () => {
   const [isSticky, setSticky]: any = useState(false);
@@ -56,7 +56,7 @@ const DesktopHeader = () => {
   return visible ? (
     <HeaderWrapper ref={ref} enabledHeight={enabledHeight}>
       <Header sticky={isSticky} enabledHeight={enabledHeight}>
-        <KycTopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} />
+        <TopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} />
         <RaiseHeader>
           <HeaderGroup>
             <HeaderLogo onClick={() => history.push('/')}>
@@ -68,16 +68,16 @@ const DesktopHeader = () => {
                   Create loan
                 </HeaderMenuItem>
               ) : (
-                <Link
-                  to="toGetStarted"
-                  spy
-                  smooth
-                  duration={500}
-                  offset={HEADER_MENU_SIZE.toGetStarted}
-                >
-                  <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
-                </Link>
-              )}
+                  <Link
+                    to="toGetStarted"
+                    spy
+                    smooth
+                    duration={500}
+                    offset={HEADER_MENU_SIZE.toGetStarted}
+                  >
+                    <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+                  </Link>
+                )}
               <HeaderMenuItem>
                 <Link
                   onClick={() => history.location.pathname !== '/' && navigateAndScroll()}

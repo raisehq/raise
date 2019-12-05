@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Button } from 'semantic-ui-react';
+import { device } from '../../commons/breakpoints';
 
 export const WarningBanner = styled.div`
   height: 70px;
@@ -9,20 +10,27 @@ export const WarningBanner = styled.div`
   justify-content: center;
   background: #f9bc2e;
   color: #3c4251;
-  font-size: 17px;
-  font-weight: bold;
+  font-size: 14px;
+  @media ${device.laptop} {
+    font-size: 17px;
+    font-weight: bold;
+  }
 `
 
 export const VerifyButton = styled(Button)`
 &&& {
   color: #3c4251;
   background: #fff;
-  font-size: 17px;
   display: flex;
   align-items: center;
   justify-content; center;
   .icon {
     margin-left: 3px;
+  }
+  margin-left: 10px;
+  font-size: 14px;
+  @media ${device.laptop} {
+    font-size: 17px;
   }
 }
 `
