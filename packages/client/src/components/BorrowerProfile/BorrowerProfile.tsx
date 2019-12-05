@@ -5,7 +5,6 @@ import { RouteComponentProps } from 'react-router';
 
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { requestPage } from '../../helpers/butter';
-import { cryptoAddressByAccount } from '../../services/user';
 import { BorrowerProfile as BorrowerProfileType } from '../../interfaces/BorrowerProfile';
 import {
   BorrowerCard,
@@ -35,7 +34,7 @@ const defaultBorrower = {
     updated: '',
     address: '',
     userId: '',
-    account: '',
+    ethereumAddress: '',
     foundationDate: '',
     background: ''
   },
@@ -68,7 +67,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
       updated,
       address,
       foundationDate,
-      account,
+      ethereumAddress,
       background
     },
     extraResources,
@@ -81,9 +80,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   useAsyncEffect(async () => {
     try {
       const response = await requestPage('borrower_profile', slug);
-      // TODO: Remove this call and get the account from the CONTEXT
-      const { address: userAccount } = await cryptoAddressByAccount(response.companyDetails.userId);
-      setPayload({ ...response, account: userAccount });
+      setPayload(response);
       setLoading(false);
     } catch (error) {
       setNotFound(true);
@@ -131,7 +128,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
         </p>
         <Resources extraResources={extraResources} />
       </SideInfo>
-      <BorrowerLoans account={account} />
+      <BorrowerLoans account={ethereumAddress} />
     </Container>
   );
 };
