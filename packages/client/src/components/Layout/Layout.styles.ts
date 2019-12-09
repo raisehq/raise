@@ -10,8 +10,7 @@ interface PropsPathname {
   pathname: string;
 }
 
-const depositWidth = pathname =>
-  match(pathname, '/deposit', () => '425px', '/verify-web3', () => '425px', ANY, () => '1200px');
+const depositWidth = pathname => match(pathname, ANY, () => '1200px');
 
 const backgroundImage = getImages('pattern-fdesk-dark.svg');
 
@@ -55,7 +54,7 @@ export const CardSized = styled(Card)`
     @media ${device.tablet} {
       min-height: 570px;
       height: auto !important;
-      width: 425px;
+      width: 500px;
     }
   }
 `;

@@ -62,7 +62,7 @@ export const RaiseMenu = styled(SemanticMenu)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     border-radius: 0px;
     transition: 0.2s;

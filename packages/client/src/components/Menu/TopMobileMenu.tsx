@@ -14,7 +14,7 @@ const TopMobileMenu = () => {
     }
   }: any = useContext(AppContext);
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
-  const visible = useMenuVisibility();
+  const {visible} = useMenuVisibility();
 
   const onClick = () => {
     showMenu(!menu);
