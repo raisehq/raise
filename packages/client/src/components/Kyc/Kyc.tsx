@@ -4,6 +4,8 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { KYCWrapper, KYCHolder, KYCDisclaimer } from './Kyc.styles';
 import AppContext from '../AppContext';
 import GetStarted from '../GetStarted';
+import OnboardingProgressBar from '../OnboardingProgressBar';
+import { isMobile } from 'react-device-detect';
 
 const KYC = () => {
   const {
@@ -62,6 +64,7 @@ const KYC = () => {
   return (
     <KYCWrapper>
       <GetStarted />
+      <OnboardingProgressBar step={3} isMobile={isMobile} />
       <Header as="h2">Verify your account</Header>
       <KYCHolder>
         <KYCDisclaimer>

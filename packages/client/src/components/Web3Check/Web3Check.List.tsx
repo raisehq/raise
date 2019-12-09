@@ -1,11 +1,19 @@
 import React, { useContext } from 'react';
-import { List, Icon, Dimmer, Loader, Card } from 'semantic-ui-react';
+import { List, Icon, Dimmer, Loader, Button } from 'semantic-ui-react';
 import { match, ANY, TAIL } from 'pampy';
 
 import Messages from './Web3Check.Messages';
 import AppContext from '../AppContext';
-import { CardContent } from './Web3Check.styles';
-import BackButton from './Web3Check.BackButton';
+import {
+  Web3CheckWalletWrapper,
+  SelectYourWalletContainer,
+  SelectYourWalletList,
+  SelectWalletOptionListItem,
+  SelectYourWalletTitle,
+  CardTitle
+} from './Web3Check.styles';
+import OnboardingProgressBar from '../OnboardingProgressBar';
+import { isMobile } from 'react-device-detect';
 
 const Check = ({ value, message }: any) => {
   const iconProps = match(
@@ -76,19 +84,27 @@ const CheckList = ({ onBack, onSuccess }: any) => {
     );
   }
   return (
-    <>
-      <BackButton onBack={onBack} />
-      <CardContent>
-        <Card.Group>
-          <Card fluid>
-            <Card.Content>
+    <Web3CheckWalletWrapper>
+      <OnboardingProgressBar step={1} isMobile={isMobile} />
+      <SelectYourWalletContainer>
+          <SelectYourWalletTitle>
+            <CardTitle>Connect your wallet </CardTitle>
+          </SelectYourWalletTitle>
+          <SelectYourWalletList>
+            <SelectWalletOptionListItem>
               <List>{StepsDOM}</List>
-            </Card.Content>
-          </Card>
-        </Card.Group>
-      </CardContent>
-      <Messages />
-    </>
+            </SelectWalletOptionListItem>
+            <SelectWalletOptionListItem>
+              <Messages />
+            </SelectWalletOptionListItem>
+            <SelectWalletOptionListItem>
+              <Button basic color="black" onClick={onBack}>
+                Go back
+              </Button>
+            </SelectWalletOptionListItem>
+          </SelectYourWalletList>
+      </SelectYourWalletContainer>
+    </Web3CheckWalletWrapper>
   );
 };
 

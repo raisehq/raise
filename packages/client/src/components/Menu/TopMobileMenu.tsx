@@ -21,7 +21,7 @@ const TopMobileMenu = () => {
   const enableKyc = accounttype_id === 2;
   const onKYC = () => history.push('/kyc');
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
-  const visible = useMenuVisibility();
+  const {visible} = useMenuVisibility();
 
   const onClick = () => {
     showMenu(!menu);

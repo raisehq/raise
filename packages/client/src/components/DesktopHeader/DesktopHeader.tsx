@@ -24,12 +24,11 @@ const DesktopHeader = () => {
     onSetGetStarted,
     store: { user }
   }: any = useContext(AppContext);
+  const { visible, visibleMenu } = useMenuVisibility();
   const {
     details: { kyc_status, accounttype_id }
   } = user;
   const enableKyc = accounttype_id === 2;
-
-  const visible = useMenuVisibility();
 
   const onKYC = () => history.push('/kyc');
   const scrollToTop = () => scroll.scrollToTop();
@@ -49,12 +48,13 @@ const DesktopHeader = () => {
             <HeaderLogo onClick={() => history.push('/')}>
               <img src={`${theme.resources}/images/logo.svg`} />
             </HeaderLogo>
-            <HeaderMenu>
-              {user.details.accounttype_id === 1 ? (
-                <HeaderMenuItem onClick={() => history.push('/create-loan')}>
-                  Create loan
-                </HeaderMenuItem>
-              ) : (
+            {visibleMenu && (
+              <HeaderMenu>
+                {user.details.accounttype_id === 1 ? (
+                  <HeaderMenuItem onClick={() => history.push('/create-loan')}>
+                    Create loan
+                  </HeaderMenuItem>
+                ) : (
                   <Link
                     to="toGetStarted"
                     spy
@@ -65,19 +65,20 @@ const DesktopHeader = () => {
                     <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
                   </Link>
                 )}
-              <HeaderMenuItem>
-                <Link
-                  onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
-                  to="myActivity"
-                  spy
-                  smooth
-                  duration={500}
-                  offset={HEADER_MENU_SIZE.myActivity}
-                >
-                  My activity
-                </Link>
-              </HeaderMenuItem>
-            </HeaderMenu>
+                <HeaderMenuItem>
+                  <Link
+                    onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
+                    to="myActivity"
+                    spy
+                    smooth
+                    duration={500}
+                    offset={HEADER_MENU_SIZE.myActivity}
+                  >
+                    My activity
+                  </Link>
+                </HeaderMenuItem>
+              </HeaderMenu>
+            )}
           </HeaderGroup>
           <HeaderGroup className="right">
             <Balance />
