@@ -41,17 +41,7 @@ const KycMessage = () => {
 
   const getView = () =>
     status.cata({
-      Start: () => (
-        <OrangeMessage hidden={false} icon>
-          <Icon name="info circle" />
-          <Message.Content as={Link} to="/kyc">
-            <Message.Header>
-              You need to <KycMessageButton onClick={onKYC}>verify your account</KycMessageButton>
-              before you can start investing
-            </Message.Header>
-          </Message.Content>
-        </OrangeMessage>
-      ),
+      Start: () => null,
       Pending: () => (
         <OrangeMessage hidden={false} icon>
           <Icon name="info circle" />

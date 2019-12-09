@@ -163,7 +163,7 @@ export const HeroLayout = styled('div')`
 
 export const Content = styled.div`
   width: 1172px;
-  padding-top: 75px;
+  padding: 40px 25px 155px 25px;
   padding-bottom: 155px;
   box-sizing: border-box;
   margin: 0 auto;
@@ -187,7 +187,7 @@ export const Wrapper = styled.div`
     url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
     url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;
 
-    @media screen and ${maxDevice.mobileM} {
+  @media screen and ${maxDevice.mobileM} {
     background: none;
   }
 `;

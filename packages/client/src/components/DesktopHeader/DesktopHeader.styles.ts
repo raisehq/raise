@@ -3,19 +3,16 @@ import Logout from '../Logout';
 import { Link } from 'react-router-dom';
 import { maxDevice } from '../../commons/breakpoints';
 
-export const Header = styled.div`
+export const HeaderWrapper: any = styled.div`
   top: 0;
-  position: fixed;
+  position: sticky;
+  height: 97px;
   border-radius: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  height: 90px;
   z-index: 999;
   margin: 0;
   border: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.35);
   background: white;
 
   @media ${maxDevice.laptop} {
@@ -48,11 +45,11 @@ export const HeaderMenu = styled.div`
   display: flex;
 `;
 
-export const HeaderWrapper = styled.div`
+export const RaiseHeader = styled.div`
   width: 1172px;
   margin: 0 auto;
   display: flex;
-  padding: 25px;
+  padding: 20px;
   box-sizing: border-box;
 
   .right {
