@@ -109,6 +109,7 @@ const CardWrapper = ({ children, size, width, ...props }: any) => {
   return (
     <Context.Provider value={values}>
       <HeroCard
+      className="heroCard"
         ref={(ref: any) => (graph.current = ref)}
         {...props}
         size={size}
