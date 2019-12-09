@@ -2,8 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { toWei } from 'web3-utils';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-import { StyledAddress as Web3Address } from './Deposit.styles';
-import { CardSized, CardContent } from '../Layout/Layout.styles';
+import { CardSized } from '../Layout/Layout.styles';
 import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
 import useWeb3 from '../../hooks/useWeb3';
@@ -74,9 +73,6 @@ const Deposit = () => {
       <OnboardingProgressBar step={2} isMobile={isMobile} />
       <Grid.Row>
         <CardSized centered>
-          <CardContent extra>
-            <Web3Address />
-          </CardContent>
           {getViewResponse(status, handleDeposit, handleContinue, handleRetry)}
         </CardSized>
       </Grid.Row>

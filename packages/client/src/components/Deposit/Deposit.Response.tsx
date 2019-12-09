@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
 import { Loader, Segment, Divider, Image, List } from 'semantic-ui-react';
+import { StyledAddress as Web3Address } from './Deposit.styles';
 import {
   ButtonGreen,
   ButtonRetry,
@@ -84,13 +85,14 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
       <Fragment>
         <CardContent>
           <CardCenteredText>
-            <CardTitle>Lender Subscription</CardTitle>
+            <CardTitle>Complete your membership</CardTitle>
             <CardSubtitle>
               <p>
                 In order to access Raise, you will need to complete the membership deposit. You will
                 be able to unlock the deposit at anytime.
               </p>
             </CardSubtitle>
+            <Web3Address />
           </CardCenteredText>
           <Segment>
             <BlockAmount>

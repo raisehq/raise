@@ -18,7 +18,6 @@ export const Web3CheckWalletWrapper = styled.div`
 export const SelectYourWalletContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
 `;
 
 export const SelectYourWalletList = styled.div`
@@ -26,7 +25,7 @@ export const SelectYourWalletList = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
 `;
 
 export const SelectWalletOptionItem = styled.div`
@@ -34,7 +33,7 @@ export const SelectWalletOptionItem = styled.div`
 `;
 
 export const SelectWalletOptionListItem = styled.div`
-  margin: 15px 0;
+  margin: 11px 0;
 `;
 
 export const SelectWalletOptionButton = styled(Button)`

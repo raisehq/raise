@@ -7,8 +7,8 @@ import AppContext from '../AppContext';
 import {
   CenteredContainerStyled as CenteredContainer,
   HeroLayout,
-  Content,
-  Wrapper
+  OnboardingContent,
+  OnboardingWrapper
 } from './Layout.styles';
 
 import Footer from '../Footer';
@@ -47,15 +47,15 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
       render={matchProps => (
         <>
         <HeroLayout>
-          <Wrapper>
-            <Content>
+          <OnboardingWrapper>
+            <OnboardingContent>
               <Grid verticalAlign="middle" padded style={{ minHeight: '100%', paddingBottom: '0' }}>
                 <CenteredContainer pathname={pathname}>
                   <Component {...matchProps} />
                 </CenteredContainer>
               </Grid>
-            </Content>
-          </Wrapper>
+            </OnboardingContent>
+          </OnboardingWrapper>
           {logged && <Footer />}
         </HeroLayout>
         </>
