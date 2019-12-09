@@ -41,7 +41,7 @@ export const CardContent = styled(Card.Content)`
     margin: 0px;
     @media ${device.tablet} {
       margin: ${({ bottom_spacing }) =>
-        bottom_spacing ? '0 2.5em 2.5em 2.5em !important;' : '0 2.5em 0em 2.5em !important;'};
+    bottom_spacing ? '0 2.5em 2.5em 2.5em !important;' : '0 2.5em 0em 2.5em !important;'};
     }
   }
 `;
@@ -64,7 +64,7 @@ export const GridSized = styled(Grid)`
     margin: 0px;
   }
 `;
-export const CenteredContainerStyled = styled('div')<PropsPathname>`
+export const CenteredContainerStyled = styled('div') <PropsPathname>`
   @media ${device.tablet} {
     margin-left: auto;
     margin-right: auto;
@@ -163,7 +163,6 @@ export const HeroLayout = styled('div')`
 
 export const Content = styled.div`
   width: 1172px;
-  padding-top: 75px;
   padding-bottom: 155px;
   box-sizing: border-box;
   margin: 0 auto;

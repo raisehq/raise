@@ -3,15 +3,18 @@ import Logout from '../Logout';
 import { Link } from 'react-router-dom';
 import { maxDevice } from '../../commons/breakpoints';
 
-export const Header = styled.div`
-  top: 0;
-  position: fixed;
+export const HeaderWrapper: any = styled.div<any>`
+  height: ${({ enabledHeight }) => (enabledHeight ? '160px' : '90px')};
+  position: relative;
+
+  @media ${maxDevice.laptop} {
+    display: none;
+  }
+`;
+export const Header: any = styled.div<any>`
+  height: ${({ enabledHeight }) => (enabledHeight ? '160px' : '90px')};
   border-radius: 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
-  height: 90px;
   z-index: 999;
   margin: 0;
   border: none;
@@ -25,6 +28,15 @@ export const Header = styled.div`
   a {
     color: #3c4251 !important;
   }
+  ${({ sticky }) => {
+    if (sticky) {
+      return `
+        top: 0;
+        position: fixed;
+      `;
+    }
+    return;
+  }}
 `;
 
 export const HeaderLogout = styled(Logout)`
@@ -48,7 +60,7 @@ export const HeaderMenu = styled.div`
   display: flex;
 `;
 
-export const HeaderWrapper = styled.div`
+export const RaiseHeader = styled.div`
   width: 1172px;
   margin: 0 auto;
   display: flex;

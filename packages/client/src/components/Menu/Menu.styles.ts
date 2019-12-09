@@ -21,7 +21,7 @@ export const BalanceMobile = styled(Balance)`
   }
 `;
 
-export const Logo = styled(Image)<ImageProps>`
+export const Logo = styled(Image) <ImageProps>`
   &&&&& {
     display: block;
     max-width: 90px;
@@ -99,7 +99,7 @@ export const RaiseMenu = styled(SemanticMenu)`
   }
 `;
 
-export const BurgerButton = styled(Button)<ButtonProps>`
+export const BurgerButton = styled(Button) <ButtonProps>`
   &&&& {
     position: absolute;
     top: 10px;
@@ -112,7 +112,7 @@ export const BurgerButton = styled(Button)<ButtonProps>`
   }
 `;
 
-export const CloseButton = styled(Button)<ButtonProps>`
+export const CloseButton = styled(Button) <ButtonProps>`
   &&&& {
     position: absolute;
     top: 10px;
@@ -128,6 +128,10 @@ export const CloseButton = styled(Button)<ButtonProps>`
   }
 `;
 
+export const MobileWrapper = styled.div`
+@media ${device.laptop} {
+  display: none;
+}`
 export const MobileMenu = styled(SemanticMenu)`
   &&&& {
     top: 0;
@@ -142,12 +146,12 @@ export const MobileMenu = styled(SemanticMenu)`
     z-index: 999;
     margin: 0;
     border: none;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 6px 11px 0px rgba(0, 0, 0, 0.19);
     background: white;
 
-    /* @media ${device.laptop} {
+    @media ${device.laptop} {
       display: none;
-    } */
+    }
   }
 `;
 
