@@ -18,6 +18,7 @@ export const Web3CheckWalletWrapper = styled.div`
 export const SelectYourWalletContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 `;
 
 export const SelectYourWalletList = styled.div`
@@ -32,9 +33,15 @@ export const SelectWalletOptionItem = styled.div`
   margin: 7px 0;
 `;
 
+export const SelectWalletOptionListItem = styled.div`
+  margin: 15px 0;
+`;
+
 export const SelectWalletOptionButton = styled(Button)`
   width: 250px;
 `;
+
+
 
 export const HelpMessage = styled.div`
   position: absolute;
@@ -47,7 +54,7 @@ export const HelpMessage = styled.div`
 export const CardDescription = styled(Card.Description)`
   &&&&&&&&& {
     min-height: 210px;
-    padding: 36px 50px 46px;
+    padding: 20px;
     background-color: #ecedee;
     border-top: none;
     font-size: 16px;
@@ -85,7 +92,6 @@ export const ButtonGreen = styled(Button)`
     ${({ double }) => (double === true ? ' height: 90px;' : 'height: 45px;')}
     background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
     color: white;
-    font: 18px bold;
     @media ${device.mobileL} {
       padding: 11px;
     }

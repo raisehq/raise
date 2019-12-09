@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
-import { Image, Loader } from 'semantic-ui-react';
+import { Image, Loader, Button } from 'semantic-ui-react';
 import CryptoWallets from '../../commons/cryptoWallets';
 import { IMAGES_PATH } from '../../commons/constants';
-import BackButton from './Web3Check.BackButton';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import {
-  CardContent,
   CardCenteredText,
   CardTitle,
   CardPadded,
-  ImageContainer
+  ImageContainer,
+  SelectYourWalletTitle,
+  SelectYourWalletContainer,
+  SelectYourWalletList,
+  SelectWalletOptionListItem
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import { isMobile } from 'react-device-detect';
@@ -51,18 +53,26 @@ const WalletConnect = ({ onBack }: any) => {
 
   return (
     <>
-      <OnboardingProgressBar step={1} isMobile={isMobile}/>
-      <BackButton onBack={onBack} />
-      <CardContent box="separated">
-        {getMessage(getCurrentProviderName())}
-        <CardPadded>
-          <ImageContainer>
-            <Loader active />
+      <OnboardingProgressBar step={1} isMobile={isMobile} />
+      <SelectYourWalletContainer>
+        <SelectYourWalletTitle>{getMessage(getCurrentProviderName())}</SelectYourWalletTitle>
+        <SelectYourWalletList>
+          <SelectWalletOptionListItem>
+            <CardPadded>
+              <ImageContainer>
+                <Loader active />
 
-            <Image src={`${IMAGES_PATH}wallet_connection.png`} />
-          </ImageContainer>
-        </CardPadded>
-      </CardContent>
+                <Image src={`${IMAGES_PATH}wallet_connection.png`} />
+              </ImageContainer>
+            </CardPadded>
+          </SelectWalletOptionListItem>
+          <SelectWalletOptionListItem>
+            <Button basic color="black" onClick={onBack}>
+              Go back
+            </Button>
+          </SelectWalletOptionListItem>
+        </SelectYourWalletList>
+      </SelectYourWalletContainer>
     </>
   );
 };
