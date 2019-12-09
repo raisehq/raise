@@ -170,7 +170,7 @@ export const Content = styled.div`
 
   @media ${maxDevice.laptop} {
     width: 100%;
-    padding: 75px 25px 50px 25px;
+    padding: 30px 25px 50px 25px;
   }
 `;
 
@@ -186,16 +186,8 @@ export const Wrapper = styled.div`
   background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
     url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
     url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;
-`;
 
-export const OnboardingWrapper = styled.div`
-  width: auto;
-  min-height: 100%;
-  background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
-    url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
-    url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;
-
-  @media screen and ${maxDevice.mobileM} {
+    @media screen and ${maxDevice.mobileM} {
     background: none;
   }
 `;
