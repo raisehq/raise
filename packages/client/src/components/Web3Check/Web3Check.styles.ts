@@ -41,8 +41,6 @@ export const SelectWalletOptionButton = styled(Button)`
   width: 250px;
 `;
 
-
-
 export const HelpMessage = styled.div`
   position: absolute;
   bottom: 10px;
@@ -141,6 +139,11 @@ export const CardCenteredText = styled.div`
   }
 `;
 
+export const TextDescription = styled.div`
+  text-align: center;
+  padding: 10px;
+`;
+
 export const SelectYourWalletTitle = styled.div`
   display: flex;
   flex-direction: column;
@@ -156,9 +159,9 @@ export const CardPadded = styled.div`
   &&&&&& {
     .ui.loader.active,
     .ui.loader.visible {
-      top: 119px;
-      position: relative;
-      left: 66%;
+      position: absolute;
+      top: 30%;
+      left: 50%;
     }
 
     @media screen and ${maxDevice.mobileL} {
@@ -171,8 +174,9 @@ export const CardPadded = styled.div`
     @media screen and ${maxDevice.mobileM} {
       .ui.loader.active,
       .ui.loader.visible {
-        top: 90px;
-        left: 73%;
+        position: absolute;
+        top: 38%;
+        left: 50%;
       }
     }
   }

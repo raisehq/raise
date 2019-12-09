@@ -11,7 +11,8 @@ import {
   SelectYourWalletTitle,
   SelectYourWalletContainer,
   SelectYourWalletList,
-  SelectWalletOptionListItem
+  SelectWalletOptionListItem,
+  TextDescription
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import { isMobile } from 'react-device-detect';
@@ -22,7 +23,7 @@ const getMessage = walletId => {
       return (
         <CardCenteredText>
           <CardTitle>Following Metamask Instructions</CardTitle>
-          <p>Raise needs to connect with your MetaMask wallet</p>
+          <TextDescription>Raise needs to connect with your MetaMask wallet</TextDescription>
         </CardCenteredText>
       );
     case CryptoWallets.Opera:

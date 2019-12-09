@@ -41,7 +41,7 @@ const Web3Check = () => {
         'wallet_success',
         getWalletName(cryptotypeId).toLowerCase()
       );
-      setUI(Stages.Checks);
+      setUI(Stages.WalletConnect);
     }
   }, []);
 
@@ -52,7 +52,7 @@ const Web3Check = () => {
         'wallet_success',
         getWalletName(cryptotypeId).toLowerCase()
       );
-      setUI(Stages.Checks);
+      setUI(Stages.WalletConnect);
     }
   }, [unlocked, web3, ui]);
 
