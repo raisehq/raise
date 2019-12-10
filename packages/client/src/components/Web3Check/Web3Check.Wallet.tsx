@@ -62,6 +62,24 @@ const Wallet = ({ onNext }: any) => {
     onNext();
   };
 
+  const handlerLink = wallet => {
+    // console.log('-button name', wallet);
+    // console.log('wallet name: ', defaultWallet.name);
+    // console.log('default wallet: ', defaultWallet);
+    switch (wallet) {
+      case 'metamask':
+        // console.log('scpecific name: ', CryptoWallets.Metamask);
+        window.location.href = 'http://metamask.app.link/';
+        break;
+      case 'opera':
+        // console.log('scpecific name: ', CryptoWallets.Opera);
+        window.location.href = 'http://onelink.to/5xwf6x';
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <Web3CheckWalletWrapper>
       <OnboardingProgressBar step={1} isMobile={isMobile} />
@@ -71,24 +89,44 @@ const Wallet = ({ onNext }: any) => {
           <CardSubTitle>Get started by connecting one of the wallets below</CardSubTitle>
         </SelectYourWalletTitle>
         <SelectYourWalletList>
-          <SelectWalletOptionItem>
+          <SelectWalletOptionItem key="coinbase">
             <SelectWalletOptionButton basic color="black" onClick={handlerCoinbase}>
               Coinbase (BETA)
             </SelectWalletOptionButton>
           </SelectWalletOptionItem>
           {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
-            <SelectWalletOptionItem>
+            <SelectWalletOptionItem key="metamask">
               <SelectWalletOptionButton basic color="black" onClick={handlerMetamask}>
                 Metamask
               </SelectWalletOptionButton>
             </SelectWalletOptionItem>
           )}
           {defaultWallet && defaultWallet.name === CryptoWallets.Opera && (
-            <SelectWalletOptionItem>
+            <SelectWalletOptionItem key="opera">
               <SelectWalletOptionButton basic color="black" onClick={handlerOpera}>
                 Opera Wallet
               </SelectWalletOptionButton>
             </SelectWalletOptionItem>
+          )}
+          {(!defaultWallet ||
+            (defaultWallet.name !== CryptoWallets.Opera &&
+              defaultWallet.name !== CryptoWallets.Metamask)) && (
+            <>
+              <SelectWalletOptionItem key="metamask">
+                <SelectWalletOptionButton
+                  basic
+                  color="black"
+                  onClick={() => handlerLink('metamask')}
+                >
+                  Metamask
+                </SelectWalletOptionButton>
+              </SelectWalletOptionItem>
+              <SelectWalletOptionItem key="opera">
+                <SelectWalletOptionButton basic color="black" onClick={() => handlerLink('opera')}>
+                  Opera Wallet
+                </SelectWalletOptionButton>
+              </SelectWalletOptionItem>
+            </>
           )}
         </SelectYourWalletList>
       </SelectYourWalletContainer>
