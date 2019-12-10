@@ -177,11 +177,14 @@ export const Header = styled.div`
   margin-bottom: 12px;
 `;
 
-export const HeaderTitle = styled.h1`
+export const HeaderTitle = styled.div`
+  display: flex;
   color: #5a5a5a;
   font-size: 12px;
   font-weight: lighter;
   line-height: 14px;
+  margin-bottom: 12px;
+  margin-top: 20px;
 `;
 
 export const HeaderContent = styled.div<{ fontSize?: any }>`
@@ -212,7 +215,7 @@ export const SubHeader = styled.div`
   margin-bottom: 5px;
 `;
 
-export const SubHeaderTitle = styled.h1`
+export const SubHeaderTitle = styled.div`
   color: #5a5a5a;
   font-size: 10px;
   font-weight: lighter;
