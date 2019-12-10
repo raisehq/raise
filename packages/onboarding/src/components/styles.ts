@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Form, Modal, Button, Checkbox } from 'semantic-ui-react';
+import { Form, Modal, Button, Checkbox, Icon } from 'semantic-ui-react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import theme from '../theme';
 
@@ -187,9 +187,13 @@ export const OnboardInput = styled.div`
   }
 `;
 
+export const OnboardInputSignUp = styled(OnboardInput)`
+  margin: 0 0 40px 0;
+`;
+
 export const OnboardButton = styled.button`
+  height: 60px;
   width: 100%;
-  height: auto;
   padding: 15px 0px;
   border-radius: 4px;
   border: none;
@@ -208,7 +212,7 @@ export const OnboardButton = styled.button`
 export const CallToSignIn = styled.div`
   width: 100%;
   text-align: center;
-  padding-top: 20px;
+  padding-top: 10%;
 
   .callToSignIn {
     background: none;
@@ -221,7 +225,6 @@ export const CallToSignIn = styled.div`
 export const OnboardingCell: any = styled.div``;
 
 export const OnboardDisclaimer = styled.div`
-  border-bottom: 1px solid #dfe3e9;
   padding-bottom: 20px;
   line-height: 20px;
   display: flex;
@@ -238,7 +241,6 @@ export const OnboardDisclaimer = styled.div`
 
 export const OnboardMailingList = styled.div`
   line-height: 20px;
-  margin-top: 60px;
   padding-bottom: 20px;
   .disclaimerBTN {
     border: none;
@@ -256,9 +258,8 @@ export const OnboardCountries: any = styled(Form.Field)`
   }
 
   .search {
-    height: 53px !important;
     width: 100% !important;
-    padding: 20px !important;
+    padding: 16px !important;
     border: 1px solid #dfe3e9;
     box-sizing: border-box !important;
     color: #5a5a5a !important;
@@ -271,25 +272,60 @@ export const ConfirmWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  padding: 50px;
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  p {
-    margin: 25px 0 45px 0;
-  }
 `;
 
+export const ConfirmHeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 50px;
+  align-items: center;
+`;
+export const ConfirmLogo = styled.img`
+  display: block;
+  width: 100px;
+  height: auto;
+`;
+export const ConfirmCros = styled(Icon)``;
+
 export const ConfirmHeader = styled.h1`
-  color: #188e9b;
   font-size: 26px;
   font-weight: bold;
   text-align: center;
 `;
 
 export const ConfirmText = styled.p`
+  text-align: center;
+  margin-top: 15px;
+`;
+
+export const ConfirmWallets = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const WalletButton = styled.button`
+  background-color: #eb3f93;
+  height: 56px;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  border: none;
+  cursor: pointer;
+`;
+
+export const ButtonText = styled.div`
+  height: 24px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
   text-align: center;
 `;
 

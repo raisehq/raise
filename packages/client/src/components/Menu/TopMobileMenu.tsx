@@ -2,29 +2,41 @@ import React, { useContext } from 'react';
 import AppContext from '../AppContext';
 import { MobileMenu, Logo } from './Menu.styles';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
+import TopBanner from '../TopBanner';
 import Burger from './Burger';
 
 const TopMobileMenu = () => {
   const {
+    history,
     store: {
-      config: { menu }
+      config: { menu },
+      user: {
+        details: { accounttype_id, kyc_status }
+      }
     },
     actions: {
       config: { showMenu }
-    }
+    },
+    web3Status: { hasDeposit }
   }: any = useContext(AppContext);
+  const enableKyc = accounttype_id === 2 && hasDeposit;
+  const onKYC = () => history.push('/kyc');
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
-  const visible = useMenuVisibility();
+  const { visible } = useMenuVisibility();
 
   const onClick = () => {
     showMenu(!menu);
   };
 
   return visible ? (
-    <MobileMenu>
-      <Burger onClick={onClick} />
-      <Logo src={logoPath} />
-    </MobileMenu>
+    // If there is a parent here it will break the sticky css rule and menu will not get fixed once scroll
+    <>
+      <TopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} mobile />
+      <MobileMenu>
+        <Burger onClick={onClick} />
+        <Logo src={logoPath} />
+      </MobileMenu>
+    </>
   ) : null;
 };
 

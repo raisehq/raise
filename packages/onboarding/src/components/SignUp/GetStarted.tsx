@@ -1,30 +1,57 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
-import { Icon, Input } from 'semantic-ui-react';
+import { Icon, Input, Select } from 'semantic-ui-react';
 import * as _ from 'lodash';
+import debounce from 'lodash/debounce';
+import { AccountType } from '@raisehq/components';
 import {
   OnboardHeader,
   OnboardSubHeader,
-  OnboardInput,
+  OnboardInputSignUp,
   OnboardButton,
+  OnboardCountries,
   CallToSignIn,
   OnboardDisclaimer,
-  OnboardLogo,
   OnboardCheckbox,
   OnboardMailingList,
   OnboardingCell,
-  MiniBody
+  MiniBody,
+  MyRecapcha
 } from '../styles';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 import { IContext } from '../types';
+import { countryOptions } from '../../commons/countries';
 import validations from '../validations';
 import theme from '../../theme';
 import { checkEmail } from '../../services';
-import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const GetStarted = ({ mini }: { mini?: boolean }) => {
-  const { onSetStep, credentials, onSetCredentials, referralCode } = useContext<IContext>(
-    AppContext
-  );
+  const { onSetStep, credentials, onSetCredentials, referralCode, onSendCredentials } = useContext<
+    IContext
+  >(AppContext);
+  const [errors, setErrors] = useState<{
+    password: boolean;
+    country: boolean;
+    email: boolean;
+    accounttype_id: number;
+  }>({
+    password: false,
+    country: false,
+    email: false,
+    accounttype_id: AccountType.Lender
+  });
+
+  const [recaptcha, setRecaptcha] = useState(null);
+  const recaptchaRef: any = React.createRef();
+
+  useEffect(() => {
+    if (recaptcha) {
+      onSendCredentials();
+    }
+  }, [recaptcha]);
+
+  const onSetCountry = debounce(async (e, data) => {
+    onSetCredentials('country_id', data.value);
+  }, 800);
 
   useEffect(() => {
     onSetCredentials('mailingChecked', false);
@@ -58,32 +85,47 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
     );
   }, 500);
 
+  const onSetPassword = debounce((e, data) => {
+    const { value } = data;
+    const validatePassword = validations.password(value);
+
+    validatePassword.fold(
+      () => setErrors({ ...errors, password: true }),
+      () => {
+        setErrors({ ...errors, password: false });
+        onSetCredentials('password', value);
+      }
+    );
+  }, 800);
+
   const onAcceptTerms = (e, { checked }) => setError({ ...error, terms: !checked });
 
   const onAcceptMailingList = (e, { checked }) => {
     onSetCredentials('mailingChecked', checked);
   };
 
+  const onSubmitSignUp = () => {
+    recaptchaRef.current.reset();
+    recaptchaRef.current.execute();
+  };
+
   const onKeyPress = event => {
-    if (event.key === 'Enter' && (credentials.email !== '' && !error.validation && !error.exist)) {
-      onSetStep('Register')();
+    if (
+      event.key === 'Enter' &&
+      credentials.email !== '' &&
+      credentials.password !== '' &&
+      credentials.country_id !== ''
+    ) {
+      onSubmitSignUp();
     }
   };
 
-  const onSetTagManagerAndStep = () => {
-    onSetStep('Register')();
-
-    return useGoogleTagManager(
-      'new user',
-      'www.raise.it',
-      'Signup',
-      '/confirm',
-      'Register',
-      'dataLayer',
-      'Submit',
-      'emailform'
-    );
+  const onCaptchaCallback = async captchaResponse => {
+    onSetCredentials('g-recaptcha-response', captchaResponse);
+    setRecaptcha(captchaResponse);
   };
+
+  const onSetTagManagerAndStep = () => onSetStep('SignIn')();
 
   const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
 
@@ -91,7 +133,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
     return (
       <MiniBody>
         <OnboardHeader>Join</OnboardHeader>
-        <OnboardInput>
+        <OnboardInputSignUp>
           <Input
             placeholder="Email address"
             onChange={onChangeEmail}
@@ -105,7 +147,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
             </div>
           )}
           {error.exist && <div className="errorText">This email already exists.</div>}
-        </OnboardInput>
+        </OnboardInputSignUp>
 
         <OnboardMailingList>
           <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
@@ -116,13 +158,19 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
           </OnboardingCell>
           <OnboardingCell>
             By signing up, I agree to Raise
-            <a className="disclaimerBTN" href={`${theme.resources}/toc.pdf`} target="_blank">
+            <a
+              className="disclaimerBTN"
+              href={`${theme.resources}/toc.pdf`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               Terms of Service
             </a>
             and
             <a
               className="disclaimerBTN"
               href={`${theme.resources}/privacy-policy.pdf`}
+              rel="noopener noreferrer"
               target="_blank"
             >
               Privacy Policy
@@ -140,11 +188,7 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
   }
   return (
     <Fragment>
-      <OnboardHeader>
-        {header} <OnboardLogo />
-      </OnboardHeader>
-      <OnboardSubHeader>Create an account</OnboardSubHeader>
-      <OnboardInput>
+      <OnboardInputSignUp>
         <Input
           placeholder="Email address"
           onChange={onChangeEmail}
@@ -157,14 +201,45 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
             That format doesn't look right. Make sure there aren't any typos.
           </div>
         )}
-        {error.exist && <div className="errorText">This email already exists.</div>}
-      </OnboardInput>
-      <OnboardButton
-        disabled={credentials.email === '' || error.validation || error.exist || error.terms}
-        onClick={onSetTagManagerAndStep}
-      >
-        Next
-      </OnboardButton>
+        {!error.validation && error.exist && (
+          <div className="errorText">This email already exists.</div>
+        )}
+      </OnboardInputSignUp>
+      <OnboardInputSignUp>
+        <OnboardCountries
+          control={Select}
+          options={countryOptions}
+          search
+          placeholder="Country of residence"
+          onChange={onSetCountry}
+          onKeyPress={onKeyPress}
+        />
+
+        <Icon size="big" name="globe" />
+      </OnboardInputSignUp>
+      <OnboardInputSignUp>
+        <Input
+          placeholder="Create a password"
+          onChange={onSetPassword}
+          error={errors.password}
+          type="password"
+          onKeyPress={onKeyPress}
+        />
+        {errors.password && (
+          <div className="errorText">
+            Passwords must have at least 8 characters and 1 capital letter.
+          </div>
+        )}
+        <Icon size="big" name="key" />
+      </OnboardInputSignUp>
+      <MyRecapcha
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
+        render="explicit"
+        onChange={onCaptchaCallback}
+      />
+
       <OnboardMailingList>
         <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
       </OnboardMailingList>
@@ -174,22 +249,41 @@ const GetStarted = ({ mini }: { mini?: boolean }) => {
         </OnboardingCell>
         <OnboardingCell>
           By signing up, I agree to Raise
-          <a className="disclaimerBTN" href={`${theme.resources}/toc.pdf`} target="_blank">
+          <a
+            className="disclaimerBTN"
+            href={`${theme.resources}/toc.pdf`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             Terms of Service
           </a>
           and
           <a
             className="disclaimerBTN"
             href={`${theme.resources}/privacy-policy.pdf`}
+            rel="noopener noreferrer"
             target="_blank"
           >
             Privacy Policy
           </a>
         </OnboardingCell>
       </OnboardDisclaimer>
+      <OnboardButton
+        disabled={
+          credentials.email === '' ||
+          credentials.password === '' ||
+          credentials.country_id === '' ||
+          error.validation ||
+          error.exist ||
+          error.terms
+        }
+        onClick={onSubmitSignUp}
+      >
+        Get Started
+      </OnboardButton>
       <CallToSignIn>
-        Do you have an account already?
-        <button className="callToSignIn" onClick={onSetStep('SignIn')}>
+        Already have an account?
+        <button className="callToSignIn" type="button" onClick={onSetStep('SignIn')}>
           Sign In
         </button>
       </CallToSignIn>

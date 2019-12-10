@@ -1,18 +1,12 @@
-import { configure } from '@storybook/react';
-import { addParameters } from '@storybook/react';
-import { themes } from '@storybook/theming';
-import '../src/general.css';
+import { configure, addDecorator } from '@storybook/react';
+import React from 'react';
+import { MemoryRouter as Router } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css';
+
+addDecorator(story => <Router initialEntries={['/foo']}>{story()}</Router>);
+
 // automatically import all files ending in *.stories.tsx
-const req = require.context('../src/components', true, /\.stories\.tsx$/);
-
-function loadStories() {
-  req.keys().forEach(req);
-}
-
-configure(loadStories, module);
-
-addParameters({
-  options: {
-    theme: themes.dark
-  }
-});
+configure(
+  require.context('../src/components', true, /\.stories\.tsx?$/),
+  module
+);

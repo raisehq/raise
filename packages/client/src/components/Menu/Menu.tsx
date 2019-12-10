@@ -14,6 +14,7 @@ import {
 import theme from '../../theme';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
 import AppContext from '../AppContext';
+import useMenuVisibility from '../../hooks/useMenuVisibility';
 
 const navigateToOutsideNewTab = route => () => {
   window.open(route, '_blank');
@@ -60,6 +61,7 @@ const Menu = () => {
       config: { menu }
     }
   }: any = useContext(AppContext);
+  const { visibleMenu } = useMenuVisibility();
 
   const toRoute = () => {
     showMenu(false);
@@ -108,7 +110,8 @@ const Menu = () => {
       {
         id: 'lender-my-activity',
         title: 'My activity',
-        link: 'myActivity'
+        link: 'myActivity',
+        onClick: toMyActivity
       }
     ]
   };
@@ -153,15 +156,23 @@ const Menu = () => {
   return (
     <RaiseMenu vertical borderless inverted className={menu ? 'open' : 'closed'}>
       <Logo src={logoPath} />
-      <Web3Address />
-      <BalanceMobile />
+      {visibleMenu && (
+        <>
+          <Web3Address />
+          <BalanceMobile />
+        </>
+      )}
       <CloseButton onClick={closeMenu} icon>
         <Icon name="close" size="big" />
       </CloseButton>
-      <div style={{ flex: 2 }} />
-      <MenuList>{getMenu(Menus[accounttype_id])}</MenuList>
-      <div style={{ flex: 2 }} />
-      <MenuSubList>{getMenu(commonRoutes)}</MenuSubList>
+      {visibleMenu && (
+        <>
+          <div style={{ flex: 2 }} />
+          <MenuList>{getMenu(Menus[accounttype_id])}</MenuList>
+          <div style={{ flex: 2 }} />
+          <MenuSubList>{getMenu(commonRoutes)}</MenuSubList>
+        </>
+      )}
       <MenuLogout />
     </RaiseMenu>
   );

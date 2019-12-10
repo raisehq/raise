@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { Icon, Popup } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import React, { ReactChild, FunctionComponent } from 'react';
+import { Popup } from 'semantic-ui-react';
 import {
   HeroCard,
   Grid,
@@ -30,7 +29,8 @@ import {
   CardBorrowerTitle,
   Vertical,
   RoiHeader,
-  RoiContent
+  RoiContent,
+  CardHref,
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -43,9 +43,16 @@ interface RowComponentProps extends React.HTMLAttributes<HTMLDivElement> {
   notop?: boolean | null;
 }
 
+interface BadgeProps {
+  children?: ReactChild;
+  color: string;
+}
+
 const Context = React.createContext({});
 
-const BadgeComponent = ({ children, color }) => <Badge color={color}>{children}</Badge>;
+const BadgeComponent = ({ children, color }: BadgeProps) => (
+  <Badge color={color}>{children}</Badge>
+);
 
 const RowComponent: React.SFC<RowComponentProps> = ({
   title,
@@ -53,7 +60,7 @@ const RowComponent: React.SFC<RowComponentProps> = ({
   contentColor,
   small,
   big,
-  notop
+  notop,
 }) => (
   <Row small={small} big={big} notop={notop}>
     <RowContent contentColor={contentColor}>{content}</RowContent>
@@ -77,32 +84,34 @@ const HeaderComponent = ({
     <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
   </Header>
 );
-
-const SubHeaderComponent = ({ title, amount, ...rest }) => (
+const SubHeaderComponent: FunctionComponent<{
+  title: string;
+  amount: string;
+}> = ({ title, amount, ...rest }) => (
   <SubHeader {...rest}>
     <SubHeaderTitle>{title}</SubHeaderTitle>
     <SubHeaderContent>{amount}</SubHeaderContent>
   </SubHeader>
 );
 
-const RoiHeaderComponent = ({ roi }) => (
+const RoiHeaderComponent: FunctionComponent<{ roi: string }> = ({ roi }) => (
   <RoiHeader>
     <RoiContent>{`${roi}ROI`}</RoiContent>
   </RoiHeader>
 );
 
-const Card = ({ children, size, width, ...props }: any) => {
+const CardWrapper = ({ children, size, width, ...props }: any) => {
   const graph = React.useRef(null);
   const [values, setValues] = React.useState({ ref: null });
 
-  React.useEffect(() => setValues({ ref: graph.current }), [graph.current]);
+  React.useEffect(() => setValues({ ref: graph.current }), []);
 
   return (
     <Context.Provider value={values}>
       <HeroCard
-        ref={ref => (graph.current = ref)}
-        {...props}
         className="heroCard"
+        ref={(ref: any) => (graph.current = ref)}
+        {...props}
         size={size}
         width={width}
       >
@@ -112,7 +121,13 @@ const Card = ({ children, size, width, ...props }: any) => {
   );
 };
 
-const GraphComponent = ({ color, currentAmount, totalAmount }) => {
+const Card: any = CardWrapper;
+
+const GraphComponent: FunctionComponent<{
+  color: string;
+  currentAmount: number;
+  totalAmount: number;
+}> = ({ color, currentAmount, totalAmount }) => {
   const { ref }: any = React.useContext(Context);
   const config = useGraphWidth(ref, currentAmount, totalAmount);
 
@@ -124,7 +139,11 @@ const GraphComponent = ({ color, currentAmount, totalAmount }) => {
   );
 };
 
-const ProgressComponent = ({ color, currentAmount, totalAmount }) => {
+const ProgressComponent: FunctionComponent<{
+  color: string;
+  currentAmount: number;
+  totalAmount: number;
+}> = ({ color, currentAmount, totalAmount }) => {
   const { ref }: any = React.useContext(Context);
   const config = useGraphWidth(ref, currentAmount, totalAmount);
 
@@ -155,7 +174,7 @@ const ContentWithLogo = ({
   size,
   to,
   className,
-  style
+  style,
 }: {
   children?: any;
   logo?: any;
@@ -164,23 +183,34 @@ const ContentWithLogo = ({
   size?: any;
   className?: any;
   style?: any;
-}) => (
-  <CardContent logo={logo} size={size} className={className} style={style}>
-    {logo && (
-      <Link className="logoWrap" to={to}>
-        <CardLogo src={logo} />
-      </Link>
-    )}
-    {topRight && <TimeLeft>{topRight}</TimeLeft>}
-    {children}
-  </CardContent>
-);
+}) => {
+  const aProps = { href: undefined };
+  if (to) {
+    aProps.href = to;
+  }
+  return (
+    <CardContent logo={logo} size={size} className={className} style={style}>
+      {logo && (
+        <a className="logoWrap" {...aProps}>
+          <CardLogo src={logo} />
+        </a>
+      )}
+      {topRight && <TimeLeft>{topRight}</TimeLeft>}
+      {children}
+    </CardContent>
+  );
+};
 
-const CardImage = ({ src, to }: { src?: any; to?: any }) => (
-  <Link to={to}>
-    <CardImageCrop src={src} />
-  </Link>
-);
+const CardImage = ({ src, to }: { src?: any; to?: any }) => {
+  if (to) {
+    return (
+      <CardHref href={to}>
+        <CardImageCrop src={src} />
+      </CardHref>
+    );
+  }
+  return <CardImageCrop src={src} />;
+};
 
 Card.BorrowerTitle = CardBorrowerTitle;
 Card.Description = CardDescription;
@@ -201,3 +231,5 @@ Card.RoiHeader = RoiHeaderComponent;
 Card.TimeLeft = TimeLeft;
 
 export default Card;
+
+export { CardWrapper };

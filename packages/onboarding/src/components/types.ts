@@ -1,6 +1,5 @@
 export type Steps =
   | 'Start'
-  | 'Register'
   | 'SignIn'
   | 'Confirm'
   | 'Verified'

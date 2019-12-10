@@ -1,9 +1,9 @@
 {
   "name": "@raisehq/onboarding",
   "private": false,
-  "version": "1.0.28",
+  "version": "1.0.34",
   "description": "Raise signup/login modal",
-  "author": "Raul Vallespin <raul@herotoken.io>",
+  "author": "RaiseHQ",
   "homepage": "http://www.raise.it",
   "license": "AGPL",
   "main": "lib/index.js",
@@ -25,7 +25,7 @@
     "lint": "eslint . --ext .js,.ts,.tsx"
   },
   "dependencies": {
-    "@raisehq/components": "^1.0.0",
+    "@raisehq/components": "*",
     "js-cookie": "^2.2.0",
     "react-google-recaptcha": "^2.0.0-rc.1",
     "react-gtm-module": "^2.0.7",

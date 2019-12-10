@@ -54,7 +54,13 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   if (!isLogged) return <Redirect to="/join" />;
 
   if (accountMatches && networkMatches && cryptotypeId !== null && hasDeposit !== undefined) {
-    if (pathname !== '/deposit' && hasDeposit !== undefined && !hasDeposit) {
+    if (
+      accounttypeId === 2 &&
+      acceptedRole &&
+      pathname !== '/deposit' &&
+      hasDeposit !== undefined &&
+      !hasDeposit
+    ) {
       return <Redirect to="/deposit" />;
     }
     if (!acceptedRole) return <Redirect to="/" />;

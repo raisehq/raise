@@ -24,6 +24,7 @@ export const Modal = styled(SemanticModal)`
     height: 100%;
     box-shadow: none;
     margin: 0;
+    overflow-y:auto;
   }
 `;
 
@@ -31,7 +32,7 @@ export const WarningContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 50px 50px 50px 50px;
+  margin: 5%;
 `;
 
 export const WarningName = styled.div`

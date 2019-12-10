@@ -1,14 +1,14 @@
 import React, { useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import LogRocket from 'logrocket';
+import TagManager from 'react-gtm-module';
 import App from './components/App';
 import RootContext from './context';
 import connector from './store/actions';
 import reducers from './store/reducers';
 import initialState from './store/initialState';
-import LogRocket from 'logrocket';
 import 'semantic-ui-css/semantic.min.css';
-import 'react-toastify/dist/ReactToastify.min.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './global.css';
@@ -23,7 +23,11 @@ const Root = () => {
   const [store, dispatch]: any = useReducer<any, any>(reducers, initialState, () => initialState);
 
   process.env.REACT_APP_LOGROCKET === 'true' && LogRocket.init('rjsyho/raisehq');
+  const tagManagerArgs = {
+    gtmId: process.env.REACT_APP_GTM_ID
+  };
 
+  TagManager.initialize(tagManagerArgs);
   const actions: any = connector(dispatch, store);
   const values: PropsValueType = { store, actions, isLogged: false };
 

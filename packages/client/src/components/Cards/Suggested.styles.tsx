@@ -1,22 +1,21 @@
 import styled from 'styled-components';
-import { Button } from 'semantic-ui-react';
-import { Card } from '@raisehq/components';
+import { InvestModal } from '../InvestModal';
+import { device } from '../../commons/breakpoints';
 
-export const CardContent = styled(Card.Content)`
-  padding: 40px 20px 0px 20px;
+import { InvestCard as InvestCardWithHooks } from '@raisehq/components';
+
+export const InvestCard = styled(InvestCardWithHooks)`
+  margin-right: 15px;
+  margin-bottom: 15px;
+  
+  @media ${device.mobileS} {
+     margin-right: 0;
+  }
+
 `;
 
-export const CardBottom = styled.div`
-  padding: 0px 20px 20px 20px;
-`;
-
-export const GraphButton = styled(Button)`
-  &&& {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    & > i:first-child {
-      margin-right: 10px;
-    }
+export const InvestButton = styled(InvestModal)`
+  &&&&&& {
+    margin-top: 15px;
   }
 `;

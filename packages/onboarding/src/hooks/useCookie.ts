@@ -7,7 +7,7 @@ import * as Cookies from 'js-cookie';
  * @param {Object|string} [initialValue]  Value will be assign if cookie doesn't exist.
  * @returns {Array} Returns cookie value, and the function to update it.
  */
-export function useCookie(key, initialValue) {
+function useCookie(key, initialValue) {
   const [item, setInnerValue] = useState(() => {
     return Cookies.get(key) || initialValue;
   });

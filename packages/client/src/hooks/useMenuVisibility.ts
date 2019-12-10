@@ -4,6 +4,7 @@ import AppContext from '../components/AppContext';
 const useMenuVisibility = () => {
   const { history }: any = useContext(AppContext);
   const [visible, setVisible] = useState(false);
+  const [visibleMenu, setVisibleMenu] = useState(false);
 
   useEffect(() => {
     if (
@@ -12,15 +13,26 @@ const useMenuVisibility = () => {
       history.location.pathname === '/dashboard' ||
       history.location.pathname.includes('/borrowers') ||
       history.location.pathname.includes('/account') ||
-      history.location.pathname === '/kyc'
+      history.location.pathname === '/kyc' ||
+      history.location.pathname.includes('/verify-web3') ||
+      history.location.pathname === '/deposit'
     ) {
       setVisible(true);
     } else {
       setVisible(false);
     }
+
+    if (
+      history.location.pathname.includes('/verify-web3') ||
+      history.location.pathname === '/deposit'
+    ) {
+      setVisibleMenu(false);
+    } else {
+      setVisibleMenu(true);
+    }
   }, [history.location.pathname]);
 
-  return visible;
+  return { visible, visibleMenu };
 };
 
 export default useMenuVisibility;

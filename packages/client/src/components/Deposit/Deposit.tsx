@@ -1,31 +1,26 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { toWei } from 'web3-utils';
-import { StyledAddress as Web3Address } from './Deposit.styles';
-import { CardSized, CardContent } from '../Layout/Layout.styles';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import { CardSized } from '../Layout/Layout.styles';
 import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
 import useWeb3 from '../../hooks/useWeb3';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
 import AppContext from '../AppContext';
-// eslint-disable-next-line
-import useGoogleTagManager from '../../hooks/useGoogleTagManager';
+import OnboardingProgressBar from '../OnboardingProgressBar';
+import { isMobile } from 'react-device-detect';
 
 const Deposit = () => {
   const {
     history,
-    store: {
-      user: {
-        // eslint-disable-next-line
-        details: { id }
-      }
-    },
     web3Status: { walletAccount, hasDeposited }
   }: any = useContext(AppContext);
   const [status, setStatus] = useState(UI.Deposit);
   const heroTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
   const { web3 } = useWeb3();
+  const tagManager = useGoogleTagManager('Deposit');
 
   useEffect(() => {
     if (status !== UI.Success && hasDeposited) {
@@ -33,24 +28,11 @@ const Deposit = () => {
     }
   }, [status, hasDeposited]);
 
-  const TagManager = label => {
-    return useGoogleTagManager(
-      id,
-      'www.raise.it',
-      'Deposit',
-      '/deposit',
-      'DepositPage',
-      'dataLayer',
-      'Submit',
-      label
-    );
-  };
-
   const handleDeposit = async () => {
     try {
       if (depositContract && heroTokenContract) {
         const { BN } = web3.utils;
-        TagManager('Deposit Attempt');
+        tagManager.sendEvent(TMEvents.Click, 'deposit_attempt');
         setStatus(UI.Waiting(UISteps.Approve));
         const allowance = new BN(
           await heroTokenContract.allowance(walletAccount, depositContract.address)
@@ -60,12 +42,13 @@ const Deposit = () => {
         }
         setStatus(UI.Waiting(UISteps.Transaction));
         await depositContract.deposit(walletAccount);
-        TagManager('Deposit Success');
+        tagManager.sendEvent(TMEvents.Submit, 'deposit_success');
         setStatus(UI.Success);
       } else {
         console.error(' CONTRACTS ARE NOT ALOWED ', depositContract, heroTokenContract);
       }
     } catch (error) {
+      tagManager.sendEvent(TMEvents.Submit, 'deposit_error');
       console.error(error);
       setStatus(UI.Error);
     }
@@ -86,14 +69,14 @@ const Deposit = () => {
   };
 
   return (
-    <Grid.Row>
-      <CardSized centered>
-        <CardContent extra>
-          <Web3Address />
-        </CardContent>
-        {getViewResponse(status, handleDeposit, handleContinue, handleRetry)}
-      </CardSized>
-    </Grid.Row>
+    <>
+      <OnboardingProgressBar step={2} isMobile={isMobile} />
+      <Grid.Row>
+        <CardSized centered>
+          {getViewResponse(status, handleDeposit, handleContinue, handleRetry)}
+        </CardSized>
+      </Grid.Row>
+    </>
   );
 };
 

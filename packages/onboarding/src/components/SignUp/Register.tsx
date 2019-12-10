@@ -13,21 +13,16 @@ import {
   MyRecapcha,
   GoogleCaptchaPolicies
 } from '../styles';
-import { AppContext } from '../App';
+import AppContext from '../App.context';
 import { IContext } from '../types';
 import { countryOptions } from '../../commons/countries';
 import validations from '../validations';
 import { checkUsername } from '../../services';
-import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 
 const Register = () => {
-  const {
-    credentials,
-    onSetStep,
-    onSetCredentials,
-    onSendCredentials,
-    referralCode
-  } = useContext<IContext>(AppContext);
+  const { credentials, onSetStep, onSetCredentials, onSendCredentials, referralCode } = useContext<
+    IContext
+  >(AppContext);
   const [errors, setErrors] = useState<{
     password: boolean;
     country: boolean;
@@ -42,7 +37,7 @@ const Register = () => {
 
   const [recaptcha, setRecaptcha] = useState(null);
   const recaptchaRef: any = React.createRef();
-  
+
   useEffect(() => {
     if (recaptcha) {
       onSendCredentials();
@@ -79,41 +74,28 @@ const Register = () => {
     );
   }, 800);
 
-  const header = !!referralCode
-    ? 'True friends invited you to Raise'
-    : 'Get started';
+  const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
+
+  const onSubmitSignUp = () => {
+    recaptchaRef.current.reset();
+    recaptchaRef.current.execute();
+  };
 
   const onKeyPress = event => {
-    useGoogleTagManager(
-      credentials.email,
-      'www.raise.it',
-      'Signup',
-      '/register',
-      'RegisterForm',
-      'dataLayer',
-      'Click',
-      'signup_form_attempt'
-    );
-
     if (
       event.key === 'Enter' &&
-      (credentials.username !== '' &&
-        credentials.password !== '' &&
-        credentials.country_id !== '')
+      credentials.username !== '' &&
+      credentials.password !== '' &&
+      credentials.country_id !== ''
     ) {
       onSubmitSignUp();
     }
   };
 
-  const onCaptchaCallback = async (captchaResponse) => {
+  const onCaptchaCallback = async captchaResponse => {
     onSetCredentials('g-recaptcha-response', captchaResponse);
     setRecaptcha(captchaResponse);
-  }
-
-  const onSubmitSignUp = () => {
-    recaptchaRef.current.reset();
-    recaptchaRef.current.execute();
-  }
+  };
 
   return (
     <Fragment>
@@ -145,9 +127,7 @@ const Register = () => {
           error={errors.username}
           onKeyPress={onKeyPress}
         />
-        {errors.username && (
-          <div className="errorText">This username already exist.</div>
-        )}
+        {errors.username && <div className="errorText">This username already exist.</div>}
         <Icon size="big" name="user" />
       </OnboardInput>
       <OnboardInput>
@@ -165,7 +145,7 @@ const Register = () => {
         )}
         <Icon size="big" name="key" />
       </OnboardInput>
-      <MyRecapcha 
+      <MyRecapcha
         ref={recaptchaRef}
         size="invisible"
         sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
@@ -184,12 +164,14 @@ const Register = () => {
       </OnboardButton>
       <CallToSignIn>
         Do you have an account already? Press here to
-        <button className="callToSignIn" onClick={onSetStep('SignIn')}>
+        <button type="button" className="callToSignIn" onClick={onSetStep('SignIn')}>
           Sign In
         </button>
       </CallToSignIn>
       <GoogleCaptchaPolicies>
-        This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+        This site is protected by reCAPTCHA and the Google{' '}
+        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
       </GoogleCaptchaPolicies>
     </Fragment>
   );

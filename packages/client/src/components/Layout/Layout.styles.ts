@@ -10,8 +10,7 @@ interface PropsPathname {
   pathname: string;
 }
 
-const depositWidth = pathname =>
-  match(pathname, '/deposit', () => '425px', '/verify-web3', () => '425px', ANY, () => '1200px');
+const depositWidth = pathname => match(pathname, ANY, () => '1200px');
 
 const backgroundImage = getImages('pattern-fdesk-dark.svg');
 
@@ -55,7 +54,7 @@ export const CardSized = styled(Card)`
     @media ${device.tablet} {
       min-height: 570px;
       height: auto !important;
-      width: 425px;
+      width: 500px;
     }
   }
 `;
@@ -164,14 +163,20 @@ export const HeroLayout = styled('div')`
 
 export const Content = styled.div`
   width: 1172px;
-  padding-top: 75px;
+  padding: 40px 25px 155px 25px;
   padding-bottom: 155px;
   box-sizing: border-box;
   margin: 0 auto;
 
   @media ${maxDevice.laptop} {
     width: 100%;
-    padding: 75px 25px 50px 25px;
+    padding: 30px 25px 50px 25px;
+  }
+`;
+
+export const OnboardingContent = styled(Content)`
+  @media ${maxDevice.laptop} {
+    padding: 30px 25px 50px 25px;
   }
 `;
 
@@ -181,6 +186,10 @@ export const Wrapper = styled.div`
   background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
     url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
     url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;
+
+  @media screen and ${maxDevice.mobileM} {
+    background: none;
+  }
 `;
 
 export const ContentMain = styled.div`

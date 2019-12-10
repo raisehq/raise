@@ -23,7 +23,7 @@ export interface BorrowerDetails {
   updated: string;
   address: string;
   userId: string;
-  account: string;
+  ethereumAddress: string;
   foundationDate: string;
   background: string;
 }

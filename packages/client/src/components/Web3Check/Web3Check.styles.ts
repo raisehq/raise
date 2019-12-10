@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { Card, Segment, Button } from 'semantic-ui-react';
-import { OnlyActive } from '../../interfaces/OnlyActive';
+import { Card, Button } from 'semantic-ui-react';
 import Web3Address from '../Web3Address';
 import { maxDevice, device } from '../../commons/breakpoints';
 
@@ -9,14 +8,36 @@ export const StyledAddress = styled(Web3Address)`
   margin: 0px 0px 0px 10px;
 `;
 
-export const NoticeHeader = styled(Card.Header)`
-  &&&&&&&&& {
-    margin: 0px 0px 40px;
-    padding: 0px !important;
-    font-weight: bold;
-    font-size: 26px;
-    border: none;
-  }
+export const Web3CheckWalletWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SelectYourWalletContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const SelectYourWalletList = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px 20px 20px;
+`;
+
+export const SelectWalletOptionItem = styled.div`
+  margin: 7px 0;
+`;
+
+export const SelectWalletOptionListItem = styled.div`
+  margin: 11px 0;
+`;
+
+export const SelectWalletOptionButton = styled(Button)`
+  width: 250px;
 `;
 
 export const HelpMessage = styled.div`
@@ -26,16 +47,11 @@ export const HelpMessage = styled.div`
   right: 0;
   text-align: center;
 `;
-export const SuccessMessage = styled.div`
-  margin: 20px 0px;
-  height: 60px;
-  font-size: 76px;
-`;
 
 export const CardDescription = styled(Card.Description)`
   &&&&&&&&& {
     min-height: 210px;
-    padding: 36px 50px 46px;
+    padding: 20px;
     background-color: #ecedee;
     border-top: none;
     font-size: 16px;
@@ -61,32 +77,10 @@ export const CardContent = styled(Card.Content)`
   }
 `;
 
-export const Web3Card = styled(Card)`
-  &&& {
-    width: 100%;
-    min-height: 490px;
-    max-width: 512px;
-    margin: 0 auto;
-    color: #5c5d5d;
-    position: relative;
-    &&&&&&&&&& > .content {
-    }
-    &&&&&&&&&& .description {
-    }
-  }
-`;
-export const NoticeSegment = styled(Segment)``;
-
-export const NoticeValue = styled.span`
-  &&& {
-    color: ${(props: OnlyActive) => (props.active ? 'green' : 'red')};
-    margin-right: 8px;
-    font-size: 1.3rem;
-  }
-`;
 export const AddressContainer = styled.div`
   margin: 6px;
 `;
+
 // prettier-ignore
 export const ButtonGreen = styled(Button)`
   &&& {
@@ -95,7 +89,6 @@ export const ButtonGreen = styled(Button)`
     ${({ double }) => (double === true ? ' height: 90px;' : 'height: 45px;')}
     background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
     color: white;
-    font: 18px bold;
     @media ${device.mobileL} {
       padding: 11px;
     }
@@ -132,12 +125,29 @@ export const CardTitle = styled.div`
   font: 26px bold;
   line-height: 36px;
   text-align: center;
-  margin: 10px;
+  margin: 20px;
+  text-align: center;
 `;
+export const CardSubTitle = styled.div`
+  text-align: center;
+`;
+
 export const CardCenteredText = styled.div`
   &&& {
     text-align: center;
   }
+`;
+
+export const TextDescription = styled.div`
+  text-align: center;
+  padding: 10px;
+`;
+
+export const SelectYourWalletTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const CardPadded = styled.div`
@@ -148,9 +158,9 @@ export const CardPadded = styled.div`
   &&&&&& {
     .ui.loader.active,
     .ui.loader.visible {
-      top: 119px;
-      position: relative;
-      left: 66%;
+      position: absolute;
+      top: 30%;
+      left: 50%;
     }
 
     @media screen and ${maxDevice.mobileL} {
@@ -163,8 +173,9 @@ export const CardPadded = styled.div`
     @media screen and ${maxDevice.mobileM} {
       .ui.loader.active,
       .ui.loader.visible {
-        top: 90px;
-        left: 73%;
+        position: absolute;
+        top: 38%;
+        left: 50%;
       }
     }
   }
