@@ -37,7 +37,7 @@ const NetworkNotMatch = ({ targetNetwork, currentNetwork }: any) => (
 const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
   <CardDescription>
     <p>
-      Check you Wallet and sign a message to bind this address to your Raise account. You will be
+      Check your Wallet and sign a message to bind this address to your Raise account. You will be
       able to operate only with this address.
     </p>
     <div />

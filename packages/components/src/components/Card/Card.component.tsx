@@ -30,7 +30,7 @@ import {
   Vertical,
   RoiHeader,
   RoiContent,
-  CardHref
+  CardHref,
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -62,11 +62,11 @@ const RowComponent: React.SFC<RowComponentProps> = ({
   big,
   notop,
 }) => (
-    <Row small={small} big={big} notop={notop}>
-      <RowContent contentColor={contentColor}>{content}</RowContent>
-      <RowTitle big={big}>{title}</RowTitle>
-    </Row>
-  );
+  <Row small={small} big={big} notop={notop}>
+    <RowContent contentColor={contentColor}>{content}</RowContent>
+    <RowTitle big={big}>{title}</RowTitle>
+  </Row>
+);
 
 const HeaderComponent = ({
   title,
@@ -74,16 +74,16 @@ const HeaderComponent = ({
   fontSize,
   ...rest
 }: {
-    title: any;
-    amount: any;
-    fontSize?: any;
-    rest?: any;
-  }) => (
-    <Header {...rest}>
-      <HeaderTitle>{title}</HeaderTitle>
-      <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
-    </Header>
-  );
+  title: any;
+  amount: any;
+  fontSize?: any;
+  rest?: any;
+}) => (
+  <Header {...rest}>
+    <HeaderTitle>{title}</HeaderTitle>
+    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
+  </Header>
+);
 const SubHeaderComponent: FunctionComponent<{
   title: string;
   amount: string;
@@ -109,7 +109,7 @@ const CardWrapper = ({ children, size, width, ...props }: any) => {
   return (
     <Context.Provider value={values}>
       <HeroCard
-      className="heroCard"
+        className="heroCard"
         ref={(ref: any) => (graph.current = ref)}
         {...props}
         size={size}
@@ -176,15 +176,15 @@ const ContentWithLogo = ({
   className,
   style,
 }: {
-    children?: any;
-    logo?: any;
-    to?: any;
-    topRight?: any;
-    size?: any;
-    className?: any;
-    style?: any;
-  }) => {
-  const aProps = { href: undefined }
+  children?: any;
+  logo?: any;
+  to?: any;
+  topRight?: any;
+  size?: any;
+  className?: any;
+  style?: any;
+}) => {
+  const aProps = { href: undefined };
   if (to) {
     aProps.href = to;
   }
@@ -198,7 +198,7 @@ const ContentWithLogo = ({
       {topRight && <TimeLeft>{topRight}</TimeLeft>}
       {children}
     </CardContent>
-  )
+  );
 };
 
 const CardImage = ({ src, to }: { src?: any; to?: any }) => {
@@ -207,12 +207,10 @@ const CardImage = ({ src, to }: { src?: any; to?: any }) => {
       <CardHref href={to}>
         <CardImageCrop src={src} />
       </CardHref>
-    )
+    );
   }
-  return (
-    <CardImageCrop src={src} />
-  )
-}
+  return <CardImageCrop src={src} />;
+};
 
 Card.BorrowerTitle = CardBorrowerTitle;
 Card.Description = CardDescription;

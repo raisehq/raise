@@ -156,7 +156,7 @@ export const HowToGetHeroToken = styled.a`
 export const BlockAmount = styled.div`
   &&& {
     display: block;
-    margin: 25px 0px 20px 0px;
+    margin: 0px 0px 20px 0px;
   }
 `;
 export const FooterRow = styled(Grid.Row)`

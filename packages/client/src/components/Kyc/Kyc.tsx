@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { Header } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { KYCWrapper, KYCHolder, KYCDisclaimer } from './Kyc.styles';
+import { KYCWrapper, KYCHolder, KYCDisclaimer, Title } from './Kyc.styles';
 import AppContext from '../AppContext';
 import GetStarted from '../GetStarted';
 import OnboardingProgressBar from '../OnboardingProgressBar';
@@ -65,7 +64,7 @@ const KYC = () => {
     <KYCWrapper>
       <GetStarted />
       <OnboardingProgressBar step={3} isMobile={isMobile} />
-      <Header as="h2">Verify your account</Header>
+      <Title as="h2">Verify your account</Title>
       <KYCHolder>
         <KYCDisclaimer>
           <p>

@@ -41,7 +41,7 @@ export const CardContent = styled(Card.Content)`
     margin: 0px;
     @media ${device.tablet} {
       margin: ${({ bottom_spacing }) =>
-    bottom_spacing ? '0 2.5em 2.5em 2.5em !important;' : '0 2.5em 0em 2.5em !important;'};
+        bottom_spacing ? '0 2.5em 2.5em 2.5em !important;' : '0 2.5em 0em 2.5em !important;'};
     }
   }
 `;
@@ -64,7 +64,7 @@ export const GridSized = styled(Grid)`
     margin: 0px;
   }
 `;
-export const CenteredContainerStyled = styled('div') <PropsPathname>`
+export const CenteredContainerStyled = styled('div')<PropsPathname>`
   @media ${device.tablet} {
     margin-left: auto;
     margin-right: auto;
@@ -170,7 +170,13 @@ export const Content = styled.div`
 
   @media ${maxDevice.laptop} {
     width: 100%;
-    padding: 40px 25px 50px 25px;
+    padding: 30px 25px 50px 25px;
+  }
+`;
+
+export const OnboardingContent = styled(Content)`
+  @media ${maxDevice.laptop} {
+    padding: 30px 25px 50px 25px;
   }
 `;
 
@@ -180,6 +186,10 @@ export const Wrapper = styled.div`
   background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
     url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
     url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;
+
+  @media screen and ${maxDevice.mobileM} {
+    background: none;
+  }
 `;
 
 export const ContentMain = styled.div`

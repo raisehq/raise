@@ -110,7 +110,8 @@ const Menu = () => {
       {
         id: 'lender-my-activity',
         title: 'My activity',
-        link: 'myActivity'
+        link: 'myActivity',
+        onClick: toMyActivity
       }
     ]
   };

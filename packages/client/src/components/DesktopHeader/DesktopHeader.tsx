@@ -22,13 +22,14 @@ const DesktopHeader = () => {
   const {
     history,
     onSetGetStarted,
-    store: { user }
+    store: { user },
+    web3Status: { hasDeposit }
   }: any = useContext(AppContext);
   const { visible, visibleMenu } = useMenuVisibility();
   const {
     details: { kyc_status, accounttype_id }
   } = user;
-  const enableKyc = accounttype_id === 2;
+  const enableKyc = accounttype_id === 2 && hasDeposit;
 
   const onKYC = () => history.push('/kyc');
   const scrollToTop = () => scroll.scrollToTop();
