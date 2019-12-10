@@ -79,7 +79,7 @@ const Resume = () => {
           <RewardMessage>
             You have earned:
             <RewardAmount>{balanceWei}</RewardAmount>
-            <MessageCoin> HERO</MessageCoin>
+            <MessageCoin> RAISE</MessageCoin>
           </RewardMessage>
         </Grid.Column>
       </Grid.Row>

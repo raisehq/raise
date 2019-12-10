@@ -1,6 +1,9 @@
 node_modules/
 packages/*/node_modules
 packages/*/lib
+packages/*/dist
+packages/*/.rts2_cache_cjs
+packages/*/.rts2_cache_esm
 lerna-debug*
 .vscode/
 packages/testing/package-lock.json

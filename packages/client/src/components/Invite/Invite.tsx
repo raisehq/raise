@@ -36,7 +36,7 @@ import useGoogleTagManager from '../../hooks/useGoogleTagManager';
 const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
 
 const quote =
-  'Hey, here is your invitation to join Raise. This link will allow you to have early access to Raise marketplace and earn Hero Tokens for free 😊';
+  'Hey, here is your invitation to join Raise. This link will allow you to have early access to Raise marketplace and earn RAISE Tokens for free 😊';
 const Invite = () => {
   const {
     store: {
