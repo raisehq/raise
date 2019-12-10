@@ -8,10 +8,11 @@ import { getWalletName } from '../../utils';
 
 import {
   StyledAddress,
-  CardDescription,
+  Description,
   HelpMessage,
   ButtonGreen,
-  AddressContainer
+  AddressContainer,
+  CardDescription
 } from './Web3Check.styles';
 
 const NeedHelp = ({ href }: any) => (
@@ -24,18 +25,18 @@ const NeedHelp = ({ href }: any) => (
 
 // @ts-ignore
 const NetworkNotMatch = ({ targetNetwork, currentNetwork }: any) => (
-  <CardDescription>
-    <h6>Change the network</h6>
+  <Description>
+    <h3>Change the network</h3>
     <p>
       Please switch to one of the following networks in your wallet:
       <b> {targetNetwork.join(', ')}</b>
     </p>
     <NeedHelp href="https://www.raise.it/help" />
-  </CardDescription>
+  </Description>
 );
 // @ts-ignore
 const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
-  <CardDescription>
+  <Description>
     <p>
       Check your Wallet and sign a message to bind this address to your Raise account. You will be
       able to operate only with this address.
@@ -48,18 +49,18 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
       </AddressContainer>
     </ButtonGreen>
     <NeedHelp href="https://www.raise.it/help" />
-  </CardDescription>
+  </Description>
 );
 // @ts-ignore
 const AccountNotMatchNotice = ({ verifiedAddress, walletId }: any) => (
-  <CardDescription>
-    <h6>Address does not match</h6>
+  <Description>
+    <h3>Address does not match</h3>
     <p>Make sure you are using {getWalletName(walletId)} with your registered address:</p>
     <div>
       <Web3Address account={verifiedAddress} />
     </div>
     <NeedHelp href="https://www.raise.it/help" />
-  </CardDescription>
+  </Description>
 );
 
 const Success = () => (
