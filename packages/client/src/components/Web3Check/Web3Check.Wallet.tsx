@@ -63,16 +63,11 @@ const Wallet = ({ onNext }: any) => {
   };
 
   const handlerLink = wallet => {
-    // console.log('-button name', wallet);
-    // console.log('wallet name: ', defaultWallet.name);
-    // console.log('default wallet: ', defaultWallet);
     switch (wallet) {
       case 'metamask':
-        // console.log('scpecific name: ', CryptoWallets.Metamask);
         window.location.href = 'http://metamask.app.link/';
         break;
       case 'opera':
-        // console.log('scpecific name: ', CryptoWallets.Opera);
         window.location.href = 'http://onelink.to/5xwf6x';
         break;
       default:
