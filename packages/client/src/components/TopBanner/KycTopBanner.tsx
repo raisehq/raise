@@ -28,8 +28,6 @@ interface KycTopBannerProps {
 const KycTopBanner = ({ enabled, kycStatus, action, mobile }: KycTopBannerProps) => {
   const view = Status[StatusSet[kycStatus || 5]];
 
-  console.log(enabled, kycStatus);
-
   if (!enabled) {
     return null;
   }

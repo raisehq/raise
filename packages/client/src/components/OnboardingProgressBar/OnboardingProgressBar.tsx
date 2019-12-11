@@ -21,7 +21,7 @@ export const OnboardingProgressBar = ({ step, isMobile }) => {
       {isMobile ? (
         steps.map((item, index) => {
           return index === step ? (
-            <MobileProgressBarWrapper>
+            <MobileProgressBarWrapper key={index}>
               <MobileProgressSteps>{`Step ${step + 1} of ${steps.length}`}</MobileProgressSteps>
               <ProgressBarStep completed current>
                 <ProgressBarText>{item[index]}</ProgressBarText>
@@ -32,7 +32,7 @@ export const OnboardingProgressBar = ({ step, isMobile }) => {
       ) : (
         <ProgressBarWrapper>
           {steps.map((item, index) => (
-            <ProgressBarStep completed={index < step} current={step === index}>
+            <ProgressBarStep completed={index < step} current={step === index} key={index}>
               <ProgressBarText>{item[index]}</ProgressBarText>
               {index + 1 < steps.length && (
                 <ProgressBarIcon>
