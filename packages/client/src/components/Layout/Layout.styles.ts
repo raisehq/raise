@@ -187,7 +187,7 @@ export const Wrapper = styled.div`
     url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
     url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;
 
-  @media screen and ${maxDevice.mobileM} {
+  @media screen and ${maxDevice.mobileL} {
     background: none;
   }
 `;

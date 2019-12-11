@@ -48,6 +48,25 @@ export const HelpMessage = styled.div`
   text-align: center;
 `;
 
+export const Description = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ecedee;
+  padding: 0 20px;
+  font-size: 16px;
+  min-height: 210px;
+  text-align: center;
+
+  span.emojis {
+      margin: 20px 0px;
+      height: 60px;
+      font-size: 76px;
+      display: block;
+    }
+`;
+
 export const CardDescription = styled(Card.Description)`
   &&&&&&&&& {
     min-height: 210px;

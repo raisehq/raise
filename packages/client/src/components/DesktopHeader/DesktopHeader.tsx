@@ -82,10 +82,16 @@ const DesktopHeader = () => {
             )}
           </HeaderGroup>
           <HeaderGroup className="right">
-            <Balance />
-            <Web3Address />
-            <MyAccountButton />
-            <HeaderLogout />
+            <>
+              {visibleMenu && (
+                <>
+                  <Balance />
+                  <Web3Address />
+                  <MyAccountButton />
+                </>
+              )}
+              <HeaderLogout />
+            </>
           </HeaderGroup>
         </RaiseHeader>
       </HeaderWrapper>
