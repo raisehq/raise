@@ -54,13 +54,11 @@ const Dashboard = () => {
   useAsyncEffect(async () => {
     try {
       if (!warningCK) {
-        const warning = await findOne('warnings', { active: true });
+        const warning = await findOne('warnings', { 'fields.active': true });
         setOpen(true);
         setWarning(warning);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }, []);
 
   const closeModal = () => {
