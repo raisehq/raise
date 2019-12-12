@@ -7,7 +7,7 @@ import {
   ChooseSignUpSubtitleWrapper,
   ChooseSignUpSubTitle,
   CallToSignIn,
-  OnboardButton
+  ChooseSignUpButton
 } from '../styles';
 
 const GetStarted = () => {
@@ -19,16 +19,16 @@ const GetStarted = () => {
         <ChooseSignUpSubTitle>Select how you want to Get Started</ChooseSignUpSubTitle>
       </ChooseSignUpSubtitleWrapper>
       <ChooseSignUpButtonList>
-        <OnboardButton onClick={() => onSetStep('SignUpWithEmail')()}>
+        <ChooseSignUpButton onClick={() => onSetStep('SignUpWithEmail')()}>
           Sign up with Email
-        </OnboardButton>
-        <OnboardButton>Sign With Bloom</OnboardButton>
+        </ChooseSignUpButton>
+        <ChooseSignUpButton>Sign With Bloom</ChooseSignUpButton>
       </ChooseSignUpButtonList>
 
       <ChooseSignUpSignInWrapper>
         <CallToSignIn>
           Already have an account?
-          <button className="callToSignIn" type="button" onClick={() => {}}>
+          <button className="callToSignIn" type="button" onClick={() => onSetStep('SignIn')()}>
             Sign In
           </button>
         </CallToSignIn>

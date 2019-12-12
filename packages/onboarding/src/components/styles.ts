@@ -416,11 +416,14 @@ export const ChooseSignUpWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 480px;
+  @media (max-width: ${size.mobileL}) {
+    min-height: 0;
+  }
 `;
 
 export const ChooseSignUpSubtitleWrapper = styled.div`
   margin: 2%;
-  height: 100%;
   text-align: center;
   font-size: 23px;
   padding: 5%;
@@ -449,7 +452,11 @@ export const ChooseSignUpButtonList = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
+  min-height: 150px;
+`;
+
+export const ChooseSignUpButton = styled(OnboardButton)`
+  width: 85%;
 `;
 
 export const ChooseSignUpSignInWrapper = styled.div`
