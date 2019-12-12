@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import { toWei } from 'web3-utils';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
@@ -14,22 +15,22 @@ import { isMobile } from 'react-device-detect';
 const Deposit = () => {
   const {
     history,
-    web3Status: { walletAccount, hasDeposited }
+    web3Status: { walletAccount, hasDeposit }
   }: any = useContext(AppContext);
+  const [doingDeposit, setDoingDeposit] = useState(false);
   const [status, setStatus] = useState(UI.Deposit);
   const heroTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
   const { web3 } = useWeb3();
   const tagManager = useGoogleTagManager('Deposit');
 
-  useEffect(() => {
-    if (status !== UI.Success && hasDeposited) {
-      setStatus(UI.Success);
-    }
-  }, [status, hasDeposited]);
+  if (!doingDeposit && status !== UI.Success && hasDeposit) {
+    return <Redirect to="/" />
+  }
 
   const handleDeposit = async () => {
     try {
+      setDoingDeposit(true);
       if (depositContract && heroTokenContract) {
         const { BN } = web3.utils;
         tagManager.sendEvent(TMEvents.Click, 'deposit_attempt');
