@@ -86,7 +86,7 @@ const Wallet = ({ onNext }: any) => {
         <SelectYourWalletList>
           <SelectWalletOptionItem key="coinbase">
             <SelectWalletOptionButton basic color="black" onClick={handlerCoinbase}>
-              Coinbase (BETA)
+              Coinbase
             </SelectWalletOptionButton>
           </SelectWalletOptionItem>
           {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
