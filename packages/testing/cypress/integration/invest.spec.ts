@@ -1,5 +1,6 @@
 describe('LENDER', function() {
   beforeEach(function() {
+    cy.butterCMS();
     cy.login('lender');
     cy.mockAPI('lender');
     cy.web3('lender');
