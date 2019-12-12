@@ -3,9 +3,13 @@ import _, { mapKeys, camelCase } from 'lodash';
 import { Parser } from 'html-to-react';
 import DOMPurify from 'dompurify';
 
+import MockButterCMS from '../__mocks__/buttercmsMocks';
+
 const staticHtmlToReact = new Parser();
 const apiKey = process.env.REACT_APP_BUTTER || '';
-const butter = Butter(apiKey);
+
+// @ts-ignore
+const butter = window.Cypress ? MockButterCMS() : Butter(apiKey);
 
 const WYSIWYGFields = ['description', 'businessPlan', 'operations', 'competitiveAnalysis'];
 
