@@ -522,6 +522,13 @@ export const GetStartedBloomWrapper = styled.div`
 export const GetStartedBloomQRSection = styled.div`
   flex: 1 1 100%;
   padding: 5%;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-end;
+  @media (max-width: ${size.mobileL}) {
+    justify-content: center;
+  }
+  
 `;
 
 export const GetStartedBloomInstructionsSection = styled.div`

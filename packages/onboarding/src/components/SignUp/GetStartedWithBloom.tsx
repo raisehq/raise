@@ -12,13 +12,16 @@ import {
 } from '../styles';
 import { Button } from 'semantic-ui-react';
 import FollowSteps from './FollowSteps';
-import { RequestElement } from '@bloomprotocol/share-kit-react';
+import { RequestElement, QROptions } from '@bloomprotocol/share-kit-react';
 import { isMobile } from 'react-device-detect';
 
 const GetStartedWithBloom = () => {
   const requestData: RequestData = { url: 'ss' };
   const buttonOptions: ButtonOptions = {
     callbackUrl: 'https://mysite.com/bloom-callback'
+  };
+  const qrOptions: Partial<QROptions> = {
+    size: 250
   };
 
   return (
@@ -29,7 +32,11 @@ const GetStartedWithBloom = () => {
       </GetStartedBloomHeader>
       <GetStartedBloomWrapper>
         <GetStartedBloomQRSection>
-          <RequestElement requestData={requestData} buttonOptions={buttonOptions} />
+          <RequestElement
+            requestData={requestData}
+            buttonOptions={buttonOptions}
+            qrOptions={qrOptions}
+          />
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
           <FollowSteps isMobile={isMobile} />
