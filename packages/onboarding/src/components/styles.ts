@@ -411,3 +411,62 @@ export const MiniBody = styled.div`
     margin-top: 0px;
   }
 `;
+
+export const ChooseSignUpWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+export const ChooseSignUpSubtitleWrapper = styled.div`
+  margin: 2%;
+  height: 100%;
+  text-align: center;
+  font-size: 23px;
+  padding: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+export const OnboardingSubTitle: any = styled.div`
+  font-size: 23px;
+  line-height: 36px;
+  opacity: 0.59;
+  color: #3c4251;
+  font-family: Lato;
+  height: 72px;
+  width: 290px;
+  margin: 5%;
+
+  @media (max-width: ${size.mobileL}) {
+    display: none;
+  }
+`;
+
+export const ChooseSignUpButtonList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+`;
+
+export const ChooseSignUpSignInWrapper = styled.div`
+  margin: 2%;
+`;
+
+export const ChooseSignUpSubTitle: any = styled.div`
+  font-size: 23px;
+  line-height: 36px;
+  opacity: 0.59;
+  color: #3c4251;
+  font-family: Lato;
+  height: 72px;
+  width: 210px;
+  margin: 5%;
+
+  @media (max-width: ${size.mobileL}) {
+    display: none;
+  }
+`;
