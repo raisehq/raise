@@ -66,6 +66,11 @@ const getWalletLinkClient = (network, networkId) => {
     `https://${network}.infura.io/v3/${process.env.REACT_APP_INFURA}`,
     networkId
   );
+
+  // FIX BUG: Walletlink bug with web3
+  // @ts-ignore
+  ethereum.on = null;
+
   return ethereum;
 };
 
