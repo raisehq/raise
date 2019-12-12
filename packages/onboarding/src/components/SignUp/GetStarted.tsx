@@ -7,7 +7,8 @@ import {
   ChooseSignUpSubtitleWrapper,
   ChooseSignUpSubTitle,
   CallToSignIn,
-  ChooseSignUpButton
+  ChooseSignUpButton,
+  ChooseSignUpWithBloomButton
 } from '../styles';
 
 const GetStarted = () => {
@@ -20,9 +21,11 @@ const GetStarted = () => {
       </ChooseSignUpSubtitleWrapper>
       <ChooseSignUpButtonList>
         <ChooseSignUpButton onClick={() => onSetStep('SignUpWithEmail')()}>
-          Sign up with Email
+          Sign Up with Email
         </ChooseSignUpButton>
-        <ChooseSignUpButton>Sign With Bloom</ChooseSignUpButton>
+        <ChooseSignUpWithBloomButton onClick={() => onSetStep('SignUpWithBloom')()}>
+          Sign Up With Bloom
+        </ChooseSignUpWithBloomButton>
       </ChooseSignUpButtonList>
 
       <ChooseSignUpSignInWrapper>

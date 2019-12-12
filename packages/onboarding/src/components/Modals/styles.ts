@@ -117,6 +117,11 @@ export const OnboardingFormContent: any = styled.div`
   }
 `;
 
+export const OnboardingBloomContent: any = styled.div`
+
+
+`;
+
 export const OnboardingImage: any = styled.img`
   max-width: 100%;
 

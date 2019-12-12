@@ -459,6 +459,12 @@ export const ChooseSignUpButton = styled(OnboardButton)`
   width: 85%;
 `;
 
+export const ChooseSignUpWithBloomButton = styled(ChooseSignUpButton)`
+  background: white;
+  color: #6067f1;
+  border: 1px solid #6067f1;
+`;
+
 export const ChooseSignUpSignInWrapper = styled.div`
   margin: 2%;
 `;
@@ -476,4 +482,76 @@ export const ChooseSignUpSubTitle: any = styled.div`
   @media (max-width: ${size.mobileL}) {
     display: none;
   }
+`;
+
+/************** GET STARTED BLOOM SCREEN ******************/
+
+export const GetStartedBloomHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+`;
+
+export const GetStartedBloomTitle = styled.div`
+  text-align: center;
+  font-size: 50px;
+  @media (max-width: ${size.mobileL}) {
+    font-size: 25px;
+  }
+`;
+
+export const GetStartedBloomSubtitle = styled.div`
+  text-align: center;
+  color: #6067f1;
+  font-size: 18px;
+`;
+
+export const GetStartedBloomWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex: 0 1 100%;
+
+  @media (max-width: ${size.mobileL}) {
+    flex-wrap: wrap;
+  }
+`;
+
+export const GetStartedBloomQRSection = styled.div`
+  flex: 1 1 100%;
+  padding: 5%;
+`;
+
+export const GetStartedBloomInstructionsSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  padding: 5% 0;
+
+  @media (max-width: ${size.mobileL}) {
+    align-items: center;
+  }
+`;
+
+export const GetStartedBloomFooter = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const InstructionsWrapper = styled.div`
+  padding: 0;
+  max-width: 200px;
+  @media (max-width: ${size.mobileL}) {
+    padding: 0 10% 10% 10%;
+    width: 100%;
+    max-width: none;
+  }
+`;
+
+export const FollowingStepsTitle = styled.div`
+  font-weight: bold;
+  font-size: 20px;
+  padding: 5% 0;
 `;
