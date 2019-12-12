@@ -77,14 +77,19 @@ export const Button = styled.button`
 
 export const SuggestedContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   margin: 15px 0 15px 0;
-  justify-content: center;
-  @media ${device.tablet} {
-    justify-content: flex-start;
+  grid-template-columns: 100%;
+  grid-template-rows: 600px; 
+  grid-column-gap: 15px;
+  grid-row-gap: 20px;
+
+  @media ${device.mobileL} {
+    grid-template-columns: repeat(auto-fill, 370px);
+    grid-template-rows: 570px; 
   }
 `;
+
 
 export const NoResults = styled.div`
   width: 100%;
