@@ -312,7 +312,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
       ),
       SignUpWithBloom: () => (
         <Panel>
-          <GetStartedWithBloom />
+          <GetStartedWithBloom onBack={() => setStep(Step.Start)}/>
         </Panel>
       ),
       StartMini: () => <GetStarted mini />,
