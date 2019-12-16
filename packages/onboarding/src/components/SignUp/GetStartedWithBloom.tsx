@@ -16,16 +16,14 @@ import { RequestElement, QROptions, Action } from '@bloomprotocol/share-kit-reac
 import { isMobile } from 'react-device-detect';
 
 const GetStartedWithBloom = ({onBack}) => {
-  //const requestData: RequestData = { url: 'ss' };
   const requestData = {
-    action: Action.attestation,
+    action: Action.authentication,
     token: '284a54f2-79ec-4056-8347-5c29a4b32070',
-    org_name: 'Bloom',
+    org_name: 'Raise',
     url: 'https://receive-kit.bloom.co/api/receive',
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
-    org_privacy_policy_url: 'https://bloom.co/legal/privacy',
-    types: ['phone','email']
+    org_privacy_policy_url: 'https://bloom.co/legal/privacy'
   }
   const buttonOptions: ButtonOptions = {
     callbackUrl: 'https://mysite.com/bloom-callback'
