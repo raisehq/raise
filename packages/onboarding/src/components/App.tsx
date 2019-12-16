@@ -133,7 +133,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
           tagManager.sendEventCategory('Signup', TMEvents.Submit, 'blog_signup_form', host);
         }
 
-        if (host.split('.')[0] === 'app') {
+        if (host && host.split('.')[0] === 'app') {
           tagManager.sendEventCategory('Signup', TMEvents.Click, 'dashboard_signup_form', host);
         }
       } catch (err) {
