@@ -12,10 +12,11 @@ import {
 } from '../styles';
 import { Button } from 'semantic-ui-react';
 import FollowSteps from './FollowSteps';
+import HelpWithBloom from './HelpWithBloom';
 import { RequestElement, QROptions, Action } from '@bloomprotocol/share-kit-react';
 import { isMobile } from 'react-device-detect';
 
-const GetStartedWithBloom = ({onBack}) => {
+const GetStartedWithBloom = ({ onBack }) => {
   const requestData = {
     action: Action.authentication,
     token: '284a54f2-79ec-4056-8347-5c29a4b32070',
@@ -24,7 +25,7 @@ const GetStartedWithBloom = ({onBack}) => {
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy'
-  }
+  };
   const buttonOptions: ButtonOptions = {
     callbackUrl: 'https://mysite.com/bloom-callback'
   };
@@ -48,7 +49,7 @@ const GetStartedWithBloom = ({onBack}) => {
           />
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
-          <FollowSteps isMobile={isMobile} />
+          {true ? <HelpWithBloom /> : <FollowSteps isMobile={isMobile} />}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
       <GetStartedBloomFooter>

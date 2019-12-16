@@ -522,13 +522,12 @@ export const GetStartedBloomWrapper = styled.div`
 export const GetStartedBloomQRSection = styled.div`
   flex: 1 1 100%;
   padding: 5%;
-  display:flex;
-  flex-direction:row;
+  display: flex;
+  flex-direction: row;
   justify-content: flex-end;
   @media (max-width: ${size.mobileL}) {
     justify-content: center;
   }
-  
 `;
 
 export const GetStartedBloomInstructionsSection = styled.div`
@@ -559,6 +558,21 @@ export const InstructionsWrapper = styled.div`
 
 export const FollowingStepsTitle = styled.div`
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   padding: 5% 0;
+  line-height: 24px;
+`;
+
+export const HelpWithBloomWrapper = styled.div`
+  padding: 5%;
+  max-width: 250px;
+  min-height: 250px;
+  text-align: center;
+  box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
+  line-height: 21px;
+  @media (max-width: ${size.mobileL}) {
+    padding: 0 10% 10% 10%;
+    width: 100%;
+    max-width: none;
+  }
 `;
