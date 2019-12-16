@@ -1,5 +1,5 @@
 import { WarningSight } from './WarningSight';
 import { RightArrow } from './RightArrow';
-import { VerifyButton } from './VerifyButton';
+import { StepButton } from './StepButton';
 
-export { WarningSight, RightArrow, VerifyButton }
+export { WarningSight, RightArrow, StepButton };

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 import { SpecialDimmer } from './Layout.styles';
+import LocalData from '../../helpers/localData';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
@@ -23,6 +24,8 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
 
     web3Status: { hasProvider, hasDeposit, accountMatches, networkMatches, unlocked }
   }: any = useContext(AppContext);
+
+  const firstLogin = LocalData.get('firstLogin') === 'first';
 
   const { connectWallet }: any = useWeb3();
   const [connectionError, setConnectionError] = useState(false);
@@ -59,7 +62,8 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
       acceptedRole &&
       pathname !== '/deposit' &&
       hasDeposit !== undefined &&
-      !hasDeposit
+      !hasDeposit &&
+      firstLogin
     ) {
       return <Redirect to="/deposit" />;
     }

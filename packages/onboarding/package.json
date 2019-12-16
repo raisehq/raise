@@ -24,6 +24,10 @@
     "build": "tsc",
     "lint": "eslint . --ext .js,.ts,.tsx"
   },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
   "dependencies": {
     "@raisehq/components": "*",
     "js-cookie": "^2.2.0",

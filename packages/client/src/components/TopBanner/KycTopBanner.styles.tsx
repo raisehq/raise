@@ -16,7 +16,7 @@ export const WarningBanner: FunctionComponent<WarningProps> = styled.div<Warning
   color: #3c4251;
   font-size: 16px;
 
-  & > * {
+  &&&&& > * {
     margin: 0px 8px;
   }
 
@@ -37,17 +37,17 @@ export const WarningBanner: FunctionComponent<WarningProps> = styled.div<Warning
       }
     `;
   }}
-`
+`;
 
 export const Icon = styled(SemanticIcon)`
-&&&&& {
-  height: 15px;
-  color: #3c4251;
-  width: 14px;
-  font-size: 19px;
-  font-weight: 100;
-}
-`
+  &&&&& {
+    height: 15px;
+    color: #3c4251;
+    width: 14px;
+    font-size: 19px;
+    font-weight: 100;
+  }
+`;
 
 export const VerifyButton = styled(Button)`
 &&&&&&&&&& {
@@ -56,7 +56,6 @@ export const VerifyButton = styled(Button)`
   display: flex;
   align-items: center;
   justify-content; center;
-  margin-left: 10px;
   font-size: 16px;
   font-weight: normal;
   padding: 13px 11px;
@@ -72,13 +71,13 @@ export const VerifyButton = styled(Button)`
     margin-left: 10px;
   }
 }
-`
+`;
 export const BlackFill = styled.div`
   background: #3c4251;
   height: 14px;
   width: 5px;
-  margin-right: 3px
-`
+  margin-right: 3px;
+`;
 
 export const WarningSignWrapper = styled.div`
   display: grid;
@@ -102,4 +101,4 @@ export const WarningSignWrapper = styled.div`
     font-size: 22px;
     width: 30px;
   }
-`
+`;

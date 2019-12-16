@@ -1,7 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Grid } from 'semantic-ui-react';
+import { LinkWrap } from './Deposit.styles';
 import { toWei } from 'web3-utils';
+import { Link } from '../Link';
+import { Grid } from 'semantic-ui-react';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { CardSized } from '../Layout/Layout.styles';
 import { UI, UISteps, getViewResponse } from './Deposit.Response';
@@ -11,6 +13,7 @@ import useHeroTokenContract from '../../hooks/useHeroTokenContract';
 import AppContext from '../AppContext';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { isMobile } from 'react-device-detect';
+import LocalData from '../../helpers/localData';
 
 const Deposit = () => {
   const {
@@ -24,8 +27,14 @@ const Deposit = () => {
   const { web3 } = useWeb3();
   const tagManager = useGoogleTagManager('Deposit');
 
+  useEffect(() => {
+    if (LocalData.get('firstLogin') === 'first') {
+      LocalData.set('firstLogin', 'firstDeposit');
+    }
+  }, []);
+
   if (!doingDeposit && status !== UI.Success && hasDeposit) {
-    return <Redirect to="/" />
+    return <Redirect to="/" />;
   }
 
   const handleDeposit = async () => {
@@ -76,6 +85,9 @@ const Deposit = () => {
         <CardSized centered>
           {getViewResponse(status, handleDeposit, handleContinue, handleRetry)}
         </CardSized>
+        <LinkWrap>
+          <Link to="/">Do it later</Link>
+        </LinkWrap>
       </Grid.Row>
     </>
   );

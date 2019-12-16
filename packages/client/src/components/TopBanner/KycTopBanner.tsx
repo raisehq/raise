@@ -1,5 +1,5 @@
 import React from 'react';
-import { MissingKyc, MissingKycMobile } from './banners/MissingKyc';
+import { StepsReminder, StepsReminderMobile } from './banners/StepsReminder';
 import daggy from 'daggy';
 
 export const Status = daggy.taggedSum('UI', {
@@ -21,13 +21,27 @@ export const StatusSet = {
 interface KycTopBannerProps {
   enabled: boolean;
   kycStatus: number;
-  action?: Function;
+  hasDeposit: boolean;
+  kycAction?: Function;
+  hasDepositAction?: Function;
   mobile?: boolean;
 }
 
-const KycTopBanner = ({ enabled, kycStatus, action, mobile }: KycTopBannerProps) => {
-  const view = Status[StatusSet[kycStatus || 5]];
-
+const KycTopBanner = ({
+  enabled,
+  kycStatus,
+  kycAction,
+  hasDeposit,
+  hasDepositAction,
+  mobile
+}: KycTopBannerProps) => {
+  const view = Status[StatusSet[(hasDeposit && kycStatus) || 5]];
+  const stepsForBanner = {
+    kyc: kycStatus === 5,
+    kycAction,
+    hasDeposit,
+    hasDepositAction
+  };
   if (!enabled) {
     return null;
   }
@@ -36,9 +50,9 @@ const KycTopBanner = ({ enabled, kycStatus, action, mobile }: KycTopBannerProps)
     view.cata({
       Start: () => {
         if (mobile) {
-          return <MissingKycMobile action={action} />;
+          return <StepsReminderMobile {...stepsForBanner} />;
         }
-        return <MissingKyc action={action} />;
+        return <StepsReminder {...stepsForBanner} />;
       },
       Pending: () => null,
       PendingRegistry: () => null,

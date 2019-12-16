@@ -19,8 +19,9 @@ const TopMobileMenu = () => {
     },
     web3Status: { hasDeposit }
   }: any = useContext(AppContext);
-  const enableKyc = accounttype_id === 2 && hasDeposit;
+  const enableKyc = accounttype_id === 2;
   const onKYC = () => history.push('/kyc');
+  const onDepositAction = () => history.push('/deposit');
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
   const { visible } = useMenuVisibility();
 
@@ -31,7 +32,14 @@ const TopMobileMenu = () => {
   return visible ? (
     // If there is a parent here it will break the sticky css rule and menu will not get fixed once scroll
     <>
-      <TopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} mobile />
+      <TopBanner
+        kycStatus={kyc_status}
+        enabled={enableKyc}
+        hasDeposit={hasDeposit}
+        hasDepositAction={onDepositAction}
+        kycAction={onKYC}
+        mobile
+      />
       <MobileMenu>
         <Burger onClick={onClick} />
         <Logo src={logoPath} />

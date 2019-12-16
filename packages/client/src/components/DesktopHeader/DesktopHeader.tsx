@@ -29,9 +29,10 @@ const DesktopHeader = () => {
   const {
     details: { kyc_status, accounttype_id }
   } = user;
-  const enableKyc = accounttype_id === 2 && hasDeposit;
+  const enableBanner = accounttype_id === 2;
 
   const onKYC = () => history.push('/kyc');
+  const onDepositAction = () => history.push('/deposit');
   const scrollToTop = () => scroll.scrollToTop();
 
   const navigateAndScroll = () => {
@@ -42,7 +43,13 @@ const DesktopHeader = () => {
   // If there is a parent for TopBanner and HeaderWrapper, it will break the sticky css rule and menu will not get fixed once scroll
   return visible ? (
     <>
-      <TopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} />
+      <TopBanner
+        kycStatus={kyc_status}
+        kycAction={onKYC}
+        hasDeposit={hasDeposit}
+        hasDepositAction={onDepositAction}
+        enabled={enableBanner}
+      />
       <HeaderWrapper>
         <RaiseHeader>
           <HeaderGroup>
