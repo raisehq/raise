@@ -70,8 +70,7 @@ deploy-int:
     - pip install awscli
   script:
     - mv packages/client/build_int build_int
-    - aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
-    - aws s3 sync build_int s3://${BUCKET_NAME_INT}/
+    - aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/
   only:
     - master
 
@@ -82,8 +81,7 @@ deploy-prod:
     - pip install awscli
   script:
     - mv packages/client/build build
-    - aws s3 rm s3://${BUCKET_NAME_PROD}/ --recursive
-    - aws s3 sync build s3://${BUCKET_NAME_PROD}/
+    - aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/
   when: manual
   only:
     - master
@@ -147,8 +145,7 @@ review:
     - pip install awscli
   script:
     - mv packages/client/build $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
-    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)/ --recursive
-    - aws s3 sync $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+    - aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     url: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
