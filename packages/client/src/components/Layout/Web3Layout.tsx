@@ -11,7 +11,7 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
   const {
     store: {
-      config: { network, networkId, isSupportedBrowser },
+      config: { network, networkId },
       auth: {
         login: { logged: isLogged }
       },
@@ -32,7 +32,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
 
   useAsyncEffect(async () => {
     try {
-      if (!hasProvider && isSupportedBrowser && isLogged) {
+      if (!hasProvider && isLogged) {
         // Check the type of wallet and try to connect to the provider
         await connectWallet(cryptotypeId, network, networkId, true);
       }
@@ -41,11 +41,9 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
       // On case of error on connect redirect to the screen connector
       setConnectionError(true);
     }
-  }, [hasProvider, isSupportedBrowser, isLogged]);
+  }, [hasProvider, isLogged]);
   const acceptedRole = (roles !== undefined && roles.indexOf(accounttypeId) > -1) || false;
 
-  // Check supported Browser
-  if (!isSupportedBrowser) return <Redirect to="/supported-browser" />;
   // Auto wallet connection error
   if (connectionError) {
     return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
