@@ -7,12 +7,16 @@ import {
   OnboardButton,
   CallToSignIn,
   Separator,
-  OnboardLogo,
+  // OnboardLogo,
   MyRecapcha,
-  GoogleCaptchaPolicies
+  GoogleCaptchaPolicies,
+  ConfirmHeaderWrapper,
+  ConfirmLogo,
+  ConfirmCros
 } from '../styles';
 import validations from '../validations';
 import AppContext from '../App.context';
+import { IMAGES_PATH } from '../../commons/constants';
 
 const Signin = () => {
   const {
@@ -21,7 +25,9 @@ const Signin = () => {
     onLogin,
     error,
     setLoginError,
-    credentials
+    credentials,
+    closeButton,
+    onClose
   }: any = useContext(AppContext);
 
   const [errors, setErrors] = useState<{
@@ -96,10 +102,7 @@ const Signin = () => {
 
   return (
     <Fragment>
-      <OnboardHeader>
-        Welcome to Raise
-        <OnboardLogo />
-      </OnboardHeader>
+      <OnboardHeader>Welcome to Raise</OnboardHeader>
       <OnboardInput>
         <Input
           id="input-login"

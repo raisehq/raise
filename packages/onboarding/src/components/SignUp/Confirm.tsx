@@ -1,24 +1,10 @@
 import React from 'react';
-import {
-  ConfirmWrapper,
-  ConfirmHeader,
-  MainImage,
-  ConfirmText,
-  ConfirmHeaderWrapper,
-  ConfirmLogo,
-  ConfirmCros
-} from '../styles';
+import { ConfirmWrapper, ConfirmHeader, MainImage, ConfirmText } from '../styles';
 import { IMAGES_PATH } from '../../commons/constants';
 
-const Confirm = ({ setStep, steps }) => {
-  const closeClicket = () => setStep(steps.SignIn);
-
+const Confirm = () => {
   return (
     <ConfirmWrapper>
-      <ConfirmHeaderWrapper>
-        <ConfirmLogo src={`${IMAGES_PATH}logo.svg`} />
-        <ConfirmCros link onClick={closeClicket} name="close" size="large"></ConfirmCros>
-      </ConfirmHeaderWrapper>
       <div>
         <MainImage src={`${IMAGES_PATH}check.svg`} />
       </div>
