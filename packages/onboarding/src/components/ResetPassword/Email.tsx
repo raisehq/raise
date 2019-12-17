@@ -30,10 +30,7 @@ const Reset = () => {
 
   return (
     <Fragment>
-      <OnboardHeader>
-        Forgot your password?
-        <OnboardLogo />
-      </OnboardHeader>
+      <OnboardHeader>Forgot your password?</OnboardHeader>
       <p>We will help you reset it and get back on track</p>
       <OnboardInput>
         <Input

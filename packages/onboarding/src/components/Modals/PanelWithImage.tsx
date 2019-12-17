@@ -11,9 +11,9 @@ import {
   OnboardingTitle,
   OnboardingSubTitle,
   OnboardingFormContent,
-  OnboardingCloseButton,
   OnboardingHeaderItemWrapper,
-  OnboardingModalContent
+  OnboardingModalContent,
+  OnboardingCloseIcon
 } from './styles';
 
 const PanelWithImage = ({ children }) => {
@@ -29,7 +29,9 @@ const PanelWithImage = ({ children }) => {
             <img src={`${IMAGES_PATH}logo.svg`} />
           </OnboardingHeaderItemWrapper>
           <OnboardingHeaderItemWrapper>
-            {closeButton && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
+            {closeButton && (
+              <OnboardingCloseIcon link onClick={onClose} name="close" size="large" />
+            )}
           </OnboardingHeaderItemWrapper>
         </OnboardingHeader>
         <OnboardingContentWrapper>

@@ -307,8 +307,8 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
         </SimpleModal>
       ),
       Confirm: () => (
-        <SimpleModal>
-          <Confirm setStep={setStep} steps={Step} />
+        <SimpleModal localClose>
+          <Confirm />
         </SimpleModal>
       ),
       Verified: () => (
