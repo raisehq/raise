@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
-
+import AppContext from '../components/AppContext';
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const metamask = useWallet();
+  const {
+    FollowTx: { watchTx }
+  }: any = useContext(AppContext);
+  const wallet = useWallet();
   useAsyncEffect(async () => {
-    if (metamask) {
+    if (wallet) {
       try {
-        const contract = await metamask.addContract('Deposit');
+        const contract = await wallet.addContract('Deposit');
 
         setActiveContract({
           address: contract.options.address,
@@ -16,18 +19,19 @@ const useDepositContract = () => {
             const resp = await contract.methods.hasDeposited(address).call();
             return resp;
           },
-          deposit: address => contract.methods.depositFor(address).send({ from: address }),
-          depositWithReferral: (address, referralAddress) =>
+          deposit: address => watchTx(contract.methods.depositFor(address).send({ from: address })),
+          depositWithReferral: watchTx((address, referralAddress) =>
             contract.methods
               .depositForWithReferral(address, referralAddress)
-              .send({ from: address }),
-          withdraw: address => contract.methods.withdraw(address).send({ from: address })
+              .send({ from: address })
+          ),
+          withdraw: address => watchTx(contract.methods.withdraw(address).send({ from: address }))
         });
       } catch (error) {
         console.error('Contract Deposit not found in current network.');
       }
     }
-  }, [metamask]);
+  }, [wallet]);
 
   return activeContract;
 };

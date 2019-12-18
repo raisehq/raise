@@ -16,7 +16,6 @@ import { Web3Check } from '../components/Web3Check';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
-// import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 import { TopMobileMenu, Menu } from './Menu';
@@ -24,9 +23,11 @@ import DesktopHeader from './DesktopHeader';
 import LocalData from '../helpers/localData';
 import Queryies from '../helpers/queryies';
 import AppContext from './AppContext';
+import FollowTx from '../helpers/followTx';
 
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
+  const [followTx, setFollowTX] = useState();
   const [isLoading, setLoading] = useState(true);
   const [getStarted, setGetStarted] = useState(firstLogin === 'first');
   const {
@@ -113,6 +114,7 @@ const App = ({ history, match }: any) => {
       if (!token) {
         await onInitKyc();
       }
+      setFollowTX(new FollowTx(`wss://${network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`));
     } else {
       await onVerifyAuth();
     }
@@ -183,7 +185,8 @@ const App = ({ history, match }: any) => {
           storedAccount,
           account: storedAccount, // Old compability
           hasDeposit
-        }
+        },
+        FollowTx: followTx
       }}
     >
       <Dimmer active={isLoading} inverted>
