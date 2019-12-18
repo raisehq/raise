@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { LinkWrap } from './Deposit.styles';
+import { Experiment, Variant } from "react-optimize";
 import { toWei } from 'web3-utils';
 import { Link } from '../Link';
 import { Grid } from 'semantic-ui-react';
@@ -14,6 +15,8 @@ import AppContext from '../AppContext';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { isMobile } from 'react-device-detect';
 import LocalData from '../../helpers/localData';
+
+const EXPERIMENT_DEPOSIT_ID = process.env.REACT_APP_AB_TEST_SKIP_DEPOSIT;
 
 const Deposit = () => {
   const {
@@ -85,9 +88,18 @@ const Deposit = () => {
         <CardSized centered>
           {getViewResponse(status, handleDeposit, handleContinue, handleRetry)}
         </CardSized>
-        <LinkWrap>
-          <Link to="/">Do it later</Link>
-        </LinkWrap>
+        {EXPERIMENT_DEPOSIT_ID && (
+          <Experiment id={EXPERIMENT_DEPOSIT_ID}>
+            <Variant id="0">
+              {/* do not show nothing, as the original current version*/}
+            </Variant>
+            <Variant id="1">
+              <LinkWrap>
+                <Link to="/">Do it later</Link>
+              </LinkWrap>
+            </Variant>
+          </Experiment>)
+        }
       </Grid.Row>
     </>
   );
