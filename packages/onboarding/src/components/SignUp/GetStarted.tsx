@@ -10,6 +10,7 @@ import {
   ChooseSignUpButton,
   ChooseSignUpWithBloomButton
 } from '../styles';
+import { Image } from 'semantic-ui-react';
 
 const GetStarted = () => {
   const { onSetStep } = useContext<IContext>(AppContext);
@@ -24,7 +25,8 @@ const GetStarted = () => {
           Sign Up with Email
         </ChooseSignUpButton>
         <ChooseSignUpWithBloomButton onClick={() => onSetStep('SignUpWithBloom')()}>
-          Sign Up With Bloom
+          <span>Sign Up</span>
+          <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
         </ChooseSignUpWithBloomButton>
       </ChooseSignUpButtonList>
 

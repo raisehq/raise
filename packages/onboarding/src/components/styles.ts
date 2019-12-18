@@ -460,9 +460,16 @@ export const ChooseSignUpButton = styled(OnboardButton)`
 `;
 
 export const ChooseSignUpWithBloomButton = styled(ChooseSignUpButton)`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   background: white;
   color: #6067f1;
   border: 1px solid #6067f1;
+
+  span{
+    padding: 0 10px;
+  }
 `;
 
 export const ChooseSignUpSignInWrapper = styled.div`
@@ -501,9 +508,17 @@ export const GetStartedBloomTitle = styled.div`
 `;
 
 export const GetStartedBloomSubtitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   color: #6067f1;
   font-size: 18px;
+
+  span {
+    padding: 10px;
+  }
 `;
 
 export const GetStartedBloomWrapper = styled.div`
@@ -564,6 +579,8 @@ export const FollowingStepsTitle = styled.div`
 `;
 
 export const HelpWithBloomWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 5%;
   max-width: 250px;
   min-height: 250px;
@@ -575,4 +592,8 @@ export const HelpWithBloomWrapper = styled.div`
     width: 100%;
     max-width: none;
   }
+`;
+
+export const IconWrapper = styled.div`
+  align-self: flex-end;
 `;
