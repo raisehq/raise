@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
+import { Experiment, Variant } from "react-optimize";
 import { Loader } from 'semantic-ui-react';
 import { SpecialDimmer } from './Layout.styles';
 import LocalData from '../../helpers/localData';
@@ -8,6 +9,8 @@ import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
 
 import useAsyncEffect from '../../hooks/useAsyncEffect';
+
+const EXPERIMENT_DEPOSIT_ID = process.env.REACT_APP_AB_TEST_SKIP_DEPOSIT;
 
 const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
   const {
@@ -54,7 +57,9 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
   }
   // Check if is Logged
-  if (!isLogged) return <Redirect to="/join" />;
+  if (!isLogged) {
+    return <Redirect to="/join" />;
+  }
 
   if (accountMatches && networkMatches && cryptotypeId !== null && hasDeposit !== undefined) {
     if (
@@ -62,10 +67,23 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
       acceptedRole &&
       pathname !== '/deposit' &&
       hasDeposit !== undefined &&
-      !hasDeposit &&
-      firstLogin
+      !hasDeposit
     ) {
-      return <Redirect to="/deposit" />;
+      if (EXPERIMENT_DEPOSIT_ID) {
+        return (
+          <Experiment id={EXPERIMENT_DEPOSIT_ID}>
+            <Variant id="0">
+              <Redirect to="/deposit" />
+            </Variant>
+            <Variant id="1">
+              {firstLogin && <Redirect to="/deposit" />}
+              {!firstLogin && !acceptedRole && <Redirect to="/" />}
+              {!firstLogin && rest.path === pathname && acceptedRole && <Layout {...rest} />}
+            </Variant>
+          </Experiment>
+        )
+      }
+      return <Redirect to="/deposit" />
     }
     if (!acceptedRole) return <Redirect to="/" />;
     if (rest.path === pathname && acceptedRole) return <Layout {...rest} />;

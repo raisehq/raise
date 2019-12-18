@@ -23,11 +23,11 @@ const DesktopHeader = () => {
     history,
     onSetGetStarted,
     store: { user },
-    web3Status: { hasDeposit }
+    web3Status: { hasDeposit },
   }: any = useContext(AppContext);
   const { visible, visibleMenu } = useMenuVisibility();
   const {
-    details: { kyc_status, accounttype_id }
+    details: { kyc_status, accounttype_id },
   } = user;
   const enableBanner = accounttype_id === 2;
 

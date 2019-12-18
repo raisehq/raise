@@ -1,10 +1,7 @@
 import React, { useContext } from 'react';
-import { Experiment, Variant } from "react-optimize";
 import AppContext from '../AppContext'
 import { StepsReminder, StepsReminderMobile } from './banners/StepsReminder';
 import daggy from 'daggy';
-
-const EXPERIMENT_DEPOSIT_ID = process.env.REACT_APP_AB_TEST_SKIP_DEPOSIT;
 
 export const Status = daggy.taggedSum('UI', {
   Pending: [],
@@ -39,8 +36,7 @@ const KycTopBanner = ({
   hasDepositAction,
   mobile
 }: KycTopBannerProps) => {
-  const { history }: any = useContext(AppContext);
-  console.log(history)
+  const { history: { location: { pathname } } }: any = useContext(AppContext);
   const view = Status[StatusSet[(hasDeposit && kycStatus) || 5]];
   const stepsForBanner = {
     kyc: kycStatus === 5,
@@ -52,9 +48,14 @@ const KycTopBanner = ({
     return null;
   }
 
+  const inDashboard = () => pathname === '/' || pathname === '/account' || pathname === '/kyc';
+
   const getView = () =>
     view.cata({
       Start: () => {
+        if (!inDashboard()) {
+          return null;
+        }
         if (mobile) {
           return <StepsReminderMobile {...stepsForBanner} />;
         }
@@ -66,20 +67,7 @@ const KycTopBanner = ({
       Success: () => null
     });
 
-  if (!EXPERIMENT_DEPOSIT_ID) {
-    return getView();
-  }
-  return (
-    <Experiment id={EXPERIMENT_DEPOSIT_ID}>
-      <Variant id="0">
-        {/* Do not show Top banner in banner */}
-        {!history.location.pathname.includes('deposit') && getView()}
-      </Variant>
-      <Variant id="1">
-        {getView()}
-      </Variant>
-    </Experiment>
-  )
+  return getView();
 };
 
 export default KycTopBanner;
