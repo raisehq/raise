@@ -29,7 +29,7 @@ const DesktopHeader = () => {
   const {
     details: { kyc_status, accounttype_id },
   } = user;
-  const enableBanner = accounttype_id === 2;
+  const enableBanner = visibleMenu && accounttype_id === 2;
 
   const onKYC = () => history.push('/kyc');
   const onDepositAction = () => history.push('/deposit');
@@ -63,16 +63,16 @@ const DesktopHeader = () => {
                     Create loan
                   </HeaderMenuItem>
                 ) : (
-                  <Link
-                    to="toGetStarted"
-                    spy
-                    smooth
-                    duration={500}
-                    offset={HEADER_MENU_SIZE.toGetStarted}
-                  >
-                    <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
-                  </Link>
-                )}
+                    <Link
+                      to="toGetStarted"
+                      spy
+                      smooth
+                      duration={500}
+                      offset={HEADER_MENU_SIZE.toGetStarted}
+                    >
+                      <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+                    </Link>
+                  )}
                 <HeaderMenuItem>
                   <Link
                     onClick={() => history.location.pathname !== '/' && navigateAndScroll()}

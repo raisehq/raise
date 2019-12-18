@@ -6,7 +6,7 @@ import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
-
+import Balance from '../Balance';
 import AppContext from '../AppContext';
 import {
   Header,
@@ -37,10 +37,13 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
     store: {
       user: {
         details: { kyc_status }
+      },
+      dai: {
+        balance
       }
     }
   }: any = useContext(AppContext);
-
+  const nMaxAmount = Number(fromWei(maxAmount));
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
   const { companyName } = useBorrowerInfo(loan.originator);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
@@ -48,7 +51,9 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   const roi = useMemo(() => value + value * expectedROI, [value, expectedROI]);
 
   const fundAll = () => {
-    setValue(Number(fromWei(maxAmount)) - Number(fromWei(principal)));
+    const nPrincipal = nMaxAmount - Number(fromWei(principal));
+    const minValue = Math.min(...[balance, nPrincipal]);
+    setValue(minValue);
   };
 
   const onConfirm = async () => {
@@ -66,9 +71,10 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   return (
     <>
       <Header>How much would you like to invest?</Header>
+      <Balance />
       <ModalInputContainer>
         <InputContainer>
-          <ModalInputBox>
+          <ModalInputBox error={value !== undefined && (value > balance || value > nMaxAmount)}>
             <TokenInput id="input-invest-value" value={value} onValueChange={setValue} />
           </ModalInputBox>
           <FundAllLabel id="btn-invest-all" green onClick={fundAll}>
@@ -117,7 +123,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       <ConfirmButton
         id="btn-invest-confirm"
         onClick={onConfirm}
-        disabled={value === 0 || value === undefined || !termsCond || kyc_status !== 3}
+        disabled={value === 0 || value === undefined || !termsCond || value > balance || value > nMaxAmount || kyc_status !== 3}
       >
         CONFIRM
       </ConfirmButton>

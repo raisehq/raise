@@ -19,11 +19,11 @@ const TopMobileMenu = () => {
     },
     web3Status: { hasDeposit }
   }: any = useContext(AppContext);
-  const enableKyc = accounttype_id === 2;
+  const { visible, visibleMenu } = useMenuVisibility();
   const onKYC = () => history.push('/kyc');
   const onDepositAction = () => history.push('/deposit');
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
-  const { visible } = useMenuVisibility();
+  const enableKyc = visibleMenu && accounttype_id === 2;
 
   const onClick = () => {
     showMenu(!menu);

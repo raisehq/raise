@@ -16,7 +16,6 @@ import { Web3Check } from '../components/Web3Check';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
-import { SupportedBrowser } from '../components/SupportedBrowser';
 // import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
@@ -248,12 +247,6 @@ const App = ({ history, match }: any) => {
                 />
                 <MainLayout exact path="/borrowers/:slug" component={BorrowerProfile} />
                 {/* Onboarding */}
-                <SimpleLayout
-                  checkLogged
-                  exact
-                  path="/supported-browser"
-                  component={SupportedBrowser}
-                />
                 <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
                 <SimpleLayout exact path="/join" component={Join} />
                 <SimpleLayout exact path="/login" component={Join} />

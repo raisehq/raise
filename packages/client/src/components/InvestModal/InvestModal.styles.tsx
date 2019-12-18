@@ -11,10 +11,12 @@ import {
   Grid,
   Checkbox
 } from 'semantic-ui-react';
+import Balance from '../Balance';
 import { device } from '../../commons/breakpoints';
 
 interface ModalInputProps {
   roi?: boolean;
+  error?: boolean;
 }
 
 interface InputLabelProps {
@@ -154,20 +156,19 @@ export const ModalInputContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 20px;
   -webkit-flex-flow: row wrap;
 `;
 
 export const InputContainer = styled.div`
-  margin-left: auto;
-  margin-right: auto;
+
 `;
 
 export const ModalInputBox = styled.div<ModalInputProps>`
   height: 48px;
   width: 173px;
-  border: 1px solid #cfd0d4;
+  border: 1px solid ${({ error }) => (error ? 'red' : '#cfd0d4')};
   border-radius: 4px;
   background-color: ${({ roi }) => (roi ? '#ECEDEE' : '#FFFFFF')};
   display: flex;
@@ -323,7 +324,7 @@ export const ListItemPadding = styled(List.Item)`
   }
 `;
 
-export const LabelPadding = styled(Label)<LabelPaddingProps>`
+export const LabelPadding = styled(Label) <LabelPaddingProps>`
   &&& {
     font-size: 14px !important;
     margin-right: 8px !important;
@@ -336,7 +337,7 @@ export const IconSuccess = styled(Icon)`
     margin: 0 !important;
   }
 `;
-export const LabelPaddingLoader = styled(LabelPadding)<LabelPaddingProps>`
+export const LabelPaddingLoader = styled(LabelPadding) <LabelPaddingProps>`
   &&& {
     position: relative;
     margin-bottom: -7px;
@@ -428,3 +429,7 @@ export const Explanation = styled(Grid.Row)`
   line-height: 21px;
   margin-top: 10px;
 `;
+
+export const UserBalance = styled(Balance)`
+  margin-left: 30px;
+`

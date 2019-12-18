@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Modal, Button } from 'semantic-ui-react';
+import { Modal, Button, Icon } from 'semantic-ui-react';
 
 const size = {
   mobileS: '320px',
@@ -8,6 +8,8 @@ const size = {
   signUp: '860px',
   desktop: '950px'
 };
+
+export const OnboardingCloseIcon = styled(Icon)``;
 
 export const OnboardingCloseButton = styled(Button)`
   &&& {
@@ -71,7 +73,7 @@ export const OnboardingHeader: any = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: center;
   height: 100px;
   border-bottom: 1px solid #dfe3e9;
   margin: 0 5px 0 5px;
