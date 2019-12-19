@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import { toWei } from 'web3-utils';
@@ -15,23 +15,43 @@ import { isMobile } from 'react-device-detect';
 const Deposit = () => {
   const {
     history,
-    web3Status: { walletAccount, hasDeposit }
+    web3Status: { walletAccount, hasDeposit },
+    followTx
   }: any = useContext(AppContext);
+
+  const [pending, setPending] = useState(false);
   const [doingDeposit, setDoingDeposit] = useState(false);
   const [status, setStatus] = useState(UI.Deposit);
   const heroTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
   const { web3 } = useWeb3();
   const tagManager = useGoogleTagManager('Deposit');
+  useEffect(() => {
+    const approvalFinished = followTx.hasPendingTx('approval');
+    const depositFinished = followTx.hasPendingTx('deposit');
 
+    if (approvalFinished || depositFinished) {
+      setPending(true);
+      followTx.on('finish_tx', hash => {
+        if (
+          followTx.getHash(approvalFinished) === hash ||
+          followTx.getHash(depositFinished) === hash
+        ) {
+          setPending(false);
+        }
+      });
+    } else {
+      setPending(false);
+    }
+  }, []);
   if (!doingDeposit && status !== UI.Success && hasDeposit) {
-    return <Redirect to="/" />
+    return <Redirect to="/" />;
   }
 
   const handleDeposit = async () => {
     try {
       setDoingDeposit(true);
-      if (depositContract && heroTokenContract) {
+      if (depositContract && heroTokenContract && !pending) {
         const { BN } = web3.utils;
         tagManager.sendEvent(TMEvents.Click, 'deposit_attempt');
         setStatus(UI.Waiting(UISteps.Approve));
@@ -45,8 +65,6 @@ const Deposit = () => {
         await depositContract.deposit(walletAccount);
         tagManager.sendEvent(TMEvents.Submit, 'deposit_success');
         setStatus(UI.Success);
-      } else {
-        console.error(' CONTRACTS ARE NOT ALOWED ', depositContract, heroTokenContract);
       }
     } catch (error) {
       tagManager.sendEvent(TMEvents.Submit, 'deposit_error');
@@ -74,7 +92,7 @@ const Deposit = () => {
       <OnboardingProgressBar step={2} isMobile={isMobile} />
       <Grid.Row>
         <CardSized centered>
-          {getViewResponse(status, handleDeposit, handleContinue, handleRetry)}
+          {getViewResponse(status, handleDeposit, handleContinue, handleRetry, pending)}
         </CardSized>
       </Grid.Row>
     </>

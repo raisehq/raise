@@ -58,7 +58,7 @@ const StepNumber = props => {
   }
 };
 
-const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
+const getViewResponse = (ui: any, onDeposit, onContinue, onRetry, pending) =>
   ui.cata({
     Success: () => (
       <Fragment>
@@ -107,7 +107,9 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
           </Segment>
         </CardContent>
         <CardContent bottom_spacing={'true'}>
-          <ButtonGreen onClick={onDeposit}>Deposit</ButtonGreen>
+          <ButtonGreen onClick={onDeposit} loading={pending}>
+            Deposit
+          </ButtonGreen>
         </CardContent>
       </Fragment>
     ),

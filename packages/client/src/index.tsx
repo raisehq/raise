@@ -7,6 +7,7 @@ import App from './components/App';
 import RootContext from './context';
 import connector from './store/actions';
 import reducers from './store/reducers';
+import FollowTx from './helpers/followTx';
 import initialState from './store/initialState';
 import 'semantic-ui-css/semantic.min.css';
 import 'slick-carousel/slick/slick.css';
@@ -16,7 +17,8 @@ import './global.css';
 type PropsValueType = {
   store: any;
   actions: any;
-  isLogged: Boolean;
+  isLogged: boolean;
+  followTx: any;
 };
 
 const Root = () => {
@@ -26,10 +28,12 @@ const Root = () => {
   const tagManagerArgs = {
     gtmId: process.env.REACT_APP_GTM_ID
   };
-
+  const followTx = new FollowTx(
+    `wss://${store.config.network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`
+  );
   TagManager.initialize(tagManagerArgs);
   const actions: any = connector(dispatch, store);
-  const values: PropsValueType = { store, actions, isLogged: false };
+  const values: PropsValueType = { store, actions, isLogged: false, followTx };
 
   return (
     <RootContext.Provider value={values}>

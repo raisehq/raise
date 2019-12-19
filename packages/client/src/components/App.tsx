@@ -23,11 +23,9 @@ import DesktopHeader from './DesktopHeader';
 import LocalData from '../helpers/localData';
 import Queryies from '../helpers/queryies';
 import AppContext from './AppContext';
-import FollowTx from '../helpers/followTx';
 
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
-  const [followTx, setFollowTX] = useState();
   const [isLoading, setLoading] = useState(true);
   const [getStarted, setGetStarted] = useState(firstLogin === 'first');
   const {
@@ -51,7 +49,8 @@ const App = ({ history, match }: any) => {
       blockchain: { fetchContracts },
       kyc: { onInitKyc },
       config: { updateNetwork }
-    }
+    },
+    followTx
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
   const [webSocket, setWebSocket]: any = useState({});
@@ -114,10 +113,10 @@ const App = ({ history, match }: any) => {
       if (!token) {
         await onInitKyc();
       }
-      setFollowTX(new FollowTx(`wss://${network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`));
     } else {
       await onVerifyAuth();
     }
+
     if (contracts === null) fetchContracts();
   }, [isLogged, token, address, network]);
 
@@ -186,7 +185,7 @@ const App = ({ history, match }: any) => {
           account: storedAccount, // Old compability
           hasDeposit
         },
-        FollowTx: followTx
+        followTx
       }}
     >
       <Dimmer active={isLoading} inverted>

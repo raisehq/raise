@@ -2,10 +2,12 @@ import { EventEmitter } from 'events';
 import PromiEvent from 'promievent';
 import Web3 from 'web3';
 
+// @ts-nocheck
 class FollowTx extends EventEmitter {
   private connection: any = null;
   private storeName: string = 'tx';
   private storage: any = null;
+
   public constructor(url: string) {
     super();
     this.connection = new Web3(new Web3.providers.WebsocketProvider(url));
@@ -15,6 +17,7 @@ class FollowTx extends EventEmitter {
     }
     this.lastTx();
   }
+
   private async lastTx() {
     const self = this;
     const data = JSON.parse(this.storage.getItem(this.storeName));
@@ -23,25 +26,35 @@ class FollowTx extends EventEmitter {
     const res = await Promise.all(
       data.map(hash => self.connection.eth.getTransactionReceipt(self.getHash(hash)))
     );
+
     res.filter(el => el).map((el: any) => self.remove(el.transactionHash));
     // check again pass 2 seconds
     setTimeout(() => self.lastTx(), 2000);
   }
+
   private mixNameAndHash(name, hash) {
     return name ? `${name}:${hash}` : hash;
   }
-  private getHash(hash) {
-    return hash.split(':').pop();
+
+  public getHash(token: string) {
+    return token.split(':').pop();
   }
-  private getName(token) {
-    return token.split(':')[0];
+
+  private getName(token: string) {
+    if (token) {
+      return token.split(':')[0];
+    } else {
+      return;
+    }
   }
+
   private save(token) {
     const data = JSON.parse(this.storage.getItem(this.storeName));
     data.push(token);
     this.storage.setItem(this.storeName, JSON.stringify(data));
     this.emit('start_tx', this.getHash(token));
   }
+
   private remove(token) {
     const data = JSON.parse(this.storage.getItem(this.storeName));
     this.storage.setItem(
@@ -52,14 +65,15 @@ class FollowTx extends EventEmitter {
   }
   public hasPendingTx(name) {
     const data = JSON.parse(this.storage.getItem(this.storeName));
-    return data.filter(value => this.getName(value) !== this.getName(name)) > 0;
+    return data.filter(value => this.getName(value) === this.getName(name)).pop();
   }
+
   // @ts-ignore
   public watchTx(method: any, name?) {
     const self = this;
+    // @ts-ignore
     const pe = new PromiEvent<any>((resolve, reject) => {
       // emit the start of the process
-      pe.emit('tx_start');
       return method
         .on('transactionHash', function(hash) {
           self.save(self.mixNameAndHash(name, hash));

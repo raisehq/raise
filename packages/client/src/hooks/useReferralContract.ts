@@ -6,9 +6,7 @@ import AppContext from '../components/AppContext';
 const useRefferalContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const wallet = useWallet();
-  const {
-    FollowTx: { watchTx }
-  }: any = useContext(AppContext);
+  const { followTx }: any = useContext(AppContext);
 
   useAsyncEffect(async () => {
     if (wallet) {
@@ -16,7 +14,8 @@ const useRefferalContract = () => {
         const contract = await wallet.addContract('ReferralTracker');
         setActiveContract({
           address: contract.options.address,
-          withdraw: account => watchTx(contract.methods.withdraw(account).send({ from: account })),
+          withdraw: account =>
+            followTx.watchTx(contract.methods.withdraw(account).send({ from: account })),
           balance: account => contract.methods.unclaimedReferrals(account).call()
         });
       } catch (error) {

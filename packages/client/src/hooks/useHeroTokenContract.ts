@@ -9,9 +9,7 @@ const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const wallet = useWallet();
   const { web3 } = useWeb3();
-  const {
-    FollowTx: { watchTx }
-  }: any = useContext(AppContext);
+  const { followTx }: any = useContext(AppContext);
 
   useAsyncEffect(async () => {
     const ready = Either.either(wallet);
@@ -31,7 +29,7 @@ const useDepositContract = () => {
                   HeroTokenContract.methods.allowance(account, spender).call(),
                 balance: account => HeroTokenContract.methods.balanceOf(account).call(),
                 approveDeposit: async (account, amount) => {
-                  return watchTx(
+                  return followTx.watchTx(
                     HeroTokenContract.methods
                       .approve(
                         DepositContract.options.address,
@@ -39,7 +37,8 @@ const useDepositContract = () => {
                       )
                       .send({
                         from: account
-                      })
+                      }),
+                    'approval'
                   );
                 }
               });
