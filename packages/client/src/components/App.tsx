@@ -28,7 +28,7 @@ import AppContext from './AppContext';
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
   const [isLoading, setLoading] = useState(true);
-  const [getStarted, setGetStarted] = useState(firstLogin === 'first');
+  const [getStarted, setGetStarted] = useState(!!(firstLogin && firstLogin.includes('first')));
   const {
     store,
     store: {

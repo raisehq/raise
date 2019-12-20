@@ -52,7 +52,6 @@ export const CardSized = styled(Card)`
     width: 100%;
     box-shadow: none;
     @media ${device.tablet} {
-      min-height: 570px;
       height: auto !important;
       width: 500px;
     }
