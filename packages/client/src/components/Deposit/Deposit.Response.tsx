@@ -17,10 +17,15 @@ import {
   ImageSized,
   SegmentPadded,
   ListItemPadding,
-  IconSuccess
+  IconSuccess,
+  Error,
+  BalanceAmount
 } from './Deposit.styles';
 import { CardContent } from '../Layout/Layout.styles';
+import UniswapModal from '../UniswapModal';
 import { IMAGES_PATH } from '../../commons/constants';
+
+const uniswapUrl = "https://uniswap.exchange/swap?theme=light?exactField=output?exactAmount=200?inputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F?outputCurrency=0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c"
 
 const UI = daggy.taggedSum('UI', {
   Success: [{}],
@@ -58,8 +63,9 @@ const StepNumber = props => {
   }
 };
 
-const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
-  ui.cata({
+const getViewResponse = (ui: any, raiseBalance, onDeposit, onContinue, onRetry) => {
+  const haveRaise = raiseBalance > 0;
+  return ui.cata({
     Success: () => (
       <Fragment>
         <CardContent>
@@ -96,10 +102,13 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
           </CardCenteredText>
           <Segment>
             <BlockAmount>
+              <BalanceAmount> {raiseBalance} </BalanceAmount>
+              <Divider />
               <Amount> 200 </Amount>
             </BlockAmount>
             <Divider />
             <CardCenteredText>
+              <UniswapModal iframeUrl={uniswapUrl} />
               <HowToGetHeroToken target="_blank" href="https://www.raise.it/help">
                 How to get RAISE Tokens
               </HowToGetHeroToken>
@@ -107,7 +116,17 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
           </Segment>
         </CardContent>
         <CardContent>
-          <ButtonGreen onClick={onDeposit}>Deposit</ButtonGreen>
+          <ButtonGreen disabled={!haveRaise} onClick={onDeposit}>Deposit</ButtonGreen>
+          {!haveRaise && (
+            <Error>
+              You need 200 RAISE to be able to apply our membership.
+              <br />
+              Get RAISE at Uniswap or learn more in our &nbsp;
+              <HowToGetHeroToken target="_blank" href="https://www.raise.it/help">
+                Help section.
+              </HowToGetHeroToken>
+            </Error>
+          )}
         </CardContent>
       </Fragment>
     ),
@@ -169,5 +188,6 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
       </Fragment>
     )
   });
+}
 
 export { getViewResponse, UI, UISteps };

@@ -98,6 +98,7 @@ export const HeaderRow = styled(Grid.Row)`
 `;
 export const CardCenteredText = styled.div`
   &&& {
+    margin: 30px 0px 0px;
     text-align: center;
   }
 `;
@@ -117,34 +118,71 @@ export const CardSubtitle = styled.div`
     margin: 19px;
   }
 `;
-
-export const Amount = styled.p`
+export const Error = styled.p`
+&&&&&& {
+  margin-top: 20px;
+  color: #99a6b6;
+  text-align: center;
+}
+`
+export const Amount = styled.div`
   &&& {
     color: #5c5d5d;
     font-size: 50px;
     font-weight: 300;
-    line-height: 16px;
-    padding-top: 45px;
+    height: 50px;
     text-align: center;
-    margin: 0px 105px;
+    line-height: normal;
+    margin: 0px 60px;
+    position: relative;
   }
 
   &&&::before {
     color: #7f8fa4;
     font-size: 12px;
-    float: left;
-    margin-top: 9px;
-    line-height: 21px;
-    content: 'Amount';
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    content: 'Membership';
   }
   &&&::after {
     color: #7f8fa4;
     font-size: 12px;
-    float: right;
-    margin-top: 9px;
-    line-height: 21px;
-    content: 'Tokens';
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    content: 'RAISE';
   }
+`;
+
+export const BalanceAmount = styled.div`
+&&& {
+  color: #5c5d5d;
+  font-size: 50px;
+  font-weight: 300;
+  height: 50px;
+  text-align: center;
+  line-height: normal;
+  margin: 0px 60px;
+  position: relative;
+}
+
+&&&::before {
+  color: #7f8fa4;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  content: 'Balance';
+}
+&&&::after {
+  color: #7f8fa4;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  content: 'RAISE';
+}
 `;
 
 export const HowToGetHeroToken = styled.a`
@@ -193,6 +231,9 @@ export const ButtonGreen = styled(Button)`
     background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
     color: white;
     font-weight: bold;
+  }
+  &&&:disabled {
+    background: rgba(0,0,0,0.3)
   }
 `;
 
