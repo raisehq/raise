@@ -39,7 +39,7 @@ export const GraphContainer = styled.div`
 export const CardImageCrop: any = styled.div<ImageCropProps>`
   width: 100%;
   height: 120px;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-image: ${({ src }) => `url(${src})`};
