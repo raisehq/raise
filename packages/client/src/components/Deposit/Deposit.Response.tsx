@@ -18,8 +18,7 @@ import {
   SegmentPadded,
   ListItemPadding,
   IconSuccess,
-  Error,
-  BalanceAmount
+  Error
 } from './Deposit.styles';
 import { CardContent } from '../Layout/Layout.styles';
 import UniswapModal from '../UniswapModal';
@@ -102,8 +101,6 @@ const getViewResponse = (ui: any, raiseBalance, onDeposit, onContinue, onRetry) 
           </CardCenteredText>
           <Segment>
             <BlockAmount>
-              <BalanceAmount> {raiseBalance} </BalanceAmount>
-              <Divider />
               <Amount> 200 </Amount>
             </BlockAmount>
             <Divider />
