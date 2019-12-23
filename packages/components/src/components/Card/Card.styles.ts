@@ -40,6 +40,8 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
   width: 100%;
   height: 120px;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   background-image: ${({ src }) => `url(${src})`};
   border-radius: 6px 6px 0 0;
   border: 1px solid #cfd0d4;
@@ -97,6 +99,7 @@ export const CardBorrowerTitle = styled.div`
 export const CardDescription = styled.div`
   max-height: 76px;
   height: 76px;
+  line-height: 21px;
   color: #5a5a5a;
   font-size: 14px;
   display: block;
