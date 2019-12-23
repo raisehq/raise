@@ -62,11 +62,11 @@ const RowComponent: React.SFC<RowComponentProps> = ({
   big,
   notop,
 }) => (
-  <Row small={small} big={big} notop={notop}>
-    <RowContent contentColor={contentColor}>{content}</RowContent>
-    <RowTitle big={big}>{title}</RowTitle>
-  </Row>
-);
+    <Row small={small} big={big} notop={notop}>
+      <RowContent contentColor={contentColor}>{content}</RowContent>
+      <RowTitle big={big}>{title}</RowTitle>
+    </Row>
+  );
 
 const HeaderComponent = ({
   title,
@@ -74,16 +74,16 @@ const HeaderComponent = ({
   fontSize,
   ...rest
 }: {
-  title: any;
-  amount: any;
-  fontSize?: any;
-  rest?: any;
-}) => (
-  <Header {...rest}>
-    <HeaderTitle>{title}</HeaderTitle>
-    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
-  </Header>
-);
+    title: any;
+    amount: any;
+    fontSize?: any;
+    rest?: any;
+  }) => (
+    <Header {...rest}>
+      <HeaderTitle>{title}</HeaderTitle>
+      <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
+    </Header>
+  );
 const SubHeaderComponent: FunctionComponent<{
   title: string;
   amount: string;
@@ -176,14 +176,14 @@ const ContentWithLogo = ({
   className,
   style,
 }: {
-  children?: any;
-  logo?: any;
-  to?: any;
-  topRight?: any;
-  size?: any;
-  className?: any;
-  style?: any;
-}) => {
+    children?: any;
+    logo?: any;
+    to?: any;
+    topRight?: any;
+    size?: any;
+    className?: any;
+    style?: any;
+  }) => {
   const aProps = { href: undefined };
   if (to) {
     aProps.href = to;
