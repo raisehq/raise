@@ -143,7 +143,7 @@ export const Amount = styled.div`
     position: absolute;
     bottom: 0px;
     left: 0px;
-    content: 'Membership';
+    content: 'Amount';
   }
   &&&::after {
     color: #7f8fa4;
