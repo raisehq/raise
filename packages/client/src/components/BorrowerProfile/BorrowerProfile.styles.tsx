@@ -5,12 +5,28 @@ import theme from '../../theme';
 
 export const Container = styled.div`
   display: flex;
-  flex-wrap: wrap;
   height: fit-content;
+  justify-content: center;
+  flex-wrap: wrap;
+  @media screen and ${device.laptop} {
+    
+  }
+`;
+
+export const LoanContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+`;
+
+export const BorrowerPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   @media screen and ${device.laptop} {
     padding: 0px 40px;
   }
-`;
+`
 
 export const BorrowerCard = styled(Card)`
   &&& {
@@ -18,12 +34,8 @@ export const BorrowerCard = styled(Card)`
     width: 100%;
     height: fit-content;
     background: none;
-    @media screen and ${device.laptop} {
-      min-height: 410px;
-      box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
-      max-width: 715px;
-      background: #ffffff;
-    }
+   
+    max-width: 797px;
   }
 `;
 

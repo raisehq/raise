@@ -15,7 +15,9 @@ import {
   HeaderImage,
   Icon,
   AddressInfo,
-  CompanyDetails
+  CompanyDetails,
+  BorrowerPage,
+  LoanContainer
 } from './BorrowerProfile.styles';
 import { Resources } from './Resource';
 import { KPIList } from './KPI';
@@ -95,41 +97,45 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
     return <Borrower404 />;
   }
   return (
-    <Container>
-      <BorrowerCard>
-        <HeaderImage>
-          <Image src={background} />
-        </HeaderImage>
-        <CompanyDetails>
-          <HeaderBox>
-            <div>
-              <Image size="small" src={logo} />
-              <a href={url} rel="noopener noreferrer" target="_blank">
-                {urlText}
-              </a>
-            </div>
-            <KPIList kpis={kpis} />
-          </HeaderBox>
-          <CompanyName>{companyName}</CompanyName>
-          <p>Last updated: {lastUpdated}</p>
-          <b>About</b>
-          {description}
-          <Socials socialNetworks={socialNetworks} />
-        </CompanyDetails>
-      </BorrowerCard>
-      <SideInfo>
-        <p className="borrowerInfo">
-          <Icon className="map marker alternate icon"></Icon>
-          <AddressInfo>{address}</AddressInfo>
-        </p>
-        <p>
-          <Icon className="calendar alternate icon"></Icon>
-          Founded on {createdDate}
-        </p>
-        <Resources extraResources={extraResources} />
-      </SideInfo>
-      <BorrowerLoans account={ethereumAddress} />
-    </Container>
+    <BorrowerPage>
+      <Container>
+        <BorrowerCard>
+          <HeaderImage>
+            <Image src={background} />
+          </HeaderImage>
+          <CompanyDetails>
+            <HeaderBox>
+              <div>
+                <Image size="small" src={logo} />
+                <a href={url} rel="noopener noreferrer" target="_blank">
+                  {urlText}
+                </a>
+              </div>
+              <KPIList kpis={kpis} />
+            </HeaderBox>
+            <CompanyName>{companyName}</CompanyName>
+            <p>Last updated: {lastUpdated}</p>
+            <b>About</b>
+            {description}
+            <Socials socialNetworks={socialNetworks} />
+          </CompanyDetails>
+        </BorrowerCard>
+        <SideInfo>
+          <p className="borrowerInfo">
+            <Icon className="map marker alternate icon"></Icon>
+            <AddressInfo>{address}</AddressInfo>
+          </p>
+          <p>
+            <Icon className="calendar alternate icon"></Icon>
+            Founded on {createdDate}
+          </p>
+          <Resources extraResources={extraResources} />
+        </SideInfo>
+      </Container>
+      <LoanContainer>
+        <BorrowerLoans account={ethereumAddress} />
+      </LoanContainer>
+    </BorrowerPage>
   );
 };
 

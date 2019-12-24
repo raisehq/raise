@@ -4,7 +4,7 @@ import 'url-search-params-polyfill';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import LogRocket from 'logrocket';
-import { MainLayout, SimpleLayout, Web3Layout } from './Layout';
+import { MainLayout, SimpleLayout, Web3Layout, BorrowerProfileLayout } from './Layout';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import CreateLoan from './CreateLoan';
 import RootContext from '../context';
@@ -245,7 +245,7 @@ const App = ({ history, match }: any) => {
                   component={CreateLoan}
                   roles={[1, 2]}
                 />
-                <MainLayout exact path="/borrowers/:slug" component={BorrowerProfile} />
+                <BorrowerProfileLayout exact path="/borrowers/:slug" component={BorrowerProfile} />
                 {/* Onboarding */}
                 <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
                 <SimpleLayout exact path="/join" component={Join} />
