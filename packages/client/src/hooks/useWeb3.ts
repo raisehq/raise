@@ -187,6 +187,10 @@ const useWeb3 = () => {
       case CryptoWallets.Coinbase:
         await setNewProvider(getWalletLinkClient(network, networkId));
         break;
+      case CryptoWallets.WebWallet:
+        if (defaultWeb3.name !== CryptoWallets.WebWallet) throw new Error('Wallet not alowed');
+        await setNewProvider(defaultWeb3.conn.currentProvider);
+        break;
       default:
         throw new Error('[useWeb3] Wallet not alowed default OPTION');
     }
