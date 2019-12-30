@@ -3,6 +3,11 @@ import { Card, Header } from 'semantic-ui-react';
 import { device, maxDevice } from '../../commons/breakpoints';
 import theme from '../../theme';
 
+
+interface ImageCropProps {
+  src?: string | null;
+}
+
 export const Container = styled.div`
   display: flex;
   height: fit-content;
@@ -17,11 +22,13 @@ export const LoanContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 auto;
+  margin-top: 90px;
 `;
 
 export const BorrowerInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 `;
 
 export const BorrowerPage = styled.div`
@@ -63,8 +70,6 @@ export const Icon = styled.i`
 `;
 
 export const AddressInfo = styled.span`
-  height: 63px;
-  width: 169px;
   color: #5a5a5a;
   font-size: 14px;
   line-height: 21px;
@@ -73,10 +78,8 @@ export const AddressInfo = styled.span`
 export const SideInfo = styled(Card)`
   &&& {
     padding: 0px 10px 32px 10px;
-    box-shadow: none;
     height: fit-content;
     width: 100%;
-    background: none;
     @media screen and ${device.laptop} {
       min-height: 407px;
       margin-left: 15px;
@@ -124,12 +127,16 @@ export const SocialsBox = styled.div`
   }
 `;
 
+export const ResourcesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const ResourceBox = styled.div`
   display: flex;
+  flex-diriection: row;
   align-items: center;
-  & .icon:first-child {
-    margin-right: 3px;
-  }
+  margin-bottom: 30px;
 `;
 
 export const HeaderBox = styled.div`
@@ -146,9 +153,6 @@ export const CompanyDetails = styled.div`
   padding: 32px 10px 32px 10px;
   @media screen and ${device.mobileM} {
     justify-content: space-between;
-  }
-  @media screen and ${device.laptop} {
-    padding: 50px 65px 50px 50px;
   }
 `;
 
@@ -207,11 +211,7 @@ export const BorrowerLoansBox = styled.div`
   }
 `;
 
-export const ResourcesContainer = styled.div`
-  & > ${ResourceBox} {
-    margin-top: 30px;
-  }
-`;
+
 
 export const KPIBox = styled.div`
   display: flex;
@@ -255,5 +255,19 @@ export const Website = styled.a`
   font-size: 14px;
 `;
 
-export const BorrowerAddress = styled.div``;
+export const BorrowerInfoItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+`;
 export const BorrowerFounded = styled.div``;
+
+export const CardImageCrop: any = styled.div<ImageCropProps>`
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-position-x: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: ${({ src }) => `url(${src})`};
+`;

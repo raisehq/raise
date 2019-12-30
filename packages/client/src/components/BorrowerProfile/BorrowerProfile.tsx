@@ -16,9 +16,9 @@ import {
   CompanyDetails,
   BorrowerPage,
   LoanContainer,
-  SideTitle
+  SideTitle,
+  CardImageCrop
 } from './BorrowerProfile.styles';
-import { Resources } from './Resource';
 import { KPIList } from './KPI';
 import Socials from './Socials';
 import BorrowerLoans from './BorrowerLoans';
@@ -65,7 +65,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
       description,
       logo,
       url,
-      // urlText,
       updated,
       address,
       foundationDate,
@@ -77,7 +76,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
     kpis
   } = borrower;
   const lastUpdated = new Date(updated).toLocaleDateString('en-GB');
-  const createdDate = new Date(foundationDate).toLocaleDateString('en-GB');
 
   useAsyncEffect(async () => {
     try {
@@ -96,12 +94,13 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   if (notFound) {
     return <Borrower404 />;
   }
+
   return (
     <BorrowerPage>
       <Container>
         <BorrowerCard>
           <HeaderImage>
-            <Image src={background} />
+            <CardImageCrop src={background} />
           </HeaderImage>
           <CompanyDetails>
             <HeaderBox>
@@ -119,8 +118,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
         <SideInfo>
           <SideTitle>Overview</SideTitle>
           <KPIList kpis={kpis}></KPIList>
-          <BorrowerInfo address={address} date={createdDate} />
-          <Resources extraResources={extraResources} />
+          <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
         </SideInfo>
       </Container>
       <LoanContainer>

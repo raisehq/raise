@@ -1,5 +1,5 @@
 import React from 'react';
-import { BorrowerInfoContainer, BorrowerAddress, BorrowerFounded, AddressInfo, Icon  } from './BorrowerProfile.styles';
+import { ResourceBox, ResourcesContainer, BorrowerInfoContainer, AddressInfo, BorrowerInfoItem, Icon  } from './BorrowerProfile.styles';
 import { ExtraResource } from '../../interfaces/BorrowerProfile';
 
 interface BorrowerInfoProps {
@@ -8,16 +8,40 @@ interface BorrowerInfoProps {
 	date: string;
 }
 
-export const BorrowerInfo: React.SFC<BorrowerInfoProps> = ({ extraResources, address, date }: BorrowerInfoProps) => (
+export const Resource: React.SFC<ExtraResource> = ({
+  resource,
+  link,
+  resource_type,
+	resourceType
+}: ExtraResource) => {
+  console.log('res:: ', resource_type, ' ', resourceType)
+	return (
+		<ResourceBox>
+			<Icon className={`${resource_type} icon`} />
+			<a href={link} target="_blank" rel="noopener noreferrer">
+				{resource}
+			</a>
+		</ResourceBox>
+	);
+};
+
+export const BorrowerInfo: React.SFC<BorrowerInfoProps> = ({ extraResources, address, date }: BorrowerInfoProps) => {
+	console.log('resources:: ', extraResources)
+	return (
 		<BorrowerInfoContainer>
-			<BorrowerAddress>
+			<BorrowerInfoItem>
 				<Icon className="map marker alternate icon"></Icon>
 				<AddressInfo>{address}</AddressInfo>
-			</BorrowerAddress>
-			<BorrowerFounded>
+			</BorrowerInfoItem>
+			<BorrowerInfoItem>
 				<Icon className="calendar alternate icon"></Icon>
 				Founded on {date}
-			</BorrowerFounded>
-		</BorrowerInfoContainer>
-);
+			</BorrowerInfoItem>
+			<ResourcesContainer>
+				{extraResources ? extraResources.map(({ resource, ...rest }) => (
+					<Resource key={resource} resource={resource} {...rest} />
+				)) : null}
+			</ResourcesContainer>
+		</BorrowerInfoContainer>);
+};
 
