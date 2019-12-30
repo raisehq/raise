@@ -19,6 +19,11 @@ export const LoanContainer = styled.div`
   margin: 0 auto;
 `;
 
+export const BorrowerInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const BorrowerPage = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,6 +32,12 @@ export const BorrowerPage = styled.div`
     padding: 0px 40px;
   }
 `
+export const SideTitle = styled.div`
+  color: #3C4251;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 36px;
+`;
 
 export const BorrowerCard = styled(Card)`
   &&& {
@@ -203,32 +214,46 @@ export const ResourcesContainer = styled.div`
 `;
 
 export const KPIBox = styled.div`
-  & > div {
-    text-align: center;
-  }
-  & > div:first-child {
-    color: #3c4251;
-    font-size: 26px;
-    font-weight: bold;
-  }
-
-  & > div:last-child {
-    color: #5a5a5a;
-    font-size: 12px;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 export const KPIListBox = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 30px;
-  & > ${KPIBox} {
-    margin-right: 60px;
-  }
-  & > ${KPIBox}:last-child {
-    margin-right: 0px;
-  }
-  @media screen and ${device.mobileS} {
-    margin-top: unset;
-  }
+  flex-direction: column;
+  
 `;
+
+export const KPIItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const KPISeparator = styled.div`
+  box-sizing: border-box;
+  height: 1px;
+  border: 1px solid #ECECEC;
+`;
+export const KPIItemLabel = styled.div`
+  	color: #5A5A5A;
+    line-height: 49px;
+    font-size: 14px;
+`;
+export const KPIItemValue = styled.div`
+color: #5A5A5A;
+font-size: 14px;
+line-height: 49px;
+font-weight: bold;
+`;
+
+export const Website = styled.a`
+  color: #0091FF;
+  line-height: 21px;
+  font-size: 14px;
+`;
+
+export const BorrowerAddress = styled.div``;
+export const BorrowerFounded = styled.div``;

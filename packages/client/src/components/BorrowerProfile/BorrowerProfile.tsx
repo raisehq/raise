@@ -12,12 +12,11 @@ import {
   Container,
   CompanyName,
   HeaderBox,
-  HeaderImage,
-  Icon,
-  AddressInfo,
+  HeaderImage,  
   CompanyDetails,
   BorrowerPage,
-  LoanContainer
+  LoanContainer,
+  SideTitle
 } from './BorrowerProfile.styles';
 import { Resources } from './Resource';
 import { KPIList } from './KPI';
@@ -25,6 +24,7 @@ import Socials from './Socials';
 import BorrowerLoans from './BorrowerLoans';
 import Borrower404 from './Borrower404';
 import BorrowerLoading from './BorrowerLoading';
+import {BorrowerInfo} from './BorrowerInfo';
 
 const defaultBorrower = {
   companyDetails: {
@@ -65,7 +65,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
       description,
       logo,
       url,
-      urlText,
+      // urlText,
       updated,
       address,
       foundationDate,
@@ -107,28 +107,19 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
             <HeaderBox>
               <div>
                 <Image size="small" src={logo} />
-                <a href={url} rel="noopener noreferrer" target="_blank">
-                  {urlText}
-                </a>
               </div>
-              <KPIList kpis={kpis} />
             </HeaderBox>
             <CompanyName>{companyName}</CompanyName>
             <p>Last updated: {lastUpdated}</p>
             <b>About</b>
             {description}
-            <Socials socialNetworks={socialNetworks} />
+            <Socials socialNetworks={socialNetworks} url={url}/>
           </CompanyDetails>
         </BorrowerCard>
         <SideInfo>
-          <p className="borrowerInfo">
-            <Icon className="map marker alternate icon"></Icon>
-            <AddressInfo>{address}</AddressInfo>
-          </p>
-          <p>
-            <Icon className="calendar alternate icon"></Icon>
-            Founded on {createdDate}
-          </p>
+          <SideTitle>Overview</SideTitle>
+          <KPIList kpis={kpis}></KPIList>
+          <BorrowerInfo address={address} date={createdDate} />
           <Resources extraResources={extraResources} />
         </SideInfo>
       </Container>
