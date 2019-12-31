@@ -13,16 +13,13 @@ export const Container = styled.div`
   height: fit-content;
   justify-content: center;
   flex-wrap: wrap;
-  @media screen and ${device.laptop} {
-    
-  }
 `;
 
 export const LoanContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  margin-top: 90px;
+  margin-top: 104px;
 `;
 
 export const BorrowerInfoContainer = styled.div`
@@ -150,7 +147,7 @@ export const HeaderBox = styled.div`
 `;
 
 export const CompanyDetails = styled.div`
-  padding: 53px 10px 32px 10px;
+  padding: 53px 10px 0px 10px;
   @media screen and ${device.mobileM} {
     justify-content: space-between;
   }
@@ -170,7 +167,6 @@ export const HeaderImage = styled.div`
 
 export const BorrowerLoansBox = styled.div`
   width: 100%;
-  margin-bottom: 25px;
 
   &&& .ui.secondary.pointing.menu .active.item {
     border-color: ${theme.colors.complementary};
@@ -196,9 +192,7 @@ export const BorrowerLoansBox = styled.div`
     flex-wrap: wrap;
     border: none;
   }
-  @media screen and ${device.mobileM} {
-    margin-top: 32px;
-  }
+ 
   .heroCard {
     margin: 0 15px 15px 0;
   }

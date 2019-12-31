@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
@@ -11,7 +10,6 @@ import {
   SideInfo,
   Container,
   CompanyName,
-  // HeaderBox,
   HeaderImage,  
   CompanyDetails,
   BorrowerPage,
@@ -104,12 +102,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
             <CardImageCrop src={background} />
           </HeaderImage>
           <CompanyDetails>
-            {/* <HeaderBox>
-              <div>
-                <Image size="small" src={logo} />
-              </div>
-            </HeaderBox> */}
-
             <BorrowerLogo src={logo}/>
             <CompanyName>{companyName}</CompanyName>
             <p>Last updated: {lastUpdated}</p>
