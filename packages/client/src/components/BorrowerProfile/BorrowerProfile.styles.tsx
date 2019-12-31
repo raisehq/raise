@@ -287,6 +287,6 @@ export const BorrowerLogo: any = styled.div<ImageCropProps>`
   background-image: ${({ src }) => `url(${src})`};
 
   position: absolute;
-  top: 201px;
+  top: 207px;
   left: 28px;
 `;
