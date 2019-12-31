@@ -85,7 +85,7 @@ export const SideInfo = styled(Card)`
       margin-left: 15px;
       margin-top: 0px;
       box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
-      padding: 50px;
+      padding: 17px;
       max-width: 350px;
       background: #ffffff;
     }
@@ -150,7 +150,7 @@ export const HeaderBox = styled.div`
 `;
 
 export const CompanyDetails = styled.div`
-  padding: 32px 10px 32px 10px;
+  padding: 53px 10px 32px 10px;
   @media screen and ${device.mobileM} {
     justify-content: space-between;
   }
@@ -266,8 +266,27 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
   width: 100%;
   height: 100%;
   background-position: center;
-  background-position-x: 0;
   background-size: cover;
   background-repeat: no-repeat;
   background-image: ${({ src }) => `url(${src})`};
+`;
+
+export const BorrowerLogo: any = styled.div<ImageCropProps>`
+  width: 115px;
+  height: 120px;
+  background-color: white;
+  border-radius: 9.82px;
+  border: 1.64px solid #CFD0D4;
+  box-sizing: border-box;
+
+
+  background-position: center;
+  background-position-x: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: ${({ src }) => `url(${src})`};
+
+  position: absolute;
+  top: 201px;
+  left: 28px;
 `;

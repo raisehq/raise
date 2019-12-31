@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image } from 'semantic-ui-react';
+// import { Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
@@ -11,13 +11,14 @@ import {
   SideInfo,
   Container,
   CompanyName,
-  HeaderBox,
+  // HeaderBox,
   HeaderImage,  
   CompanyDetails,
   BorrowerPage,
   LoanContainer,
   SideTitle,
-  CardImageCrop
+  CardImageCrop,
+  BorrowerLogo
 } from './BorrowerProfile.styles';
 import { KPIList } from './KPI';
 import Socials from './Socials';
@@ -103,11 +104,13 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
             <CardImageCrop src={background} />
           </HeaderImage>
           <CompanyDetails>
-            <HeaderBox>
+            {/* <HeaderBox>
               <div>
                 <Image size="small" src={logo} />
               </div>
-            </HeaderBox>
+            </HeaderBox> */}
+
+            <BorrowerLogo src={logo}/>
             <CompanyName>{companyName}</CompanyName>
             <p>Last updated: {lastUpdated}</p>
             <b>About</b>
