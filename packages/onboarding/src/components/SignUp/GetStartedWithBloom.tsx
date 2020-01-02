@@ -15,12 +15,34 @@ import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import { RequestElement, QROptions, Action } from '@bloomprotocol/share-kit-react';
 import useInterval from '../../hooks/useInterval';
-import { bloomSignIn } from '../../services';
+import { bloomSignIn, verifyBloomLogin } from '../../services';
+import bloomToken from 'uuid';
 
 const GetStartedWithBloom = ({ onBack }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
-  useInterval(() => console.log('Haciendo polling'), 1000);
+  const [tokenBloom, setTokenBloom] = useState('');
+
+  useInterval(async () => {
+    const response = await verifyBloomLogin(tokenBloom);
+    response.fold(
+      error => {
+        console.log(error);
+      },
+      response => {
+        const {
+          data: {
+            data: { bloom_id }
+          }
+        } = response;
+        console.log(bloom_id);
+      }
+    );
+  }, 3000);
+
+  useEffect(() => {
+    setTokenBloom(bloomToken());
+  }, []);
 
   useEffect(() => {
     if (isOpenHelp) return;
@@ -40,9 +62,9 @@ const GetStartedWithBloom = ({ onBack }) => {
 
   const requestData = {
     action: Action.attestation,
-    token: '284a54f2-79ec-4056-8347-5c29a4b32070',
+    token: tokenBloom,
     org_name: 'Raise',
-    url: bloomSignIn(),
+    url: tokenBloom,
     //url: 'https://receive-kit.bloom.co/api/receive',
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',

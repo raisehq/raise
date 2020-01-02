@@ -20,7 +20,8 @@ const URL = {
   CHECK_USERNAME: `${getHost('AUTH')}/users/username/exists?username=`,
   CHECK_EMAIL: `${getHost('AUTH')}/users/email/exists`,
   CHECK_COUNTRYBLOCKED: `${getHost('AUTH')}/users/country/blocked?country_id=`,
-  BLOOM_SIGN_IN: `${getHost('CORE')}/kyc/scan`
+  BLOOM_SIGN_IN: `${getHost('CORE')}/kyc/scan`,
+  BLOOM_LOGIN: 'http://0.0.0.0:3001/bloom/authenticate'
 };
 
 export const signUp = async data => {
@@ -136,3 +137,14 @@ export const checkBlockedCountry = async countryid => {
 };
 
 export const bloomSignIn = () => URL.BLOOM_SIGN_IN;
+
+export const verifyBloomLogin = async tokenBloom => {
+  const config: any = {
+    url: `${URL.BLOOM_LOGIN}`,
+    method: 'POST',
+    ...COMMON_HEADERS,
+    data: { bloom_id: tokenBloom }
+  };
+
+  return await to(axios(config));
+};
