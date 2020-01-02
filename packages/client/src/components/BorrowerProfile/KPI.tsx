@@ -1,8 +1,7 @@
 import React from 'react';
-import numeral from '../../commons/numeral';
 import { KPI as KPIProps } from '../../interfaces/BorrowerProfile';
 
-import { KPIBox, KPIListBox } from './BorrowerProfile.styles';
+import { KPIBox, KPIListBox, KPIItem, KPISeparator, KPIItemLabel, KPIItemValue } from './BorrowerProfile.styles';
 
 interface KPIListProps {
   kpis: KPIProps[];
@@ -10,8 +9,11 @@ interface KPIListProps {
 
 export const KPI: React.SFC<KPIProps> = ({ kpi, label }: KPIProps) => (
   <KPIBox>
-    <div>{numeral(kpi).format('0%')}</div>
-    <div>{label}</div>
+    <KPIItem>
+      <KPIItemLabel>{label}</KPIItemLabel>
+      <KPIItemValue>{kpi}</KPIItemValue>
+    </KPIItem>
+    <KPISeparator />
   </KPIBox>
 );
 
