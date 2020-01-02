@@ -157,11 +157,11 @@ export const HeaderImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  height: 267px;
+  height: 124px;
   overflow: hidden;
   flex-wrap: wrap;
-  @media screen and ${device.mobileM} {
-    justify-content: space-between;
+  @media screen and ${device.laptop} {
+    height: 267px;  
   }
 `;
 
@@ -266,8 +266,8 @@ export const CardImageCrop: any = styled.div<ImageCropProps>`
 `;
 
 export const BorrowerLogo: any = styled.div<ImageCropProps>`
-  width: 115px;
-  height: 120px;
+  height: 70px;
+  width: 73px;
   background-color: white;
   border-radius: 9.82px;
   border: 1.64px solid #CFD0D4;
@@ -281,6 +281,16 @@ export const BorrowerLogo: any = styled.div<ImageCropProps>`
   background-image: ${({ src }) => `url(${src})`};
 
   position: absolute;
-  top: 207px;
+  top: 88px;
   left: 28px;
+
+  @media screen and ${device.laptop} {
+    width: 115px;
+    height: 120px;
+    top: 207px;
+    left: 28px;
+  }
+
+
+
 `;
