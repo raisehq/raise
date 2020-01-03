@@ -45,10 +45,10 @@ const Wallet = ({ onNext }: any) => {
   const handlerLink = wallet => {
     switch (wallet) {
       case 'metamask':
-        window.location.href = 'http://metamask.app.link/';
+        window.open('http://metamask.app.link/');
         break;
       case 'opera':
-        window.location.href = 'http://onelink.to/5xwf6x';
+        window.open('http://onelink.to/5xwf6x');
         break;
       default:
         break;
