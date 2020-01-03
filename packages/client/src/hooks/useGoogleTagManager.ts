@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import TagManager from 'react-gtm-module';
 
 export enum TMEvents {
@@ -9,6 +10,17 @@ export enum TMEvents {
 const GTMID = process.env.REACT_APP_GTM_ID;
 
 function useGoogleTagManager(category?) {
+  const [isLoaded, setLoaded] = useState(false);
+
+  const initialize = () => {
+    if (!isLoaded) {
+      TagManager.initialize({
+        gtmId: GTMID
+      });
+      setLoaded(true);
+    }
+  };
+
   const sendEvent = (event, label, value?) =>
     TagManager.dataLayer({
       gtmId: GTMID,
@@ -33,7 +45,7 @@ function useGoogleTagManager(category?) {
     });
 
   const pageView = (path, title) =>
-    TagManager.initialize({
+    TagManager.dataLayer({
       gtmId: GTMID,
       dataLayer: {
         event: TMEvents.PageView,
@@ -44,7 +56,7 @@ function useGoogleTagManager(category?) {
 
   // Esta funcion sirve para todo.
 
-  return { sendEvent, pageView, sendEventCategory };
+  return { sendEvent, pageView, sendEventCategory, initialize };
 }
 
 export default useGoogleTagManager;
