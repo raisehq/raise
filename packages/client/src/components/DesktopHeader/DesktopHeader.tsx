@@ -23,15 +23,16 @@ const DesktopHeader = () => {
     history,
     onSetGetStarted,
     store: { user },
-    web3Status: { hasDeposit }
+    web3Status: { hasDeposit },
   }: any = useContext(AppContext);
   const { visible, visibleMenu } = useMenuVisibility();
   const {
-    details: { kyc_status, accounttype_id }
+    details: { kyc_status, accounttype_id },
   } = user;
-  const enableKyc = visibleMenu && accounttype_id === 2 && hasDeposit;
+  const enableBanner = visibleMenu && accounttype_id === 2;
 
   const onKYC = () => history.push('/kyc');
+  const onDepositAction = () => history.push('/deposit');
   const scrollToTop = () => scroll.scrollToTop();
 
   const navigateAndScroll = () => {
@@ -42,7 +43,13 @@ const DesktopHeader = () => {
   // If there is a parent for TopBanner and HeaderWrapper, it will break the sticky css rule and menu will not get fixed once scroll
   return visible ? (
     <>
-      <TopBanner kycStatus={kyc_status} enabled={enableKyc} action={onKYC} />
+      <TopBanner
+        kycStatus={kyc_status}
+        kycAction={onKYC}
+        hasDeposit={hasDeposit}
+        hasDepositAction={onDepositAction}
+        enabled={enableBanner}
+      />
       <HeaderWrapper>
         <RaiseHeader>
           <HeaderGroup>

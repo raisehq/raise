@@ -106,7 +106,7 @@ const getViewResponse = (ui: any, onDeposit, onContinue, onRetry) =>
             </CardCenteredText>
           </Segment>
         </CardContent>
-        <CardContent bottom_spacing={'true'}>
+        <CardContent>
           <ButtonGreen onClick={onDeposit}>Deposit</ButtonGreen>
         </CardContent>
       </Fragment>

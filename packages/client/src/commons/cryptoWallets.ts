@@ -1,9 +1,10 @@
 enum CryptoWallets {
   NotConnected = -1,
-  Unknow = 0,
+  Unknown = 0,
   Metamask = 1,
   Coinbase = 2,
-  Opera = 3
+  Opera = 3,
+  WebWallet = 4
 }
 
 export default CryptoWallets;

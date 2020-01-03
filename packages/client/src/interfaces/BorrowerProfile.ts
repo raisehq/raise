@@ -6,6 +6,7 @@ export interface SocialNetwork {
 export interface ExtraResource {
   resource: string | undefined;
   link: string;
+  resource_type: string;
   resourceType: string;
 }
 

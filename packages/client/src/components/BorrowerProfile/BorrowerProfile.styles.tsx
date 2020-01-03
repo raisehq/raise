@@ -3,13 +3,44 @@ import { Card, Header } from 'semantic-ui-react';
 import { device, maxDevice } from '../../commons/breakpoints';
 import theme from '../../theme';
 
+
+interface ImageCropProps {
+  src?: string | null;
+}
+
 export const Container = styled.div`
   display: flex;
-  flex-wrap: wrap;
   height: fit-content;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+export const LoanContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 104px;
+`;
+
+export const BorrowerInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+`;
+
+export const BorrowerPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   @media screen and ${device.laptop} {
     padding: 0px 40px;
   }
+`
+export const SideTitle = styled.div`
+  color: #3C4251;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 36px;
 `;
 
 export const BorrowerCard = styled(Card)`
@@ -18,12 +49,8 @@ export const BorrowerCard = styled(Card)`
     width: 100%;
     height: fit-content;
     background: none;
-    @media screen and ${device.laptop} {
-      min-height: 410px;
-      box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
-      max-width: 715px;
-      background: #ffffff;
-    }
+   
+    max-width: 797px;
   }
 `;
 
@@ -40,8 +67,6 @@ export const Icon = styled.i`
 `;
 
 export const AddressInfo = styled.span`
-  height: 63px;
-  width: 169px;
   color: #5a5a5a;
   font-size: 14px;
   line-height: 21px;
@@ -50,16 +75,14 @@ export const AddressInfo = styled.span`
 export const SideInfo = styled(Card)`
   &&& {
     padding: 0px 10px 32px 10px;
-    box-shadow: none;
     height: fit-content;
     width: 100%;
-    background: none;
     @media screen and ${device.laptop} {
       min-height: 407px;
       margin-left: 15px;
       margin-top: 0px;
       box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
-      padding: 50px;
+      padding: 17px;
       max-width: 350px;
       background: #ffffff;
     }
@@ -101,12 +124,16 @@ export const SocialsBox = styled.div`
   }
 `;
 
+export const ResourcesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const ResourceBox = styled.div`
   display: flex;
+  flex-diriection: row;
   align-items: center;
-  & .icon:first-child {
-    margin-right: 3px;
-  }
+  margin-bottom: 30px;
 `;
 
 export const HeaderBox = styled.div`
@@ -120,12 +147,9 @@ export const HeaderBox = styled.div`
 `;
 
 export const CompanyDetails = styled.div`
-  padding: 32px 10px 32px 10px;
+  padding: 53px 10px 0px 10px;
   @media screen and ${device.mobileM} {
     justify-content: space-between;
-  }
-  @media screen and ${device.laptop} {
-    padding: 50px 65px 50px 50px;
   }
 `;
 
@@ -133,17 +157,16 @@ export const HeaderImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  height: 267px;
+  height: 124px;
   overflow: hidden;
   flex-wrap: wrap;
-  @media screen and ${device.mobileM} {
-    justify-content: space-between;
+  @media screen and ${device.laptop} {
+    height: 267px;  
   }
 `;
 
 export const BorrowerLoansBox = styled.div`
   width: 100%;
-  margin-bottom: 25px;
 
   &&& .ui.secondary.pointing.menu .active.item {
     border-color: ${theme.colors.complementary};
@@ -169,9 +192,7 @@ export const BorrowerLoansBox = styled.div`
     flex-wrap: wrap;
     border: none;
   }
-  @media screen and ${device.mobileM} {
-    margin-top: 32px;
-  }
+ 
   .heroCard {
     margin: 0 15px 15px 0;
   }
@@ -184,39 +205,92 @@ export const BorrowerLoansBox = styled.div`
   }
 `;
 
-export const ResourcesContainer = styled.div`
-  & > ${ResourceBox} {
-    margin-top: 30px;
-  }
-`;
+
 
 export const KPIBox = styled.div`
-  & > div {
-    text-align: center;
-  }
-  & > div:first-child {
-    color: #3c4251;
-    font-size: 26px;
-    font-weight: bold;
-  }
-
-  & > div:last-child {
-    color: #5a5a5a;
-    font-size: 12px;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 export const KPIListBox = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 30px;
-  & > ${KPIBox} {
-    margin-right: 60px;
+  flex-direction: column;
+  
+`;
+
+export const KPIItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const KPISeparator = styled.div`
+  box-sizing: border-box;
+  height: 1px;
+  border: 1px solid #ECECEC;
+`;
+export const KPIItemLabel = styled.div`
+  	color: #5A5A5A;
+    line-height: 49px;
+    font-size: 14px;
+`;
+export const KPIItemValue = styled.div`
+color: #5A5A5A;
+font-size: 14px;
+line-height: 49px;
+font-weight: bold;
+`;
+
+export const Website = styled.a`
+  color: #0091FF;
+  line-height: 21px;
+  font-size: 14px;
+`;
+
+export const BorrowerInfoItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+`;
+export const BorrowerFounded = styled.div``;
+
+export const CardImageCrop: any = styled.div<ImageCropProps>`
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: ${({ src }) => `url(${src})`};
+`;
+
+export const BorrowerLogo: any = styled.div<ImageCropProps>`
+  height: 70px;
+  width: 73px;
+  background-color: white;
+  border-radius: 9.82px;
+  border: 1.64px solid #CFD0D4;
+  box-sizing: border-box;
+
+
+  background-position: center;
+  background-position-x: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: ${({ src }) => `url(${src})`};
+
+  position: absolute;
+  top: 88px;
+  left: 28px;
+
+  @media screen and ${device.laptop} {
+    width: 115px;
+    height: 120px;
+    top: 207px;
+    left: 28px;
   }
-  & > ${KPIBox}:last-child {
-    margin-right: 0px;
-  }
-  @media screen and ${device.mobileS} {
-    margin-top: unset;
-  }
+
+
+
 `;
