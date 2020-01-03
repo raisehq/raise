@@ -40,6 +40,13 @@ const getMessage = walletId => {
           <p>You may need to scan the wallet link QR Code</p>
         </CardCenteredText>
       );
+    case CryptoWallets.WebWallet:
+      return (
+        <CardCenteredText>
+          <CardTitle>Following the Web Wallet Instructions</CardTitle>
+          <TextDescription>Raise needs to connect with your web wallet</TextDescription>
+        </CardCenteredText>
+      );
     default:
       return null;
   }
