@@ -15,8 +15,13 @@ const Logout = (props: any) => {
       auth: { onSignout }
     }
   }: any = useContext(AppContext);
-
+  const { onLogin, onSignup } = props;
+  const goToLogin = useCallback(() => {
+    if (onLogin) return onLogin();
+    window.location.href = `${getHost('APP')}/join`;
+  }, []);
   const goToSignup = useCallback(() => {
+    if (onSignup) return onSignup();
     window.location.href = `${getHost('APP')}/join`;
   }, []);
 
@@ -29,7 +34,7 @@ const Logout = (props: any) => {
   }
   return (
     <>
-      <LoginButton onClick={onSignout} {...props}>
+      <LoginButton onClick={goToLogin} {...props}>
         Log in
       </LoginButton>
       <SignupButton onClick={goToSignup} {...props}>
