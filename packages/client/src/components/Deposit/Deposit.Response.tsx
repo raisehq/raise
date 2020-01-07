@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
-import { Loader, Segment, Divider, Image, Grid, List, Button } from 'semantic-ui-react';
+import { Loader, Image, List } from 'semantic-ui-react';
 import { StyledAddress as Web3Address } from './Deposit.styles';
 import {
   ButtonGreen,
@@ -15,7 +15,11 @@ import {
   ImageSized,
   SegmentPadded,
   ListItemPadding,
-  IconSuccess
+  IconSuccess,
+  DepositInput,
+  CenteredText,
+  FullDivider,
+  GoBack
   //Error
 } from './Deposit.styles';
 import { CardContent } from '../Layout/Layout.styles';
@@ -90,85 +94,82 @@ const getViewResponse = (ui: any, raiseBalance, expectedPrice, onDeposit, onCont
       <Fragment>
         <CardContent>
           <CardCenteredText>
-            <CardTitle>You need Raise Tokens to complete your membership</CardTitle>
+            <CardTitle>Make a deposit</CardTitle>
             <CardSubtitle>
               <p>
-                In order to become a Raise member, you will need to complete a deposit. You will
-                be able to unlock the deposit at anytime.
+                To register your account, we require you to make a temporary deposit in Raise Tokens, which you can request back anytime
               </p>
             </CardSubtitle>
             <Web3Address />
           </CardCenteredText>
-          <Segment>
-            <Grid spaceBetween verticalAlign='middle'>
-              <h6>Raise token</h6>
-              <h6>200</h6>
-            </Grid>
-            <Divider />
-            <Grid spaceBetween verticalAlign='middle'>
-              <div>Amount in USD</div>
-              <div>USD {expectedPrice} approx</div>
-            </Grid>
-          </Segment>
+          <DepositInput big style={{ marginTop: 54 }}>
+            <div>Raise token</div>
+            <div><b>200</b></div>
+          </DepositInput>
+          <FullDivider />
+          <DepositInput>
+            <div>Amount in USD</div>
+            <div>USD {expectedPrice} approx</div>
+          </DepositInput>
         </CardContent>
-        <CardContent>
+        <CardContent centeredText>
           <ButtonGreen onClick={onGetRaise}>Get Raise Tokens with Uniswap</ButtonGreen>
-          <HowToGetHeroToken target="_blank" href="https://www.raise.it/help">
-            Why do I need Raise Tokens?
-          </HowToGetHeroToken>
-          <HowToGetHeroToken target="_blank" href="https://www.raise.it/help">
-            Do it later
-          </HowToGetHeroToken>
+          <CenteredText>
+            <br />
+            <HowToGetHeroToken target="_blank" href="https://www.raise.it/help">
+              Why do I need to make a deposit?
+            </HowToGetHeroToken>
+            <br /><br />
+          </CenteredText>
         </CardContent>
       </Fragment>
     ),
     GetRaise: () => (
+      <Fragment>
         <CardContent>
           <CardCenteredText>
-            <CardTitle>Get Raise Tokens with Uniswap</CardTitle>
+            <CardTitle><b>Get Raise Tokens with Uniswap</b></CardTitle>
           </CardCenteredText>
-          <UniswapEmbedded iframeUrl={uniswapUrl} />
-          <Button onClick={onRetry}>Go back</Button>
         </CardContent>
-    ),
-    Deposit: () => {
-      return (
-        <Fragment>
-          <CardContent>
-            <CardCenteredText>
-              <CardTitle>You need Raise Tokens to complete your membership</CardTitle>
-              <CardSubtitle>
-                <p>
-                  In order to become a Raise member, you will need to complete a deposit. You will
-                  be able to unlock the deposit at anytime.
-              </p>
-              </CardSubtitle>
-              <Web3Address />
-            </CardCenteredText>
-            <Segment>
-              <Grid spaceBetween>
-                <h6>Raise token</h6>
-                <b>200</b>
-              </Grid>
-              <Divider />
-              <Grid spaceBetween>
-                <h6>Amount in USD</h6>
-                <b>{expectedPrice}</b>
-              </Grid>
-              <CardCenteredText>
 
-              </CardCenteredText>
-            </Segment>
-          </CardContent>
-          <CardContent>
-            <ButtonGreen disabled={!haveRaise} onClick={onDeposit}>Deposit</ButtonGreen>
+        <UniswapEmbedded iframeUrl={uniswapUrl} />
+        <GoBack basic color="black" onClick={onRetry}>Go back</GoBack>
+      </Fragment>
+    ),
+    Deposit: () => (
+      <Fragment>
+        <CardContent>
+          <CardCenteredText>
+            <CardTitle>Complete your deposit</CardTitle>
+            <CardSubtitle>
+              <p>
+                You already have enough tokens to become a Raise member, you just need to complete the deposit.
+              </p>
+            </CardSubtitle>
+            <Web3Address />
+          </CardCenteredText>
+          <DepositInput big style={{ marginTop: 54 }}>
+            <div>Raise token</div>
+            <div><b>200</b></div>
+          </DepositInput>
+          <FullDivider />
+          <DepositInput>
+            <div>Amount in USD</div>
+            <div>USD {expectedPrice} approx</div>
+          </DepositInput>
+        </CardContent>
+        <CardContent centeredText>
+          <ButtonGreen disabled={!haveRaise} onClick={onDeposit}>Deposit</ButtonGreen>
+          <CenteredText>
+            <br />
             <HowToGetHeroToken target="_blank" href="https://www.raise.it/help">
-              Why do I need Raise Tokens?
-          </HowToGetHeroToken>
-          </CardContent>
-        </Fragment>
-      )
-    },
+              Why do I need to make a deposit?
+            </HowToGetHeroToken>
+            <br /><br />
+          </CenteredText>
+        </CardContent>
+      </Fragment>
+    ),
     Waiting: steps => (
       <Fragment>
         <CardContent>

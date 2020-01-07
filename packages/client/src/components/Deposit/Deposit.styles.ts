@@ -1,7 +1,11 @@
 import styled from 'styled-components';
-import { Grid, Button, Image, Loader, Segment, Label, List, Icon } from 'semantic-ui-react';
+import { Grid, Button, Image, Loader, Segment, Label, List, Icon, Divider } from 'semantic-ui-react';
 import Web3Address from '../Web3Address';
 import { device } from '../../commons/breakpoints';
+
+interface DepositInputProps {
+  big?: boolean;
+}
 
 export const LinkWrap = styled.div`
   text-align: center;
@@ -19,6 +23,22 @@ export const ListItemPadding = styled(List.Item)`
     margin-bottom: 25px;
   }
 `;
+export const GoBack = styled(Button)`
+&&&&&&&&& {
+  width: 122px;
+  font-size: 18px;
+  margin: 81px auto 0px;
+}
+`
+
+export const DepositInput = styled.div<DepositInputProps>`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: ${({ big }) => big ? '18px' : '14px'};
+  color: ${({ big }) => big ? '#3C4251' : '#5A5A5A'};
+`
 
 export const LabelPadding = styled(Label)`
   &&& {
@@ -102,6 +122,17 @@ export const CardCenteredText = styled.div`
     text-align: center;
   }
 `;
+export const CenteredText = styled.div`
+  &&& {
+    text-align: center;
+  }
+`;
+
+export const FullDivider = styled(Divider)`
+&&&:not(.vertical):not(.horizontal) {
+  border-top: 1px solid #979797;
+}
+`
 export const CardTitle = styled.div`
   color: #3c4251;
   font: 26px bold;
@@ -115,7 +146,7 @@ export const CardSubtitle = styled.div`
     font-size: 16px;
     line-height: 22px;
     text-align: center;
-    margin: 19px;
+    margin: 19px 0px;
   }
 `;
 export const Error = styled.p`
@@ -186,11 +217,8 @@ export const BalanceAmount = styled.div`
 `;
 
 export const HowToGetHeroToken = styled.a`
-  height: 21px;
-  width: 147px;
   color: #00a76f;
   font-size: 14px;
-  line-height: 45px;
   text-align: center;
   text-decoration: underline;
 `;
@@ -213,10 +241,11 @@ export const ButtonGreen = styled(Button)`
   &&&:focus {
     height: 62px;
     width: 100%;
+    font-weight: bold;
     ${({ blocked }) => (blocked ? 'opacity: 0.4 !important;' : '')}
-    background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
+    background: #00DA9E;
     color: white;
-    font: 18px bold;
+    font-size: 18px;
     line-height: 24px;
   }
   &&&:hover {

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import { toWei } from 'web3-utils';
+import { toWei, fromWei } from 'web3-utils';
 import { tradeTokensForExactTokens } from '@uniswap/sdk';
+import BigNumber from 'bignumber.js';
 import get from 'lodash/get';
 import { Experiment, Variant } from "react-optimize";
 import { LinkWrap } from './Deposit.styles';
@@ -37,20 +38,21 @@ const Deposit = () => {
   const RaiseAddress = getAddress(walletNetworkId, 'HeroToken');
   const RaiseAddressMainnet = getAddress(1, 'HeroToken');
   const DaiAddressMainnet = getAddress(1, 'DAI');
+  console.log(RaiseAddressMainnet, DaiAddressMainnet)
   const { web3 } = useWeb3();
   const tagManager = useGoogleTagManager('Deposit');
   const raiseBalance = retrieveERC20Balance(web3, RaiseAddress, walletAccount)
 
   const asyncEffect = async () => {
-    const tradeInfo = await tradeTokensForExactTokens(DaiAddressMainnet, RaiseAddressMainnet, '200', 1)
+    const tradeInfo = await tradeTokensForExactTokens(DaiAddressMainnet, RaiseAddressMainnet, new BigNumber('200000000000000000000'), 1)
     console.log(tradeInfo)
     setExpectedPrice(
       Number(
-        tradeInfo.inputAmount.amount.toString()
+        Number(fromWei(tradeInfo.inputAmount.amount.toString())).toFixed(2)
       )
     );
   }
-  
+
   useEffect(() => {
     if (LocalData.get('firstLogin') === 'first') {
       LocalData.set('firstLogin', 'firstDeposit');

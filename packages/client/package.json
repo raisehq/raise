@@ -16,6 +16,7 @@
     "@uniswap/sdk": "^1.0.0-beta.4",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.17.0",
+    "bignumber.js": "^9.0.0",
     "buttercms": "^1.1.5",
     "chart.js": "^2.8.0",
     "daggy": "^1.4.0",
