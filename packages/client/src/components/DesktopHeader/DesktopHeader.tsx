@@ -22,12 +22,17 @@ const DesktopHeader = () => {
   const {
     history,
     onSetGetStarted,
-    store: { user },
-    web3Status: { hasDeposit },
+    store: {
+      user,
+      auth: {
+        login: { logged: isLogged }
+      }
+    },
+    web3Status: { hasDeposit }
   }: any = useContext(AppContext);
   const { visible, visibleMenu } = useMenuVisibility();
   const {
-    details: { kyc_status, accounttype_id },
+    details: { kyc_status, accounttype_id }
   } = user;
   const enableBanner = visibleMenu && accounttype_id === 2;
 
@@ -56,23 +61,23 @@ const DesktopHeader = () => {
             <HeaderLogo onClick={() => history.push('/')}>
               <img src={`${theme.resources}/images/logo.svg`} />
             </HeaderLogo>
-            {visibleMenu && (
+            {isLogged && visibleMenu && (
               <HeaderMenu>
                 {user.details.accounttype_id === 1 ? (
                   <HeaderMenuItem onClick={() => history.push('/create-loan')}>
                     Create loan
                   </HeaderMenuItem>
                 ) : (
-                    <Link
-                      to="toGetStarted"
-                      spy
-                      smooth
-                      duration={500}
-                      offset={HEADER_MENU_SIZE.toGetStarted}
-                    >
-                      <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
-                    </Link>
-                  )}
+                  <Link
+                    to="toGetStarted"
+                    spy
+                    smooth
+                    duration={500}
+                    offset={HEADER_MENU_SIZE.toGetStarted}
+                  >
+                    <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+                  </Link>
+                )}
                 <HeaderMenuItem>
                   <Link
                     onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
@@ -90,7 +95,7 @@ const DesktopHeader = () => {
           </HeaderGroup>
           <HeaderGroup className="right">
             <>
-              {visibleMenu && (
+              {isLogged && visibleMenu && (
                 <>
                   <Balance />
                   <Web3Address />
