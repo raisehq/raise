@@ -239,7 +239,7 @@ export const FooterRow = styled(Grid.Row)`
 export const ButtonGreen = styled(Button)`
   &&&,
   &&&:focus {
-    height: 62px;
+    min-height: 62px;
     width: 100%;
     font-weight: bold;
     ${({ blocked }) => (blocked ? 'opacity: 0.4 !important;' : '')}

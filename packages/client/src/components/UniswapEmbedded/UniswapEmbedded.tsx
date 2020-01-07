@@ -17,7 +17,6 @@ const UniswapEmbedded: React.SFC<UniswapProps> = ({ iframeUrl, className }) =>
       display: 'block',
       borderRadius: 10,
       maxWidth: 600,
-      minWidth: 300
     }}
     id="myId"
   />
