@@ -118,7 +118,7 @@ const useWeb3 = () => {
     if (conn.host && conn.host.indexOf('infura') !== -1) return 103;
     if (conn.host && conn.host.indexOf('localhost') !== -1) return 104;
     if (browserName && browserName.includes('Opera')) return CryptoWallets.Opera;
-    return CryptoWallets.Unknow;
+    return CryptoWallets.WebWallet;
   };
 
   const setNewProvider = async provider => {
@@ -154,7 +154,7 @@ const useWeb3 = () => {
     const prevWeb3 = Connection.getPrevious();
     return {
       conn: prevWeb3,
-      name: prevWeb3 ? getCurrentProviderName(prevWeb3.currentProvider) : CryptoWallets.Unknow
+      name: prevWeb3 ? getCurrentProviderName(prevWeb3.currentProvider) : CryptoWallets.Unknown
     };
   };
 
@@ -186,6 +186,10 @@ const useWeb3 = () => {
         break;
       case CryptoWallets.Coinbase:
         await setNewProvider(getWalletLinkClient(network, networkId));
+        break;
+      case CryptoWallets.WebWallet:
+        if (defaultWeb3.name !== CryptoWallets.WebWallet) throw new Error('Wallet not alowed');
+        await setNewProvider(defaultWeb3.conn.currentProvider);
         break;
       default:
         throw new Error('[useWeb3] Wallet not alowed default OPTION');
