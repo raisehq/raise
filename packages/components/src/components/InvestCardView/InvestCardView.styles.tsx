@@ -4,7 +4,8 @@ import Card, { CardWrapper } from '../Card';
 
 export const InvestCardBody = styled(CardWrapper)`
   min-height: 470px;
-  width: 372px;
+  max-width: 372px;
+  width: 100%;
 `;
 
 export const CardContent = styled(Card.Content)`

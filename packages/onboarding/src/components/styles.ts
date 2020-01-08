@@ -95,6 +95,11 @@ export const OnboardingWrapper = styled.div`
   display: flex;
   overflow: hidden;
 
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
   .content {
     margin: 0 !important;
     padding: 0 !important;

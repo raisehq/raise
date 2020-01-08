@@ -3,6 +3,10 @@ import { Grid, Button, Image, Loader, Segment, Label, List, Icon } from 'semanti
 import Web3Address from '../Web3Address';
 import { device } from '../../commons/breakpoints';
 
+export const LinkWrap = styled.div`
+  text-align: center;
+`;
+
 export const StyledAddress = styled(Web3Address)`
   float: right;
 `;

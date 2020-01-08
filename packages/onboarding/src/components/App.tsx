@@ -58,9 +58,19 @@ interface IProps {
   onClose?: () => null;
   closeButton?: boolean;
   initStep?: number;
+  pathRedirect?: string;
 }
 
-const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }: IProps) => {
+const App = ({
+  history,
+  open,
+  mountNode,
+  blur,
+  onClose,
+  closeButton,
+  initStep,
+  pathRedirect
+}: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(defaultContext.credentials);
@@ -138,7 +148,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
           tagManager.sendEventCategory('Signup', TMEvents.Submit, 'blog_signup_form', host);
         }
 
-        if (host.split('.')[0] === 'app') {
+        if (host && host.split('.')[0] === 'app') {
           tagManager.sendEventCategory('Signup', TMEvents.Click, 'dashboard_signup_form', host);
         }
       } catch (err) {
@@ -278,7 +288,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
 
         setuserCookie(user, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
         tagManager.sendEventCategory('Login', TMEvents.Click, 'login_success', host);
-        window.location.href = getHost('APP');
+        window.location.href = getHost('APP') + (pathRedirect ? pathRedirect : '');
       }
     );
   };
@@ -322,8 +332,8 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
         </SimpleModal>
       ),
       Confirm: () => (
-        <SimpleModal>
-          <Confirm setStep={setStep} steps={Step} />
+        <SimpleModal localClose>
+          <Confirm />
         </SimpleModal>
       ),
       Verified: () => (

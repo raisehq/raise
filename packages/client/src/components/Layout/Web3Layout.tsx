@@ -1,17 +1,21 @@
 import React, { useContext, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
+import { Experiment, Variant } from "react-optimize";
 import { Loader } from 'semantic-ui-react';
 import { SpecialDimmer } from './Layout.styles';
+import LocalData from '../../helpers/localData';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
 
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 
+const EXPERIMENT_DEPOSIT_ID = process.env.REACT_APP_AB_TEST_SKIP_DEPOSIT;
+
 const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
   const {
     store: {
-      config: { network, networkId, isSupportedBrowser },
+      config: { network, networkId },
       auth: {
         login: { logged: isLogged }
       },
@@ -24,6 +28,8 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     web3Status: { hasProvider, hasDeposit, accountMatches, networkMatches, unlocked }
   }: any = useContext(AppContext);
 
+  const firstLogin = LocalData.get('firstLogin') === 'first';
+
   const { connectWallet }: any = useWeb3();
   const [connectionError, setConnectionError] = useState(false);
   const {
@@ -32,7 +38,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
 
   useAsyncEffect(async () => {
     try {
-      if (!hasProvider && isSupportedBrowser && isLogged) {
+      if (!hasProvider && isLogged) {
         // Check the type of wallet and try to connect to the provider
         await connectWallet(cryptotypeId, network, networkId, true);
       }
@@ -41,17 +47,17 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
       // On case of error on connect redirect to the screen connector
       setConnectionError(true);
     }
-  }, [hasProvider, isSupportedBrowser, isLogged]);
+  }, [hasProvider, isLogged]);
   const acceptedRole = (roles !== undefined && roles.indexOf(accounttypeId) > -1) || false;
 
-  // Check supported Browser
-  if (!isSupportedBrowser) return <Redirect to="/supported-browser" />;
   // Auto wallet connection error
   if (connectionError) {
     return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
   }
   // Check if is Logged
-  if (!isLogged) return <Redirect to="/join" />;
+  if (!isLogged) {
+    return <Redirect to="/join" />;
+  }
 
   if (accountMatches && networkMatches && cryptotypeId !== null && hasDeposit !== undefined) {
     if (
@@ -61,7 +67,21 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
       hasDeposit !== undefined &&
       !hasDeposit
     ) {
-      return <Redirect to="/deposit" />;
+      if (EXPERIMENT_DEPOSIT_ID) {
+        return (
+          <Experiment id={EXPERIMENT_DEPOSIT_ID}>
+            <Variant id="0">
+              <Redirect to="/deposit" />
+            </Variant>
+            <Variant id="1">
+              {firstLogin && <Redirect to="/deposit" />}
+              {!firstLogin && !acceptedRole && <Redirect to="/" />}
+              {!firstLogin && rest.path === pathname && acceptedRole && <Layout {...rest} />}
+            </Variant>
+          </Experiment>
+        )
+      }
+      return <Redirect to="/deposit" />
     }
     if (!acceptedRole) return <Redirect to="/" />;
     if (rest.path === pathname && acceptedRole) return <Layout {...rest} />;

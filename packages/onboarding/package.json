@@ -1,7 +1,7 @@
 {
   "name": "@raisehq/onboarding",
   "private": false,
-  "version": "1.0.34",
+  "version": "1.0.38",
   "description": "Raise signup/login modal",
   "author": "RaiseHQ",
   "homepage": "http://www.raise.it",
@@ -23,6 +23,10 @@
     "compile:onboarding": "tsc",
     "build": "tsc",
     "lint": "eslint . --ext .js,.ts,.tsx"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "dependencies": {
     "@raisehq/components": "*",

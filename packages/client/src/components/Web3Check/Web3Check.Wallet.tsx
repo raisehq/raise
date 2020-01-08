@@ -31,44 +31,24 @@ const Wallet = ({ onNext }: any) => {
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
 
-  const handlerCoinbase = async () => {
+  const handlerWallet = walletSelected => async () => {
     tagManager.sendEvent(
       TMEvents.Click,
       'wallet_attempt',
-      getWalletName(CryptoWallets.Coinbase).toLowerCase()
+      getWalletName(walletSelected).toLowerCase()
     );
-    await connectWallet(CryptoWallets.Coinbase, network, networkId);
+    await connectWallet(walletSelected, network, networkId);
 
-    onNext();
-  };
-
-  const handlerMetamask = async () => {
-    tagManager.sendEvent(
-      TMEvents.Click,
-      'wallet_attempt',
-      getWalletName(CryptoWallets.Metamask).toLowerCase()
-    );
-    await connectWallet(CryptoWallets.Metamask, network, networkId);
-    onNext();
-  };
-
-  const handlerOpera = async () => {
-    tagManager.sendEvent(
-      TMEvents.Click,
-      'wallet_attempt',
-      getWalletName(CryptoWallets.Opera).toLowerCase()
-    );
-    await connectWallet(CryptoWallets.Opera, network, networkId);
     onNext();
   };
 
   const handlerLink = wallet => {
     switch (wallet) {
       case 'metamask':
-        window.location.href = 'http://metamask.app.link/';
+        window.open('http://metamask.app.link/');
         break;
       case 'opera':
-        window.location.href = 'http://onelink.to/5xwf6x';
+        window.open('http://onelink.to/5xwf6x');
         break;
       default:
         break;
@@ -85,21 +65,44 @@ const Wallet = ({ onNext }: any) => {
         </SelectYourWalletTitle>
         <SelectYourWalletList>
           <SelectWalletOptionItem key="coinbase">
-            <SelectWalletOptionButton basic color="black" onClick={handlerCoinbase}>
-              Coinbase (BETA)
+            <SelectWalletOptionButton
+              basic
+              color="black"
+              onClick={handlerWallet(CryptoWallets.Coinbase)}
+            >
+              Coinbase
             </SelectWalletOptionButton>
           </SelectWalletOptionItem>
           {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
             <SelectWalletOptionItem key="metamask">
-              <SelectWalletOptionButton basic color="black" onClick={handlerMetamask}>
+              <SelectWalletOptionButton
+                basic
+                color="black"
+                onClick={handlerWallet(CryptoWallets.Metamask)}
+              >
                 Metamask
               </SelectWalletOptionButton>
             </SelectWalletOptionItem>
           )}
           {defaultWallet && defaultWallet.name === CryptoWallets.Opera && (
             <SelectWalletOptionItem key="opera">
-              <SelectWalletOptionButton basic color="black" onClick={handlerOpera}>
+              <SelectWalletOptionButton
+                basic
+                color="black"
+                onClick={handlerWallet(CryptoWallets.Opera)}
+              >
                 Opera Wallet
+              </SelectWalletOptionButton>
+            </SelectWalletOptionItem>
+          )}
+          {defaultWallet && defaultWallet.name === CryptoWallets.WebWallet && (
+            <SelectWalletOptionItem key="webwallet">
+              <SelectWalletOptionButton
+                basic
+                color="black"
+                onClick={handlerWallet(CryptoWallets.WebWallet)}
+              >
+                Web Wallet
               </SelectWalletOptionButton>
             </SelectWalletOptionItem>
           )}

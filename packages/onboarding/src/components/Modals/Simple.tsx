@@ -3,20 +3,30 @@ import {
   OnboardingSimpleModal,
   OnboardingWrapper,
   commonModal,
-  OnboardingCloseButton
+  ConfirmHeaderWrapper,
+  ConfirmLogo,
+  ConfirmCros
 } from '../styles';
 import AppContext from '../App.context';
+import { IMAGES_PATH } from '../../commons/constants';
 
-const SimpleModal = ({ children }: any) => {
+const SimpleModal = ({ localClose, children }: any) => {
   const { blur, mountNode, open, onClose, closeButton }: any = useContext(AppContext);
 
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
     <OnboardingSimpleModal {...dimmer} style={commonModal} open={open} mountNode={mountNode}>
-      {closeButton && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
       <OnboardingWrapper>
-        <div className="process">{children}</div>
+        <div className="process">
+          <ConfirmHeaderWrapper>
+            <ConfirmLogo src={`${IMAGES_PATH}logo.svg`} />
+            {(closeButton || localClose) && (
+              <ConfirmCros link onClick={onClose} name="close" size="large" />
+            )}
+          </ConfirmHeaderWrapper>
+          {children}
+        </div>
       </OnboardingWrapper>
     </OnboardingSimpleModal>
   );

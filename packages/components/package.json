@@ -1,6 +1,6 @@
 {
   "name": "@raisehq/components",
-  "version": "0.1.19",
+  "version": "0.1.27",
   "license": "MIT",
   "author": "Raise HQ",
   "main": "dist/index.js",
@@ -19,7 +19,8 @@
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "husky": {
     "hooks": {
@@ -31,10 +32,6 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
-  },
-  "alias": {
-    "react": "../../../node_modules/react",
-    "react-dom": "../../../node_modules/react-dom"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -52,10 +49,8 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "husky": "^3.1.0",
-    "react": "16.9.0",
     "react-docgen-typescript-loader": "^3.6.0",
-    "react-dom": "16.9.0",
-    "react-test-renderer": "16.9.0",
+    "react-test-renderer": "^16.9.0",
     "tsdx": "^0.11.0",
     "tslib": "^1.10.0",
     "typescript": "^3.7.2"
@@ -82,11 +77,10 @@
     "react-chartjs-2": "^2.8.0",
     "react-content-loader": "^4.3.2",
     "react-docgen-typescript-loader": "^3.5.0",
-    "react-router-dom": "^5.1.2",
     "react-spring": "^8.0.27",
     "semantic-ui-react": "^0.88.1",
     "storybook-react-router": "^1.0.8",
-    "styled-components": "^4.4.1",
+    "styled-components": "^5.0.0-rc.2",
     "web3-utils": "^1.2.4"
   }
 }

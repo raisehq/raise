@@ -7,7 +7,6 @@ import {
   OnboardButton,
   CallToSignIn,
   Separator,
-  OnboardLogo,
   MyRecapcha,
   GoogleCaptchaPolicies
 } from '../styles';
@@ -96,10 +95,7 @@ const Signin = () => {
 
   return (
     <Fragment>
-      <OnboardHeader>
-        Welcome to Raise
-        <OnboardLogo />
-      </OnboardHeader>
+      <OnboardHeader>Welcome to Raise</OnboardHeader>
       <OnboardInput>
         <Input
           id="input-login"
