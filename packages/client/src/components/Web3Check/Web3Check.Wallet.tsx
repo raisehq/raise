@@ -117,15 +117,17 @@ const Wallet = ({ onNext }: any) => {
               defaultWallet.name !== CryptoWallets.Coinbase &&
               defaultWallet.name !== CryptoWallets.Metamask)) && (
             <>
-              <SelectWalletOptionItem key="coinbase">
-                <SelectWalletOptionButton
-                  basic
-                  color="black"
-                  onClick={() => handlerLink('coinbase')}
-                >
-                  Coinbase
-                </SelectWalletOptionButton>
-              </SelectWalletOptionItem>
+              {isMobile && (
+                <SelectWalletOptionItem key="coinbase">
+                  <SelectWalletOptionButton
+                    basic
+                    color="black"
+                    onClick={() => handlerLink('coinbase')}
+                  >
+                    Coinbase
+                  </SelectWalletOptionButton>
+                </SelectWalletOptionItem>
+              )}
               <SelectWalletOptionItem key="metamask">
                 <SelectWalletOptionButton
                   basic
