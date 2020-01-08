@@ -1,4 +1,24 @@
-image: node:11
+image: node:11-alpine
+
+before_script:
+  - |
+    #!/bin/sh
+    apk add --no-cache --virtual .build-deps \
+    ca-certificates \
+    make \
+    g++ \
+    wget \
+    git \
+    python \
+    py-pip \
+    tar && \
+    cd /usr/local/bin && \
+    wget https://yarnpkg.com/latest.tar.gz && \
+    tar zvxf latest.tar.gz && \
+    ln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \
+    cd - \
+    apk del .build-deps
+
 stages:
   - build
   - deploy
@@ -39,6 +59,7 @@ build-front-review:
 build-front-production:
   stage: build
   script:
+    - echo $REACT_APP_HOST_URL
     - npx lerna bootstrap --ci
     - yarn run build:deps
     - yarn run client:build:production
@@ -52,6 +73,7 @@ build-front-production:
 build-front-integration:
   stage: build
   script:
+    - echo $REACT_APP_HOST_URL
     - npx lerna bootstrap --ci
     - yarn run build:deps
     - yarn run client:build:integration
@@ -64,7 +86,7 @@ build-front-integration:
       - packages/client/build_int
 
 deploy-int:
-  image: 'python:latest'
+  image: python:3.7-alpine
   stage: deploy
   before_script:
     - pip install awscli
@@ -75,7 +97,7 @@ deploy-int:
     - master
 
 deploy-prod:
-  image: 'python:latest'
+  image: python:3.7-alpine
   stage: deploy
   before_script:
     - pip install awscli
@@ -139,7 +161,7 @@ cypress-e2e-integration:
     - master
 
 review:
-  image: 'python:latest'
+  image: python:3.7-alpine
   stage: review
   before_script:
     - pip install awscli
@@ -156,7 +178,7 @@ review:
     - master
 
 stop-review:
-  image: 'python:latest'
+  image: python:3.7-alpine
   stage: cleanup
   before_script:
     - pip install awscli
