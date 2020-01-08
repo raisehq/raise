@@ -4,7 +4,7 @@ import { toWei, fromWei } from 'web3-utils';
 import { tradeTokensForExactTokens } from '@uniswap/sdk';
 import BigNumber from 'bignumber.js';
 import get from 'lodash/get';
-import { Experiment, Variant } from "react-optimize";
+import { Experiment, Variant } from 'react-optimize';
 import { LinkWrap } from './Deposit.styles';
 import { Link } from '../Link';
 import { Grid } from 'semantic-ui-react';
@@ -26,11 +26,13 @@ const Deposit = () => {
   const {
     history,
     web3Status: { walletAccount, walletNetworkId, hasDeposit },
-    store: { blockchain: { contracts: heroContracts } }
+    store: {
+      blockchain: { contracts: heroContracts }
+    }
   }: any = useContext(AppContext);
   const [retries, setRetries] = useState(0);
   const [expectedPrice, setExpectedPrice] = useState(0);
-  const getAddress = (netId, name) => get(heroContracts, `address.${netId}.${name}`)
+  const getAddress = (netId, name) => get(heroContracts, `address.${netId}.${name}`);
   const [doingDeposit, setDoingDeposit] = useState(false);
   const [status, setStatus] = useState(UI.Deposit);
   const RaiseTokenContract = useHeroTokenContract();
@@ -38,34 +40,34 @@ const Deposit = () => {
   const RaiseAddress = getAddress(walletNetworkId, 'HeroToken');
   const RaiseAddressMainnet = getAddress(1, 'HeroToken');
   const DaiAddressMainnet = getAddress(1, 'DAI');
-  console.log(RaiseAddressMainnet, DaiAddressMainnet)
+
   const { web3 } = useWeb3();
   const tagManager = useGoogleTagManager('Deposit');
-  const raiseBalance = retrieveERC20Balance(web3, RaiseAddress, walletAccount)
+  const raiseBalance = retrieveERC20Balance(web3, RaiseAddress, walletAccount);
 
   const asyncEffect = async () => {
-    const tradeInfo = await tradeTokensForExactTokens(DaiAddressMainnet, RaiseAddressMainnet, new BigNumber('200000000000000000000'), 1)
-    console.log(tradeInfo)
-    setExpectedPrice(
-      Number(
-        Number(fromWei(tradeInfo.inputAmount.amount.toString())).toFixed(2)
-      )
+    const tradeInfo = await tradeTokensForExactTokens(
+      DaiAddressMainnet,
+      RaiseAddressMainnet,
+      new BigNumber('200000000000000000000'),
+      1
     );
-  }
+    setExpectedPrice(Number(Number(fromWei(tradeInfo.inputAmount.amount.toString())).toFixed(2)));
+  };
 
   useEffect(() => {
     if (LocalData.get('firstLogin') === 'first') {
       LocalData.set('firstLogin', 'firstDeposit');
     }
 
-    asyncEffect()
+    asyncEffect();
   }, []);
 
   useEffect(() => {
-    if (!hasDeposit && raiseBalance < 200) {
+    if (!doingDeposit && !hasDeposit && raiseBalance < 200) {
       setStatus(UI.GetRaiseInfo);
     }
-    if (!hasDeposit && raiseBalance >= 200) {
+    if (!doingDeposit && !hasDeposit && raiseBalance >= 200) {
       setStatus(UI.Deposit);
     }
   }, [retries, raiseBalance]);
@@ -118,35 +120,43 @@ const Deposit = () => {
 
   const onGetRaise = async () => {
     setStatus(UI.GetRaise);
-  }
+  };
 
   const onToDeposit = async () => {
     setStatus(UI.Deposit);
-  }
+  };
 
   const onGetRaiseInfo = async () => {
     setStatus(UI.GetRaiseInfo);
-  }
+  };
 
   return (
     <>
       <OnboardingProgressBar step={2} isMobile={isMobile} />
       <Grid.Row>
         <CardSized centered>
-          {getViewResponse(status, raiseBalance, expectedPrice, onDeposit, onContinue, onRetry, onGetRaise, onToDeposit, onGetRaiseInfo)}
+          {getViewResponse(
+            status,
+            raiseBalance,
+            expectedPrice,
+            onDeposit,
+            onContinue,
+            onRetry,
+            onGetRaise,
+            onToDeposit,
+            onGetRaiseInfo
+          )}
         </CardSized>
         {EXPERIMENT_DEPOSIT_ID && (
           <Experiment id={EXPERIMENT_DEPOSIT_ID}>
-            <Variant id="0">
-              {/* do not show nothing, as the original current version*/}
-            </Variant>
+            <Variant id="0">{/* do not show nothing, as the original current version*/}</Variant>
             <Variant id="1">
               <LinkWrap>
                 <Link to="/">Do it later</Link>
               </LinkWrap>
             </Variant>
-          </Experiment>)
-        }
+          </Experiment>
+        )}
       </Grid.Row>
     </>
   );

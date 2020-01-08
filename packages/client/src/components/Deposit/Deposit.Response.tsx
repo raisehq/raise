@@ -26,7 +26,8 @@ import { CardContent } from '../Layout/Layout.styles';
 import UniswapEmbedded from '../UniswapEmbedded';
 import { IMAGES_PATH } from '../../commons/constants';
 
-const uniswapUrl = "https://uniswap.exchange/swap?theme=light?exactField=output?exactAmount=200?inputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F?outputCurrency=0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c"
+const uniswapUrl =
+  'https://uniswap.exchange/swap?theme=light?exactField=output?exactAmount=200?inputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F?outputCurrency=0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c';
 
 const UI = daggy.taggedSum('UI', {
   Success: [{}],
@@ -66,7 +67,17 @@ const StepNumber = props => {
   }
 };
 
-const getViewResponse = (ui: any, raiseBalance, expectedPrice, onDeposit, onContinue, onRetry, onGetRaise, onToDeposit, onGetRaiseInfo) => {
+const getViewResponse = (
+  ui: any,
+  raiseBalance,
+  expectedPrice,
+  onDeposit,
+  onContinue,
+  onRetry,
+  onGetRaise,
+  onToDeposit,
+  onGetRaiseInfo
+) => {
   const haveRaise = raiseBalance > 0;
   return ui.cata({
     Success: () => (
@@ -97,14 +108,17 @@ const getViewResponse = (ui: any, raiseBalance, expectedPrice, onDeposit, onCont
             <CardTitle>Make a deposit</CardTitle>
             <CardSubtitle>
               <p>
-                To register your account, we require you to make a temporary deposit in Raise Tokens, which you can request back anytime
+                To register your account, we require you to make a temporary deposit in Raise
+                Tokens, which you can request back anytime
               </p>
             </CardSubtitle>
             <Web3Address />
           </CardCenteredText>
           <DepositInput big style={{ marginTop: 54 }}>
-            <div>Raise token</div>
-            <div><b>200</b></div>
+            <div>Raise tokens</div>
+            <div>
+              <b>200</b>
+            </div>
           </DepositInput>
           <FullDivider />
           <DepositInput>
@@ -119,7 +133,8 @@ const getViewResponse = (ui: any, raiseBalance, expectedPrice, onDeposit, onCont
             <HowToGetHeroToken target="_blank" href="https://www.raise.it/help">
               Why do I need to make a deposit?
             </HowToGetHeroToken>
-            <br /><br />
+            <br />
+            <br />
           </CenteredText>
         </CardContent>
       </Fragment>
@@ -128,12 +143,16 @@ const getViewResponse = (ui: any, raiseBalance, expectedPrice, onDeposit, onCont
       <Fragment>
         <CardContent>
           <CardCenteredText>
-            <CardTitle><b>Get Raise Tokens with Uniswap</b></CardTitle>
+            <CardTitle>
+              <b>Get Raise Tokens with Uniswap</b>
+            </CardTitle>
           </CardCenteredText>
         </CardContent>
 
         <UniswapEmbedded iframeUrl={uniswapUrl} />
-        <GoBack basic color="black" onClick={onRetry}>Go back</GoBack>
+        <GoBack basic color="black" onClick={onRetry}>
+          Go back
+        </GoBack>
       </Fragment>
     ),
     Deposit: () => (
@@ -143,14 +162,17 @@ const getViewResponse = (ui: any, raiseBalance, expectedPrice, onDeposit, onCont
             <CardTitle>Complete your deposit</CardTitle>
             <CardSubtitle>
               <p>
-                You already have enough tokens to become a Raise member, you just need to complete the deposit.
+                You already have enough tokens to become a Raise member, you just need to complete
+                the deposit.
               </p>
             </CardSubtitle>
             <Web3Address />
           </CardCenteredText>
           <DepositInput big style={{ marginTop: 54 }}>
-            <div>Raise token</div>
-            <div><b>200</b></div>
+            <div>Raise tokens</div>
+            <div>
+              <b>200</b>
+            </div>
           </DepositInput>
           <FullDivider />
           <DepositInput>
@@ -159,13 +181,16 @@ const getViewResponse = (ui: any, raiseBalance, expectedPrice, onDeposit, onCont
           </DepositInput>
         </CardContent>
         <CardContent centeredText>
-          <ButtonGreen disabled={!haveRaise} onClick={onDeposit}>Deposit</ButtonGreen>
+          <ButtonGreen disabled={!haveRaise} onClick={onDeposit}>
+            Deposit
+          </ButtonGreen>
           <CenteredText>
             <br />
             <HowToGetHeroToken target="_blank" href="https://www.raise.it/help">
               Why do I need to make a deposit?
             </HowToGetHeroToken>
-            <br /><br />
+            <br />
+            <br />
           </CenteredText>
         </CardContent>
       </Fragment>
@@ -228,6 +253,6 @@ const getViewResponse = (ui: any, raiseBalance, expectedPrice, onDeposit, onCont
       </Fragment>
     )
   });
-}
+};
 
 export { getViewResponse, UI, UISteps };

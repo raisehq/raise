@@ -23,11 +23,11 @@ const DesktopHeader = () => {
     history,
     onSetGetStarted,
     store: { user },
-    web3Status: { hasDeposit },
+    web3Status: { hasDeposit }
   }: any = useContext(AppContext);
   const { visible, visibleMenu } = useMenuVisibility();
   const {
-    details: { kyc_status, accounttype_id },
+    details: { kyc_status, accounttype_id }
   } = user;
   const enableBanner = visibleMenu && accounttype_id === 2;
 
@@ -63,16 +63,16 @@ const DesktopHeader = () => {
                     Create loan
                   </HeaderMenuItem>
                 ) : (
-                    <Link
-                      to="toGetStarted"
-                      spy
-                      smooth
-                      duration={500}
-                      offset={HEADER_MENU_SIZE.toGetStarted}
-                    >
-                      <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
-                    </Link>
-                  )}
+                  <Link
+                    to="toGetStarted"
+                    spy
+                    smooth
+                    duration={500}
+                    offset={HEADER_MENU_SIZE.toGetStarted}
+                  >
+                    <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+                  </Link>
+                )}
                 <HeaderMenuItem>
                   <Link
                     onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
