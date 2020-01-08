@@ -3,7 +3,6 @@ import { Card, Header } from 'semantic-ui-react';
 import { device, maxDevice } from '../../commons/breakpoints';
 import theme from '../../theme';
 
-
 interface ImageCropProps {
   src?: string | null;
 }
@@ -35,9 +34,9 @@ export const BorrowerPage = styled.div`
   @media screen and ${device.laptop} {
     padding: 0px 40px;
   }
-`
+`;
 export const SideTitle = styled.div`
-  color: #3C4251;
+  color: #3c4251;
   font-size: 26px;
   font-weight: bold;
   line-height: 36px;
@@ -49,7 +48,7 @@ export const BorrowerCard = styled(Card)`
     width: 100%;
     height: fit-content;
     background: none;
-   
+
     max-width: 797px;
   }
 `;
@@ -161,7 +160,7 @@ export const HeaderImage = styled.div`
   overflow: hidden;
   flex-wrap: wrap;
   @media screen and ${device.laptop} {
-    height: 267px;  
+    height: 267px;
   }
 `;
 
@@ -192,7 +191,7 @@ export const BorrowerLoansBox = styled.div`
     flex-wrap: wrap;
     border: none;
   }
- 
+
   .heroCard {
     margin: 0 15px 15px 0;
   }
@@ -203,9 +202,10 @@ export const BorrowerLoansBox = styled.div`
       margin: 0 0 10px 0;
     }
   }
+  .suggested-card {
+    margin-left: 10px;
+  }
 `;
-
-
 
 export const KPIBox = styled.div`
   display: flex;
@@ -217,7 +217,6 @@ export const KPIListBox = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  
 `;
 
 export const KPIItem = styled.div`
@@ -229,22 +228,22 @@ export const KPIItem = styled.div`
 export const KPISeparator = styled.div`
   box-sizing: border-box;
   height: 1px;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
 `;
 export const KPIItemLabel = styled.div`
-  	color: #5A5A5A;
-    line-height: 49px;
-    font-size: 14px;
+  color: #5a5a5a;
+  line-height: 49px;
+  font-size: 14px;
 `;
 export const KPIItemValue = styled.div`
-color: #5A5A5A;
-font-size: 14px;
-line-height: 49px;
-font-weight: bold;
+  color: #5a5a5a;
+  font-size: 14px;
+  line-height: 49px;
+  font-weight: bold;
 `;
 
 export const Website = styled.a`
-  color: #0091FF;
+  color: #0091ff;
   line-height: 21px;
   font-size: 14px;
 `;
@@ -270,9 +269,8 @@ export const BorrowerLogo: any = styled.div<ImageCropProps>`
   width: 73px;
   background-color: white;
   border-radius: 9.82px;
-  border: 1.64px solid #CFD0D4;
+  border: 1.64px solid #cfd0d4;
   box-sizing: border-box;
-
 
   background-position: center;
   background-position-x: 0;
@@ -290,7 +288,4 @@ export const BorrowerLogo: any = styled.div<ImageCropProps>`
     top: 207px;
     left: 28px;
   }
-
-
-
 `;
