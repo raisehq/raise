@@ -61,7 +61,12 @@ const Wallet = ({ onNext }: any) => {
       <SelectYourWalletContainer>
         <SelectYourWalletTitle>
           <CardTitle>Select your wallet</CardTitle>
-          <CardSubTitle>Get started by connecting one of the wallets below</CardSubTitle>
+          <CardSubTitle>
+            Get started by connecting one of the wallets below ##{' '}
+            {defaultWallet ? defaultWallet.name : 'NO'}-
+            {defaultWallet ? defaultWallet.conn.toString() : 'NO'}
+            ##
+          </CardSubTitle>
         </SelectYourWalletTitle>
         <SelectYourWalletList>
           <SelectWalletOptionItem key="coinbase">
