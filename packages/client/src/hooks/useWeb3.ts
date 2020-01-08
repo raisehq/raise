@@ -111,8 +111,6 @@ const useWeb3 = () => {
     if (!conn) return CryptoWallets.NotConnected;
     if (conn.isMetaMask) return CryptoWallets.Metamask;
     if (conn.isWalletLink) return CryptoWallets.Coinbase;
-    const { __CIPHER__ } = window as any;
-    if (typeof __CIPHER__ !== 'undefined') return 100;
     if (conn.constructor.name === 'EthereumProvider') return 101;
     if (conn.constructor.name === 'Web3FrameProvider') return 102;
     if (conn.host && conn.host.indexOf('infura') !== -1) return 103;
