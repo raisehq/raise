@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-//import AppContext from '../App.context';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   ChooseSignUpWrapper,
   GetStartedBloomHeader,
@@ -32,10 +31,9 @@ const GetStartedWithBloom = ({ onBack }) => {
       response => {
         const {
           data: {
-            data: { bloom_id }
+            data: { bloom_id, public_key, client_id }
           }
         } = response;
-        console.log(bloom_id);
       }
     );
   }, 3000);
