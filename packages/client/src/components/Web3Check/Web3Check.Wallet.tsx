@@ -45,10 +45,13 @@ const Wallet = ({ onNext }: any) => {
   const handlerLink = wallet => {
     switch (wallet) {
       case 'metamask':
-        window.open('http://metamask.app.link/');
+        window.open('http://metamask.app.link/', '_blank');
         break;
       case 'opera':
-        window.open('http://onelink.to/5xwf6x');
+        window.open('http://onelink.to/5xwf6x', '_blank');
+        break;
+      case 'coinbase':
+        window.open('http://onelink.to/mn3hhr', '_blank');
         break;
       default:
         break;
@@ -60,19 +63,22 @@ const Wallet = ({ onNext }: any) => {
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletContainer>
         <SelectYourWalletTitle>
-          <CardTitle>Select your wallet </CardTitle>
+          <CardTitle>Select your wallet</CardTitle>
           <CardSubTitle>Get started by connecting one of the wallets below</CardSubTitle>
         </SelectYourWalletTitle>
         <SelectYourWalletList>
-          <SelectWalletOptionItem key="coinbase">
-            <SelectWalletOptionButton
-              basic
-              color="black"
-              onClick={handlerWallet(CryptoWallets.Coinbase)}
-            >
-              Coinbase
-            </SelectWalletOptionButton>
-          </SelectWalletOptionItem>
+          {((isMobile && defaultWallet && defaultWallet.name === CryptoWallets.Coinbase) ||
+            !isMobile) && (
+            <SelectWalletOptionItem key="coinbase">
+              <SelectWalletOptionButton
+                basic
+                color="black"
+                onClick={handlerWallet(CryptoWallets.Coinbase)}
+              >
+                Coinbase
+              </SelectWalletOptionButton>
+            </SelectWalletOptionItem>
+          )}
           {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
             <SelectWalletOptionItem key="metamask">
               <SelectWalletOptionButton
@@ -108,8 +114,20 @@ const Wallet = ({ onNext }: any) => {
           )}
           {(!defaultWallet ||
             (defaultWallet.name !== CryptoWallets.Opera &&
+              defaultWallet.name !== CryptoWallets.Coinbase &&
               defaultWallet.name !== CryptoWallets.Metamask)) && (
             <>
+              {isMobile && (
+                <SelectWalletOptionItem key="coinbase">
+                  <SelectWalletOptionButton
+                    basic
+                    color="black"
+                    onClick={() => handlerLink('coinbase')}
+                  >
+                    Coinbase
+                  </SelectWalletOptionButton>
+                </SelectWalletOptionItem>
+              )}
               <SelectWalletOptionItem key="metamask">
                 <SelectWalletOptionButton
                   basic
