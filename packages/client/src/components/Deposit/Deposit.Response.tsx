@@ -26,7 +26,7 @@ import { CardContent } from '../Layout/Layout.styles';
 import UniswapEmbedded from '../UniswapEmbedded';
 import { IMAGES_PATH } from '../../commons/constants';
 
-const uniswapUrl =
+const UNISWAP_URL =
   'https://uniswap.exchange/swap?theme=light?exactField=output?exactAmount=200?inputCurrency=0x6B175474E89094C44Da98b954EedeAC495271d0F?outputCurrency=0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c';
 
 const UI = daggy.taggedSum('UI', {
@@ -149,7 +149,7 @@ const getViewResponse = (
           </CardCenteredText>
         </CardContent>
 
-        <UniswapEmbedded iframeUrl={uniswapUrl} />
+        <UniswapEmbedded iframeUrl={UNISWAP_URL} />
         <GoBack basic color="black" onClick={onRetry}>
           Go back
         </GoBack>
