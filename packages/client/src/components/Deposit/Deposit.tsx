@@ -14,7 +14,8 @@ import { UI, UISteps, getViewResponse } from './Deposit.Response';
 import useDepositContract from '../../hooks/useDepositContract';
 import useWeb3 from '../../hooks/useWeb3';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
-import retrieveERC20Balance from '../../hooks/retrieveERC20Balance';
+import useERC20BalancePooling from '../../hooks/useERC20BalancePooling';
+import useAsyncEffect from '../../hooks/useAsyncEffect';
 import AppContext from '../AppContext';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { isMobile } from 'react-device-detect';
@@ -35,32 +36,32 @@ const Deposit = () => {
   const getAddress = (netId, name) => get(heroContracts, `address.${netId}.${name}`);
   const [doingDeposit, setDoingDeposit] = useState(false);
   const [status, setStatus] = useState(UI.Deposit);
-  const RaiseTokenContract = useHeroTokenContract();
+  const raiseTokenContract = useHeroTokenContract();
   const depositContract = useDepositContract();
-  const RaiseAddress = getAddress(walletNetworkId, 'HeroToken');
-  const RaiseAddressMainnet = getAddress(1, 'HeroToken');
-  const DaiAddressMainnet = getAddress(1, 'DAI');
+  const raiseAddress = getAddress(walletNetworkId, 'HeroToken');
+  const raiseAddressMainnet = getAddress(1, 'HeroToken');
+  const daiAddressMainnet = getAddress(1, 'DAI');
 
   const { web3 } = useWeb3();
   const tagManager = useGoogleTagManager('Deposit');
-  const raiseBalance = retrieveERC20Balance(web3, RaiseAddress, walletAccount);
+  const raiseBalance = useERC20BalancePooling(web3, raiseAddress, walletAccount);
 
-  const asyncEffect = async () => {
+  const retrieveDAIPrice = async () => {
     const tradeInfo = await tradeTokensForExactTokens(
-      DaiAddressMainnet,
-      RaiseAddressMainnet,
+      daiAddressMainnet,
+      raiseAddressMainnet,
       new BigNumber('200000000000000000000'),
       1
     );
     setExpectedPrice(Number(Number(fromWei(tradeInfo.inputAmount.amount.toString())).toFixed(2)));
   };
 
-  useEffect(() => {
+  useAsyncEffect(async () => {
     if (LocalData.get('firstLogin') === 'first') {
       LocalData.set('firstLogin', 'firstDeposit');
     }
 
-    asyncEffect();
+    await retrieveDAIPrice();
   }, []);
 
   useEffect(() => {
@@ -79,22 +80,22 @@ const Deposit = () => {
   const onDeposit = async () => {
     try {
       setDoingDeposit(true);
-      if (depositContract && RaiseTokenContract) {
+      if (depositContract && raiseTokenContract) {
         const { BN } = web3.utils;
         tagManager.sendEvent(TMEvents.Click, 'deposit_attempt');
         setStatus(UI.Waiting(UISteps.Approve));
         const allowance = new BN(
-          await RaiseTokenContract.allowance(walletAccount, depositContract.address)
+          await raiseTokenContract.allowance(walletAccount, depositContract.address)
         );
         if (allowance.lt(new BN(toWei('200')))) {
-          await RaiseTokenContract.approveDeposit(walletAccount, 200);
+          await raiseTokenContract.approveDeposit(walletAccount, 200);
         }
         setStatus(UI.Waiting(UISteps.Transaction));
         await depositContract.deposit(walletAccount);
         tagManager.sendEvent(TMEvents.Submit, 'deposit_success');
         setStatus(UI.Success);
       } else {
-        console.error(' CONTRACTS ARE NOT ALOWED ', depositContract, RaiseTokenContract);
+        console.error(' CONTRACTS ARE NOT ALOWED ', depositContract, raiseTokenContract);
       }
     } catch (error) {
       tagManager.sendEvent(TMEvents.Submit, 'deposit_error');
@@ -115,6 +116,7 @@ const Deposit = () => {
 
   const onRetry = async () => {
     setRetries(r => r + 1);
+    setDoingDeposit(false);
     setStatus(UI.Deposit);
   };
 
