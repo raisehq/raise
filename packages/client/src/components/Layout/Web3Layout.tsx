@@ -55,7 +55,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
   }
   // Check if is Logged
-  if (!isLogged) {
+  if (!isLogged && !pathname.includes('/join')) {
     return <Redirect to="/join" />;
   }
 
