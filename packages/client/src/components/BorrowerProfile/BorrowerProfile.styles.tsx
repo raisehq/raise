@@ -204,6 +204,7 @@ export const BorrowerLoansBox = styled.div`
   }
   .suggested-card {
     margin-left: 10px;
+    margin-bottom: 10px;
   }
 `;
 
