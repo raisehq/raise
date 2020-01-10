@@ -21,7 +21,8 @@ const URL = {
   CHECK_EMAIL: `${getHost('AUTH')}/users/email/exists`,
   CHECK_COUNTRYBLOCKED: `${getHost('AUTH')}/users/country/blocked?country_id=`,
   BLOOM_SIGN_IN: `${getHost('CORE')}/kyc/scan`,
-  BLOOM_LOGIN: 'http://0.0.0.0:3001/bloom/authenticate'
+  //BLOOM_LOGIN: 'http://0.0.0.0:3001/oauth/bloom/authenticate'
+  BLOOM_LOGIN: 'https://lp-912.api.herodev.es/oauth/bloom/authenticate'
 };
 
 export const signUp = async data => {

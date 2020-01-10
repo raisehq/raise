@@ -31,9 +31,11 @@ const GetStartedWithBloom = ({ onBack }) => {
       response => {
         const {
           data: {
-            data: { bloom_id, public_key, client_id }
+            data: { bloom_token, public_key, client_id }
           }
         } = response;
+        console.log('Token Bloom sent: ', tokenBloom);
+        console.log('Token Bloom received: ', bloom_token);
       }
     );
   }, 3000);
@@ -43,27 +45,37 @@ const GetStartedWithBloom = ({ onBack }) => {
   }, []);
 
   useEffect(() => {
-    if (isOpenHelp) return;
+    setIsScreenIdle(true);
+  }, []);
+
+  useEffect(() => {
     const events = ['load', 'mousemove', 'mousedown', 'click', 'scroll', 'keypress'];
 
-    const resetTimeout = () => setIsScreenIdle(false);
+    const resetTimeout = () => {
+      setIsScreenIdle(false);
+    };
 
     for (let i in events) {
       window.addEventListener(events[i], resetTimeout);
     }
 
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
+      if (isScreenIdle) {
+        setIsOpenHelp(true);
+      }
       setIsScreenIdle(true);
-      setIsOpenHelp(true);
-    }, 3000);
-  }, [isOpenHelp, isScreenIdle]);
+    }, 4000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isScreenIdle]);
 
   const requestData = {
     action: Action.attestation,
     token: tokenBloom,
     org_name: 'Raise',
-    url: tokenBloom,
-    //url: 'https://receive-kit.bloom.co/api/receive',
+    url: 'https://lp-912.api.herodev.es/kyc/scan',
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
@@ -94,11 +106,15 @@ const GetStartedWithBloom = ({ onBack }) => {
             requestData={requestData}
             buttonOptions={buttonOptions}
             qrOptions={qrOptions}
-            buttonCallbackUrl="https://bloom.co?token=284a54f2-79ec-4056-8347-5c29a4b32070"
+            buttonCallbackUrl="https://lp-912.api.herodev.es/kyc/scan"
           />
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
-          {isOpenHelp ? <HelpWithBloom setIsOpenHelp={setIsOpenHelp} /> : <FollowSteps />}
+          {isOpenHelp ? (
+            <HelpWithBloom setIsOpenHelp={setIsOpenHelp} setIsScreenIdle={setIsScreenIdle} />
+          ) : (
+            <FollowSteps />
+          )}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
       <GetStartedBloomFooter>

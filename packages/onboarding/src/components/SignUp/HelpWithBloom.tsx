@@ -2,7 +2,7 @@ import React from 'react';
 import { HelpWithBloomWrapper, FollowingStepsTitle, IconWrapper } from '../styles';
 import { Icon } from 'semantic-ui-react';
 
-const HelpWithBloom = ({ setIsOpenHelp }) => {
+const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle }) => {
   return (
     <HelpWithBloomWrapper>
       <IconWrapper>
@@ -10,6 +10,7 @@ const HelpWithBloom = ({ setIsOpenHelp }) => {
           name="close"
           onClick={() => {
             setIsOpenHelp(false);
+            setIsScreenIdle(true);
           }}
         />
       </IconWrapper>
