@@ -58,6 +58,9 @@ const Menu = () => {
       user: {
         details: { accounttype_id }
       },
+      auth: {
+        login: { logged: isLogged }
+      },
       config: { menu }
     }
   }: any = useContext(AppContext);
@@ -152,11 +155,10 @@ const Menu = () => {
       document.body.classList.remove('hidescroll');
     };
   }, [menu]);
-
   return (
     <RaiseMenu vertical borderless inverted className={menu ? 'open' : 'closed'}>
       <Logo src={logoPath} />
-      {visibleMenu && (
+      {isLogged && visibleMenu && (
         <>
           <Web3Address />
           <BalanceMobile />
@@ -165,7 +167,7 @@ const Menu = () => {
       <CloseButton onClick={closeMenu} icon>
         <Icon name="close" size="big" />
       </CloseButton>
-      {visibleMenu && (
+      {isLogged && visibleMenu && (
         <>
           <div style={{ flex: 2 }} />
           <MenuList>{getMenu(Menus[accounttype_id])}</MenuList>

@@ -60,11 +60,11 @@ export const Description = styled.div`
   text-align: center;
 
   span.emojis {
-      margin: 20px 0px;
-      height: 60px;
-      font-size: 76px;
-      display: block;
-    }
+    margin: 20px 0px;
+    height: 60px;
+    font-size: 76px;
+    display: block;
+  }
 `;
 
 export const CardDescription = styled(Card.Description)`
@@ -178,8 +178,8 @@ export const CardPadded = styled.div`
     .ui.loader.active,
     .ui.loader.visible {
       position: absolute;
-      top: 30%;
-      left: 50%;
+      top: 45%;
+      left: 60%;
     }
 
     @media screen and ${maxDevice.mobileL} {
@@ -193,8 +193,8 @@ export const CardPadded = styled.div`
       .ui.loader.active,
       .ui.loader.visible {
         position: absolute;
-        top: 38%;
-        left: 50%;
+        top: 52%;
+        left: 67%;
       }
     }
   }
