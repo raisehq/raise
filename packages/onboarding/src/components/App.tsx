@@ -241,6 +241,40 @@ const App = ({
     );
   };
 
+  const onLoginWithBloom = async result => {
+    console.log(result)
+    const login = LocalData.get('firstLogin');
+
+    if (login) {
+      if (login === 'first') {
+        LocalData.set('firstLogin', 'passed');
+      }
+    } else {
+      LocalData.set('firstLogin', 'first');
+    }
+    LocalData.setObj('auth', {
+      token: result.public_key,
+      id: result.id,
+      status: result.userstatus_id,
+      type: result.accounttype_id
+    });
+
+    LocalData.setObj('user', result);
+
+    setAuthCookie(
+      {
+        token: result.public_key,
+        id: result.id,
+        status: result.userstatus_id,
+        type: result.accounttype_id
+      },
+      { domain: process.env.REACT_APP_COOKIE_DOMAIN }
+    );
+
+    setuserCookie(result, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
+    window.location.href = getHost('APP') + (pathRedirect ? pathRedirect : '');
+  };
+
   const onLogin = async () => {
     tagManager.sendEventCategory('Login', TMEvents.Click, 'login_attempt', host);
 
@@ -322,7 +356,7 @@ const App = ({
       ),
       SignUpWithBloom: () => (
         <Panel>
-          <GetStartedWithBloom onBack={() => setStep(Step.Start)}/>
+          <GetStartedWithBloom onBack={() => setStep(Step.Start)} />
         </Panel>
       ),
       StartMini: () => <GetStarted mini />,
@@ -403,6 +437,7 @@ const App = ({
         onSetPasswordBorrower,
         onActivateAccount,
         onRecover,
+        onLoginWithBloom,
         onLogin,
         onResetToken,
         credentials,

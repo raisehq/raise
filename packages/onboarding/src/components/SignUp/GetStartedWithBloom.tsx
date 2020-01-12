@@ -16,11 +16,15 @@ import { RequestElement, QROptions, Action } from '@bloomprotocol/share-kit-reac
 import useInterval from '../../hooks/useInterval';
 import { bloomSignIn, verifyBloomLogin } from '../../services';
 import bloomToken from 'uuid';
+import AppContext from '../App.context';
 
 const GetStartedWithBloom = ({ onBack }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
+  const [pollingUserId, setPollingUserId] = useState('');
+
+  const { onLoginWithBloom }: any = useContext(AppContext);
 
   useInterval(async () => {
     const response = await verifyBloomLogin(tokenBloom);
@@ -31,11 +35,13 @@ const GetStartedWithBloom = ({ onBack }) => {
       response => {
         const {
           data: {
-            data: { bloom_token, public_key, client_id }
+            data: { result }
           }
         } = response;
-        console.log('Token Bloom sent: ', tokenBloom);
-        console.log('Token Bloom received: ', bloom_token);
+        setPollingUserId(result.id);
+        if (result.id) {
+          onLoginWithBloom(result);
+        }
       }
     );
   }, 3000);
