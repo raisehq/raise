@@ -28,22 +28,17 @@ const GetStartedWithBloom = ({ onBack }) => {
 
   useInterval(async () => {
     const response = await verifyBloomLogin(tokenBloom);
-    response.fold(
-      error => {
-        console.log(error);
-      },
-      response => {
-        const {
-          data: {
-            data: { result }
-          }
-        } = response;
-        setPollingUserId(result.id);
-        if (result.id) {
-          onLoginWithBloom(result);
+    response.fold(response => {
+      const {
+        data: {
+          data: { result }
         }
+      } = response;
+      setPollingUserId(result.id);
+      if (result.id) {
+        onLoginWithBloom(result);
       }
-    );
+    });
   }, 3000);
 
   useEffect(() => {
@@ -87,7 +82,6 @@ const GetStartedWithBloom = ({ onBack }) => {
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
     types: ['email']
   };
-  console.log(JSON.stringify(requestData));
 
   const buttonOptions: ButtonOptions = {
     callbackUrl: bloomSignIn()
