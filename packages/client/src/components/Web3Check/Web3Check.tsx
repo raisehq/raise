@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
+// URLSearchParams polyfill for IE 11
+import URLSearchParams from '@ungap/url-search-params'
 import ErrorConnection from './Web3Check.ErrorConnection';
 import { CardSized } from '../Layout/Layout.styles';
 import Wallet from './Web3Check.Wallet';
@@ -24,6 +25,7 @@ const getStage = (stage, handleNext, handleBack, handleSuccess) => {
 const Web3Check = () => {
   const {
     web3Status: { unlocked },
+    history,
     store: {
       user: {
         // @ts-ignore
@@ -31,6 +33,7 @@ const Web3Check = () => {
       }
     }
   }: any = useContext(AppContext);
+  const redirect = (new URLSearchParams(history.location.search)).get('redirect');
   const { web3 }: any = useWeb3();
   const tagManager = useGoogleTagManager('Wallet');
   const [ui, setUI] = useState(Stages.WalletSelector);
@@ -53,6 +56,7 @@ const Web3Check = () => {
         getWalletName(cryptotypeId).toLowerCase()
       );
       setUI(Stages.Checks);
+      handleSuccess()
     }
   }, [unlocked, web3, ui]);
 
@@ -61,7 +65,7 @@ const Web3Check = () => {
   };
 
   const handleSuccess = () => {
-    return <Redirect to="/" />;
+    history.push(redirect);
   };
 
   const handleNext = () => {

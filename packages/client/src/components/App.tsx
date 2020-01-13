@@ -241,7 +241,15 @@ const App = ({ history, match }: any) => {
                   component={CreateLoan}
                   roles={[1, 2]}
                 />
-                <BorrowerProfileLayout exact path="/borrowers/:slug" component={BorrowerProfile} />
+                <Web3Layout
+                  publicRoute
+                  marketplace
+                  layout={BorrowerProfileLayout}
+                  exact
+                  path="/borrowers/:slug"
+                  component={BorrowerProfile}
+                  roles={[1, 2]}
+                />
                 {/* Onboarding */}
                 <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
                 <SimpleLayout exact path="/join" component={Join} />
