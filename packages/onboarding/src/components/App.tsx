@@ -358,7 +358,7 @@ const App = ({
           <GetStartedWithBloom onBack={() => setStep(Step.Start)} />
         </Panel>
       ),
-      StartMini: () => <GetStarted/>,
+      StartMini: () => <GetStarted />,
       SignIn: () => (
         <SimpleModal>
           <SignIn />

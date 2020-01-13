@@ -21,7 +21,7 @@ const URL = {
   CHECK_EMAIL: `${getHost('AUTH')}/users/email/exists`,
   CHECK_COUNTRYBLOCKED: `${getHost('AUTH')}/users/country/blocked?country_id=`,
   BLOOM_SIGN_IN: `${getHost('CORE')}/kyc/scan`,
-  BLOOM_LOGIN:  `${getHost('AUTH')}/bloom/authenticate`
+  BLOOM_LOGIN:  `${getHost('AUTH')}/oauth/bloom/authenticate`
 };
 
 export const signUp = async data => {
