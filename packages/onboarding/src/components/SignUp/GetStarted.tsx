@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AppContext from '../App.context';
 import { IContext } from '../types';
 import {
@@ -11,10 +11,19 @@ import {
   ChooseSignUpButton,
   ChooseSignUpWithBloomButton
 } from '../styles';
+import { redirectFormBloomApp } from '../../services';
 import { Image } from 'semantic-ui-react';
+import LocalData from '../localData';
 
 const GetStarted = () => {
   const { onSetStep } = useContext<IContext>(AppContext);
+
+  useEffect(() => {
+    const auth = LocalData.getObj('auth');
+    if (auth && auth.token) {
+      window.location.href = redirectFormBloomApp();
+    }
+  }, []);
 
   return (
     <ChooseSignUpWrapper>
