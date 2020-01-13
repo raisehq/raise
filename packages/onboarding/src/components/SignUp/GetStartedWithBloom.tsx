@@ -43,7 +43,7 @@ const GetStartedWithBloom = ({ onBack }) => {
         }
       }
     );
-  }, 3000);
+  }, 5000);
 
   useEffect(() => {
     setTokenBloom(bloomToken());
@@ -69,7 +69,7 @@ const GetStartedWithBloom = ({ onBack }) => {
         setIsOpenHelp(true);
       }
       setIsScreenIdle(true);
-    }, 4000);
+    }, 10000);
 
     return () => {
       clearTimeout(timeout);
