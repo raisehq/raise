@@ -19,7 +19,7 @@ const GetStarted = () => {
   return (
     <ChooseSignUpWrapper>
       <ChooseSignUpSubtitleWrapper>
-        <ChooseSignUpSubTitle>Select how you want to Get Started</ChooseSignUpSubTitle>
+        <ChooseSignUpSubTitle>Select how you want to get started</ChooseSignUpSubTitle>
       </ChooseSignUpSubtitleWrapper>
       <ChooseSignUpButtonList>
         <ChooseSignUpButton onClick={() => onSetStep('SignUpWithEmail')()}>
