@@ -194,7 +194,7 @@ export const OnboardingContent = styled(Content)`
 
 export const Wrapper = styled.div`
   width: auto;
-  min-height: 100%;
+  min-height: 800px;
   background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
     url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
     url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;

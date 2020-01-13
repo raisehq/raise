@@ -22,7 +22,10 @@ const Dashboard = () => {
       loan: { suggested, lenderInvestments },
       user: {
         cryptoAddress: { address }
-      }
+      },
+      auth: {
+        login: { logged }
+      },
     },
     webSocket: { webSocket }
   }: any = useContext(AppContext);
@@ -58,14 +61,14 @@ const Dashboard = () => {
         setOpen(true);
         setWarning(warning);
       }
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   const closeModal = () => {
     setOpen(false);
   };
 
-  const panes = [
+  const activityPanels = [
     {
       menuItem: 'Auctions',
       render: () => <Tab auctions={lenderInvestments} states={[0]} type="lender" />
@@ -82,12 +85,16 @@ const Dashboard = () => {
       <DashboardContainer>
         <Header as="h1">Investment opportunities</Header>
         <Suggesteds auctions={suggested} states={[0]} />
-        <Element name="myActivity" className="element">
-          <Header as="h1" id="my-activity">
-            My Activity
-          </Header>
-        </Element>
-        <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
+        {logged && (
+          <>
+            <Element name="myActivity" className="element">
+              <Header as="h1" id="my-activity">
+                My Activity
+              </Header>
+            </Element>
+            <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={activityPanels} />
+          </>
+        )}
       </DashboardContainer>
       {activeWarning ? (
         <WarningModal
