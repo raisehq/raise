@@ -21,7 +21,8 @@ const URL = {
   CHECK_EMAIL: `${getHost('AUTH')}/users/email/exists`,
   CHECK_COUNTRYBLOCKED: `${getHost('AUTH')}/users/country/blocked?country_id=`,
   BLOOM_SIGN_IN: `${getHost('CORE')}/kyc/scan`,
-  BLOOM_LOGIN:  `${getHost('AUTH')}/oauth/bloom/authenticate`
+  BLOOM_LOGIN: `${getHost('AUTH')}/oauth/bloom/authenticate`,
+  REDIRECT: `${getHost('APP')}`
 };
 
 export const signUp = async data => {
@@ -137,6 +138,8 @@ export const checkBlockedCountry = async countryid => {
 };
 
 export const bloomSignIn = () => URL.BLOOM_SIGN_IN;
+
+export const redirectFormBloomApp = () => URL.REDIRECT;
 
 export const verifyBloomLogin = async tokenBloom => {
   const config: any = {
