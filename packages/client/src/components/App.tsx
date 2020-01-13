@@ -179,6 +179,8 @@ const App = ({ history, match }: any) => {
           networkMatches,
           accountMatches,
           targetNetwork,
+          walletNetworkId,
+          walletNetwork,
           walletAccount,
           storedAccount,
           account: storedAccount, // Old compability

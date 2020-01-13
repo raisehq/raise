@@ -1,7 +1,11 @@
 import styled from 'styled-components';
-import { Grid, Button, Image, Loader, Segment, Label, List, Icon } from 'semantic-ui-react';
+import { Grid, Button, Image, Loader, Segment, Label, List, Icon, Divider } from 'semantic-ui-react';
 import Web3Address from '../Web3Address';
 import { device } from '../../commons/breakpoints';
+
+interface DepositInputProps {
+  big?: boolean;
+}
 
 export const LinkWrap = styled.div`
   text-align: center;
@@ -19,6 +23,22 @@ export const ListItemPadding = styled(List.Item)`
     margin-bottom: 25px;
   }
 `;
+export const GoBack = styled(Button)`
+&&&&&&&&& {
+  width: 122px;
+  font-size: 18px;
+  margin: 81px auto 0px;
+}
+`
+
+export const DepositInput = styled.div<DepositInputProps>`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: ${({ big }) => big ? '18px' : '14px'};
+  color: ${({ big }) => big ? '#3C4251' : '#5A5A5A'};
+`
 
 export const LabelPadding = styled(Label)`
   &&& {
@@ -98,9 +118,21 @@ export const HeaderRow = styled(Grid.Row)`
 `;
 export const CardCenteredText = styled.div`
   &&& {
+    margin: 30px 0px 0px;
     text-align: center;
   }
 `;
+export const CenteredText = styled.div`
+  &&& {
+    text-align: center;
+  }
+`;
+
+export const FullDivider = styled(Divider)`
+&&&:not(.vertical):not(.horizontal) {
+  border-top: 1px solid #979797;
+}
+`
 export const CardTitle = styled.div`
   color: #3c4251;
   font: 26px bold;
@@ -114,45 +146,79 @@ export const CardSubtitle = styled.div`
     font-size: 16px;
     line-height: 22px;
     text-align: center;
-    margin: 19px;
+    margin: 19px 0px;
   }
 `;
-
-export const Amount = styled.p`
+export const Error = styled.p`
+&&&&&& {
+  margin-top: 20px;
+  color: #99a6b6;
+  text-align: center;
+}
+`
+export const Amount = styled.div`
   &&& {
     color: #5c5d5d;
     font-size: 50px;
     font-weight: 300;
-    line-height: 16px;
-    padding-top: 45px;
+    height: 50px;
     text-align: center;
-    margin: 0px 105px;
+    line-height: normal;
+    margin: 0px 60px;
+    position: relative;
   }
 
   &&&::before {
     color: #7f8fa4;
     font-size: 12px;
-    float: left;
-    margin-top: 9px;
-    line-height: 21px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
     content: 'Amount';
   }
   &&&::after {
     color: #7f8fa4;
     font-size: 12px;
-    float: right;
-    margin-top: 9px;
-    line-height: 21px;
-    content: 'Tokens';
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    content: 'RAISE';
   }
 `;
 
+export const BalanceAmount = styled.div`
+&&& {
+  color: #5c5d5d;
+  font-size: 50px;
+  font-weight: 300;
+  height: 50px;
+  text-align: center;
+  line-height: normal;
+  margin: 0px 60px;
+  position: relative;
+}
+
+&&&::before {
+  color: #7f8fa4;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  content: 'Balance';
+}
+&&&::after {
+  color: #7f8fa4;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  content: 'RAISE';
+}
+`;
+
 export const HowToGetHeroToken = styled.a`
-  height: 21px;
-  width: 147px;
   color: #00a76f;
   font-size: 14px;
-  line-height: 45px;
   text-align: center;
   text-decoration: underline;
 `;
@@ -173,12 +239,13 @@ export const FooterRow = styled(Grid.Row)`
 export const ButtonGreen = styled(Button)`
   &&&,
   &&&:focus {
-    height: 62px;
+    min-height: 62px;
     width: 100%;
+    font-weight: bold;
     ${({ blocked }) => (blocked ? 'opacity: 0.4 !important;' : '')}
-    background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
+    background: #00DA9E;
     color: white;
-    font: 18px bold;
+    font-size: 18px;
     line-height: 24px;
   }
   &&&:hover {
@@ -193,6 +260,9 @@ export const ButtonGreen = styled(Button)`
     background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
     color: white;
     font-weight: bold;
+  }
+  &&&:disabled {
+    background: rgba(0,0,0,0.3)
   }
 `;
 

@@ -13,7 +13,7 @@ export const OnboardingProgressBar = ({ step, isMobile }) => {
   const steps = [
     { 0: 'Get Started' },
     { 1: 'Connect Wallet' },
-    { 2: 'Membership' },
+    { 2: 'Deposit' },
     { 3: 'Verify Account' }
   ];
   return (
