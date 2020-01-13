@@ -22,23 +22,27 @@ const GetStartedWithBloom = ({ onBack }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
-  const [pollingUserId, setPollingUserId] = useState('');
 
   const { onLoginWithBloom }: any = useContext(AppContext);
 
   useInterval(async () => {
     const response = await verifyBloomLogin(tokenBloom);
-    response.fold(response => {
-      const {
-        data: {
-          data: { result }
+    response.fold(
+      error => {
+        console.log(error);
+      },
+      response => {
+        const {
+          data: {
+            data: { result }
+          }
+        } = response;
+
+        if (result.id) {
+          onLoginWithBloom(result);
         }
-      } = response;
-      setPollingUserId(result.id);
-      if (result.id) {
-        onLoginWithBloom(result);
       }
-    });
+    );
   }, 3000);
 
   useEffect(() => {
@@ -76,7 +80,7 @@ const GetStartedWithBloom = ({ onBack }) => {
     action: Action.attestation,
     token: tokenBloom,
     org_name: 'Raise',
-    url: 'https://lp-912.api.herodev.es/kyc/scan',
+    url: bloomSignIn(),
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
@@ -84,7 +88,7 @@ const GetStartedWithBloom = ({ onBack }) => {
   };
 
   const buttonOptions: ButtonOptions = {
-    callbackUrl: bloomSignIn()
+    callbackUrl: ''
   };
 
   const qrOptions: Partial<QROptions> = {
@@ -106,7 +110,6 @@ const GetStartedWithBloom = ({ onBack }) => {
             requestData={requestData}
             buttonOptions={buttonOptions}
             qrOptions={qrOptions}
-            buttonCallbackUrl="https://lp-912.api.herodev.es/kyc/scan"
           />
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
