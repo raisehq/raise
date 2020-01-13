@@ -1,4 +1,5 @@
 const defaultContext = {
+  history: {},
   onSetStep: () => () => null,
   onSetCredentials: () => null,
   onSendCredentials: () => null,
