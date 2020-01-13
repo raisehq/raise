@@ -37,6 +37,7 @@ const BorrowerLoans: React.SFC<BorrowerLoansProps> = ({ account }: BorrowerLoans
 
   const activeAuctions =
     auctions && auctions.length ? auctions.filter(({ state }) => state === 0) : null;
+
   return activeAuctions && activeAuctions.length > 0 ? (
     <BorrowerLoansBox>
       <Header as="h2">Investment opportunities</Header>

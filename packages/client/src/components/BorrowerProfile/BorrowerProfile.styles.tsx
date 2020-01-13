@@ -17,7 +17,7 @@ export const Container = styled.div`
 export const LoanContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin: 0 auto;
+  flex-wrap: wrap;
   margin-top: 104px;
 `;
 
