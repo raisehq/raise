@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link, animateScroll as scroll } from 'react-scroll';
 import {
   HeaderWrapper,
@@ -17,11 +17,8 @@ import useMenuVisibility from '../../hooks/useMenuVisibility';
 import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
 import TopBanner from '../TopBanner';
-import Onboarding, { Step } from '@raisehq/onboarding';
 
 const DesktopHeader = () => {
-  const [open, setOpen] = useState(false);
-  const [uiModal, setUiModal] = useState(Step.SignIn);
   const {
     history,
     onSetGetStarted,
@@ -30,6 +27,9 @@ const DesktopHeader = () => {
       auth: {
         login: { logged: isLogged }
       }
+    },
+    actions: {
+      onboarding: { showOnboarding }
     },
     web3Status: { hasDeposit }
   }: any = useContext(AppContext);
@@ -47,14 +47,7 @@ const DesktopHeader = () => {
     history.push('/');
     scrollToTop();
   };
-  const onCloseOnboarding = () => {
-    setOpen(false);
-    return null;
-  };
-  const troggleOnboarding = troggle => () => {
-    if (troggle === 'login') setUiModal(Step.Start);
-    setOpen(true);
-  };
+
   // If there is a parent for TopBanner and HeaderWrapper, it will break the sticky css rule and menu will not get fixed once scroll
   return visible ? (
     <>
@@ -65,15 +58,7 @@ const DesktopHeader = () => {
         hasDepositAction={onDepositAction}
         enabled={enableBanner}
       />
-      <Onboarding
-        blur={false}
-        open={open}
-        history={history}
-        closeButton
-        onClose={onCloseOnboarding}
-        initStep={uiModal}
-        pathRedirect={window.location.pathname}
-      />
+
       <HeaderWrapper>
         <RaiseHeader>
           <HeaderGroup>
@@ -122,8 +107,8 @@ const DesktopHeader = () => {
                 </>
               )}
               <HeaderLogout
-                onLogin={troggleOnboarding('login')}
-                onSignup={troggleOnboarding('signup')}
+                onLogin={() => showOnboarding('login')}
+                onSignup={() => showOnboarding('signup')}
               />
             </>
           </HeaderGroup>

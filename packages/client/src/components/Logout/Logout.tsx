@@ -4,7 +4,7 @@ import AppContext from '../AppContext';
 import { getHost } from '../../utils/index';
 import { SignupButton, LoginButton } from './Logout.styles';
 
-const Logout = (props: any) => {
+const Logout = ({ onLogin, onSignup, ...props }: any) => {
   const {
     store: {
       auth: {
@@ -15,7 +15,7 @@ const Logout = (props: any) => {
       auth: { onSignout }
     }
   }: any = useContext(AppContext);
-  const { onLogin, onSignup } = props;
+
   const goToLogin = useCallback(() => {
     if (onLogin) return onLogin();
     window.location.href = `${getHost('APP')}/join`;
