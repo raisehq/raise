@@ -25,11 +25,13 @@ import LocalData from '../helpers/localData';
 import Queryies from '../helpers/queryies';
 import AppContext from './AppContext';
 import NotFound404 from '../components/BorrowerProfile/Borrower404';
+import Onboarding from '@raisehq/onboarding';
 
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
   const [isLoading, setLoading] = useState(true);
   const [getStarted, setGetStarted] = useState(!!(firstLogin && firstLogin.includes('first')));
+
   const {
     store,
     store: {
@@ -42,7 +44,8 @@ const App = ({ history, match }: any) => {
       user: {
         details: { id, accounttype_id: accounttypeId, email, status },
         cryptoAddress: { address, cryptotypeId }
-      }
+      },
+      onboarding: { show: showOnboarding, troggle: troggleOnboarding }
     },
     actions,
     actions: {
@@ -50,10 +53,12 @@ const App = ({ history, match }: any) => {
       user: { onGetCryptoAddressByUser, onGetUser, onGetUserFromBC },
       blockchain: { fetchContracts },
       kyc: { onInitKyc },
-      config: { updateNetwork }
+      config: { updateNetwork },
+      onboarding: { hiddeOnboarding }
     }
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
+
   const [webSocket, setWebSocket]: any = useState({});
   const [daiWebSocket, setDaiWebSocket]: any = useState({});
   const {
@@ -70,7 +75,7 @@ const App = ({ history, match }: any) => {
   } = useWeb3Checker(address);
 
   const onSetGetStarted = () => setGetStarted(!getStarted);
-  // Enabling connections
+  // Enabling connectionsStart
   useEffect(() => {
     if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {
       setLoading(false);
@@ -180,6 +185,8 @@ const App = ({ history, match }: any) => {
           networkMatches,
           accountMatches,
           targetNetwork,
+          walletNetworkId,
+          walletNetwork,
           walletAccount,
           storedAccount,
           account: storedAccount, // Old compability
@@ -190,7 +197,16 @@ const App = ({ history, match }: any) => {
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
-
+      <Onboarding
+        blur={false}
+        open={showOnboarding}
+        history={history}
+        closeButton
+        onClose={hiddeOnboarding}
+        initStep={troggleOnboarding}
+        pathRedirect={window.location.pathname}
+        mountNode={modalRefs.current}
+      />
       {!isLoading && (
         <>
           <TopMobileMenu />

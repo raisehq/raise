@@ -101,7 +101,6 @@ const useWeb3Checker = storedAccount => {
           targetNetwork,
           hasDeposit
         );
-        // console.log('CHEKC ', newState);
         if (!_.isEqual(newState, web3State.current)) {
           web3State.current = newState;
           forceUpdate();

@@ -45,7 +45,6 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
     <Route
       {...rest}
       render={matchProps => (
-        <>
         <HeroLayout>
           <Wrapper>
             <OnboardingContent>
@@ -58,7 +57,6 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
           </Wrapper>
           {logged && <Footer />}
         </HeroLayout>
-        </>
       )}
     />
   );

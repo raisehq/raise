@@ -109,6 +109,10 @@ const initialState = {
   },
   dai: {
     balance: '0.00'
+  },
+  onboarding: {
+    show: false,
+    troggle: ''
   }
 };
 
