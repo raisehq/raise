@@ -12,7 +12,7 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 const EXPERIMENT_DEPOSIT_ID = process.env.REACT_APP_AB_TEST_SKIP_DEPOSIT;
 
-const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
+const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, publicRoute, ...rest }: any) => {
   const {
     store: {
       config: { network, networkId },
@@ -54,9 +54,13 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   if (connectionError) {
     return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
   }
-  // Check if is Logged
-  if (!isLogged && !pathname.includes('/join')) {
+  // Check if is Logged and not public
+  if (!publicRoute && !isLogged && !pathname.includes('/join')) {
     return <Redirect to="/join" />;
+  }
+
+  if (publicRoute && !isLogged) {
+    return <Layout {...rest} />;
   }
 
   if (accountMatches && networkMatches && cryptotypeId !== null && hasDeposit !== undefined) {
