@@ -17,6 +17,7 @@ import useInterval from '../../hooks/useInterval';
 import { bloomSignIn, verifyBloomLogin } from '../../services';
 import bloomToken from 'uuid';
 import AppContext from '../App.context';
+import { isMobile } from 'react-device-detect';
 
 const GetStartedWithBloom = ({ onBack }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
@@ -109,7 +110,7 @@ const GetStartedWithBloom = ({ onBack }) => {
           {isOpenHelp ? (
             <HelpWithBloom setIsOpenHelp={setIsOpenHelp} setIsScreenIdle={setIsScreenIdle} />
           ) : (
-            <FollowSteps />
+            <FollowSteps isMobile />
           )}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
