@@ -12,7 +12,7 @@ import {
 import { Button, Image } from 'semantic-ui-react';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
-import { RequestElement, QROptions, Action } from '@bloomprotocol/share-kit-react';
+import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
 import useInterval from '../../hooks/useInterval';
 import { bloomSignIn, verifyBloomLogin } from '../../services';
 import bloomToken from 'uuid';
@@ -73,7 +73,7 @@ const GetStartedWithBloom = ({ onBack }) => {
     };
   }, [isScreenIdle]);
 
-  const requestData = {
+  const requestData: RequestData = {
     action: Action.attestation,
     token: tokenBloom,
     org_name: 'Raise',
@@ -82,10 +82,6 @@ const GetStartedWithBloom = ({ onBack }) => {
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
     types: ['email']
-  };
-
-  const buttonOptions: ButtonOptions = {
-    callbackUrl: ''
   };
 
   const qrOptions: Partial<QROptions> = {
@@ -105,7 +101,7 @@ const GetStartedWithBloom = ({ onBack }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={buttonOptions}
+            buttonOptions={{ callbackUrl: '' }}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>
