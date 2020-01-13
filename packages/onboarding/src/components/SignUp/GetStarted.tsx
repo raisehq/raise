@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import AppContext from '../App.context';
+import { IContext } from '../types';
 import {
   ChooseSignUpWrapper,
   ChooseSignUpSignInWrapper,

@@ -5,6 +5,7 @@ const defaultContext = {
   onResetPassword: () => null,
   onSetPasswordBorrower: () => null,
   onActivateAccount: () => null,
+  onLoginWithBloom: () => null,
   onLogin: () => null,
   error: false,
   onLoginURL: null,

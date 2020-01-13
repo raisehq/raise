@@ -1,4 +1,12 @@
-export type Steps = 'Start' | 'SignIn' | 'Confirm' | 'Verified' | 'ResetOK' | 'ResetKO';
+export type Steps =
+  | 'Start'
+  | 'SignIn'
+  | 'Confirm'
+  | 'Verified'
+  | 'ResetOK'
+  | 'ResetKO'
+  | 'SignUpWithEmail'
+  | 'SignUpWithBloom';
 
 export interface ICredentials {
   email: string;
@@ -25,6 +33,13 @@ export interface ISignin {
   'g-recaptcha-response': string;
 }
 
+export interface ILoginWithBloom {
+  public_key: string;
+  id: string;
+  userstatus_id: string;
+  accounttype_id: string;
+}
+
 export interface IContext {
   blur: boolean;
   mountNode?: any | null;
@@ -35,7 +50,7 @@ export interface IContext {
   onResetPassword: (token: string, password: string) => null | void | Promise<any>;
   onSetPasswordBorrower: (token: string, password: string) => null | void | Promise<any>;
   onActivateAccount: (token: string) => null | void | Promise<any>;
-  onLoginWithBloom: () => null | void | Promise<any>;
+  onLoginWithBloom: (result: ILoginWithBloom) => null | void | Promise<any>;
   onLogin: () => null | void | Promise<any>;
   setLoginError: (x: boolean) => null | void | Promise<any>;
   error: boolean;
