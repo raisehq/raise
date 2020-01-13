@@ -1,7 +1,7 @@
 {
   "name": "@raisehq/onboarding",
   "private": false,
-  "version": "1.0.47",
+  "version": "1.0.48",
   "description": "Raise signup/login modal",
   "author": "RaiseHQ",
   "homepage": "http://www.raise.it",
@@ -31,6 +31,7 @@
   "dependencies": {
     "@raisehq/components": "*",
     "js-cookie": "^2.2.0",
+    "react-device-detect": "^1.11.14",
     "react-google-recaptcha": "^2.0.0-rc.1",
     "react-gtm-module": "^2.0.7",
     "react-iframe": "^1.8.0",
