@@ -24,6 +24,7 @@ import DesktopHeader from './DesktopHeader';
 import LocalData from '../helpers/localData';
 import Queryies from '../helpers/queryies';
 import AppContext from './AppContext';
+import NotFound404 from '../components/BorrowerProfile/Borrower404';
 
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
@@ -179,6 +180,8 @@ const App = ({ history, match }: any) => {
           networkMatches,
           accountMatches,
           targetNetwork,
+          walletNetworkId,
+          walletNetwork,
           walletAccount,
           storedAccount,
           account: storedAccount, // Old compability
@@ -225,17 +228,14 @@ const App = ({ history, match }: any) => {
                   marketplace
                   layout={MainLayout}
                   exact
-                  path="/dashboard"
-                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
-                  roles={[1, 2]}
-                />
-                <Web3Layout
-                  marketplace
-                  layout={MainLayout}
-                  exact
                   path="/"
                   component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
                   roles={[1, 2]}
+                />
+                <MainLayout
+                  exact
+                  path="/dashboard"
+                  component={DashboardLender}
                 />
                 <Web3Layout
                   marketplaceSuggesteds
@@ -253,6 +253,7 @@ const App = ({ history, match }: any) => {
                 <SimpleLayout exact path="/join/verify/token/:token" component={Join} />
                 <SimpleLayout exact path="/join/password/reset/:token" component={Join} />
                 <SimpleLayout exact path="/join/activate/:token" component={Join} />
+                <MainLayout component={NotFound404} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>
