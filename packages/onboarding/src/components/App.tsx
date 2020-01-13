@@ -242,7 +242,6 @@ const App = ({
   };
 
   const onLoginWithBloom = async result => {
-    console.log(result)
     const login = LocalData.get('firstLogin');
 
     if (login) {

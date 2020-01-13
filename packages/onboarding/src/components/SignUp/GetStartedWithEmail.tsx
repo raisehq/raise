@@ -1,6 +1,5 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Icon, Input, Select } from 'semantic-ui-react';
-import * as _ from 'lodash';
 import debounce from 'lodash/debounce';
 import { AccountType } from '@raisehq/components';
 import {
@@ -63,7 +62,7 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
     terms: true
   });
 
-  const onChangeEmail = _.debounce((e, data) => {
+  const onChangeEmail = debounce((e, data) => {
     const { value } = data;
     const validateEmail = validations.isEmail(value);
 

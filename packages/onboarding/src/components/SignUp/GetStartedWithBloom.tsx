@@ -47,9 +47,6 @@ const GetStartedWithBloom = ({ onBack }) => {
 
   useEffect(() => {
     setTokenBloom(bloomToken());
-  }, []);
-
-  useEffect(() => {
     setIsScreenIdle(true);
   }, []);
 
