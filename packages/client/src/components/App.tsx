@@ -225,17 +225,13 @@ const App = ({ history, match }: any) => {
                   roles={[1, 2]}
                 />
                 <Web3Layout
+                  publicRoute
                   marketplace
                   layout={MainLayout}
                   exact
                   path="/"
-                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
+                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : DashboardLender}
                   roles={[1, 2]}
-                />
-                <MainLayout
-                  exact
-                  path="/dashboard"
-                  component={DashboardLender}
                 />
                 <Web3Layout
                   marketplaceSuggesteds
