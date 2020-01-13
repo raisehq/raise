@@ -102,7 +102,7 @@ const GetStartedWithBloom = ({ onBack }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={{ callbackUrl: `${redirectFormBloomApp()}/verify-web3?redirect=/` }}
+            buttonOptions={{ callbackUrl: `${redirectFormBloomApp()}/verify/token/bloom` }}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>

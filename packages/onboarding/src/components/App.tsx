@@ -118,6 +118,26 @@ const App = ({
       );
     }
 
+    if (pathname.includes('verify/token/bloom')) {
+      const path = pathname.split('/');
+      const token = path[path.length - 1];
+
+      const auth = LocalData.getObj('auth');
+
+      if (auth && auth.token) {
+        setStep(Step.Verifying);
+
+        const verifying = await services.validateToken({
+          token
+        });
+
+        verifying.fold(
+          () => setStep(Step.VerifiedError(token)),
+          () => setStep(Step.Verified)
+        );
+      }
+    }
+
     if (pathname.includes('password/reset')) {
       const path = pathname.split('/');
       const token = path[path.length - 1];
