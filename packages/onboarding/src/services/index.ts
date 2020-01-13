@@ -22,7 +22,7 @@ const URL = {
   CHECK_COUNTRYBLOCKED: `${getHost('AUTH')}/users/country/blocked?country_id=`,
   BLOOM_SIGN_IN: `${getHost('CORE')}/kyc/scan`,
   BLOOM_LOGIN: `${getHost('AUTH')}/oauth/bloom/authenticate`,
-  REDIRECT: `${getHost('APP')}/verify-web3?redirect=/`
+  REDIRECT: `${getHost('APP')}`
 };
 
 export const signUp = async data => {
