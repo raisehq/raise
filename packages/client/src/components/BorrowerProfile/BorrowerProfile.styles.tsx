@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Card, Header } from 'semantic-ui-react';
+import { Card, Header, Popup } from 'semantic-ui-react';
 import { device, maxDevice } from '../../commons/breakpoints';
 import theme from '../../theme';
 
@@ -225,6 +225,11 @@ export const KPIItem = styled.div`
   width: 100%;
 `;
 
+export const KPILabel = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+
 export const KPISeparator = styled.div`
   box-sizing: border-box;
   height: 1px;
@@ -240,6 +245,15 @@ export const KPIItemValue = styled.div`
   font-size: 14px;
   line-height: 49px;
   font-weight: bold;
+`;
+
+export const KPITooltip = styled(Popup)`
+  margin-left: 5px !important;
+`;
+
+export const KPIIcon = styled.div`
+  margin-left: 5px !important;
+  margin-top: 15px;
 `;
 
 export const Website = styled.a`
