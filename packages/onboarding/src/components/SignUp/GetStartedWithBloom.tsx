@@ -14,7 +14,7 @@ import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
 import useInterval from '../../hooks/useInterval';
-import { bloomSignIn, verifyBloomLogin, redirectFormBloomApp } from '../../services';
+import { bloomSignIn, verifyBloomLogin, redirectFromBloomApp } from '../../services';
 import bloomToken from 'uuid';
 import AppContext from '../App.context';
 import { isMobile } from 'react-device-detect';
@@ -102,7 +102,7 @@ const GetStartedWithBloom = ({ onBack }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={{ callbackUrl: redirectFormBloomApp() }}
+            buttonOptions={{ callbackUrl: redirectFromBloomApp() }}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>

@@ -11,7 +11,7 @@ import {
   ChooseSignUpButton,
   ChooseSignUpWithBloomButton
 } from '../styles';
-import { redirectFormBloomApp } from '../../services';
+import { redirectFromBloomApp } from '../../services';
 import { Image } from 'semantic-ui-react';
 import LocalData from '../localData';
 
@@ -21,7 +21,7 @@ const GetStarted = () => {
   useEffect(() => {
     const auth = LocalData.getObj('auth');
     if (auth && auth.token) {
-      window.location.href = redirectFormBloomApp();
+      window.location.href = redirectFromBloomApp();
     }
   }, []);
 

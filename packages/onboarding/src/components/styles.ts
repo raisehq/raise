@@ -472,7 +472,7 @@ export const ChooseSignUpWithBloomButton = styled(ChooseSignUpButton)`
   color: #6067f1;
   border: 1px solid #6067f1;
 
-  span{
+  span {
     padding: 0 10px;
   }
 `;
@@ -533,9 +533,11 @@ export const GetStartedBloomWrapper = styled.div`
   justify-content: flex-start;
   align-items: stretch;
   flex: 0 1 100%;
+  min-height: 400px;
 
   @media (max-width: ${size.mobileL}) {
     flex-wrap: wrap;
+    min-height: 0;
   }
 `;
 
@@ -593,9 +595,9 @@ export const HelpWithBloomWrapper = styled.div`
   box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
   line-height: 21px;
   @media (max-width: ${size.mobileL}) {
-    padding: 0 10% 10% 10%;
     width: 100%;
     max-width: none;
+    align-items: stretch;
   }
 `;
 

@@ -139,7 +139,7 @@ export const checkBlockedCountry = async countryid => {
 
 export const bloomSignIn = () => URL.BLOOM_SIGN_IN;
 
-export const redirectFormBloomApp = () => URL.REDIRECT;
+export const redirectFromBloomApp = () => URL.REDIRECT;
 
 export const verifyBloomLogin = async tokenBloom => {
   const config: any = {
