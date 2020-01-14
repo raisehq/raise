@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import daggy from 'daggy';
+import { CardPlaceholder } from '@raisehq/components';
 import Suggested from '../Cards/Suggested';
 import { getActiveAuctions } from '../../utils/loanUtils';
 import { SuggestedContainer, NoResults } from './Dashboard.styles';
@@ -12,8 +13,11 @@ export const Auctions = daggy.taggedSum('Auctions', {
 });
 
 const Suggesteds = ({ auctions, states }) => {
+  const [gracePeriod, setGracePeriod] = useState(0);
   const [suggestedAuctions, setSuggestedAuctions] = useState();
   const [suggestedState, setSuggestedState]: any = useState(Auctions.Loading);
+
+  console.log(suggestedAuctions)
 
   useEffect(() => {
     if (!suggestedAuctions) {
@@ -27,11 +31,24 @@ const Suggesteds = ({ auctions, states }) => {
 
   useInterval(() => {
     const suggested = getActiveAuctions(auctions, states);
-    setSuggestedAuctions(suggested);
+    if (suggested.length > 0) {
+      setSuggestedAuctions(suggested);
+      return;
+    }
+    if (gracePeriod > 2) {
+      setSuggestedAuctions(suggested);
+      return;
+    } else {
+      setGracePeriod(value => value + 1);
+    }
   }, 1000);
 
   return suggestedState.cata({
-    Loading: () => <SuggestedContainer></SuggestedContainer>,
+    Loading: () => <SuggestedContainer>
+      <CardPlaceholder />
+      <CardPlaceholder />
+      <CardPlaceholder />
+    </SuggestedContainer>,
     Success: () => (
       <SuggestedContainer>
         {suggestedAuctions.map(auction => (

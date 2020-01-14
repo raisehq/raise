@@ -95,6 +95,10 @@ const App = ({
     }
   }, []);
 
+  useEffect(() => {
+    if (initStep && initStep !== step) setStep(initStep);
+  }, [initStep]);
+
   useAsyncEffect(async () => {
     const { pathname } = history.location;
 

@@ -12,7 +12,7 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 const EXPERIMENT_DEPOSIT_ID = process.env.REACT_APP_AB_TEST_SKIP_DEPOSIT;
 
-const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
+const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, publicRoute, ...rest }: any) => {
   const {
     store: {
       config: { network, networkId },
@@ -55,9 +55,13 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   if (connectionError) {
     return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
   }
-  // Check if is Logged
-  if (!isLogged && !pathname.includes('/join')) {
+  // Check if is Logged and not public
+  if (!publicRoute && !isLogged && !pathname.includes('/join')) {
     return <Redirect to="/join" />;
+  }
+
+  if (publicRoute && !isLogged) {
+    return <Layout {...rest} />;
   }
 
   if (accountMatches && networkMatches && cryptotypeId !== null && hasDeposit !== undefined) {
@@ -76,7 +80,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
               <Variant id="1">
                 {firstLogin && pushTo('/deposit')}
                 {!firstLogin && !acceptedRole && pushTo('/')}
-                {!firstLogin && rest.path === pathname && acceptedRole && <Layout {...rest} />}
+                {!firstLogin && acceptedRole && <Layout {...rest} />}
               </Variant>
             </Experiment>
           </>
@@ -87,14 +91,15 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     if (!acceptedRole) {
       return <Redirect to="/" />;
     }
-    if (rest.path === pathname && acceptedRole) {
+    if (acceptedRole) {
       return <Layout {...rest} />;
     }
   } else {
     // on case the connection with web3 are not ok or we have the correct conection but are different wallets
     // eslint-disable-next-line
     if (pathname !== '/verify-web3' && (cryptotypeId === CryptoWallets.NotConnected || unlocked)) {
-      return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
+      history.push(`/verify-web3?redirect=${history.location.pathname}`);
+      return null;
     }
   }
   // On case account not match and network not match
