@@ -447,8 +447,8 @@ const App = ({
         error: loginError,
         mountNode,
         closeButton,
-        open, 
-        history
+        open,
+        pathRedirect
       }}
     >
       {getStep()}

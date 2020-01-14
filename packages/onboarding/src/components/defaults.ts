@@ -1,5 +1,5 @@
 const defaultContext = {
-  history: {},
+  pathRedirect: '',
   onSetStep: () => () => null,
   onSetCredentials: () => null,
   onSendCredentials: () => null,

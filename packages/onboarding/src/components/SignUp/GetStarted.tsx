@@ -17,14 +17,14 @@ import LocalData from '../localData';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 const GetStarted = () => {
-  const { onSetStep, history } = useContext<IContext>(AppContext);
+  const { onSetStep, pathRedirect } = useContext<IContext>(AppContext);
 
   useAsyncEffect(async () => {
     const auth = LocalData.getObj('auth');
     if (auth && auth.token) {
-      window.location.href = redirectFormBloomApp();
+      window.location.href = redirectFormBloomApp() + (pathRedirect ? pathRedirect : '');
     }
-  }, [history.location.pathname]);
+  }, [pathRedirect]);
 
   return (
     <ChooseSignUpWrapper>
