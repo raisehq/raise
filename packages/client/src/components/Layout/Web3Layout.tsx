@@ -80,7 +80,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, public
               <Variant id="1">
                 {firstLogin && pushTo('/deposit')}
                 {!firstLogin && !acceptedRole && pushTo('/')}
-                {!firstLogin && rest.path === pathname && acceptedRole && <Layout {...rest} />}
+                {!firstLogin && acceptedRole && <Layout {...rest} />}
               </Variant>
             </Experiment>
           </>
@@ -91,14 +91,15 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, public
     if (!acceptedRole) {
       return <Redirect to="/" />;
     }
-    if (rest.path === pathname && acceptedRole) {
+    if (acceptedRole) {
       return <Layout {...rest} />;
     }
   } else {
     // on case the connection with web3 are not ok or we have the correct conection but are different wallets
     // eslint-disable-next-line
     if (pathname !== '/verify-web3' && (cryptotypeId === CryptoWallets.NotConnected || unlocked)) {
-      return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
+      history.push(`/verify-web3?redirect=${history.location.pathname}`);
+      return null;
     }
   }
   // On case account not match and network not match
