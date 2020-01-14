@@ -448,7 +448,7 @@ const App = ({
         mountNode,
         closeButton,
         open,
-        pathRedirect
+        history
       }}
     >
       {getStep()}

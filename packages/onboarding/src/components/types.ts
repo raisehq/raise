@@ -60,5 +60,5 @@ export interface IContext {
   open: boolean;
   closeButton: boolean;
   onResetToken: () => null | void | Promise<any>;
-  pathRedirect: string;
+  history: any;
 }
