@@ -9,6 +9,13 @@ const size = {
   desktop: '950px'
 };
 
+export const commonModal = {
+  borderRadius: '4px',
+  boxShadow: '0 10px 26px 0 rgba(6, 52, 40, 0.1)',
+  margin: '0 !important',
+  padding: '0 !important'
+};
+
 export const OnboardingCloseIcon = styled(Icon)``;
 
 export const OnboardingCloseButton = styled(Button)`
@@ -169,5 +176,72 @@ export const OnboardingTitleWrapper: any = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     padding: 1%;
+  }
+`;
+
+export const OnboardingSimpleModal: any = styled(Modal)`
+  &&& {
+    width: ${size.mobileL};
+
+    @media (max-width: ${size.mobileL}) {
+      width: 100%;
+    }
+  }
+`;
+
+export const ConfirmLogo = styled.img`
+  display: block;
+  width: 100px;
+  height: auto;
+`;
+
+export const ConfirmCros = styled(Icon)``;
+
+export const ConfirmHeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 50px;
+  align-items: center;
+`;
+
+export const OnboardingWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .visuals {
+    flex: 0 1 100%;
+    background: #f7fdff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .process {
+    flex: 0 1 100%;
+    background: #fff;
+    padding: 50px;
+    box-sizing: border-box;
+  }
+
+  .error.field {
+    .ui.search {
+      background-color: #fff6f6;
+      border-color: #e0b4b4;
+      box-shadow: none;
+      color: #9f3a38 !important;
+    }
   }
 `;
