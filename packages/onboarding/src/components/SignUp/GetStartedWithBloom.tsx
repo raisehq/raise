@@ -24,6 +24,7 @@ const GetStartedWithBloom = ({ onBack }) => {
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
 
+  
   const { onLoginWithBloom }: any = useContext(AppContext);
 
   useInterval(async () => {
