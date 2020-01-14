@@ -14,16 +14,35 @@ import {
 import { redirectFromBloomApp } from '../../services';
 import { Image } from 'semantic-ui-react';
 import LocalData from '../localData';
+import { verifyBloomLogin } from '../../services';
+import useInterval from '../../hooks/useInterval';
 
 const GetStarted = () => {
-  const { onSetStep } = useContext<IContext>(AppContext);
+  const { onSetStep, onLoginWithBloom } = useContext<IContext>(AppContext);
 
-  useEffect(() => {
-    const auth = LocalData.getObj('auth');
-    if (auth && auth.token) {
-      window.location.href = redirectFromBloomApp();
+  useInterval(async () => {
+    if (window.location.href.includes('bloom')) {
+      const path = window.location.search.split('=');
+      const token = path[path.length - 1];
+      const response = await verifyBloomLogin(token);
+      response.fold(
+        error => {
+          console.log(error);
+        },
+        response => {
+          const {
+            data: {
+              data: { result }
+            }
+          } = response;
+
+          if (result.id) {
+            onLoginWithBloom(result);
+          }
+        }
+      );
     }
-  }, []);
+  }, 3000);
 
   return (
     <ChooseSignUpWrapper>

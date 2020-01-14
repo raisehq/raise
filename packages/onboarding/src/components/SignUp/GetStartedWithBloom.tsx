@@ -102,7 +102,7 @@ const GetStartedWithBloom = ({ onBack }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={{ callbackUrl: redirectFromBloomApp() }}
+            buttonOptions={{ callbackUrl: `${redirectFromBloomApp()}?bloom=${bloomToken}` }}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>
