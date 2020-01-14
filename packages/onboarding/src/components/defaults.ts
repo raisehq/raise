@@ -1,10 +1,12 @@
 const defaultContext = {
+  history: {},
   onSetStep: () => () => null,
   onSetCredentials: () => null,
   onSendCredentials: () => null,
   onResetPassword: () => null,
   onSetPasswordBorrower: () => null,
   onActivateAccount: () => null,
+  onLoginWithBloom: () => null,
   onLogin: () => null,
   error: false,
   onLoginURL: null,

@@ -19,7 +19,10 @@ const URL = {
   REFRESH: `${getHost('AUTH')}/jwt/refresh`,
   CHECK_USERNAME: `${getHost('AUTH')}/users/username/exists?username=`,
   CHECK_EMAIL: `${getHost('AUTH')}/users/email/exists`,
-  CHECK_COUNTRYBLOCKED: `${getHost('AUTH')}/users/country/blocked?country_id=`
+  CHECK_COUNTRYBLOCKED: `${getHost('AUTH')}/users/country/blocked?country_id=`,
+  BLOOM_SIGN_IN: `${getHost('CORE')}/kyc/scan`,
+  BLOOM_LOGIN: `${getHost('AUTH')}/oauth/bloom/authenticate`,
+  REDIRECT: `${getHost('APP')}/verify-web3?bloom=`
 };
 
 export const signUp = async data => {
@@ -29,7 +32,7 @@ export const signUp = async data => {
     ...COMMON_HEADERS,
     data
   };
-  
+
   return await to(axios(config));
 };
 
@@ -61,9 +64,7 @@ export const changePassword = async (token, password) => {
     }
   };
 
-  return await to(
-    axios.put(`${URL.CHANGE_PASSWORD}`, { token, password: password }, config)
-  );
+  return await to(axios.put(`${URL.CHANGE_PASSWORD}`, { token, password: password }, config));
 };
 
 export const validateToken = async ({ token }) => {
@@ -72,7 +73,7 @@ export const validateToken = async ({ token }) => {
     method: 'GET',
     ...COMMON_HEADERS
   };
-  
+
   return await to(axios(config));
 };
 export const updateToken = async token => {
@@ -113,7 +114,10 @@ export const checkEmail = async email => {
 
   const request = await to(axios(config));
 
-  return request.fold(() => Right('Not Exist'), () => Left('Exist'));
+  return request.fold(
+    () => Right('Not Exist'),
+    () => Left('Exist')
+  );
 };
 
 export const checkBlockedCountry = async countryid => {
@@ -131,4 +135,19 @@ export const checkBlockedCountry = async countryid => {
     () => Left(null),
     request => Either.either(request.data.exist === 0)
   );
+};
+
+export const bloomSignIn = () => URL.BLOOM_SIGN_IN;
+
+export const redirectFromBloomApp = () => URL.REDIRECT;
+
+export const verifyBloomLogin = async tokenBloom => {
+  const config: any = {
+    url: `${URL.BLOOM_LOGIN}`,
+    method: 'POST',
+    ...COMMON_HEADERS,
+    data: { bloom_id: tokenBloom }
+  };
+
+  return await to(axios(config));
 };
