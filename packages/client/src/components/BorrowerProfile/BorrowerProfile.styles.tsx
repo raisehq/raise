@@ -17,8 +17,10 @@ export const Container = styled.div`
 export const LoanContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin: 0 auto;
+  flex-wrap: wrap;
   margin-top: 104px;
+  max-width: 797px;
+  flex-basis: 100%;
 `;
 
 export const BorrowerInfoContainer = styled.div`
@@ -165,8 +167,6 @@ export const HeaderImage = styled.div`
 `;
 
 export const BorrowerLoansBox = styled.div`
-  width: 100%;
-
   &&& .ui.secondary.pointing.menu .active.item {
     border-color: ${theme.colors.complementary};
   }
