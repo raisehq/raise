@@ -12,6 +12,7 @@ import {
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
+import { WalletButton } from '../WalletButton';
 import CryptoWallets from '../../commons/cryptoWallets';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
@@ -69,16 +70,14 @@ const Wallet = ({ onNext }: any) => {
         <SelectYourWalletList>
           {((isMobile && defaultWallet && defaultWallet.name === CryptoWallets.Coinbase) ||
             !isMobile) && (
-            <SelectWalletOptionItem key="coinbase">
-              <SelectWalletOptionButton
-                basic
-                color="black"
-                onClick={handlerWallet(CryptoWallets.Coinbase)}
-              >
-                Coinbase
-              </SelectWalletOptionButton>
-            </SelectWalletOptionItem>
-          )}
+              <SelectWalletOptionItem key="coinbase">
+                <WalletButton
+                  onClickAction={handlerWallet(CryptoWallets.Coinbase)}
+                  walletName="Coinbase"
+                  walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
+                />
+              </SelectWalletOptionItem>
+            )}
           {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
             <SelectWalletOptionItem key="metamask">
               <SelectWalletOptionButton
@@ -116,34 +115,34 @@ const Wallet = ({ onNext }: any) => {
             (defaultWallet.name !== CryptoWallets.Opera &&
               defaultWallet.name !== CryptoWallets.Coinbase &&
               defaultWallet.name !== CryptoWallets.Metamask)) && (
-            <>
-              {isMobile && (
-                <SelectWalletOptionItem key="coinbase">
+              <>
+                {isMobile && (
+                  <SelectWalletOptionItem key="coinbase">
+                    <SelectWalletOptionButton
+                      basic
+                      color="black"
+                      onClick={() => handlerLink('coinbase')}
+                    >
+                      Coinbase
+                  </SelectWalletOptionButton>
+                  </SelectWalletOptionItem>
+                )}
+                <SelectWalletOptionItem key="metamask">
                   <SelectWalletOptionButton
                     basic
                     color="black"
-                    onClick={() => handlerLink('coinbase')}
+                    onClick={() => handlerLink('metamask')}
                   >
-                    Coinbase
-                  </SelectWalletOptionButton>
+                    Metamask
+                </SelectWalletOptionButton>
                 </SelectWalletOptionItem>
-              )}
-              <SelectWalletOptionItem key="metamask">
-                <SelectWalletOptionButton
-                  basic
-                  color="black"
-                  onClick={() => handlerLink('metamask')}
-                >
-                  Metamask
+                <SelectWalletOptionItem key="opera">
+                  <SelectWalletOptionButton basic color="black" onClick={() => handlerLink('opera')}>
+                    Opera Wallet
                 </SelectWalletOptionButton>
-              </SelectWalletOptionItem>
-              <SelectWalletOptionItem key="opera">
-                <SelectWalletOptionButton basic color="black" onClick={() => handlerLink('opera')}>
-                  Opera Wallet
-                </SelectWalletOptionButton>
-              </SelectWalletOptionItem>
-            </>
-          )}
+                </SelectWalletOptionItem>
+              </>
+            )}
         </SelectYourWalletList>
       </SelectYourWalletContainer>
     </Web3CheckWalletWrapper>
