@@ -28,9 +28,6 @@ const DesktopHeader = () => {
         login: { logged: isLogged }
       }
     },
-    actions: {
-      onboarding: { showOnboarding }
-    },
     web3Status: { hasDeposit }
   }: any = useContext(AppContext);
   const { visible, visibleMenu } = useMenuVisibility();
@@ -48,6 +45,14 @@ const DesktopHeader = () => {
     scrollToTop();
   };
 
+  const openLogin = () => {
+    history.push('/login');
+  }
+
+  const openSignup = () => {
+    history.push('/join');
+  }
+
   // If there is a parent for TopBanner and HeaderWrapper, it will break the sticky css rule and menu will not get fixed once scroll
   return visible ? (
     <>
@@ -58,7 +63,6 @@ const DesktopHeader = () => {
         hasDepositAction={onDepositAction}
         enabled={enableBanner}
       />
-
       <HeaderWrapper>
         <RaiseHeader>
           <HeaderGroup>
@@ -72,16 +76,16 @@ const DesktopHeader = () => {
                     Create loan
                   </HeaderMenuItem>
                 ) : (
-                  <Link
-                    to="toGetStarted"
-                    spy
-                    smooth
-                    duration={500}
-                    offset={HEADER_MENU_SIZE.toGetStarted}
-                  >
-                    <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
-                  </Link>
-                )}
+                    <Link
+                      to="toGetStarted"
+                      spy
+                      smooth
+                      duration={500}
+                      offset={HEADER_MENU_SIZE.toGetStarted}
+                    >
+                      <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+                    </Link>
+                  )}
                 <HeaderMenuItem>
                   <Link
                     onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
@@ -107,8 +111,8 @@ const DesktopHeader = () => {
                 </>
               )}
               <HeaderLogout
-                onLogin={() => showOnboarding('login')}
-                onSignup={() => showOnboarding('signup')}
+                onLogin={openLogin}
+                onSignup={openSignup}
               />
             </>
           </HeaderGroup>
