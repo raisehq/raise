@@ -26,7 +26,7 @@ build-front-review:
     REACT_APP_HOST_URL: 'https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
   script:
     - 'echo $REACT_APP_HOST_URL'
-#   - 'npx lerna bootstrap --ci'
+    #   - 'npx lerna bootstrap --ci'
     - 'yarn --pure-lockfile --cache-folder .yarn'
     - 'yarn run client:build:integration'
   only:
@@ -42,7 +42,7 @@ build-front-production:
   stage: build
   script:
     - 'echo $REACT_APP_HOST_URL'
-#   - 'npx lerna bootstrap --ci'
+    #   - 'npx lerna bootstrap --ci'
     - 'yarn --pure-lockfile --cache-folder .yarn'
     - 'yarn run client:build:production'
   only:
@@ -56,7 +56,7 @@ build-front-integration:
   stage: build
   script:
     - 'echo $REACT_APP_HOST_URL'
-#   - 'npx lerna bootstrap --ci'
+    #   - 'npx lerna bootstrap --ci'
     - 'yarn --pure-lockfile --cache-folder .yarn'
     - 'yarn run client:build:integration'
     - 'mv  packages/client/build  packages/client/build_int'
@@ -101,9 +101,9 @@ cypress-e2e:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
     - 'cd packages/testing'
-    - '$(npm bin)/cypress cache path'
-    - '$(npm bin)/cypress cache list'
-    - '$(npm bin)/cypress verify'
+    - 'npx cypress cache path'
+    - 'npx cypress cache list'
+    - 'npx cypress verify'
     - 'npm run ci:run'
   artifacts:
     expire_in: '1 week'
@@ -128,9 +128,9 @@ cypress-e2e-integration:
   script:
     - 'cd packages/testing'
     - yarn
-    - '$(npm bin)/cypress cache path'
-    - '$(npm bin)/cypress cache list'
-    - '$(npm bin)/cypress verify'
+    - 'npx cypress cache path'
+    - 'npx cypress cache list'
+    - 'npx cypress verify'
     - 'yarn run ci:run'
   artifacts:
     expire_in: '1 week'
