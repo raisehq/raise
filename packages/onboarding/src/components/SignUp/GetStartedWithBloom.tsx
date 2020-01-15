@@ -24,7 +24,12 @@ const GetStartedWithBloom = ({ onBack }) => {
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
 
-  const { onLoginWithBloom, bloomToken }: any = useContext(AppContext);
+  const { onLoginWithBloom, bloom_token }: any = useContext(AppContext);
+
+  useEffect(() => {
+    setTokenBloom(bloom_token ? bloom_token : bloomToken());
+    setIsScreenIdle(true);
+  }, []);
 
   useInterval(async () => {
     const response = await verifyBloomLogin(tokenBloom);
@@ -46,10 +51,7 @@ const GetStartedWithBloom = ({ onBack }) => {
     );
   }, 5000);
 
-  useEffect(() => {
-    setTokenBloom(bloomToken ? bloomToken : bloomToken());
-    setIsScreenIdle(true);
-  }, []);
+  
 
   useEffect(() => {
     const events = ['load', 'mousemove', 'mousedown', 'click', 'scroll', 'keypress'];

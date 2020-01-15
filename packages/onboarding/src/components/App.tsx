@@ -82,7 +82,7 @@ const App = ({
   const [auth, setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
-  const [bloomToken, setBloomToken] = useState('');
+  const [bloom_token, setBloomToken] = useState('');
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
@@ -464,7 +464,7 @@ const App = ({
         closeButton,
         open,
         history,
-        bloomToken
+        bloom_token
       }}
     >
       {getStep()}

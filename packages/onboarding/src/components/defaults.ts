@@ -1,6 +1,6 @@
 const defaultContext = {
   history: {},
-  bloomToken: '',
+  bloom_token: '',
   onSetStep: () => () => null,
   onSetCredentials: () => null,
   onSendCredentials: () => null,
