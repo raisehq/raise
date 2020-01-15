@@ -4,6 +4,8 @@ import 'url-search-params-polyfill';
 import { AccountType } from '@raisehq/components';
 import AppContext from './App.context';
 import GetStarted from './SignUp/GetStarted';
+import GetStartedWithEmail from './SignUp/GetStartedWithEmail';
+import GetStartedWithBloom from './SignUp/GetStartedWithBloom';
 import Confirm from './SignUp/Confirm';
 import SignIn from './SignIn/SignIn';
 import Verified from './Verification/Verified';
@@ -18,6 +20,7 @@ import BorrowerSignUp from './BorrowerSignUp/Passwords';
 import BorrowerSignUpError from './BorrowerSignUp/Error';
 import BorrowerSignUpOK from './BorrowerSignUp/Success';
 import PanelWithImage from './Modals/PanelWithImage';
+import Panel from './Modals/Panel';
 import SimpleModal from './Modals/Simple';
 import BigSimpleModal from './Modals/BigSimpleModal'
 import { ICredentials, Steps } from './types';
@@ -31,6 +34,8 @@ import defaultContext from './defaults';
 
 const Step = daggy.taggedSum('UI', {
   Start: [],
+  SignUpWithEmail: [],
+  SignUpWithBloom: [],
   StartMini: [],
   SignIn: [],
   Confirm: [],
@@ -241,6 +246,39 @@ const App = ({
     );
   };
 
+  const onLoginWithBloom = async result => {
+    const login = LocalData.get('firstLogin');
+
+    if (login) {
+      if (login === 'first') {
+        LocalData.set('firstLogin', 'passed');
+      }
+    } else {
+      LocalData.set('firstLogin', 'first');
+    }
+    LocalData.setObj('auth', {
+      token: result.public_key,
+      id: result.id,
+      status: result.userstatus_id,
+      type: result.accounttype_id
+    });
+
+    LocalData.setObj('user', result);
+
+    setAuthCookie(
+      {
+        token: result.public_key,
+        id: result.id,
+        status: result.userstatus_id,
+        type: result.accounttype_id
+      },
+      { domain: process.env.REACT_APP_COOKIE_DOMAIN }
+    );
+
+    setuserCookie(result, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
+    window.location.href = getHost('APP') + (pathRedirect ? pathRedirect : '');
+  };
+
   const onLogin = async () => {
     tagManager.sendEventCategory('Login', TMEvents.Click, 'login_attempt', host);
 
@@ -315,7 +353,17 @@ const App = ({
           <GetStarted />
         </PanelWithImage>
       ),
-      StartMini: () => <GetStarted mini />,
+      SignUpWithEmail: () => (
+        <PanelWithImage>
+          <GetStartedWithEmail />
+        </PanelWithImage>
+      ),
+      SignUpWithBloom: () => (
+        <Panel>
+          <GetStartedWithBloom onBack={() => setStep(Step.Start)} />
+        </Panel>
+      ),
+      StartMini: () => <GetStarted />,
       SignIn: () => (
         <SimpleModal>
           <SignIn />
@@ -393,6 +441,7 @@ const App = ({
         onSetPasswordBorrower,
         onActivateAccount,
         onRecover,
+        onLoginWithBloom,
         onLogin,
         onResetToken,
         credentials,
@@ -403,7 +452,8 @@ const App = ({
         error: loginError,
         mountNode,
         closeButton,
-        open
+        open,
+        history
       }}
     >
       {getStep()}
