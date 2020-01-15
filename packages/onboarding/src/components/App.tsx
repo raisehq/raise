@@ -83,6 +83,7 @@ const App = ({
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
   const [bloom_token, setBloomToken] = useState('');
+
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
@@ -108,13 +109,8 @@ const App = ({
     }
 
     if (pathname.includes('/bloom')) {
-      const params = window.location.search;
-      const separatedParams = params.split('=');
-      const token = separatedParams[separatedParams.length - 1];
-
-      setBloomToken(token);
-
-      setStep(Step.GetStartedWithBloom);
+      setBloomToken(bloom_token);
+      setStep(Step.SignUpWithBloom);
     }
 
     if (pathname.includes('verify/token')) {
@@ -476,3 +472,4 @@ const App = ({
 export default App;
 
 export { Step, App };
+
