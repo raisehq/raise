@@ -22,7 +22,7 @@ const URL = {
   CHECK_COUNTRYBLOCKED: `${getHost('AUTH')}/users/country/blocked?country_id=`,
   BLOOM_SIGN_IN: `${getHost('CORE')}/kyc/scan`,
   BLOOM_LOGIN: `${getHost('AUTH')}/oauth/bloom/authenticate`,
-  REDIRECT: `${getHost('APP')}/bloom`
+  REDIRECT: `${getHost('APP')}/login/bloom/:token`
 };
 
 export const signUp = async data => {
@@ -139,7 +139,7 @@ export const checkBlockedCountry = async countryid => {
 
 export const bloomSignIn = () => URL.BLOOM_SIGN_IN;
 
-export const redirectFromBloomApp = () => URL.REDIRECT;
+export const redirectFromBloomApp = token => URL.REDIRECT.replace(':token', token);
 
 export const verifyBloomLogin = async tokenBloom => {
   const config: any = {
