@@ -4,8 +4,8 @@ before_script:
 stages:
   - build
   - deploy
-  - test
   - review
+  - test
   - cleanup
 variables:
   AWS_DEFAULT_REGION: eu-west-1
