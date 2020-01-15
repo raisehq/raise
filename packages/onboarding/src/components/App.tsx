@@ -22,6 +22,7 @@ import BorrowerSignUpOK from './BorrowerSignUp/Success';
 import PanelWithImage from './Modals/PanelWithImage';
 import Panel from './Modals/Panel';
 import SimpleModal from './Modals/Simple';
+import BigSimpleModal from './Modals/BigSimpleModal'
 import { ICredentials, Steps } from './types';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import * as services from '../services';
@@ -369,9 +370,9 @@ const App = ({
         </SimpleModal>
       ),
       Confirm: () => (
-        <SimpleModal localClose>
+        <BigSimpleModal localClose>
           <Confirm />
-        </SimpleModal>
+        </BigSimpleModal>
       ),
       Verified: () => (
         <SimpleModal>
