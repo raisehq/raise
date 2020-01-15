@@ -82,7 +82,6 @@ const App = ({
   const [auth, setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
-  const [bloom_token, setBloomToken] = useState('');
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
@@ -103,8 +102,6 @@ const App = ({
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
-    console.log('APP.TSX');
-    console.log('Token: ', bloom_token);
 
     if (pathname === '/join') {
       setStep(Step.Start);
@@ -172,7 +169,6 @@ const App = ({
   }, [step]);
 
   const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
-  const onSetToken = (bloomToken: string) => setBloomToken(bloomToken);
 
   const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
@@ -370,7 +366,7 @@ const App = ({
       ),
       SignUpWithBloom: token => (
         <Panel>
-          <GetStartedWithBloom onBack={() => setStep(Step.Start)} token />
+          <GetStartedWithBloom onBack={() => setStep(Step.Start)} token={token} />
         </Panel>
       ),
       StartMini: () => <GetStarted />,
@@ -463,9 +459,7 @@ const App = ({
         mountNode,
         closeButton,
         open,
-        history,
-        bloom_token,
-        onSetToken
+        history
       }}
     >
       {getStep()}
