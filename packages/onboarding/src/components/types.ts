@@ -61,4 +61,5 @@ export interface IContext {
   closeButton: boolean;
   onResetToken: () => null | void | Promise<any>;
   history: any;
+  bloomToken: string;
 }

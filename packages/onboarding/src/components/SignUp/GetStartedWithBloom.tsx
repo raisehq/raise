@@ -24,7 +24,7 @@ const GetStartedWithBloom = ({ onBack }) => {
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
 
-  const { onLoginWithBloom }: any = useContext(AppContext);
+  const { onLoginWithBloom, bloomToken }: any = useContext(AppContext);
 
   useInterval(async () => {
     const response = await verifyBloomLogin(tokenBloom);
@@ -47,7 +47,7 @@ const GetStartedWithBloom = ({ onBack }) => {
   }, 5000);
 
   useEffect(() => {
-    setTokenBloom(bloomToken());
+    setTokenBloom(bloomToken ? bloomToken : bloomToken());
     setIsScreenIdle(true);
   }, []);
 
@@ -102,7 +102,7 @@ const GetStartedWithBloom = ({ onBack }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={{ callbackUrl: `${redirectFromBloomApp()}${bloomToken()}` }}
+            buttonOptions={{ callbackUrl: `${redirectFromBloomApp()}${tokenBloom}` }}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>

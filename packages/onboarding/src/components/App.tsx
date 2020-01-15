@@ -82,6 +82,7 @@ const App = ({
   const [auth, setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
+  const [bloomToken, setBloomToken] = useState('');
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
@@ -104,6 +105,16 @@ const App = ({
 
     if (pathname === '/join') {
       setStep(Step.Start);
+    }
+
+    if (pathname.includes('/bloom')) {
+      const params = window.location.search;
+      const separatedParams = params.split('=');
+      const token = separatedParams[separatedParams.length - 1];
+
+      setBloomToken(token);
+
+      setStep(Step.GetStartedWithBloom);
     }
 
     if (pathname.includes('verify/token')) {
@@ -452,7 +463,8 @@ const App = ({
         mountNode,
         closeButton,
         open,
-        history
+        history,
+        bloomToken
       }}
     >
       {getStep()}
