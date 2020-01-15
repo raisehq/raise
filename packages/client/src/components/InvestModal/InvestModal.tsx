@@ -39,11 +39,11 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const [stage, setStage] = useState(UI.Confirm);
   const [investment, setInvestment] = useState(0);
 
-  const invested = loan.lenderAmount && Number(fromWei(loan.lenderAmount));
-  const notConnected = !hasProvider || !unlocked || !accountMatches || !networkMatches;
+  const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
+  const connected = hasProvider && unlocked && accountMatches && networkMatches;
 
   const buttonText = match(
-    [!!notConnected, !!invested],
+    [connected, invested],
     [true, ANY],
     () => 'INVEST',
     [false, true],
@@ -84,7 +84,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
         className={className}
         fluid
         onClick={openModal}
-        disabled={isLogged ? !notConnected || kyc_status !== 3 : false}
+        disabled={!(isLogged && connected && kyc_status === 3)}
       >
         {buttonText}
       </LenderButton>

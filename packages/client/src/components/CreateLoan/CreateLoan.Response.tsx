@@ -130,7 +130,7 @@ export const getLoanAction = (stage, values, methods) => {
       <LoanConfirmation>
         <Header as="h2">Congrats!</Header>
         <p>Your loan request have been created.</p>
-        <ConfirmButton id="btn-check" as={Link} to="/dashboard">
+        <ConfirmButton id="btn-check" as={Link} to="/">
           Check your loans
         </ConfirmButton>
         <NewLoanAnchor onClick={onRetry}>Create a new loan</NewLoanAnchor>
