@@ -4,3 +4,4 @@ cypress/snapshots/*
 cypress/results
 contracts
 .db
+ganache_db

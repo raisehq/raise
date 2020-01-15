@@ -34,7 +34,7 @@ variables:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - packages/testing/contracts
+    - packages/testing/ganache_db
     - '$CI_PROJECT_DIR/packages/testing/.cache/Cypress'
 
 build-front-review:
@@ -157,8 +157,8 @@ cypress-e2e-integration:
       - packages/testing/cypress/screenshots
       - packages/testing/cypress/videos
       - packages/testing/cypress/snapshots
-  only:
-    - master
+#   only:
+#    - master
 
 review:
   image: python:3.7-alpine
