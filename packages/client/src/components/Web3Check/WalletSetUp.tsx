@@ -4,12 +4,13 @@ import {
   CardSubTitle,
   SelectYourWalletTitle,
   Web3CheckWalletWrapper,
-  SelectYourWalletContainer,
-  GoBack
+  SelectYourWalletContainer
 } from './Web3Check.styles';
 
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { isMobile } from 'react-device-detect';
+import { WalletButton } from '../WalletButton';
+import GoBackButton from '../GoBackButton';
 
 const WalletSetUp = ({ onBack }: any) => {
   return (
@@ -17,11 +18,20 @@ const WalletSetUp = ({ onBack }: any) => {
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletContainer>
         <SelectYourWalletTitle>
-          <CardTitle>Select your wallet</CardTitle>
-          <CardSubTitle>Get started by connecting one of the wallets below</CardSubTitle>
+          <CardTitle>Set up your wallet</CardTitle>
+          <CardSubTitle>
+            If you don't have a wallet there is no problem, click on the button bellow and create an
+            account in Coinbase. It's fast, easy and secure.
+          </CardSubTitle>
         </SelectYourWalletTitle>
+        {/* <WalletIcon />
+        <GreenWalletButton>
+          <GreenWalletButtonText></GreenWalletButtonText>
+        </GreenWalletButton>
+        <OtherWalletsText></OtherWalletsText> */}
+        <WalletButton />
+        <GoBackButton />
       </SelectYourWalletContainer>
-      <GoBack />
     </Web3CheckWalletWrapper>
   );
 };

@@ -221,3 +221,69 @@ export const CardBottom = styled.div`
   text-align: center;
   width: 324px;
 `;
+
+export const GreenActionButton = styled.div`
+  dispaly: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 338px;
+  border-radius: 4px;
+  background-color: #00da9e;
+  cursor: pointer;
+`;
+
+export const WhiteActionButton = styled.div`
+  dispaly: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 338px;
+  border-radius: 4px;
+  border: 1px solid #3c4251;
+  cursor: pointer;
+`;
+
+export const GreenActionText = styled.div`
+  width: 219px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  width: 259px;
+`;
+
+export const GreenActionTitleText = styled.div`
+  width: 219px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 21px;
+  text-align: center;
+`;
+
+export const WhiteActionText = styled.div`
+  width: 219px;
+  color: #3c4251;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  width: 259px;
+`;
+
+export const WhiteActionTitleText = styled.div`
+  width: 219px;
+  color: #3c4251;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 21px;
+  text-align: center;
+`;
+
+export const TextWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 12px;
+`;

@@ -4,7 +4,13 @@ import {
   CardSubTitle,
   SelectYourWalletTitle,
   Web3CheckWalletWrapper,
-  SelectYourWalletContainer
+  GreenActionButton,
+  GreenActionText,
+  WhiteActionButton,
+  WhiteActionText,
+  GreenActionTitleText,
+  WhiteActionTitleText,
+  TextWrapper
 } from './Web3Check.styles';
 
 import OnboardingProgressBar from '../OnboardingProgressBar';
@@ -14,12 +20,22 @@ const WalletConnectForm = ({ onExists, onNotexists }: any) => {
   return (
     <Web3CheckWalletWrapper>
       <OnboardingProgressBar step={1} isMobile={isMobile} />
-      <SelectYourWalletContainer>
-        <SelectYourWalletTitle>
-          <CardTitle>Select your wallet</CardTitle>
-          <CardSubTitle>Get started by connecting one of the wallets below</CardSubTitle>
-        </SelectYourWalletTitle>
-      </SelectYourWalletContainer>
+      <SelectYourWalletTitle>
+        <CardTitle>Connect Your Wallet</CardTitle>
+        <CardSubTitle>To start using Raise, you need to connect a digital wallet</CardSubTitle>
+      </SelectYourWalletTitle>
+      <GreenActionButton>
+        <TextWrapper>
+          <GreenActionTitleText>Connect to my existing wallet</GreenActionTitleText>
+          <GreenActionText>Metamask, Coinbase or Opera Wallet</GreenActionText>
+        </TextWrapper>
+      </GreenActionButton>
+      <WhiteActionButton>
+        <TextWrapper>
+          <WhiteActionTitleText>Don't have a wallet</WhiteActionTitleText>
+          <WhiteActionText>No problem, we can help you with that</WhiteActionText>
+        </TextWrapper>
+      </WhiteActionButton>
     </Web3CheckWalletWrapper>
   );
 };
