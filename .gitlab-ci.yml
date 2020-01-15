@@ -108,31 +108,32 @@ deploy-prod:
   only:
     - master
 
-# cypress-e2e:
-#   image: cypress/base:10
-#   stage: test
-#   variables:
-#     CYPRESS_url: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
-#     CYPRESS_baseUrl: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
-#     CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
-#   before_script:
-#     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
-#   script:
-#     - cd packages/testing
-#     - npm i
-#     - $(npm bin)/cypress cache path
-#     - $(npm bin)/cypress cache list
-#     - $(npm bin)/cypress verify
-#     - npm run ci:run
-#   artifacts:
-#     expire_in: 1 week
-#     when: always
-#     paths:
-#       - packages/testing/cypress/screenshots
-#       - packages/testing/cypress/videos
-#       - packages/testing/cypress/snapshots
-#   only:
-#     - merge_requests
+ cypress-e2e:
+   image: cypress/base:10
+   stage: test
+   variables:
+     CYPRESS_url: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
+     CYPRESS_baseUrl: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
+     CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
+   before_script:
+     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+   script:
+     - cd packages/testing
+     - npm i
+     - $(npm bin)/cypress cache path
+     - $(npm bin)/cypress cache list
+     - $(npm bin)/cypress verify
+     - npm run ci:run
+   artifacts:
+     expire_in: 1 week
+     when: always
+     paths:
+       - packages/testing/ganache_db
+       - packages/testing/cypress/screenshots
+       - packages/testing/cypress/videos
+       - packages/testing/cypress/snapshots
+   only:
+     - merge_requests
 
 cypress-e2e-integration:
   image: cypress/base:10
@@ -155,10 +156,11 @@ cypress-e2e-integration:
     when: always
     paths:
       - packages/testing/cypress/screenshots
+      - packages/testing/ganache_db
       - packages/testing/cypress/videos
       - packages/testing/cypress/snapshots
-#   only:
-#    - master
+   only:
+    - master
 
 review:
   image: python:3.7-alpine
