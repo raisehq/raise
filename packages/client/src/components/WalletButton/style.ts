@@ -1,16 +1,21 @@
 import styled from 'styled-components';
-// import { Button } from 'semantic-ui-react';
+// import { Icon } from 'semantic-ui-react';
 
-export const WalletIcon = styled.img`
+export const WalletLinkIcon = styled.img`
+  width: 17px;
+  height: 17px;
+`;
+
+export const WalletLogo = styled.img`
   width: 43px;
   height: 43px;
 `;
 
 export const WalletText = styled.div`
-  height: 24px;	
-  width: 155px;	
-  color: #3C4251;	
-  font-size: 16px;	
+  height: 24px;
+  width: 155px;
+  color: #3c4251;
+  font-size: 16px;
   line-height: 24px;
   margin-left: 19px;
 `;

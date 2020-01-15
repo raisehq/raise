@@ -1,21 +1,25 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
 // URLSearchParams polyfill for IE 11
-import URLSearchParams from '@ungap/url-search-params'
+import URLSearchParams from '@ungap/url-search-params';
 import ErrorConnection from './Web3Check.ErrorConnection';
 import { CardSized } from '../Layout/Layout.styles';
 import Wallet from './Web3Check.Wallet';
 import List from './Web3Check.List';
 import WalletConnect from './Web3Check.WalletConnect';
+import WalletConnectForm from './WalletConnectForm';
+import WalletSetUp from './WalletSetUp';
 import Stages from './Web3Check.stages';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 
-const getStage = (stage, handleNext, handleBack, handleSuccess) => {
+const getStage = (stage, handleNext, handleBack, handleSuccess, backToConnectForm) => {
   return stage.cata({
-    WalletSelector: () => <Wallet onNext={handleNext} />,
+    WalletConnectForm: () => <WalletConnectForm onExists={} onNotExists={} />,
+    WalletSetUp: () => <WalletSetUp onBack={backToConnectForm} />,
+    WalletSelector: () => <Wallet onNext={handleNext} onBack={backToConnectForm} />,
     WalletError: () => <ErrorConnection onBack={handleBack} />,
     WalletConnect: () => <WalletConnect onBack={handleBack} />,
     Checks: () => <List onSuccess={handleSuccess} onBack={handleBack} />
@@ -33,10 +37,10 @@ const Web3Check = () => {
       }
     }
   }: any = useContext(AppContext);
-  const redirect = (new URLSearchParams(history.location.search)).get('redirect');
+  const redirect = new URLSearchParams(history.location.search).get('redirect');
   const { web3 }: any = useWeb3();
   const tagManager = useGoogleTagManager('Wallet');
-  const [ui, setUI] = useState(Stages.WalletSelector);
+  const [ui, setUI] = useState(Stages.WalletConnectForm);
   useEffect(() => {
     if (web3 && unlocked) {
       tagManager.sendEvent(
@@ -49,6 +53,7 @@ const Web3Check = () => {
   }, []);
 
   useEffect(() => {
+    // TODO: check this logic ???????????
     if (web3 && unlocked && ui !== Stages.Checks && ui !== Stages.WalletSelector) {
       tagManager.sendEvent(
         TMEvents.Submit,
@@ -56,9 +61,13 @@ const Web3Check = () => {
         getWalletName(cryptotypeId).toLowerCase()
       );
       setUI(Stages.Checks);
-      handleSuccess()
+      handleSuccess();
     }
   }, [unlocked, web3, ui]);
+
+  const backToConnectForm = () => {
+    setUI(Stages.WalletConnectForm);
+  };
 
   const handleBack = () => {
     setUI(Stages.WalletSelector);
@@ -74,7 +83,9 @@ const Web3Check = () => {
 
   return (
     <Grid.Row>
-      <CardSized>{getStage(ui, handleNext, handleBack, handleSuccess)}</CardSized>
+      <CardSized>
+        {getStage(ui, handleNext, handleBack, handleSuccess, backToConnectForm)}
+      </CardSized>
     </Grid.Row>
   );
 };

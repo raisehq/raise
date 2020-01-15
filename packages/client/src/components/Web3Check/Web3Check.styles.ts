@@ -29,7 +29,7 @@ export const SelectYourWalletList = styled.div`
 `;
 
 export const SelectWalletOptionItem = styled.div`
-  margin: 7px 0;
+  margin-bottom: 24px;
 `;
 
 export const SelectWalletOptionListItem = styled.div`
@@ -90,8 +90,8 @@ export const CardContent = styled(Card.Content)`
   &&& {
     border-top: none !important;
     padding: ${({ box }) => {
-    return box === 'separated' ? '20px 50px 60px 50px !important' : '50px !important';
-  }}
+      return box === 'separated' ? '20px 50px 60px 50px !important' : '50px !important';
+    }}
     font-size: 14px;
   }
 `;
@@ -139,16 +139,26 @@ export const CardHeader = styled(Card.Header)`
   }
 `;
 
+export const GoBack = styled.div`
+  margin-top: 68.5px;
+`;
+
 export const CardTitle = styled.div`
   color: #3c4251;
-  font: 26px bold;
+  font-size: 26px;
+  font-weight: bold;
   line-height: 36px;
   text-align: center;
-  margin: 20px;
+  margin-top: 62px;
+  margin-bottom: 10px;
   text-align: center;
 `;
 export const CardSubTitle = styled.div`
   text-align: center;
+  color: #3c4251;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 39.5px;
 `;
 
 export const CardCenteredText = styled.div`
