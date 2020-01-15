@@ -34,7 +34,7 @@ import defaultContext from './defaults';
 const Step = daggy.taggedSum('UI', {
   Start: [],
   SignUpWithEmail: [],
-  SignUpWithBloom: [],
+  SignUpWithBloom: [{}],
   StartMini: [],
   SignIn: [],
   Confirm: [],
@@ -103,14 +103,11 @@ const App = ({
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
+    console.log('APP.TSX');
+    console.log('Token: ', bloom_token);
 
     if (pathname === '/join') {
       setStep(Step.Start);
-    }
-
-    if (pathname.includes('/bloom')) {
-      setBloomToken(bloom_token);
-      setStep(Step.SignUpWithBloom);
     }
 
     if (pathname.includes('verify/token')) {
@@ -146,6 +143,12 @@ const App = ({
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
+    if (pathname.includes('/login/bloom')) {
+      const path = pathname.split('/');
+      const token = path[path.length - 1];
+
+      setStep(Step.SignUpWithBloom(token));
+    }
   }, [history.location.pathname, open]);
 
   useEffect(() => {
@@ -169,6 +172,7 @@ const App = ({
   }, [step]);
 
   const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
+  const onSetToken = (bloomToken: string) => setBloomToken(bloomToken);
 
   const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
@@ -364,9 +368,9 @@ const App = ({
           <GetStartedWithEmail />
         </PanelWithImage>
       ),
-      SignUpWithBloom: () => (
+      SignUpWithBloom: token => (
         <Panel>
-          <GetStartedWithBloom onBack={() => setStep(Step.Start)} />
+          <GetStartedWithBloom onBack={() => setStep(Step.Start)} token />
         </Panel>
       ),
       StartMini: () => <GetStarted />,
@@ -460,7 +464,8 @@ const App = ({
         closeButton,
         open,
         history,
-        bloom_token
+        bloom_token,
+        onSetToken
       }}
     >
       {getStep()}
@@ -472,4 +477,3 @@ const App = ({
 export default App;
 
 export { Step, App };
-
