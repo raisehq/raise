@@ -15,9 +15,17 @@ import AppContext from '../AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 
-const getStage = (stage, handleNext, handleBack, handleSuccess, backToConnectForm) => {
+const getStage = (
+  stage,
+  handleNext,
+  handleBack,
+  handleSuccess,
+  backToConnectForm,
+  onExists,
+  onNotExists
+) => {
   return stage.cata({
-    WalletConnectForm: () => <WalletConnectForm onExists={} onNotExists={} />,
+    WalletConnectForm: () => <WalletConnectForm onExists={onExists} onNotExists={onNotExists} />,
     WalletSetUp: () => <WalletSetUp onBack={backToConnectForm} />,
     WalletSelector: () => <Wallet onNext={handleNext} onBack={backToConnectForm} />,
     WalletError: () => <ErrorConnection onBack={handleBack} />,
@@ -65,6 +73,14 @@ const Web3Check = () => {
     }
   }, [unlocked, web3, ui]);
 
+  const onExists = () => {
+    setUI(Stages.WalletSelector);
+  };
+
+  const onNotExists = () => {
+    setUI(Stages.WalletSetUp);
+  };
+
   const backToConnectForm = () => {
     setUI(Stages.WalletConnectForm);
   };
@@ -84,7 +100,15 @@ const Web3Check = () => {
   return (
     <Grid.Row>
       <CardSized>
-        {getStage(ui, handleNext, handleBack, handleSuccess, backToConnectForm)}
+        {getStage(
+          ui,
+          handleNext,
+          handleBack,
+          handleSuccess,
+          backToConnectForm,
+          onExists,
+          onNotExists
+        )}
       </CardSized>
     </Grid.Row>
   );
