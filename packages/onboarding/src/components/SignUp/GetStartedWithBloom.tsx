@@ -49,7 +49,7 @@ const GetStartedWithBloom = ({ onBack, token = '' }) => {
         }
       }
     );
-  }, 5000);
+  }, 3000);
 
   useEffect(() => {
     const events = ['load', 'mousemove', 'mousedown', 'click', 'scroll', 'keypress'];
