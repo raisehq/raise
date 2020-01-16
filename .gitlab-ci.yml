@@ -17,6 +17,8 @@ cache:
     - .yarn
     - packages/testing/ganache_db
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+    - packages/*/.yarn/*
+    - packages/*/node_modules/*
 
 build-front-review:
   stage: build
@@ -103,7 +105,7 @@ cypress-e2e:
     - 'yarn run cypress cache path'
     - 'yarn run cypress cache list'
     - 'yarn run cypress verify'
-    - 'npm run ci:run'
+    - 'yarn run ci:run'
   artifacts:
     expire_in: '1 week'
     when: always

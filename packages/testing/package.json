@@ -19,20 +19,20 @@
     "url": "git+https://damarnezht@bitbucket.org/herodevteam/raise.git"
   },
   "scripts": {
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "cypress:run:chrome": "cypress run --browser chrome",
+    "cypress:open": "yarn run cypress open",
+    "cypress:run": "yarn run cypress run",
+    "cypress:run:chrome": "yarn run cypress run --browser chrome",
     "ci:open": "sh cypress/scripts/run_ganache.sh yarn run cypress:open ",
     "ci:run": "sh cypress/scripts/run_ganache.sh yarn run cypress:run",
     "ci:run:chrome": "sh cypress/scripts/run_ganache.sh yarn run cypress:run:chrome",
-    "test": "npm run ci:open",
+    "test": "yarn run ci:open",
     "ganache:run": "ganache-cli --gasLimit 0xfffffffffff ---gasPrice 0x01 -i 6969 -m \"stamp polar cup smart ill agree human episode reform trigger text forget\" --db .gcache --port 8545",
     "cy:run": "node cypress/scripts/cypress.js"
   },
   "dependencies": {
     "@cypress/webpack-preprocessor": "^4.1.0",
     "@raisehq/components": "^0.1.8",
-    "cypress": "^3.4.1",
+    "cypress": "^3.8.2",
     "ganache-cli": "^6.7.0",
     "mochawesome": "^4.1.0",
     "node-slack-upload": "^2.0.0",
