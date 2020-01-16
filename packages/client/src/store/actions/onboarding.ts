@@ -2,7 +2,6 @@ import { Step } from '@raisehq/onboarding';
 
 export default (dispatch: any, state: any) => {
   const showOnboarding = troggle => {
-    console.log('TROGGLE!!! -----------> ', troggle);
     dispatch({
       type: 'ONBOARDING_SHOW',
       data: {

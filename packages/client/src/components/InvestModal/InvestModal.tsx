@@ -93,7 +93,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
         className={className}
         fluid
         onClick={openModal}
-        disabled={!(isLogged && connected && kyc_status === 3)}
+        disabled={isLogged ? connected && kyc_status === 3 : false}
       >
         {buttonText}
       </LenderButton>
