@@ -13,12 +13,8 @@ variables:
 cache:
   key: '${CI_COMMIT_REF_SLUG}'
   paths:
-    - node_modules/
-    - .yarn
     - packages/testing/ganache_db
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    - packages/*/.yarn/*
-    - packages/*/node_modules/*
 
 build-front-review:
   stage: build
@@ -27,8 +23,7 @@ build-front-review:
     REACT_APP_HOST_URL: 'https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
   script:
     - 'echo $REACT_APP_HOST_URL'
-    #   - 'npx lerna bootstrap --ci'
-    - 'yarn --pure-lockfile --cache-folder .yarn'
+    - 'yarn --pure-lockfile
     - 'yarn run client:build:integration'
   only:
     - merge_requests
@@ -43,8 +38,7 @@ build-front-production:
   stage: build
   script:
     - 'echo $REACT_APP_HOST_URL'
-    #   - 'npx lerna bootstrap --ci'
-    - 'yarn --pure-lockfile --cache-folder .yarn'
+    - 'yarn --pure-lockfile
     - 'yarn run client:build:production'
   only:
     - master
@@ -57,8 +51,7 @@ build-front-integration:
   stage: build
   script:
     - 'echo $REACT_APP_HOST_URL'
-    #   - 'npx lerna bootstrap --ci'
-    - 'yarn --pure-lockfile --cache-folder .yarn'
+    - 'yarn --pure-lockfile
     - 'yarn run client:build:integration'
     - 'mv  packages/client/build  packages/client/build_int'
   only:
@@ -101,6 +94,7 @@ cypress-e2e:
   before_script:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
+    - 'yarn --pure-lockfile
     - 'cd packages/testing'
     - 'yarn run cypress cache path'
     - 'yarn run cypress cache list'
@@ -127,8 +121,8 @@ cypress-e2e-integration:
   before_script:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
+    - 'yarn --pure-lockfile
     - 'cd packages/testing'
-    - yarn
     - 'yarn run cypress cache path'
     - 'yarn run cypress cache list'
     - 'yarn run cypress verify'
