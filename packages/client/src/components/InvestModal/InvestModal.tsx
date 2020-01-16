@@ -7,7 +7,7 @@ import AppContext from '../AppContext';
 import InvestState from './InvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
-
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
 import { match, ANY } from 'pampy';
 
@@ -22,6 +22,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
     web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
   }: any = useContext(AppContext);
   const {
+    history,
     modalRefs,
     store: {
       user: {
@@ -38,7 +39,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Confirm);
   const [investment, setInvestment] = useState(0);
-
+  const tagManager = useGoogleTagManager();
   const invested = loan.lenderAmount && Number(fromWei(loan.lenderAmount));
   const notConnected = !hasProvider || !unlocked || !accountMatches || !networkMatches;
 
@@ -59,6 +60,14 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
       setStage(UI.Confirm);
       setOpen(true);
     } else {
+      const isBorrowerProfile = history.location.pathname
+        .split('/')
+        .filter(pt => pt === 'borrowers');
+      tagManager.sendEventCategory(
+        'Card',
+        TMEvents.Click,
+        isBorrowerProfile ? 'borrower_profile' : 'marketplace'
+      );
       showOnboarding();
     }
   };
