@@ -3,10 +3,11 @@ import PrivateKeyProvider from 'truffle-privatekey-provider';
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 import cardsBorrower from '../fixtures/cards_borrower.json';
 import cardsLender from '../fixtures/cards_lender.json';
+import users from '../fixtures/users.json';
 import { createCard } from './cardManager';
 
 // Require only when start test
-import contracts from '../../contracts/contracts.json';
+import contracts from '../fixtures/contracts.json';
 
 /*
   Add plugin to make snapshots
@@ -45,6 +46,18 @@ Cypress.Commands.add('addCards', function(type) {
     cardsBorrower.users[0].loanRequests.push(newCard);
     win.UseWebsocket.trigger('loansByAccount', cardsBorrower);
     win.UseWebsocket.trigger('liveAuctionsByAccount', cardsBorrower);
+  });
+});
+
+/*
+  Mock the graph and the card creation
+*/
+Cypress.Commands.add('checkFakeDai', function(type) {
+  cy.window().then(win => {
+    const daiBalances = {
+      balances: users.map(address => ({ wad: '10000000000000000000', address }))
+    };
+    win.UseWebsocket.trigger('daiBalance', daiBalances);
   });
 });
 
