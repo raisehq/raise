@@ -33,7 +33,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
     await connectWallet(walletSelected, network, networkId);
 
-    onNext();
+    onNext('WalletSetUp');
   };
 
   return (

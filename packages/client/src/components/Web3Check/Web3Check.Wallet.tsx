@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import {
   CardTitle,
@@ -26,13 +26,18 @@ const Wallet = ({ onNext, onBack }: any) => {
       config: { network, networkId }
     }
   }: any = useContext(AppContext);
-  const { connectWallet }: any = useWeb3();
+  const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
+  const [defaultWallet, setDefaultWallet] = useState();
   const tagManager = useGoogleTagManager('Wallet');
+
+  useEffect(() => {
+    setDefaultWallet(getDefaultWeb3());
+  }, [web3]);
 
   const handlerWallet = walletSelected => async () => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
-
+    console.log('default wallet is ===> ', defaultWallet);
     if (isMobile) {
       switch (walletName) {
         case 'metamask':
@@ -48,10 +53,21 @@ const Wallet = ({ onNext, onBack }: any) => {
           break;
       }
     } else {
-      await connectWallet(walletSelected, network, networkId);
+      if (defaultWallet.name === -1 && walletName === 'metamask') {
+        window.open('http://metamask.app.link/', '_blank');
+      } else if (defaultWallet.name === -1 && walletName === 'opera') {
+        window.open('http://onelink.to/5xwf6x', '_blank');
+      } else {
+        try {
+          await connectWallet(walletSelected, network, networkId);
+          onNext('WalletSelector');
+        } catch (error) {
+          // console.log(error)
+        }
+      }
     }
 
-    onNext();
+
   };
 
   return (
