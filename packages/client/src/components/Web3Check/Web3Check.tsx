@@ -26,7 +26,7 @@ const getStage = (
 ) => {
   return stage.cata({
     WalletConnectForm: () => <WalletConnectForm onExists={onExists} onNotExists={onNotExists} />,
-    WalletSetUp: () => <WalletSetUp onBack={backToConnectForm} />,
+    WalletSetUp: () => <WalletSetUp onNext={handleNext} onBack={backToConnectForm} />,
     WalletSelector: () => <Wallet onNext={handleNext} onBack={backToConnectForm} />,
     WalletError: () => <ErrorConnection onBack={handleBack} />,
     WalletConnect: () => <WalletConnect onBack={handleBack} />,

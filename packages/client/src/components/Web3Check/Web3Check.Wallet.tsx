@@ -20,7 +20,7 @@ import { getWalletName } from '../../utils';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { isMobile } from 'react-device-detect';
 
-const Wallet = ({ onNext }: any) => {
+const Wallet = ({ onNext, onBack }: any) => {
   const {
     store: {
       config: { network, networkId }
@@ -86,7 +86,9 @@ const Wallet = ({ onNext }: any) => {
           </SelectWalletOptionItem>
           {!isMobile && (
             <GoBack>
-              <GoBackButton />
+              <GoBackButton
+                onClickAction={onBack}
+              />
             </GoBack>
           )}
         </SelectYourWalletList>
