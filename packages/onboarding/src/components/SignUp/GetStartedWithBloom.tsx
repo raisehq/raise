@@ -19,10 +19,10 @@ import bloomToken from 'uuid';
 import AppContext from '../App.context';
 import { isMobile } from 'react-device-detect';
 
-const GetStartedWithBloom = ({ onBack, token }) => {
+const GetStartedWithBloom = ({ onBack, token = '' }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
-  const [tokenBloom, setTokenBloom] = useState('');
+  const [tokenBloom, setTokenBloom] = useState(null);
 
   const { onLoginWithBloom }: any = useContext(AppContext);
 
@@ -50,8 +50,6 @@ const GetStartedWithBloom = ({ onBack, token }) => {
       }
     );
   }, 5000);
-
-
 
   useEffect(() => {
     const events = ['load', 'mousemove', 'mousedown', 'click', 'scroll', 'keypress'];

@@ -170,6 +170,8 @@ const App = ({
 
   const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
 
+  const onSetStepWithParam = (newStep: Steps) => param => () => setStep(Step[newStep](param));
+
   const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
   };
@@ -441,6 +443,7 @@ const App = ({
     <AppContext.Provider
       value={{
         onSetStep,
+        onSetStepWithParam,
         onSetCredentials,
         onSendCredentials,
         onResetPassword,
