@@ -28,6 +28,7 @@ const GetStartedWithBloom = ({ onBack, token }) => {
 
   useEffect(() => {
     setTokenBloom(token ? token : bloomToken());
+    setIsScreenIdle(true);
   }, []);
 
   useInterval(async () => {
@@ -50,10 +51,7 @@ const GetStartedWithBloom = ({ onBack, token }) => {
     );
   }, 5000);
 
-  useEffect(() => {
-    setTokenBloom(bloomToken());
-    setIsScreenIdle(true);
-  }, []);
+
 
   useEffect(() => {
     const events = ['load', 'mousemove', 'mousedown', 'click', 'scroll', 'keypress'];
