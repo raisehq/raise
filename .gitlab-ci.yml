@@ -13,7 +13,6 @@ variables:
 cache:
   key: '${CI_COMMIT_REF_SLUG}'
   paths:
-    - packages/testing/ganache_db
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
 
 build-front-review:
@@ -110,6 +109,10 @@ cypress-e2e:
       - packages/testing/cypress/snapshots
   only:
     - merge_requests
+  cache:
+    key: ganache-global-cache
+    paths:
+      - packages/testing/ganache_db
 
 cypress-e2e-integration:
   image: 'cypress/browsers:node10.16.0-chrome77'
@@ -135,6 +138,10 @@ cypress-e2e-integration:
       - packages/testing/ganache_db
       - packages/testing/cypress/videos
       - packages/testing/cypress/snapshots
+  cache:
+    key: ganache-global-cache
+    paths:
+      - packages/testing/ganache_db
   only:
     - master
 
