@@ -50,7 +50,7 @@ check_cache() {
   if [ -d "$ganache_directory" ] && [ -s "$ganache_directory/git_commit_hash" ]; then
     # If ganache_db exists, check the current commit hash versus origin integration
     current_commit_hash=`cat ganache_db/git_commit_hash`
-    remote_commit_hash=`git ls-remote https://gitlab.com/raisehq/contracts-solidity.git/ | awk "/integration/ {print \$1}"`
+    remote_commit_hash=$(git ls-remote https://gitlab.com/raisehq/contracts-solidity.git/ integration | cut -f1)
     echo "current : $current_commit_hash"
     echo "remote  : $remote_commit_hash" 
     if [ "$current_commit_hash" != "$remote_commit_hash" ]; then
