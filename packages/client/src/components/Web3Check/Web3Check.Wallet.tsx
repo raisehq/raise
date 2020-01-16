@@ -37,6 +37,11 @@ const Wallet = ({ onNext }: any) => {
       'wallet_attempt',
       getWalletName(walletSelected).toLowerCase()
     );
+    if (window.fbq) {
+      window.fbq('trackCustom', 'wallet_attempt', {
+        type: getWalletName(walletSelected).toLowerCase()
+      });
+    }
     await connectWallet(walletSelected, network, networkId);
 
     onNext();

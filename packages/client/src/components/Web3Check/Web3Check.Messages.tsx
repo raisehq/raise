@@ -100,7 +100,12 @@ const CurrentNotice = () => {
         'new_wallet',
         getWalletName(cryptotypeId).toLowerCase()
       );
-      history.push('/deposit')
+      if (window.fbq) {
+        window.fbq('trackCustom', 'new_wallet', {
+          type: getWalletName(cryptotypeId).toLowerCase()
+        });
+      }
+      history.push('/deposit');
     } catch (error) {
       console.error('[Web3Check.Message][HandleUploadSignature] Error : ', error);
     }

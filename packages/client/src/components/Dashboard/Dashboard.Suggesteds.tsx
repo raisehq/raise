@@ -17,8 +17,6 @@ const Suggesteds = ({ auctions, states }) => {
   const [suggestedAuctions, setSuggestedAuctions] = useState();
   const [suggestedState, setSuggestedState]: any = useState(Auctions.Loading);
 
-  console.log(suggestedAuctions)
-
   useEffect(() => {
     if (!suggestedAuctions) {
       setSuggestedState(Auctions.Loading);
@@ -44,11 +42,13 @@ const Suggesteds = ({ auctions, states }) => {
   }, 1000);
 
   return suggestedState.cata({
-    Loading: () => <SuggestedContainer>
-      <CardPlaceholder />
-      <CardPlaceholder />
-      <CardPlaceholder />
-    </SuggestedContainer>,
+    Loading: () => (
+      <SuggestedContainer>
+        <CardPlaceholder />
+        <CardPlaceholder />
+        <CardPlaceholder />
+      </SuggestedContainer>
+    ),
     Success: () => (
       <SuggestedContainer>
         {suggestedAuctions.map(auction => (
