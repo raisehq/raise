@@ -11,7 +11,6 @@ const FollowSteps = ({ isMobile }) => {
         <p>1. Click on the button above</p>
       )}
       <p>2. Follow Bloom's instructions</p>
-      <p>3. Make sure to have your Country registered at Bloom</p>
       <p>4. If you have any problem, send email to help@raise.it</p>
     </InstructionsWrapper>
   );

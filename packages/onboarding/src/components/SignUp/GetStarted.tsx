@@ -23,7 +23,7 @@ const GetStarted = () => {
       </ChooseSignUpSubtitleWrapper>
       <ChooseSignUpButtonList>
         <ChooseSignUpButton onClick={() => onSetStep('SignUpWithEmail')()}>
-          Sign Up with Email
+          Sign Up with email
         </ChooseSignUpButton>
         <ChooseSignUpWithBloomButton onClick={() => onSetStepWithParam('SignUpWithBloom')('')()}>
           <span>Sign Up</span>
