@@ -55,7 +55,6 @@ check_cache() {
     echo "remote  : $remote_commit_hash" 
     if [ "$current_commit_hash" != "$remote_commit_hash" ]; then
       echo "Generating DB cache due checksum failed"
-      exit 1
       generate_cache
     else
       echo "Checksum success"
