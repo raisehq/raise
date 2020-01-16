@@ -17,7 +17,7 @@ import useMenuVisibility from '../../hooks/useMenuVisibility';
 import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
 import TopBanner from '../TopBanner';
-
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 const DesktopHeader = () => {
   const {
     history,
@@ -31,6 +31,7 @@ const DesktopHeader = () => {
     web3Status: { hasDeposit }
   }: any = useContext(AppContext);
   const { visible, visibleMenu } = useMenuVisibility();
+  const tagManager = useGoogleTagManager();
   const {
     details: { kyc_status, accounttype_id }
   } = user;
@@ -47,11 +48,17 @@ const DesktopHeader = () => {
 
   const openLogin = () => {
     history.push('/login');
-  }
+  };
 
   const openSignup = () => {
+    const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'borrowers');
+    tagManager.sendEventCategory(
+      'Signup',
+      TMEvents.Click,
+      isBorrowerProfile ? 'borrower_profile' : 'marketplace'
+    );
     history.push('/join');
-  }
+  };
 
   // If there is a parent for TopBanner and HeaderWrapper, it will break the sticky css rule and menu will not get fixed once scroll
   return visible ? (
@@ -76,16 +83,16 @@ const DesktopHeader = () => {
                     Create loan
                   </HeaderMenuItem>
                 ) : (
-                    <Link
-                      to="toGetStarted"
-                      spy
-                      smooth
-                      duration={500}
-                      offset={HEADER_MENU_SIZE.toGetStarted}
-                    >
-                      <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
-                    </Link>
-                  )}
+                  <Link
+                    to="toGetStarted"
+                    spy
+                    smooth
+                    duration={500}
+                    offset={HEADER_MENU_SIZE.toGetStarted}
+                  >
+                    <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+                  </Link>
+                )}
                 <HeaderMenuItem>
                   <Link
                     onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
@@ -110,10 +117,7 @@ const DesktopHeader = () => {
                   <MyAccountButton />
                 </>
               )}
-              <HeaderLogout
-                onLogin={openLogin}
-                onSignup={openSignup}
-              />
+              <HeaderLogout onLogin={openLogin} onSignup={openSignup} />
             </>
           </HeaderGroup>
         </RaiseHeader>
