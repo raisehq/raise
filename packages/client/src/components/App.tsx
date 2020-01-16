@@ -244,7 +244,9 @@ const App = ({ history, match }: any) => {
                   layout={MainLayout}
                   exact
                   path="/"
-                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : DashboardLender}
+                  component={
+                    accounttypeId ? componentsByRole[accounttypeId].dashboard : DashboardLender
+                  }
                   roles={[1, 2]}
                 />
                 <Web3Layout
@@ -268,6 +270,7 @@ const App = ({ history, match }: any) => {
                 <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
                 <SimpleLayout exact path="/join" component={Join} />
                 <SimpleLayout exact path="/login" component={Join} />
+                <SimpleLayout exact path="/login/bloom/:token" component={Join} />
                 <SimpleLayout exact path="/join/verify/token/:token" component={Join} />
                 <SimpleLayout exact path="/join/password/reset/:token" component={Join} />
                 <SimpleLayout exact path="/join/activate/:token" component={Join} />

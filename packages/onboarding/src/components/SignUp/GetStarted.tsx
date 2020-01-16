@@ -14,7 +14,7 @@ import {
 import { Image } from 'semantic-ui-react';
 
 const GetStarted = () => {
-  const { onSetStep } = useContext<IContext>(AppContext);
+  const { onSetStep, onSetStepWithParam } = useContext<IContext>(AppContext);
 
   return (
     <ChooseSignUpWrapper>
@@ -23,9 +23,9 @@ const GetStarted = () => {
       </ChooseSignUpSubtitleWrapper>
       <ChooseSignUpButtonList>
         <ChooseSignUpButton onClick={() => onSetStep('SignUpWithEmail')()}>
-          Sign Up with Email
+          Sign Up with email
         </ChooseSignUpButton>
-        <ChooseSignUpWithBloomButton onClick={() => onSetStep('SignUpWithBloom')()}>
+        <ChooseSignUpWithBloomButton onClick={() => onSetStepWithParam('SignUpWithBloom')('')()}>
           <span>Sign Up</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
         </ChooseSignUpWithBloomButton>

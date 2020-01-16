@@ -19,12 +19,17 @@ import bloomToken from 'uuid';
 import AppContext from '../App.context';
 import { isMobile } from 'react-device-detect';
 
-const GetStartedWithBloom = ({ onBack }) => {
+const GetStartedWithBloom = ({ onBack, token = '' }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
-  const [tokenBloom, setTokenBloom] = useState('');
+  const [tokenBloom, setTokenBloom] = useState(null);
 
   const { onLoginWithBloom }: any = useContext(AppContext);
+
+  useEffect(() => {
+    setTokenBloom(token ? token : bloomToken());
+    setIsScreenIdle(true);
+  }, []);
 
   useInterval(async () => {
     const response = await verifyBloomLogin(tokenBloom);
@@ -44,12 +49,7 @@ const GetStartedWithBloom = ({ onBack }) => {
         }
       }
     );
-  }, 5000);
-
-  useEffect(() => {
-    setTokenBloom(bloomToken());
-    setIsScreenIdle(true);
-  }, []);
+  }, 3000);
 
   useEffect(() => {
     const events = ['load', 'mousemove', 'mousedown', 'click', 'scroll', 'keypress'];
@@ -102,7 +102,7 @@ const GetStartedWithBloom = ({ onBack }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={{ callbackUrl: `${redirectFromBloomApp()}${bloomToken()}` }}
+            buttonOptions={{ callbackUrl: redirectFromBloomApp(tokenBloom) }}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>

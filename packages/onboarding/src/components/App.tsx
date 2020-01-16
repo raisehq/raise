@@ -35,7 +35,7 @@ import defaultContext from './defaults';
 const Step = daggy.taggedSum('UI', {
   Start: [],
   SignUpWithEmail: [],
-  SignUpWithBloom: [],
+  SignUpWithBloom: [{}],
   StartMini: [],
   SignIn: [],
   Confirm: [],
@@ -83,6 +83,7 @@ const App = ({
   const [auth, setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
+
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
@@ -140,6 +141,12 @@ const App = ({
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
+    if (pathname.includes('/login/bloom')) {
+      const path = pathname.split('/');
+      const token = path[path.length - 1];
+
+      setStep(Step.SignUpWithBloom(token));
+    }
   }, [history.location.pathname, open]);
 
   useEffect(() => {
@@ -163,6 +170,8 @@ const App = ({
   }, [step]);
 
   const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
+
+  const onSetStepWithParam = (newStep: Steps) => param => () => setStep(Step[newStep](param));
 
   const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
@@ -358,9 +367,9 @@ const App = ({
           <GetStartedWithEmail />
         </PanelWithImage>
       ),
-      SignUpWithBloom: () => (
+      SignUpWithBloom: token => (
         <Panel>
-          <GetStartedWithBloom onBack={() => setStep(Step.Start)} />
+          <GetStartedWithBloom onBack={() => setStep(Step.Start)} token={token} />
         </Panel>
       ),
       StartMini: () => <GetStarted />,
@@ -435,6 +444,7 @@ const App = ({
     <AppContext.Provider
       value={{
         onSetStep,
+        onSetStepWithParam,
         onSetCredentials,
         onSendCredentials,
         onResetPassword,
