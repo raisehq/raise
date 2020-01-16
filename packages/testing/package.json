@@ -19,9 +19,9 @@
     "url": "git+https://damarnezht@bitbucket.org/herodevteam/raise.git"
   },
   "scripts": {
-    "cypress:open": "npx cypress open",
-    "cypress:run": "npx cypress run",
-    "cypress:run:chrome": "npx cypress run --browser chrome",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:chrome": "cypress run --browser chrome",
     "ci:open": "sh cypress/scripts/run_ganache.sh yarn run cypress:open ",
     "ci:run": "sh cypress/scripts/run_ganache.sh yarn run cypress:run",
     "ci:run:chrome": "sh cypress/scripts/run_ganache.sh yarn run cypress:run:chrome",
