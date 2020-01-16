@@ -1,52 +1,35 @@
-image: node:11-alpine
-
+image: 'node:11-alpine'
 before_script:
-  - |
-    #!/bin/sh
-    apk add --no-cache --virtual .build-deps \
-    ca-certificates \
-    make \
-    g++ \
-    wget \
-    git \
-    python \
-    py-pip \
-    tar && \
-    cd /usr/local/bin && \
-    wget https://yarnpkg.com/latest.tar.gz && \
-    tar zvxf latest.tar.gz && \
-    ln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \
-    cd - \
-    apk del .build-deps
-
+  - "#!/bin/sh\napk add --no-cache --virtual .build-deps \\\nca-certificates \\\nmake \\\ng++ \\\nwget \\\ngit \\\npython \\\npy-pip \\\ntar && \\\ncd /usr/local/bin && \\\nwget https://yarnpkg.com/latest.tar.gz && \\\ntar zvxf latest.tar.gz && \\\nln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \\\ncd - \\\napk del .build-deps\n"
 stages:
   - build
   - deploy
-  - test
   - review
+  - test
   - cleanup
-
 variables:
   AWS_DEFAULT_REGION: eu-west-1
-  npm_config_cache: '$CI_PROJECT_DIR/packages/testing/.npm'
-  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/packages/testing/.cache/Cypress'
-
+  CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
+  key: '${CI_COMMIT_REF_SLUG}'
   paths:
-    - packages/testing/contracts
-    - '$CI_PROJECT_DIR/packages/testing/.cache/Cypress'
+    - node_modules/
+    - .yarn
+    - packages/testing/ganache_db
+    - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+    - packages/*/.yarn/*
+    - packages/*/node_modules/*
 
 build-front-review:
   stage: build
   variables:
-    REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.$DOMAIN
-    REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
+    REACT_APP_COOKIE_DOMAIN: '.${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    REACT_APP_HOST_URL: 'https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
   script:
-    - echo $REACT_APP_HOST_URL
-    - npx lerna bootstrap --ci
-    - yarn run build:deps
-    - yarn run client:build:integration
+    - 'echo $REACT_APP_HOST_URL'
+    #   - 'npx lerna bootstrap --ci'
+    - 'yarn --pure-lockfile --cache-folder .yarn'
+    - 'yarn run client:build:integration'
   only:
     - merge_requests
   except:
@@ -59,10 +42,10 @@ build-front-review:
 build-front-production:
   stage: build
   script:
-    - echo $REACT_APP_HOST_URL
-    - npx lerna bootstrap --ci
-    - yarn run build:deps
-    - yarn run client:build:production
+    - 'echo $REACT_APP_HOST_URL'
+    #   - 'npx lerna bootstrap --ci'
+    - 'yarn --pure-lockfile --cache-folder .yarn'
+    - 'yarn run client:build:production'
   only:
     - master
   artifacts:
@@ -73,11 +56,11 @@ build-front-production:
 build-front-integration:
   stage: build
   script:
-    - echo $REACT_APP_HOST_URL
-    - npx lerna bootstrap --ci
-    - yarn run build:deps
-    - yarn run client:build:integration
-    - mv  packages/client/build  packages/client/build_int
+    - 'echo $REACT_APP_HOST_URL'
+    #   - 'npx lerna bootstrap --ci'
+    - 'yarn --pure-lockfile --cache-folder .yarn'
+    - 'yarn run client:build:integration'
+    - 'mv  packages/client/build  packages/client/build_int'
   only:
     - master
   artifacts:
@@ -86,91 +69,92 @@ build-front-integration:
       - packages/client/build_int
 
 deploy-int:
-  image: python:3.7-alpine
+  image: 'python:3.7-alpine'
   stage: deploy
   before_script:
-    - pip install awscli
+    - 'pip install awscli'
   script:
-    - mv packages/client/build_int build_int
-    - aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/
+    - 'mv packages/client/build_int build_int'
+    - 'aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/'
   only:
     - master
 
 deploy-prod:
-  image: python:3.7-alpine
+  image: 'python:3.7-alpine'
   stage: deploy
   before_script:
-    - pip install awscli
+    - 'pip install awscli'
   script:
-    - mv packages/client/build build
-    - aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/
+    - 'mv packages/client/build build'
+    - 'aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/'
   when: manual
   only:
     - master
 
-# cypress-e2e:
-#   image: cypress/base:10
-#   stage: test
-#   variables:
-#     CYPRESS_url: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
-#     CYPRESS_baseUrl: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
-#     CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/packages/testing/.cache/Cypress"
-#   before_script:
-#     - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
-#   script:
-#     - cd packages/testing
-#     - npm i
-#     - $(npm bin)/cypress cache path
-#     - $(npm bin)/cypress cache list
-#     - $(npm bin)/cypress verify
-#     - npm run ci:run
-#   artifacts:
-#     expire_in: 1 week
-#     when: always
-#     paths:
-#       - packages/testing/cypress/screenshots
-#       - packages/testing/cypress/videos
-#       - packages/testing/cypress/snapshots
-#   only:
-#     - merge_requests
-
-cypress-e2e-integration:
-  image: cypress/base:10
+cypress-e2e:
+  image: 'cypress/browsers:node10.16.0-chrome77'
   stage: test
   variables:
-    CYPRESS_url: https://app.herodev.es
-    CYPRESS_baseUrl: https://app.herodev.es
-    CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/packages/testing/.cache/Cypress'
+    CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
   before_script:
-    - apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+    - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
-    - cd packages/testing
-    - yarn
-    - $(npm bin)/cypress cache path
-    - $(npm bin)/cypress cache list
-    - $(npm bin)/cypress verify
-    - yarn run ci:run
+    - 'cd packages/testing'
+    - 'yarn run cypress cache path'
+    - 'yarn run cypress cache list'
+    - 'yarn run cypress verify'
+    - 'yarn run ci:run'
   artifacts:
-    expire_in: 1 week
+    expire_in: '1 week'
+    when: always
+    paths:
+      - packages/testing/ganache_db
+      - packages/testing/cypress/screenshots
+      - packages/testing/cypress/videos
+      - packages/testing/cypress/snapshots
+  only:
+    - merge_requests
+
+cypress-e2e-integration:
+  image: 'cypress/browsers:node10.16.0-chrome77'
+  stage: test
+  variables:
+    CYPRESS_url: 'https://app.herodev.es'
+    CYPRESS_baseUrl: 'https://app.herodev.es'
+    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+  before_script:
+    - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
+  script:
+    - 'cd packages/testing'
+    - yarn
+    - 'yarn run cypress cache path'
+    - 'yarn run cypress cache list'
+    - 'yarn run cypress verify'
+    - 'yarn run ci:run'
+  artifacts:
+    expire_in: '1 week'
     when: always
     paths:
       - packages/testing/cypress/screenshots
+      - packages/testing/ganache_db
       - packages/testing/cypress/videos
       - packages/testing/cypress/snapshots
   only:
     - master
 
 review:
-  image: python:3.7-alpine
+  image: 'python:3.7-alpine'
   stage: review
   before_script:
-    - pip install awscli
+    - 'pip install awscli'
   script:
-    - mv packages/client/build $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
-    - aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+    - 'mv packages/client/build $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+    - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
   environment:
     name: review/$CI_COMMIT_REF_SLUG
-    url: http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
+    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
     on_stop: stop-review
   only:
     - merge_requests
@@ -178,12 +162,12 @@ review:
     - master
 
 stop-review:
-  image: python:3.7-alpine
+  image: 'python:3.7-alpine'
   stage: cleanup
   before_script:
-    - pip install awscli
+    - 'pip install awscli'
   script:
-    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+    - 'aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive'
   when: manual
   variables:
     GIT_STRATEGY: none
