@@ -100,9 +100,9 @@ cypress-e2e:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
     - 'cd packages/testing'
-    - 'npx cypress cache path'
-    - 'npx cypress cache list'
-    - 'npx cypress verify'
+    - 'yarn run cypress cache path'
+    - 'yarn run cypress cache list'
+    - 'yarn run cypress verify'
     - 'npm run ci:run'
   artifacts:
     expire_in: '1 week'
@@ -127,9 +127,9 @@ cypress-e2e-integration:
   script:
     - 'cd packages/testing'
     - yarn
-    - 'npx cypress cache path'
-    - 'npx cypress cache list'
-    - 'npx cypress verify'
+    - 'yarn run cypress cache path'
+    - 'yarn run cypress cache list'
+    - 'yarn run cypress verify'
     - 'yarn run ci:run'
   artifacts:
     expire_in: '1 week'
