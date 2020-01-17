@@ -57,6 +57,11 @@ const DesktopHeader = () => {
       TMEvents.Click,
       isBorrowerProfile ? 'borrower_profile' : 'marketplace'
     );
+    if (window.fbq) {
+      window.fbq('trackCustom', 'Signup', {
+        type: isBorrowerProfile ? 'borrower_profile' : 'marketplace'
+      });
+    }
     history.push('/join');
   };
 

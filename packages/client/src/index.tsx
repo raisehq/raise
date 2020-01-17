@@ -19,6 +19,14 @@ type PropsValueType = {
   isLogged: Boolean;
 };
 
+declare global {
+  interface Window {
+    fbq: any;
+  }
+}
+
+window.fbq = window.fbq || null;
+
 const Root = () => {
   const [store, dispatch]: any = useReducer<any, any>(reducers, initialState, () => initialState);
   const tagManager = useGoogleTagManager();

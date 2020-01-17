@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Grid } from 'semantic-ui-react';
 // URLSearchParams polyfill for IE 11
-import URLSearchParams from '@ungap/url-search-params'
+import URLSearchParams from '@ungap/url-search-params';
 import ErrorConnection from './Web3Check.ErrorConnection';
 import { CardSized } from '../Layout/Layout.styles';
 import Wallet from './Web3Check.Wallet';
@@ -33,10 +33,11 @@ const Web3Check = () => {
       }
     }
   }: any = useContext(AppContext);
-  const redirect = (new URLSearchParams(history.location.search)).get('redirect');
+  const redirect = new URLSearchParams(history.location.search).get('redirect');
   const { web3 }: any = useWeb3();
   const tagManager = useGoogleTagManager('Wallet');
   const [ui, setUI] = useState(Stages.WalletSelector);
+
   useEffect(() => {
     if (web3 && unlocked) {
       tagManager.sendEvent(
@@ -44,6 +45,11 @@ const Web3Check = () => {
         'wallet_success',
         getWalletName(cryptotypeId).toLowerCase()
       );
+      if (window.fbq) {
+        window.fbq('trackCustom', 'wallet_success', {
+          type: getWalletName(cryptotypeId).toLowerCase()
+        });
+      }
       setUI(Stages.Checks);
     }
   }, []);
@@ -55,8 +61,13 @@ const Web3Check = () => {
         'wallet_success',
         getWalletName(cryptotypeId).toLowerCase()
       );
+      if (window.fbq) {
+        window.fbq('trackCustom', 'wallet_success', {
+          type: getWalletName(cryptotypeId).toLowerCase()
+        });
+      }
       setUI(Stages.Checks);
-      handleSuccess()
+      handleSuccess();
     }
   }, [unlocked, web3, ui]);
 
