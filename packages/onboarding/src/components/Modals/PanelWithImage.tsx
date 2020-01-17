@@ -23,7 +23,7 @@ const PanelWithImage = ({ children, title }) => {
 
   return (
     <OnboardingModal {...dimmer} open={open} mountNode={mountNode}>
-      <OnboardingModalContent>
+      <OnboardingModalContent id="process">
         <OnboardingHeader>
           <OnboardingHeaderItemWrapper>
             <img src={`${IMAGES_PATH}logo.svg`} />
