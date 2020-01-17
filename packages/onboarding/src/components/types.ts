@@ -1,12 +1,14 @@
 export type Steps =
   | 'Start'
   | 'SignIn'
+  | 'SignInWithEmail'
   | 'Confirm'
   | 'Verified'
   | 'ResetOK'
   | 'ResetKO'
   | 'SignUpWithEmail'
   | 'SignUpWithBloom';
+
 
 export interface ICredentials {
   email: string;
@@ -45,7 +47,7 @@ export interface IContext {
   mountNode?: any | null;
   credentials: ICredentials;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
-  onSetStepWithParam: (step: Steps) => (param: string) => () => null | void | Promise<any>;
+  onSetStepWithParam: (step: string) => (param: string) => () => null | void | Promise<any>;
   onSetCredentials: (input: string, value: string | boolean) => null | void | Promise<any>;
   onSendCredentials: () => null | void | Promise<any>;
   onResetPassword: (token: string, password: string) => null | void | Promise<any>;

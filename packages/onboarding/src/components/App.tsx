@@ -8,6 +8,7 @@ import GetStartedWithEmail from './SignUp/GetStartedWithEmail';
 import GetStartedWithBloom from './SignUp/GetStartedWithBloom';
 import Confirm from './SignUp/Confirm';
 import SignIn from './SignIn/SignIn';
+import SignInWithEmail from './SignInWithEmail/SignInWithEmail';
 import Verified from './Verification/Verified';
 import Verifying from './Verification/Verifying';
 import VerifiedError from './Verification/VerifiedError';
@@ -22,7 +23,7 @@ import BorrowerSignUpOK from './BorrowerSignUp/Success';
 import PanelWithImage from './Modals/PanelWithImage';
 import Panel from './Modals/Panel';
 import SimpleModal from './Modals/Simple';
-import BigSimpleModal from './Modals/BigSimpleModal'
+import BigSimpleModal from './Modals/BigSimpleModal';
 import { ICredentials, Steps } from './types';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import * as services from '../services';
@@ -38,6 +39,7 @@ const Step = daggy.taggedSum('UI', {
   SignUpWithBloom: [{}],
   StartMini: [],
   SignIn: [],
+  SignInWithEmail: [],
   Confirm: [],
   Verifying: [],
   Verified: [],
@@ -358,12 +360,12 @@ const App = ({
   const getStep = () =>
     step.cata({
       Start: () => (
-        <PanelWithImage>
+        <PanelWithImage title={'Get Started'}>
           <GetStarted />
         </PanelWithImage>
       ),
       SignUpWithEmail: () => (
-        <PanelWithImage>
+        <PanelWithImage title={'Get Started'}>
           <GetStartedWithEmail />
         </PanelWithImage>
       ),
@@ -374,8 +376,13 @@ const App = ({
       ),
       StartMini: () => <GetStarted />,
       SignIn: () => (
-        <SimpleModal>
+        <PanelWithImage title={'Sign in'}>
           <SignIn />
+        </PanelWithImage>
+      ),
+      SignInWithEmail: () => (
+        <SimpleModal>
+          <SignInWithEmail />
         </SimpleModal>
       ),
       Confirm: () => (

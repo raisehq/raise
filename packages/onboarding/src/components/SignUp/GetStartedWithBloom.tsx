@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-  ChooseSignUpWrapper,
+  ChooseMethodWrapper,
   GetStartedBloomHeader,
   GetStartedBloomTitle,
   GetStartedBloomSubtitle,
@@ -90,7 +90,7 @@ const GetStartedWithBloom = ({ onBack, token = '' }) => {
   };
 
   return (
-    <ChooseSignUpWrapper>
+    <ChooseMethodWrapper>
       <GetStartedBloomHeader>
         <GetStartedBloomTitle>Get Started</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
@@ -119,7 +119,7 @@ const GetStartedWithBloom = ({ onBack, token = '' }) => {
           Go back
         </Button>
       </GetStartedBloomFooter>
-    </ChooseSignUpWrapper>
+    </ChooseMethodWrapper>
   );
 };
 

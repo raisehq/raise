@@ -417,26 +417,6 @@ export const MiniBody = styled.div`
   }
 `;
 
-export const ChooseSignUpWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 480px;
-  @media (max-width: ${size.mobileL}) {
-    min-height: 0;
-  }
-`;
-
-export const ChooseSignUpSubtitleWrapper = styled.div`
-  margin: 2%;
-  text-align: center;
-  font-size: 23px;
-  padding: 5%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
-
 export const OnboardingSubTitle: any = styled.div`
   font-size: 23px;
   line-height: 36px;
@@ -452,50 +432,20 @@ export const OnboardingSubTitle: any = styled.div`
   }
 `;
 
-export const ChooseSignUpButtonList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 150px;
-`;
-
-export const ChooseSignUpButton = styled(OnboardButton)`
-  width: 85%;
-`;
-
-export const ChooseSignUpWithBloomButton = styled(ChooseSignUpButton)`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  background: white;
-  color: #6067f1;
-  border: 1px solid #6067f1;
-
-  span {
-    padding: 0 10px;
-  }
-`;
-
 export const ChooseSignUpSignInWrapper = styled.div`
   margin: 2%;
 `;
 
-export const ChooseSignUpSubTitle: any = styled.div`
-  font-size: 23px;
-  line-height: 36px;
-  opacity: 0.59;
-  color: #3c4251;
-  font-family: Lato;
-  height: 72px;
-  width: 210px;
-  margin: 5%;
-
+export const ChooseMethodWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 480px;
   @media (max-width: ${size.mobileL}) {
-    display: none;
+    min-height: 0;
+    
   }
 `;
-
 /************** GET STARTED BLOOM SCREEN ******************/
 
 export const GetStartedBloomHeader = styled.div`
