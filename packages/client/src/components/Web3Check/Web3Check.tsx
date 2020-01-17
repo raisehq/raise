@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Grid } from 'semantic-ui-react';
+// import { Grid } from 'semantic-ui-react';
 // URLSearchParams polyfill for IE 11
 import URLSearchParams from '@ungap/url-search-params';
-import { CardSized } from '../Layout/Layout.styles';
+// import { CardSized } from '../Layout/Layout.styles';
 import Wallet from './Web3Check.Wallet';
 import List from './Web3Check.List';
 import WalletConnect from './Web3Check.WalletConnect';
@@ -109,19 +109,15 @@ const Web3Check = () => {
   };
 
   return (
-    <Grid.Row>
-      <CardSized>
-        {getStage(
-          ui,
-          handleNext,
-          handleBack,
-          handleSuccess,
-          backToConnectForm,
-          onExists,
-          onNotExists
-        )}
-      </CardSized>
-    </Grid.Row>
+    getStage(
+      ui,
+      handleNext,
+      handleBack,
+      handleSuccess,
+      backToConnectForm,
+      onExists,
+      onNotExists
+    )
   );
 };
 

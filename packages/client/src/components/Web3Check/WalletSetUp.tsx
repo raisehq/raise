@@ -29,12 +29,9 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
   const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
   const [defaultWallet, setDefaultWallet] = useState();
 
-
   useEffect(() => {
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
-
-
 
   const handlerWallet = walletSelected => async () => {
     const walletName = getWalletName(walletSelected).toLowerCase();

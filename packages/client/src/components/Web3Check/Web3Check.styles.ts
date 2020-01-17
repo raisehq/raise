@@ -25,7 +25,6 @@ export const SelectYourWalletList = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 20px 20px 20px;
 `;
 
 export const SelectWalletOptionItem = styled.div`
