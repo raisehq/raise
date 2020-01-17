@@ -20,7 +20,7 @@ const AuthenticationMethods = ({ method }) => {
         <ChooseMethodSubTitle>Select how you want to {method.toLowerCase()}</ChooseMethodSubTitle>
       </ChooseMethodSubtitleWrapper>
       <ChooseMethodButtonList>
-        <ChooseMethodButton id="btn-signin-email" onClick={() => onSetStep('SignInWithEmail')()}>
+        <ChooseMethodButton id="btn-sign-in-email" onClick={() => onSetStep('SignInWithEmail')()}>
           {method} with email
         </ChooseMethodButton>
         <ChooseBloomMethodButton
