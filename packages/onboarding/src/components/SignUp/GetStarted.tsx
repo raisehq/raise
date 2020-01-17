@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import AppContext from '../App.context';
 import { IContext } from '../types';
 import { ChooseMethodWrapper, ChooseSignUpSignInWrapper, CallToSignIn } from '../styles';
