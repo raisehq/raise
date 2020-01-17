@@ -37,6 +37,7 @@ const Step = daggy.taggedSum('UI', {
   Start: [],
   SignUpWithEmail: [],
   SignUpWithBloom: [{}],
+  SignInWithBloom: [{}],
   StartMini: [],
   SignIn: [],
   SignInWithEmail: [],
@@ -372,6 +373,11 @@ const App = ({
       SignUpWithBloom: token => (
         <Panel>
           <GetStartedWithBloom onBack={() => setStep(Step.Start)} token={token} />
+        </Panel>
+      ),
+      SignInWithBloom: token => (
+        <Panel>
+          <GetStartedWithBloom onBack={() => setStep(Step.SignIn)} token={token} />
         </Panel>
       ),
       StartMini: () => <GetStarted />,

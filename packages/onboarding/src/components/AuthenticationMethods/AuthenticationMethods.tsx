@@ -23,7 +23,11 @@ const AuthenticationMethods = ({ method }) => {
         <ChooseMethodButton onClick={() => onSetStep('SignInWithEmail')()}>
           {method} with email
         </ChooseMethodButton>
-        <ChooseBloomMethodButton onClick={() => onSetStepWithParam('SignUpWithBloom')('')()}>
+        <ChooseBloomMethodButton
+          onClick={() =>
+            onSetStepWithParam(method === 'Sign Up' ? 'SignUpWithBloom' : 'SignInWithBloom')('')()
+          }
+        >
           <span>{method}</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
         </ChooseBloomMethodButton>
