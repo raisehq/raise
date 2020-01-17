@@ -2,7 +2,7 @@ import React from 'react';
 import { HelpWithBloomWrapper, FollowingStepsTitle, IconWrapper } from '../styles';
 import { Icon } from 'semantic-ui-react';
 
-const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle }) => {
+const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, method }) => {
   return (
     <HelpWithBloomWrapper>
       <IconWrapper>
@@ -14,7 +14,7 @@ const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle }) => {
           }}
         />
       </IconWrapper>
-      <FollowingStepsTitle>Are you having problems to Sign Up with Bloom?</FollowingStepsTitle>
+      <FollowingStepsTitle>Are you having problems to { method } with Bloom?</FollowingStepsTitle>
       <p>Please, make sure to have your Country registered at Bloom.</p>
       <p>If you need help send email to help@raise.it</p>
     </HelpWithBloomWrapper>

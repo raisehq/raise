@@ -433,12 +433,20 @@ const App = ({
       ),
       SignUpWithBloom: token => (
         <Panel>
-          <GetStartedWithBloom onBack={() => setStep(Step.Start)} token={token} />
+          <GetStartedWithBloom
+            onBack={() => setStep(Step.Start)}
+            token={token}
+            method={'Get Started'}
+          />
         </Panel>
       ),
       SignInWithBloom: token => (
         <Panel>
-          <GetStartedWithBloom onBack={() => setStep(Step.SignIn)} token={token} />
+          <GetStartedWithBloom
+            onBack={() => setStep(Step.SignIn)}
+            token={token}
+            method={'Sign In'}
+          />
         </Panel>
       ),
       StartMini: () => <GetStarted />,
