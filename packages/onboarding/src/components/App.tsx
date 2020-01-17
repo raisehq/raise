@@ -4,6 +4,8 @@ import 'url-search-params-polyfill';
 import { AccountType } from '@raisehq/components';
 import AppContext from './App.context';
 import GetStarted from './SignUp/GetStarted';
+import GetStartedWithEmail from './SignUp/GetStartedWithEmail';
+import GetStartedWithBloom from './SignUp/GetStartedWithBloom';
 import Confirm from './SignUp/Confirm';
 import SignIn from './SignIn/SignIn';
 import Verified from './Verification/Verified';
@@ -18,7 +20,9 @@ import BorrowerSignUp from './BorrowerSignUp/Passwords';
 import BorrowerSignUpError from './BorrowerSignUp/Error';
 import BorrowerSignUpOK from './BorrowerSignUp/Success';
 import PanelWithImage from './Modals/PanelWithImage';
+import Panel from './Modals/Panel';
 import SimpleModal from './Modals/Simple';
+import BigSimpleModal from './Modals/BigSimpleModal'
 import { ICredentials, Steps } from './types';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import * as services from '../services';
@@ -30,6 +34,8 @@ import defaultContext from './defaults';
 
 const Step = daggy.taggedSum('UI', {
   Start: [],
+  SignUpWithEmail: [],
+  SignUpWithBloom: [{}],
   StartMini: [],
   SignIn: [],
   Confirm: [],
@@ -77,6 +83,7 @@ const App = ({
   const [auth, setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
+
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
@@ -134,6 +141,12 @@ const App = ({
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
+    if (pathname.includes('/login/bloom')) {
+      const path = pathname.split('/');
+      const token = path[path.length - 1];
+
+      setStep(Step.SignUpWithBloom(token));
+    }
   }, [history.location.pathname, open]);
 
   useEffect(() => {
@@ -157,6 +170,8 @@ const App = ({
   }, [step]);
 
   const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
+
+  const onSetStepWithParam = (newStep: Steps) => param => () => setStep(Step[newStep](param));
 
   const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
@@ -240,6 +255,39 @@ const App = ({
     );
   };
 
+  const onLoginWithBloom = async result => {
+    const login = LocalData.get('firstLogin');
+
+    if (login) {
+      if (login === 'first') {
+        LocalData.set('firstLogin', 'passed');
+      }
+    } else {
+      LocalData.set('firstLogin', 'first');
+    }
+    LocalData.setObj('auth', {
+      token: result.public_key,
+      id: result.id,
+      status: result.userstatus_id,
+      type: result.accounttype_id
+    });
+
+    LocalData.setObj('user', result);
+
+    setAuthCookie(
+      {
+        token: result.public_key,
+        id: result.id,
+        status: result.userstatus_id,
+        type: result.accounttype_id
+      },
+      { domain: process.env.REACT_APP_COOKIE_DOMAIN }
+    );
+
+    setuserCookie(result, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
+    window.location.href = getHost('APP') + (pathRedirect ? pathRedirect : '');
+  };
+
   const onLogin = async () => {
     tagManager.sendEventCategory('Login', TMEvents.Click, 'login_attempt', host);
 
@@ -314,16 +362,26 @@ const App = ({
           <GetStarted />
         </PanelWithImage>
       ),
-      StartMini: () => <GetStarted mini />,
+      SignUpWithEmail: () => (
+        <PanelWithImage>
+          <GetStartedWithEmail />
+        </PanelWithImage>
+      ),
+      SignUpWithBloom: token => (
+        <Panel>
+          <GetStartedWithBloom onBack={() => setStep(Step.Start)} token={token} />
+        </Panel>
+      ),
+      StartMini: () => <GetStarted />,
       SignIn: () => (
         <SimpleModal>
           <SignIn />
         </SimpleModal>
       ),
       Confirm: () => (
-        <SimpleModal localClose>
+        <BigSimpleModal localClose>
           <Confirm />
-        </SimpleModal>
+        </BigSimpleModal>
       ),
       Verified: () => (
         <SimpleModal>
@@ -386,12 +444,14 @@ const App = ({
     <AppContext.Provider
       value={{
         onSetStep,
+        onSetStepWithParam,
         onSetCredentials,
         onSendCredentials,
         onResetPassword,
         onSetPasswordBorrower,
         onActivateAccount,
         onRecover,
+        onLoginWithBloom,
         onLogin,
         onResetToken,
         credentials,
@@ -402,7 +462,8 @@ const App = ({
         error: loginError,
         mountNode,
         closeButton,
-        open
+        open,
+        history
       }}
     >
       {getStep()}

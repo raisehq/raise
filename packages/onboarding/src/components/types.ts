@@ -4,7 +4,9 @@ export type Steps =
   | 'Confirm'
   | 'Verified'
   | 'ResetOK'
-  | 'ResetKO';
+  | 'ResetKO'
+  | 'SignUpWithEmail'
+  | 'SignUpWithBloom';
 
 export interface ICredentials {
   email: string;
@@ -31,16 +33,25 @@ export interface ISignin {
   'g-recaptcha-response': string;
 }
 
+export interface ILoginWithBloom {
+  public_key: string;
+  id: string;
+  userstatus_id: string;
+  accounttype_id: string;
+}
+
 export interface IContext {
   blur: boolean;
   mountNode?: any | null;
   credentials: ICredentials;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
+  onSetStepWithParam: (step: Steps) => (param: string) => () => null | void | Promise<any>;
   onSetCredentials: (input: string, value: string | boolean) => null | void | Promise<any>;
   onSendCredentials: () => null | void | Promise<any>;
   onResetPassword: (token: string, password: string) => null | void | Promise<any>;
   onSetPasswordBorrower: (token: string, password: string) => null | void | Promise<any>;
   onActivateAccount: (token: string) => null | void | Promise<any>;
+  onLoginWithBloom: (result: ILoginWithBloom) => null | void | Promise<any>;
   onLogin: () => null | void | Promise<any>;
   setLoginError: (x: boolean) => null | void | Promise<any>;
   error: boolean;
@@ -50,4 +61,5 @@ export interface IContext {
   open: boolean;
   closeButton: boolean;
   onResetToken: () => null | void | Promise<any>;
+  history: any;
 }

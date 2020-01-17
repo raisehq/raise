@@ -101,7 +101,10 @@ export const changePassword = async (token, password) => {
     axios.put(`${URL.CHANGE_PASSWORD}`, { token, password: password.password }, config)
   );
 
-  return response.fold(error => Left(error), () => Right(true));
+  return response.fold(
+    error => Left(error),
+    () => Right(true)
+  );
 };
 
 export const validateToken = async ({ token }: Types.ValidateToken) => {
@@ -154,7 +157,10 @@ export const getUser = async (userId: string | undefined) => {
 
   const response = await to(axios(config));
 
-  return response.fold(error => Left(error), ({ data: { data } }) => data);
+  return response.fold(
+    error => Left(error),
+    ({ data: { data } }) => data
+  );
 };
 
 export const refreshToken = async () => {
@@ -219,7 +225,10 @@ export const checkUsername = async username => {
 
   const request = await to(axios(config));
 
-  return request.fold(() => Left(null), request => Either.either(request.data.exist === 0));
+  return request.fold(
+    () => Left(null),
+    request => Either.either(request.data.exist === 0)
+  );
 };
 
 export const checkEmail = async email => {

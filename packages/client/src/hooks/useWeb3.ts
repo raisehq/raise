@@ -101,7 +101,7 @@ const useWeb3 = () => {
         }
       } catch (error) {
         console.error('[useWeb3] Error enable wallet.', error);
-        throw error;
+        // throw error;
       }
     }
   };
