@@ -9,8 +9,6 @@ export type Steps =
   | 'SignUpWithEmail'
   | 'SignUpWithBloom';
 
-
-  
 export interface ICredentials {
   email: string;
   password: string;
