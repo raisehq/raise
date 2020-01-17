@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   CardTitle,
   SelectYourWalletTitle,
@@ -26,14 +26,30 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     }
   }: any = useContext(AppContext);
   const tagManager = useGoogleTagManager('Wallet');
-  const { connectWallet }: any = useWeb3();
+  const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
+  const [defaultWallet, setDefaultWallet] = useState();
+
+
+  useEffect(() => {
+    setDefaultWallet(getDefaultWeb3());
+  }, [web3]);
+
+
 
   const handlerWallet = walletSelected => async () => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
-    await connectWallet(walletSelected, network, networkId);
 
-    onNext('WalletSetUp');
+    if ((defaultWallet.name === -1 && walletName === 'metamask') || (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)) {
+      window.open('http://metamask.app.link/', '_blank');
+    } else {
+      try {
+        await connectWallet(walletSelected, network, networkId);
+        onNext('WalletSetUp');
+      } catch (error) {
+        // console.log(error)
+      }
+    }
   };
 
   return (

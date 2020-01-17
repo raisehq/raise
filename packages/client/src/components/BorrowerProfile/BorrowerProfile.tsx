@@ -115,10 +115,10 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
           <KPIList kpis={kpis}></KPIList>
           <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
         </SideInfo>
-        <LoanContainer>
-          <BorrowerLoans account={ethereumAddress} />
-        </LoanContainer>
       </Container>
+      <LoanContainer>
+        <BorrowerLoans account={ethereumAddress} />
+      </LoanContainer>
     </BorrowerPage>
   );
 };

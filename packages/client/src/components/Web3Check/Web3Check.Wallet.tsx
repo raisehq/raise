@@ -37,7 +37,7 @@ const Wallet = ({ onNext, onBack }: any) => {
   const handlerWallet = walletSelected => async () => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
-    console.log('default wallet is ===> ', defaultWallet);
+
     if (isMobile) {
       switch (walletName) {
         case 'metamask':
@@ -53,9 +53,9 @@ const Wallet = ({ onNext, onBack }: any) => {
           break;
       }
     } else {
-      if (defaultWallet.name === -1 && walletName === 'metamask') {
+      if ((defaultWallet.name === -1 && walletName === 'metamask') || (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)) {
         window.open('http://metamask.app.link/', '_blank');
-      } else if (defaultWallet.name === -1 && walletName === 'opera') {
+      } else if ((defaultWallet.name === -1 && walletName === 'opera') || (walletName === 'opera' && defaultWallet.name !== CryptoWallets.Opera)) {
         window.open('http://onelink.to/5xwf6x', '_blank');
       } else {
         try {
@@ -113,3 +113,84 @@ const Wallet = ({ onNext, onBack }: any) => {
   );
 };
 export default Wallet;
+
+
+// <SelectYourWalletList>
+// {((isMobile && defaultWallet && defaultWallet.name === CryptoWallets.Coinbase) ||
+//   !isMobile) && (
+//   <SelectWalletOptionItem key="coinbase">
+//     <SelectWalletOptionButton
+//       basic
+//       color="black"
+//       onClick={handlerWallet(CryptoWallets.Coinbase)}
+//     >
+//       Coinbase
+//     </SelectWalletOptionButton>
+//   </SelectWalletOptionItem>
+// )}
+// {defaultWallet && defaultWallet.name === CryptoWallets.Metamask && (
+//   <SelectWalletOptionItem key="metamask">
+//     <SelectWalletOptionButton
+//       basic
+//       color="black"
+//       onClick={handlerWallet(CryptoWallets.Metamask)}
+//     >
+//       Metamask
+//     </SelectWalletOptionButton>
+//   </SelectWalletOptionItem>
+// )}
+// {defaultWallet && defaultWallet.name === CryptoWallets.Opera && (
+//   <SelectWalletOptionItem key="opera">
+//     <SelectWalletOptionButton
+//       basic
+//       color="black"
+//       onClick={handlerWallet(CryptoWallets.Opera)}
+//     >
+//       Opera Wallet
+//     </SelectWalletOptionButton>
+//   </SelectWalletOptionItem>
+// )}
+// {defaultWallet && defaultWallet.name === CryptoWallets.WebWallet && (
+//   <SelectWalletOptionItem key="webwallet">
+//     <SelectWalletOptionButton
+//       basic
+//       color="black"
+//       onClick={handlerWallet(CryptoWallets.WebWallet)}
+//     >
+//       Web Wallet
+//     </SelectWalletOptionButton>
+//   </SelectWalletOptionItem>
+// )}
+// {(!defaultWallet ||
+//   (defaultWallet.name !== CryptoWallets.Opera &&
+//     defaultWallet.name !== CryptoWallets.Coinbase &&
+//     defaultWallet.name !== CryptoWallets.Metamask)) && (
+//   <>
+//     {isMobile && (
+//       <SelectWalletOptionItem key="coinbase">
+//         <SelectWalletOptionButton
+//           basic
+//           color="black"
+//           onClick={() => handlerLink('coinbase')}
+//         >
+//           Coinbase
+//         </SelectWalletOptionButton>
+//       </SelectWalletOptionItem>
+//     )}
+//     <SelectWalletOptionItem key="metamask">
+//       <SelectWalletOptionButton
+//         basic
+//         color="black"
+//         onClick={() => handlerLink('metamask')}
+//       >
+//         Metamask
+//       </SelectWalletOptionButton>
+//     </SelectWalletOptionItem>
+//     <SelectWalletOptionItem key="opera">
+//       <SelectWalletOptionButton basic color="black" onClick={() => handlerLink('opera')}>
+//         Opera Wallet
+//       </SelectWalletOptionButton>
+//     </SelectWalletOptionItem>
+//   </>
+// )}
+// </SelectYourWalletList>

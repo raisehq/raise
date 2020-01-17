@@ -3,4 +3,5 @@ cypress/videos/*
 cypress/snapshots/*
 cypress/results
 contracts
-.gcache
+.db
+ganache_db

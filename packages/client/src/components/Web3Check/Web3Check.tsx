@@ -48,7 +48,7 @@ const Web3Check = () => {
   const { web3 }: any = useWeb3();
   const tagManager = useGoogleTagManager('Wallet');
   const [ui, setUI] = useState(isMobile ? Stages.WalletSelector : Stages.WalletConnectForm);
-  const [prevStage, setPrevStage] = useState('WalletConnectForm');
+  const [prevStage, setPrevStage] = useState(isMobile ? 'WalletSelector' : 'WalletConnectForm');
 
   useEffect(() => {
     if (web3 && unlocked) {
@@ -94,7 +94,7 @@ const Web3Check = () => {
         setUI(Stages.WalletSetUp);
         break;
       default:
-        setUI(Stages.WalletSelectorForm);
+        setUI(Stages.WalletConnectForm);
         break;
     }
   };
@@ -104,8 +104,8 @@ const Web3Check = () => {
   };
 
   const handleNext = (step) => {
-    setPrevStage(step);
     setUI(Stages.WalletConnect);
+    setPrevStage(step);
   };
 
   return (

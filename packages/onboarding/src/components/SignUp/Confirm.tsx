@@ -1,20 +1,15 @@
 import React from 'react';
-import { ConfirmWrapper, ConfirmHeader, MainImage, ConfirmText } from '../styles';
+import { ConfirmWrapper, ConfirmHeader, ConfirmText } from './styles';
+import { MainImage } from './styles';
 import { IMAGES_PATH } from '../../commons/constants';
 
 const Confirm = () => {
   return (
     <ConfirmWrapper>
-      <div>
-        <MainImage src={`${IMAGES_PATH}check.svg`} />
-      </div>
-      <ConfirmHeader>Check your inbox to verify your account</ConfirmHeader>
+      <MainImage src={`${IMAGES_PATH}check.svg`} />
+      <ConfirmHeader>Check your inbox!</ConfirmHeader>
       <ConfirmText>
-        In order to access Raise you will need to use one of the following wallets: Metamask, Opera
-        Touch or Coinbase. We just sent you an email with all the information.
-      </ConfirmText>
-      <ConfirmText>
-        In the meantime, our team is developing new mobile integrations. We will keep you posted.
+        We've sent a confirmation to your inbox to verify your email and instructions for the next steps.
       </ConfirmText>
     </ConfirmWrapper>
   );
