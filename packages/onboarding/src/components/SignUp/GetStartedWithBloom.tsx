@@ -36,6 +36,7 @@ const GetStartedWithBloom = ({ onBack, method, token = '' }) => {
     response.fold(
       error => {
         console.log(error);
+        onLoginWithBloom(error, method);
       },
       response => {
         const {
@@ -45,7 +46,7 @@ const GetStartedWithBloom = ({ onBack, method, token = '' }) => {
         } = response;
 
         if (result.id) {
-          onLoginWithBloom(result);
+          onLoginWithBloom(result, method);
         }
       }
     );
@@ -114,8 +115,8 @@ const GetStartedWithBloom = ({ onBack, method, token = '' }) => {
               method={method === 'Sign In' ? 'Sign In' : 'Sign Up'}
             />
           ) : (
-            <FollowSteps isMobile />
-          )}
+              <FollowSteps isMobile />
+            )}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
       <GetStartedBloomFooter>
