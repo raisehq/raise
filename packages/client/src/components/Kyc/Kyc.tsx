@@ -1,22 +1,8 @@
 import React, { useContext } from 'react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import {
-  CardTitle,
-  CardSubTitle,
-  KycWrapper,
-  KycContainer,
-  KycTitleWrapper,
-  SelectKycMethodList,
-  KycSumSub,
-  KycBloom,
-  KycButtonWrapper,
-  LinkWrap
-} from './Kyc.styles';
-import { Link } from '../Link';
+import { KYCWrapper, KYCHolder, KYCDisclaimer, Title } from './Kyc.styles';
 import AppContext from '../AppContext';
-import OnboardingProgressBar from '../OnboardingProgressBar';
-import { isMobile } from 'react-device-detect';
-import { Image } from 'semantic-ui-react';
+import GetStarted from '../GetStarted';
 
 const KYC = () => {
   const {
@@ -31,7 +17,7 @@ const KYC = () => {
   }: any = useContext(AppContext);
 
   useAsyncEffect(async () => {
-    if (history.location.pathname === '/kyc' && token) {
+    if (history.location.pathname === '/kyc-sumsub' && token) {
       const { id } = store.user.details;
 
       await onConnect();
@@ -73,40 +59,25 @@ const KYC = () => {
   }, [history, token]);
 
   return (
-    <KycWrapper>
-      <OnboardingProgressBar step={3} isMobile={isMobile} />
-      <KycContainer>
-        <KycTitleWrapper>
-          <CardTitle>It's time to verify your account</CardTitle>
-
-          <CardSubTitle>
-            <p>
-              The objective of verifying your account is to prevent Raise from being used by
-              criminal elements for money laundering activities.
-            </p>
-          </CardSubTitle>
-        </KycTitleWrapper>
-        <SelectKycMethodList>
-          <KycButtonWrapper>
-            <KycSumSub className="btn-kyc-sumsub" onClick={() => {}}>
-              Verify with SumSub
-            </KycSumSub>
-          </KycButtonWrapper>
-          <KycButtonWrapper>
-            <KycBloom onClick={() => {}}>
-              <span>Verify with </span>
-              <Image
-                src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
-                size="tiny"
-              />
-            </KycBloom>
-          </KycButtonWrapper>
-        </SelectKycMethodList>
-        <LinkWrap>
-          <Link to="/">Do it later</Link>
-        </LinkWrap>
-      </KycContainer>
-    </KycWrapper>
+    <KYCWrapper>
+      <GetStarted />
+      <Title as="h2">Verify your account</Title>
+      <KYCHolder>
+        <KYCDisclaimer>
+          <p>
+            The objective of verifying your account is to prevent Raise from being used by criminal
+            elements for money laundering activities.
+          </p>
+          <p>
+            This process will take approximately 3 minutes to complete and it will be verified by a
+            third-party organization. After submission, you will receive an email confirming your
+            approval or to verify further information. The time-frame for approval can vary on a
+            user to user basis.
+          </p>
+        </KYCDisclaimer>
+        <div id="idensic" />
+      </KYCHolder>
+    </KYCWrapper>
   );
 };
 
