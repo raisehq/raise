@@ -224,7 +224,7 @@ const App = ({ history, match }: any) => {
                 />
                 <Web3Layout
                   marketplace
-                  layout={MainLayout}
+                  layout={SimpleLayout}
                   exact
                   path="/kyc"
                   component={Kyc}
