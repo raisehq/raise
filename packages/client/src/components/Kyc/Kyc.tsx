@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { KYCWrapper, KYCHolder, KYCDisclaimer, Title } from './Kyc.styles';
+import { KYCWrapper, KYCHolder, KYCDisclaimer, Title, OnGoBackButton } from './Kyc.styles';
 import AppContext from '../AppContext';
 import GetStarted from '../GetStarted';
+import { Button } from 'semantic-ui-react';
 
 const KYC = () => {
   const {
@@ -77,6 +78,11 @@ const KYC = () => {
         </KYCDisclaimer>
         <div id="idensic" />
       </KYCHolder>
+      <OnGoBackButton>
+        <Button basic color="black" onClick={() => history.push('/kyc')}>
+          Go back
+        </Button>
+      </OnGoBackButton>
     </KYCWrapper>
   );
 };

@@ -39,15 +39,17 @@ const KycSelectMethod = () => {
               Verify with SumSub
             </KycSumSub>
           </KycButtonWrapper>
-          <KycButtonWrapper>
-            <KycBloom onClick={() => {}} disabled>
-              <span>Verify with </span>
-              <Image
-                src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
-                size="tiny"
-              />
-            </KycBloom>
-          </KycButtonWrapper>
+          {false && (
+            <KycButtonWrapper>
+              <KycBloom onClick={() => {}} disabled>
+                <span>Verify with </span>
+                <Image
+                  src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
+                  size="tiny"
+                />
+              </KycBloom>
+            </KycButtonWrapper>
+          )}
         </SelectKycMethodList>
         <LinkWrap>
           <Link to="/">Do it later</Link>

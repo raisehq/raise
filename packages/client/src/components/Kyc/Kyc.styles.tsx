@@ -24,6 +24,11 @@ export const Title = styled(Header)`
   text-align: center;
 `;
 
+export const OnGoBackButton = styled.div`
+  text-align: center;
+  justify-content: center;
+  padding: 10px;
+`;
 /**************** Bloom **************/
 
 export const KycWrapper = styled.div`
@@ -34,7 +39,6 @@ export const KycWrapper = styled.div`
 `;
 
 export const KycContainer = styled.div`
-
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -66,7 +70,6 @@ export const SelectKycMethodList = styled.div`
 
 export const CardSubTitle = styled.div`
   text-align: center;
-
 `;
 
 export const KycButtonWrapper = styled.div`
