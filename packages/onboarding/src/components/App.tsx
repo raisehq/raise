@@ -188,7 +188,21 @@ const App = ({
 
   const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
 
-  const onSetStepWithParam = (newStep: Steps) => param => () => setStep(Step[newStep](param));
+  const onSetStepWithParam = (newStep: Steps) => param => () => {
+    if (newStep === 'SignUpWithBloom') {
+      tagManager.sendEventCategory('Signup', TMEvents.Click, 'signup_attempt_bloom', host);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'Signup', { type: 'signup_attempt', host });
+      }
+    } else if (newStep === 'SignInWithBloom') {
+      tagManager.sendEventCategory('Login', TMEvents.Click, 'login_attempt_bloom', host);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'Login', { type: 'login_attempt_bloom', host });
+      }
+
+    }
+    setStep(Step[newStep](param))
+  };
 
   const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
@@ -310,7 +324,34 @@ const App = ({
     );
   };
 
-  const onLoginWithBloom = async result => {
+  const onLoginWithBloom = async (result, method) => {
+    if (result instanceof Error) {
+      if (method === 'Get Started') {
+        tagManager.sendEventCategory('Signup', TMEvents.Submit, 'signup_error_bloom', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Signup', { type: 'signup_error_bloom', host });
+        }
+      } else if (method === 'Sign In') {
+        tagManager.sendEventCategory('Login', TMEvents.Click, 'login_error_bloom', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Login', { type: 'login_error_bloom', host });
+        }
+      }
+      return;
+    }
+
+    if (method === 'Get Started') {
+      tagManager.sendEventCategory('Signup', TMEvents.Submit, 'signup_success_bloom', host);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'Signup', { type: 'signup_success_bloom', host });
+      }
+    } else if (method === 'Sign In') {
+      tagManager.sendEventCategory('Login', TMEvents.Click, 'login_success_bloom', host);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'Login', { type: 'login_success_bloom', host });
+      }
+    }
+
     const login = LocalData.get('firstLogin');
 
     if (login) {

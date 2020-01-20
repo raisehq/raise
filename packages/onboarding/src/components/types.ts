@@ -7,7 +7,8 @@ export type Steps =
   | 'ResetOK'
   | 'ResetKO'
   | 'SignUpWithEmail'
-  | 'SignUpWithBloom';
+  | 'SignUpWithBloom'
+  | 'SignInWithBloom';
 
 export interface ICredentials {
   email: string;
@@ -52,7 +53,7 @@ export interface IContext {
   onResetPassword: (token: string, password: string) => null | void | Promise<any>;
   onSetPasswordBorrower: (token: string, password: string) => null | void | Promise<any>;
   onActivateAccount: (token: string) => null | void | Promise<any>;
-  onLoginWithBloom: (result: ILoginWithBloom) => null | void | Promise<any>;
+  onLoginWithBloom: (result: ILoginWithBloom, method: string) => null | void | Promise<any>;
   onLogin: () => null | void | Promise<any>;
   setLoginError: (x: boolean) => null | void | Promise<any>;
   error: boolean;
