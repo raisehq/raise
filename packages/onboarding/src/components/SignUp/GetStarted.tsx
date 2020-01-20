@@ -1,36 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import AppContext from '../App.context';
 import { IContext } from '../types';
-import {
-  ChooseSignUpWrapper,
-  ChooseSignUpSignInWrapper,
-  ChooseSignUpButtonList,
-  ChooseSignUpSubtitleWrapper,
-  ChooseSignUpSubTitle,
-  CallToSignIn,
-  ChooseSignUpButton,
-  ChooseSignUpWithBloomButton
-} from '../styles';
-import { Image } from 'semantic-ui-react';
+import { ChooseMethodWrapper, ChooseSignUpSignInWrapper, CallToSignIn } from '../styles';
+import AuthenticationMethods from '../AuthenticationMethods/AuthenticationMethods';
 
 const GetStarted = () => {
-  const { onSetStep, onSetStepWithParam } = useContext<IContext>(AppContext);
+  const { onSetStep } = useContext<IContext>(AppContext);
 
   return (
-    <ChooseSignUpWrapper>
-      <ChooseSignUpSubtitleWrapper>
-        <ChooseSignUpSubTitle>Select how you want to get started</ChooseSignUpSubTitle>
-      </ChooseSignUpSubtitleWrapper>
-      <ChooseSignUpButtonList>
-        <ChooseSignUpButton onClick={() => onSetStep('SignUpWithEmail')()}>
-          Sign Up with email
-        </ChooseSignUpButton>
-        <ChooseSignUpWithBloomButton onClick={() => onSetStepWithParam('SignUpWithBloom')('')()}>
-          <span>Sign Up</span>
-          <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
-        </ChooseSignUpWithBloomButton>
-      </ChooseSignUpButtonList>
-
+    <ChooseMethodWrapper>
+      <AuthenticationMethods method={'Sign Up'}/>
       <ChooseSignUpSignInWrapper>
         <CallToSignIn>
           Already have an account?
@@ -39,7 +18,7 @@ const GetStarted = () => {
           </button>
         </CallToSignIn>
       </ChooseSignUpSignInWrapper>
-    </ChooseSignUpWrapper>
+    </ChooseMethodWrapper>
   );
 };
 

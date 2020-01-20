@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-  ChooseSignUpWrapper,
+  ChooseMethodWrapper,
   GetStartedBloomHeader,
   GetStartedBloomTitle,
   GetStartedBloomSubtitle,
@@ -19,7 +19,7 @@ import bloomToken from 'uuid';
 import AppContext from '../App.context';
 import { isMobile } from 'react-device-detect';
 
-const GetStartedWithBloom = ({ onBack, token = '' }) => {
+const GetStartedWithBloom = ({ onBack, method, token = '' }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState(null);
@@ -90,9 +90,9 @@ const GetStartedWithBloom = ({ onBack, token = '' }) => {
   };
 
   return (
-    <ChooseSignUpWrapper>
+    <ChooseMethodWrapper>
       <GetStartedBloomHeader>
-        <GetStartedBloomTitle>Get Started</GetStartedBloomTitle>
+        <GetStartedBloomTitle>{method}</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
           <span>With</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
@@ -108,7 +108,11 @@ const GetStartedWithBloom = ({ onBack, token = '' }) => {
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
           {isOpenHelp ? (
-            <HelpWithBloom setIsOpenHelp={setIsOpenHelp} setIsScreenIdle={setIsScreenIdle} />
+            <HelpWithBloom
+              setIsOpenHelp={setIsOpenHelp}
+              setIsScreenIdle={setIsScreenIdle}
+              method={method === 'Sign In' ? 'Sign In' : 'Sign Up'}
+            />
           ) : (
             <FollowSteps isMobile />
           )}
@@ -119,7 +123,7 @@ const GetStartedWithBloom = ({ onBack, token = '' }) => {
           Go back
         </Button>
       </GetStartedBloomFooter>
-    </ChooseSignUpWrapper>
+    </ChooseMethodWrapper>
   );
 };
 
