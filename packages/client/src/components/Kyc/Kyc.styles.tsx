@@ -69,21 +69,6 @@ export const CardSubTitle = styled.div`
 
 `;
 
-export const CardCenteredText = styled.div`
-  &&& {
-    margin: 30px 0px 0px;
-    text-align: center;
-  }
-`;
-
-export const ChooseMethodButtonList = styled.div`
-  display: flex
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 150px;
-`;
-
 export const KycButtonWrapper = styled.div`
   margin: 5px 0;
   width: 100%;
