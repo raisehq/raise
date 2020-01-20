@@ -18,6 +18,7 @@ import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
 import TopBanner from '../TopBanner';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+
 const DesktopHeader = () => {
   const {
     history,
@@ -27,6 +28,9 @@ const DesktopHeader = () => {
       auth: {
         login: { logged: isLogged }
       }
+    },
+    actions: {
+      onboarding: { showOnboarding }
     },
     web3Status: { hasDeposit }
   }: any = useContext(AppContext);
@@ -47,7 +51,7 @@ const DesktopHeader = () => {
   };
 
   const openLogin = () => {
-    history.push('/login');
+    showOnboarding('login');
   };
 
   const openSignup = () => {
@@ -62,7 +66,7 @@ const DesktopHeader = () => {
         type: isBorrowerProfile ? 'borrower_profile' : 'marketplace'
       });
     }
-    history.push('/join');
+    showOnboarding('join');
   };
 
   // If there is a parent for TopBanner and HeaderWrapper, it will break the sticky css rule and menu will not get fixed once scroll
