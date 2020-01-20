@@ -191,7 +191,6 @@ export const OnboardInput = styled.div`
     left: 0;
   }
 `;
-
 export const OnboardInputSignUp = styled(OnboardInput)`
   margin: 0 0 40px 0;
 `;

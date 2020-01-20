@@ -48,7 +48,7 @@ const KycTopBanner = ({
     return null;
   }
 
-  const inDashboard = () => pathname === '/' || pathname === '/account' || pathname === '/kyc';
+  const inDashboard = () => pathname === '/' || pathname === '/account' || pathname === '/kyc'|| pathname === '/kyc-sumsub';
 
   const getView = () =>
     view.cata({
