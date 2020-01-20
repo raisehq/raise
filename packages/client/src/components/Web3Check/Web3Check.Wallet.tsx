@@ -38,6 +38,12 @@ const Wallet = ({ onNext, onBack }: any) => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
 
+    if (window.fbq) {
+      window.fbq('trackCustom', 'wallet_attempt', {
+        type: walletName
+      });
+    }
+
     if (isMobile) {
       switch (walletName) {
         case 'metamask':

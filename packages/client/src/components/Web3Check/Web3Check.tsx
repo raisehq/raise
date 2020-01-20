@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-// import { Grid } from 'semantic-ui-react';
 // URLSearchParams polyfill for IE 11
 import URLSearchParams from '@ungap/url-search-params';
-// import { CardSized } from '../Layout/Layout.styles';
 import Wallet from './Web3Check.Wallet';
 import List from './Web3Check.List';
 import WalletConnect from './Web3Check.WalletConnect';
@@ -57,6 +55,11 @@ const Web3Check = () => {
         'wallet_success',
         getWalletName(cryptotypeId).toLowerCase()
       );
+      if (window.fbq) {
+        window.fbq('trackCustom', 'wallet_success', {
+          type: getWalletName(cryptotypeId).toLowerCase()
+        });
+      }
       setUI(Stages.Checks);
     }
   }, []);
@@ -68,6 +71,11 @@ const Web3Check = () => {
         'wallet_success',
         getWalletName(cryptotypeId).toLowerCase()
       );
+      if (window.fbq) {
+        window.fbq('trackCustom', 'wallet_success', {
+          type: getWalletName(cryptotypeId).toLowerCase()
+        });
+      }
       setUI(Stages.Checks);
       handleSuccess();
     }

@@ -16,14 +16,14 @@ import {
   OnboardingCloseIcon
 } from './styles';
 
-const PanelWithImage = ({ children }) => {
+const PanelWithImage = ({ children, title }) => {
   const { blur, mountNode, open, onClose, closeButton }: any = useContext(AppContext);
 
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
     <OnboardingModal {...dimmer} open={open} mountNode={mountNode}>
-      <OnboardingModalContent>
+      <OnboardingModalContent id="process">
         <OnboardingHeader>
           <OnboardingHeaderItemWrapper>
             <img src={`${IMAGES_PATH}logo.svg`} />
@@ -37,7 +37,7 @@ const PanelWithImage = ({ children }) => {
         <OnboardingContentWrapper>
           <OnboardingImageWrapper>
             <OnboardingTitleWrapper>
-              <OnboardingTitle>Get started</OnboardingTitle>
+              <OnboardingTitle>{title}</OnboardingTitle>
               <OnboardingSubTitle>
                 The only marketplace that makes your money grow
               </OnboardingSubTitle>
