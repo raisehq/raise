@@ -65,6 +65,7 @@ const DesktopHeader = () => {
       window.fbq('trackCustom', 'Signup', {
         type: isBorrowerProfile ? 'borrower_profile' : 'marketplace'
       });
+    }
     showOnboarding('join');
   };
 
