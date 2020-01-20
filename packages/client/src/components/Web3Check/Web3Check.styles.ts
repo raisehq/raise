@@ -25,11 +25,10 @@ export const SelectYourWalletList = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 20px 20px 20px;
 `;
 
 export const SelectWalletOptionItem = styled.div`
-  margin: 7px 0;
+  margin-bottom: 24px;
 `;
 
 export const SelectWalletOptionListItem = styled.div`
@@ -90,8 +89,8 @@ export const CardContent = styled(Card.Content)`
   &&& {
     border-top: none !important;
     padding: ${({ box }) => {
-      return box === 'separated' ? '20px 50px 60px 50px !important' : '50px !important';
-    }}
+    return box === 'separated' ? '20px 50px 60px 50px !important' : '50px !important';
+  }}
     font-size: 14px;
   }
 `;
@@ -139,16 +138,26 @@ export const CardHeader = styled(Card.Header)`
   }
 `;
 
+export const GoBack = styled.div`
+  margin-top: 68.5px;
+`;
+
 export const CardTitle = styled.div`
   color: #3c4251;
-  font: 26px bold;
+  font-size: 26px;
+  font-weight: bold;
   line-height: 36px;
   text-align: center;
-  margin: 20px;
+  margin-top: 62px;
+  margin-bottom: 10px;
   text-align: center;
 `;
 export const CardSubTitle = styled.div`
   text-align: center;
+  color: #3c4251;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 39.5px;
 `;
 
 export const CardCenteredText = styled.div`
@@ -211,3 +220,107 @@ export const CardBottom = styled.div`
   text-align: center;
   width: 324px;
 `;
+
+export const GreenActionButton = styled.div`
+  dispaly: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 338px;
+  border-radius: 4px;
+  background-color: #00da9e;
+  cursor: pointer;
+  margin: 10px 0;
+`;
+
+export const WhiteActionButton = styled.div`
+  dispaly: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 338px;
+  border-radius: 4px;
+  border: 1px solid #3c4251;
+  cursor: pointer;
+  margin: 10px 0;
+`;
+
+export const GreenActionText = styled.div`
+  width: 219px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  width: 259px;
+`;
+
+export const GreenActionTitleText = styled.div`
+  width: 219px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 21px;
+  text-align: center;
+`;
+
+export const WhiteActionText = styled.div`
+  width: 219px;
+  color: #3c4251;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  width: 259px;
+`;
+
+export const WhiteActionTitleText = styled.div`
+  width: 219px;
+  color: #3c4251;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 21px;
+  text-align: center;
+`;
+
+export const TextWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 12px;
+`;
+
+export const ConnectFormSubtitle = styled.div`
+  width: 280px;
+  color: #3C4251;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
+export const SetUpSubtitle = styled.div`
+  width: 512px;
+  color: #3C4251;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 22px;
+`;
+
+export const WalletIcon = styled.img`
+  height: 76px;
+  width: 76px;
+  margin-bottom: 16px;
+`;
+
+export const OtherWalletsText = styled.div`
+  height: 24px;	
+  width: 374px;	
+  color: #3C4251;		
+  font-size: 16px;	
+  line-height: 24px;	
+  text-align: center;
+  margin-top: 39px;
+  margin-bottom: 9.5px;
+`;
+
