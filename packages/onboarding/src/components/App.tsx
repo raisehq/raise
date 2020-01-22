@@ -114,7 +114,9 @@ const App = ({
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
-
+    if (!open) {
+      return;
+    }
     if (pathname === '/join') {
       setStep(Step.Start);
     }
@@ -199,9 +201,8 @@ const App = ({
       if (window.fbq) {
         window.fbq('trackCustom', 'Login', { type: 'login_attempt_bloom', host });
       }
-
     }
-    setStep(Step[newStep](param))
+    setStep(Step[newStep](param));
   };
 
   const onSetCredentials = (input, value) => {
