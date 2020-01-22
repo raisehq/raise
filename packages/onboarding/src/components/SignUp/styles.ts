@@ -6,6 +6,12 @@ export const MainImage = styled.img`
   height: 82px;
 `;
 
+export const ErrorImage = styled.img`
+  display: block;
+  width: 53%;
+  height: auto;
+`;
+
 export const ConfirmWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -25,7 +31,7 @@ export const ConfirmHeader = styled.h1`
 export const ConfirmText = styled.p`
   text-align: center;
   margin-top: 15px;
-  color: #5A5A5A;
+  color: #5a5a5a;
   font-size: 14px;
   line-height: 21px;
   max-width: 322px;

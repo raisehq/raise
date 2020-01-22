@@ -7,6 +7,7 @@ import GetStarted from './SignUp/GetStarted';
 import GetStartedWithEmail from './SignUp/GetStartedWithEmail';
 import GetStartedWithBloom from './SignUp/GetStartedWithBloom';
 import Confirm from './SignUp/Confirm';
+import ErrorBloom from './SignUp/ErrorBloom';
 import SignIn from './SignIn/SignIn';
 import SignInWithEmail from './SignInWithEmail/SignInWithEmail';
 import Verified from './Verification/Verified';
@@ -49,6 +50,7 @@ const Step = daggy.taggedSum('UI', {
   StartMini: [],
   SignIn: [],
   SignInWithEmail: [],
+  ErrorWithBloom: [],
   Confirm: [],
   Verifying: [],
   Verified: [],
@@ -199,9 +201,8 @@ const App = ({
       if (window.fbq) {
         window.fbq('trackCustom', 'Login', { type: 'login_attempt_bloom', host });
       }
-
     }
-    setStep(Step[newStep](param))
+    setStep(Step[newStep](param));
   };
 
   const onSetCredentials = (input, value) => {
@@ -337,7 +338,7 @@ const App = ({
           window.fbq('trackCustom', 'Login', { type: 'login_error_bloom', host });
         }
       }
-      return;
+      return setStep(Step.ErrorWithBloom);
     }
 
     if (method === 'Get Started') {
@@ -472,13 +473,9 @@ const App = ({
           <GetStartedWithEmail />
         </PanelWithImage>
       ),
-      SignUpWithBloom: token => (
+      SignUpWithBloom: () => (
         <Panel>
-          <GetStartedWithBloom
-            onBack={() => setStep(Step.Start)}
-            token={token}
-            method={'Get Started'}
-          />
+          <ErrorBloom onBack={() => setStep(Step.Start)} method={'Get Started'} />
         </Panel>
       ),
       SignInWithBloom: token => (
@@ -500,6 +497,11 @@ const App = ({
         <SimpleModal>
           <SignInWithEmail />
         </SimpleModal>
+      ),
+      ErrorWithBloom: () => (
+        <Panel>
+          <ErrorBloom onBack={() => setStep(Step.Start)} method={'Get Started'} />
+        </Panel>
       ),
       Confirm: () => (
         <BigSimpleModal localClose>
