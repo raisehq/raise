@@ -271,7 +271,7 @@ const App = ({ history, match }: any) => {
                   marketplace
                   layout={BorrowerProfileLayout}
                   exact
-                  path="/borrowers/:slug"
+                  path="/c/:slug"
                   component={BorrowerProfile}
                   roles={[1, 2]}
                 />
