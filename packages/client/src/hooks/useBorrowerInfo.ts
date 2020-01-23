@@ -30,7 +30,7 @@ const useBorrowerInfo = borrowerAddress => {
       const response = await findOne('companies', {
         'fields.ethereum_address': borrowerAddress
       });
-      response.slug = `${APP_URL}/borrowers/${response.slug}`;
+      response.slug = `${APP_URL}/c/${response.slug}`;
       setCompany(response);
     } catch (error) {
       console.error(error);
