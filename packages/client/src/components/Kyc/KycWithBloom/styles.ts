@@ -40,9 +40,14 @@ export const GetStartedBloomSubtitle = styled.div`
   text-align: center;
   color: #6067f1;
   font-size: 18px;
+  padding-top: 20px;
 
   span {
     padding: 10px;
+  }
+
+  @media (max-width: ${size.mobileL}) {
+    padding-top: 0;
   }
 `;
 
@@ -123,4 +128,8 @@ export const HelpWithBloomWrapper = styled.div`
 
 export const IconWrapper = styled.div`
   align-self: flex-end;
+`;
+
+export const BloomParagraph = styled.p`
+  color: #6067f1;
 `;

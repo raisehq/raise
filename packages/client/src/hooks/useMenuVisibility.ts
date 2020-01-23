@@ -15,6 +15,7 @@ const useMenuVisibility = () => {
       history.location.pathname.includes('/account') ||
       history.location.pathname === '/kyc' ||
       history.location.pathname === '/kyc-sumsub' ||
+      history.location.pathname === '/kyc-bloom' ||
       history.location.pathname.includes('/verify-web3') ||
       history.location.pathname === '/deposit'
     ) {

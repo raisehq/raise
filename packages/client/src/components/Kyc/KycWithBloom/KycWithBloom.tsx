@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   ChooseMethodWrapper,
   GetStartedBloomHeader,
@@ -14,13 +14,20 @@ import { Button, Image } from 'semantic-ui-react';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
+import AppContext from '../../AppContext';
+//import LocalData from '../../../helpers/localData';
 
 const KycWithBloom = ({ onBack, token = '' }) => {
+  const { history }: any = useContext(AppContext);
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
+  const [tokenBloom, setTokenBloom] = useState('');
 
   useEffect(() => {
     setIsScreenIdle(true);
+    //const user = LocalData.get('user');
+    //const userId = user ? user.id : null;
+    setTokenBloom('');
   }, []);
 
   useEffect(() => {
@@ -48,13 +55,13 @@ const KycWithBloom = ({ onBack, token = '' }) => {
 
   const requestData: RequestData = {
     action: Action.attestation,
-    token: '',
+    token: tokenBloom,
     org_name: 'Raise',
     url: '',
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
-    types: ['email']
+    types: ['email', 'id-document', 'full-name', 'address']
   };
 
   const qrOptions: Partial<QROptions> = {
@@ -87,7 +94,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
       <GetStartedBloomFooter>
-        <Button basic color="black" onClick={onBack}>
+        <Button basic color="black" onClick={() => history.push('/kyc')}>
           Go back
         </Button>
       </GetStartedBloomFooter>
