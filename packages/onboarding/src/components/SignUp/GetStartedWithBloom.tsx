@@ -115,7 +115,7 @@ const GetStartedWithBloom = ({ onBack, method, token = '' }) => {
               method={method === 'Sign In' ? 'Sign In' : 'Sign Up'}
             />
           ) : (
-            <FollowSteps isMobile={isMobile} />
+            <FollowSteps isMobile={isMobile}  />
           )}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
