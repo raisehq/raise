@@ -55,7 +55,7 @@ const DesktopHeader = () => {
   };
 
   const openSignup = () => {
-    const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'borrowers');
+    const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'c');
     tagManager.sendEventCategory(
       'Signup',
       TMEvents.Click,
