@@ -31,7 +31,7 @@ const AuthenticationMethods = ({ method }) => {
             onSetStepWithParam(method === 'Sign Up' ? 'SignUpWithBloom' : 'SignInWithBloom')('')()
           }
         >
-          <span>{method}</span>
+          <span>{method} with</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
         </ChooseBloomMethodButton>
       </ChooseMethodButtonList>
