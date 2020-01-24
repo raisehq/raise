@@ -57,7 +57,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
     action: Action.attestation,
     token: tokenBloom,
     org_name: 'Raise',
-    url: '',
+    url: 'https://lp-996.api.herodev.es/kyc/bloom/verification',
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
@@ -81,7 +81,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={{ callbackUrl: '' }}
+            buttonOptions={{ callbackUrl: ''}}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>
