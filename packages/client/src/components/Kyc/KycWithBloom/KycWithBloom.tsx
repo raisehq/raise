@@ -15,7 +15,8 @@ import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
 import AppContext from '../../AppContext';
-//import LocalData from '../../../helpers/localData';
+import { URL } from '../../../services/kyc';
+import LocalData from '../../../helpers/localData';
 
 const KycWithBloom = ({ onBack, token = '' }) => {
   const { history }: any = useContext(AppContext);
@@ -25,9 +26,8 @@ const KycWithBloom = ({ onBack, token = '' }) => {
 
   useEffect(() => {
     setIsScreenIdle(true);
-    //const user = LocalData.get('user');
-    //const userId = user ? user.id : null;
-    setTokenBloom('');
+    const userId = LocalData.getObj('user').id;
+    setTokenBloom(userId);
   }, []);
 
   useEffect(() => {
@@ -57,11 +57,12 @@ const KycWithBloom = ({ onBack, token = '' }) => {
     action: Action.attestation,
     token: tokenBloom,
     org_name: 'Raise',
-    url: 'https://lp-996.api.herodev.es/kyc/bloom/verification',
+    //url: 'https://lp-996.api.herodev.es/kyc/bloom/verification',
+    url: URL.BLOOM_KYC,
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
-    types: ['email', 'id-document', 'full-name', 'address']
+    types: ['email', 'id-document', 'full-name']
   };
 
   const qrOptions: Partial<QROptions> = {
@@ -81,7 +82,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={{ callbackUrl: ''}}
+            buttonOptions={{ callbackUrl: history.push('/') }}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>

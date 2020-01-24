@@ -2,13 +2,18 @@ import axios from 'axios';
 import Header from '../helpers/header';
 import { to, getHost } from '../utils';
 
-const HOST = `${getHost('CORE')}/kyc`;
+export const URL = {
+  AUTH: `${getHost('CORE')}/kyc/auth`,
+  CONNECT: `${getHost('CORE')}/kyc/connect`,
+  VERIFY: `${getHost('CORE')}/kyc/isverified`,
+  BLOOM_KYC: `${getHost('CORE')}/kyc/bloom/verification`
+};
 
 const COMMON_HEADERS = { Accept: 'application/json', 'Content-Type': 'application/json' };
 
 export const initKyc = async id => {
   const config: any = {
-    url: `${HOST}/auth/${id}`,
+    url: `${URL.AUTH}/${id}`,
     method: 'GET',
     headers: { ...COMMON_HEADERS, ...Header.getHeaderAuth() }
   };
@@ -23,7 +28,7 @@ export const initKyc = async id => {
 
 export const connect = async (userId, email, token) => {
   const config: any = {
-    url: `${HOST}/connect/${userId}/${email}/${token}`,
+    url: `${URL.CONNECT}/${userId}/${email}/${token}`,
     method: 'POST',
     headers: { ...COMMON_HEADERS, ...Header.getHeaderAuth() }
   };
@@ -38,7 +43,7 @@ export const connect = async (userId, email, token) => {
 
 export const isKYCVerified = async (userId, token) => {
   const config: any = {
-    url: `${HOST}/isverified/${userId}/${token}`,
+    url: `${URL.VERIFY}/${userId}/${token}`,
     method: 'GET',
     headers: { ...COMMON_HEADERS, ...Header.getHeaderAuth() }
   };
