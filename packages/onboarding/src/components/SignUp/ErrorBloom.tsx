@@ -15,9 +15,7 @@ const ErrorBloom = ({ onBack, method }) => {
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
-        <GetStartedBloomTitleError>
-          Ups! Somoething went wrong with Bloom.
-        </GetStartedBloomTitleError>
+        <GetStartedBloomTitleError>Ups! Something went wrong with Bloom.</GetStartedBloomTitleError>
       </GetStartedBloomHeader>
       <GetStartedBloomWrapper>
         <GetStartedBloomErrorSection>
