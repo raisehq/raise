@@ -131,6 +131,7 @@ const Deposit = () => {
   };
 
   const onGetRaise = async () => {
+    tagManager.sendEvent(TMEvents.Click, 'uniswap_attempt');
     setStatus(UI.GetRaise);
   };
 
