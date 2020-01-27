@@ -17,6 +17,7 @@ import useInterval from '../../hooks/useInterval';
 import { bloomSignIn, verifyBloomLogin, redirectFromBloomApp } from '../../services';
 import bloomToken from 'uuid';
 import AppContext from '../App.context';
+import { isMobile } from 'react-device-detect';
 
 const GetStartedWithBloom = ({ onBack, method, token = null }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
@@ -26,11 +27,10 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
   const { onLoginWithBloom }: any = useContext(AppContext);
 
   const watchBloom = async () => {
-    console.log(' TOKEN INSIDE OF THE SETIMEOUT : ', tokenBloom);
     const response = await verifyBloomLogin(tokenBloom);
     response.fold(
       error => {
-        console.log(error);
+        console.error('Error Watch Bloom : ', error);
         onLoginWithBloom(error, method);
       },
       resp => {
@@ -54,12 +54,10 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
       setTokenBloom(bloomToken());
     }
     setIsScreenIdle(true);
-    console.log('BLOOM TOKEN ', tokenBloom);
   }, []);
 
   useEffect(() => {
     if (tokenBloom !== null) {
-      console.log('>>>> BLOOM TOKEN ', tokenBloom);
       // Start check bloom
       checkerTimeout.current = setTimeout(watchBloom, 3000);
       return () => {
@@ -105,7 +103,6 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
   const qrOptions: Partial<QROptions> = {
     size: 250
   };
-  
 
   return (
     <ChooseMethodWrapper>
