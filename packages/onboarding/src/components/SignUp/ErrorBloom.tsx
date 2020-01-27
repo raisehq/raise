@@ -4,10 +4,9 @@ import { ErrorImage } from './styles';
 import {
   ChooseMethodWrapper,
   GetStartedBloomHeader,
-  GetStartedBloomTitle,
-  GetStartedBloomSubtitle,
+  GetStartedBloomTitleError,
   GetStartedBloomWrapper,
-  GetStartedBloomQRSection,
+  GetStartedBloomErrorSection,
   GetStartedBloomInstructionsSection,
   GetStartedBloomFooter
 } from '../styles';
@@ -16,16 +15,17 @@ const ErrorBloom = ({ onBack, method }) => {
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
-        <GetStartedBloomTitle>{method}</GetStartedBloomTitle>
-        <GetStartedBloomSubtitle> Ups! Somoething went wrong with Bloom.</GetStartedBloomSubtitle>
+        <GetStartedBloomTitleError>
+          Ups! Somoething went wrong with Bloom.
+        </GetStartedBloomTitleError>
       </GetStartedBloomHeader>
       <GetStartedBloomWrapper>
-        <GetStartedBloomQRSection>
+        <GetStartedBloomErrorSection>
           <ErrorImage src={`${IMAGES_PATH}img_tokenerror.png`} />
-        </GetStartedBloomQRSection>
+        </GetStartedBloomErrorSection>
         <GetStartedBloomInstructionsSection>
           <p>
-            Please, make sure to have your Country registered at Bloom or already doesn't have an
+            Please, make sure to have your Country registered at Bloom or that you don't have an
             existing account with the same email.
           </p>
         </GetStartedBloomInstructionsSection>

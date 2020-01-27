@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  signUp: '860px',
+  desktop: '950px'
+};
 export const MainImage = styled.img`
   display: block;
   width: 82px;
@@ -8,8 +14,11 @@ export const MainImage = styled.img`
 
 export const ErrorImage = styled.img`
   display: block;
-  width: 53%;
-  height: auto;
+  width: 379px;
+  height: 237px;
+  @media (max-width: ${size.mobileL}) {
+    padding: 0%;
+  }
 `;
 
 export const ConfirmWrapper = styled.div`

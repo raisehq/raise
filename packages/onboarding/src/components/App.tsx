@@ -473,9 +473,13 @@ const App = ({
           <GetStartedWithEmail />
         </PanelWithImage>
       ),
-      SignUpWithBloom: () => (
+      SignUpWithBloom: token => (
         <Panel>
-          <ErrorBloom onBack={() => setStep(Step.Start)} method={'Get Started'} />
+          <GetStartedWithBloom
+            onBack={() => setStep(Step.Start)}
+            token={token}
+            method={'Get Started'}
+          />
         </Panel>
       ),
       SignInWithBloom: token => (
