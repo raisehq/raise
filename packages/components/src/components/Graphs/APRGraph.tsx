@@ -208,7 +208,6 @@ const APRGraph = ({
     Chart.Chart.plugins.register(todayVerticalLine);
     Chart.Chart.plugins.register(chartBackground);
 
-    console.log('loading data');
     /**
      * Compound DAI rate api call, latest 30 day
      */
@@ -225,7 +224,6 @@ const APRGraph = ({
         },
       }
     );
-    console.log('response', response);
 
     if (
       response.status === 200 &&
@@ -239,7 +237,6 @@ const APRGraph = ({
       const estDataset = supplyRates.map(
         ({ rate }: { rate: number }) => rate * 100
       );
-      console.log(estDataset);
 
       const currentDataset = estDataset.slice(length - nowIndex - 1);
       setFullCompoundDataset(estDataset);
