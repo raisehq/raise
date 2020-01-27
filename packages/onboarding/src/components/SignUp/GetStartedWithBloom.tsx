@@ -105,6 +105,7 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
   const qrOptions: Partial<QROptions> = {
     size: 250
   };
+  
 
   return (
     <ChooseMethodWrapper>
@@ -131,7 +132,7 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
               method={method === 'Sign In' ? 'Sign In' : 'Sign Up'}
             />
           ) : (
-            <FollowSteps isMobile />
+            <FollowSteps isMobile={isMobile} />
           )}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>

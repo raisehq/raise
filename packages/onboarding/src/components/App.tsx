@@ -116,7 +116,9 @@ const App = ({
 
   useAsyncEffect(async () => {
     const { pathname } = history.location;
-
+    if (!open) {
+      return;
+    }
     if (pathname === '/join') {
       setStep(Step.Start);
     }
