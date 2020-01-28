@@ -6,7 +6,9 @@ stages:
   - deploy
   - review
   - test
-  - cleanup
+  - cleanup 
+  - invalidate_cf_cache
+
 variables:
   AWS_DEFAULT_REGION: eu-west-1
   CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
@@ -179,3 +181,25 @@ stop-review:
     - merge_requests
   except:
     - master
+
+invalidate_cf_cache:
+  stage: invalidate_cf_cache
+  image: alpine:latest
+  before_script:
+  - |
+    #!/bin/sh
+    apk add --update openssh-client bash curl git jq python py-pip
+    pip install awscli
+    if [ "${CI_COMMIT_REF_NAME}" == "master" ]; then
+      export CF_DISTRIBUTION_ID="${PROD_CF_DISTRIBUTION_ID}"
+    else
+      export CF_DISTRIBUTION_ID="${INT_CF_DISTRIBUTION_ID}"
+    fi
+  script:
+    - |
+      #!/bin/sh
+      inv_id=$(aws cloudfront create-invalidation --distribution-id ${CF_DISTRIBUTION_ID} --paths "/*" | grep Id | awk -F":" '{print $2}' | tr -d '", ')
+      until aws cloudfront get-invalidation --id ${inv_id} --distribution-id ${CF_DISTRIBUTION_ID} | grep -m 1 "Completed"; do sleep 1 ; done
+  only:
+    - master
+    - integration
