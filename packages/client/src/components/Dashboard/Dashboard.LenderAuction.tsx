@@ -19,7 +19,7 @@ const Auction = ({ auction }: { auction: any }) => {
   } = calcs;
 
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
-  const borrowerUrl = `/borrowers/${slug}`;
+  const borrowerUrl = `/c/${slug}`;
 
   return (
     <Card>

@@ -1,9 +1,24 @@
 import styled from 'styled-components';
-
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  signUp: '860px',
+  desktop: '950px'
+};
 export const MainImage = styled.img`
   display: block;
   width: 82px;
   height: 82px;
+`;
+
+export const ErrorImage = styled.img`
+  display: block;
+  width: 379px;
+  height: 237px;
+  @media (max-width: ${size.mobileL}) {
+    padding: 0%;
+  }
 `;
 
 export const ConfirmWrapper = styled.div`
@@ -25,7 +40,7 @@ export const ConfirmHeader = styled.h1`
 export const ConfirmText = styled.p`
   text-align: center;
   margin-top: 15px;
-  color: #5A5A5A;
+  color: #5a5a5a;
   font-size: 14px;
   line-height: 21px;
   max-width: 322px;

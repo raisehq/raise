@@ -7,6 +7,7 @@ import GetStarted from './SignUp/GetStarted';
 import GetStartedWithEmail from './SignUp/GetStartedWithEmail';
 import GetStartedWithBloom from './SignUp/GetStartedWithBloom';
 import Confirm from './SignUp/Confirm';
+import ErrorBloom from './SignUp/ErrorBloom';
 import SignIn from './SignIn/SignIn';
 import SignInWithEmail from './SignInWithEmail/SignInWithEmail';
 import Verified from './Verification/Verified';
@@ -49,6 +50,7 @@ const Step = daggy.taggedSum('UI', {
   StartMini: [],
   SignIn: [],
   SignInWithEmail: [],
+  ErrorWithBloom: [],
   Confirm: [],
   Verifying: [],
   Verified: [],
@@ -338,7 +340,7 @@ const App = ({
           window.fbq('trackCustom', 'Login', { type: 'login_error_bloom', host });
         }
       }
-      return;
+      return setStep(Step.ErrorWithBloom);
     }
 
     if (method === 'Get Started') {
@@ -501,6 +503,11 @@ const App = ({
         <SimpleModal>
           <SignInWithEmail />
         </SimpleModal>
+      ),
+      ErrorWithBloom: () => (
+        <Panel>
+          <ErrorBloom onBack={() => setStep(Step.Start)} method={'Get Started'} />
+        </Panel>
       ),
       Confirm: () => (
         <BigSimpleModal localClose>

@@ -63,7 +63,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
     } else {
       const isBorrowerProfile = history.location.pathname
         .split('/')
-        .filter(pt => pt === 'borrowers');
+        .filter(pt => pt === 'c');
       tagManager.sendEventCategory(
         'Card',
         TMEvents.Click,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
   ChooseMethodWrapper,
   GetStartedBloomHeader,
@@ -19,38 +19,52 @@ import bloomToken from 'uuid';
 import AppContext from '../App.context';
 import { isMobile } from 'react-device-detect';
 
-const GetStartedWithBloom = ({ onBack, method, token = '' }) => {
+const GetStartedWithBloom = ({ onBack, method, token = null }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
-  const [tokenBloom, setTokenBloom] = useState(null);
-
+  const [tokenBloom, setTokenBloom] = useState(token !== null && token.length > 0 ? token : null);
+  const checkerTimeout = useRef(null);
   const { onLoginWithBloom }: any = useContext(AppContext);
 
-  useEffect(() => {
-    setTokenBloom(token ? token : bloomToken());
-    setIsScreenIdle(true);
-  }, []);
-
-  useInterval(async () => {
+  const watchBloom = async () => {
     const response = await verifyBloomLogin(tokenBloom);
     response.fold(
       error => {
-        console.log(error);
+        console.error('Error Watch Bloom : ', error);
         onLoginWithBloom(error, method);
       },
-      response => {
+      resp => {
         const {
           data: {
             data: { result }
           }
-        } = response;
+        } = resp;
 
         if (result.id) {
           onLoginWithBloom(result, method);
+        } else {
+          checkerTimeout.current = setTimeout(watchBloom, 3000);
         }
       }
     );
-  }, 3000);
+  };
+
+  useEffect(() => {
+    if (tokenBloom === null || tokenBloom.length === 0) {
+      setTokenBloom(bloomToken());
+    }
+    setIsScreenIdle(true);
+  }, []);
+
+  useEffect(() => {
+    if (tokenBloom !== null) {
+      // Start check bloom
+      checkerTimeout.current = setTimeout(watchBloom, 3000);
+      return () => {
+        clearTimeout(checkerTimeout.current);
+      };
+    }
+  }, [tokenBloom]);
 
   useEffect(() => {
     const events = ['load', 'mousemove', 'mousedown', 'click', 'scroll', 'keypress'];
@@ -115,8 +129,8 @@ const GetStartedWithBloom = ({ onBack, method, token = '' }) => {
               method={method === 'Sign In' ? 'Sign In' : 'Sign Up'}
             />
           ) : (
-              <FollowSteps isMobile />
-            )}
+            <FollowSteps isMobile={isMobile} />
+          )}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
       <GetStartedBloomFooter>

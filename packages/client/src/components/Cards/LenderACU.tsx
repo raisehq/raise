@@ -37,7 +37,7 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
 
   const contentColor = state === 3 ? 'red' : null;
   const loanTermLeft = state === 5 ? '-' : times.loanTermLeft;
-  const borrowerUrl = `/borrowers/${slug}`;
+  const borrowerUrl = `/c/${slug}`;
 
   return (
     <Card width="372px">

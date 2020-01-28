@@ -237,6 +237,7 @@ const APRGraph = ({
       const estDataset = supplyRates.map(
         ({ rate }: { rate: number }) => rate * 100
       );
+
       const currentDataset = estDataset.slice(length - nowIndex - 1);
       setFullCompoundDataset(estDataset);
       setCompoundDataset(currentDataset);
