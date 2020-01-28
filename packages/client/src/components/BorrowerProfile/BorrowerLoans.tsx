@@ -35,12 +35,10 @@ const BorrowerLoans: React.SFC<BorrowerLoansProps> = ({ account }: BorrowerLoans
     return null;
   }
 
-  const activeAuctions =
-    auctions && auctions.length ? auctions.filter(({ state }) => state === 0) : null;
-  return activeAuctions && activeAuctions.length > 0 ? (
+  return auctions && auctions.length > 0 ? (
     <BorrowerLoansBox>
-      <Header as="h2">Active Auctions</Header>
-      <Tab auctions={activeAuctions} states={[0]} type="suggested" />
+      <Header as="h2">Investment opportunities</Header>
+      <Tab auctions={auctions} states={[0]} type="suggested" />
     </BorrowerLoansBox>
   ) : null;
 };

@@ -4,13 +4,14 @@ import 'url-search-params-polyfill';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import LogRocket from 'logrocket';
-import { MainLayout, SimpleLayout, Web3Layout } from './Layout';
+import { MainLayout, SimpleLayout, Web3Layout, BorrowerProfileLayout } from './Layout';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import CreateLoan from './CreateLoan';
 import RootContext from '../context';
 import MyAccount from './MyAccount';
 import Join from './Join';
 import Kyc from '../components/Kyc';
+import KycSelectMethod from '../components/Kyc/KycSelectMethod';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
 import { BorrowerProfile } from '../components/BorrowerProfile';
@@ -23,11 +24,14 @@ import DesktopHeader from './DesktopHeader';
 import LocalData from '../helpers/localData';
 import Queryies from '../helpers/queryies';
 import AppContext from './AppContext';
+import NotFound404 from '../components/BorrowerProfile/Borrower404';
+import Onboarding from '@raisehq/onboarding';
 
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
   const [isLoading, setLoading] = useState(true);
-  const [getStarted, setGetStarted] = useState(firstLogin === 'first');
+  const [getStarted, setGetStarted] = useState(!!(firstLogin && firstLogin.includes('first')));
+
   const {
     store,
     store: {
@@ -40,7 +44,8 @@ const App = ({ history, match }: any) => {
       user: {
         details: { id, accounttype_id: accounttypeId, email, status },
         cryptoAddress: { address, cryptotypeId }
-      }
+      },
+      onboarding: { show: showOnboarding, troggle: troggleOnboarding }
     },
     actions,
     actions: {
@@ -48,11 +53,13 @@ const App = ({ history, match }: any) => {
       user: { onGetCryptoAddressByUser, onGetUser, onGetUserFromBC },
       blockchain: { fetchContracts },
       kyc: { onInitKyc },
-      config: { updateNetwork }
+      config: { updateNetwork },
+      onboarding: { hiddeOnboarding }
     },
     followTx
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
+
   const [webSocket, setWebSocket]: any = useState({});
   const [daiWebSocket, setDaiWebSocket]: any = useState({});
   const {
@@ -69,7 +76,7 @@ const App = ({ history, match }: any) => {
   } = useWeb3Checker(address);
 
   const onSetGetStarted = () => setGetStarted(!getStarted);
-  // Enabling connections
+  // Enabling connectionsStart
   useEffect(() => {
     if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {
       setLoading(false);
@@ -180,6 +187,8 @@ const App = ({ history, match }: any) => {
           networkMatches,
           accountMatches,
           targetNetwork,
+          walletNetworkId,
+          walletNetwork,
           walletAccount,
           storedAccount,
           account: storedAccount, // Old compability
@@ -191,7 +200,16 @@ const App = ({ history, match }: any) => {
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
-
+      <Onboarding
+        blur={false}
+        open={showOnboarding}
+        history={history}
+        closeButton
+        onClose={hiddeOnboarding}
+        initStep={troggleOnboarding}
+        pathRedirect={window.location.pathname}
+        mountNode={modalRefs.current}
+      />
       {!isLoading && (
         <>
           <TopMobileMenu />
@@ -209,9 +227,17 @@ const App = ({ history, match }: any) => {
                 />
                 <Web3Layout
                   marketplace
-                  layout={MainLayout}
+                  layout={SimpleLayout}
                   exact
                   path="/kyc"
+                  component={KycSelectMethod}
+                  roles={[1, 2]}
+                />
+                <Web3Layout
+                  marketplace
+                  layout={SimpleLayout}
+                  exact
+                  path="/kyc-sumsub"
                   component={Kyc}
                   roles={[1, 2]}
                 />
@@ -224,19 +250,14 @@ const App = ({ history, match }: any) => {
                   roles={[1, 2]}
                 />
                 <Web3Layout
-                  marketplace
-                  layout={MainLayout}
-                  exact
-                  path="/dashboard"
-                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
-                  roles={[1, 2]}
-                />
-                <Web3Layout
+                  publicRoute
                   marketplace
                   layout={MainLayout}
                   exact
                   path="/"
-                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : null}
+                  component={
+                    accounttypeId ? componentsByRole[accounttypeId].dashboard : DashboardLender
+                  }
                   roles={[1, 2]}
                 />
                 <Web3Layout
@@ -247,14 +268,24 @@ const App = ({ history, match }: any) => {
                   component={CreateLoan}
                   roles={[1, 2]}
                 />
-                <MainLayout exact path="/borrowers/:slug" component={BorrowerProfile} />
+                <Web3Layout
+                  publicRoute
+                  marketplace
+                  layout={BorrowerProfileLayout}
+                  exact
+                  path="/c/:slug"
+                  component={BorrowerProfile}
+                  roles={[1, 2]}
+                />
                 {/* Onboarding */}
                 <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
                 <SimpleLayout exact path="/join" component={Join} />
                 <SimpleLayout exact path="/login" component={Join} />
+                <SimpleLayout exact path="/login/bloom/:token" component={Join} />
                 <SimpleLayout exact path="/join/verify/token/:token" component={Join} />
                 <SimpleLayout exact path="/join/password/reset/:token" component={Join} />
                 <SimpleLayout exact path="/join/activate/:token" component={Join} />
+                <MainLayout component={NotFound404} />
               </Switch>
             </CSSTransition>
           </TransitionGroup>

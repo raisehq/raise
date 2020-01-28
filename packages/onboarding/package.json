@@ -1,7 +1,7 @@
 {
   "name": "@raisehq/onboarding",
   "private": false,
-  "version": "1.0.38",
+  "version": "1.0.61",
   "description": "Raise signup/login modal",
   "author": "RaiseHQ",
   "homepage": "http://www.raise.it",
@@ -24,9 +24,15 @@
     "build": "tsc",
     "lint": "eslint . --ext .js,.ts,.tsx"
   },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
   "dependencies": {
+    "@bloomprotocol/share-kit-react": "^4.5.0",
     "@raisehq/components": "*",
     "js-cookie": "^2.2.0",
+    "react-device-detect": "^1.11.14",
     "react-google-recaptcha": "^2.0.0-rc.1",
     "react-gtm-module": "^2.0.7",
     "react-iframe": "^1.8.0",
@@ -35,7 +41,8 @@
     "react-transition-group": "^4.3.0",
     "slick-carousel": "^1.8.1",
     "typescript": "^3.5.3",
-    "url-search-params-polyfill": "^7.0.0"
+    "url-search-params-polyfill": "^7.0.0",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.11.0",

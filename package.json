@@ -5,17 +5,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.6.8",
-    "@types/react": "^16.8.23",
-    "@types/react-dom": "^16.8.5",
-    "axios": "^0.19.0",
-    "daggy": "^1.4.0",
     "lerna": "^3.16.4",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "semantic-ui-react": "^0.87.3",
-    "styled-components": "^4.3.2",
     "typescript": "^3.5.3",
     "validator": "^11.1.0"
   },
@@ -30,5 +20,8 @@
     "build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client"
+  },
+  "dependencies": {
+    "react-scripts": "3.3.0"
   }
 }

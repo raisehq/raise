@@ -39,7 +39,7 @@ const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
     }
     return auction.state;
   }, [auction.state, auction.loanRepaid]);
-  const borrowerUrl = `/borrowers/${slug}`;
+  const borrowerUrl = `/c/${slug}`;
   return (
     <Card width="372px">
       <Card.Content size="100%">

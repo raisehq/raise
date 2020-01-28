@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 import { Icon } from 'semantic-ui-react';
 import { SocialNetwork } from '../../interfaces/BorrowerProfile';
-import { SocialsBox } from './BorrowerProfile.styles';
+import { SocialsBox, Website } from './BorrowerProfile.styles';
 
 interface SocialProps {
   socialNetworks: SocialNetwork[];
+  url: string;
 }
 
-const Socials: React.SFC<SocialProps> = ({ socialNetworks }: SocialProps) => {
+const Socials: React.SFC<SocialProps> = ({ socialNetworks, url }: SocialProps) => {
   const SocialDOM = useMemo(
     () =>
       socialNetworks.map(({ network, link }) => (
@@ -17,7 +18,13 @@ const Socials: React.SFC<SocialProps> = ({ socialNetworks }: SocialProps) => {
       )),
     [socialNetworks]
   );
-  return <SocialsBox>{SocialDOM}</SocialsBox>;
+
+  return ( 
+    <SocialsBox>
+      {SocialDOM}
+      <Website href={url} rel="noopener noreferrer" target="_blank">Visit website</Website>
+    </SocialsBox>
+  );
 };
 
 export default Socials;

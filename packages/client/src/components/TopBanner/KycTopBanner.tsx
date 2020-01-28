@@ -1,5 +1,6 @@
-import React from 'react';
-import { MissingKyc, MissingKycMobile } from './banners/MissingKyc';
+import React, { useContext } from 'react';
+import AppContext from '../AppContext'
+import { StepsReminder, StepsReminderMobile } from './banners/StepsReminder';
 import daggy from 'daggy';
 
 export const Status = daggy.taggedSum('UI', {
@@ -21,24 +22,44 @@ export const StatusSet = {
 interface KycTopBannerProps {
   enabled: boolean;
   kycStatus: number;
-  action?: Function;
+  hasDeposit: boolean;
+  kycAction?: Function;
+  hasDepositAction?: Function;
   mobile?: boolean;
 }
 
-const KycTopBanner = ({ enabled, kycStatus, action, mobile }: KycTopBannerProps) => {
-  const view = Status[StatusSet[kycStatus || 5]];
-
+const KycTopBanner = ({
+  enabled,
+  kycStatus,
+  kycAction,
+  hasDeposit,
+  hasDepositAction,
+  mobile
+}: KycTopBannerProps) => {
+  const { history: { location: { pathname } } }: any = useContext(AppContext);
+  const view = Status[StatusSet[(hasDeposit && kycStatus) || 5]];
+  const stepsForBanner = {
+    kyc: kycStatus === 5,
+    kycAction,
+    hasDeposit,
+    hasDepositAction
+  };
   if (!enabled) {
     return null;
   }
 
+  const inDashboard = () => pathname === '/' || pathname === '/account' || pathname === '/kyc'|| pathname === '/kyc-sumsub';
+
   const getView = () =>
     view.cata({
       Start: () => {
-        if (mobile) {
-          return <MissingKycMobile action={action} />;
+        if (!inDashboard()) {
+          return null;
         }
-        return <MissingKyc action={action} />;
+        if (mobile) {
+          return <StepsReminderMobile {...stepsForBanner} />;
+        }
+        return <StepsReminder {...stepsForBanner} />;
       },
       Pending: () => null,
       PendingRegistry: () => null,

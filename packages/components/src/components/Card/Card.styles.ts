@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Icon, Image } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import { device } from '../../utils/breakpoints';
 
 interface RowContentProps {
@@ -38,24 +38,31 @@ export const GraphContainer = styled.div`
 
 export const CardImageCrop: any = styled.div<ImageCropProps>`
   width: 100%;
-  height: 120px;
-  background-position: center center;
+  height: 124px;
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   background-image: ${({ src }) => `url(${src})`};
   border-radius: 6px 6px 0 0;
-  border: 1px solid #cfd0d4;
+  border-bottom: 1px solid #cfd0d4;
 `;
 export const CardHref: any = styled.a`
   width: 100%;
   display: block;
 `;
-export const CardLogo: any = styled(Image)`
+export const CardLogo: any = styled.div<ImageCropProps>`
   &&& {
     width: 70px;
     height: 70px;
     background-color: white;
     border-radius: 6px;
     border: 1px solid #cfd0d4;
+  
+    background-position: center;
+    background-position-x: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: ${({ src }) => `url(${src})`};
   }
 `;
 
@@ -102,6 +109,7 @@ export const CardDescription = styled.div`
   font-size: 14px;
   display: block;
   text-align: left;
+  line-height: 21px;
 `;
 
 export const CardContent = styled.div<{
@@ -120,6 +128,7 @@ export const CardContent = styled.div<{
     position: absolute;
     top: -35px;
     left: 14px;
+
   }
   &&& > ${TimeLeft} {
     position: absolute;

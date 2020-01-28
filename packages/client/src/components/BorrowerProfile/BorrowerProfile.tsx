@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
@@ -11,18 +10,20 @@ import {
   SideInfo,
   Container,
   CompanyName,
-  HeaderBox,
   HeaderImage,
-  Icon,
-  AddressInfo,
-  CompanyDetails
+  CompanyDetails,
+  BorrowerPage,
+  LoanContainer,
+  SideTitle,
+  CardImageCrop,
+  BorrowerLogo
 } from './BorrowerProfile.styles';
-import { Resources } from './Resource';
 import { KPIList } from './KPI';
 import Socials from './Socials';
 import BorrowerLoans from './BorrowerLoans';
 import Borrower404 from './Borrower404';
 import BorrowerLoading from './BorrowerLoading';
+import { BorrowerInfo } from './BorrowerInfo';
 
 const defaultBorrower = {
   companyDetails: {
@@ -63,7 +64,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
       description,
       logo,
       url,
-      urlText,
       updated,
       address,
       foundationDate,
@@ -75,7 +75,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
     kpis
   } = borrower;
   const lastUpdated = new Date(updated).toLocaleDateString('en-GB');
-  const createdDate = new Date(foundationDate).toLocaleDateString('en-GB');
 
   useAsyncEffect(async () => {
     try {
@@ -94,42 +93,33 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   if (notFound) {
     return <Borrower404 />;
   }
+
   return (
-    <Container>
-      <BorrowerCard>
-        <HeaderImage>
-          <Image src={background} />
-        </HeaderImage>
-        <CompanyDetails>
-          <HeaderBox>
-            <div>
-              <Image size="small" src={logo} />
-              <a href={url} rel="noopener noreferrer" target="_blank">
-                {urlText}
-              </a>
-            </div>
-            <KPIList kpis={kpis} />
-          </HeaderBox>
-          <CompanyName>{companyName}</CompanyName>
-          <p>Last updated: {lastUpdated}</p>
-          <b>About</b>
-          {description}
-          <Socials socialNetworks={socialNetworks} />
-        </CompanyDetails>
-      </BorrowerCard>
-      <SideInfo>
-        <p className="borrowerInfo">
-          <Icon className="map marker alternate icon"></Icon>
-          <AddressInfo>{address}</AddressInfo>
-        </p>
-        <p>
-          <Icon className="calendar alternate icon"></Icon>
-          Founded on {createdDate}
-        </p>
-        <Resources extraResources={extraResources} />
-      </SideInfo>
-      <BorrowerLoans account={ethereumAddress} />
-    </Container>
+    <BorrowerPage>
+      <Container>
+        <BorrowerCard>
+          <HeaderImage>
+            <CardImageCrop src={background} />
+          </HeaderImage>
+          <CompanyDetails>
+            <BorrowerLogo src={logo} />
+            <CompanyName>{companyName}</CompanyName>
+            <p>Last updated: {lastUpdated}</p>
+            <b>About</b>
+            {description}
+            <Socials socialNetworks={socialNetworks} url={url} />
+          </CompanyDetails>
+        </BorrowerCard>
+        <SideInfo>
+          <SideTitle>Overview</SideTitle>
+          <KPIList kpis={kpis}></KPIList>
+          <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
+        </SideInfo>
+      </Container>
+      <LoanContainer>
+        <BorrowerLoans account={ethereumAddress} />
+      </LoanContainer>
+    </BorrowerPage>
   );
 };
 

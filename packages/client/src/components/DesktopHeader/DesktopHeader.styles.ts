@@ -23,8 +23,12 @@ export const HeaderWrapper: any = styled.div`
     color: #3c4251 !important;
   }
 `;
+interface LogoutButtonInt {
+  onSignup?: any;
+  onLogin?: any;
+}
 
-export const HeaderLogout = styled(Logout)`
+export const HeaderLogout = styled(Logout)<LogoutButtonInt>`
   &&&& {
     border: 1px solid #3c4251;
     background: transparent;

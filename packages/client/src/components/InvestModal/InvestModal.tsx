@@ -7,7 +7,7 @@ import AppContext from '../AppContext';
 import InvestState from './InvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
-
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
 import { match, ANY } from 'pampy';
 
@@ -22,24 +22,32 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
     web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
   }: any = useContext(AppContext);
   const {
+    history,
     modalRefs,
     store: {
       user: {
         details: { kyc_status }
+      },
+      auth: {
+        login: { logged: isLogged }
       }
+    },
+    actions: {
+      onboarding: { showOnboarding }
     }
   }: any = useContext(AppContext);
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Confirm);
   const [investment, setInvestment] = useState(0);
-
-  const invested = loan.lenderAmount && Number(fromWei(loan.lenderAmount));
-  const notConnected = !hasProvider || !unlocked || !accountMatches || !networkMatches;
-
+  const tagManager = useGoogleTagManager();
+  const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
+  // prettier-ignore
+  const connected = (hasProvider && unlocked && accountMatches && networkMatches);
+  const userActivated = connected && kyc_status === 3;
   const buttonText = match(
-    [!!notConnected, !!invested],
+    [connected, invested],
     [true, ANY],
-    () => 'Connect wallet',
+    () => 'INVEST',
     [false, true],
     () => 'INVEST MORE',
     [false, false],
@@ -49,8 +57,25 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   );
 
   const openModal = () => {
-    setStage(UI.Confirm);
-    setOpen(true);
+    if (isLogged) {
+      setStage(UI.Confirm);
+      setOpen(true);
+    } else {
+      const isBorrowerProfile = history.location.pathname
+        .split('/')
+        .filter(pt => pt === 'c');
+      tagManager.sendEventCategory(
+        'Card',
+        TMEvents.Click,
+        isBorrowerProfile ? 'borrower_profile' : 'marketplace'
+      );
+      if (window.fbq) {
+        window.fbq('trackCustom', 'Card', {
+          type: isBorrowerProfile ? 'borrower_profile' : 'marketplace'
+        });
+      }
+      showOnboarding();
+    }
   };
   const closeModal = () => {
     setOpen(false);
@@ -74,7 +99,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
         className={className}
         fluid
         onClick={openModal}
-        disabled={notConnected || kyc_status !== 3}
+        disabled={isLogged ? !userActivated : false}
       >
         {buttonText}
       </LenderButton>

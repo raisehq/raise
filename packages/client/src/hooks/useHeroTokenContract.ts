@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { Either } from '../utils';
+import { toWei } from 'web3-utils';
 import useWallet from './useWallet';
 import useWeb3 from './useWeb3';
 import useAsyncEffect from './useAsyncEffect';
@@ -25,6 +26,7 @@ const useDepositContract = () => {
               const HeroTokenContract = await wallet.addContract('HeroToken');
               const DepositContract = await wallet.addContract('Deposit');
               setActiveContract({
+                address: () => HeroTokenContract.options.address,
                 allowance: (account, spender) =>
                   HeroTokenContract.methods.allowance(account, spender).call(),
                 balance: account => HeroTokenContract.methods.balanceOf(account).call(),

@@ -52,14 +52,14 @@ const CheckList = ({ onBack, onSuccess }: any) => {
 
   // prettier-ignore
   const steps = match(matchConditions,
-    [ false, TAIL],
+    [false, TAIL],
     () => ['user-action', 'pending', 'pending'],
-    [ true, false, TAIL],
+    [true, false, TAIL],
     () => ['pass', 'user-action', 'pending'],
     [true, true, false],
-    () => [ 'pass', 'pass', 'user-action'],
+    () => ['pass', 'pass', 'user-action'],
     [true, true, true],
-    () => [ 'pass', 'pass', 'pass'],
+    () => ['pass', 'pass', 'pass'],
     ANY,
     () => ['pending', 'pending', 'pending']);
 
@@ -73,7 +73,7 @@ const CheckList = ({ onBack, onSuccess }: any) => {
     <Check key={`check-${i}`} value={value} message={stepsMessage[i]} />
   ));
   if (matchConditions.every((el: any) => el)) {
-    return onSuccess();
+    onSuccess();
   }
 
   if (!hasProvider) {
@@ -87,22 +87,22 @@ const CheckList = ({ onBack, onSuccess }: any) => {
     <Web3CheckWalletWrapper>
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletContainer>
-          <SelectYourWalletTitle>
-            <CardTitle>Connect your wallet </CardTitle>
-          </SelectYourWalletTitle>
-          <SelectYourWalletList>
-            <SelectWalletOptionListItem>
-              <List>{StepsDOM}</List>
-            </SelectWalletOptionListItem>
-            <SelectWalletOptionListItem>
-              <Messages />
-            </SelectWalletOptionListItem>
-            <SelectWalletOptionListItem>
-              <Button basic color="black" onClick={onBack}>
-                Go back
+        <SelectYourWalletTitle>
+          <CardTitle>Connect your wallet </CardTitle>
+        </SelectYourWalletTitle>
+        <SelectYourWalletList>
+          <SelectWalletOptionListItem>
+            <List>{StepsDOM}</List>
+          </SelectWalletOptionListItem>
+          <SelectWalletOptionListItem>
+            <Messages />
+          </SelectWalletOptionListItem>
+          <SelectWalletOptionListItem>
+            <Button basic color="black" onClick={onBack}>
+              Go back
               </Button>
-            </SelectWalletOptionListItem>
-          </SelectYourWalletList>
+          </SelectWalletOptionListItem>
+        </SelectYourWalletList>
       </SelectYourWalletContainer>
     </Web3CheckWalletWrapper>
   );

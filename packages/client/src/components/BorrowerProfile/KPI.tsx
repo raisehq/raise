@@ -1,17 +1,42 @@
 import React from 'react';
-import numeral from '../../commons/numeral';
+import { Icon } from 'semantic-ui-react';
 import { KPI as KPIProps } from '../../interfaces/BorrowerProfile';
 
-import { KPIBox, KPIListBox } from './BorrowerProfile.styles';
+import {
+  KPIBox,
+  KPIListBox,
+  KPIItem,
+  KPISeparator,
+  KPIItemLabel,
+  KPIItemValue,
+  KPITooltip,
+  KPILabel,
+  KPIIcon
+} from './BorrowerProfile.styles';
 
 interface KPIListProps {
   kpis: KPIProps[];
 }
 
-export const KPI: React.SFC<KPIProps> = ({ kpi, label }: KPIProps) => (
+export const KPI: React.SFC<KPIProps> = ({ kpi, label, tooltip }: KPIProps) => (
   <KPIBox>
-    <div>{numeral(kpi).format('0%')}</div>
-    <div>{label}</div>
+    <KPIItem>
+      <KPILabel>
+        <KPIItemLabel>{label}</KPIItemLabel>
+        {tooltip && (
+          <KPIIcon>
+            <KPITooltip
+              content={tooltip}
+              inverted
+              position="center top"
+              trigger={<Icon color="teal" name="info circle" />}
+            />
+          </KPIIcon>
+        )}
+      </KPILabel>
+      <KPIItemValue>{kpi}</KPIItemValue>
+    </KPIItem>
+    <KPISeparator />
   </KPIBox>
 );
 
