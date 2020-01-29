@@ -17,6 +17,8 @@ import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/s
 import AppContext from '../../AppContext';
 import { URL } from '../../../services/kyc';
 import LocalData from '../../../helpers/localData';
+import useInterval from '../../../hooks/useInterval';
+import { getUser } from '../../../services/auth';
 
 const KycWithBloom = ({ onBack, token = '' }) => {
   const { history }: any = useContext(AppContext);
@@ -24,9 +26,24 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
 
+  useInterval(async () => {
+    if (tokenBloom !== '') {
+      const user = await getUser(tokenBloom);
+      if (user.kyc_status === 3) {
+        LocalData.setObj('user', {
+          ...user,
+          kyc_status: user.kyc_status
+        });
+        history.push('/');
+      }
+    }
+  }, 3000);
+
   useEffect(() => {
     setIsScreenIdle(true);
-    const userId = LocalData.getObj('user').id;
+    const user = LocalData.getObj('user');
+    const userId = user.id;
+    console.log('USERID: ', userId);
     setTokenBloom(userId);
   }, []);
 
@@ -57,7 +74,6 @@ const KycWithBloom = ({ onBack, token = '' }) => {
     action: Action.attestation,
     token: tokenBloom,
     org_name: 'Raise',
-    //url: 'https://lp-996.api.herodev.es/kyc/bloom/verification',
     url: URL.BLOOM_KYC,
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
@@ -82,7 +98,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={{ callbackUrl: history.push('/') }}
+            buttonOptions={{ callbackUrl: `${process.env.REACT_APP_HOST}` }}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>
