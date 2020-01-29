@@ -10,7 +10,7 @@ import {
   GetStartedBloomFooter
 } from '../styles';
 
-const ErrorBloom = ({ onBack }: { onBack: any }) => {
+const ErrorBloom = ({ onBack }: any) => {
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
