@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@bloomprotocol/share-kit-react": "^4.4.0",
-    "@raisehq/components": "*",
-    "@raisehq/onboarding": "*",
+    "@raisehq/components": "file:../components",
+    "@raisehq/onboarding": "file:../onboarding",
     "@types/jest": "24.0.15",
     "@types/lodash": "^4.14.135",
     "@types/node": "12.0.8",
@@ -58,17 +58,6 @@
     "walletlink": "^1.0.0",
     "web3": "1.2.4",
     "web3-utils": "1.2.4"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^1.11.0",
-    "eslint": "^6.2.1",
-    "eslint-config-airbnb-typescript": "^4.0.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.14.3",
-    "jest": "^24.9.0",
-    "react-use-cookie": "^1.0.2",
-    "ts-jest": "^24.0.2"
   },
   "scripts": {
     "start": "NODE_ENV=production node index.js",
