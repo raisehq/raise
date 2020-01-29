@@ -12,6 +12,7 @@ import MyAccount from './MyAccount';
 import Join from './Join';
 import Kyc from '../components/Kyc';
 import KycSelectMethod from '../components/Kyc/KycSelectMethod';
+import KycWithBloom from '../components/Kyc/KycWithBloom/KycWithBloom';
 import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
 import { BorrowerProfile } from '../components/BorrowerProfile';
@@ -239,6 +240,14 @@ const App = ({ history, match }: any) => {
                   exact
                   path="/kyc-sumsub"
                   component={Kyc}
+                  roles={[1, 2]}
+                />
+                <Web3Layout
+                  marketplace
+                  layout={SimpleLayout}
+                  exact
+                  path="/kyc-bloom"
+                  component={KycWithBloom}
                   roles={[1, 2]}
                 />
                 <Web3Layout

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import AppContext from '../AppContext'
+import AppContext from '../AppContext';
 import { StepsReminder, StepsReminderMobile } from './banners/StepsReminder';
 import daggy from 'daggy';
 
@@ -36,7 +36,11 @@ const KycTopBanner = ({
   hasDepositAction,
   mobile
 }: KycTopBannerProps) => {
-  const { history: { location: { pathname } } }: any = useContext(AppContext);
+  const {
+    history: {
+      location: { pathname }
+    }
+  }: any = useContext(AppContext);
   const view = Status[StatusSet[(hasDeposit && kycStatus) || 5]];
   const stepsForBanner = {
     kyc: kycStatus === 5,
@@ -48,7 +52,12 @@ const KycTopBanner = ({
     return null;
   }
 
-  const inDashboard = () => pathname === '/' || pathname === '/account' || pathname === '/kyc'|| pathname === '/kyc-sumsub';
+  const inDashboard = () =>
+    pathname === '/' ||
+    pathname === '/account' ||
+    pathname === '/kyc' ||
+    pathname === '/kyc-bloom' ||
+    pathname === '/kyc-sumsub';
 
   const getView = () =>
     view.cata({
