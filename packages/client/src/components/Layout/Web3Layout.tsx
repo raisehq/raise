@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
-import { Experiment, Variant } from "react-optimize";
+import { Experiment, Variant } from 'react-optimize';
 import { Loader } from 'semantic-ui-react';
 import { SpecialDimmer } from './Layout.styles';
 import LocalData from '../../helpers/localData';
@@ -12,7 +12,7 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 const EXPERIMENT_DEPOSIT_ID = process.env.REACT_APP_AB_TEST_SKIP_DEPOSIT;
 
-const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...rest }: any) => {
+const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, publicRoute, ...rest }: any) => {
   const {
     store: {
       config: { network, networkId },
@@ -28,6 +28,7 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     web3Status: { hasProvider, hasDeposit, accountMatches, networkMatches, unlocked }
   }: any = useContext(AppContext);
 
+  const pushTo = (route: string) => history.push(route);
   const firstLogin = LocalData.get('firstLogin') === 'first';
 
   const { connectWallet }: any = useWeb3();
@@ -54,9 +55,13 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
   if (connectionError) {
     return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
   }
-  // Check if is Logged
-  if (!isLogged) {
+  // Check if is Logged and not public
+  if (!publicRoute && !isLogged && !pathname.includes('/join')) {
     return <Redirect to="/join" />;
+  }
+
+  if (publicRoute && !isLogged) {
+    return <Layout {...rest} />;
   }
 
   if (accountMatches && networkMatches && cryptotypeId !== null && hasDeposit !== undefined) {
@@ -69,31 +74,35 @@ const Web3Layout = ({ history, layout: Layout, exact, roles, marketplace, ...res
     ) {
       if (EXPERIMENT_DEPOSIT_ID) {
         return (
-          <Experiment id={EXPERIMENT_DEPOSIT_ID}>
-            <Variant id="0">
-              <Redirect to="/deposit" />
-            </Variant>
-            <Variant id="1">
-              {firstLogin && <Redirect to="/deposit" />}
-              {!firstLogin && !acceptedRole && <Redirect to="/" />}
-              {!firstLogin && rest.path === pathname && acceptedRole && <Layout {...rest} />}
-            </Variant>
-          </Experiment>
-        )
+          <>
+            <Experiment id={EXPERIMENT_DEPOSIT_ID}>
+              <Variant id="0">{pushTo('/deposit')}</Variant>
+              <Variant id="1">
+                {firstLogin && pushTo('/deposit')}
+                {!firstLogin && !acceptedRole && pushTo('/')}
+                {!firstLogin && acceptedRole && <Layout {...rest} />}
+              </Variant>
+            </Experiment>
+          </>
+        );
       }
-      return <Redirect to="/deposit" />
+      return <Redirect to="/deposit" />;
     }
-    if (!acceptedRole) return <Redirect to="/" />;
-    if (rest.path === pathname && acceptedRole) return <Layout {...rest} />;
+    if (!acceptedRole) {
+      return <Redirect to="/" />;
+    }
+    if (acceptedRole) {
+      return <Layout {...rest} />;
+    }
   } else {
     // on case the connection with web3 are not ok or we have the correct conection but are different wallets
     // eslint-disable-next-line
     if (pathname !== '/verify-web3' && (cryptotypeId === CryptoWallets.NotConnected || unlocked)) {
-      return <Redirect to={`/verify-web3?redirect=${history.location.pathname}`} />;
+      history.push(`/verify-web3?redirect=${history.location.pathname}`);
+      return null;
     }
   }
   // On case account not match and network not match
-
   return (
     <SpecialDimmer active inverted>
       <Loader>

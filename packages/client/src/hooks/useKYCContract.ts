@@ -6,16 +6,17 @@ import AppContext from '../components/AppContext';
 const useKYCContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const wallet = useWallet();
-  const {
-    FollowTx: { watchTx }
-  }: any = useContext(AppContext);
+  const { followTx }: any = useContext(AppContext);
   useAsyncEffect(async () => {
     if (wallet) {
       try {
         const contract = await wallet.addContract('KYC');
 
         setActiveContract({
-          add: watchTx(account => contract.methods.add(account).send({ from: account })),
+          add: followTx.watchTx(
+            account => contract.methods.add(account).send({ from: account }),
+            'KYC'
+          ),
           isConfirmed: account => contract.methods.isConfirmed(account).call()
         });
       } catch (error) {

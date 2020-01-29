@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { browserName } from 'react-device-detect';
+import { browserName, isMobile } from 'react-device-detect';
 import Web3 from 'web3';
 import WalletLink from 'walletlink';
 import CryptoWallets from '../commons/cryptoWallets';
@@ -101,7 +101,7 @@ const useWeb3 = () => {
         }
       } catch (error) {
         console.error('[useWeb3] Error enable wallet.', error);
-        throw error;
+        // throw error;
       }
     }
   };
@@ -111,8 +111,7 @@ const useWeb3 = () => {
     if (!conn) return CryptoWallets.NotConnected;
     if (conn.isMetaMask) return CryptoWallets.Metamask;
     if (conn.isWalletLink) return CryptoWallets.Coinbase;
-    const { __CIPHER__ } = window as any;
-    if (typeof __CIPHER__ !== 'undefined') return 100;
+    if (conn.isToshi) return CryptoWallets.Coinbase;
     if (conn.constructor.name === 'EthereumProvider') return 101;
     if (conn.constructor.name === 'Web3FrameProvider') return 102;
     if (conn.host && conn.host.indexOf('infura') !== -1) return 103;
@@ -185,7 +184,11 @@ const useWeb3 = () => {
         await setNewProvider(defaultWeb3.conn.currentProvider);
         break;
       case CryptoWallets.Coinbase:
-        await setNewProvider(getWalletLinkClient(network, networkId));
+        if (isMobile) {
+          await setNewProvider(defaultWeb3.conn.currentProvider);
+        } else {
+          await setNewProvider(getWalletLinkClient(network, networkId));
+        }
         break;
       case CryptoWallets.WebWallet:
         if (defaultWeb3.name !== CryptoWallets.WebWallet) throw new Error('Wallet not alowed');

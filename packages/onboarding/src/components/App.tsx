@@ -4,8 +4,12 @@ import 'url-search-params-polyfill';
 import { AccountType } from '@raisehq/components';
 import AppContext from './App.context';
 import GetStarted from './SignUp/GetStarted';
+import GetStartedWithEmail from './SignUp/GetStartedWithEmail';
+import GetStartedWithBloom from './SignUp/GetStartedWithBloom';
 import Confirm from './SignUp/Confirm';
+import ErrorBloom from './SignUp/ErrorBloom';
 import SignIn from './SignIn/SignIn';
+import SignInWithEmail from './SignInWithEmail/SignInWithEmail';
 import Verified from './Verification/Verified';
 import Verifying from './Verification/Verifying';
 import VerifiedError from './Verification/VerifiedError';
@@ -18,7 +22,9 @@ import BorrowerSignUp from './BorrowerSignUp/Passwords';
 import BorrowerSignUpError from './BorrowerSignUp/Error';
 import BorrowerSignUpOK from './BorrowerSignUp/Success';
 import PanelWithImage from './Modals/PanelWithImage';
+import Panel from './Modals/Panel';
 import SimpleModal from './Modals/Simple';
+import BigSimpleModal from './Modals/BigSimpleModal';
 import { ICredentials, Steps } from './types';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import * as services from '../services';
@@ -28,10 +34,23 @@ import LocalData from './localData';
 import useGoogleTagManager, { TMEvents } from '../hooks/useGoogleTagManager';
 import defaultContext from './defaults';
 
+declare global {
+  interface Window {
+    fbq: any;
+  }
+}
+
+window.fbq = window.fbq || null;
+
 const Step = daggy.taggedSum('UI', {
   Start: [],
+  SignUpWithEmail: [],
+  SignUpWithBloom: [{}],
+  SignInWithBloom: [{}],
   StartMini: [],
   SignIn: [],
+  SignInWithEmail: [],
+  ErrorWithBloom: [],
   Confirm: [],
   Verifying: [],
   Verified: [],
@@ -53,9 +72,19 @@ interface IProps {
   onClose?: () => null;
   closeButton?: boolean;
   initStep?: number;
+  pathRedirect?: string;
 }
 
-const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }: IProps) => {
+const App = ({
+  history,
+  open,
+  mountNode,
+  blur,
+  onClose,
+  closeButton,
+  initStep,
+  pathRedirect
+}: IProps) => {
   const [step, setStep] = useState(Step.Start);
   const [loginError, setLoginError] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<ICredentials>(defaultContext.credentials);
@@ -67,6 +96,7 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   const [auth, setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
+
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const refCode = query.get('referralCode');
@@ -80,9 +110,15 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     }
   }, []);
 
+  useEffect(() => {
+    if (initStep && initStep !== step) setStep(initStep);
+  }, [initStep]);
+
   useAsyncEffect(async () => {
     const { pathname } = history.location;
-
+    if (!open) {
+      return;
+    }
     if (pathname === '/join') {
       setStep(Step.Start);
     }
@@ -120,6 +156,12 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     if (pathname.includes('login')) {
       setStep(Step.SignIn);
     }
+    if (pathname.includes('/login/bloom')) {
+      const path = pathname.split('/');
+      const token = path[path.length - 1];
+
+      setStep(Step.SignUpWithBloom(token));
+    }
   }, [history.location.pathname, open]);
 
   useEffect(() => {
@@ -131,10 +173,16 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
       try {
         if (startMini) {
           tagManager.sendEventCategory('Signup', TMEvents.Submit, 'blog_signup_form', host);
+          if (window.fbq) {
+            window.fbq('trackCustom', 'Signup', { type: 'blog_signup_form', host });
+          }
         }
 
         if (host && host.split('.')[0] === 'app') {
           tagManager.sendEventCategory('Signup', TMEvents.Click, 'dashboard_signup_form', host);
+          if (window.fbq) {
+            window.fbq('trackCustom', 'Signup', { type: 'dashboard_signup_form', host });
+          }
         }
       } catch (err) {
         console.log('[onSendCredentials] Error tracking analytics ', err);
@@ -144,12 +192,32 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
 
   const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
 
+  const onSetStepWithParam = (newStep: Steps) => param => () => {
+    if (newStep === 'SignUpWithBloom') {
+      tagManager.sendEventCategory('Signup', TMEvents.Click, 'signup_attempt_bloom', host);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'Signup', { type: 'signup_attempt', host });
+      }
+    } else if (newStep === 'SignInWithBloom') {
+      tagManager.sendEventCategory('Login', TMEvents.Click, 'login_attempt_bloom', host);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'Login', { type: 'login_attempt_bloom', host });
+      }
+    }
+    setStep(Step[newStep](param));
+  };
+
   const onSetCredentials = (input, value) => {
     setCredentials(creds => ({ ...creds, [input]: value }));
   };
 
   const onSendCredentials = async () => {
     tagManager.sendEventCategory('Signup', TMEvents.Click, 'signup_attempt', host);
+
+    if (window.fbq) {
+      window.fbq('trackCustom', 'Signup', { type: 'signup_attempt', host });
+    }
+
     const signup = await services.signUp({
       ...credentials,
       ...(!!referralCode ? { referrer_code: referralCode } : {}),
@@ -158,10 +226,16 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     signup.fold(
       () => {
         tagManager.sendEventCategory('Signup', TMEvents.Submit, 'signup_error', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Signup', { type: 'signup_error', host });
+        }
         console.log('something went wrong');
       },
       () => {
         tagManager.sendEventCategory('Signup', TMEvents.Submit, 'signup_success', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Signup', { type: 'signup_success', host });
+        }
         setStep(Step.Confirm);
       }
     );
@@ -169,15 +243,24 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
 
   const onResetPassword = async (token, password) => {
     tagManager.sendEventCategory('Reset', TMEvents.Click, 'reset_attempt', host);
+    if (window.fbq) {
+      window.fbq('trackCustom', 'Reset', { type: 'reset_attempt', host });
+    }
     const resetPassword = await services.changePassword(token, password);
 
     resetPassword.fold(
       () => {
         tagManager.sendEventCategory('Reset', TMEvents.Submit, 'reset_error', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Reset', { type: 'reset_error', host });
+        }
         setStep(Step.ResetError);
       },
       () => {
         tagManager.sendEventCategory('Reset', TMEvents.Submit, 'reset_success', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Reset', { type: 'reset_success', host });
+        }
         setStep(Step.ResetOK);
       }
     );
@@ -194,6 +277,9 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
 
   const onActivateAccount = async token => {
     tagManager.sendEventCategory('ActivateBorrower', TMEvents.Click, 'activate_attempt', host);
+    if (window.fbq) {
+      window.fbq('trackCustom', 'ActivateBorrower', { type: 'activate_attempt', host });
+    }
     const activateAccount = await services.validateToken({
       token
     });
@@ -201,10 +287,16 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     activateAccount.fold(
       () => {
         tagManager.sendEventCategory('ActivateBorrower', TMEvents.Submit, 'activate_error', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'ActivateBorrower', { type: 'activate_error', host });
+        }
         setStep(Step.BorrowerSignUpError);
       },
       () => {
         tagManager.sendEventCategory('ActivateBorrower', TMEvents.Submit, 'activate_success', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'ActivateBorrower', { type: 'activate_success', host });
+        }
         setStep(Step.BorrowerSignUpOK);
       }
     );
@@ -212,22 +304,94 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
 
   const onRecover = async email => {
     tagManager.sendEventCategory('Recover', TMEvents.Click, 'recover_attempt', host);
+    if (window.fbq) {
+      window.fbq('trackCustom', 'Recover', { type: 'recover_attempt', host });
+    }
     const request = await services.recovery(email);
 
     request.fold(
       () => {
         tagManager.sendEventCategory('Recover', TMEvents.Submit, 'recover_error', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Recover', { type: 'recover_error', host });
+        }
         console.log('Something went wrong');
       },
       () => {
         tagManager.sendEventCategory('Recover', TMEvents.Submit, 'recover_success', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Recover', { type: 'recover_success', host });
+        }
         setStep(Step.ResetConfirm);
       }
     );
   };
 
+  const onLoginWithBloom = async (result, method) => {
+    if (result instanceof Error) {
+      if (method === 'Get Started') {
+        tagManager.sendEventCategory('Signup', TMEvents.Submit, 'signup_error_bloom', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Signup', { type: 'signup_error_bloom', host });
+        }
+      } else if (method === 'Sign In') {
+        tagManager.sendEventCategory('Login', TMEvents.Click, 'login_error_bloom', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Login', { type: 'login_error_bloom', host });
+        }
+      }
+      return setStep(Step.ErrorWithBloom);
+    }
+
+    if (method === 'Get Started') {
+      tagManager.sendEventCategory('Signup', TMEvents.Submit, 'signup_success_bloom', host);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'Signup', { type: 'signup_success_bloom', host });
+      }
+    } else if (method === 'Sign In') {
+      tagManager.sendEventCategory('Login', TMEvents.Click, 'login_success_bloom', host);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'Login', { type: 'login_success_bloom', host });
+      }
+    }
+
+    const login = LocalData.get('firstLogin');
+
+    if (login) {
+      if (login === 'first') {
+        LocalData.set('firstLogin', 'passed');
+      }
+    } else {
+      LocalData.set('firstLogin', 'first');
+    }
+    LocalData.setObj('auth', {
+      token: result.public_key,
+      id: result.id,
+      status: result.userstatus_id,
+      type: result.accounttype_id
+    });
+
+    LocalData.setObj('user', result);
+
+    setAuthCookie(
+      {
+        token: result.public_key,
+        id: result.id,
+        status: result.userstatus_id,
+        type: result.accounttype_id
+      },
+      { domain: process.env.REACT_APP_COOKIE_DOMAIN }
+    );
+
+    setuserCookie(result, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
+    window.location.href = getHost('APP') + (pathRedirect ? pathRedirect : '');
+  };
+
   const onLogin = async () => {
     tagManager.sendEventCategory('Login', TMEvents.Click, 'login_attempt', host);
+    if (window.fbq) {
+      window.fbq('trackCustom', 'Login', { type: 'login_attempt', host });
+    }
 
     const request = await services.signIn({
       email: credentials.email,
@@ -238,6 +402,9 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     request.fold(
       () => {
         tagManager.sendEventCategory('Login', TMEvents.Click, 'login_error', host);
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Login', { type: 'login_error', host });
+        }
         setLoginError(true);
       },
       response => {
@@ -273,7 +440,10 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
 
         setuserCookie(user, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
         tagManager.sendEventCategory('Login', TMEvents.Click, 'login_success', host);
-        window.location.href = getHost('APP');
+        if (window.fbq) {
+          window.fbq('trackCustom', 'Login', { type: 'login_success', host });
+        }
+        window.location.href = getHost('APP') + (pathRedirect ? pathRedirect : '');
       }
     );
   };
@@ -296,20 +466,53 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
   const getStep = () =>
     step.cata({
       Start: () => (
-        <PanelWithImage>
+        <PanelWithImage title={'Get Started'}>
           <GetStarted />
         </PanelWithImage>
       ),
-      StartMini: () => <GetStarted mini />,
+      SignUpWithEmail: () => (
+        <PanelWithImage title={'Get Started'}>
+          <GetStartedWithEmail />
+        </PanelWithImage>
+      ),
+      SignUpWithBloom: token => (
+        <Panel>
+          <GetStartedWithBloom
+            onBack={() => setStep(Step.Start)}
+            token={token}
+            method={'Get Started'}
+          />
+        </Panel>
+      ),
+      SignInWithBloom: token => (
+        <Panel>
+          <GetStartedWithBloom
+            onBack={() => setStep(Step.SignIn)}
+            token={token}
+            method={'Sign In'}
+          />
+        </Panel>
+      ),
+      StartMini: () => <GetStarted />,
       SignIn: () => (
-        <SimpleModal>
+        <PanelWithImage title={'Sign in'}>
           <SignIn />
+        </PanelWithImage>
+      ),
+      SignInWithEmail: () => (
+        <SimpleModal>
+          <SignInWithEmail />
         </SimpleModal>
       ),
+      ErrorWithBloom: () => (
+        <Panel>
+          <ErrorBloom onBack={() => setStep(Step.Start)} method={'Get Started'} />
+        </Panel>
+      ),
       Confirm: () => (
-        <SimpleModal localClose>
+        <BigSimpleModal localClose>
           <Confirm />
-        </SimpleModal>
+        </BigSimpleModal>
       ),
       Verified: () => (
         <SimpleModal>
@@ -372,12 +575,14 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
     <AppContext.Provider
       value={{
         onSetStep,
+        onSetStepWithParam,
         onSetCredentials,
         onSendCredentials,
         onResetPassword,
         onSetPasswordBorrower,
         onActivateAccount,
         onRecover,
+        onLoginWithBloom,
         onLogin,
         onResetToken,
         credentials,
@@ -388,7 +593,8 @@ const App = ({ history, open, mountNode, blur, onClose, closeButton, initStep }:
         error: loginError,
         mountNode,
         closeButton,
-        open
+        open,
+        history
       }}
     >
       {getStep()}

@@ -13,6 +13,7 @@ export interface ExtraResource {
 export interface KPI {
   kpi: number;
   label: string;
+  tooltip: string;
 }
 
 export interface BorrowerDetails {

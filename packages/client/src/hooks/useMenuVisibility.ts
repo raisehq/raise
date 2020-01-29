@@ -11,9 +11,10 @@ const useMenuVisibility = () => {
       history.location.pathname === '/' ||
       history.location.pathname === '/create-loan' ||
       history.location.pathname === '/dashboard' ||
-      history.location.pathname.includes('/borrowers') ||
+      history.location.pathname.includes('/c') ||
       history.location.pathname.includes('/account') ||
       history.location.pathname === '/kyc' ||
+      history.location.pathname === '/kyc-sumsub' ||
       history.location.pathname.includes('/verify-web3') ||
       history.location.pathname === '/deposit'
     ) {

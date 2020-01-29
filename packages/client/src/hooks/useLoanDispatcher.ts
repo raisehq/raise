@@ -8,9 +8,7 @@ const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const { web3 } = useWeb3();
   const wallet = useWallet();
-  const {
-    FollowTx: { watchTx }
-  }: any = useContext(AppContext);
+  const { followTx }: any = useContext(AppContext);
 
   useAsyncEffect(async () => {
     if (wallet) {
@@ -38,7 +36,10 @@ const useLoanDispatcher = () => {
               auctionSecondsLength
             ];
 
-            return watchTx(contract.methods.deploy(...params).send({ from: account }));
+            return followTx.watchTx(
+              contract.methods.deploy(...params).send({ from: account }),
+              'loanDispacher'
+            );
           }
         });
       } catch (error) {

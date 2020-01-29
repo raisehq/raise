@@ -10,7 +10,7 @@ import {
   SideInfo,
   Container,
   CompanyName,
-  HeaderImage,  
+  HeaderImage,
   CompanyDetails,
   BorrowerPage,
   LoanContainer,
@@ -23,7 +23,7 @@ import Socials from './Socials';
 import BorrowerLoans from './BorrowerLoans';
 import Borrower404 from './Borrower404';
 import BorrowerLoading from './BorrowerLoading';
-import {BorrowerInfo} from './BorrowerInfo';
+import { BorrowerInfo } from './BorrowerInfo';
 
 const defaultBorrower = {
   companyDetails: {
@@ -102,12 +102,12 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
             <CardImageCrop src={background} />
           </HeaderImage>
           <CompanyDetails>
-            <BorrowerLogo src={logo}/>
+            <BorrowerLogo src={logo} />
             <CompanyName>{companyName}</CompanyName>
             <p>Last updated: {lastUpdated}</p>
             <b>About</b>
             {description}
-            <Socials socialNetworks={socialNetworks} url={url}/>
+            <Socials socialNetworks={socialNetworks} url={url} />
           </CompanyDetails>
         </BorrowerCard>
         <SideInfo>

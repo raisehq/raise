@@ -1,15 +1,16 @@
 import { useState, useContext } from 'react';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
-import AppContext from '../components/AppContext';
+import AppContext from '../context';
+
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const {
-    FollowTx: { watchTx }
-  }: any = useContext(AppContext);
+  const { followTx }: any = useContext(AppContext);
+
   const wallet = useWallet();
+
   useAsyncEffect(async () => {
-    if (wallet) {
+    if (wallet && followTx) {
       try {
         const contract = await wallet.addContract('Deposit');
 
@@ -19,19 +20,26 @@ const useDepositContract = () => {
             const resp = await contract.methods.hasDeposited(address).call();
             return resp;
           },
-          deposit: address => watchTx(contract.methods.depositFor(address).send({ from: address })),
-          depositWithReferral: watchTx((address, referralAddress) =>
-            contract.methods
-              .depositForWithReferral(address, referralAddress)
-              .send({ from: address })
-          ),
-          withdraw: address => watchTx(contract.methods.withdraw(address).send({ from: address }))
+          deposit: address =>
+            followTx.watchTx(
+              contract.methods.depositFor(address).send({ from: address }),
+              'deposit'
+            ),
+          depositWithReferral: (address, referralAddress) =>
+            followTx.watchTx(
+              contract.methods
+                .depositForWithReferral(address, referralAddress)
+                .send({ from: address }),
+              'depositReferal'
+            ),
+          withdraw: address =>
+            followTx.watchTx(contract.methods.withdraw(address).send({ from: address }))
         });
       } catch (error) {
-        console.error('Contract Deposit not found in current network.');
+        console.error('Contract Deposit not found in current network.', error);
       }
     }
-  }, [wallet]);
+  }, [wallet, followTx]);
 
   return activeContract;
 };
