@@ -36,7 +36,7 @@ const KycSelectMethod = () => {
         <SelectKycMethodList>
           <KycButtonWrapper>
             <KycSumSub className="btn-kyc-sumsub" onClick={() => history.push('/kyc-sumsub')}>
-              Verify with Sum&Substance
+              Verify with Sum & Substance
             </KycSumSub>
           </KycButtonWrapper>
           <KycButtonWrapper>
