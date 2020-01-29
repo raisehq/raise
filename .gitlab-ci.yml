@@ -67,11 +67,13 @@ deploy-int:
   before_script:
     - 'pip install awscli'
   script:
-    - 'mv packages/client/build_int build_int'
-    - export distId=$(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_INT" | cut -f1)
-    - while read -r dist; do aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html"; done <<< "$distId"
-    - 'aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/'
-
+    - |
+      mv packages/client/build_int build_int
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_INT" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html";
+      done
+      aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/
   only:
     - master
 
@@ -81,10 +83,14 @@ deploy-prod:
   before_script:
     - 'pip install awscli'
   script:
-    - 'mv packages/client/build build'
-    - export distId=$(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1)
-    - while read -r dist; do aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html"; done <<< "$distId"
-    - 'aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/'
+    - |
+      #!/bin/sh
+      mv packages/client/build build
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html";
+      done
+      aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/
   when: manual
   only:
     - master
