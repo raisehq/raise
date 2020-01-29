@@ -56,7 +56,7 @@ const Dashboard = () => {
 
   useAsyncEffect(async () => {
     try {
-      if (!warningCK) {
+      if (!warningCK || warningCK === '') {
         const warning = await findOne('warnings', { 'fields.active': true });
         setOpen(true);
         setWarning(warning);

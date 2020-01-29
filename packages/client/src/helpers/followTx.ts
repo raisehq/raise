@@ -2,6 +2,8 @@ import { EventEmitter } from 'events';
 import PromiEvent from 'promievent';
 import Web3 from 'web3';
 
+//@ts-ignore
+const isTest = !!window.Cypress;
 // @ts-nocheck
 class FollowTx extends EventEmitter {
   private connection: any = null;
@@ -10,12 +12,12 @@ class FollowTx extends EventEmitter {
 
   public constructor(url: string) {
     super();
-    this.connection = new Web3(new Web3.providers.WebsocketProvider(url));
+    if (!isTest) this.connection = new Web3(new Web3.providers.WebsocketProvider(url));
     this.storage = window.localStorage;
     if (!this.storage.getItem(this.storeName)) {
       this.storage.setItem(this.storeName, '[]');
     }
-    this.lastTx();
+    if (!isTest) this.lastTx();
   }
 
   private async lastTx() {
@@ -76,13 +78,14 @@ class FollowTx extends EventEmitter {
       // emit the start of the process
       return method
         .on('transactionHash', function(hash) {
-          self.save(self.mixNameAndHash(name, hash));
+          if (!isTest) self.save(self.mixNameAndHash(name, hash));
           pe.emit('transactionHash', hash);
         })
         .on('receipt', function(receipt) {
-          self.remove(self.mixNameAndHash(name, receipt.transactionHash));
+          if (!isTest) self.remove(self.mixNameAndHash(name, receipt.transactionHash));
           pe.emit('receipt', receipt);
           pe.emit('tx_finished');
+          return resolve(receipt);
         })
         .on('error', function(error) {
           pe.emit('tx_finished');
