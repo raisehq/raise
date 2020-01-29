@@ -14,13 +14,13 @@ const ErrorBloom = ({ onBack }: { onBack: any }) => {
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
-        <GetStartedBloomTitleError>Ups! Something went wrong.</GetStartedBloomTitleError>
+        <GetStartedBloomTitleError>Oops! Something went wrong</GetStartedBloomTitleError>
       </GetStartedBloomHeader>
       <GetStartedBloomWrapper>
         <GetStartedBloomInfoErrorSection>
           <p>
-            Please, make sure to have your Country registered at Bloom or that you don't have an
-            existing account with the same email.
+            Please check that you don't have an existing account with the email address used in
+            Bloom.
           </p>
         </GetStartedBloomInfoErrorSection>
       </GetStartedBloomWrapper>
