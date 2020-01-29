@@ -50,7 +50,7 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
             <OnboardingContent>
               <Grid verticalAlign="middle" padded style={{ minHeight: '100%', paddingBottom: '0' }}>
                 <CenteredContainer pathname={pathname}>
-                  <Component {...matchProps} />
+                  <Component {...matchProps} {...rest} />
                 </CenteredContainer>
               </Grid>
             </OnboardingContent>
