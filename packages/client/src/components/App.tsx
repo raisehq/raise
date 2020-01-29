@@ -18,7 +18,6 @@ import { Web3Check } from '../components/Web3Check';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import useWeb3Checker from '../hooks/useWeb3Checker';
-// import useGoogleTagManager from '../hooks/useGoogleTagManager';
 import UseWebSockets from '../hooks/useWebSockets';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 import { TopMobileMenu, Menu } from './Menu';
@@ -57,7 +56,8 @@ const App = ({ history, match }: any) => {
       kyc: { onInitKyc },
       config: { updateNetwork },
       onboarding: { hiddeOnboarding }
-    }
+    },
+    followTx
   }: any = useContext(RootContext);
   const modalRefs = useRef<HTMLDivElement>(null);
 
@@ -124,6 +124,7 @@ const App = ({ history, match }: any) => {
     } else {
       await onVerifyAuth();
     }
+
     if (contracts === null) fetchContracts();
   }, [isLogged, token, address, network]);
 
@@ -193,7 +194,8 @@ const App = ({ history, match }: any) => {
           storedAccount,
           account: storedAccount, // Old compability
           hasDeposit
-        }
+        },
+        followTx
       }}
     >
       <Dimmer active={isLoading} inverted>

@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
+import AppContext from '../context';
 
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const metamask = useWallet();
+  const { followTx }: any = useContext(AppContext);
+
+  const wallet = useWallet();
+
   useAsyncEffect(async () => {
-    if (metamask) {
+    if (wallet && followTx) {
       try {
-        const contract = await metamask.addContract('Deposit');
+        const contract = await wallet.addContract('Deposit');
 
         setActiveContract({
           address: contract.options.address,
@@ -16,18 +20,26 @@ const useDepositContract = () => {
             const resp = await contract.methods.hasDeposited(address).call();
             return resp;
           },
-          deposit: address => contract.methods.depositFor(address).send({ from: address }),
+          deposit: address =>
+            followTx.watchTx(
+              contract.methods.depositFor(address).send({ from: address }),
+              'deposit'
+            ),
           depositWithReferral: (address, referralAddress) =>
-            contract.methods
-              .depositForWithReferral(address, referralAddress)
-              .send({ from: address }),
-          withdraw: address => contract.methods.withdraw(address).send({ from: address })
+            followTx.watchTx(
+              contract.methods
+                .depositForWithReferral(address, referralAddress)
+                .send({ from: address }),
+              'depositReferal'
+            ),
+          withdraw: address =>
+            followTx.watchTx(contract.methods.withdraw(address).send({ from: address }))
         });
       } catch (error) {
-        console.error('Contract Deposit not found in current network.');
+        console.error('Contract Deposit not found in current network.', error);
       }
     }
-  }, [metamask]);
+  }, [wallet, followTx]);
 
   return activeContract;
 };

@@ -76,7 +76,8 @@ const getViewResponse = (
   onRetry,
   onGetRaise,
   onToDeposit,
-  onGetRaiseInfo
+  onGetRaiseInfo,
+  pending
 ) => {
   const haveRaise = raiseBalance > 0;
   return ui.cata({
@@ -181,7 +182,7 @@ const getViewResponse = (
           </DepositInput>
         </CardContent>
         <CardContent centeredText>
-          <ButtonGreen disabled={!haveRaise} onClick={onDeposit}>
+          <ButtonGreen disabled={!haveRaise} onClick={onDeposit} loading={pending}>
             Deposit
           </ButtonGreen>
           <CenteredText>

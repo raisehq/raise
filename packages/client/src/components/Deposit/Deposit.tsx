@@ -5,9 +5,10 @@ import { tradeTokensForExactTokens } from '@uniswap/sdk';
 import BigNumber from 'bignumber.js';
 import get from 'lodash/get';
 import { Experiment, Variant } from 'react-optimize';
+import { isMobile } from 'react-device-detect';
+import { Grid } from 'semantic-ui-react';
 import { LinkWrap } from './Deposit.styles';
 import { Link } from '../Link';
-import { Grid } from 'semantic-ui-react';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { CardSized } from '../Layout/Layout.styles';
 import { UI, UISteps, getViewResponse } from './Deposit.Response';
@@ -18,19 +19,21 @@ import useERC20BalancePooling from '../../hooks/useERC20BalancePooling';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import AppContext from '../AppContext';
 import OnboardingProgressBar from '../OnboardingProgressBar';
-import { isMobile } from 'react-device-detect';
 import LocalData from '../../helpers/localData';
 
 const EXPERIMENT_DEPOSIT_ID = process.env.REACT_APP_AB_TEST_SKIP_DEPOSIT;
+const RAISE_MIN_BALANCE = 200;
 
 const Deposit = () => {
   const {
     history,
+    followTx,
     web3Status: { walletAccount, walletNetworkId, hasDeposit },
     store: {
       blockchain: { contracts: heroContracts }
     }
   }: any = useContext(AppContext);
+  const [pending, setPending] = useState(false);
   const [retries, setRetries] = useState(0);
   const [expectedPrice, setExpectedPrice] = useState(0);
   const getAddress = (netId, name) => get(heroContracts, `address.${netId}.${name}`);
@@ -44,6 +47,7 @@ const Deposit = () => {
 
   const { web3 } = useWeb3();
   const tagManager = useGoogleTagManager('Deposit');
+
   const raiseBalance = useERC20BalancePooling(web3, raiseAddress, walletAccount);
 
   const retrieveDAIPrice = async () => {
@@ -60,18 +64,38 @@ const Deposit = () => {
     if (LocalData.get('firstLogin') === 'first') {
       LocalData.set('firstLogin', 'firstDeposit');
     }
-
     await retrieveDAIPrice();
   }, []);
 
   useEffect(() => {
-    if (!doingDeposit && !hasDeposit && raiseBalance < 200) {
-      setStatus(UI.GetRaiseInfo);
+    if (!doingDeposit && !hasDeposit) {
+      if (raiseBalance < RAISE_MIN_BALANCE) {
+        setStatus(UI.GetRaiseInfo);
+      } else {
+        setStatus(UI.Deposit);
+      }
     }
-    if (!doingDeposit && !hasDeposit && raiseBalance >= 200) {
-      setStatus(UI.Deposit);
+  }, [retries, raiseBalance, doingDeposit, hasDeposit]);
+
+  // Effect to detect if the transaction has pending or finished
+  useEffect(() => {
+    const approvalFinished = followTx.hasPendingTx('approval');
+    const depositFinished = followTx.hasPendingTx('deposit');
+
+    if (approvalFinished || depositFinished) {
+      setPending(true);
+      followTx.on('finish_tx', hash => {
+        if (
+          followTx.getHash(approvalFinished) === hash ||
+          followTx.getHash(depositFinished) === hash
+        ) {
+          setPending(false);
+        }
+      });
+    } else {
+      setPending(false);
     }
-  }, [retries, raiseBalance]);
+  }, []);
 
   if (!doingDeposit && status !== UI.Success && hasDeposit) {
     return <Redirect to="/" />;
@@ -80,7 +104,8 @@ const Deposit = () => {
   const onDeposit = async () => {
     try {
       setDoingDeposit(true);
-      if (depositContract && raiseTokenContract) {
+
+      if (depositContract && raiseTokenContract && !pending) {
         const { BN } = web3.utils;
         tagManager.sendEvent(TMEvents.Click, 'deposit_attempt');
         if (window.fbq) {
@@ -102,14 +127,19 @@ const Deposit = () => {
         }
         setStatus(UI.Success);
       } else {
-        console.error(' CONTRACTS ARE NOT ALOWED ', depositContract, raiseTokenContract);
+        console.error(
+          '[DEPOSIT]',
+          ' Contracts are not allowed ',
+          depositContract,
+          raiseTokenContract
+        );
       }
     } catch (error) {
       tagManager.sendEvent(TMEvents.Submit, 'deposit_error');
       if (window.fbq) {
         window.fbq('trackCustom', 'Deposit', { type: 'deposit_error' });
       }
-      console.error(error);
+      console.error('[DEPOSIT]', error);
       setStatus(UI.Error);
     }
   };
@@ -157,7 +187,8 @@ const Deposit = () => {
             onRetry,
             onGetRaise,
             onToDeposit,
-            onGetRaiseInfo
+            onGetRaiseInfo,
+            pending
           )}
         </CardSized>
         {EXPERIMENT_DEPOSIT_ID && (
