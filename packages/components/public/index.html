@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <!-- External dependencies for RaiseComponents module -->
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-is@16/umd/react-is.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/styled-components@5.0.0/dist/styled-components.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/semantic-ui-react/dist/umd/semantic-ui-react.min.js"
+    ></script>
+
+    <!-- Raise Components UI library -->
+    <script crossorigin src="./raisecomponents.umd.development.js"></script>
+
+    <!-- GraphQL client to query from TheGraph -->
+    <script src="//cdn.jsdelivr.net/npm/graphql.js@0.6.6/graphql.min.js"></script>
+  </head>
+  <body>
+    <h2>Hello Test</h2>
+    <div id="card"></div>
+    <script>
+      console.log('hi', RaiseComponents);
+      console.log(document.getElementById('card'));
+
+      const e = React.createElement;
+
+      ReactDOM.render(
+        e(RaiseComponents.InvestCard),
+        document.getElementById('card')
+      );
+    </script>
+  </body>
+</html>
