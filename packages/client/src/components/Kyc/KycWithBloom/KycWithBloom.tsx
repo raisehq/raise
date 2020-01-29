@@ -34,6 +34,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
           ...user,
           kyc_status: user.kyc_status
         });
+        onBack();
         history.push('/');
       }
     }

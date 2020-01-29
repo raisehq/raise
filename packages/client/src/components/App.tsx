@@ -248,6 +248,7 @@ const App = ({ history, match }: any) => {
                   exact
                   path="/kyc-bloom"
                   component={KycWithBloom}
+                  onBack={onGetUser}
                   roles={[1, 2]}
                 />
                 <Web3Layout
