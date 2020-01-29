@@ -73,7 +73,7 @@ deploy-int:
         echo $dist
         aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html";
       done
-    aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/
+      aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/
   only:
     - master
 
