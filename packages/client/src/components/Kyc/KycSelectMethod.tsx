@@ -39,9 +39,8 @@ const KycSelectMethod = () => {
               Verify with Sum&Substance
             </KycSumSub>
           </KycButtonWrapper>
-
           <KycButtonWrapper>
-            <KycBloom onClick={() => {}}>
+            <KycBloom onClick={() => history.push('/kyc-bloom')}>
               <span>Verify with </span>
               <Image
                 src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
