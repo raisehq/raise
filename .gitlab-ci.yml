@@ -6,8 +6,7 @@ stages:
   - deploy
   - review
   - test
-  - cleanup 
-  - invalidate_cf_cache
+  - cleanup
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1
@@ -69,7 +68,10 @@ deploy-int:
     - 'pip install awscli'
   script:
     - 'mv packages/client/build_int build_int'
+    - export distId=$(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_INT" | cut -f1)
+    - while read -r dist; do aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html"; done <<< "$distId"
     - 'aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/'
+
   only:
     - master
 
@@ -80,6 +82,8 @@ deploy-prod:
     - 'pip install awscli'
   script:
     - 'mv packages/client/build build'
+    - export distId=$(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1)
+    - while read -r dist; do aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html"; done <<< "$distId"
     - 'aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/'
   when: manual
   only:
@@ -181,25 +185,3 @@ stop-review:
     - merge_requests
   except:
     - master
-
-invalidate_cf_cache:
-  stage: invalidate_cf_cache
-  image: alpine:latest
-  before_script:
-  - |
-    #!/bin/sh
-    apk add --update openssh-client bash curl git jq python py-pip
-    pip install awscli
-    if [ "${CI_COMMIT_REF_NAME}" == "master" ]; then
-      export CF_DISTRIBUTION_ID="${PROD_CF_DISTRIBUTION_ID}"
-    else
-      export CF_DISTRIBUTION_ID="${INT_CF_DISTRIBUTION_ID}"
-    fi
-  script:
-    - |
-      #!/bin/sh
-      inv_id=$(aws cloudfront create-invalidation --distribution-id ${CF_DISTRIBUTION_ID} --paths "/*" | grep Id | awk -F":" '{print $2}' | tr -d '", ')
-      until aws cloudfront get-invalidation --id ${inv_id} --distribution-id ${CF_DISTRIBUTION_ID} | grep -m 1 "Completed"; do sleep 1 ; done
-  only:
-    - master
-    - integration
