@@ -39,7 +39,8 @@ module.exports = {
     ],
     'implicit-arrow-linebreak': 0,
     'operator-linebreak': 0,
-    'object-curly-newline': 0
+    'object-curly-newline': 0,
+    '@typescript-eslint/ban-ts-ignore': 0
   },
   settings: {
     react: {
