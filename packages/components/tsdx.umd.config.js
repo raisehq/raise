@@ -1,4 +1,5 @@
-const analyzer = require('rollup-plugin-analyzer');
+// Analyze rollup bundle size
+// const analyzer = require('rollup-plugin-analyzer');
 
 const externals = [
   'react',
@@ -20,7 +21,7 @@ module.exports = {
     config.output.format = 'umd';
     config.output.name = 'RaiseComponents';
     config.external = id => externals.includes(id);
-    config.plugins.push(analyzer());
+    // config.plugins.push(analyzer());
     return config;
   },
 };
