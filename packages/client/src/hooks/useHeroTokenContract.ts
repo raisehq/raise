@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Either } from '../utils';
 import { toWei } from 'web3-utils';
 import useWallet from './useWallet';
-
 import useAsyncEffect from './useAsyncEffect';
+import AppContext from '../components/AppContext';
 
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const metamask = useWallet();
+  const wallet = useWallet();
+  const { followTx }: any = useContext(AppContext);
 
   useAsyncEffect(async () => {
-    const ready = Either.either(metamask);
+    const ready = Either.either(wallet);
 
     ready.fold(
       () => null,
@@ -20,22 +21,22 @@ const useDepositContract = () => {
         isActive.fold(
           async () => {
             try {
-              const HeroTokenContract = await metamask.addContract('HeroToken');
-              const DepositContract = await metamask.addContract('Deposit');
+              const HeroTokenContract = await wallet.addContract('HeroToken');
+              const DepositContract = await wallet.addContract('Deposit');
               setActiveContract({
                 address: () => HeroTokenContract.options.address,
                 allowance: (account, spender) =>
                   HeroTokenContract.methods.allowance(account, spender).call(),
                 balance: account => HeroTokenContract.methods.balanceOf(account).call(),
                 approveDeposit: async (account, amount) => {
-                  return HeroTokenContract.methods
-                    .approve(
-                      DepositContract.options.address,
-                      toWei(amount.toString(), 'ether')
-                    )
-                    .send({
-                      from: account
-                    });
+                  return followTx.watchTx(
+                    HeroTokenContract.methods
+                      .approve(DepositContract.options.address, toWei(amount.toString(), 'ether'))
+                      .send({
+                        from: account
+                      }),
+                    'approval'
+                  );
                 }
               });
             } catch (error) {
@@ -46,7 +47,7 @@ const useDepositContract = () => {
         );
       }
     );
-  }, [metamask]);
+  }, [wallet]);
 
   return activeContract;
 };

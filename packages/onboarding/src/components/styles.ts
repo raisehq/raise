@@ -442,7 +442,6 @@ export const ChooseMethodWrapper = styled.div`
   min-height: 480px;
   @media (max-width: ${size.mobileL}) {
     min-height: 0;
-    
   }
 `;
 /************** GET STARTED BLOOM SCREEN ******************/
@@ -460,7 +459,14 @@ export const GetStartedBloomTitle = styled.div`
     font-size: 25px;
   }
 `;
-
+export const GetStartedBloomTitleError = styled.div`
+  text-align: center;
+  font-size: 25px;
+  margin-top: 15px;
+  @media (max-width: ${size.mobileL}) {
+    font-size: 25px;
+  }
+`;
 export const GetStartedBloomSubtitle = styled.div`
   display: flex;
   flex-direction: row;
@@ -501,6 +507,18 @@ export const GetStartedBloomQRSection = styled.div`
   }
 `;
 
+export const GetStartedBloomErrorSection = styled.div`
+  flex: 1 1 100%;
+  padding: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  @media (max-width: ${size.mobileL}) {
+    justify-content: center;
+    padding: 0%;
+  }
+`;
+
 export const GetStartedBloomInstructionsSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -509,6 +527,21 @@ export const GetStartedBloomInstructionsSection = styled.div`
 
   @media (max-width: ${size.mobileL}) {
     align-items: center;
+  }
+`;
+
+export const GetStartedBloomInfoErrorSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  text-align: center;
+  font-size: 15px;
+  height: 300px;
+  margin: 0px 10%;
+  padding-top: 20%;
+  @media (max-width: ${size.mobileL}) {
+    align-items: center;
+    margin: 0px;
   }
 `;
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   ChooseMethodWrapper,
   GetStartedBloomHeader,
@@ -8,63 +8,45 @@ import {
   GetStartedBloomQRSection,
   GetStartedBloomInstructionsSection,
   GetStartedBloomFooter
-} from '../styles';
+} from './styles';
+import { isMobile } from 'react-device-detect';
 import { Button, Image } from 'semantic-ui-react';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
-import useInterval from '../../hooks/useInterval';
-import { bloomSignIn, verifyBloomLogin, redirectFromBloomApp } from '../../services';
-import bloomToken from 'uuid';
-import AppContext from '../App.context';
-import { isMobile } from 'react-device-detect';
+import AppContext from '../../AppContext';
+import { URL } from '../../../services/kyc';
+import LocalData from '../../../helpers/localData';
+import useInterval from '../../../hooks/useInterval';
+import { getUser } from '../../../services/auth';
 
-const GetStartedWithBloom = ({ onBack, method, token = null }) => {
+const KycWithBloom = ({ onBack, token = '' }) => {
+  const { history }: any = useContext(AppContext);
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
-  const [tokenBloom, setTokenBloom] = useState(token !== null && token.length > 0 ? token : null);
-  const checkerTimeout = useRef(null);
-  const { onLoginWithBloom }: any = useContext(AppContext);
+  const [tokenBloom, setTokenBloom] = useState('');
 
-  const watchBloom = async () => {
-    const response = await verifyBloomLogin(tokenBloom);
-    response.fold(
-      error => {
-        console.error('Error Watch Bloom : ', error);
-        onLoginWithBloom(error, method);
-      },
-      resp => {
-        const {
-          data: {
-            data: { result }
-          }
-        } = resp;
-
-        if (result.id) {
-          onLoginWithBloom(result, method);
-        } else {
-          checkerTimeout.current = setTimeout(watchBloom, 3000);
-        }
+  useInterval(async () => {
+    if (tokenBloom !== '') {
+      const user = await getUser(tokenBloom);
+      if (user.kyc_status === 3) {
+        LocalData.setObj('user', {
+          ...user,
+          kyc_status: user.kyc_status
+        });
+        onBack();
+        history.push('/');
       }
-    );
-  };
+    }
+  }, 3000);
 
   useEffect(() => {
-    if (tokenBloom === null || tokenBloom.length === 0) {
-      setTokenBloom(bloomToken());
-    }
     setIsScreenIdle(true);
+    const user = LocalData.getObj('user');
+    const userId = user.id;
+    console.log('USERID: ', userId);
+    setTokenBloom(userId);
   }, []);
-
-  useEffect(() => {
-    if (tokenBloom !== null) {
-      // Start check bloom
-      checkerTimeout.current = setTimeout(watchBloom, 3000);
-      return () => {
-        clearTimeout(checkerTimeout.current);
-      };
-    }
-  }, [tokenBloom]);
 
   useEffect(() => {
     const events = ['load', 'mousemove', 'mousedown', 'click', 'scroll', 'keypress'];
@@ -93,11 +75,11 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
     action: Action.attestation,
     token: tokenBloom,
     org_name: 'Raise',
-    url: bloomSignIn(),
+    url: URL.BLOOM_KYC,
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
-    types: ['email']
+    types: ['email', 'id-document', 'full-name']
   };
 
   const qrOptions: Partial<QROptions> = {
@@ -107,7 +89,7 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
-        <GetStartedBloomTitle>{method}</GetStartedBloomTitle>
+        <GetStartedBloomTitle>Verify KYC</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
           <span>With</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
@@ -117,24 +99,20 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
         <GetStartedBloomQRSection>
           <RequestElement
             requestData={requestData}
-            buttonOptions={{ callbackUrl: redirectFromBloomApp(tokenBloom) }}
+            buttonOptions={{ callbackUrl: `${process.env.REACT_APP_HOST}` }}
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
           {isOpenHelp ? (
-            <HelpWithBloom
-              setIsOpenHelp={setIsOpenHelp}
-              setIsScreenIdle={setIsScreenIdle}
-              method={method === 'Sign In' ? 'Sign In' : 'Sign Up'}
-            />
+            <HelpWithBloom setIsOpenHelp={setIsOpenHelp} setIsScreenIdle={setIsScreenIdle} />
           ) : (
             <FollowSteps isMobile={isMobile} />
           )}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
       <GetStartedBloomFooter>
-        <Button basic color="black" onClick={onBack}>
+        <Button basic color="black" onClick={() => history.push('/kyc')}>
           Go back
         </Button>
       </GetStartedBloomFooter>
@@ -142,4 +120,4 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
   );
 };
 
-export default GetStartedWithBloom;
+export default KycWithBloom;

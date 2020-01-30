@@ -18,11 +18,10 @@ import {
 
 const PanelWithImage = ({ children, title }) => {
   const { blur, mountNode, open, onClose, closeButton }: any = useContext(AppContext);
-
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
-    <OnboardingModal {...dimmer} open={open} mountNode={mountNode}>
+    <OnboardingModal {...dimmer} open={open} mountNode={mountNode ? mountNode : undefined}>
       <OnboardingModalContent id="process">
         <OnboardingHeader>
           <OnboardingHeaderItemWrapper>

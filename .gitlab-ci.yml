@@ -7,6 +7,7 @@ stages:
   - review
   - test
   - cleanup
+
 variables:
   AWS_DEFAULT_REGION: eu-west-1
   CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
@@ -66,8 +67,13 @@ deploy-int:
   before_script:
     - 'pip install awscli'
   script:
-    - 'mv packages/client/build_int build_int'
-    - 'aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/'
+    - |
+      mv packages/client/build_int build_int
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_INT" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html";
+      done
+      aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --cache-control max-age=2592000
   only:
     - master
 
@@ -77,8 +83,14 @@ deploy-prod:
   before_script:
     - 'pip install awscli'
   script:
-    - 'mv packages/client/build build'
-    - 'aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/'
+    - |
+      #!/bin/sh
+      mv packages/client/build build
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html";
+      done
+      aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --cache-control max-age=2592000
   when: manual
   only:
     - master
