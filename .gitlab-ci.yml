@@ -73,7 +73,7 @@ deploy-int:
         echo $dist
         aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html";
       done
-      aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --recursive --cache-control max-age=3600
+      aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --cache-control max-age=2592000
   only:
     - master
 
@@ -90,7 +90,7 @@ deploy-prod:
         echo $dist
         aws cloudfront create-invalidation --distribution-id $dist --paths "/index.html";
       done
-      aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --recursive --cache-control max-age=3600
+      aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --cache-control max-age=2592000
   when: manual
   only:
     - master
