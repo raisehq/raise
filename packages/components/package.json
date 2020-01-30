@@ -13,7 +13,7 @@
     "start": "tsdx watch",
     "dev": "tsdx watch",
     "build": "tsdx build",
-    "build:umd": "tsdx build --format umd --name RaiseComponents",
+    "build:umd": "cp tsdx.umd.config.js tsdx.config.js && tsdx build --format umd --name RaiseComponents",
     "test": "tsdx test --env=jsdom",
     "lint": "tsdx lint",
     "storybook": "start-storybook -p 6006",
@@ -57,9 +57,12 @@
     "react-content-loader": "^4.3.2",
     "react-docgen-typescript-loader": "^3.5.0",
     "react-spring": "^8.0.27",
+    "rollup-plugin-analyzer": "^3.2.2",
+    "rollup-plugin-visualizer": "^3.3.1",
     "semantic-ui-react": "^0.88.1",
     "storybook-react-router": "^1.0.8",
     "styled-components": "^5.0.0-rc.2",
-    "web3-utils": "^1.2.4"
+    "web3-utils": "^1.2.4",
+    "tsdx": "^0.12.3"
   }
 }
