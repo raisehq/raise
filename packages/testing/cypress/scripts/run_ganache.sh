@@ -30,6 +30,8 @@ generate_cache() {
   git clone https://gitlab.com/raisehq/contracts-solidity --branch integration ./contracts > "/dev/null" 2>&1
   cp cypress/fixtures/users.json contracts/int.accounts.json
   cd contracts
+  # creat empty file, does not contain a private key, for requeriment purposes
+  touch private.key
   echo "- Install dependencies"
   npm i
   echo "- Migrate contracts inside ganache"
@@ -75,7 +77,7 @@ start_ganache() {
     echo `pwd`
     mkdir .db
   fi
-  npx ganache-cli --db .db  --allowUnlimitedContractSize --gasLimit 0xfffffffffff --gasPrice 0x01 -i 6969 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" > /dev/null &
+  TEMP=~/tmp npx ganache-cli --db .db  --allowUnlimitedContractSize --gasLimit 0xfffffffffff --gasPrice 0x01 -i 6969 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" > /dev/null &
   ganache_pid=$!
 
   echo "Waiting for ganache to launch on port "$ganache_port"... and pid "$ganache_pid""

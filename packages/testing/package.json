@@ -26,7 +26,7 @@
     "ci:run": "sh cypress/scripts/run_ganache.sh yarn run cypress:run",
     "ci:run:chrome": "sh cypress/scripts/run_ganache.sh yarn run cypress:run:chrome",
     "test": "yarn run ci:open",
-    "ganache:run": "ganache-cli --gasLimit 0xfffffffffff ---gasPrice 0x01 -i 6969 -m \"stamp polar cup smart ill agree human episode reform trigger text forget\" --db .gcache --port 8545",
+    "ganache:run": "TEMP=~/tmp ganache-cli --gasLimit 0xfffffffffff ---gasPrice 0x01 -i 6969 -m \"stamp polar cup smart ill agree human episode reform trigger text forget\" --port 8545",
     "cy:run": "node cypress/scripts/cypress.js"
   },
   "devDependencies": {
