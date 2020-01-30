@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getHost, to, Left, Right, Either } from '../utils/index';
+import { isMobile } from 'react-device-detect';
 
 const COMMON_HEADERS = {
   headers: {
@@ -139,7 +140,29 @@ export const checkBlockedCountry = async countryid => {
 
 export const bloomSignIn = () => URL.BLOOM_SIGN_IN;
 
-export const redirectFromBloomApp = token => URL.REDIRECT.replace(':token', token);
+const checkDappBrowserCallback = token => {
+  // @ts-ignore
+  if (window.web3 && window.web3.currentProvider.isMetaMask) {
+    return `https://metamask.app.link/dapp/raise.it/login/bloom/${token}`;
+  }
+  // @ts-ignore
+  if (window.web3 && window.web3.currentProvider.isTrust) {
+    return `https://link.trustwallet.com/open_url?coin_id=60&url=https://raise.it/login/bloom/${token}`;
+  }
+  // @ts-ignore
+  if (window.web3 && window.web3.currentProvider.isStatus) {
+    return `status-im://browse/raise.it//login/bloom/${token}`;
+  }
+  return URL.REDIRECT.replace(':token', token);
+};
+
+export const redirectFromBloomApp = token => {
+  if (isMobile) {
+    checkDappBrowserCallback(token);
+  } else {
+    return URL.REDIRECT.replace(':token', token);
+  }
+};
 
 export const verifyBloomLogin = async tokenBloom => {
   const config: any = {

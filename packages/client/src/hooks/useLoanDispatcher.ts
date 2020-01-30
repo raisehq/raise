@@ -1,18 +1,20 @@
-import { useState } from 'react';
-// import AppContext from '../components/AppContext';
+import { useState, useContext } from 'react';
 import useWallet from './useWallet';
 import useWeb3 from './useWeb3';
 import useAsyncEffect from './useAsyncEffect';
+import AppContext from '../components/AppContext';
 
 const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const { web3 } = useWeb3();
-  const metamask = useWallet();
+  const wallet = useWallet();
+  const { followTx }: any = useContext(AppContext);
+
   useAsyncEffect(async () => {
-    if (metamask) {
+    if (wallet) {
       try {
-        const contract = await metamask.addContract('LoanDispatcher');
-        const account = await metamask.getPrimaryAccount();
+        const contract = await wallet.addContract('LoanDispatcher');
+        const account = await wallet.getPrimaryAccount();
         setActiveContract({
           deploy: async (
             minAmount,
@@ -34,14 +36,17 @@ const useLoanDispatcher = () => {
               auctionSecondsLength
             ];
 
-            return contract.methods.deploy(...params).send({ from: account });
+            return followTx.watchTx(
+              contract.methods.deploy(...params).send({ from: account }),
+              'loanDispacher'
+            );
           }
         });
       } catch (error) {
         console.error('Contract LoanDispatcher not found in current network.', error);
       }
     }
-  }, [metamask]);
+  }, [wallet]);
 
   return activeContract;
 };

@@ -10,10 +10,11 @@ import AppContext from '../components/AppContext';
 const useRepayment = (loan, open) => {
   const { borrowerDebt, id }: any = loan;
   const {
-    web3Status: { account }
+    web3Status: { account },
+    followTx
   }: any = useContext(AppContext);
   const { web3 } = useWeb3();
-  const metamask = useWallet();
+  const wallet = useWallet();
   const [approved, setApproved] = useState(false);
   const [error, setError] = useState();
   const [stage, setStage] = useState(Stages.Confirm);
@@ -29,7 +30,7 @@ const useRepayment = (loan, open) => {
       const {
         utils: { BN }
       } = web3;
-      const DAI = await metamask.addContract('DAI');
+      const DAI = await wallet.addContract('DAI');
       const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
       const valueBN = new BN(borrowerDebt);
       const currentBalance = await DAIContract.methods.balanceOf(account).call({ from: account });
@@ -44,8 +45,8 @@ const useRepayment = (loan, open) => {
       const {
         utils: { BN }
       } = web3;
-      const DAIProxy = await metamask.addContract('DAIProxy');
-      const DAI = await metamask.addContract('DAI');
+      const DAIProxy = await wallet.addContract('DAIProxy');
+      const DAI = await wallet.addContract('DAI');
       const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
       const valueBN = new BN(borrowerDebt);
 
@@ -55,9 +56,9 @@ const useRepayment = (loan, open) => {
 
       if (valueBN.gt(new BN(amountApproved))) {
         try {
-          await DAIContract.methods
-            .approve(DAIProxy.options.address, MAX_VALUE)
-            .send({ from: account });
+          await followTx.watchTx(
+            DAIContract.methods.approve(DAIProxy.options.address, MAX_VALUE).send({ from: account })
+          );
           setApproved(true);
         } catch (err) {
           console.error('[useRepayment] Error: ', err);
@@ -71,9 +72,9 @@ const useRepayment = (loan, open) => {
 
   useAsyncEffect(async () => {
     if (open && approved) {
-      const DAIProxy = await metamask.addContract('DAIProxy');
+      const DAIProxy = await wallet.addContract('DAIProxy');
       try {
-        await DAIProxy.methods.repay(id, borrowerDebt).send({ from: account });
+        await followTx.watchTx(DAIProxy.methods.repay(id, borrowerDebt).send({ from: account }));
         setStage(Stages.Success);
       } catch (err) {
         console.error('[useRepayment] Error: ', err);

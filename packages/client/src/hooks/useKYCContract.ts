@@ -1,25 +1,29 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
+import AppContext from '../components/AppContext';
 
 const useKYCContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const metamask = useWallet();
-
+  const wallet = useWallet();
+  const { followTx }: any = useContext(AppContext);
   useAsyncEffect(async () => {
-    if (metamask) {
+    if (wallet) {
       try {
-        const contract = await metamask.addContract('KYC');
+        const contract = await wallet.addContract('KYC');
 
         setActiveContract({
-          add: account => contract.methods.add(account).send({ from: account }),
+          add: followTx.watchTx(
+            account => contract.methods.add(account).send({ from: account }),
+            'KYC'
+          ),
           isConfirmed: account => contract.methods.isConfirmed(account).call()
         });
       } catch (error) {
         console.error('Ćontract KYC not found in current network.');
       }
     }
-  }, [metamask]);
+  }, [wallet]);
 
   return activeContract;
 };

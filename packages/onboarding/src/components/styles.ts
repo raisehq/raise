@@ -530,6 +530,21 @@ export const GetStartedBloomInstructionsSection = styled.div`
   }
 `;
 
+export const GetStartedBloomInfoErrorSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  text-align: center;
+  font-size: 15px;
+  height: 300px;
+  margin: 0px 10%;
+  padding-top: 20%;
+  @media (max-width: ${size.mobileL}) {
+    align-items: center;
+    margin: 0px;
+  }
+`;
+
 export const GetStartedBloomFooter = styled.div`
   display: flex;
   justify-content: center;

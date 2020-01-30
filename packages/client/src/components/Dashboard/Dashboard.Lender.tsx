@@ -25,12 +25,12 @@ const Dashboard = () => {
       },
       auth: {
         login: { logged }
-      },
+      }
     },
     webSocket: { webSocket }
   }: any = useContext(AppContext);
 
-  const [warningCK, setWarningCK] = useCookie('warning');
+  const [warningCK, setWarningCK] = useCookie('warning', '');
   const [activeWarning, setWarning] = useState();
   const [open, setOpen] = useState(false);
 
@@ -56,12 +56,14 @@ const Dashboard = () => {
 
   useAsyncEffect(async () => {
     try {
-      if (!warningCK) {
+      if (!warningCK || warningCK === '') {
         const warning = await findOne('warnings', { 'fields.active': true });
         setOpen(true);
         setWarning(warning);
       }
-    } catch (error) { }
+    } catch (error) {
+      console.error('[DASBOARD.LENDER] ', error);
+    }
   }, []);
 
   const closeModal = () => {
@@ -92,7 +94,11 @@ const Dashboard = () => {
                 My Activity
               </Header>
             </Element>
-            <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={activityPanels} />
+            <DashboardTab
+              renderActiveOnly
+              menu={{ secondary: true, pointing: true }}
+              panes={activityPanels}
+            />
           </>
         )}
       </DashboardContainer>
