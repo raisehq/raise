@@ -78,8 +78,8 @@ start_ganache() {
     mkdir .db
   fi
   TEMP=~/tmp
-  npx hello-world-npx &
-  npx hello-world-npx
+  npx cowsay "Background" &
+  npx cowsay "Not background"
   npx ganache-cli --db .db  --allowUnlimitedContractSize --gasLimit 0xfffffffffff --gasPrice 0x01 -i 6969 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" &
   ganache_pid=$!
 
