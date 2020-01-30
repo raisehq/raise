@@ -15,7 +15,7 @@ const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle }) => {
         />
       </IconWrapper>
       <FollowingStepsTitle>Are you having problems to verify KYC with Bloom?</FollowingStepsTitle>
-      <p>Please, make sure to have your Country registered at Bloom.</p>
+      <p>Please make sure you registered your address and ID in your Bloom profile.</p>
       <p>If you need help send email to help@raise.it</p>
     </HelpWithBloomWrapper>
   );
