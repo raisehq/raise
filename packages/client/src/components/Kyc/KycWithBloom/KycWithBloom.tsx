@@ -27,6 +27,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   const [tokenBloom, setTokenBloom] = useState('');
 
   useInterval(async () => {
+    
     if (tokenBloom !== '') {
       const user = await getUser(tokenBloom);
       if (user.kyc_status === 3) {
