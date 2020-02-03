@@ -2,6 +2,7 @@ image: 'node:11-alpine'
 before_script:
   - "#!/bin/sh\napk add --no-cache --virtual .build-deps \\\nca-certificates \\\nmake \\\ng++ \\\nwget \\\ngit \\\npython \\\npy-pip \\\ntar && \\\ncd /usr/local/bin && \\\nwget https://yarnpkg.com/latest.tar.gz && \\\ntar zvxf latest.tar.gz && \\\nln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \\\ncd - \\\napk del .build-deps\n"
 stages:
+  - deploy_backend
   - build
   - deploy
   - review
@@ -16,11 +17,23 @@ cache:
   paths:
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
 
+trigger-deployment:
+  stage: deploy_backend
+  script:
+    - 'curl -X POST -F token=${DEPLOYMENT_TOKEN} -F ref=master -F variables[REVIEW_SLUG]=${CI_COMMIT_REF_SLUG} https://gitlab.com/api/v4/projects/15165091/trigger/pipeline'
+  only:
+    - merge_requests
+  except:
+    - master
+
 build-front-review:
   stage: build
   variables:
-    REACT_APP_COOKIE_DOMAIN: '.${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
-    REACT_APP_HOST_URL: 'https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.$DOMAIN
+    REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
+    REACT_APP_HOST_URL_AUTH: https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN
+    REACT_APP_HOST_URL_CORE: https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN
+    REACT_APP_HOST_URL_FILE: https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN
   script:
     - |
       echo $REACT_APP_HOST_URL
@@ -179,9 +192,18 @@ stop-review:
   image: 'python:3.7-alpine'
   stage: cleanup
   before_script:
-    - 'pip install awscli'
+    - |
+      #!/bin/sh
+      apk add --no-cache curl jq python py-pip openssh-client bash
+      pip install awscli
+      $(aws ecr get-login --no-include-email --region "${AWS_DEFAULT_REGION}")
+      mkdir -p ~/.ssh
+      echo -e "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa
+      chmod 600 ~/.ssh/id_rsa
+      '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    - 'aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive'
+    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+    - ssh ubuntu@bastion.${DOMAIN} delete_review integration ${CI_COMMIT_REF_SLUG}
   when: manual
   variables:
     GIT_STRATEGY: none
