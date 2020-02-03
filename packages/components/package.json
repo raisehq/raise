@@ -13,6 +13,7 @@
     "start": "tsdx watch",
     "dev": "tsdx watch",
     "build": "tsdx build",
+    "build:umd": "cp tsdx.umd.config.js tsdx.config.js && tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
     "test": "tsdx test --env=jsdom",
     "lint": "tsdx lint",
     "storybook": "start-storybook -p 6006",
@@ -21,17 +22,6 @@
   "peerDependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
@@ -55,6 +45,17 @@
     "tslib": "^1.10.0",
     "typescript": "^3.7.2"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
   "dependencies": {
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/lodash": "^4.14.149",
@@ -74,13 +75,14 @@
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
     "pampy": "^0.0.6",
-    "react-chartjs-2": "^2.8.0",
+    "react-chartjs-2": "^2.9.0",
     "react-content-loader": "^4.3.2",
     "react-docgen-typescript-loader": "^3.5.0",
     "react-spring": "^8.0.27",
     "semantic-ui-react": "^0.88.1",
     "storybook-react-router": "^1.0.8",
     "styled-components": "^5.0.0-rc.2",
-    "web3-utils": "^1.2.4"
+    "web3-utils": "^1.2.4",
+    "tsdx": "^0.12.3"
   }
 }
