@@ -26,26 +26,8 @@
     "ci:run": "sh cypress/scripts/run_ganache.sh yarn run cypress:run",
     "ci:run:chrome": "sh cypress/scripts/run_ganache.sh yarn run cypress:run:chrome",
     "test": "yarn run ci:open",
-    "ganache:run": "ganache-cli --gasLimit 0xfffffffffff ---gasPrice 0x01 -i 6969 -m \"stamp polar cup smart ill agree human episode reform trigger text forget\" --db .gcache --port 8545",
+    "ganache:run": "TEMP=~/tmp ganache-cli --gasLimit 0xfffffffffff ---gasPrice 0x01 -i 6969 -m \"stamp polar cup smart ill agree human episode reform trigger text forget\" --port 8545",
     "cy:run": "node cypress/scripts/cypress.js"
-  },
-  "dependencies": {
-    "@cypress/webpack-preprocessor": "^4.1.0",
-    "@raisehq/components": "^0.1.8",
-    "cypress": "^3.8.2",
-    "ganache-cli": "^6.7.0",
-    "mochawesome": "^4.1.0",
-    "node-slack-upload": "^2.0.0",
-    "react-slick": "^0.25.2",
-    "request": "^2.88.0",
-    "sinon": "^7.4.2",
-    "slack-notify": "^0.1.7",
-    "slick-carousel": "^1.8.1",
-    "truffle-privatekey-provider": "^1.3.0",
-    "url-search-params-polyfill": "^7.0.0",
-    "validator": "^10.11.0",
-    "web3": "1.2.1",
-    "web3-utils": "1.0.0-beta.55"
   },
   "devDependencies": {
     "cypress-image-snapshot": "^3.1.1",
@@ -62,5 +44,23 @@
     "ts-loader": "^6.0.4",
     "typescript": "^3.6.2",
     "webpack": "^4.39.3"
+  },
+  "dependencies": {
+    "@cypress/webpack-preprocessor": "^4.1.0",
+    "@raisehq/components": "*",
+    "cypress": "^3.8.2",
+    "ganache-cli": "6.9.0",
+    "mochawesome": "^4.1.0",
+    "node-slack-upload": "^2.0.0",
+    "react-slick": "^0.25.2",
+    "request": "^2.88.0",
+    "sinon": "^7.4.2",
+    "slack-notify": "^0.1.7",
+    "slick-carousel": "^1.8.1",
+    "truffle-privatekey-provider": "^1.3.0",
+    "url-search-params-polyfill": "^7.0.0",
+    "validator": "^10.11.0",
+    "web3": "1.2.1",
+    "web3-utils": "1.0.0-beta.55"
   }
 }

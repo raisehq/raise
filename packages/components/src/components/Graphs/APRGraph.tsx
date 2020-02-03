@@ -11,8 +11,7 @@ import numeral from '../../commons/numeral';
 import { chartBackground, todayVerticalLine } from './plugins';
 import { DAI_ADDRESS } from '../../commons/constants';
 
-// Bypass typescript definitions in react-chartjs, missing Chart definition
-const Chart = require('react-chartjs-2');
+import { Chart } from 'react-chartjs-2';
 
 interface APRGraphProps {
   maxInterestRate: BN;
@@ -205,8 +204,8 @@ const APRGraph = ({
   };
 
   useAsyncEffect(async () => {
-    Chart.Chart.plugins.register(todayVerticalLine);
-    Chart.Chart.plugins.register(chartBackground);
+    Chart.pluginService.register(todayVerticalLine);
+    Chart.pluginService.register(chartBackground);
 
     /**
      * Compound DAI rate api call, latest 30 day
