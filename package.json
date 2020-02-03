@@ -4,11 +4,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "devDependencies": {
-    "lerna": "^3.16.4",
-    "typescript": "^3.5.3",
-    "validator": "^11.1.0"
-  },
   "scripts": {
     "bootstrap": "lerna bootstrap --use-workspaces",
     "dev": "yarn run build:deps && lerna run dev --stream --scope client",
@@ -22,6 +17,8 @@
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client"
   },
   "dependencies": {
+    "lerna": "^3.16.4",
+    "typescript": "^3.5.3",
     "react-scripts": "3.3.0"
   }
 }
