@@ -21,10 +21,13 @@ build-front-review:
   variables:
     REACT_APP_COOKIE_DOMAIN: '.${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
     REACT_APP_HOST_URL: 'https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    REACT_APP_HOST_URL_AUTH: 'https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN'
+    REACT_APP_HOST_URL_CORE: 'https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN'
   script:
-    - 'echo $REACT_APP_HOST_URL'
-    - 'yarn --pure-lockfile'
-    - 'yarn run client:build:integration'
+    - |
+      echo $REACT_APP_HOST_URL
+      yarn --pure-lockfile
+      yarn run client:build:integration
   only:
     - merge_requests
   except:
