@@ -19,6 +19,10 @@ cache:
 
 trigger-deployment:
   stage: deploy_backend
+  before_script:
+    - |
+      #!/bin/sh
+      apk add --no-cache curl
   script:
     - 'curl -X POST -F token=${DEPLOYMENT_TOKEN} -F ref=master -F variables[REVIEW_SLUG]=${CI_COMMIT_REF_SLUG} https://gitlab.com/api/v4/projects/15165091/trigger/pipeline'
   only:
