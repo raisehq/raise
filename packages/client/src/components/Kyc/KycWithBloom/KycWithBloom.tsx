@@ -25,6 +25,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
+  const [attestations, setAttestations] = useState<any>([]);
 
   useInterval(async () => {
     if (tokenBloom !== '') {
@@ -41,6 +42,9 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   }, 3000);
 
   useEffect(() => {
+    setAttestations(process.env.REACT_APP_BLOOM_ATTESTATIONS
+      ? process.env.REACT_APP_BLOOM_ATTESTATIONS.split(' ')
+      : []);
     setIsScreenIdle(true);
     const user = LocalData.getObj('user');
     const userId = user.id;
@@ -79,7 +83,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
-    types: ['email', 'id-document', 'full-name']
+    types: attestations
   };
 
   const qrOptions: Partial<QROptions> = {
