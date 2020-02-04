@@ -31,9 +31,9 @@ const DesktopHeader = () => {
     },
     actions: {
       onboarding: { showOnboarding }
-    },
-    web3Status: { hasDeposit }
-  }: any = useContext(AppContext);
+    }
+  }: // web3Status: { hasDeposit }
+  any = useContext(AppContext);
   const { visible, visibleMenu } = useMenuVisibility();
   const tagManager = useGoogleTagManager();
   const {
@@ -42,7 +42,7 @@ const DesktopHeader = () => {
   const enableBanner = visibleMenu && accounttype_id === 2;
 
   const onKYC = () => history.push('/kyc');
-  const onDepositAction = () => history.push('/deposit');
+  // const onDepositAction = () => history.push('/deposit');
   const scrollToTop = () => scroll.scrollToTop();
 
   const navigateAndScroll = () => {
@@ -75,8 +75,8 @@ const DesktopHeader = () => {
       <TopBanner
         kycStatus={kyc_status}
         kycAction={onKYC}
-        hasDeposit={hasDeposit}
-        hasDepositAction={onDepositAction}
+        // hasDeposit={hasDeposit}
+        // hasDepositAction={onDepositAction}
         enabled={enableBanner}
       />
       <HeaderWrapper>

@@ -22,9 +22,9 @@ export const StatusSet = {
 interface KycTopBannerProps {
   enabled: boolean;
   kycStatus: number;
-  hasDeposit: boolean;
+  // hasDeposit: boolean;
   kycAction?: Function;
-  hasDepositAction?: Function;
+  // hasDepositAction?: Function;
   mobile?: boolean;
 }
 
@@ -32,8 +32,8 @@ const KycTopBanner = ({
   enabled,
   kycStatus,
   kycAction,
-  hasDeposit,
-  hasDepositAction,
+  // hasDeposit,
+  // hasDepositAction,
   mobile
 }: KycTopBannerProps) => {
   const {
@@ -41,12 +41,12 @@ const KycTopBanner = ({
       location: { pathname }
     }
   }: any = useContext(AppContext);
-  const view = Status[StatusSet[(hasDeposit && kycStatus) || 5]];
+  const view = Status[StatusSet[kycStatus || 5]];
   const stepsForBanner = {
     kyc: kycStatus === 5,
-    kycAction,
-    hasDeposit,
-    hasDepositAction
+    kycAction
+    // hasDeposit,
+    // hasDepositAction
   };
   if (!enabled) {
     return null;
