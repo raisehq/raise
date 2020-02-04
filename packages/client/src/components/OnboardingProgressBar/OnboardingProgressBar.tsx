@@ -10,12 +10,7 @@ import {
 import { Icon } from 'semantic-ui-react';
 
 export const OnboardingProgressBar = ({ step, isMobile }) => {
-  const steps = [
-    { 0: 'Get Started' },
-    { 1: 'Connect Wallet' },
-    { 2: 'Deposit' },
-    { 3: 'Verify Account' }
-  ];
+  const steps = [{ 0: 'Get Started' }, { 1: 'Connect Wallet' }, { 2: 'Verify Account' }];
   return (
     <>
       {isMobile ? (
