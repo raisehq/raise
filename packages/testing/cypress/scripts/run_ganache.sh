@@ -78,7 +78,7 @@ start_ganache() {
     mkdir .db
   fi
   [ ! -d "./tmp" ] && mkdir ./tmp
-  TEMP=./tmp npx ganache-cli --db .db  --allowUnlimitedContractSize --gasLimit 0xfffffffffff --gasPrice 0x01 -i 6969 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" > /dev/null &
+  TEMP=./tmp npx ganache-cli --db .db  --allowUnlimitedContractSize --gasLimit 0xfffffffffff --gasPrice 0x01 -i 6969 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" &
   ganache_pid=$!
 
   echo "Waiting for ganache to launch on port "$ganache_port"... and pid "$ganache_pid""
