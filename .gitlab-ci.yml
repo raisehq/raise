@@ -207,7 +207,7 @@ stop-review:
       '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
-    - ssh ubuntu@bastion.${DOMAIN} delete_review integration ${CI_COMMIT_REF_SLUG}
+    - ssh ubuntu@bastion.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
   when: manual
   variables:
     GIT_STRATEGY: none
