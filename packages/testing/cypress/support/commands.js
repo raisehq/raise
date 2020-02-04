@@ -163,10 +163,15 @@ Cypress.Commands.add('mockAPI', function(type) {
     const user = Cypress.env('user');
 
     win.AxiosMockResponses = [
-      ['POST', 'https://api.herodev.es/jwt/verify', 200, { mock: true, success: true }],
+      [
+        'POST',
+        `${process.env.REACT_APP_HOST_URL_AUTH}/jwt/verify`,
+        200,
+        { mock: true, success: true }
+      ], //'https://api.herodev.es
       [
         'GET',
-        'https://api.herodev.es/cryptoaddress/user/user:12345',
+        `${process.env.REACT_APP_HOST_URL_CORE}/cryptoaddress/user/user:12345`,
         200,
         {
           mock: true,
@@ -186,7 +191,7 @@ Cypress.Commands.add('mockAPI', function(type) {
       ],
       [
         'PUT',
-        'https://api.herodev.es/users/user:12345',
+        `${process.env.REACT_APP_HOST_URL_CORE}/users/user:12345`,
         200,
         {
           mock: true,
