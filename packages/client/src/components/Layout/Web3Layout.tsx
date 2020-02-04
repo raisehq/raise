@@ -1,16 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
-// import { Experiment, Variant } from 'react-optimize';
 import { Loader } from 'semantic-ui-react';
 import { SpecialDimmer } from './Layout.styles';
-// import LocalData from '../../helpers/localData';
 import useWeb3 from '../../hooks/useWeb3';
 import AppContext from '../AppContext';
 import CryptoWallets from '../../commons/cryptoWallets';
-
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-
-// const EXPERIMENT_DEPOSIT_ID = process.env.REACT_APP_AB_TEST_SKIP_DEPOSIT;
 
 const Web3Layout = ({
   history,
@@ -35,9 +30,6 @@ const Web3Layout = ({
 
     web3Status: { hasProvider, accountMatches, networkMatches, unlocked }
   }: any = useContext(AppContext);
-
-  // const pushTo = (route: string) => history.push(route);
-  // const firstLogin = LocalData.get('firstLogin') === 'first';
 
   const { connectWallet }: any = useWeb3();
   const [connectionError, setConnectionError] = useState(false);
@@ -72,35 +64,7 @@ const Web3Layout = ({
     return <Layout {...rest} />;
   }
 
-  if (
-    accountMatches &&
-    networkMatches &&
-    cryptotypeId !== null
-    // && hasDeposit !== undefined
-  ) {
-    // if (
-    //   accounttypeId === 2 &&
-    //   acceptedRole &&
-    //   // pathname !== '/deposit' &&
-    //   // hasDeposit !== undefined &&
-    //   // !hasDeposit
-    // ) {
-    //   // if (EXPERIMENT_DEPOSIT_ID) {
-    //   //   return (
-    //   //     <>
-    //   //       <Experiment id={EXPERIMENT_DEPOSIT_ID}>
-    //   //         <Variant id="0">{pushTo('/deposit')}</Variant>
-    //   //         <Variant id="1">
-    //   //           {firstLogin && pushTo('/deposit')}
-    //   //           {!firstLogin && !acceptedRole && pushTo('/')}
-    //   //           {!firstLogin && acceptedRole && <Layout {...rest} />}
-    //   //         </Variant>
-    //   //       </Experiment>
-    //   //     </>
-    //   //   );
-    //   // }
-    //   return <Redirect to="/deposit" />;
-    // }
+  if (accountMatches && networkMatches && cryptotypeId !== null) {
     if (!acceptedRole) {
       return <Redirect to="/" />;
     }

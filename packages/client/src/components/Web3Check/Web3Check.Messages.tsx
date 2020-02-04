@@ -79,7 +79,6 @@ const CurrentNotice = () => {
       // @ts-ignore
       blockchain: { uploadSignature }
     },
-    // history,
     store: {
       user: {
         // @ts-ignore
@@ -105,7 +104,6 @@ const CurrentNotice = () => {
           type: getWalletName(cryptotypeId).toLowerCase()
         });
       }
-      // history.push('/deposit');
     } catch (error) {
       console.error('[Web3Check.Message][HandleUploadSignature] Error : ', error);
     }
