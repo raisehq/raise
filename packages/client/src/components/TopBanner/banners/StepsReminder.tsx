@@ -6,8 +6,6 @@ export const Steps = (kycAction, kyc, mobile) => {
   if (!kyc) {
     return (
       <>
-        {/* <StepButton onClick={hasDepositAction}>Deposit</StepButton>
-        <RightArrow /> */}
         <StepButton onClick={kycAction}>Verify Account</StepButton>
       </>
     );
@@ -15,18 +13,6 @@ export const Steps = (kycAction, kyc, mobile) => {
   if (!kyc && mobile) {
     return <StepButton onClick={kycAction}>Verify Account</StepButton>;
   }
-  // if (hasDepositAction && !kyc && !mobile) {
-  //   return (
-  //     <>
-  //       <div>Deposit</div>
-  //       <RightArrow />
-  //       <StepButton onClick={kycAction}>Verify Account</StepButton>
-  //     </>
-  //   );
-  // }
-  // if (!hasDepositAction && kyc) {
-  //   return <StepButton onClick={hasDepositAction}>Deposit</StepButton>;
-  // }
   return null;
 };
 

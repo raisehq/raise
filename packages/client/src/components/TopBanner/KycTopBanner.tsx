@@ -22,20 +22,11 @@ export const StatusSet = {
 interface KycTopBannerProps {
   enabled: boolean;
   kycStatus: number;
-  // hasDeposit: boolean;
   kycAction?: Function;
-  // hasDepositAction?: Function;
   mobile?: boolean;
 }
 
-const KycTopBanner = ({
-  enabled,
-  kycStatus,
-  kycAction,
-  // hasDeposit,
-  // hasDepositAction,
-  mobile
-}: KycTopBannerProps) => {
+const KycTopBanner = ({ enabled, kycStatus, kycAction, mobile }: KycTopBannerProps) => {
   const {
     history: {
       location: { pathname }
@@ -45,8 +36,6 @@ const KycTopBanner = ({
   const stepsForBanner = {
     kyc: kycStatus === 5,
     kycAction
-    // hasDeposit,
-    // hasDepositAction
   };
   if (!enabled) {
     return null;
