@@ -161,7 +161,10 @@ Cypress.Commands.add('login', function(type, env = 'local') {
 Cypress.Commands.add('mockAPI', function(type) {
   cy.on('window:before:load', win => {
     const user = Cypress.env('user');
-
+    console.log(
+      '------------------------------------------> ',
+      process.env.REACT_APP_HOST_URL_AUTH
+    );
     win.AxiosMockResponses = [
       [
         'POST',
