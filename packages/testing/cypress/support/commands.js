@@ -104,55 +104,27 @@ Cypress.Commands.add('addLoanAndCard', function(type) {
   Mock Login process
 */
 Cypress.Commands.add('login', function(type, env = 'local') {
-  if (env === 'local') {
-    // Mock API login
-    const auth = {
-      id: 'user:12345',
-      status: 2,
-      token: 'XXXXXX',
-      type: type === 'lender' ? 2 : 1
-    };
-    const user = {
-      id: 'user:12345',
-      email: 'noreply@raise.it',
-      firstname: null,
-      lastname: null,
-      kyc_status: 3,
-      status: 2,
-      accounttype_id: type === 'lender' ? 2 : 1,
-      delete: 0,
-      referral_code: 'TEST01'
-    };
-    cy.window().then(win => {
-      win.localStorage.setItem('auth', JSON.stringify(auth));
-      win.localStorage.setItem('user', JSON.stringify(user));
-    });
-  } else {
-    // Only for test directly with the API
-    const user = Cypress.env('user');
-    cy.request({
-      method: 'POST',
-      url: Cypress.env('api') + 'api/jwt/authenticate',
-      body: {
-        email: user[type].email,
-        password: user[type].password,
-        'g-recaptcha-response': 'xxxxxxxxx'
-      }
-    }).then(({ body: { data }, status }) => {
-      if (status !== 200) throw new Error('Error login');
-
-      const auth = {
-        id: data.user.id,
-        status: data.user.status,
-        token: data.JwtToken,
-        type: data.user.accounttype_id
-      };
-      cy.window().then(win => {
-        win.localStorage.setItem('auth', JSON.stringify(auth));
-        win.localStorage.setItem('user', JSON.stringify(data.user));
-      });
-    });
-  }
+  const auth = {
+    id: 'user:12345',
+    status: 2,
+    token: 'XXXXXX',
+    type: type === 'lender' ? 2 : 1
+  };
+  const user = {
+    id: 'user:12345',
+    email: 'noreply@raise.it',
+    firstname: null,
+    lastname: null,
+    kyc_status: 3,
+    status: 2,
+    accounttype_id: type === 'lender' ? 2 : 1,
+    delete: 0,
+    referral_code: 'TEST01'
+  };
+  cy.window().then(win => {
+    win.localStorage.setItem('auth', JSON.stringify(auth));
+    win.localStorage.setItem('user', JSON.stringify(user));
+  });
 });
 
 /*
@@ -161,12 +133,11 @@ Cypress.Commands.add('login', function(type, env = 'local') {
 Cypress.Commands.add('mockAPI', function(type) {
   cy.on('window:before:load', win => {
     const user = Cypress.env('user');
-
     win.AxiosMockResponses = [
-      ['POST', 'https://api.herodev.es/jwt/verify', 200, { mock: true, success: true }],
+      ['POST', `${Cypress.env('api')}/jwt/verify`, 200, { mock: true, success: true }], //'https://api.herodev.es
       [
         'GET',
-        'https://api.herodev.es/cryptoaddress/user/user:12345',
+        `${Cypress.env('api')}/cryptoaddress/user/user:12345`,
         200,
         {
           mock: true,
@@ -186,7 +157,7 @@ Cypress.Commands.add('mockAPI', function(type) {
       ],
       [
         'PUT',
-        'https://api.herodev.es/users/user:12345',
+        `${Cypress.env('api')}/users/user:12345`,
         200,
         {
           mock: true,
