@@ -33,11 +33,11 @@ trigger-deployment:
 build-front-review:
   stage: build
   variables:
-    REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.$DOMAIN
-    REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
-    REACT_APP_HOST_URL_AUTH: https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN
-    REACT_APP_HOST_URL_CORE: https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN
-    REACT_APP_HOST_URL_FILE: https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN
+    REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.${DOMAIN}
+    REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}
+    REACT_APP_HOST_URL_AUTH: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+    REACT_APP_HOST_URL_CORE: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+    REACT_APP_HOST_URL_FILE: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
   script:
     - |
       echo $REACT_APP_HOST_URL
@@ -117,14 +117,10 @@ cypress-e2e:
   image: 'cypress/browsers:node10.16.0-chrome77'
   stage: test
   variables:
-    CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
-    CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
+    CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.$DOMAIN
-    REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.$DOMAIN
-    REACT_APP_HOST_URL_AUTH: https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN
-    REACT_APP_HOST_URL_CORE: https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN
-    REACT_APP_HOST_URL_FILE: https://${CI_COMMIT_REF_SLUG}.api.$DOMAIN
+    CYPRESS_api: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
   before_script:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
@@ -156,6 +152,7 @@ cypress-e2e-integration:
     CYPRESS_url: 'https://app.herodev.es'
     CYPRESS_baseUrl: 'https://app.herodev.es'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+    CYPRESS_api: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
   before_script:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
