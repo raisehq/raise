@@ -29,7 +29,8 @@ import AppContext from '../AppContext';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui, setStage }) => {
   const {
-    web3Status: { walletAccount }
+    web3Status: { walletAccount },
+    followTx
   }: any = useContext(AppContext);
 
   const { web3 } = useWeb3();
@@ -86,9 +87,12 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
     if (approved) {
       const { DAIProxy } = contracts;
       try {
-        await DAIProxy.methods
-          .fund(loan.id, toWei(investment.toString()))
-          .send({ from: walletAccount });
+        await followTx.watchTx(
+          DAIProxy.methods
+            .fund(loan.id, toWei(investment.toString()))
+            .send({ from: walletAccount }),
+          'investment'
+        );
         setStage(ui.Success);
       } catch (error) {
         console.error('[DAIProxy ERROR]', 'address:', loan.id, ' stacktrace: ', error);

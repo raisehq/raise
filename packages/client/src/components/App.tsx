@@ -27,6 +27,7 @@ import Queryies from '../helpers/queryies';
 import AppContext from './AppContext';
 import NotFound404 from '../components/BorrowerProfile/Borrower404';
 import Onboarding from '@raisehq/onboarding';
+import { ToastContainer, toast } from 'react-toastify';
 
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
@@ -78,6 +79,40 @@ const App = ({ history, match }: any) => {
 
   const onSetGetStarted = () => setGetStarted(!getStarted);
   // Enabling connectionsStart
+  useEffect(() => {
+    if (followTx) {
+      followTx.on('start_tx', tx => {
+        console.log('--------------------> start transaction::::: ', tx);
+        toast('this is a toast test', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: false,
+          toastId: tx
+        });
+      });
+      followTx.on('finish_tx', tx => {
+        console.log('--------------- finish tx:: ', tx);
+        toast.update(tx, {
+          render: 'New content',
+          type: toast.TYPE.INFO,
+          autoClose: 5000
+        });
+      });
+    }
+  }, [followTx]);
+  // useCallback(
+  //   followTx.on('start_tx', tx => {
+  //     console.log('--------------------> start transaction::::: ', tx);
+  //   }),
+  //   []
+  // );
+
+  // useCallback(
+  //   followTx.on('finish_tx', tx => {
+  //     console.log('--------------- finish tx:: ', tx);
+  //   }),
+  //   []
+  // );
+
   useEffect(() => {
     if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {
       setLoading(false);
@@ -302,6 +337,7 @@ const App = ({ history, match }: any) => {
         </>
       )}
       <div ref={modalRefs} />
+      <ToastContainer />
     </AppContext.Provider>
   );
 };

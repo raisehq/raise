@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import LogRocket from 'logrocket';
@@ -31,13 +31,21 @@ window.fbq = window.fbq || null;
 
 const Root = () => {
   const [store, dispatch]: any = useReducer<any, any>(reducers, initialState, () => initialState);
+  const [followTx, setFollowTx] = useState();
   const tagManager = useGoogleTagManager();
   process.env.REACT_APP_LOGROCKET === 'true' && LogRocket.init('rjsyho/raisehq');
 
   tagManager.initialize();
-  const followTx = new FollowTx(
-    `wss://${store.config.network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`
-  );
+  useEffect(() => {
+    if (!followTx) {
+      setFollowTx(
+        new FollowTx(
+          `wss://${store.config.network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`
+        )
+      );
+    }
+  }, []);
+
   const actions: any = connector(dispatch, store);
   const values: PropsValueType = { store, actions, isLogged: false, followTx };
 
