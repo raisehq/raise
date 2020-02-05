@@ -26,6 +26,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
   const [attestations, setAttestations] = useState<any>([]);
+  const [kycUnsuccessful, setKycUnsuccessful] = useState(false);
 
   useInterval(async () => {
     if (tokenBloom !== '') {
@@ -38,13 +39,22 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         onBack();
         history.push('/');
       }
+      if (user.kyc_status === 4) {
+        setKycUnsuccessful(true);
+        LocalData.setObj('user', {
+          ...user,
+          kyc_status: user.kyc_status
+        });
+      }
     }
   }, 3000);
 
   useEffect(() => {
-    setAttestations(process.env.REACT_APP_BLOOM_ATTESTATIONS
-      ? process.env.REACT_APP_BLOOM_ATTESTATIONS.split(' ')
-      : []);
+    setAttestations(
+      process.env.REACT_APP_BLOOM_ATTESTATIONS
+        ? process.env.REACT_APP_BLOOM_ATTESTATIONS.split(' ')
+        : []
+    );
     setIsScreenIdle(true);
     const user = LocalData.getObj('user');
     const userId = user.id;
@@ -95,7 +105,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
       <GetStartedBloomHeader>
         <GetStartedBloomTitle>Verify KYC</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
-          <span>With</span>
+          <span>with</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
         </GetStartedBloomSubtitle>
       </GetStartedBloomHeader>
@@ -109,7 +119,11 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
           {isOpenHelp ? (
-            <HelpWithBloom setIsOpenHelp={setIsOpenHelp} setIsScreenIdle={setIsScreenIdle} />
+            <HelpWithBloom
+              setIsOpenHelp={setIsOpenHelp}
+              kycUnsuccessful={kycUnsuccessful}
+              setIsScreenIdle={setIsScreenIdle}
+            />
           ) : (
             <FollowSteps isMobile={isMobile} />
           )}

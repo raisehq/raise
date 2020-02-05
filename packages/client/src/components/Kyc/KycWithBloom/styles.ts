@@ -8,6 +8,10 @@ const size = {
   desktop: '950px'
 };
 
+interface KycStatus {
+  kycUnsuccessful?: boolean | null;
+}
+
 export const ChooseMethodWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -110,15 +114,17 @@ export const FollowingStepsTitle = styled.div`
   line-height: 24px;
 `;
 
-export const HelpWithBloomWrapper = styled.div`
+export const HelpWithBloomWrapper = styled.div<KycStatus>`
   display: flex;
   flex-direction: column;
-  padding: 5%;
+  padding: 7%;
   max-width: 250px;
   min-height: 250px;
   text-align: center;
   box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
   line-height: 21px;
+  background-color: ${props => (props.kycUnsuccessful ? '#6067f1' : 'white')};
+  color: ${props => (props.kycUnsuccessful ? 'white' : 'inherit')};
   @media (max-width: ${size.mobileL}) {
     width: 100%;
     max-width: none;
