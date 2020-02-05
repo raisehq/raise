@@ -17,7 +17,7 @@ const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful }) => {
     </div>
   );
   return (
-    <HelpWithBloomWrapper kycUnsuccessful>
+    <HelpWithBloomWrapper kycUnsuccessful={kycUnsuccessful}>
       <IconWrapper>
         <Icon
           name="close"

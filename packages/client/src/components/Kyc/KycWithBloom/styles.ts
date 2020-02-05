@@ -124,7 +124,7 @@ export const HelpWithBloomWrapper = styled.div<KycStatus>`
   box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
   line-height: 21px;
   background-color: ${props => (props.kycUnsuccessful ? '#6067f1' : 'white')};
-  color: ${props => (props.kycUnsuccessful ? 'white' : '#6067f1')};
+  color: ${props => (props.kycUnsuccessful ? 'white' : 'inherit')};
   @media (max-width: ${size.mobileL}) {
     width: 100%;
     max-width: none;
