@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Card, Grid, Button, Image, Dimmer } from 'semantic-ui-react';
 import { match, ANY } from 'pampy';
 import { getImages } from '../../utils';
-
+import theme from '../../theme';
 import { maxDevice, device } from '../../commons/breakpoints';
 
 interface PropsPathname {
@@ -195,7 +195,8 @@ export const OnboardingContent = styled(Content)`
 export const Wrapper = styled.div`
   width: auto;
   min-height: 800px;
-  background: none;
+  background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
+    url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat;
 
   @media screen and ${maxDevice.mobileL} {
     background: none;
