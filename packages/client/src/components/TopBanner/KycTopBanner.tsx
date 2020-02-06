@@ -43,28 +43,22 @@ const KycTopBanner = ({ enabled, kycStatus, kycAction, mobile }: KycTopBannerPro
 
   const inDashboard = () => pathname === '/' || pathname === '/account';
 
+  const getStepsReminder = () => {
+    if (!inDashboard()) {
+      return null;
+    }
+    if (mobile) {
+      return <StepsReminderMobile {...stepsForBanner} />;
+    }
+    return <StepsReminder {...stepsForBanner} />;
+  };
+
   const getView = () =>
     view.cata({
-      Start: () => {
-        if (!inDashboard()) {
-          return null;
-        }
-        if (mobile) {
-          return <StepsReminderMobile {...stepsForBanner} />;
-        }
-        return <StepsReminder {...stepsForBanner} />;
-      },
+      Start: getStepsReminder,
       Pending: () => null,
       PendingRegistry: () => null,
-      Error: () => {
-        if (!inDashboard()) {
-          return null;
-        }
-        if (mobile) {
-          return <StepsReminderMobile {...stepsForBanner} />;
-        }
-        return <StepsReminder {...stepsForBanner} />;
-      },
+      Error: getStepsReminder,
       Success: () => null
     });
 
