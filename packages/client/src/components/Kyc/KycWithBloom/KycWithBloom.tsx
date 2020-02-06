@@ -97,7 +97,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   };
 
   const qrOptions: Partial<QROptions> = {
-    size: 250
+    size: 260
   };
 
   return (
@@ -118,11 +118,12 @@ const KycWithBloom = ({ onBack, token = '' }) => {
           />
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
-          {isOpenHelp || kycUnsuccessful? (
+          {isOpenHelp || kycUnsuccessful ? (
             <HelpWithBloom
               setIsOpenHelp={setIsOpenHelp}
               kycUnsuccessful={kycUnsuccessful}
               setIsScreenIdle={setIsScreenIdle}
+              history={history}
             />
           ) : (
             <FollowSteps isMobile={isMobile} />

@@ -30,7 +30,7 @@ export const GetStartedBloomHeader = styled.div`
 
 export const GetStartedBloomTitle = styled.div`
   text-align: center;
-  font-size: 50px;
+  font-size: 40px;
   @media (max-width: ${size.mobileL}) {
     font-size: 25px;
   }
@@ -110,7 +110,6 @@ export const InstructionsWrapper = styled.div`
 export const FollowingStepsTitle = styled.div`
   font-weight: bold;
   font-size: 18px;
-  padding: 5% 0;
   line-height: 24px;
 `;
 
@@ -142,4 +141,16 @@ export const BloomParagraph = styled.p`
 
 export const HelpMessage = styled.div`
   margin-top: 5%;
+`;
+
+export const LinkToSumSub = styled.button`
+  background: none;
+  border: none;
+  text-decoration: underline;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+  }
 `;
