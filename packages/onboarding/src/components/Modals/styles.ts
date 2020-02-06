@@ -42,8 +42,10 @@ export const OnboardingCloseButton = styled(Button)`
 export const OnboardingModal: any = styled(Modal)`
   display: flex;
   flex-direction: row;
+  overflow: hidden !important;
 
   @media (max-width: 500px) {
+    overflow-y: auto !important;
     &&&&&&.ui.modal {
       border-radius: 0;
       width: 100%;
@@ -126,10 +128,7 @@ export const OnboardingFormContent: any = styled.div`
   }
 `;
 
-export const OnboardingBloomContent: any = styled.div`
-
-
-`;
+export const OnboardingBloomContent: any = styled.div``;
 
 export const OnboardingImage: any = styled.img`
   max-width: 100%;
