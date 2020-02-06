@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Card, Grid, Button, Image, Dimmer } from 'semantic-ui-react';
 import { match, ANY } from 'pampy';
 import { getImages } from '../../utils';
-import theme from '../../theme';
+
 import { maxDevice, device } from '../../commons/breakpoints';
 
 interface PropsPathname {
@@ -41,7 +41,7 @@ export const CardContent = styled(Card.Content)`
     margin: 0px;
     @media ${device.tablet} {
       margin: ${({ bottom_spacing }) =>
-    bottom_spacing ? '0 2.5em 2.5em 2.5em !important;' : '0 2.5em 0em 2.5em !important;'};
+        bottom_spacing ? '0 2.5em 2.5em 2.5em !important;' : '0 2.5em 0em 2.5em !important;'};
     }
   }
 `;
@@ -63,7 +63,7 @@ export const GridSized = styled(Grid)`
     margin: 0px;
   }
 `;
-export const CenteredContainerStyled = styled('div') <PropsPathname>`
+export const CenteredContainerStyled = styled('div')<PropsPathname>`
   @media ${device.tablet} {
     margin-left: auto;
     margin-right: auto;
@@ -195,9 +195,7 @@ export const OnboardingContent = styled(Content)`
 export const Wrapper = styled.div`
   width: auto;
   min-height: 800px;
-  background: url(${theme.resources}/images/img_bkblue.svg) center right no-repeat,
-    url(${theme.resources}/images/img_bkgreen.svg) 0 70% no-repeat,
-    url(${theme.resources}/images/img_curve.svg) bottom center no-repeat;
+  background: none;
 
   @media screen and ${maxDevice.mobileL} {
     background: none;
