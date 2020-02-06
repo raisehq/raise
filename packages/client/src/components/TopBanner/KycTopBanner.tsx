@@ -41,12 +41,7 @@ const KycTopBanner = ({ enabled, kycStatus, kycAction, mobile }: KycTopBannerPro
     return null;
   }
 
-  const inDashboard = () =>
-    pathname === '/' ||
-    pathname === '/account' ||
-    pathname === '/kyc' ||
-    pathname === '/kyc-bloom' ||
-    pathname === '/kyc-sumsub';
+  const inDashboard = () => pathname === '/' || pathname === '/account';
 
   const getView = () =>
     view.cata({
@@ -61,7 +56,15 @@ const KycTopBanner = ({ enabled, kycStatus, kycAction, mobile }: KycTopBannerPro
       },
       Pending: () => null,
       PendingRegistry: () => null,
-      Error: () => null,
+      Error: () => {
+        if (!inDashboard()) {
+          return null;
+        }
+        if (mobile) {
+          return <StepsReminderMobile {...stepsForBanner} />;
+        }
+        return <StepsReminder {...stepsForBanner} />;
+      },
       Success: () => null
     });
 
