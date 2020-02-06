@@ -139,3 +139,7 @@ export const IconWrapper = styled.div`
 export const BloomParagraph = styled.p`
   color: #6067f1;
 `;
+
+export const HelpMessage = styled.div`
+  margin-top: 5%;
+`;
