@@ -46,12 +46,10 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const userActivated = connected && kyc_status === 3;
   const buttonText = match(
     [connected, invested],
-    [true, ANY],
+    [ANY, false],
     () => 'INVEST',
     [false, true],
     () => 'INVEST MORE',
-    [false, false],
-    () => 'INVEST',
     ANY,
     () => 'INVEST'
   );
