@@ -103,7 +103,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
-        <GetStartedBloomTitle>Verify KYC</GetStartedBloomTitle>
+        <GetStartedBloomTitle>Verify your account</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
           <span>with</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />

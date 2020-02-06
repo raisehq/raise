@@ -5,7 +5,7 @@ import { Icon } from 'semantic-ui-react';
 const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful }) => {
   const kycUnsuccessfulMessage = (
     <div>
-      <p>Your KYC validation has not passed.</p>
+      <p>It looks like there is some problem with your Id document attestation.</p>
       <p>Please, send us email to help@raise.it so we can help you.</p>
     </div>
   );
