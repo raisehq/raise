@@ -39,7 +39,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         onBack();
         history.push('/');
       }
-      if (user.kyc_status === 4) {
+      if (user.kyc_status === 4 && user.kyc_provider === 2) {
         setKycUnsuccessful(true);
         LocalData.setObj('user', {
           ...user,
@@ -118,7 +118,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
           />
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
-          {isOpenHelp ? (
+          {isOpenHelp || kycUnsuccessful? (
             <HelpWithBloom
               setIsOpenHelp={setIsOpenHelp}
               kycUnsuccessful={kycUnsuccessful}
