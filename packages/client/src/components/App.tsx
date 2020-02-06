@@ -27,7 +27,8 @@ import Queryies from '../helpers/queryies';
 import AppContext from './AppContext';
 import NotFound404 from '../components/BorrowerProfile/Borrower404';
 import Onboarding from '@raisehq/onboarding';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import Toast, { StyledToastContainer } from './Toast';
 
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
@@ -79,39 +80,48 @@ const App = ({ history, match }: any) => {
 
   const onSetGetStarted = () => setGetStarted(!getStarted);
   // Enabling connectionsStart
+
+  const notify = () =>
+    toast(<Toast text="test text for the modal" tx={'tx'} state="pending" />, {
+      position: 'top-right',
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      type: toast.TYPE.INFO
+    });
+
   useEffect(() => {
     if (followTx) {
-      followTx.on('start_tx', tx => {
+      followTx.on('start_tx', ({ tx, text }) => {
         console.log('--------------------> start transaction::::: ', tx);
-        toast('this is a toast test', {
-          position: toast.POSITION.TOP_RIGHT,
+
+        toast(<Toast text={text} tx={tx} state="pending" />, {
+          position: 'top-right',
           autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          type: toast.TYPE.INFO,
           toastId: tx
         });
       });
-      followTx.on('finish_tx', tx => {
+      followTx.on('finish_tx', ({ tx, text }) => {
         console.log('--------------- finish tx:: ', tx);
         toast.update(tx, {
-          render: 'New content',
+          render: <Toast text={text} tx={tx} state="success" />,
           type: toast.TYPE.INFO,
-          autoClose: 5000
+          autoClose: false,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false
         });
       });
     }
   }, [followTx]);
-  // useCallback(
-  //   followTx.on('start_tx', tx => {
-  //     console.log('--------------------> start transaction::::: ', tx);
-  //   }),
-  //   []
-  // );
-
-  // useCallback(
-  //   followTx.on('finish_tx', tx => {
-  //     console.log('--------------- finish tx:: ', tx);
-  //   }),
-  //   []
-  // );
 
   useEffect(() => {
     if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {
@@ -251,6 +261,19 @@ const App = ({ history, match }: any) => {
           <TopMobileMenu />
           <DesktopHeader />
           <Menu />
+          <button type="button" onClick={notify}>
+            Notify !
+          </button>
+          <StyledToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            draggable={false}
+            pauseOnHover={false}
+          />
           <TransitionGroup component={null}>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
               <Switch>
@@ -337,7 +360,6 @@ const App = ({ history, match }: any) => {
         </>
       )}
       <div ref={modalRefs} />
-      <ToastContainer />
     </AppContext.Provider>
   );
 };

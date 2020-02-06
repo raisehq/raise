@@ -91,7 +91,8 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
           DAIProxy.methods
             .fund(loan.id, toWei(investment.toString()))
             .send({ from: walletAccount }),
-          'investment'
+          'investment',
+          `Create Investment Order ${investment} DAI`
         );
         setStage(ui.Success);
       } catch (error) {
