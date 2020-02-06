@@ -44,6 +44,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   // prettier-ignore
   const connected = (hasProvider && unlocked && accountMatches && networkMatches);
   const userActivated = connected && kyc_status === 3;
+  
   const buttonText = match(
     [connected, invested],
     [ANY, false],
