@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Header } from 'semantic-ui-react';
 import { DashboardContainer, DashboardWrapper, DashboardTab } from './Dashboard.styles';
-import KycMessage from '../KycMessage';
 import AppContext from '../AppContext';
 import GetStarted from '../GetStarted';
 import Suggesteds from './Dashboard.Suggesteds';
@@ -82,7 +81,6 @@ const Dashboard = () => {
   ];
   return (
     <DashboardWrapper>
-      <KycMessage />
       <GetStarted />
       <DashboardContainer>
         <Header as="h1">Investment opportunities</Header>

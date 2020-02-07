@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import AppContext from '../AppContext';
 import { MobileMenu, Logo } from './Menu.styles';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
-import TopBanner from '../TopBanner';
+import KycTopBanner from '../TopBanner/KycTopBanner';
 import Burger from './Burger';
+import { isMobile } from 'react-device-detect';
 
 const TopMobileMenu = () => {
   const {
@@ -12,6 +13,9 @@ const TopMobileMenu = () => {
       config: { menu },
       user: {
         details: { accounttype_id, kyc_status }
+      },
+      auth: {
+        login: { logged: isLogged }
       }
     },
     actions: {
@@ -30,7 +34,14 @@ const TopMobileMenu = () => {
   return visible ? (
     // If there is a parent here it will break the sticky css rule and menu will not get fixed once scroll
     <>
-      <TopBanner kycStatus={kyc_status} enabled={enableKyc} kycAction={onKYC} mobile />
+      {isLogged && (
+        <KycTopBanner
+          kycStatus={kyc_status}
+          enabled={enableKyc}
+          kycAction={onKYC}
+          isMobile={isMobile}
+        />
+      )}
       <MobileMenu>
         <Burger onClick={onClick} />
         <Logo src={logoPath} />
