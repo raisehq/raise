@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AppContext from '../AppContext';
 import { NotificationBar } from './banners/StepsReminder';
 import daggy from 'daggy';
@@ -27,21 +27,22 @@ interface KycTopBannerProps {
 }
 
 const KycTopBanner = ({ enabled, kycStatus, kycAction, isMobile }: KycTopBannerProps) => {
-  const {
-    history: {
-      location: { pathname }
-    }
-  }: any = useContext(AppContext);
+  const [path, setPath] = useState('');
+  const { history }: any = useContext(AppContext);
+
+  useEffect(() => {
+    setPath(history.location.pathname);
+  }, [history.location.pathname]);
 
   const view = Status[StatusSet[kycStatus || 5]];
 
   const stepsForBanner = {
     kycAction,
     isMobile,
-    kycStatus: kycStatus === null? 5: kycStatus
+    kycStatus: kycStatus === null ? 5 : kycStatus
   };
 
-  const showNotificationBar = () => pathname === '/' || pathname === '/account';
+  const showNotificationBar = () => path === '/' || path === '/account';
 
   const getStepsReminder = () => {
     return enabled && showNotificationBar() && <NotificationBar {...stepsForBanner} />;
