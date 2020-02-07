@@ -10,8 +10,8 @@ const Toast = ({ text, tx, state }) => {
   }: any = useContext(RootContext);
 
   const states = {
-    pending: 'Unconfirmed',
-    success: 'Confirmed'
+    pending: 'Processing',
+    success: 'Done!'
   };
 
   const createLink = tx => {
@@ -22,7 +22,7 @@ const Toast = ({ text, tx, state }) => {
     <ToastCustomContainer>
       <ToastText>{text}</ToastText>
       <TxLink href={createLink(tx)} target="_blank">
-        {state === 'pending' ? `${states[state]} timer` : states[state]}
+        {state === 'pending' ? `${states[state]}` : states[state]}
       </TxLink>
     </ToastCustomContainer>
   );
