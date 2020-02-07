@@ -27,7 +27,6 @@ interface KycTopBannerProps {
 }
 
 const KycTopBanner = ({ enabled, kycStatus, kycAction, isMobile }: KycTopBannerProps) => {
-  console.log(kycStatus);
   const {
     history: {
       location: { pathname }

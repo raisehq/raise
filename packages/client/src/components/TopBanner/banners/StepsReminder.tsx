@@ -2,8 +2,6 @@ import React from 'react';
 import { WarningBanner } from '../KycTopBanner.styles';
 import { WarningSight, RightArrow, StepButton } from '../misc';
 
-export const Steps = kycAction => <StepButton onClick={kycAction}>Verify Account</StepButton>;
-
 export const getMessages = kcyStatus => {
   const messages = {
     2: 'Your application is under review',
@@ -12,8 +10,19 @@ export const getMessages = kcyStatus => {
   return messages[kcyStatus];
 };
 
+export const getView = (kycStatus, isMobile, kycAction) => {
+  if (kycStatus === 2 || kycStatus === 4) {
+    return <WarningBanner isMobile={isMobile}>{getMessages(kycStatus)}</WarningBanner>;
+  } else {
+    return (
+      <WarningBanner isMobile={isMobile}>
+        <StepButton onClick={kycAction}>Verify Account</StepButton>
+      </WarningBanner>
+    );
+  }
+};
+
 export const NotificationBar = ({ kycStatus, kycAction, isMobile }) => {
-  console.log(kycStatus);
   const showSteps = kycStatus === 1 || kycStatus === 5;
   return (
     <WarningBanner isMobile={isMobile}>
@@ -26,15 +35,7 @@ export const NotificationBar = ({ kycStatus, kycAction, isMobile }) => {
           <RightArrow />
         </>
       )}
-      {renderView(isMobile, kycAction, kycStatus)}
+      {getView(kycStatus, isMobile, kycAction)}
     </WarningBanner>
   );
-};
-
-export const renderView = (isMobile, kycAction, kycStatus) => {
-  if (kycStatus !== 1 || kycStatus !== 5) {
-    return <WarningBanner isMobile={isMobile}>{getMessages(kycStatus)}</WarningBanner>;
-  } else {
-    return Steps(kycAction);
-  }
 };

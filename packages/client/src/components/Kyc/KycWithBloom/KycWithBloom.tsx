@@ -57,7 +57,6 @@ const KycWithBloom = ({ onBack, token = '' }) => {
     setIsScreenIdle(true);
     const user = LocalData.getObj('user');
     const userId = user.id;
-    console.log('USERID: ', userId);
     setTokenBloom(userId);
   }, []);
 
