@@ -43,6 +43,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         LocalData.setObj('user', {
           ...user
         });
+        onBack();
       }
     }
   }, 3000);
@@ -116,7 +117,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
           />
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
-          {isOpenHelp || kycUnsuccessful? (
+          {isOpenHelp || kycUnsuccessful ? (
             <HelpWithBloom
               setIsOpenHelp={setIsOpenHelp}
               kycUnsuccessful={kycUnsuccessful}

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import AppContext from '../AppContext';
-import { StepsReminder, StepsReminderMobile } from './banners/StepsReminder';
+import { NotificationBar } from './banners/StepsReminder';
 import daggy from 'daggy';
 
 export const Status = daggy.taggedSum('UI', {
@@ -23,41 +23,36 @@ interface KycTopBannerProps {
   enabled: boolean;
   kycStatus: number;
   kycAction?: Function;
-  mobile?: boolean;
+  isMobile: boolean;
 }
 
-const KycTopBanner = ({ enabled, kycStatus, kycAction, mobile }: KycTopBannerProps) => {
+const KycTopBanner = ({ enabled, kycStatus, kycAction, isMobile }: KycTopBannerProps) => {
+  console.log(kycStatus);
   const {
     history: {
       location: { pathname }
     }
   }: any = useContext(AppContext);
-  const view = Status[StatusSet[kycStatus || 5]];
-  const stepsForBanner = {
-    kyc: kycStatus === 5,
-    kycAction
-  };
-  if (!enabled) {
-    return null;
-  }
 
-  const inDashboard = () => pathname === '/' || pathname === '/account';
+  const view = Status[StatusSet[kycStatus || 5]];
+
+  const stepsForBanner = {
+    kycAction,
+    isMobile,
+    kycStatus: kycStatus === null? 5: kycStatus
+  };
+
+  const showNotificationBar = () => pathname === '/' || pathname === '/account';
 
   const getStepsReminder = () => {
-    if (!inDashboard()) {
-      return null;
-    }
-    if (mobile) {
-      return <StepsReminderMobile {...stepsForBanner} />;
-    }
-    return <StepsReminder {...stepsForBanner} />;
+    return enabled && showNotificationBar() && <NotificationBar {...stepsForBanner} />;
   };
 
   const getView = () =>
     view.cata({
       Start: getStepsReminder,
-      Pending: () => null,
-      PendingRegistry: () => null,
+      Pending: getStepsReminder,
+      PendingRegistry: getStepsReminder,
       Error: getStepsReminder,
       Success: () => null
     });
