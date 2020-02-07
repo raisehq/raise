@@ -195,14 +195,13 @@ review:
     - master
 
 stop-review:
-  image: 'python:3.7-alpine'
+  image: 'alpine:latest'
   stage: cleanup
   before_script:
     - |
       #!/bin/sh
-      apk add --no-cache curl jq python py-pip openssh-client bash
+      apk add --no-cache curl python py-pip openssh-client bash
       pip install awscli
-      $(aws ecr get-login --no-include-email --region "${AWS_DEFAULT_REGION}")
       mkdir -p ~/.ssh
       echo -e "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa
       chmod 600 ~/.ssh/id_rsa
