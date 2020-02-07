@@ -45,6 +45,13 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         });
         onBack();
       }
+      if (user.kyc_status === 2 || user.kyc_status === 3) {
+        history.push('/');
+        LocalData.setObj('user', {
+          ...user
+        });
+        onBack();
+      }
     }
   }, 3000);
 
