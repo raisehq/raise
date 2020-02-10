@@ -11,18 +11,20 @@ const Toast = ({ text, tx, state }) => {
 
   const states = {
     pending: 'Processing',
-    success: 'Done!'
+    success: 'Done!',
+    error: 'Something went wrong'
   };
 
-  const createLink = tx => {
-    return `https://${network && network !== 'mainnet' ? `${network}.` : ''}etherscan.io/tx/${tx}`;
-  };
+  const createLink = transaction =>
+    `https://${
+      network && network !== 'mainnet' ? `${network}.` : ''
+    }etherscan.io/tx/${transaction}`;
 
   return (
     <ToastCustomContainer>
       <ToastText>{text}</ToastText>
       <TxLink href={createLink(tx)} target="_blank">
-        {state === 'pending' ? `${states[state]}` : states[state]}
+        {states[state]}
       </TxLink>
     </ToastCustomContainer>
   );

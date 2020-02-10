@@ -57,7 +57,10 @@ const useRepayment = (loan, open) => {
       if (valueBN.gt(new BN(amountApproved))) {
         try {
           await followTx.watchTx(
-            DAIContract.methods.approve(DAIProxy.options.address, MAX_VALUE).send({ from: account })
+            DAIContract.methods
+              .approve(DAIProxy.options.address, MAX_VALUE)
+              .send({ from: account }),
+            'approval'
           );
           setApproved(true);
         } catch (err) {
@@ -74,7 +77,11 @@ const useRepayment = (loan, open) => {
     if (open && approved) {
       const DAIProxy = await wallet.addContract('DAIProxy');
       try {
-        await followTx.watchTx(DAIProxy.methods.repay(id, borrowerDebt).send({ from: account }));
+        await followTx.watchTx(
+          DAIProxy.methods.repay(id, borrowerDebt).send({ from: account }),
+          'repayLoan',
+          [borrowerDebt]
+        );
         setStage(Stages.Success);
       } catch (err) {
         console.error('[useRepayment] Error: ', err);

@@ -81,22 +81,9 @@ const App = ({ history, match }: any) => {
   const onSetGetStarted = () => setGetStarted(!getStarted);
   // Enabling connectionsStart
 
-  const notify = () =>
-    toast(<Toast text="test text for the modal" tx={'tx'} state="pending" />, {
-      position: 'top-right',
-      autoClose: false,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      type: toast.TYPE.INFO
-    });
-
   useEffect(() => {
     if (followTx) {
       followTx.on('start_tx', ({ tx, text }) => {
-        console.log('--------------------> start transaction::::: ', tx);
-
         toast(<Toast text={text} tx={tx} state="pending" />, {
           position: 'top-right',
           autoClose: false,
@@ -109,17 +96,49 @@ const App = ({ history, match }: any) => {
         });
       });
       followTx.on('finish_tx', ({ tx, text }) => {
-        console.log('--------------- finish tx:: ', tx);
-        toast.update(tx, {
-          render: <Toast text={text} tx={tx} state="success" />,
-          type: toast.TYPE.INFO,
-          autoClose: false,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false
-        });
+        if (!toast.isActive(tx)) {
+          toast(<Toast text={text} tx={tx} state="success" />, {
+            type: toast.TYPE.INFO,
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false
+          });
+        } else {
+          toast.update(tx, {
+            render: <Toast text={text} tx={tx} state="success" />,
+            type: toast.TYPE.INFO,
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false
+          });
+        }
       });
+      // followTx.on('error_tx', ({ tx, text }) => {
+      //   if (!toast.isActive(tx)) {
+      //     toast(<Toast text={text} tx={tx} state="error" />, {
+      //       type: toast.TYPE.INFO,
+      //       autoClose: 5000,
+      //       hideProgressBar: true,
+      //       closeOnClick: true,
+      //       pauseOnHover: false,
+      //       draggable: false
+      //     });
+      //   } else {
+      //     toast.update(tx, {
+      //       render: <Toast text={text} tx={tx} state="error" />,
+      //       type: toast.TYPE.INFO,
+      //       autoClose: 5000,
+      //       hideProgressBar: true,
+      //       closeOnClick: true,
+      //       pauseOnHover: false,
+      //       draggable: false
+      //     });
+      //   }
+      // });
     }
   }, [followTx]);
 
@@ -261,9 +280,6 @@ const App = ({ history, match }: any) => {
           <TopMobileMenu />
           <DesktopHeader />
           <Menu />
-          <button type="button" onClick={notify}>
-            Notify !
-          </button>
           <StyledToastContainer
             position="bottom-right"
             autoClose={5000}

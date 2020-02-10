@@ -31,7 +31,8 @@ const Confirm = () => {
   const metamask = useWallet();
   const { loan, setStage, calculatedLoan }: any = useContext(ClaimLoanContext);
   const {
-    web3Status: { account }
+    web3Status: { account },
+    followTx
   }: any = useContext(AppContext);
   const { id: loanAddress } = loan;
 
@@ -41,9 +42,13 @@ const Confirm = () => {
 
     try {
       const loanContract = await metamask.addContractByAddress('LoanContract', loanAddress);
-      await loanContract.methods.withdrawLoan().send({
-        from: account
-      });
+      await followTx.watchTx(
+        loanContract.methods.withdrawLoan().send({
+          from: account
+        }),
+        'withdrawLoan',
+        [calculatedLoan.netBalance]
+      );
       setStage(Stages.Success);
     } catch (error) {
       console.error(error);

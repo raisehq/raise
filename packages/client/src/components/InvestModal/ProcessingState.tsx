@@ -63,9 +63,12 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
         .call({ from: walletAccount });
       if (valueBN.gt(new BN(amountApproved))) {
         try {
-          await DAIContract.methods
-            .approve(DAIProxy.options.address, MAX_VALUE)
-            .send({ from: walletAccount });
+          await followTx.watchTx(
+            DAIContract.methods
+              .approve(DAIProxy.options.address, MAX_VALUE)
+              .send({ from: walletAccount }),
+            'approval'
+          );
           setAproved(true);
         } catch (error) {
           console.error(

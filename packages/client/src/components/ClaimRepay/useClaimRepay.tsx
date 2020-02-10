@@ -6,7 +6,8 @@ import AppContext from '../AppContext';
 const useRepayment = (loan, open) => {
   const { id }: any = loan;
   const {
-    web3Status: { account }
+    web3Status: { account },
+    followTx
   }: any = useContext(AppContext);
   const metamask = useWallet();
   const [pending, setPending] = useState(false);
@@ -22,7 +23,10 @@ const useRepayment = (loan, open) => {
     setPending(true);
     const LoanContract = await metamask.addContractByAddress('LoanContract', id);
     try {
-      await LoanContract.methods.withdrawRepayment().send({ from: account });
+      await followTx.watchTx(
+        LoanContract.methods.withdrawRepayment().send({ from: account }),
+        'withdrawRepayment'
+      );
       setStage(Stages.Success);
     } catch (err) {
       setPending(false);

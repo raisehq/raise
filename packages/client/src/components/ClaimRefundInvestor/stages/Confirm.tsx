@@ -31,7 +31,8 @@ const Confirm = () => {
   const metamask = useWallet();
   const { loan, setStage, calculatedLoan }: any = useContext(ClaimRefundContext);
   const {
-    web3Status: { account }
+    web3Status: { account },
+    followTx
   }: any = useContext(AppContext);
   const { id: loanAddress } = loan;
 
@@ -41,9 +42,13 @@ const Confirm = () => {
 
     try {
       const loanContract = await metamask.addContractByAddress('LoanContract', loanAddress);
-      await loanContract.methods.withdrawRefund().send({
-        from: account
-      });
+      await followTx.watchTx(
+        loanContract.methods.withdrawRefund().send({
+          from: account
+        }),
+        'withdrawRefund',
+        [calculatedLoan.lenderAmount]
+      );
       setStage(Stages.Success);
     } catch (error) {
       console.error(error);
