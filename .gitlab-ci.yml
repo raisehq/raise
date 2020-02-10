@@ -88,7 +88,7 @@ deploy-int:
     - |
       mv packages/client/build_int build_int
       aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
-      aws s3 cp s3://${BUCKET_NAME_INT}/ s3://${BUCKET_NAME_INT}/ --recursive --include \"*.html\" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public --content-type \"text/html; charset=utf-8\"
+      aws s3 cp s3://${BUCKET_NAME_INT}/ s3://${BUCKET_NAME_INT}/ --recursive --include \"*.html\" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
       for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_INT" | cut -f1); do
         echo $dist
         aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
@@ -106,7 +106,7 @@ deploy-prod:
       #!/bin/sh
       mv packages/client/build build
       aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --cache-control max-age=86400000
-      aws s3 cp s3://${BUCKET_NAME_PROD}/ s3://${BUCKET_NAME_PROD}/ --recursive --include \"*.html\" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public --content-type \"text/html; charset=utf-8\"
+      aws s3 cp s3://${BUCKET_NAME_PROD}/ s3://${BUCKET_NAME_PROD}/ --recursive --include \"*.html\" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
       for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
         echo $dist
         aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
