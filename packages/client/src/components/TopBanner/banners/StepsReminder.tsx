@@ -23,7 +23,7 @@ export const getView = (kycStatus, isMobile, kycAction) => {
 };
 
 export const NotificationBar = ({ kycStatus, kycAction, isMobile }) => {
-  const showSteps = kycStatus === 1 || kycStatus === 5;
+  const showSteps = kycStatus === 1 || kycStatus === null ;
   return (
     <WarningBanner isMobile={isMobile}>
       <WarningSight />
