@@ -66,14 +66,20 @@ const KYC = () => {
       <KYCHolder>
         <KYCDisclaimer>
           <p>
-            The objective of verifying your account is to prevent Raise from being used by criminal
-            elements for money laundering activities.
+            The process is simple and should take no more than 3 minutes. We will need two things
+            from you: a <b>photo of your proof of ID</b> (e.g. passport), <b>and a live selfie</b>.
           </p>
           <p>
-            This process will take approximately 3 minutes to complete and it will be verified by a
-            third-party organization. After submission, you will receive an email confirming your
-            approval or to verify further information. The time-frame for approval can vary on a
-            user to user basis.
+            Your application will be verified by a third-party organization. After submission, you
+            will receive a notification confirming your approval or asking to verify further
+            information. Approval usually takes a few minutes, but can sometimes take up to 24
+            hours.
+          </p>
+          <p>
+            Learn more:{' '}
+            <a href="https://raise.it/blog/kyc-guide" rel="noorigin ">
+              <i>How to pass our KYC in under 5 minutes</i>
+            </a>
           </p>
         </KYCDisclaimer>
         <div id="idensic" />
