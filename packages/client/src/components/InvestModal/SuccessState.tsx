@@ -20,7 +20,7 @@ const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }
     <ModalFlexWrapper id="modal-success">
       <CardTitle>Your funds are safe in escrow until the auction is over</CardTitle>
       <CardSubtitle>
-        Your investment will be active when the auctions end. Follow the auction Progress and check
+        Your investment will be active when the auctions end. Follow the auction progress and check
         new investment opportunities from your dashboard.
       </CardSubtitle>
 

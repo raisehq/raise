@@ -102,13 +102,13 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   };
 
   const qrOptions: Partial<QROptions> = {
-    size: 250
+    size: 260
   };
 
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
-        <GetStartedBloomTitle>Verify KYC</GetStartedBloomTitle>
+        <GetStartedBloomTitle>Verify your account</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
           <span>with</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
@@ -128,6 +128,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
               setIsOpenHelp={setIsOpenHelp}
               kycUnsuccessful={kycUnsuccessful}
               setIsScreenIdle={setIsScreenIdle}
+              history={history}
             />
           ) : (
             <FollowSteps isMobile={isMobile} />

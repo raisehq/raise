@@ -34,7 +34,7 @@ const WalletConnectForm = ({ onExists, onNotExists }: any) => {
       <WhiteActionButton
         onClick={onNotExists}>
         <TextWrapper>
-          <WhiteActionTitleText>Don't have a wallet</WhiteActionTitleText>
+          <WhiteActionTitleText>I don't have a wallet</WhiteActionTitleText>
           <WhiteActionText>No problem, we can help you with that</WhiteActionText>
         </TextWrapper>
       </WhiteActionButton>
