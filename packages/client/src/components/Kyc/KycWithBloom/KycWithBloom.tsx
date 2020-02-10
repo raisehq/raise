@@ -43,6 +43,14 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         LocalData.setObj('user', {
           ...user
         });
+        onBack();
+      }
+      if (user.kyc_status === 2 || user.kyc_status === 3) {
+        history.push('/');
+        LocalData.setObj('user', {
+          ...user
+        });
+        onBack();
       }
     }
   }, 3000);
@@ -56,7 +64,6 @@ const KycWithBloom = ({ onBack, token = '' }) => {
     setIsScreenIdle(true);
     const user = LocalData.getObj('user');
     const userId = user.id;
-    console.log('USERID: ', userId);
     setTokenBloom(userId);
   }, []);
 
@@ -95,13 +102,13 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   };
 
   const qrOptions: Partial<QROptions> = {
-    size: 250
+    size: 260
   };
 
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
-        <GetStartedBloomTitle>Verify KYC</GetStartedBloomTitle>
+        <GetStartedBloomTitle>Verify your account</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
           <span>with</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
@@ -116,11 +123,12 @@ const KycWithBloom = ({ onBack, token = '' }) => {
           />
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
-          {isOpenHelp || kycUnsuccessful? (
+          {isOpenHelp || kycUnsuccessful ? (
             <HelpWithBloom
               setIsOpenHelp={setIsOpenHelp}
               kycUnsuccessful={kycUnsuccessful}
               setIsScreenIdle={setIsScreenIdle}
+              history={history}
             />
           ) : (
             <FollowSteps isMobile={isMobile} />

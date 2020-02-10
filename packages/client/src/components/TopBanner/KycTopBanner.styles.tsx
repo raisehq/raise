@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button, Icon as SemanticIcon } from 'semantic-ui-react';
 import { maxDevice, device as minDevice } from '../../commons/breakpoints';
 interface WarningProps {
-  mobile?: true;
+  isMobile?: true;
 }
 
 export const WarningBanner: FunctionComponent<WarningProps> = styled.div<WarningProps>`
@@ -23,8 +23,8 @@ export const WarningBanner: FunctionComponent<WarningProps> = styled.div<Warning
   @media ${minDevice.laptop} {
     font-weight: bold;
   }
-  ${({ mobile }) => {
-    if (mobile) {
+  ${({ isMobile }) => {
+    if (isMobile) {
       return `
         @media ${minDevice.laptop} {
           display: none;
