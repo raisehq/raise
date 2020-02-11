@@ -19,7 +19,7 @@ export const StatusSet = {
   5: 'Start'
 };
 
-interface KycTopBannerProps {
+export interface KycTopBannerProps {
   enabled: boolean;
   kycStatus: number;
   kycAction?: Function;
