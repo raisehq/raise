@@ -5,6 +5,8 @@ import AppContext from '../AppContext';
 import GetStarted from '../GetStarted';
 import { Button } from 'semantic-ui-react';
 
+const LANDING_URL = process.env.REACT_APP_WEB_URL || 'https://raise.it';
+
 const KYC = () => {
   const {
     history,
@@ -77,7 +79,7 @@ const KYC = () => {
           </p>
           <p>
             Learn more:{' '}
-            <a href="https://raise.it/blog/kyc-guide" rel="noorigin ">
+            <a href={`${LANDING_URL}/blog/kyc-guide`} rel="noorigin ">
               <i>How to pass our KYC in under 5 minutes</i>
             </a>
           </p>
