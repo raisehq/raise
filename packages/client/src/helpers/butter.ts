@@ -1,11 +1,10 @@
 import Butter from 'buttercms';
 import _, { mapKeys, camelCase } from 'lodash';
-import { Parser } from 'html-to-react';
+import staticHtmlToReact from 'htmr';
 import DOMPurify from 'dompurify';
 
 import MockButterCMS from '../__mocks__/buttercmsMocks';
 
-const staticHtmlToReact = new Parser();
 const apiKey = process.env.REACT_APP_BUTTER || '';
 
 // @ts-ignore
@@ -17,7 +16,7 @@ const toCamelCase = (v, k: string) => camelCase(k);
 
 const sanitizeValue = fields => (v, k) => {
   if (fields.includes(k)) {
-    return staticHtmlToReact.parse(DOMPurify.sanitize(v));
+    return staticHtmlToReact(DOMPurify.sanitize(v));
   }
   return v;
 };
