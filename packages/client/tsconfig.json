@@ -30,7 +30,7 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "strict": true,
-    "module": "commonjs",
+    "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
