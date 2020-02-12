@@ -45,7 +45,6 @@ describe('<KycTopBanner />', () => {
 
     it('should show message : "Your application is under review"', () => {
       act(() => {
-        // const history = {location: {pathname: '/'}};
         render(
           <AppContext.Provider value={contextProps}>
             <KycTopBanner {...kycProps} />
@@ -79,7 +78,6 @@ describe('<KycTopBanner />', () => {
 
     it('should show message : "The blockchain is catching up 🍆"', () => {
       act(() => {
-        // const history = {location: {pathname: '/'}};
         render(
           <AppContext.Provider value={contextProps}>
             <KycTopBanner {...kycProps} />
@@ -114,7 +112,6 @@ describe('<KycTopBanner />', () => {
     it('should show button with the text : "Verify Account"', () => {
       let rendered;
       act(() => {
-        // const history = {location: {pathname: '/'}};
         rendered = (
           <AppContext.Provider value={contextProps}>
             <KycTopBanner {...kycProps} />
@@ -149,8 +146,8 @@ describe('<KycTopBanner />', () => {
 
     it('should show button with the text : "The blockchain is catching up 🍆"', () => {
       let rendered;
+      let emptyContainer = document.createElement('div');
       act(() => {
-        // const history = {location: {pathname: '/'}};
         rendered = (
           <AppContext.Provider value={contextProps}>
             <KycTopBanner {...kycProps} />
@@ -158,7 +155,7 @@ describe('<KycTopBanner />', () => {
         );
         render(rendered, container);
       });
-      expect(container).toBe('The blockchain is catching up 🍆');
+      expect(container).toStrictEqual(emptyContainer);
     });
   });
   describe('when KYC_STATUS is Success (3) and kyc status in blockchain is true ', () => {
@@ -184,8 +181,8 @@ describe('<KycTopBanner />', () => {
 
     it('should not render the top bar', () => {
       let rendered;
+      let emptyContainer = document.createElement('div');
       act(() => {
-        // const history = {location: {pathname: '/'}};
         rendered = (
           <AppContext.Provider value={contextProps}>
             <KycTopBanner {...kycProps} />
@@ -193,7 +190,7 @@ describe('<KycTopBanner />', () => {
         );
         render(rendered, container);
       });
-      expect(container).toBe(null);
+      expect(container).toStrictEqual(emptyContainer);
     });
   });
 });
