@@ -16,14 +16,16 @@ export const getView = (kycStatus, isMobile, kycAction) => {
   } else {
     return (
       <WarningBanner isMobile={isMobile}>
-        <StepButton onClick={kycAction}>Verify Account</StepButton>
+        <StepButton id="kyc-verify-button" onClick={kycAction}>
+          Verify Account
+        </StepButton>
       </WarningBanner>
     );
   }
 };
 
 export const NotificationBar = ({ kycStatus, kycAction, isMobile }) => {
-  const showSteps = kycStatus === 1 || kycStatus === 5;
+  const showSteps = kycStatus === 1 || kycStatus === null;
   return (
     <WarningBanner isMobile={isMobile}>
       <WarningSight />
