@@ -33,6 +33,7 @@ const useRepayment = (loan, open) => {
       const DAI = await wallet.addContract('DAI');
       const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
       const valueBN = new BN(borrowerDebt);
+
       const currentBalance = await DAIContract.methods.balanceOf(account).call({ from: account });
       if (new BN(currentBalance).gte(valueBN)) {
         setHasBalance(true);
@@ -76,11 +77,12 @@ const useRepayment = (loan, open) => {
   useAsyncEffect(async () => {
     if (open && approved) {
       const DAIProxy = await wallet.addContract('DAIProxy');
+
       try {
         await followTx.watchTx(
           DAIProxy.methods.repay(id, borrowerDebt).send({ from: account }),
           'repayLoan',
-          [borrowerDebt]
+          [web3.utils.fromWei(borrowerDebt)]
         );
         setStage(Stages.Success);
       } catch (err) {

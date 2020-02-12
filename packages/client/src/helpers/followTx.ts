@@ -52,15 +52,15 @@ class FollowTx extends EventEmitter {
   }
 
   private format(text, params) {
-    console.log('params:: ', params)
-    if (params.length === 0) { 
-        return text;
+    console.log('params:: ', params);
+    if (!params || params.length === 0) {
+      return text;
     }
     let result = text;
     for (let i = 0; i < params.length; i++) {
-        result = result.replace(new RegExp("\\{" + (i) + "\\}", "g"), params[i]);
+      result = result.replace(new RegExp('\\{' + i + '\\}', 'g'), params[i]);
     }
-  console.log('result:: ', result)
+    console.log('result:: ', result);
     return result;
   }
 
@@ -68,9 +68,9 @@ class FollowTx extends EventEmitter {
     const data = JSON.parse(this.storage.getItem(this.storeName));
     data.push(token);
     this.storage.setItem(this.storeName, JSON.stringify(data));
-    console.log('token:: ', token)
-    const name: string|undefined = this.getName(token);
-    console.log('invest loan::: ', name)
+    console.log('token:: ', token);
+    const name: string | undefined = this.getName(token);
+    console.log('invest loan::: ', name);
     const textToast = name ? this.format(toastMessages[name], params) : '';
     this.emit('start_tx', { tx: this.getHash(token), text: textToast });
   }
@@ -81,9 +81,9 @@ class FollowTx extends EventEmitter {
       this.storeName,
       JSON.stringify(data.filter(value => this.getHash(value) !== this.getHash(token)))
     );
-    console.log('token:: ', token)
-    const name: string|undefined = this.getName(token);
-    console.log('invest loan::: ', name)
+    console.log('token:: ', token);
+    const name: string | undefined = this.getName(token);
+    console.log('invest loan::: ', name);
     const textToast = name ? this.format(toastMessages[name], params) : '';
     this.emit('finish_tx', { tx: this.getHash(token), text: textToast });
   }
