@@ -19,12 +19,15 @@ const useRepayment = (loan, open) => {
   }, [open]);
 
   const claimRepayment = async depositChecked => {
-    console.log('deposit checked ===> ', depositChecked);
     setPending(true);
     const LoanContract = await metamask.addContractByAddress('LoanContract', id);
     try {
-      // TODO: add checked status so sc knows what to do
-      await LoanContract.methods.withdrawRepayment().send({ from: account });
+      if (depositChecked) {
+        await LoanContract.methods.withdrawRepaymentAndDeposit().send({ from: account });
+      } else {
+        await LoanContract.methods.withdrawRepayment().send({ from: account });
+      }
+
       setStage(Stages.Success);
     } catch (err) {
       setPending(false);
