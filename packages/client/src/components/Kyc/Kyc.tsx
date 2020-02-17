@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import {
   KYCWrapper,
@@ -11,6 +11,9 @@ import {
 import AppContext from '../AppContext';
 import GetStarted from '../GetStarted';
 import { Button, Image } from 'semantic-ui-react';
+import useInterval from '../../hooks/useInterval';
+import LocalData from '../../helpers/localData';
+import { getUser } from '../../services/auth';
 
 const KYC = () => {
   const {
@@ -23,6 +26,11 @@ const KYC = () => {
       kyc: { onConnect }
     }
   }: any = useContext(AppContext);
+  const [userObj, setUserObj] = useState<any>(null);
+
+  useEffect(() => {
+    setUserObj(LocalData.getObj('user'));
+  });
 
   useAsyncEffect(async () => {
     if (history.location.pathname === '/kyc-sumsub' && token) {
@@ -66,13 +74,35 @@ const KYC = () => {
     }
   }, [history, token]);
 
+  useInterval(async () => {
+    if (userObj) {
+      const { id } = userObj;
+
+      const user = await getUser(id);
+      if (user.kyc_status === 1 && user.kyc_provider === 2) {
+        LocalData.setObj('user', {
+          ...user
+        });
+      }
+      if (user.kyc_status === 4 || user.kyc_status === 3) {
+        history.push('/kyc-success');
+        LocalData.setObj('user', {
+          ...user
+        });
+      }
+    }
+  }, 3000);
+
   return (
     <KYCWrapper>
       <GetStarted />
       <GetStartedSumTitle as="h2">Verify your account</GetStartedSumTitle>
       <GetStartedSumSubtitle>
         <span>with</span>
-        <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/sumsub_logo_417x76.png`} size="small" />
+        <Image
+          src={`${process.env.REACT_APP_HOST_IMAGES}/images/sumsub_logo_417x76.png`}
+          size="small"
+        />
       </GetStartedSumSubtitle>
       <GetStartedSumDescription>
         <span>
