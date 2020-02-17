@@ -40,7 +40,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         onBack();
       }
       if (user.kyc_status === 4 || user.kyc_status === 3) {
-        history.push('/');
+        history.push('/kyc-success');
         LocalData.setObj('user', {
           ...user
         });

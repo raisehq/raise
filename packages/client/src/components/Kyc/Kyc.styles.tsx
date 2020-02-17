@@ -41,6 +41,73 @@ export const KycWrapper = styled.div`
   align-items: center;
 `;
 
+export const KycSuccessWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  min-height: 400px;
+`;
+
+export const MainImage = styled.img`
+  width: 82px;
+  height: 82px;
+`;
+
+export const KycSuccessHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5%;
+  min-height: 250px;
+`;
+
+export const GreenActionButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 80%;
+  border-radius: 4px;
+  background-color: #00da9e;
+  cursor: pointer;
+  margin: 10px 0;
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+  }
+`;
+
+export const GreenActionTitleText = styled.div`
+  width: 219px;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+`;
+
+export const KycSuccessTitle = styled.div`
+  text-align: center;
+  font-size: 26px;
+  line-height: 36px;
+  font-weight: bold;
+  color: #3c4251;
+  @media (max-width: ${size.mobileL}) {
+    font-size: 25px;
+  }
+`;
+
+export const KycSuccessDescription = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: 21px;
+  max-width: 400px;
+`;
+
 export const KycContainer = styled.div`
   display: flex;
   flex-direction: column;
