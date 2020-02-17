@@ -47,6 +47,34 @@ export const HelpMessage = styled.div`
   text-align: center;
 `;
 
+export const DescriptionText = styled.div`
+  height: 72px;	
+  width: 321px;	
+  color: #3C4251;
+  font-size: 16px;	
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+export const ActionDescription = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 16px;
+  min-height: 210px;
+  text-align: center;
+
+  span.emojis {
+    margin: 20px 0px;
+    height: 60px;
+    font-size: 76px;
+    display: block;
+  }
+`;
+
 export const Description = styled.div`
   display: flex;
   flex-direction: column;
@@ -97,6 +125,30 @@ export const CardContent = styled(Card.Content)`
 
 export const AddressContainer = styled.div`
   margin: 6px;
+`;
+
+export const ButtonGreenSmall = styled(Button)`
+  &&& {
+    width: 178px;
+    ${({ disabled }) => (disabled === 'true' ? 'opacity: 0.4 !important;' : '')}
+    background: linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);
+    color: white;
+    height: 44px;
+    margin-top: 20px;
+    
+  }
+  &&&:hover {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border: 1px solid #00a870;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+  }
+  &&&:active {
+    background-color: #188e9b;
+    color: white;
+  }
 `;
 
 // prettier-ignore

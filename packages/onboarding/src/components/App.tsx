@@ -10,6 +10,7 @@ import Confirm from './SignUp/Confirm';
 import ErrorBloom from './SignUp/ErrorBloom';
 import SignIn from './SignIn/SignIn';
 import SignInWithEmail from './SignInWithEmail/SignInWithEmail';
+import ResendValidationEmail from './ResendValidationEmail/ResendValidationEmail';
 import Verified from './Verification/Verified';
 import Verifying from './Verification/Verifying';
 import VerifiedError from './Verification/VerifiedError';
@@ -62,7 +63,8 @@ const Step = daggy.taggedSum('UI', {
   ResetPasswordInput: [{}],
   BorrowerSignUp: [{}],
   BorrowerSignUpError: [],
-  BorrowerSignUpOK: []
+  BorrowerSignUpOK: [],
+  ResendValidationEmail: ['token']
 });
 interface IProps {
   history: any;
@@ -400,10 +402,14 @@ const App = ({
     });
 
     request.fold(
-      () => {
+      error => {
         tagManager.sendEventCategory('Login', TMEvents.Click, 'login_error', host);
         if (window.fbq) {
           window.fbq('trackCustom', 'Login', { type: 'login_error', host });
+        }
+        if (error.response.status === 423) {
+          const { token } = error.response.data ? error.response.data.data : { token: null };
+          setStep(Step.ResendValidationEmail(token));
         }
         setLoginError(true);
       },
@@ -567,6 +573,11 @@ const App = ({
       BorrowerSignUpOK: () => (
         <SimpleModal>
           <BorrowerSignUpOK />
+        </SimpleModal>
+      ),
+      ResendValidationEmail: token => (
+        <SimpleModal>
+          <ResendValidationEmail token={token} />
         </SimpleModal>
       )
     });

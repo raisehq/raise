@@ -198,23 +198,22 @@ review:
     - master
 
 stop-review:
-  image: 'alpine:latest'
+  image: python:3.7-alpine
   stage: cleanup
+  variables:
+    BASTION: "bastion"
+    GIT_STRATEGY: none
   before_script:
-    - |
-      #!/bin/sh
-      apk add --no-cache curl python py-pip openssh-client bash
-      pip install awscli
-      mkdir -p ~/.ssh
-      echo -e "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa
-      chmod 600 ~/.ssh/id_rsa
-      '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - apk add --no-cache openssh-client bash
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - chmod 600 ~/.ssh/config
+    - pip install awscli
   script:
     - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
-    - ssh ubuntu@bastion.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
+    - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
   when: manual
-  variables:
-    GIT_STRATEGY: none
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     action: stop

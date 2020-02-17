@@ -32,7 +32,6 @@ import Onboarding from '@raisehq/onboarding';
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
   const [isLoading, setLoading] = useState(true);
-  const [getStarted, setGetStarted] = useState(!!(firstLogin && firstLogin.includes('first')));
 
   const {
     store,
@@ -60,6 +59,9 @@ const App = ({ history, match }: any) => {
     },
     followTx
   }: any = useContext(RootContext);
+
+  const [getStarted, setGetStarted] = useState(!!(firstLogin && firstLogin.includes('first')));
+
   const modalRefs = useRef<HTMLDivElement>(null);
 
   const [webSocket, setWebSocket]: any = useState({});
@@ -78,6 +80,7 @@ const App = ({ history, match }: any) => {
   } = useWeb3Checker(address);
 
   const onSetGetStarted = () => setGetStarted(!getStarted);
+
   // Enabling connectionsStart
   useEffect(() => {
     if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {
@@ -88,6 +91,13 @@ const App = ({ history, match }: any) => {
     }
   }, [network, networkMatches, walletNetwork]);
   // Enabling connections
+
+  useEffect(() => {
+    if (!isLogged) {
+      setGetStarted(false);
+    } else if (firstLogin && firstLogin.includes('first')) setGetStarted(true);
+  }, [isLogged]);
+
   useEffect(() => {
     if (Object.keys(webSocket).length === 0) {
       const webSocketInstance = new UseWebSockets(getGraphWSEndpoint(network), 'graphql-ws');
