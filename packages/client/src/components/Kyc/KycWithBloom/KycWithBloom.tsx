@@ -31,13 +31,6 @@ const KycWithBloom = ({ onBack, token = '' }) => {
   useInterval(async () => {
     if (tokenBloom !== '') {
       const user = await getUser(tokenBloom);
-      if (user.kyc_status === 3) {
-        LocalData.setObj('user', {
-          ...user
-        });
-        onBack();
-        history.push('/');
-      }
       if (user.kyc_status === 1 && user.kyc_provider === 2) {
         setKycUnsuccessful(true);
         LocalData.setObj('user', {
@@ -45,7 +38,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         });
         onBack();
       }
-      if (user.kyc_status === 2 || user.kyc_status === 3) {
+      if (user.kyc_status === 4 || user.kyc_status === 3) {
         history.push('/');
         LocalData.setObj('user', {
           ...user
