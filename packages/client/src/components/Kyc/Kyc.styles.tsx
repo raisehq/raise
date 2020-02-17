@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Header, Message } from 'semantic-ui-react';
+import { Header, Message, Icon } from 'semantic-ui-react';
 
 const size = {
   mobileS: '320px',
@@ -136,7 +136,7 @@ export const SelectKycMethodList = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 50px 0;
+  padding: 40px 0;
 `;
 
 export const CardSubTitle = styled.div`
@@ -144,8 +144,11 @@ export const CardSubTitle = styled.div`
 `;
 
 export const KycButtonWrapper = styled.div`
+display: flex;
+flex-direction: column;
+align-items:center;
   margin: 5px 0;
-  width: 55%;
+  width: 100%;
 `;
 
 /*export const KycButton = styled.button`
@@ -167,10 +170,12 @@ export const KycButtonWrapper = styled.div`
 
 export const KycButton = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
   box-sizing: border-box;
   height: 71px;
-  width: 283px;
+  width: 300px;
   border: 1px solid #3c4251;
   border-radius: 4px;
   cursor: pointer;
@@ -197,12 +202,19 @@ export const KycButtonText = styled.div`
   margin-left: 19px;
 `;
 
-export const KycButtonLinkIcon = styled.img`
-  width: 17px;
-  height: 17px;
+export const KycButtonLinkIconContainer = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+export const KycButtonLinkIcon = styled(Icon)`
+  width: 16px;
+  height: 16px;
   margin-right: 27.5px;
   margin-top: 26px;
   margin-bottom: 27px;
+  color: #3c4251;
 `;
 
 /*export const KycSumSub = styled(KycButton)`
@@ -223,6 +235,7 @@ export const KycBloom = styled(KycButton)`
 
 export const LinkWrap = styled.div`
   text-align: center;
+  padding: 5% 0;
 `;
 
 export const KycMessage = styled(Message)`

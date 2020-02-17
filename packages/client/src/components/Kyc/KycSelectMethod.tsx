@@ -14,7 +14,8 @@ import {
   KycMessageContent,
   KycButtonLogo,
   KycButtonText,
-  KycButtonLinkIcon
+  KycButtonLinkIcon,
+  KycButtonLinkIconContainer
 } from './Kyc.styles';
 import { Link } from '../Link';
 import OnboardingProgressBar from '../OnboardingProgressBar';
@@ -43,24 +44,26 @@ const KycSelectMethod = () => {
             <KycButton className="btn-kyc-sumsub" onClick={() => history.push('/kyc-sumsub')}>
               <KycButtonMethodName>
                 <KycButtonLogo
-                  src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
+                  src={`${process.env.REACT_APP_HOST_IMAGES}/images/sumsub_icon_80x80.png`}
                 />
                 <KycButtonText>Verify with Sum&Sub</KycButtonText>
               </KycButtonMethodName>
-              <KycButtonLinkIcon src="./arrow-right.svg"/>
+              <KycButtonLinkIconContainer>
+                <KycButtonLinkIcon name="chevron right" size="big" />
+              </KycButtonLinkIconContainer>
             </KycButton>
           </KycButtonWrapper>
           <KycButtonWrapper>
             <KycButton onClick={() => history.push('/kyc-bloom')}>
               <KycButtonMethodName>
                 <KycButtonLogo
-                  src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
+                  src={`${process.env.REACT_APP_HOST_IMAGES}/images/bloom_icon_80x80.png`}
                 />
                 <KycButtonText>Verify with Bloom</KycButtonText>
               </KycButtonMethodName>
-              <KycButtonLinkIcon
-                src={`${process.env.REACT_APP_HOST_IMAGES}/images/external_link.svg`}
-              />
+              <KycButtonLinkIconContainer>
+                <KycButtonLinkIcon name="chevron right" size="big" />
+              </KycButtonLinkIconContainer>
             </KycButton>
           </KycButtonWrapper>
         </SelectKycMethodList>

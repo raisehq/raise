@@ -72,7 +72,7 @@ const KYC = () => {
       <GetStartedSumTitle as="h2">Verify your account</GetStartedSumTitle>
       <GetStartedSumSubtitle>
         <span>with</span>
-        <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
+        <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/sumsub_logo_417x76.png`} size="small" />
       </GetStartedSumSubtitle>
       <GetStartedSumDescription>
         <span>
