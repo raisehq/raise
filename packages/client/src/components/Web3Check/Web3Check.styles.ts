@@ -18,6 +18,8 @@ export const Web3CheckWalletWrapper = styled.div`
 export const SelectYourWalletContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const SelectYourWalletList = styled.div`
@@ -25,6 +27,11 @@ export const SelectYourWalletList = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const BackContainer = styled.div`
+  align-self: center;
+  margin-top: 20px;
 `;
 
 export const SelectWalletOptionItem = styled.div`
@@ -178,17 +185,16 @@ export const SelectYourWalletTitle = styled.div`
   align-items: center;
 `;
 
-export const CardPadded = styled.div`
-  margin-right: 10px;
-  margin-left: 10px;
+export const LoaderContainer = styled.div`
   margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+export const CardPadded = styled.div`
   text-align: center;
   &&&&&& {
     .ui.loader.active,
     .ui.loader.visible {
-      position: absolute;
-      top: 45%;
-      left: 60%;
     }
 
     @media screen and ${maxDevice.mobileL} {
