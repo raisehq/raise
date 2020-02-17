@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./lib",
-    "module": "esnext",
+    "module": "commonjs",
     "declaration": true,
     "noImplicitAny": false,
     "removeComments": true,
