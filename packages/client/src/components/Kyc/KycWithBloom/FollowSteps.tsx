@@ -1,5 +1,5 @@
 import React from 'react';
-import { InstructionsWrapper, FollowingStepsTitle, BloomParagraph } from './styles';
+import { InstructionsWrapper, FollowingStepsTitle, BloomParagraph, BloomHelpRaise } from './styles';
 
 const FollowSteps = ({ isMobile }) => {
   return (
@@ -11,8 +11,12 @@ const FollowSteps = ({ isMobile }) => {
         <p>1. Tap on the button above</p>
       )}
       <p>2. Follow Bloom's instructions</p>
-      <BloomParagraph>3. Make sure you have uploaded your ID in Bloom</BloomParagraph>
-      <p>4. If you have any problem, send email to help@raise.it</p>
+      <BloomParagraph>
+        3. Make sure you've <span>uploaded your ID in Bloom</span>
+      </BloomParagraph>
+      <p>
+        4. If you have any problem, send email to <BloomHelpRaise>help@raise.it</BloomHelpRaise>
+      </p>
     </InstructionsWrapper>
   );
 };

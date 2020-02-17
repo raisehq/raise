@@ -1,11 +1,16 @@
 import React, { useContext } from 'react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { KYCWrapper, KYCHolder, KYCDisclaimer, Title, OnGoBackButton } from './Kyc.styles';
+import {
+  KYCWrapper,
+  KYCHolder,
+  OnGoBackButton,
+  GetStartedSumTitle,
+  GetStartedSumSubtitle,
+  GetStartedSumDescription
+} from './Kyc.styles';
 import AppContext from '../AppContext';
 import GetStarted from '../GetStarted';
-import { Button } from 'semantic-ui-react';
-
-const LANDING_URL = process.env.REACT_APP_WEB_URL || 'https://raise.it';
+import { Button, Image } from 'semantic-ui-react';
 
 const KYC = () => {
   const {
@@ -64,26 +69,20 @@ const KYC = () => {
   return (
     <KYCWrapper>
       <GetStarted />
-      <Title as="h2">Verify your account</Title>
+      <GetStartedSumTitle as="h2">Verify your account</GetStartedSumTitle>
+      <GetStartedSumSubtitle>
+        <span>with</span>
+        <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
+      </GetStartedSumSubtitle>
+      <GetStartedSumDescription>
+        <span>
+          This process will take approximately 3 minutes to complete and it will be verified by a
+          third-party organization. After submission, you will receive an email confirming your
+          approval or to verify further information. The time-frame for approval can vary on a user
+          to user basis.
+        </span>
+      </GetStartedSumDescription>
       <KYCHolder>
-        <KYCDisclaimer>
-          <p>
-            The process is simple and should take no more than 3 minutes. We will need two things
-            from you: a <b>photo of your proof of ID</b> (e.g. passport), <b>and a live selfie</b>.
-          </p>
-          <p>
-            Your application will be verified by a third-party organization. After submission, you
-            will receive a notification confirming your approval or asking to verify further
-            information. Approval usually takes a few minutes, but can sometimes take up to 24
-            hours.
-          </p>
-          <p>
-            Learn more:{' '}
-            <a href={`${LANDING_URL}/blog/kyc-guide`} rel="noorigin ">
-              <i>How to pass our KYC in under 5 minutes</i>
-            </a>
-          </p>
-        </KYCDisclaimer>
         <div id="idensic" />
       </KYCHolder>
       <OnGoBackButton>
