@@ -459,7 +459,6 @@ const App = ({
   };
 
   const onOnClose = () => {
-    core - service;
     if (initStep) {
       setStep(initStep);
     } else {
