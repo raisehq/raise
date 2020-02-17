@@ -7,7 +7,6 @@ import { Href } from '../Layout/Layout.styles';
 import { getWalletName } from '../../utils';
 import {
   StyledAddress,
-  Description,
   HelpMessage,
   AddressContainer,
   CardDescription,
@@ -26,14 +25,14 @@ const NeedHelp = ({ href }: any) => (
 
 // @ts-ignore
 const NetworkNotMatch = ({ targetNetwork, currentNetwork }: any) => (
-  <Description>
+  <ActionDescription>
     <h3>Change the network</h3>
-    <p>
+    <DescriptionText>
       Please switch to one of the following networks in your wallet:
       <b> {targetNetwork.join(', ')}</b>
-    </p>
+    </DescriptionText>
     <NeedHelp href="https://www.raise.it/help" />
-  </Description>
+  </ActionDescription>
 );
 // @ts-ignore
 const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
@@ -54,14 +53,14 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
 );
 // @ts-ignore
 const AccountNotMatchNotice = ({ verifiedAddress, walletId }: any) => (
-  <Description>
+  <ActionDescription>
     <h3>Address does not match</h3>
-    <p>Make sure you are using {getWalletName(walletId)} with your registered address:</p>
-    <div>
-      <Web3Address account={verifiedAddress} />
-    </div>
+    <DescriptionText>
+      Make sure you are using {getWalletName(walletId)} with your registered address:
+    </DescriptionText>
+    <Web3Address account={verifiedAddress} />
     <NeedHelp href="https://www.raise.it/help" />
-  </Description>
+  </ActionDescription>
 );
 
 const Success = () => (
