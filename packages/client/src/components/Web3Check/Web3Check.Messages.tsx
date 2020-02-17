@@ -5,14 +5,15 @@ import useWeb3 from '../../hooks/useWeb3';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { Href } from '../Layout/Layout.styles';
 import { getWalletName } from '../../utils';
-
 import {
   StyledAddress,
   Description,
   HelpMessage,
-  ButtonGreen,
   AddressContainer,
-  CardDescription
+  CardDescription,
+  DescriptionText,
+  ActionDescription,
+  ButtonGreenSmall
 } from './Web3Check.styles';
 
 const NeedHelp = ({ href }: any) => (
@@ -36,20 +37,20 @@ const NetworkNotMatch = ({ targetNetwork, currentNetwork }: any) => (
 );
 // @ts-ignore
 const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
-  <Description>
-    <p>
+  <ActionDescription>
+    <DescriptionText>
       Check your Wallet and sign a message to bind this address to your Raise account. You will be
       able to operate only with this address.
-    </p>
-    <div />
-    <ButtonGreen onClick={uploadSignature} double>
-      Sign message with
-      <AddressContainer>
-        <StyledAddress account={currentAddress} />
-      </AddressContainer>
-    </ButtonGreen>
+    </DescriptionText>
+    <AddressContainer>
+      <StyledAddress account={currentAddress} />
+    </AddressContainer>
+    <ButtonGreenSmall onClick={uploadSignature}>
+      Click to confirm
+    </ButtonGreenSmall>
     <NeedHelp href="https://www.raise.it/help" />
-  </Description>
+  </ActionDescription>
+
 );
 // @ts-ignore
 const AccountNotMatchNotice = ({ verifiedAddress, walletId }: any) => (
