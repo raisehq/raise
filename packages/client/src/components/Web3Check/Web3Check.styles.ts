@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Card, Button } from 'semantic-ui-react';
 import Web3Address from '../Web3Address';
-import { maxDevice, device } from '../../commons/breakpoints';
+import { device } from '../../commons/breakpoints';
 
 export const StyledAddress = styled(Web3Address)`
   font-size: 14px;
