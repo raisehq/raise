@@ -28,8 +28,9 @@ const KycSelectMethod = () => {
 
           <CardSubTitle>
             <p>
-              The objective of verifying your account is to prevent Raise from being used by
-              criminal elements for money laundering activities.
+              Our verification process is in place to make your Raise experience exceptional. We put
+              measures in place to prevent our platform from being used for criminal purposes, such
+              as money laundering, and to ensure the integrity and security of our system.
             </p>
           </CardSubTitle>
         </KycTitleWrapper>
@@ -40,13 +41,13 @@ const KycSelectMethod = () => {
             </KycSumSub>
           </KycButtonWrapper>
           <KycButtonWrapper>
-              <KycBloom onClick={() => history.push('/kyc-bloom')}>
-                <span>Verify with </span>
-                <Image
-                  src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
-                  size="tiny"
-                />
-              </KycBloom>
+            <KycBloom onClick={() => history.push('/kyc-bloom')}>
+              <span>Verify with </span>
+              <Image
+                src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
+                size="tiny"
+              />
+            </KycBloom>
           </KycButtonWrapper>
         </SelectKycMethodList>
         <LinkWrap>

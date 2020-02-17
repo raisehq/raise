@@ -69,7 +69,7 @@ const Processing = () => {
             <Grid.Column width={14}>
               <Action>Allow Raise to interact with your wallet</Action>
               <Explanation>
-                Once you give us allowance, you will be able to repay yout loans
+                Once you allow us, you will be able to repay yout loans
               </Explanation>
             </Grid.Column>
           </Grid>

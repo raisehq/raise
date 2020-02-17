@@ -41,12 +41,24 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
 
   useAsyncEffect(async () => {
     if (metamask) {
-      const DAIProxy = await metamask.addContract('DAIProxy');
-      const DAI = await metamask.addContract('DAI');
-      setContracts({
-        DAIProxy,
-        DAI
-      });
+      try {
+        const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
+        const DaiProxyAddress = await loanContract.methods.proxyContractAddress().call();
+        const DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
+        const DAI = await metamask.addContract('DAI');
+        setContracts({
+          DAIProxy,
+          DAI
+        });
+      } catch (error) {
+        console.error('failed to retrieve daiproxy, using current one');
+        const DAIProxy = await metamask.addContract('DAIProxy');
+        const DAI = await metamask.addContract('DAI');
+        setContracts({
+          DAIProxy,
+          DAI
+        });
+      }
     }
   }, [metamask]);
 

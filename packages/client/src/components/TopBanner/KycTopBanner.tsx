@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AppContext from '../AppContext';
-import { StepsReminder, StepsReminderMobile } from './banners/StepsReminder';
+import { NotificationBar } from './banners/StepsReminder';
 import daggy from 'daggy';
 
 export const Status = daggy.taggedSum('UI', {
@@ -19,45 +19,47 @@ export const StatusSet = {
   5: 'Start'
 };
 
-interface KycTopBannerProps {
+export interface KycTopBannerProps {
   enabled: boolean;
   kycStatus: number;
   kycAction?: Function;
-  mobile?: boolean;
+  isMobile: boolean;
+  kycBCStatus: boolean;
 }
 
-const KycTopBanner = ({ enabled, kycStatus, kycAction, mobile }: KycTopBannerProps) => {
-  const {
-    history: {
-      location: { pathname }
-    }
-  }: any = useContext(AppContext);
-  const view = Status[StatusSet[kycStatus || 5]];
-  const stepsForBanner = {
-    kyc: kycStatus === 5,
-    kycAction
-  };
-  if (!enabled) {
-    return null;
-  }
+const KycTopBanner = ({
+  enabled,
+  kycStatus,
+  kycAction,
+  isMobile,
+  kycBCStatus
+}: KycTopBannerProps) => {
+  const [path, setPath] = useState('');
+  const { history }: any = useContext(AppContext);
 
-  const inDashboard = () => pathname === '/' || pathname === '/account';
+  useEffect(() => {
+    setPath(history.location.pathname);
+  }, [history.location.pathname]);
+
+  const view = Status[StatusSet[kycStatus || 5]];
+
+  const stepsForBanner = {
+    kycAction,
+    isMobile,
+    kycStatus: kycStatus === 3 && kycBCStatus ? 3 : kycStatus === 3 ? 4 : kycStatus
+  };
+
+  const showNotificationBar = () => path === '/' || path === '/account';
 
   const getStepsReminder = () => {
-    if (!inDashboard()) {
-      return null;
-    }
-    if (mobile) {
-      return <StepsReminderMobile {...stepsForBanner} />;
-    }
-    return <StepsReminder {...stepsForBanner} />;
+    return enabled && showNotificationBar() && <NotificationBar {...stepsForBanner} />;
   };
 
   const getView = () =>
     view.cata({
       Start: getStepsReminder,
-      Pending: () => null,
-      PendingRegistry: () => null,
+      Pending: getStepsReminder,
+      PendingRegistry: getStepsReminder,
       Error: getStepsReminder,
       Success: () => null
     });

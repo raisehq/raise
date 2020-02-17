@@ -6,7 +6,6 @@ import {
   DashboardTab,
   Header
 } from './Dashboard.styles';
-import KycMessage from '../KycMessage';
 import AppContext from '../AppContext';
 import Tab from './Dashboard.Tab';
 import Queryies from '../../helpers/queryies';
@@ -64,7 +63,6 @@ const Dashboard = () => {
 
   return (
     <DashboardWrapper>
-      <KycMessage />
       <DashboardContainer>
        <Element name="myActivity" className="element">
         <Header as="h1" id="my-activity">
