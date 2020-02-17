@@ -190,33 +190,6 @@ export const LoaderContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-export const CardPadded = styled.div`
-  text-align: center;
-  &&&&&& {
-    .ui.loader.active,
-    .ui.loader.visible {
-    }
-
-    @media screen and ${maxDevice.mobileL} {
-      .ui.loader.active,
-      .ui.loader.visible {
-        top: 110px;
-        left: 73%;
-      }
-    }
-    @media screen and ${maxDevice.mobileM} {
-      .ui.loader.active,
-      .ui.loader.visible {
-        position: absolute;
-        top: 52%;
-        left: 67%;
-      }
-    }
-  }
-  img {
-    width: 243px;
-  }
-`;
 export const ImageContainer = styled.div`
   display: block;
 `;
