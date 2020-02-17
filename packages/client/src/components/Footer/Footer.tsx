@@ -68,10 +68,12 @@ const FooterCmp = () => (
       <FooterImage />
     </FooterWrapper>
     <FooterDisclaimer>
-      <p>Version : Release 2.0.0.38</p>
       <p>
-        Raise Labs OÜ. Registered office address: Maakri 19-1, 10145 Tallinn, Estonia. Reg. code:
-        14802358 · Copyright ©2019 · All rights reserved
+        Raise was born and is being developed with passion from the Barcelona headquarters of Raise
+        <br />
+        Labs OÜ. Registered office address: Maakri 19-1, 10145 Tallinn, Estonia. Reg. code: 14802358
+        <br />
+        Copyright ©2019 · All rights reserved
       </p>
     </FooterDisclaimer>
   </Footer>
