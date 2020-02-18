@@ -74,7 +74,7 @@ const KycSelectMethod = () => {
           <KycMessageContent>
             <ul>
               <li>A photo of your proof of ID (e.g. passport)</li>
-              <li>A selfie holding you ID</li>
+              <li>You will be required to take a selfie</li>
             </ul>
           </KycMessageContent>
           <KycMessageContent>This process will only take 3 minutes</KycMessageContent>

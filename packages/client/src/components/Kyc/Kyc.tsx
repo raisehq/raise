@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import {
   KYCWrapper,
-  KYCHolder,
   OnGoBackButton,
   GetStartedSumTitle,
   GetStartedSumSubtitle,
@@ -113,9 +112,7 @@ const KYC = () => {
           to user basis.
         </span>
       </GetStartedSumDescription>
-      <KYCHolder>
-        <div id="idensic" />
-      </KYCHolder>
+      <div id="idensic" />
       <OnGoBackButton>
         <Button basic color="black" onClick={() => history.push('/kyc')}>
           Go back
