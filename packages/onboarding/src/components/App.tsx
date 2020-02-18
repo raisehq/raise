@@ -137,7 +137,7 @@ const App = ({
 
       verifying.fold(
         () => setStep(Step.VerifiedError(token)),
-        () => setStep(Step.Verified)
+        () => history.push('/login/email') // setStep(Step.Verified)
       );
     }
 
@@ -163,6 +163,10 @@ const App = ({
       const token = path[path.length - 1];
 
       setStep(Step.SignUpWithBloom(token));
+    }
+
+    if (pathname.includes('/login/email')) {
+      setStep(Step.SignInWithEmail);
     }
   }, [history.location.pathname, open]);
 

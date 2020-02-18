@@ -302,6 +302,7 @@ const App = ({ history, match }: any) => {
                 <SimpleLayout exact path="/join" component={Join} />
                 <SimpleLayout exact path="/login" component={Join} />
                 <SimpleLayout exact path="/login/bloom/:token" component={Join} />
+                <SimpleLayout exact path="/login/email" component={Join} />
                 <SimpleLayout exact path="/join/verify/token/:token" component={Join} />
                 <SimpleLayout exact path="/join/password/reset/:token" component={Join} />
                 <SimpleLayout exact path="/join/activate/:token" component={Join} />
