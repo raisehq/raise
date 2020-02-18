@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { KYCWrapper, KYCHolder, KYCDisclaimer, Title, OnGoBackButton } from './Kyc.styles';
 import AppContext from '../AppContext';
-import GetStarted from '../GetStarted';
 import { Button } from 'semantic-ui-react';
 
 const LANDING_URL = process.env.REACT_APP_WEB_URL || 'https://raise.it';
@@ -63,7 +62,6 @@ const KYC = () => {
 
   return (
     <KYCWrapper>
-      <GetStarted />
       <Title as="h2">Verify your account</Title>
       <KYCHolder>
         <KYCDisclaimer>

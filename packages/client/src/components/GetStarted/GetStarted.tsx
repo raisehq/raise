@@ -53,17 +53,19 @@ const GetStarted = () => {
     setSlides(getSlides(content));
   }, []);
 
+  console.log('get started::: ', getStarted, slides);
+
   return (
-   <Element name="toGetStarted" className="element">
-    <Wrapper visible={getStarted}>
-      <SliderClose onClick={onSetGetStarted}>
-        <Icon name="cancel" />
-      </SliderClose>
-      <Slider className="slider" {...settings}>
-        {slides}
-      </Slider>
-      <NoSlider>{slides}</NoSlider>
-    </Wrapper>
+    <Element name="toGetStarted" className="element">
+      <Wrapper visible={getStarted}>
+        <SliderClose onClick={onSetGetStarted}>
+          <Icon name="cancel" />
+        </SliderClose>
+        <Slider className="slider" {...settings}>
+          {slides}
+        </Slider>
+        <NoSlider>{slides}</NoSlider>
+      </Wrapper>
     </Element>
   );
 };
