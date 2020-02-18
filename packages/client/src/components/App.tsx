@@ -11,6 +11,7 @@ import RootContext from '../context';
 import MyAccount from './MyAccount';
 import Join from './Join';
 import Kyc from '../components/Kyc';
+import KycSuccess from '../components/Kyc/KycSuccess';
 import KycSelectMethod from '../components/Kyc/KycSelectMethod';
 import KycWithBloom from '../components/Kyc/KycWithBloom/KycWithBloom';
 import Deposit from '../components/Deposit';
@@ -259,6 +260,14 @@ const App = ({ history, match }: any) => {
                   path="/kyc-bloom"
                   component={KycWithBloom}
                   onBack={onGetUser}
+                  roles={[1, 2]}
+                />
+                <Web3Layout
+                  marketplace
+                  layout={SimpleLayout}
+                  exact
+                  path="/kyc-success"
+                  component={KycSuccess}
                   roles={[1, 2]}
                 />
                 <Web3Layout
