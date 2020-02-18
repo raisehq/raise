@@ -30,7 +30,8 @@ const KYC = () => {
 
   useEffect(() => {
     setUserObj(LocalData.getObj('user'));
-  });
+    console.log(userObj);
+  }, []);
 
   useAsyncEffect(async () => {
     if (history.location.pathname === '/kyc-sumsub' && token) {
