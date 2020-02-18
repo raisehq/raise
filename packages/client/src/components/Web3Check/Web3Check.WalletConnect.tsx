@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react';
-import { Image, Loader, Button } from 'semantic-ui-react';
+import GoBackButton from '../GoBackButton';
+import { Loader } from 'semantic-ui-react';
 import CryptoWallets from '../../commons/cryptoWallets';
-import { IMAGES_PATH } from '../../commons/constants';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import {
   CardCenteredText,
   CardTitle,
-  CardPadded,
-  ImageContainer,
+  LoaderContainer,
   SelectYourWalletTitle,
   SelectYourWalletContainer,
-  SelectYourWalletList,
-  SelectWalletOptionListItem,
+  BackContainer,
   TextDescription
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
@@ -64,22 +62,12 @@ const WalletConnect = ({ onBack }: any) => {
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletContainer>
         <SelectYourWalletTitle>{getMessage(getCurrentProviderName())}</SelectYourWalletTitle>
-        <SelectYourWalletList>
-          <SelectWalletOptionListItem>
-            <CardPadded>
-              <ImageContainer>
-                <Loader active />
-
-                <Image src={`${IMAGES_PATH}wallet_connection.png`} />
-              </ImageContainer>
-            </CardPadded>
-          </SelectWalletOptionListItem>
-          <SelectWalletOptionListItem>
-            <Button basic color="black" onClick={onBack}>
-              Go back
-            </Button>
-          </SelectWalletOptionListItem>
-        </SelectYourWalletList>
+        <LoaderContainer>
+          <Loader active inline='centered' />
+        </LoaderContainer>
+        <BackContainer>
+          <GoBackButton onClickAction={onBack} />
+        </BackContainer>
       </SelectYourWalletContainer>
     </>
   );
