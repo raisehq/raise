@@ -54,16 +54,18 @@ const GetStarted = () => {
   }, []);
 
   return (
-   <Element name="toGetStarted" className="element">
-    <Wrapper visible={getStarted}>
-      <SliderClose onClick={onSetGetStarted}>
-        <Icon name="cancel" />
-      </SliderClose>
-      <Slider className="slider" {...settings}>
-        {slides}
-      </Slider>
-      <NoSlider>{slides}</NoSlider>
-    </Wrapper>
+    <Element name="toGetStarted" className="element">
+      {getStarted && (
+        <Wrapper visible="hidden" getStarted={getStarted}>
+          <SliderClose onClick={onSetGetStarted}>
+            <Icon name="cancel" />
+          </SliderClose>
+          <Slider className="slider" {...settings}>
+            {slides}
+          </Slider>
+          <NoSlider>{slides}</NoSlider>
+        </Wrapper>
+      )}
     </Element>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { Button, Image } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import {
   KYCWrapper,
@@ -8,8 +9,6 @@ import {
   GetStartedSumDescription
 } from './Kyc.styles';
 import AppContext from '../AppContext';
-import GetStarted from '../GetStarted';
-import { Button, Image } from 'semantic-ui-react';
 import useInterval from '../../hooks/useInterval';
 import LocalData from '../../helpers/localData';
 import { getUser } from '../../services/auth';
@@ -95,7 +94,6 @@ const KYC = () => {
 
   return (
     <KYCWrapper>
-      <GetStarted />
       <GetStartedSumTitle as="h2">Verify your account</GetStartedSumTitle>
       <GetStartedSumSubtitle>
         <span>with</span>
