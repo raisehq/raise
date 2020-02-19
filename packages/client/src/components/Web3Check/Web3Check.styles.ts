@@ -253,7 +253,7 @@ export const CardBottom = styled.div`
 `;
 
 export const GreenActionButton = styled.div`
-  dispaly: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 70px;
@@ -265,7 +265,7 @@ export const GreenActionButton = styled.div`
 `;
 
 export const WhiteActionButton = styled.div`
-  dispaly: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 70px;

@@ -7,7 +7,8 @@ import {
   GetStartedBloomWrapper,
   GetStartedBloomQRSection,
   GetStartedBloomInstructionsSection,
-  GetStartedBloomFooter
+  GetStartedBloomFooter,
+  GetStartedBloomDescription
 } from './styles';
 import { isMobile } from 'react-device-detect';
 import { Button, Image } from 'semantic-ui-react';
@@ -39,7 +40,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
         onBack();
       }
       if (user.kyc_status === 4 || user.kyc_status === 3) {
-        history.push('/');
+        history.push('/kyc-success');
         LocalData.setObj('user', {
           ...user
         });
@@ -106,6 +107,14 @@ const KycWithBloom = ({ onBack, token = '' }) => {
           <span>with</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
         </GetStartedBloomSubtitle>
+        <GetStartedBloomDescription>
+          <span>
+            This process will take approximately 3 minutes to complete and it will be verified by a
+            third-party organization. After submission, you will receive an email confirming your
+            approval or to verify further information. The time-frame for approval can vary on a
+            user to user basis.
+          </span>
+        </GetStartedBloomDescription>
       </GetStartedBloomHeader>
       <GetStartedBloomWrapper>
         <GetStartedBloomQRSection>

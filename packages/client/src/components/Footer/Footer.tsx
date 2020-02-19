@@ -73,7 +73,7 @@ const FooterCmp = () => (
         <br />
         Labs OÜ. Registered office address: Maakri 19-1, 10145 Tallinn, Estonia. Reg. code: 14802358
         <br />
-        Copyright ©2019 · All rights reserved
+        Copyright ©2020 · All rights reserved
       </p>
     </FooterDisclaimer>
   </Footer>
