@@ -7,12 +7,14 @@ export const Wrapper: any = styled.div`
   padding: 15px;
   box-sizing: border-box;
   position: relative;
-  display: ${(props: any) => (props.visible ? 'block' : 'none')};
 
   .slider {
     @media (max-width: 563px) {
       display: none !important;
     }
+  }
+  .slick-initialized {
+    visibility: ${(props: any) => (props.getStarted ? 'visible' : 'hidden')};
   }
 
   .images {
