@@ -6,15 +6,20 @@ import {
   KycContainer,
   KycTitleWrapper,
   SelectKycMethodList,
-  KycSumSub,
-  KycBloom,
+  KycButton,
+  KycButtonMethodName,
   KycButtonWrapper,
-  LinkWrap
+  LinkWrap,
+  KycMessage,
+  KycMessageContent,
+  KycButtonLogo,
+  KycButtonText,
+  KycButtonLinkIcon,
+  KycButtonLinkIconContainer
 } from './Kyc.styles';
 import { Link } from '../Link';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { isMobile } from 'react-device-detect';
-import { Image } from 'semantic-ui-react';
 import AppContext from '../AppContext';
 
 const KycSelectMethod = () => {
@@ -28,27 +33,52 @@ const KycSelectMethod = () => {
 
           <CardSubTitle>
             <p>
-              The objective of verifying your account is to prevent Raise from being used by
-              criminal elements for money laundering activities.
+              Our verification process is in place to make your Raise experience exceptional. We put
+              measures in place to prevent our platform from being used for criminal purposes, such
+              as money laundering, and to ensure the integrity and security of our system.
             </p>
           </CardSubTitle>
         </KycTitleWrapper>
         <SelectKycMethodList>
           <KycButtonWrapper>
-            <KycSumSub className="btn-kyc-sumsub" onClick={() => history.push('/kyc-sumsub')}>
-              Verify with Sum & Substance
-            </KycSumSub>
+            <KycButton className="btn-kyc-sumsub" onClick={() => history.push('/kyc-sumsub')}>
+              <KycButtonMethodName>
+                <KycButtonLogo
+                  src={`${process.env.REACT_APP_HOST_IMAGES}/images/sumsub_icon_80x80.png`}
+                />
+                <KycButtonText>Verify with Sum&Sub</KycButtonText>
+              </KycButtonMethodName>
+              <KycButtonLinkIconContainer>
+                <KycButtonLinkIcon name="chevron right" size="big" />
+              </KycButtonLinkIconContainer>
+            </KycButton>
           </KycButtonWrapper>
           <KycButtonWrapper>
-              <KycBloom onClick={() => history.push('/kyc-bloom')}>
-                <span>Verify with </span>
-                <Image
-                  src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
-                  size="tiny"
+            <KycButton onClick={() => history.push('/kyc-bloom')}>
+              <KycButtonMethodName>
+                <KycButtonLogo
+                  src={`${process.env.REACT_APP_HOST_IMAGES}/images/bloom_icon_80x80.png`}
                 />
-              </KycBloom>
+                <KycButtonText>Verify with Bloom</KycButtonText>
+              </KycButtonMethodName>
+              <KycButtonLinkIconContainer>
+                <KycButtonLinkIcon name="chevron right" size="big" />
+              </KycButtonLinkIconContainer>
+            </KycButton>
           </KycButtonWrapper>
         </SelectKycMethodList>
+        <KycMessage>
+          <KycMessageContent>
+            To start this step, we will need two things from you
+          </KycMessageContent>
+          <KycMessageContent>
+            <ul>
+              <li>A photo of your proof of ID (e.g. passport)</li>
+              <li>You will be required to take a selfie</li>
+            </ul>
+          </KycMessageContent>
+          <KycMessageContent>This process will only take 3 minutes</KycMessageContent>
+        </KycMessage>
         <LinkWrap>
           <Link to="/">Do it later</Link>
         </LinkWrap>

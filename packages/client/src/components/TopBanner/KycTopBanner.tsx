@@ -19,14 +19,21 @@ export const StatusSet = {
   5: 'Start'
 };
 
-interface KycTopBannerProps {
+export interface KycTopBannerProps {
   enabled: boolean;
   kycStatus: number;
   kycAction?: Function;
   isMobile: boolean;
+  kycBCStatus: boolean;
 }
 
-const KycTopBanner = ({ enabled, kycStatus, kycAction, isMobile }: KycTopBannerProps) => {
+const KycTopBanner = ({
+  enabled,
+  kycStatus,
+  kycAction,
+  isMobile,
+  kycBCStatus
+}: KycTopBannerProps) => {
   const [path, setPath] = useState('');
   const { history }: any = useContext(AppContext);
 
@@ -39,7 +46,7 @@ const KycTopBanner = ({ enabled, kycStatus, kycAction, isMobile }: KycTopBannerP
   const stepsForBanner = {
     kycAction,
     isMobile,
-    kycStatus: kycStatus === null ? 5 : kycStatus
+    kycStatus: kycStatus === 3 && kycBCStatus ? 3 : kycStatus === 3 ? 4 : kycStatus
   };
 
   const showNotificationBar = () => path === '/' || path === '/account';

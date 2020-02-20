@@ -11,6 +11,7 @@ import RootContext from '../context';
 import MyAccount from './MyAccount';
 import Join from './Join';
 import Kyc from '../components/Kyc';
+import KycSuccess from '../components/Kyc/KycSuccess';
 import KycSelectMethod from '../components/Kyc/KycSelectMethod';
 import KycWithBloom from '../components/Kyc/KycWithBloom/KycWithBloom';
 import Deposit from '../components/Deposit';
@@ -31,7 +32,6 @@ import Onboarding from '@raisehq/onboarding';
 const App = ({ history, match }: any) => {
   const firstLogin = LocalData.get('firstLogin');
   const [isLoading, setLoading] = useState(true);
-  const [getStarted, setGetStarted] = useState(!!(firstLogin && firstLogin.includes('first')));
 
   const {
     store,
@@ -59,6 +59,9 @@ const App = ({ history, match }: any) => {
     },
     followTx
   }: any = useContext(RootContext);
+
+  const [getStarted, setGetStarted] = useState(!!(firstLogin && firstLogin.includes('first')));
+
   const modalRefs = useRef<HTMLDivElement>(null);
 
   const [webSocket, setWebSocket]: any = useState({});
@@ -77,6 +80,7 @@ const App = ({ history, match }: any) => {
   } = useWeb3Checker(address);
 
   const onSetGetStarted = () => setGetStarted(!getStarted);
+
   // Enabling connectionsStart
   useEffect(() => {
     if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {
@@ -87,6 +91,13 @@ const App = ({ history, match }: any) => {
     }
   }, [network, networkMatches, walletNetwork]);
   // Enabling connections
+
+  useEffect(() => {
+    if (!isLogged) {
+      setGetStarted(false);
+    } else if (firstLogin && firstLogin.includes('first')) setGetStarted(true);
+  }, [isLogged]);
+
   useEffect(() => {
     if (Object.keys(webSocket).length === 0) {
       const webSocketInstance = new UseWebSockets(getGraphWSEndpoint(network), 'graphql-ws');
@@ -253,6 +264,14 @@ const App = ({ history, match }: any) => {
                 />
                 <Web3Layout
                   marketplace
+                  layout={SimpleLayout}
+                  exact
+                  path="/kyc-success"
+                  component={KycSuccess}
+                  roles={[1, 2]}
+                />
+                <Web3Layout
+                  marketplace
                   layout={MainLayout}
                   exact
                   path="/account"
@@ -292,6 +311,7 @@ const App = ({ history, match }: any) => {
                 <SimpleLayout exact path="/join" component={Join} />
                 <SimpleLayout exact path="/login" component={Join} />
                 <SimpleLayout exact path="/login/bloom/:token" component={Join} />
+                <SimpleLayout exact path="/login/email" component={Join} />
                 <SimpleLayout exact path="/join/verify/token/:token" component={Join} />
                 <SimpleLayout exact path="/join/password/reset/:token" component={Join} />
                 <SimpleLayout exact path="/join/activate/:token" component={Join} />
