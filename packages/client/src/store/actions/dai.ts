@@ -1,5 +1,10 @@
 import { fromWei } from 'web3-utils';
 
+const stringNumbertoFixed = (stringNumber, fixed) => {
+  const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?');
+  return stringNumber.match(re)[0];
+};
+
 export default (dispatch: any, state: any) => {
   const onGetBalance = (error, data) => {
     if (error) {
@@ -9,7 +14,7 @@ export default (dispatch: any, state: any) => {
         if (data.balances[0]) {
           dispatch({
             type: 'SET_BALANCE',
-            data: parseFloat(fromWei(data.balances[0].wad)).toFixed(2)
+            data: stringNumbertoFixed(fromWei(data.balances[0].wad).toString(), 2)
           });
         }
       } catch (dError) {
