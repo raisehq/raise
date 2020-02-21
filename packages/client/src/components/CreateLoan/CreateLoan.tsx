@@ -3,7 +3,7 @@ import { BrowserView } from 'react-device-detect';
 import AppContext from '../AppContext';
 import numeral, { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
-import Coin from '../Coin';
+//import Coin from '../Coin';
 import LoanInput from './LoanInput';
 import {
   TopHeader,
@@ -26,7 +26,16 @@ import {
   InputBox,
   InputDescription,
   LoanForm,
-  SliderWrapper
+  SliderWrapper,
+  LoanFormWrapper,
+  LoanAmountGroup,
+  LoanCoinSelect,
+  LoanAmountRow,
+  LoanWrapper,
+  LoanDescriptionContainer,
+  LoanControlsContainer,
+  LoanFormLabel,
+  LoanControlsGroup
 } from './CreateLoan.styles';
 import Slider from '../Slider';
 import { getMonths, getLoanAuctionInterval } from '../../commons/months';
@@ -240,19 +249,44 @@ const CreateLoan = () => {
         <LoanAmountBox>
           <LoanDescription>
             <TopHeader as="h2">How much would you like to borrow?</TopHeader>
-            <p>Please enter the amount you would like to borrow.</p>
           </LoanDescription>
           <LoanFormInput>
-            <LoanInputBox>
-              <LoanInput
-                id="input-amount"
-                value={loan.amount}
-                onValueChange={onSetAmount}
-                onBlur={onBlur}
-                fmt={numeralFormat}
-              />
-              <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.png`} />
-            </LoanInputBox>
+            <LoanFormWrapper>
+              <LoanAmountRow>
+                <div>Please enter the amount you would like to borrow.</div>
+              </LoanAmountRow>
+              <LoanAmountRow>
+                <LoanAmountGroup>
+                  <LoanInputLabel>
+                    <span>Amount</span>
+                  </LoanInputLabel>
+                  <LoanInputBox>
+                    <LoanInput
+                      id="input-amount"
+                      value={loan.amount}
+                      onValueChange={onSetAmount}
+                      onBlur={onBlur}
+                      fmt={numeralFormat}
+                    />
+                  </LoanInputBox>
+                </LoanAmountGroup>
+                <LoanAmountGroup>
+                  <LoanInputLabel>
+                    <span>Coins</span>
+                  </LoanInputLabel>
+                  <LoanCoinSelect
+                    value={selectedLoanAuction}
+                    onChange={onSetTermAuction}
+                    placeholder="Select Coin"
+                    options={[
+                      { key: '1', value: 'DAI', text: 'DAI' },
+                      { key: '2', value: 'USDT', text: 'USDT' }
+                    ]}
+                  />
+                </LoanAmountGroup>
+              </LoanAmountRow>
+            </LoanFormWrapper>
+
             <LoanInputLabel>
               {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
             </LoanInputLabel>
@@ -281,6 +315,45 @@ const CreateLoan = () => {
             )}
           </LoanDescriptionLowerAmount>
         </LoanAmountBox>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
+        <LoanWrapper>
+          <LoanDescriptionContainer>
+            <TopHeader as="h2">How much would you like to borrow?</TopHeader>
+            <div>Please enter the amount you would like to borrow.</div>
+          </LoanDescriptionContainer>
+          <LoanControlsContainer>
+            <LoanControlsGroup>
+              <LoanFormLabel>
+                <span>Amount</span>
+              </LoanFormLabel>
+              <LoanInputBox>
+                <LoanInput
+                  id="input-amount"
+                  value={loan.amount}
+                  onValueChange={onSetAmount}
+                  onBlur={onBlur}
+                  fmt={numeralFormat}
+                />
+              </LoanInputBox>
+            </LoanControlsGroup>
+            <LoanControlsGroup>
+              <LoanFormLabel>
+                <span>Coins</span>
+              </LoanFormLabel>
+              <LoanCoinSelect
+                value={selectedLoanAuction}
+                onChange={onSetTermAuction}
+                placeholder="Select Coin"
+                options={[
+                  { key: '1', value: 'DAI', text: 'DAI' },
+                  { key: '2', value: 'USDT', text: 'USDT' }
+                ]}
+              />
+            </LoanControlsGroup>
+          </LoanControlsContainer>
+        </LoanWrapper>
         <BrowserView>
           <Divider />
         </BrowserView>

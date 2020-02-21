@@ -74,6 +74,14 @@ export const Divider = styled(DividerUI)<DividerProps>`
     border-bottom: 1px solid #9498a0;
   }
 `;
+export const LoanCoinSelect = styled(Select)`
+  height: 30px;
+  min-width: 70px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 145px;
+`;
 
 export const LoanSelect = styled(Select)`
   padding: 20px !important;
@@ -136,6 +144,29 @@ export const LoanFormInput = styled.div`
     margin-top: 60px;
     width: unset;
   }
+`;
+
+export const LoanFormWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: green;
+`;
+
+export const LoanAmountRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: gray;
+  align-items: center;
+  height: 100%;
+`;
+
+export const LoanAmountGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 5%;
 `;
 
 export const LoanTerm = styled(LoanBox)`
@@ -338,7 +369,7 @@ export const LoanInputBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+
   input {
     max-width: 140px;
     border: none !important;
@@ -365,7 +396,14 @@ export const NewLoanAnchor = styled.div`
   font-size: 14px;
   font-weight: bold;
 `;
-export const LoanAmountBox = styled(LoanBox)`
+export const LoanAmountBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  background: none;
+  padding: 30px 0px;
+  position: relative;
+
   & ${LoanInputBox}:first-child {
     margin-top: 10px;
   }
@@ -386,6 +424,18 @@ export const LoanInputLabel = styled.div`
     font-weight: normal;
     font-size: 12px;
   }
+  @media ${device.laptop} {
+    text-align: right;
+  }
+`;
+
+export const LoanAmountLabel = styled.div`
+  font-size: 14px;
+  text-align: right;
+  font-weight: bold;
+  margin-top: 2px;
+  text-align: center;
+
   @media ${device.laptop} {
     text-align: right;
   }
@@ -487,4 +537,56 @@ export const MinAmount = styled.div`
     position: relative;
     top: 5px;
   }
+`;
+
+/*************************** NEW DESIGN  *************************************/
+
+export const LoanWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+export const LoanDescriptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
+
+export const LoanControlsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-height: 150px;
+
+  @media ${maxDevice.mobileL} {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100%;
+
+  }
+`;
+
+export const LoanControlsGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  width: 100%;
+  padding-top: 5px 0;
+`;
+
+export const LoanFormLabel = styled.div`
+  display: flex;
+  align-items: flex-end;
+  font-size: 14px;
+  text-align: right;
+  font-weight: bold;
+  margin-top: 2px;
+  text-align: center;
 `;
