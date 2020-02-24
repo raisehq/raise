@@ -3,7 +3,6 @@ import { BrowserView } from 'react-device-detect';
 import AppContext from '../AppContext';
 import numeral, { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
-//import Coin from '../Coin';
 import LoanInput from './LoanInput';
 import {
   TopHeader,
@@ -33,38 +32,26 @@ import {
   LoanControlsGroup,
   LoanInputCoin
 } from './CreateLoan.styles';
+import {
+  MIN_AMOUNT_OPTIONS,
+  MIN,
+  MAX,
+  AMOUNT_DEFAULT,
+  TERM_DEFAULT,
+  TERM_AUCTION_DEFAULT,
+  MIN_PERCENT_DEFAULT,
+  SLIDER_MIN_APR,
+  SLIDER_MAX_APR,
+  MIN_APR_DEFAULT,
+  MAX_APR_DEFAULT,
+  MARKS
+} from './constants';
 import Slider from '../Slider';
 import { getMonths, getLoanAuctionInterval } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
+import { COINS, CREATE_LOAN_DEFAULT_COIN } from '../../commons/constants';
 
-/** Start of defaults */
-const minAmountOptions = [
-  { text: '20%', value: 20 },
-  { text: '30%', value: 30 },
-  { text: '40%', value: 40 },
-  { text: '50%', value: 50 },
-  { text: '60%', value: 60 },
-  { text: '70%', value: 70 }
-];
-
-const min = 1;
-const max = 2500000;
-const defaultAmount = 10000;
-const defaultTerm = 2592000;
-const defaultTermAuction = 2592000;
-const defaultMinPercent = 20;
-const sliderMinAPR = 0;
-const sliderMaxAPR = 20;
-const defaultMinAPR = 10;
-const defaultMaxAPR = 20;
-
-const marks = {
-  5: '',
-  10: '',
-  15: ''
-};
-
-/** End of defaults */
+const COIN_DEFAULT = CREATE_LOAN_DEFAULT_COIN;
 
 const calculateMinAmount = (value, percent) => {
   const minAmount = value - value * (percent / 100);
@@ -75,6 +62,7 @@ const CreateLoan = () => {
   const {
     web3Status: { network }
   }: any = useContext(AppContext);
+
   const [stage, setStage] = useState(UI.Confirm);
   const loanDispatcher = useLoanDispatcher();
   const [amountValidation, setAmountValidation] = useState({
@@ -82,21 +70,25 @@ const CreateLoan = () => {
     msg: ''
   });
   const [termsCond, setTermsCond] = useState(false);
-  const [minAPR, setMinAPR] = useState(defaultMinAPR);
-  const [maxAPR, setMaxAPR] = useState(defaultMaxAPR);
-  const [minPercent, setMinPercent] = useState(defaultMinPercent);
+  const [minAPR, setMinAPR] = useState(MIN_APR_DEFAULT);
+  const [maxAPR, setMaxAPR] = useState(MAX_APR_DEFAULT);
+  const [minPercent, setMinPercent] = useState(MIN_PERCENT_DEFAULT);
   const [loan, setLoan] = useState({
-    amount: defaultAmount,
-    term: defaultTerm,
-    auctionTerm: defaultTermAuction,
-    minMir: parseFloat((defaultMinAPR / 12).toString()),
-    maxMir: parseFloat((defaultMaxAPR / 12).toString()),
+    amount: AMOUNT_DEFAULT,
+    coinAmount: COIN_DEFAULT.address,
+    term: TERM_DEFAULT,
+    auctionTerm: TERM_AUCTION_DEFAULT,
+    minMir: parseFloat((MIN_APR_DEFAULT / 12).toString()),
+    maxMir: parseFloat((MAX_APR_DEFAULT / 12).toString()),
     accept: false,
-    minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
+    minAmount: calculateMinAmount(AMOUNT_DEFAULT, MIN_PERCENT_DEFAULT)
   });
-  const [selectedMonth, setSelectedMonth] = useState(defaultTerm);
-  const [selectedLoanAuction, setSelectedLoanAuction] = useState(defaultTermAuction);
+  const [selectedMonth, setSelectedMonth] = useState(TERM_DEFAULT);
+  const [selectedLoanAuction, setSelectedLoanAuction] = useState(TERM_AUCTION_DEFAULT);
   const termMonths = loan.term / 60 / 60 / 24 / 30;
+  const [coins, setCoins] = useState([]);
+  const [selectedCoinAmount, setSelectedCoinAmount] = useState(COIN_DEFAULT.name);
+  const [selectedAddressCoin, setSelectedAddressCoin] = useState(COIN_DEFAULT.address);
 
   // Calculations
   const numberAmount = loan.amount;
@@ -129,6 +121,16 @@ const CreateLoan = () => {
   const onSetTermAuction = (e, { value }) => {
     setSelectedLoanAuction(value);
     setLoan({ ...loan, auctionTerm: value });
+  };
+
+  const onSetCoinAmount = (e, data) => {
+    debugger;
+    setSelectedCoinAmount(data.value);
+    const coin = COINS.find(item => item.name === data.value);
+    const addressCoin: any = coin ? coin.address : null;
+    setSelectedAddressCoin(addressCoin);
+    console.log(selectedAddressCoin);
+    setLoan({ ...loan, coinAmount: addressCoin });
   };
 
   const onSetMIR = minMir => maxMir => setLoan({ ...loan, minMir, maxMir });
@@ -165,6 +167,7 @@ const CreateLoan = () => {
         loan.term,
         loan.accept,
         loan.auctionTerm
+        //loan.tokenAddress
       );
       setStage(UI.Success);
     } catch (error) {
@@ -185,32 +188,44 @@ const CreateLoan = () => {
       error: false,
       msg: ''
     });
-    setMinAPR(defaultMinAPR);
-    setMaxAPR(defaultMaxAPR);
-    setMinPercent(defaultMinPercent);
+    setMinAPR(MIN_APR_DEFAULT);
+    setMaxAPR(MAX_APR_DEFAULT);
+    setMinPercent(MIN_PERCENT_DEFAULT);
     setLoan({
-      amount: defaultAmount,
-      term: defaultTerm,
-      auctionTerm: defaultTermAuction,
-      minMir: parseFloat((defaultMinAPR / 12).toString()),
-      maxMir: parseFloat((defaultMaxAPR / 12).toString()),
+      amount: AMOUNT_DEFAULT,
+      coinAmount: COIN_DEFAULT.address,
+      term: TERM_DEFAULT,
+      auctionTerm: TERM_AUCTION_DEFAULT,
+      minMir: parseFloat((MIN_APR_DEFAULT / 12).toString()),
+      maxMir: parseFloat((MAX_APR_DEFAULT / 12).toString()),
       accept: false,
-      minAmount: calculateMinAmount(defaultAmount, defaultMinPercent)
+      minAmount: calculateMinAmount(AMOUNT_DEFAULT, MIN_PERCENT_DEFAULT)
     });
     setTermsCond(false);
 
     //Reseting control values to default in case of create a new loan without refreshing the screen
-    onSetTermAuction(null, { value: defaultTermAuction });
-    onSetTerm(null, { value: defaultTerm });
+    onSetTermAuction(null, { value: TERM_AUCTION_DEFAULT });
+    onSetTerm(null, { value: TERM_DEFAULT });
   };
 
   const onBlur = e => {
     const currentValue = loan.amount;
     setAmountValidation({
-      error: currentValue < min || currentValue > max,
-      msg: `Can not be ${currentValue < min ? `less than ${min} DAI` : `more than ${max} DAI`}`
+      error: currentValue < MIN || currentValue > MAX,
+      msg: `Can not be ${currentValue < MIN ? `less than ${MIN} DAI` : `more than ${MAX} DAI`}`
     });
   };
+
+  useEffect(() => {
+    const coinsArrays: any = COINS.map((item, index) => ({
+      text: item.name,
+      value: item.name,
+      key: index
+    }));
+
+    setCoins(coinsArrays);
+    setSelectedCoinAmount(coinsArrays[0].text);
+  }, []);
 
   useEffect(() => {
     const { amount: currentAmount, term: termSeconds, minMir, maxMir } = loan;
@@ -228,6 +243,7 @@ const CreateLoan = () => {
 
   const values = {
     loan,
+    selectedCoinAmount,
     numberAmount,
     amountValidation,
     formattedAmount,
@@ -267,13 +283,10 @@ const CreateLoan = () => {
                 <span>Coins</span>
               </LoanFormLabel>
               <LoanCoinSelect
-                value={selectedLoanAuction}
-                onChange={onSetTermAuction}
+                value={selectedCoinAmount}
+                onChange={onSetCoinAmount}
                 placeholder="Select Coin"
-                options={[
-                  { key: '1', value: 'DAI', text: 'DAI' },
-                  { key: '2', value: 'USDT', text: 'USDT' }
-                ]}
+                options={coins}
               />
             </LoanControlsGroup>
             <LoanInputLabel>
@@ -292,13 +305,15 @@ const CreateLoan = () => {
               <InputBox>
                 <InputDescription>
                   Please select how much less:
-                  <p>Minimum amount: {formattedMinAmount} DAI</p>
+                  <p>
+                    Minimum amount: {formattedMinAmount} {selectedCoinAmount}
+                  </p>
                 </InputDescription>
                 <MininumLoanSelect
                   value={minPercent}
                   onChange={onMinAmount}
                   placeholder="Select"
-                  options={minAmountOptions}
+                  options={MIN_AMOUNT_OPTIONS}
                 />
               </InputBox>
             )}
@@ -354,11 +369,11 @@ const CreateLoan = () => {
           </LoanDescription>
           <SliderWrapper>
             <Slider
-              defaultValue={[defaultMinAPR, defaultMaxAPR]}
+              defaultValue={[MIN_APR_DEFAULT, MAX_APR_DEFAULT]}
               onChange={value => onInterestChange(value)}
-              min={sliderMinAPR}
-              marks={marks}
-              max={sliderMaxAPR}
+              min={SLIDER_MIN_APR}
+              marks={MARKS}
+              max={SLIDER_MAX_APR}
               allowCross={false}
               loan={loan}
               minAPR={minAPR}

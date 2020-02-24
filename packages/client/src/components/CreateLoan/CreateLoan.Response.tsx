@@ -34,7 +34,8 @@ export const getLoanAction = (stage, values, methods) => {
     loan,
     amountValidation,
     numberAmount,
-    termsCond
+    termsCond,
+    selectedCoinAmount
   } = values;
 
   const { onSave, onRetry, onToggleTerms } = methods;
@@ -49,7 +50,7 @@ export const getLoanAction = (stage, values, methods) => {
                 Loan amount
               </LoanFormInfo>
               <LoanFormValue alignment="left" isMobile={isMobile}>
-                {formattedAmount} DAI
+                {formattedAmount} {selectedCoinAmount}
               </LoanFormValue>
             </LoanFormContainer>
             <LoanFormContainer>
@@ -57,7 +58,7 @@ export const getLoanAction = (stage, values, methods) => {
                 System fees (1%)
               </LoanFormInfo>
               <LoanFormValue alignment="left" isMobile={isMobile}>
-                -{systemFees} DAI
+                -{systemFees} {selectedCoinAmount}
               </LoanFormValue>
             </LoanFormContainer>
             <LoanFormContainer>
@@ -65,7 +66,7 @@ export const getLoanAction = (stage, values, methods) => {
                 Net loan proceeds
               </LoanFormInfo>
               <LoanFormValue alignment="left" isMobile={isMobile} big={!isMobile} className="bold">
-                {netLoan} DAI
+                {netLoan} {selectedCoinAmount}
               </LoanFormValue>
             </LoanFormContainer>
           </div>
@@ -76,7 +77,7 @@ export const getLoanAction = (stage, values, methods) => {
                 Principal
               </LoanFormInfo>
               <LoanFormValue alignment="right" isMobile={isMobile}>
-                {formattedAmount} DAI
+                {formattedAmount} {selectedCoinAmount}
               </LoanFormValue>
             </LoanFormContainer>
             <LoanFormContainer>
@@ -84,7 +85,7 @@ export const getLoanAction = (stage, values, methods) => {
                 Interest
               </LoanFormInfo>
               <LoanFormValue alignment="right" isMobile={isMobile}>
-                {totalInterest} DAI
+                {totalInterest} {selectedCoinAmount}
               </LoanFormValue>
             </LoanFormContainer>
             <LoanFormContainer>
@@ -92,7 +93,7 @@ export const getLoanAction = (stage, values, methods) => {
                 Total repayment amount
               </LoanFormInfo>
               <LoanFormValue alignment="right" isMobile={isMobile} big={!isMobile} className="bold">
-                {repaymentAmount} DAI
+                {repaymentAmount} {selectedCoinAmount}
               </LoanFormValue>
             </LoanFormContainer>
           </div>
