@@ -546,6 +546,7 @@ export const LoanWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding: 5% 0;
 `;
 
 export const LoanDescriptionContainer = styled.div`
@@ -561,14 +562,12 @@ export const LoanControlsContainer = styled.div`
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: flex-end;
-  min-height: 150px;
 
   @media ${maxDevice.mobileL} {
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-end;
     width: 100%;
-
   }
 `;
 
@@ -577,8 +576,16 @@ export const LoanControlsGroup = styled.div`
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-around;
-  width: 100%;
-  padding-top: 5px 0;
+  padding-top: 5px;
+  padding-left: 5px;
+  flex: 0 1 45%;
+
+  @media ${maxDevice.mobileL} {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex: 0 1 100%;
+  }
 `;
 
 export const LoanFormLabel = styled.div`

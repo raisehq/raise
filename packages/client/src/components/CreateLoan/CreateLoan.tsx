@@ -13,7 +13,6 @@ import {
   LoanContainer,
   LoanBox,
   LoanTerm,
-  LoanAmountBox,
   LoanInputBox,
   LoanSelect,
   MininumLoanSelect,
@@ -27,10 +26,7 @@ import {
   InputDescription,
   LoanForm,
   SliderWrapper,
-  LoanFormWrapper,
-  LoanAmountGroup,
   LoanCoinSelect,
-  LoanAmountRow,
   LoanWrapper,
   LoanDescriptionContainer,
   LoanControlsContainer,
@@ -246,78 +242,6 @@ const CreateLoan = () => {
   return (
     <LoanContainer>
       <LoanForm>
-        <LoanAmountBox>
-          <LoanDescription>
-            <TopHeader as="h2">How much would you like to borrow?</TopHeader>
-          </LoanDescription>
-          <LoanFormInput>
-            <LoanFormWrapper>
-              <LoanAmountRow>
-                <div>Please enter the amount you would like to borrow.</div>
-              </LoanAmountRow>
-              <LoanAmountRow>
-                <LoanAmountGroup>
-                  <LoanInputLabel>
-                    <span>Amount</span>
-                  </LoanInputLabel>
-                  <LoanInputBox>
-                    <LoanInput
-                      id="input-amount"
-                      value={loan.amount}
-                      onValueChange={onSetAmount}
-                      onBlur={onBlur}
-                      fmt={numeralFormat}
-                    />
-                  </LoanInputBox>
-                </LoanAmountGroup>
-                <LoanAmountGroup>
-                  <LoanInputLabel>
-                    <span>Coins</span>
-                  </LoanInputLabel>
-                  <LoanCoinSelect
-                    value={selectedLoanAuction}
-                    onChange={onSetTermAuction}
-                    placeholder="Select Coin"
-                    options={[
-                      { key: '1', value: 'DAI', text: 'DAI' },
-                      { key: '2', value: 'USDT', text: 'USDT' }
-                    ]}
-                  />
-                </LoanAmountGroup>
-              </LoanAmountRow>
-            </LoanFormWrapper>
-
-            <LoanInputLabel>
-              {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
-            </LoanInputLabel>
-          </LoanFormInput>
-          <LoanDescriptionLowerAmount>
-            <Header as="h3">Would you accept a lower amount than the requested?</Header>
-            <LoanFormInput>
-              <LoanCheckbox toggle label={loan.accept ? 'YES' : 'NO'} onChange={onToggleAccept} />
-            </LoanFormInput>
-            <p>
-              In some cases, loan auctions don't achieve the target amount for different reasons
-            </p>
-            {loan.accept && (
-              <InputBox>
-                <InputDescription>
-                  Please select how much less:
-                  <p>Minimum amount: {formattedMinAmount} DAI</p>
-                </InputDescription>
-                <MininumLoanSelect
-                  value={minPercent}
-                  onChange={onMinAmount}
-                  placeholder="Select"
-                  options={minAmountOptions}
-                />
-              </InputBox>
-            )}
-          </LoanDescriptionLowerAmount>
-        </LoanAmountBox>
-        <BrowserView>
-          <Divider />
-        </BrowserView>
         <LoanWrapper>
           <LoanDescriptionContainer>
             <TopHeader as="h2">How much would you like to borrow?</TopHeader>
@@ -352,7 +276,33 @@ const CreateLoan = () => {
                 ]}
               />
             </LoanControlsGroup>
+            <LoanInputLabel>
+              {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
+            </LoanInputLabel>
           </LoanControlsContainer>
+          <LoanDescriptionLowerAmount>
+            <Header as="h3">Would you accept a lower amount than the requested?</Header>
+            <LoanFormInput>
+              <LoanCheckbox toggle label={loan.accept ? 'YES' : 'NO'} onChange={onToggleAccept} />
+            </LoanFormInput>
+            <p>
+              In some cases, loan auctions don't achieve the target amount for different reasons
+            </p>
+            {loan.accept && (
+              <InputBox>
+                <InputDescription>
+                  Please select how much less:
+                  <p>Minimum amount: {formattedMinAmount} DAI</p>
+                </InputDescription>
+                <MininumLoanSelect
+                  value={minPercent}
+                  onChange={onMinAmount}
+                  placeholder="Select"
+                  options={minAmountOptions}
+                />
+              </InputBox>
+            )}
+          </LoanDescriptionLowerAmount>
         </LoanWrapper>
         <BrowserView>
           <Divider />
