@@ -597,3 +597,7 @@ export const LoanFormLabel = styled.div`
   margin-top: 2px;
   text-align: center;
 `;
+
+export const LoanInputCoin = styled(LoanInputBox)`
+  padding-top: 4px;
+`;

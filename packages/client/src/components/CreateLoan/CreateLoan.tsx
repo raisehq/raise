@@ -13,7 +13,6 @@ import {
   LoanContainer,
   LoanBox,
   LoanTerm,
-  LoanInputBox,
   LoanSelect,
   MininumLoanSelect,
   LoanCheckbox,
@@ -31,7 +30,8 @@ import {
   LoanDescriptionContainer,
   LoanControlsContainer,
   LoanFormLabel,
-  LoanControlsGroup
+  LoanControlsGroup,
+  LoanInputCoin
 } from './CreateLoan.styles';
 import Slider from '../Slider';
 import { getMonths, getLoanAuctionInterval } from '../../commons/months';
@@ -252,7 +252,7 @@ const CreateLoan = () => {
               <LoanFormLabel>
                 <span>Amount</span>
               </LoanFormLabel>
-              <LoanInputBox>
+              <LoanInputCoin>
                 <LoanInput
                   id="input-amount"
                   value={loan.amount}
@@ -260,7 +260,7 @@ const CreateLoan = () => {
                   onBlur={onBlur}
                   fmt={numeralFormat}
                 />
-              </LoanInputBox>
+              </LoanInputCoin>
             </LoanControlsGroup>
             <LoanControlsGroup>
               <LoanFormLabel>
