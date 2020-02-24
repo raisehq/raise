@@ -75,7 +75,7 @@ const CreateLoan = () => {
   const [minPercent, setMinPercent] = useState(MIN_PERCENT_DEFAULT);
   const [loan, setLoan] = useState({
     amount: AMOUNT_DEFAULT,
-    coinAmount: COIN_DEFAULT.address,
+    tokenAddress: COIN_DEFAULT.address,
     term: TERM_DEFAULT,
     auctionTerm: TERM_AUCTION_DEFAULT,
     minMir: parseFloat((MIN_APR_DEFAULT / 12).toString()),
@@ -130,7 +130,7 @@ const CreateLoan = () => {
     const addressCoin: any = coin ? coin.address : null;
     setSelectedAddressCoin(addressCoin);
     console.log(selectedAddressCoin);
-    setLoan({ ...loan, coinAmount: addressCoin });
+    setLoan({ ...loan, tokenAddress: addressCoin });
   };
 
   const onSetMIR = minMir => maxMir => setLoan({ ...loan, minMir, maxMir });
@@ -193,7 +193,7 @@ const CreateLoan = () => {
     setMinPercent(MIN_PERCENT_DEFAULT);
     setLoan({
       amount: AMOUNT_DEFAULT,
-      coinAmount: COIN_DEFAULT.address,
+      tokenAddress: COIN_DEFAULT.address,
       term: TERM_DEFAULT,
       auctionTerm: TERM_AUCTION_DEFAULT,
       minMir: parseFloat((MIN_APR_DEFAULT / 12).toString()),
