@@ -215,6 +215,10 @@ export const LoanDescriptionLowerAmount = styled(LoanDescription)`
       flex: unset;
     }
   }
+
+  @media ${maxDevice.mobileL} {
+    margin-top: 30px;
+  }
 `;
 
 export const SliderWrapper = styled.div`
@@ -582,8 +586,8 @@ export const LoanControlsGroup = styled.div`
 
   @media ${maxDevice.mobileL} {
     flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-end;
     flex: 0 1 100%;
   }
 `;
