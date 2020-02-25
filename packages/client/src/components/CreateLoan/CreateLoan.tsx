@@ -166,7 +166,7 @@ const CreateLoan = () => {
         loan.maxMir,
         loan.term,
         loan.accept,
-        loan.auctionTerm
+        loan.auctionTerm,
         loan.tokenAddress
       );
       setStage(UI.Success);
