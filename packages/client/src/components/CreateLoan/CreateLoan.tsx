@@ -92,7 +92,7 @@ const CreateLoan = () => {
   const [selectedMonth, setSelectedMonth] = useState(TERM_DEFAULT);
   const [selectedLoanAuction, setSelectedLoanAuction] = useState(TERM_AUCTION_DEFAULT);
   const [coins, setCoins] = useState([]);
-  const [selectedCoinAmount, setSelectedCoinAmount] = useState(COIN_DEFAULT.name);
+  const [selectedCoinType, setSelectedCoinType] = useState(COIN_DEFAULT.name);
 
   const monthOptions = useMemo(() => getMonths(network), [network]);
   const loanAuctionInterval = useMemo(() => getLoanAuctionInterval(network), [network]);
@@ -105,7 +105,7 @@ const CreateLoan = () => {
     }));
 
     setCoins(coinsArrays);
-    setSelectedCoinAmount(coinsArrays[0].text);
+    setSelectedCoinType(coinsArrays[0].text);
   }, []);
 
   useEffect(() => {
@@ -137,7 +137,7 @@ const CreateLoan = () => {
   };
 
   const onSetCoinAmount = (e, data) => {
-    setSelectedCoinAmount(data.value);
+    setSelectedCoinType(data.value);
     const coin = COINS.find(item => item.name === data.value);
     const addressCoin: any = coin ? coin.address : null;
 
@@ -234,7 +234,7 @@ const CreateLoan = () => {
 
   const values = {
     loan,
-    selectedCoinAmount,
+    selectedCoinType,
     numberAmount: loan.amount,
     amountValidation,
     formattedAmount: formatAmount(loan.amount),
@@ -282,7 +282,7 @@ const CreateLoan = () => {
                 <span>Coins</span>
               </LoanFormLabel>
               <LoanCoinSelect
-                value={selectedCoinAmount}
+                value={selectedCoinType}
                 onChange={onSetCoinAmount}
                 placeholder="Select Coin"
                 options={coins}
@@ -305,7 +305,7 @@ const CreateLoan = () => {
                 <InputDescription>
                   Please select how much less:
                   <p>
-                    Minimum amount: {formatAmount(loan.minAmount)} {selectedCoinAmount}
+                    Minimum amount: {formatAmount(loan.minAmount)} {selectedCoinType}
                   </p>
                 </InputDescription>
                 <MininumLoanSelect
