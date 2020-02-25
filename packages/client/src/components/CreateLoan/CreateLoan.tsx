@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { BrowserView } from 'react-device-detect';
 import AppContext from '../AppContext';
-import numeral, { numeralFormat } from '../../commons/numeral';
+import { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
 import LoanInput from './LoanInput';
 import {
@@ -46,17 +46,23 @@ import {
   MAX_APR_DEFAULT,
   MARKS
 } from './constants';
+import {
+  formatAmount,
+  calculateRepaymentAmount,
+  calculateNetLoan,
+  calculateSystemFees,
+  calculateTotalInterest,
+  calculateTermFromSecondsToMonths,
+  calculateMinAmount,
+  calculateAPRFromMIR,
+  calculateMIRFromAPR
+} from './calculations';
 import Slider from '../Slider';
 import { getMonths, getLoanAuctionInterval } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS, CREATE_LOAN_DEFAULT_COIN } from '../../commons/constants';
 
 const COIN_DEFAULT = CREATE_LOAN_DEFAULT_COIN;
-
-const calculateMinAmount = (value, percent) => {
-  const minAmount = value - value * (percent / 100);
-  return minAmount >= 1 ? minAmount : 1;
-};
 
 const CreateLoan = () => {
   const {
@@ -85,21 +91,31 @@ const CreateLoan = () => {
   });
   const [selectedMonth, setSelectedMonth] = useState(TERM_DEFAULT);
   const [selectedLoanAuction, setSelectedLoanAuction] = useState(TERM_AUCTION_DEFAULT);
-  const termMonths = loan.term / 60 / 60 / 24 / 30;
   const [coins, setCoins] = useState([]);
   const [selectedCoinAmount, setSelectedCoinAmount] = useState(COIN_DEFAULT.name);
-  const [selectedAddressCoin, setSelectedAddressCoin] = useState(COIN_DEFAULT.address);
 
-  // Calculations
-  const numberAmount = loan.amount;
-  const formattedAmount = numeral(loan.amount).format();
-  const formattedMinAmount = numeral(loan.minAmount).format();
-  const repaymentAmount = numeral(
-    numberAmount + (numberAmount * (loan.maxMir * termMonths)) / 100
-  ).format();
-  const netLoan = numeral(numberAmount - (numberAmount * 1) / 100).format();
-  const systemFees = numeral((numberAmount * 1) / 100).format();
-  const totalInterest = numeral((numberAmount * (loan.maxMir * termMonths)) / 100).format();
+  const monthOptions = useMemo(() => getMonths(network), [network]);
+  const loanAuctionInterval = useMemo(() => getLoanAuctionInterval(network), [network]);
+
+  useEffect(() => {
+    const coinsArrays: any = COINS.map((item, index) => ({
+      text: item.name,
+      value: item.name,
+      key: index
+    }));
+
+    setCoins(coinsArrays);
+    setSelectedCoinAmount(coinsArrays[0].text);
+  }, []);
+
+  useEffect(() => {
+    const { amount: currentAmount, term: termSeconds, minMir, maxMir } = loan;
+    const term = calculateTermFromSecondsToMonths(termSeconds);
+    if (currentAmount && minMir && maxMir && term) {
+      setMinAPR(calculateAPRFromMIR(minMir));
+      setMaxAPR(calculateAPRFromMIR(maxMir));
+    }
+  }, [loan]);
 
   const onSetAmount = ({ floatValue }) => {
     const minAmount = calculateMinAmount(floatValue, minPercent);
@@ -109,9 +125,6 @@ const CreateLoan = () => {
       minAmount: loan.accept ? minAmount : floatValue
     });
   };
-
-  const monthOptions = useMemo(() => getMonths(network), [network]);
-  const loanAuctionInterval = useMemo(() => getLoanAuctionInterval(network), [network]);
 
   const onSetTerm = (e, data) => {
     setSelectedMonth(data.value);
@@ -124,12 +137,10 @@ const CreateLoan = () => {
   };
 
   const onSetCoinAmount = (e, data) => {
-    debugger;
     setSelectedCoinAmount(data.value);
     const coin = COINS.find(item => item.name === data.value);
     const addressCoin: any = coin ? coin.address : null;
-    setSelectedAddressCoin(addressCoin);
-    console.log(selectedAddressCoin);
+
     setLoan({ ...loan, tokenAddress: addressCoin });
   };
 
@@ -148,8 +159,8 @@ const CreateLoan = () => {
   const onInterestChange = valuesArray => {
     const minApr = parseFloat(valuesArray[0]);
     const maxApr = parseFloat(valuesArray[1]);
-    const minMir = minApr / 12;
-    const maxMir = maxApr / 12;
+    const minMir = calculateMIRFromAPR(minApr);
+    const maxMir = calculateMIRFromAPR(maxApr);
 
     setMinAPR(minApr);
     setMaxAPR(maxApr);
@@ -216,26 +227,6 @@ const CreateLoan = () => {
     });
   };
 
-  useEffect(() => {
-    const coinsArrays: any = COINS.map((item, index) => ({
-      text: item.name,
-      value: item.name,
-      key: index
-    }));
-
-    setCoins(coinsArrays);
-    setSelectedCoinAmount(coinsArrays[0].text);
-  }, []);
-
-  useEffect(() => {
-    const { amount: currentAmount, term: termSeconds, minMir, maxMir } = loan;
-    const term = termSeconds / 60 / 60 / 24 / 30;
-    if (currentAmount && minMir && maxMir && term) {
-      setMinAPR(minMir * 12);
-      setMaxAPR(maxMir * 12);
-    }
-  }, [loan]);
-
   const onToggleTerms = () => {
     const toggleTerms = !termsCond;
     setTermsCond(toggleTerms);
@@ -244,13 +235,21 @@ const CreateLoan = () => {
   const values = {
     loan,
     selectedCoinAmount,
-    numberAmount,
+    numberAmount: loan.amount,
     amountValidation,
-    formattedAmount,
-    repaymentAmount,
-    netLoan,
-    systemFees,
-    totalInterest,
+    formattedAmount: formatAmount(loan.amount),
+    repaymentAmount: calculateRepaymentAmount(
+      loan.amount,
+      loan.maxMir,
+      calculateTermFromSecondsToMonths(loan.term)
+    ),
+    netLoan: calculateNetLoan(loan.amount),
+    systemFees: calculateSystemFees(loan.amount),
+    totalInterest: calculateTotalInterest(
+      loan.amount,
+      loan.maxMir,
+      calculateTermFromSecondsToMonths(loan.term)
+    ),
     termsCond
   };
   const methods = { onSave, onRetry, onToggleTerms };
@@ -306,7 +305,7 @@ const CreateLoan = () => {
                 <InputDescription>
                   Please select how much less:
                   <p>
-                    Minimum amount: {formattedMinAmount} {selectedCoinAmount}
+                    Minimum amount: {formatAmount(loan.minAmount)} {selectedCoinAmount}
                   </p>
                 </InputDescription>
                 <MininumLoanSelect
