@@ -167,7 +167,7 @@ const CreateLoan = () => {
         loan.term,
         loan.accept,
         loan.auctionTerm
-        //loan.tokenAddress
+        loan.tokenAddress
       );
       setStage(UI.Success);
     } catch (error) {
