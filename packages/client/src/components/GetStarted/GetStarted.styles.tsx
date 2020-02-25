@@ -7,12 +7,14 @@ export const Wrapper: any = styled.div`
   padding: 15px;
   box-sizing: border-box;
   position: relative;
-  display: ${(props: any) => (props.visible ? 'block' : 'none')};
 
   .slider {
     @media (max-width: 563px) {
       display: none !important;
     }
+  }
+  .slick-initialized {
+    visibility: ${(props: any) => (props.getStarted ? 'visible' : 'hidden')};
   }
 
   .images {
@@ -42,8 +44,8 @@ export const Wrapper: any = styled.div`
     }
   }
 
-  .slide-wrapper{
-      outline:none;
+  .slide-wrapper {
+    outline: none;
   }
 `;
 
@@ -70,12 +72,12 @@ export const SlideImage = styled.img`
 
 export const SliderClose = styled.button`
   position: absolute;
-  z-index:900;
+  z-index: 900;
   top: 12px;
   right: 5px;
   background: none;
   border: none;
-  outline:none;
+  outline: none;
   cursor: pointer;
 
   i.icon {

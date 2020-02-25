@@ -108,7 +108,7 @@ export const isSupportedBrowser = () =>
   );
 
 const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v5/contracts.json';
+  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v6/contracts.json';
 
 export const getContractsDefinition = async () => {
   const remoteContracts = await axios.get(HERO_CONTRACTS);
@@ -116,7 +116,6 @@ export const getContractsDefinition = async () => {
   const contractsDef = window.Cypress ? window.contracts : remoteContracts.data;
   return contractsDef;
 };
-
 
 export const getWalletName = walletId => {
   switch (walletId) {

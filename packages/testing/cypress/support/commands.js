@@ -85,7 +85,7 @@ Cypress.Commands.add('addLoanAndCard', function(type) {
       '2592000'
     ];
     const LoanDispatcher = new web3.eth.Contract(
-      contracts.abi.LoanDispatcher,
+      contracts.abi[netId].LoanDispatcher,
       contracts.address[netId].LoanDispatcher
     );
     console.log(' LOAN DISPACHER : ', LoanDispatcher);

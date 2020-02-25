@@ -26,11 +26,15 @@ export const GetStartedBloomHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  padding-top: 5%;
 `;
 
 export const GetStartedBloomTitle = styled.div`
   text-align: center;
-  font-size: 40px;
+  font-size: 26px;
+  line-height: 36px;
+  font-weight: bold;
+  color: #3c4251;
   @media (max-width: ${size.mobileL}) {
     font-size: 25px;
   }
@@ -44,7 +48,7 @@ export const GetStartedBloomSubtitle = styled.div`
   text-align: center;
   color: #6067f1;
   font-size: 18px;
-  padding-top: 20px;
+  line-height: 22px;
 
   span {
     padding: 10px;
@@ -55,6 +59,16 @@ export const GetStartedBloomSubtitle = styled.div`
   }
 `;
 
+export const GetStartedBloomDescription = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: 21px;
+  max-width: 620px;
+`;
+
 export const GetStartedBloomWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -63,6 +77,7 @@ export const GetStartedBloomWrapper = styled.div`
   align-items: stretch;
   flex: 0 1 100%;
   min-height: 400px;
+  padding-top: 5%;
 
   @media (max-width: ${size.mobileL}) {
     flex-wrap: wrap;
@@ -98,8 +113,9 @@ export const GetStartedBloomFooter = styled.div`
 `;
 
 export const InstructionsWrapper = styled.div`
-  padding: 0;
+  padding-top: 10%;
   max-width: 200px;
+  line-height: 21px;
   @media (max-width: ${size.mobileL}) {
     padding: 0 10% 10% 10%;
     width: 100%;
@@ -108,9 +124,11 @@ export const InstructionsWrapper = styled.div`
 `;
 
 export const FollowingStepsTitle = styled.div`
+  color: #3c4251;
   font-weight: bold;
   font-size: 18px;
   line-height: 24px;
+  margin: 2% 0;
 `;
 
 export const HelpWithBloomWrapper = styled.div<KycStatus>`
@@ -137,6 +155,14 @@ export const IconWrapper = styled.div`
 
 export const BloomParagraph = styled.p`
   color: #6067f1;
+
+  span {
+    font-weight: bold;
+  }
+`;
+
+export const BloomHelpRaise = styled.span`
+  color: #00a76f;
 `;
 
 export const HelpMessage = styled.div`

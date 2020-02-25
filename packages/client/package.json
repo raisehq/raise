@@ -80,7 +80,7 @@
     "build": "NODE_OPTIONS='--max-old-space-size=2048' react-scripts build",
     "build:integration": "env-cmd --no-override .env.integration yarn run build",
     "build:production": "NODE_ENV=production env-cmd --no-override .env.production yarn run build ",
-    "test": "jest --coverage --coverageDirectory=output/coverage/jest",
+    "test": "jest --verbose=true",
     "test:watch": "jest --watchAll --verbose=false",
     "lint": "eslint . --ext .js,.ts,.tsx"
   },
@@ -98,7 +98,7 @@
   },
   "jest": {
     "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      "^.+\\.(ts|tsx)?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../AppContext';
 import { MobileMenu, Logo } from './Menu.styles';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
@@ -22,6 +22,14 @@ const TopMobileMenu = () => {
       config: { showMenu }
     }
   }: any = useContext(AppContext);
+  const [kycBCStatus, setKycBCStatus] = useState(false);
+
+  useEffect(() => {
+    if (kyc_status === 3) {
+      setKycBCStatus(true);
+    }
+  }, [kyc_status]);
+
   const { visible, visibleMenu } = useMenuVisibility();
   const onKYC = () => history.push('/kyc');
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
@@ -40,6 +48,7 @@ const TopMobileMenu = () => {
           enabled={enableKyc}
           kycAction={onKYC}
           isMobile={isMobile}
+          kycBCStatus={kycBCStatus}
         />
       )}
       <MobileMenu>

@@ -1,5 +1,12 @@
 import React from 'react';
-import { HelpWithBloomWrapper, FollowingStepsTitle, IconWrapper, HelpMessage, LinkToSumSub } from './styles';
+import {
+  HelpWithBloomWrapper,
+  FollowingStepsTitle,
+  IconWrapper,
+  HelpMessage,
+  LinkToSumSub,
+  BloomHelpRaise
+} from './styles';
 import { Icon } from 'semantic-ui-react';
 
 const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful, history }) => {
@@ -19,7 +26,9 @@ const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful, histor
   const helpWithBloomMessage = (
     <HelpMessage>
       <p>Please make sure you registered your ID in your Bloom profile.</p>
-      <p>If you need help send email to help@raise.it</p>
+      <p>
+        If you need help send email to <BloomHelpRaise>help@raise.it</BloomHelpRaise>
+      </p>
     </HelpMessage>
   );
   return (
