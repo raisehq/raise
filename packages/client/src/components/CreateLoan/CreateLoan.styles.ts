@@ -605,3 +605,48 @@ export const LoanFormLabel = styled.div`
 export const LoanInputCoin = styled(LoanInputBox)`
   padding-top: 4px;
 `;
+
+/*************************** LAST DESIGN  *************************************/
+
+export const CreateLoanSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 150px;
+`;
+
+export const CreateLoanRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+`;
+
+export const CreateLoanColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 79px;
+`;
+
+export const SectionTitle = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  color: #3c4251;
+`;
+
+export const ControlLabel = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 138.27%;
+  display: flex;
+  align-items: center;
+  color: #8a8e97;
+`;

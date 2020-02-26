@@ -30,7 +30,12 @@ import {
   LoanControlsContainer,
   LoanFormLabel,
   LoanControlsGroup,
-  LoanInputCoin
+  LoanInputCoin,
+  CreateLoanSection,
+  CreateLoanRow,
+  CreateLoanColumn,
+  SectionTitle,
+  ControlLabel
 } from './CreateLoan.styles';
 import {
   MIN_AMOUNT_OPTIONS,
@@ -61,6 +66,7 @@ import Slider from '../Slider';
 import { getMonths, getLoanAuctionInterval } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS, CREATE_LOAN_DEFAULT_COIN } from '../../commons/constants';
+import InputNumber from '../commons/InputControl/InputNumber';
 
 const COIN_DEFAULT = CREATE_LOAN_DEFAULT_COIN;
 
@@ -321,6 +327,24 @@ const CreateLoan = () => {
         <BrowserView>
           <Divider />
         </BrowserView>
+        <CreateLoanSection>
+          <CreateLoanRow>
+            <SectionTitle as="h2">How much would you like to borrow?</SectionTitle>
+          </CreateLoanRow>
+          <CreateLoanRow>
+            <CreateLoanColumn>
+              <ControlLabel>Enter the amount</ControlLabel>
+              <InputNumber
+                id="input-amount"
+                value={loan.amount}
+                onValueChange={onSetAmount}
+                onBlur={onBlur}
+                fmt={numeralFormat}
+              />
+            </CreateLoanColumn>
+          </CreateLoanRow>
+          <CreateLoanRow></CreateLoanRow>
+        </CreateLoanSection>
         <LoanTerm>
           <LoanDescription>
             <Header as="h2">Loan Auction</Header>

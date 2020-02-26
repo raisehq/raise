@@ -15,7 +15,6 @@ export const calculateTotalInterest = (numberAmount, loanMaxMir, termMonths) =>
 
 export const calculateTermFromSecondsToMonths = loanTerm => loanTerm / 60 / 60 / 24 / 30;
 
-
 export const calculateMinAmount = (value, percent) => {
   const minAmount = value - value * (percent / 100);
   return minAmount >= 1 ? minAmount : 1;
