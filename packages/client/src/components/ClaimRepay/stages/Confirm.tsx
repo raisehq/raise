@@ -41,12 +41,13 @@ const Confirm = () => {
 
   const { roi }: any = getCalculations(loan);
   const lenderAmount = numeral(fromWei(loan.lenderAmount)).format();
-  const lenderRoiAmount = numeral(
-    Number(fromWei(loan.lenderAmount)) + Number(fromWei(loan.lenderAmount)) * numeral(roi).value()
-  ).format();
+  
+
+  const lenderGains = Number(fromWei(loan.lenderAmount)) + Number(fromWei(loan.lenderAmount)) * numeral(roi).value();
+  const lenderRoiAmount = numeral(lenderGains).format();
 
   useEffect(() => {
-    if (swap <= Number(lenderRoiAmount)) {
+    if (Number(swap) <= Number(lenderGains)) {
       setHasFunds(true);
     }
   }, [swap]);

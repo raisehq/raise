@@ -1,10 +1,11 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
 import { tradeTokensForExactTokens } from '@uniswap/sdk';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { fromWei, toWei } from 'web3-utils';
+import AppContext from '../AppContext';
 
 import useClaimRepay from './useClaimRepay';
 import ConfirmStage from './stages/Confirm';
@@ -24,21 +25,30 @@ export const Stages = daggy.taggedSum('UI', {
 });
 
 const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
+    const {
+    store: { 
+      blockchain: {contracts}
+     }
+  }: any = useContext(AppContext);
+
   const [open, setOpen] = useState(false);
   const { stage, setStage, ...rest }: any = useClaimRepay(loan, open);
   const [swap, setSwap] = useState(0);
-
+  const netNumbers = {
+    mainnet: 1,
+    kovan: 42
+  };
   const getMarketSwap = async () => {
     try {
+      const addresses = contracts.address[netNumbers["mainnet"]];
       const tradeDetails = await tradeTokensForExactTokens(
-        '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI address
-        '0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c', // RAISE address
+        addresses['DAI'] || '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI address
+        addresses['RaiseToken'] || '0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c', // RAISE address
         toWei('200'), // output tokens (200 RAISE)
-        1 // chain id, 1 mainnet
+        netNumbers["mainnet"] // chain id, 1 mainnet
       );
-
+      
       const totalDaiPrice = fromWei(tradeDetails.inputAmount.amount.toString());
-
       return totalDaiPrice;
     } catch (error) {
       throw error;
@@ -48,9 +58,10 @@ const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
   useAsyncEffect(async () => {
     try {
       const market = await getMarketSwap();
+      console.log(market)
       setSwap(Number(market));
     } catch (error) {
-      throw error;
+      console.error(error);
     }
   }, []);
 
