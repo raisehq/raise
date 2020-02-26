@@ -8,7 +8,7 @@ export const InputFieldStyled = styled(Input)`
   box-sizing: border-box;
   border-radius: 3px;
   height: 48px;
-  width: 260px
+  width: 260px;
 
   :hover {
     border: 1px solid #8a8e97;

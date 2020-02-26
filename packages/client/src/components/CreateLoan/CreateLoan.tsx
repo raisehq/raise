@@ -67,6 +67,7 @@ import { getMonths, getLoanAuctionInterval } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS, CREATE_LOAN_DEFAULT_COIN } from '../../commons/constants';
 import InputNumber from '../commons/InputControl/InputNumber';
+import GroupButton from '../commons/ButtonControl/GroupButton';
 
 const COIN_DEFAULT = CREATE_LOAN_DEFAULT_COIN;
 
@@ -341,6 +342,9 @@ const CreateLoan = () => {
                 onBlur={onBlur}
                 fmt={numeralFormat}
               />
+            </CreateLoanColumn>
+            <CreateLoanColumn>
+              <GroupButton />
             </CreateLoanColumn>
           </CreateLoanRow>
           <CreateLoanRow></CreateLoanRow>

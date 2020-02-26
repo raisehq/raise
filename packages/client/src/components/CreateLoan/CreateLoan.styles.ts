@@ -620,15 +620,16 @@ export const CreateLoanRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
+  
 `;
 
 export const CreateLoanColumn = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-start;
   min-height: 79px;
+  padding-right: 15px;
 `;
 
 export const SectionTitle = styled.div`
