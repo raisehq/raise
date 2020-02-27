@@ -68,6 +68,7 @@ import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS, CREATE_LOAN_DEFAULT_COIN } from '../../commons/constants';
 import InputNumber from '../commons/InputControl/InputNumber';
 import GroupButton from '../commons/ButtonControl/GroupButton';
+import CheckboxControl from '../commons/CheckboxControl';
 
 const COIN_DEFAULT = CREATE_LOAN_DEFAULT_COIN;
 
@@ -344,10 +345,13 @@ const CreateLoan = () => {
               />
             </CreateLoanColumn>
             <CreateLoanColumn>
+              <ControlLabel>Select the cryptocurrency</ControlLabel>
               <GroupButton />
             </CreateLoanColumn>
           </CreateLoanRow>
-          <CreateLoanRow></CreateLoanRow>
+          <CreateLoanRow>
+            <CheckboxControl label="I accept a lower amount than the requested if the auction don’t achieve the target" />
+            </CreateLoanRow>
         </CreateLoanSection>
         <LoanTerm>
           <LoanDescription>
