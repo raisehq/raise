@@ -16,6 +16,7 @@ import {
   CheckContainer,
   LoanFormContainer
 } from './CreateLoan.styles';
+import Button from '../commons/ButtonControl/Button';
 
 export const UI = daggy.taggedSum('UI', {
   Confirm: [],
@@ -103,19 +104,20 @@ export const getLoanAction = (stage, values, methods) => {
           <LoanTermsCheckbox id="btn-check-term-conditions" onChange={onToggleTerms} />I agree to
           the Terms and Conditions of the Loan Agreement
         </CheckContainer>
-        <ConfirmButton
-          id="btn-create"
-          onClick={onSave}
-          disabled={
-            amountValidation.error ||
-            loan.term === 0 ||
-            loan.mir === 0 ||
-            numberAmount === 0 ||
-            !termsCond
-          }
-        >
-          Confirm
-        </ConfirmButton>
+        <div>
+          <Button
+            idAttr="btn-create"
+            onClick={onSave}
+            text="Confirm"
+            disabled={
+              amountValidation.error ||
+              loan.term === 0 ||
+              loan.mir === 0 ||
+              numberAmount === 0 ||
+              !termsCond
+            }
+          />
+        </div>
       </LoanConfirmation>
     ),
     Waiting: () => (
