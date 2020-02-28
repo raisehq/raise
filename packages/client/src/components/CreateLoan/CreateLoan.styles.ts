@@ -621,14 +621,13 @@ export const CreateLoanRow = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
-  width:100%;
-  
+  width: 100%;
 `;
 
 export const CreateLoanColumn = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: flex-start;
   min-height: 79px;
   padding-right: 15px;
@@ -652,4 +651,13 @@ export const ControlLabel = styled.div`
   display: flex;
   align-items: center;
   color: #8a8e97;
+`;
+
+export const CreateLoanDescription = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #5a5a5a;
 `;

@@ -5,8 +5,10 @@ import { Button } from 'semantic-ui-react';
 export const ButtonStyled = styled(Button)`
   &&& {
     height: 48px;
+    min-width: 48px;
     background-color: #fff;
     box-sizing: border-box;
+    text-align: center;
 
     font-family: Lato;
     font-style: normal;
@@ -39,8 +41,8 @@ export const ButtonStyledGroup = styled(Button.Group)`
   }
 `;
 
-export const ButtonContent = styled.div`
+export const ButtonContent = styled.span`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 `;

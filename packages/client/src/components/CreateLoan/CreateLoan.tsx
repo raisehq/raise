@@ -35,7 +35,8 @@ import {
   CreateLoanRow,
   CreateLoanColumn,
   SectionTitle,
-  ControlLabel
+  ControlLabel,
+  CreateLoanDescription
 } from './CreateLoan.styles';
 import {
   MIN_AMOUNT_OPTIONS,
@@ -346,12 +347,28 @@ const CreateLoan = () => {
             </CreateLoanColumn>
             <CreateLoanColumn>
               <ControlLabel>Select the cryptocurrency</ControlLabel>
-              <GroupButton />
+              <GroupButton options={[ {text: 'One', icon:'heart'}, {text: 'Two', icon:'heart'}, {text: 'Three', icon:'heart' } ]} withIcon={true}/>
             </CreateLoanColumn>
           </CreateLoanRow>
           <CreateLoanRow>
             <CheckboxControl label="I accept a lower amount than the requested if the auction don’t achieve the target" />
-            </CreateLoanRow>
+          </CreateLoanRow>
+        </CreateLoanSection>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
+        <CreateLoanSection>
+          <CreateLoanRow>
+            <SectionTitle as="h2">Loan Auction</SectionTitle>
+          </CreateLoanRow>
+          <CreateLoanRow>
+            <CreateLoanDescription>
+              Select how long do you want for your loan auction to be open.
+            </CreateLoanDescription>
+          </CreateLoanRow>
+          <CreateLoanRow>
+            <GroupButton options={[{text: '07'}, {text: '15'}, {text: '30'}, {text: '45'}]}/>
+          </CreateLoanRow>
         </CreateLoanSection>
         <LoanTerm>
           <LoanDescription>
