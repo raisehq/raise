@@ -621,6 +621,7 @@ export const CreateLoanRow = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
+  width:100%;
   
 `;
 
