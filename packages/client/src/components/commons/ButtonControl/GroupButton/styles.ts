@@ -46,4 +46,10 @@ export const ButtonContent = styled.span`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  color: #000000;
+
+  &&& > .ui.image {
+    width: 16px;
+    margin: 2px;
+  }
 `;

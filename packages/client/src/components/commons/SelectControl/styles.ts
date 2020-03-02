@@ -19,6 +19,10 @@ export const SelectStyled = styled(Select)`
     color: #5a5a5a;
   }
 
+  &&&.ui.selection.dropdown > .dropdown.icon {
+    top: 32%;
+  }
+
   :hover {
     border: 1px solid #8a8e97;
     i.icon.dropdown::before {

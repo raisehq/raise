@@ -1,7 +1,7 @@
 import React from 'react';
 import { ButtonStyledGroup, ButtonStyled, ButtonContent } from './styles';
 
-import { Icon } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 
 const GroupButton = ({ options, withIcon = false, onClick, selectedIndex, ...rest }) => {
   return (
@@ -14,7 +14,7 @@ const GroupButton = ({ options, withIcon = false, onClick, selectedIndex, ...res
           className={item.key === selectedIndex.toString() && 'selected'}
         >
           <ButtonContent>
-            {withIcon && <Icon name={item.icon} />}
+            {withIcon && <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${item.icon}`}/>}
             {item.text}
           </ButtonContent>
         </ButtonStyled>
