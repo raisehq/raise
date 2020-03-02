@@ -70,6 +70,7 @@ import { COINS, CREATE_LOAN_DEFAULT_COIN } from '../../commons/constants';
 import InputNumber from '../commons/InputControl/InputNumber';
 import GroupButton from '../commons/ButtonControl/GroupButton';
 import CheckboxControl from '../commons/CheckboxControl';
+import SelectControl from '../commons/SelectControl';
 
 const COIN_DEFAULT = CREATE_LOAN_DEFAULT_COIN;
 
@@ -347,7 +348,14 @@ const CreateLoan = () => {
             </CreateLoanColumn>
             <CreateLoanColumn>
               <ControlLabel>Select the cryptocurrency</ControlLabel>
-              <GroupButton options={[ {text: 'One', icon:'heart'}, {text: 'Two', icon:'heart'}, {text: 'Three', icon:'heart' } ]} withIcon={true}/>
+              <GroupButton
+                options={[
+                  { text: 'One', icon: 'heart' },
+                  { text: 'Two', icon: 'heart' },
+                  { text: 'Three', icon: 'heart' }
+                ]}
+                withIcon={true}
+              />
             </CreateLoanColumn>
           </CreateLoanRow>
           <CreateLoanRow>
@@ -367,7 +375,31 @@ const CreateLoan = () => {
             </CreateLoanDescription>
           </CreateLoanRow>
           <CreateLoanRow>
-            <GroupButton options={[{text: '07'}, {text: '15'}, {text: '30'}, {text: '45'}]}/>
+            <GroupButton
+              options={[{ text: '07' }, { text: '15' }, { text: '30' }, { text: '45' }]}
+            />
+          </CreateLoanRow>
+        </CreateLoanSection>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
+        <CreateLoanSection>
+          <CreateLoanRow>
+            <SectionTitle as="h2">Loan Term</SectionTitle>
+          </CreateLoanRow>
+          <CreateLoanRow>
+            <CreateLoanDescription>
+              Select when you want to repay the loan. The loan term it will start after the loan
+              auction is finished
+            </CreateLoanDescription>
+          </CreateLoanRow>
+          <CreateLoanRow>
+            <SelectControl
+              value={selectedMonth}
+              onChange={onSetTerm}
+              placeholder="Select term"
+              options={monthOptions}
+            />
           </CreateLoanRow>
         </CreateLoanSection>
         <LoanTerm>
