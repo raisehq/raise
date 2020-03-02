@@ -3,34 +3,17 @@ import { BrowserView } from 'react-device-detect';
 import AppContext from '../AppContext';
 import { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
-import LoanInput from './LoanInput';
 import {
-  TopHeader,
   Header,
   Divider,
-  LoanInputLabel,
   LoanContainer,
   LoanBox,
-  LoanTerm,
-  LoanSelect,
-  MininumLoanSelect,
-  LoanCheckbox,
   LoanDescription,
-  LoanDescriptionLowerAmount,
-  LoanFormInput,
   SideInfo,
   InputError,
-  InputBox,
-  InputDescription,
+  LoanInputLabel,
   LoanForm,
   SliderWrapper,
-  LoanCoinSelect,
-  LoanWrapper,
-  LoanDescriptionContainer,
-  LoanControlsContainer,
-  LoanFormLabel,
-  LoanControlsGroup,
-  LoanInputCoin,
   CreateLoanSection,
   CreateLoanRow,
   CreateLoanColumn,
@@ -64,7 +47,8 @@ import {
   calculateMIRFromAPR
 } from './calculations';
 import Slider from '../Slider';
-import { getMonths, getLoanAuctionInterval } from '../../commons/months';
+import { getMonths } from '../../commons/months';
+import { getLoanAuctionIntervalArray } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS, CREATE_LOAN_DEFAULT_COIN } from '../../commons/constants';
 import InputNumber from '../commons/InputControl/InputNumber';
@@ -100,22 +84,24 @@ const CreateLoan = () => {
     minAmount: calculateMinAmount(AMOUNT_DEFAULT, MIN_PERCENT_DEFAULT)
   });
   const [selectedMonth, setSelectedMonth] = useState(TERM_DEFAULT);
-  const [selectedLoanAuction, setSelectedLoanAuction] = useState(TERM_AUCTION_DEFAULT);
+
   const [coins, setCoins] = useState([]);
   const [selectedCoinType, setSelectedCoinType] = useState(COIN_DEFAULT.name);
+  const [selectedCoinIndex, setSelectedCoinIndex] = useState<any>(0);
+  const [selectedMonthIndex, setSelectedMonthIndex] = useState<any>(2);
 
   const monthOptions = useMemo(() => getMonths(network), [network]);
-  const loanAuctionInterval = useMemo(() => getLoanAuctionInterval(network), [network]);
-
+  const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(network), [network]);
   useEffect(() => {
-    const coinsArrays: any = COINS.map((item, index) => ({
+    const coinsArrays: any = COINS.map(item => ({
       text: item.name,
       value: item.name,
-      key: index
+      key: item.key,
+      icon: item.icon
     }));
-
     setCoins(coinsArrays);
     setSelectedCoinType(coinsArrays[0].text);
+    setSelectedCoinIndex(coinsArrays[0].key);
   }, []);
 
   useEffect(() => {
@@ -141,14 +127,17 @@ const CreateLoan = () => {
     setLoan({ ...loan, term: data.value });
   };
 
-  const onSetTermAuction = (e, { value }) => {
-    setSelectedLoanAuction(value);
-    setLoan({ ...loan, auctionTerm: value });
+  const onSetTermAuction = option => () => {
+    //setSelectedLoanAuction(option);
+    const auctionTerm = loanAuctionIntervalArray.find(item => item.value === option);
+    setSelectedMonthIndex(auctionTerm && auctionTerm.key);
+    setLoan({ ...loan, auctionTerm: option });
   };
 
-  const onSetCoinAmount = (e, data) => {
-    setSelectedCoinType(data.value);
-    const coin = COINS.find(item => item.name === data.value);
+  const onSetCoinAmount = option => () => {
+    setSelectedCoinType(option);
+    const coin = COINS.find(item => item.name === option);
+    setSelectedCoinIndex(coin ? coin.key : 0);
     const addressCoin: any = coin ? coin.address : null;
 
     setLoan({ ...loan, tokenAddress: addressCoin });
@@ -225,7 +214,7 @@ const CreateLoan = () => {
     setTermsCond(false);
 
     //Reseting control values to default in case of create a new loan without refreshing the screen
-    onSetTermAuction(null, { value: TERM_AUCTION_DEFAULT });
+    onSetTermAuction(TERM_AUCTION_DEFAULT)();
     onSetTerm(null, { value: TERM_DEFAULT });
   };
 
@@ -267,70 +256,6 @@ const CreateLoan = () => {
   return (
     <LoanContainer>
       <LoanForm>
-        <LoanWrapper>
-          <LoanDescriptionContainer>
-            <TopHeader as="h2">How much would you like to borrow?</TopHeader>
-            <div>Please enter the amount you would like to borrow.</div>
-          </LoanDescriptionContainer>
-          <LoanControlsContainer>
-            <LoanControlsGroup>
-              <LoanFormLabel>
-                <span>Amount</span>
-              </LoanFormLabel>
-              <LoanInputCoin>
-                <LoanInput
-                  id="input-amount"
-                  value={loan.amount}
-                  onValueChange={onSetAmount}
-                  onBlur={onBlur}
-                  fmt={numeralFormat}
-                />
-              </LoanInputCoin>
-            </LoanControlsGroup>
-            <LoanControlsGroup>
-              <LoanFormLabel>
-                <span>Coins</span>
-              </LoanFormLabel>
-              <LoanCoinSelect
-                value={selectedCoinType}
-                onChange={onSetCoinAmount}
-                placeholder="Select Coin"
-                options={coins}
-              />
-            </LoanControlsGroup>
-            <LoanInputLabel>
-              {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
-            </LoanInputLabel>
-          </LoanControlsContainer>
-          <LoanDescriptionLowerAmount>
-            <Header as="h3">Would you accept a lower amount than the requested?</Header>
-            <LoanFormInput>
-              <LoanCheckbox toggle label={loan.accept ? 'YES' : 'NO'} onChange={onToggleAccept} />
-            </LoanFormInput>
-            <p>
-              In some cases, loan auctions don't achieve the target amount for different reasons
-            </p>
-            {loan.accept && (
-              <InputBox>
-                <InputDescription>
-                  Please select how much less:
-                  <p>
-                    Minimum amount: {formatAmount(loan.minAmount)} {selectedCoinType}
-                  </p>
-                </InputDescription>
-                <MininumLoanSelect
-                  value={minPercent}
-                  onChange={onMinAmount}
-                  placeholder="Select"
-                  options={MIN_AMOUNT_OPTIONS}
-                />
-              </InputBox>
-            )}
-          </LoanDescriptionLowerAmount>
-        </LoanWrapper>
-        <BrowserView>
-          <Divider />
-        </BrowserView>
         <CreateLoanSection>
           <CreateLoanRow>
             <SectionTitle as="h2">How much would you like to borrow?</SectionTitle>
@@ -349,18 +274,39 @@ const CreateLoan = () => {
             <CreateLoanColumn>
               <ControlLabel>Select the cryptocurrency</ControlLabel>
               <GroupButton
-                options={[
-                  { text: 'One', icon: 'heart' },
-                  { text: 'Two', icon: 'heart' },
-                  { text: 'Three', icon: 'heart' }
-                ]}
+                options={coins}
                 withIcon={true}
+                onClick={onSetCoinAmount}
+                selectedIndex={selectedCoinIndex}
               />
             </CreateLoanColumn>
+            <LoanInputLabel>
+              {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
+            </LoanInputLabel>
           </CreateLoanRow>
           <CreateLoanRow>
-            <CheckboxControl label="I accept a lower amount than the requested if the auction don’t achieve the target" />
+            <CheckboxControl
+              onChange={onToggleAccept}
+              label="I accept a lower amount than the requested if the auction don’t achieve the target"
+            />
           </CreateLoanRow>
+
+          {loan.accept && (
+            <>
+              <CreateLoanColumn>
+                <ControlLabel>Please select how much less:</ControlLabel>
+                <SelectControl
+                  value={minPercent}
+                  onChange={onMinAmount}
+                  placeholder="Select"
+                  options={MIN_AMOUNT_OPTIONS}
+                />
+              </CreateLoanColumn>
+              <ControlLabel>
+                Minimum amount: {formatAmount(loan.minAmount)} {selectedCoinType}
+              </ControlLabel>
+            </>
+          )}
         </CreateLoanSection>
         <BrowserView>
           <Divider />
@@ -376,7 +322,9 @@ const CreateLoan = () => {
           </CreateLoanRow>
           <CreateLoanRow>
             <GroupButton
-              options={[{ text: '07' }, { text: '15' }, { text: '30' }, { text: '45' }]}
+              options={loanAuctionIntervalArray}
+              onClick={onSetTermAuction}
+              selectedIndex={selectedMonthIndex}
             />
           </CreateLoanRow>
         </CreateLoanSection>
@@ -402,43 +350,11 @@ const CreateLoan = () => {
             />
           </CreateLoanRow>
         </CreateLoanSection>
-        <LoanTerm>
-          <LoanDescription>
-            <Header as="h2">Loan Auction</Header>
-            <p>
-              Select how long you want for your loan auction to be open. You will be able to check
-              the loan auction progress from your dashboard.
-            </p>
-          </LoanDescription>
-          <LoanFormInput>
-            <LoanSelect
-              value={selectedLoanAuction}
-              onChange={onSetTermAuction}
-              placeholder="Select auction time"
-              options={loanAuctionInterval}
-            />
-          </LoanFormInput>
-        </LoanTerm>
+
         <BrowserView>
           <Divider />
         </BrowserView>
-        <LoanTerm>
-          <LoanDescription>
-            <Header as="h2">Loan term</Header>
-            <p>The loan term will start after the loan auction is finished.</p>
-          </LoanDescription>
-          <LoanFormInput>
-            <LoanSelect
-              value={selectedMonth}
-              onChange={onSetTerm}
-              placeholder="Select term"
-              options={monthOptions}
-            />
-          </LoanFormInput>
-        </LoanTerm>
-        <BrowserView>
-          <Divider />
-        </BrowserView>
+
         <LoanBox>
           <LoanDescription>
             <Header as="h2">Annual percentage rate</Header>

@@ -19,3 +19,11 @@ export const getLoanAuctionInterval = (network: string) => [
     text: `${item} day${item >= 1 ? 's' : ''}`
   }))
 ];
+
+export const getLoanAuctionIntervalArray = (network: string) => [
+  ...[7, 15, 30, 45].map((item, index) => ({
+    key: `${index}`,
+    value: daysToSecond(item),
+    text: `${item}`
+  }))
+];

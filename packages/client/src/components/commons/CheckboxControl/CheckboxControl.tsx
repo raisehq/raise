@@ -1,8 +1,8 @@
 import React from 'react';
 import { CheckboxStyled, CheckboxLabel } from './styles';
 
-const CheckboxControl = ({ label }) => {
-  return <CheckboxStyled label={<CheckboxLabel>{label}</CheckboxLabel>} />;
+const CheckboxControl = ({ label, ...rest }) => {
+  return <CheckboxStyled label={<CheckboxLabel>{label}</CheckboxLabel>} {...rest} />;
 };
 
 export default CheckboxControl;
