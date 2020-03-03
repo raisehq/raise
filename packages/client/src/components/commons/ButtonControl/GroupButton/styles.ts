@@ -15,6 +15,7 @@ export const ButtonStyled = styled(Button)`
     font-weight: bold;
     font-size: 14px;
     line-height: 138.27%;
+    color: #000000;
 
     &:hover {
       background: #ecedee;
@@ -46,10 +47,11 @@ export const ButtonContent = styled.span`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  color: #000000;
+ 
 
   &&& > .ui.image {
     width: 16px;
     margin: 2px;
   }
+
 `;
