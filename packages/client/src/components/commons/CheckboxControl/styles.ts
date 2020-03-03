@@ -10,7 +10,7 @@ export const CheckboxStyled = styled(Checkbox)`
       font-weight: normal;
       font-size: 16px;
       line-height: 24px;
-      color: #b1b3b9;
+      color: #8a8e97;
     }
 
     .box:after,

@@ -285,6 +285,8 @@ const CreateLoan = () => {
                   selectedIndex={selectedCoinIndex}
                 />
               </CreateLoanColumn>
+            </CreateLoanRow>
+            <CreateLoanRow>
               <LoanInputLabel>
                 {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
               </LoanInputLabel>
