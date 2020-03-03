@@ -607,13 +607,23 @@ export const LoanInputCoin = styled(LoanInputBox)`
 `;
 
 /*************************** LAST DESIGN  *************************************/
+export const CreateLoanWrapper = styled.div`
+  box-shadow: ${theme.shadow};
+  box-sizing: border-box;
+  padding: 16px 30px;
+  width: 100%;
 
-export const CreateLoanSection = styled.div`
+  @media ${device.laptop} {
+    max-width: 735px;
+    font-size: 14px;
+    background: #fff;
+  }
+`;
+export const Section = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  min-height: 150px;
 `;
 
 export const CreateLoanRow = styled.div`
@@ -622,6 +632,14 @@ export const CreateLoanRow = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
+`;
+
+export const CreateAmountSubSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 177px;
+  padding-bottom: 20px;
 `;
 
 export const CreateLoanColumn = styled.div`
@@ -653,6 +671,12 @@ export const ControlLabel = styled.div`
   color: #8a8e97;
 `;
 
+export const MinimumAmountControlLabel = styled(ControlLabel)`
+  align-items: flex-end;
+  font-size: 16px;
+  padding: 10px 0;
+`;
+
 export const CreateLoanDescription = styled.div`
   font-family: Lato;
   font-style: normal;
@@ -660,4 +684,22 @@ export const CreateLoanDescription = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: #5a5a5a;
+`;
+
+export const CreateLoanSection = styled(Section)`
+  height: 121px;
+  margin: 35px 0 40px 0;
+`;
+
+export const CreateAmountSection = styled(Section)`
+  min-height: 177px;
+  margin: 35px 0 40px 0;
+  justify-content: flex-start;
+`;
+
+export const CreateLoanHeader = styled.div`
+  height: 54px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;

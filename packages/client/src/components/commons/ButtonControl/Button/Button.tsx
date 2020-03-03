@@ -3,7 +3,7 @@ import { ButtonStyled } from './styles';
 
 const Button = ({ text, onClick, disabled = false, idAttr }) => {
   return (
-    <ButtonStyled onClick={onClick} disabled={false} id={idAttr}>
+    <ButtonStyled onClick={onClick} disabled={disabled} id={idAttr}>
       {text}
     </ButtonStyled>
   );

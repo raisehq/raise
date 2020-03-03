@@ -12,14 +12,18 @@ import {
   SideInfo,
   InputError,
   LoanInputLabel,
-  LoanForm,
+  CreateLoanWrapper,
   SliderWrapper,
   CreateLoanSection,
+  CreateAmountSection,
   CreateLoanRow,
   CreateLoanColumn,
   SectionTitle,
   ControlLabel,
-  CreateLoanDescription
+  CreateLoanDescription,
+  CreateLoanHeader,
+  CreateAmountSubSection,
+  MinimumAmountControlLabel
 } from './CreateLoan.styles';
 import {
   MIN_AMOUNT_OPTIONS,
@@ -255,44 +259,46 @@ const CreateLoan = () => {
 
   return (
     <LoanContainer>
-      <LoanForm>
-        <CreateLoanSection>
-          <CreateLoanRow>
-            <SectionTitle as="h2">How much would you like to borrow?</SectionTitle>
-          </CreateLoanRow>
-          <CreateLoanRow>
-            <CreateLoanColumn>
-              <ControlLabel>Enter the amount</ControlLabel>
-              <InputNumber
-                id="input-amount"
-                value={loan.amount}
-                onValueChange={onSetAmount}
-                onBlur={onBlur}
-                fmt={numeralFormat}
+      <CreateLoanWrapper>
+        <CreateAmountSection>
+          <CreateAmountSubSection>
+            <CreateLoanRow>
+              <SectionTitle as="h2">How much would you like to borrow?</SectionTitle>
+            </CreateLoanRow>
+            <CreateLoanRow>
+              <CreateLoanColumn>
+                <ControlLabel>Enter the amount</ControlLabel>
+                <InputNumber
+                  id="input-amount"
+                  value={loan.amount}
+                  onValueChange={onSetAmount}
+                  onBlur={onBlur}
+                  fmt={numeralFormat}
+                />
+              </CreateLoanColumn>
+              <CreateLoanColumn>
+                <ControlLabel>Select the cryptocurrency</ControlLabel>
+                <GroupButton
+                  options={coins}
+                  withIcon={true}
+                  onClick={onSetCoinAmount}
+                  selectedIndex={selectedCoinIndex}
+                />
+              </CreateLoanColumn>
+              <LoanInputLabel>
+                {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
+              </LoanInputLabel>
+            </CreateLoanRow>
+            <CreateLoanRow>
+              <CheckboxControl
+                onChange={onToggleAccept}
+                label="I accept a lower amount than the requested if the auction don’t achieve the target"
               />
-            </CreateLoanColumn>
-            <CreateLoanColumn>
-              <ControlLabel>Select the cryptocurrency</ControlLabel>
-              <GroupButton
-                options={coins}
-                withIcon={true}
-                onClick={onSetCoinAmount}
-                selectedIndex={selectedCoinIndex}
-              />
-            </CreateLoanColumn>
-            <LoanInputLabel>
-              {amountValidation.error ? <InputError>{amountValidation.msg}</InputError> : ''}
-            </LoanInputLabel>
-          </CreateLoanRow>
-          <CreateLoanRow>
-            <CheckboxControl
-              onChange={onToggleAccept}
-              label="I accept a lower amount than the requested if the auction don’t achieve the target"
-            />
-          </CreateLoanRow>
+            </CreateLoanRow>
+          </CreateAmountSubSection>
 
           {loan.accept && (
-            <>
+            <CreateLoanRow>
               <CreateLoanColumn>
                 <ControlLabel>Please select how much less:</ControlLabel>
                 <SelectControl
@@ -302,24 +308,27 @@ const CreateLoan = () => {
                   options={MIN_AMOUNT_OPTIONS}
                 />
               </CreateLoanColumn>
-              <ControlLabel>
+              <MinimumAmountControlLabel>
                 Minimum amount: {formatAmount(loan.minAmount)} {selectedCoinType}
-              </ControlLabel>
-            </>
+              </MinimumAmountControlLabel>
+            </CreateLoanRow>
           )}
-        </CreateLoanSection>
+        </CreateAmountSection>
         <BrowserView>
           <Divider />
         </BrowserView>
         <CreateLoanSection>
-          <CreateLoanRow>
-            <SectionTitle as="h2">Loan Auction</SectionTitle>
-          </CreateLoanRow>
-          <CreateLoanRow>
-            <CreateLoanDescription>
-              Select how long do you want for your loan auction to be open.
-            </CreateLoanDescription>
-          </CreateLoanRow>
+          <CreateLoanHeader>
+            <CreateLoanRow>
+              <SectionTitle as="h2">Loan Auction</SectionTitle>
+            </CreateLoanRow>
+            <CreateLoanRow>
+              <CreateLoanDescription>
+                Select how long do you want for your loan auction to be open.
+              </CreateLoanDescription>
+            </CreateLoanRow>
+          </CreateLoanHeader>
+
           <CreateLoanRow>
             <GroupButton
               options={loanAuctionIntervalArray}
@@ -332,15 +341,17 @@ const CreateLoan = () => {
           <Divider />
         </BrowserView>
         <CreateLoanSection>
-          <CreateLoanRow>
-            <SectionTitle as="h2">Loan Term</SectionTitle>
-          </CreateLoanRow>
-          <CreateLoanRow>
-            <CreateLoanDescription>
-              Select when you want to repay the loan. The loan term it will start after the loan
-              auction is finished
-            </CreateLoanDescription>
-          </CreateLoanRow>
+          <CreateLoanHeader>
+            <CreateLoanRow>
+              <SectionTitle as="h2">Loan Term</SectionTitle>
+            </CreateLoanRow>
+            <CreateLoanRow>
+              <CreateLoanDescription>
+                Select when you want to repay the loan. The loan term will start after the loan
+                auction is finished
+              </CreateLoanDescription>
+            </CreateLoanRow>
+          </CreateLoanHeader>
           <CreateLoanRow>
             <SelectControl
               value={selectedMonth}
@@ -379,7 +390,7 @@ const CreateLoan = () => {
             <SideInfo>* MIR : Monthly simple interest rate</SideInfo>
           </SliderWrapper>
         </LoanBox>
-      </LoanForm>
+      </CreateLoanWrapper>
       {getLoanAction(stage, values, methods)}
     </LoanContainer>
   );
