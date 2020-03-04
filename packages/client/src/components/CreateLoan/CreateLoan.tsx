@@ -55,10 +55,7 @@ import { getMonths } from '../../commons/months';
 import { getLoanAuctionIntervalArray } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS, CREATE_LOAN_DEFAULT_COIN } from '../../commons/constants';
-import InputNumber from '../commons/InputControl/InputNumber';
-import GroupButton from '../commons/ButtonControl/GroupButton';
-import CheckboxControl from '../commons/CheckboxControl';
-import SelectControl from '../commons/SelectControl';
+import { InputNumber, GroupButton, CheckboxControl, SelectControl } from '@raisehq/components';
 
 const COIN_DEFAULT = CREATE_LOAN_DEFAULT_COIN;
 

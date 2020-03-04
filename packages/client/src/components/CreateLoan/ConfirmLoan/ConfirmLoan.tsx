@@ -1,7 +1,6 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
-import Button from '../../commons/ButtonControl/Button';
-import CheckboxControl from '../../commons/CheckboxControl';
+import { Button, CheckboxControl } from '@raisehq/components';
 
 import {
   Divider,
