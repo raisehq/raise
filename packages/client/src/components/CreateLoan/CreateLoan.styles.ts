@@ -48,7 +48,7 @@ export const Header = styled(HeaderUI)<HeaderProps>`
 `;
 
 export const Divider = styled(DividerUI)<DividerProps>`
-  &&&&& {
+  &&&.ui.divider {
     border-top: none;
     border-bottom: 1px solid #b1b3b9;
   }
@@ -409,6 +409,10 @@ export const MinimumAmountControlLabel = styled(ControlLabel)`
 `;
 
 export const CreateLoanDescription = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
   font-family: Lato;
   font-style: normal;
   font-weight: normal;
@@ -429,7 +433,7 @@ export const CreateAmountSection = styled(Section)`
 `;
 
 export const CreateLoanHeader = styled.div`
-  height: 54px;
+  min-height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -464,7 +468,7 @@ export const AmountNumber = styled(AmountDescription)`
 `;
 
 export const DividerConfirmLoan = styled(Divider)`
-  &&& {
+  &&&.ui.divider {
     border-bottom: 1px solid #ecedee;
   }
 `;

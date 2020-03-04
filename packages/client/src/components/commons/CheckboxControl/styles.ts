@@ -13,7 +13,7 @@ export const CheckboxStyled = styled(Checkbox)<CheckBoxProps>`
       font-style: normal;
       font-weight: normal;
       font-size: ${({ size }) => (size === 'small' ? '12px' : '16px')};
-      line-height: 24px;
+      line-height: ${({ size }) => (size === 'small' ? '16px' : '24px')};
       color: #8a8e97;
     }
 
@@ -23,7 +23,7 @@ export const CheckboxStyled = styled(Checkbox)<CheckBoxProps>`
     label:before {
       transform: ${({ size }) => (size === 'small' ? 'inherit' : `scale(1.28571429)`)};
       transform-origin: left;
-      top: 3px;
+      top: ${({ size }) => (size === 'small' ? '-1px' : '3px')};
     }
     &&&.ui.checkbox input:focus ~ .box:before,
     &&&.ui.checkbox input:focus ~ label:before {
