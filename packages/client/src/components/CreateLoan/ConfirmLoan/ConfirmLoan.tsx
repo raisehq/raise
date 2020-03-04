@@ -8,7 +8,6 @@ import {
   DividerConfirmLoan,
   LoanConfirmation,
   LoanResume,
-  CheckContainer,
   AmountRow,
   AmountDescription,
   AmountNumber
@@ -76,13 +75,14 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
         </div>
       </LoanResume>
       {!isMobile && <Divider />}
-      <CheckContainer>
+      <AmountRow>
         <CheckboxControl
+          size="small"
           id="btn-check-term-conditions"
           onChange={onToggleTerms}
           label="I agree to the Terms and Conditions of the Loan Agreement"
         />
-      </CheckContainer>
+      </AmountRow>
 
       <div>
         <Button

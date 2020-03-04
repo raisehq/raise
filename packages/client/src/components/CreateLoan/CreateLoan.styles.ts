@@ -31,6 +31,7 @@ export const CheckContainer = styled.div`
   line-height: 20px;
   margin-top: 20px;
   display: flex;
+  padding: 5px;
 
   @media ${device.mobileS} {
     color: #5a5a5a;
@@ -49,7 +50,7 @@ export const Header = styled(HeaderUI)<HeaderProps>`
 export const Divider = styled(DividerUI)<DividerProps>`
   &&&&& {
     border-top: none;
-    border-bottom: 1px solid #9498a0;
+    border-bottom: 1px solid #b1b3b9;
   }
 `;
 
@@ -361,7 +362,6 @@ export const CreateLoanRow = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
-  padding: 5px 0;
 `;
 
 export const CreateAmountSubSection = styled.div`
@@ -388,6 +388,7 @@ export const SectionTitle = styled.div`
   font-size: 20px;
   line-height: 24px;
   color: #3c4251;
+  padding-bottom: 10px;
 `;
 
 export const ControlLabel = styled.div`
@@ -423,7 +424,7 @@ export const CreateLoanSection = styled(Section)`
 
 export const CreateAmountSection = styled(Section)`
   min-height: 177px;
-  margin: 35px 0 40px 0;
+  margin: 30px 0 30px 0;
   justify-content: flex-start;
 `;
 
@@ -463,5 +464,7 @@ export const AmountNumber = styled(AmountDescription)`
 `;
 
 export const DividerConfirmLoan = styled(Divider)`
-  background: #ecedee;
+  &&& {
+    border-bottom: 1px solid #ecedee;
+  }
 `;

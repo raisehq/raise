@@ -2,13 +2,17 @@ import styled from 'styled-components';
 
 import { Checkbox } from 'semantic-ui-react';
 
-export const CheckboxStyled = styled(Checkbox)`
+interface CheckBoxProps {
+  size?: string;
+}
+
+export const CheckboxStyled = styled(Checkbox)<CheckBoxProps>`
   &&& {
     &&&.ui.checkbox label {
       font-family: Lato;
       font-style: normal;
       font-weight: normal;
-      font-size: 16px;
+      font-size: ${({ size }) => (size === 'small' ? '12px' : '16px')};
       line-height: 24px;
       color: #8a8e97;
     }
@@ -17,7 +21,7 @@ export const CheckboxStyled = styled(Checkbox)`
     .box:before,
     label:after,
     label:before {
-      transform: scale(1.28571429);
+      transform: ${({ size }) => (size === 'small' ? 'inherit' : `scale(1.28571429)`)};
       transform-origin: left;
       top: 3px;
     }
@@ -41,6 +45,5 @@ export const CheckboxLabel = styled.label`
   font-family: Lato;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
   line-height: 24px;
 `;
