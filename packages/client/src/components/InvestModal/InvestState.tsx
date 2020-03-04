@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useContext } from 'react';
+import styled from 'styled-components';
 import { fromWei } from 'web3-utils';
 import { Card } from '@raisehq/components';
 import { TokenInput } from '../TokenInput';
@@ -6,7 +7,6 @@ import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
-import Balance from '../Balance';
 import AppContext from '../AppContext';
 import {
   Header,
@@ -16,10 +16,25 @@ import {
   ConfirmButton,
   InputContainer,
   // Amount,
-  FundAllLabel,
+  // FundAllLabel,
   LoanTermsCheckbox,
-  CheckContainer
+  CheckContainer,
+  InvestorBalance
 } from './InvestModal.styles';
+
+const errorMessages = {
+  inputGreaterThanBalance: 'Not enought balance.',
+  inputGreaterThanLoanAmount: 'Invest less than target.'
+};
+
+const ErrorBox = styled.div`
+  width: 100%;
+  min-height: 30px;
+  color: red;
+  display: block;
+  content: '';
+  margin-top: 8px;
+`;
 
 const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
   const { principal, investorCount, maxAmount } = loan;
@@ -38,9 +53,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       user: {
         details: { kyc_status }
       },
-      dai: {
-        balance
-      }
+      dai: { balance }
     }
   }: any = useContext(AppContext);
   const nMaxAmount = Number(fromWei(maxAmount));
@@ -68,24 +81,43 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
     setTermsCond(toggleTerms);
   };
 
+  const errorMessage = () => {
+    if (value && value > balance) {
+      return errorMessages.inputGreaterThanBalance;
+    }
+    if (value && value > nMaxAmount) {
+      return errorMessages.inputGreaterThanLoanAmount;
+    }
+    return null;
+  };
+
+  const onSetValue = v => {
+    if (v < 0) {
+      return setValue(0);
+    }
+    return setValue(v);
+  };
+
   return (
     <>
       <Header>How much would you like to invest?</Header>
-      <Balance />
+      <InvestorBalance id="btn-invest-all" onClick={fundAll} />
       <ModalInputContainer>
         <InputContainer>
+          <InputLabel>Investment</InputLabel>
           <ModalInputBox error={value !== undefined && (value > balance || value > nMaxAmount)}>
-            <TokenInput id="input-invest-value" value={value} onValueChange={setValue} />
+            <TokenInput id="input-invest-value" value={value} onValueChange={onSetValue} />
           </ModalInputBox>
-          <FundAllLabel id="btn-invest-all" green onClick={fundAll}>
-            Fund all
-          </FundAllLabel>
+          <ErrorBox>
+            {errorMessage()}
+            &nbsp;
+          </ErrorBox>
         </InputContainer>
         <InputContainer>
+          <InputLabel>Expected ROI</InputLabel>
           <ModalInputBox roi>
             <TokenInput value={roi} decimalScale={4} displayType="text" />
           </ModalInputBox>
-          <InputLabel>Expected ROI</InputLabel>
         </InputContainer>
       </ModalInputContainer>
       <Card size="230px" width="400px">
@@ -123,7 +155,14 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       <ConfirmButton
         id="btn-invest-confirm"
         onClick={onConfirm}
-        disabled={value === 0 || value === undefined || !termsCond || value > balance || value > nMaxAmount || kyc_status !== 3}
+        disabled={
+          value === 0 ||
+          value === undefined ||
+          !termsCond ||
+          value > balance ||
+          value > nMaxAmount ||
+          kyc_status !== 3
+        }
       >
         CONFIRM
       </ConfirmButton>
