@@ -5,12 +5,13 @@ import CheckboxControl from '../../commons/CheckboxControl';
 
 import {
   Divider,
+  DividerConfirmLoan,
   LoanConfirmation,
-  LoanFormInfo,
-  LoanFormValue,
   LoanResume,
   CheckContainer,
-  LoanFormContainer
+  AmountRow,
+  AmountDescription,
+  AmountNumber
 } from '../CreateLoan.styles';
 
 const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
@@ -30,57 +31,48 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
     <LoanConfirmation>
       <LoanResume>
         <div>
-          <LoanFormContainer>
-            <LoanFormInfo alignment="left" isMobile={isMobile}>
-              Loan amount
-            </LoanFormInfo>
-            <LoanFormValue alignment="left" isMobile={isMobile}>
-              {formattedAmount} {selectedCoinType}
-            </LoanFormValue>
-          </LoanFormContainer>
-          <LoanFormContainer>
-            <LoanFormInfo alignment="left" isMobile={isMobile}>
-              System fees (1%)
-            </LoanFormInfo>
-            <LoanFormValue alignment="left" isMobile={isMobile}>
-              -{systemFees} {selectedCoinType}
-            </LoanFormValue>
-          </LoanFormContainer>
-          <LoanFormContainer>
-            <LoanFormInfo alignment="left" isMobile={isMobile}>
-              Net loan proceeds
-            </LoanFormInfo>
-            <LoanFormValue alignment="left" isMobile={isMobile} big={!isMobile} className="bold">
-              {netLoan} {selectedCoinType}
-            </LoanFormValue>
-          </LoanFormContainer>
+          <AmountRow>
+            <AmountDescription bold fontSize={16}>
+              Summary
+            </AmountDescription>
+          </AmountRow>
+          {!isMobile && <DividerConfirmLoan />}
+          <AmountRow>
+            <AmountDescription>Cryptocurrency</AmountDescription>
+            <AmountNumber>{selectedCoinType}</AmountNumber>
+          </AmountRow>
+          {!isMobile && <DividerConfirmLoan />}
+          <AmountRow>
+            <AmountDescription>Loan amount</AmountDescription>
+            <AmountNumber>{formattedAmount}</AmountNumber>
+          </AmountRow>
+          {!isMobile && <DividerConfirmLoan />}
+          <AmountRow>
+            <AmountDescription>System fees (1%)</AmountDescription>
+            <AmountNumber>-{systemFees}</AmountNumber>
+          </AmountRow>
+          {!isMobile && <DividerConfirmLoan />}
+          <AmountRow>
+            <AmountDescription>Net loan proceeds</AmountDescription>
+            <AmountNumber bold>{netLoan}</AmountNumber>
+          </AmountRow>
         </div>
         {!isMobile && <Divider />}
         <div>
-          <LoanFormContainer>
-            <LoanFormInfo alignment="right" isMobile={isMobile}>
-              Principal
-            </LoanFormInfo>
-            <LoanFormValue alignment="right" isMobile={isMobile}>
-              {formattedAmount} {selectedCoinType}
-            </LoanFormValue>
-          </LoanFormContainer>
-          <LoanFormContainer>
-            <LoanFormInfo alignment="right" isMobile={isMobile}>
-              Interest
-            </LoanFormInfo>
-            <LoanFormValue alignment="right" isMobile={isMobile}>
-              {totalInterest} {selectedCoinType}
-            </LoanFormValue>
-          </LoanFormContainer>
-          <LoanFormContainer>
-            <LoanFormInfo alignment="right" isMobile={isMobile}>
-              Total repayment amount
-            </LoanFormInfo>
-            <LoanFormValue alignment="right" isMobile={isMobile} big={!isMobile} className="bold">
-              {repaymentAmount} {selectedCoinType}
-            </LoanFormValue>
-          </LoanFormContainer>
+          <AmountRow>
+            <AmountDescription>Principal</AmountDescription>
+            <AmountNumber>{formattedAmount}</AmountNumber>
+          </AmountRow>
+          {!isMobile && <DividerConfirmLoan />}
+          <AmountRow>
+            <AmountDescription>Interest</AmountDescription>
+            <AmountNumber>{totalInterest}</AmountNumber>
+          </AmountRow>
+          {!isMobile && <DividerConfirmLoan />}
+          <AmountRow>
+            <AmountDescription>Total repayment amount</AmountDescription>
+            <AmountNumber bold>{repaymentAmount}</AmountNumber>
+          </AmountRow>
         </div>
       </LoanResume>
       {!isMobile && <Divider />}

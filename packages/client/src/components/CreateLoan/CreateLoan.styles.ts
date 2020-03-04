@@ -22,6 +22,11 @@ interface LoanFormInfoProps {
   isMobile: boolean;
 }
 
+interface AmountDescriptionProps {
+  bold?: boolean;
+  fontSize?: number;
+}
+
 export const CheckContainer = styled.div`
   line-height: 20px;
   margin-top: 20px;
@@ -146,7 +151,7 @@ export const LoanConfirmation = styled(Card)`
     bottom: 0px;
     height: fit-content;
     width: 100%;
-    padding: 30px 20px 20px 20px;
+    padding: 0 32px;
     box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
 
     @media ${device.mobileS} {
@@ -165,7 +170,7 @@ export const LoanConfirmation = styled(Card)`
       top: 0px;
       width: 100%;
       max-width: 735px;
-      padding: 50px;
+      padding: 30px;
     }
   }
 
@@ -330,10 +335,11 @@ export const InputError = styled.div`
 `;
 
 /*************************** LAST DESIGN  *************************************/
+
 export const CreateLoanWrapper = styled.div`
   box-shadow: ${theme.shadow};
   box-sizing: border-box;
-  padding: 16px 30px;
+  padding: 0 30px;
   width: 100%;
 
   @media ${device.laptop} {
@@ -355,6 +361,7 @@ export const CreateLoanRow = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
+  padding: 5px 0;
 `;
 
 export const CreateAmountSubSection = styled.div`
@@ -411,7 +418,7 @@ export const CreateLoanDescription = styled.div`
 
 export const CreateLoanSection = styled(Section)`
   height: 121px;
-  margin: 35px 0 40px 0;
+  margin: 30px 0 40px 0;
 `;
 
 export const CreateAmountSection = styled(Section)`
@@ -425,4 +432,36 @@ export const CreateLoanHeader = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`;
+
+/*********************** ConfirmLoan ****************************/
+
+export const AmountRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const AmountDescription = styled.div<AmountDescriptionProps>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '12px')};
+  font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
+  color: ${({ bold }) => (bold ? '#3c4251' : 'inherit')};
+`;
+
+export const AmountDescriptionBold = styled.div`
+  font-weight: bold;
+  color: #3c4251;
+  font-size: 20px;
+`;
+
+export const AmountNumber = styled(AmountDescription)`
+  font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '20px')};
+`;
+
+export const DividerConfirmLoan = styled(Divider)`
+  background: #ecedee;
 `;
