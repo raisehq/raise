@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { BrowserView } from 'react-device-detect';
+import useAsyncEffect from '../../hooks/useAsyncEffect';
 import AppContext from '../AppContext';
 import numeral, { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
@@ -52,7 +53,7 @@ const sliderMinAPR = 0;
 const sliderMaxAPR = 20;
 const defaultMinAPR = 10;
 const defaultMaxAPR = 20;
-
+const defaultOperatorFee = 4;
 const marks = {
   5: '',
   10: '',
@@ -70,6 +71,7 @@ const CreateLoan = () => {
   const {
     web3Status: { network }
   }: any = useContext(AppContext);
+  const [operatorFee, setOperatorFee] = useState(0);
   const [stage, setStage] = useState(UI.Confirm);
   const loanDispatcher = useLoanDispatcher();
   const [amountValidation, setAmountValidation] = useState({
@@ -93,6 +95,17 @@ const CreateLoan = () => {
   const [selectedLoanAuction, setSelectedLoanAuction] = useState(defaultTermAuction);
   const termMonths = loan.term / 60 / 60 / 24 / 30;
 
+  useAsyncEffect(async () => {
+    if (operatorFee === 0 && loanDispatcher) {
+      try {
+        const contractOperatorFee = await loanDispatcher.getOperatorFee();
+        setOperatorFee(contractOperatorFee);
+      } catch (error) {
+        console.error(error);
+        setOperatorFee(defaultOperatorFee);
+      }
+    }
+  }, [loanDispatcher]);
   // Calculations
   const numberAmount = loan.amount;
   const formattedAmount = numeral(loan.amount).format();
@@ -101,7 +114,7 @@ const CreateLoan = () => {
     numberAmount + (numberAmount * (loan.maxMir * termMonths)) / 100
   ).format();
   const netLoan = numeral(numberAmount - (numberAmount * 1) / 100).format();
-  const systemFees = numeral((numberAmount * 1) / 100).format();
+  const systemFees = numeral((numberAmount * operatorFee) / 100).format();
   const totalInterest = numeral((numberAmount * (loan.maxMir * termMonths)) / 100).format();
 
   const onSetAmount = ({ floatValue }) => {
@@ -230,7 +243,8 @@ const CreateLoan = () => {
     netLoan,
     systemFees,
     totalInterest,
-    termsCond
+    termsCond,
+    operatorFee
   };
   const methods = { onSave, onRetry, onToggleTerms };
 

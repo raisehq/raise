@@ -34,7 +34,8 @@ export const getLoanAction = (stage, values, methods) => {
     loan,
     amountValidation,
     numberAmount,
-    termsCond
+    termsCond,
+    operatorFee
   } = values;
 
   const { onSave, onRetry, onToggleTerms } = methods;
@@ -54,7 +55,7 @@ export const getLoanAction = (stage, values, methods) => {
             </LoanFormContainer>
             <LoanFormContainer>
               <LoanFormInfo alignment="left" isMobile={isMobile}>
-                System fees (1%)
+                System fees ({operatorFee}%)
               </LoanFormInfo>
               <LoanFormValue alignment="left" isMobile={isMobile}>
                 -{systemFees} DAI
