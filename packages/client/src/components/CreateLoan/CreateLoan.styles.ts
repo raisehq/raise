@@ -362,6 +362,10 @@ export const CreateLoanRow = styled.div`
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
+
+  @media (max-width: ${size.mobileL}) {
+    padding-bottom: 20px;
+  }
 `;
 
 export const CreateAmountSubSection = styled.div`
@@ -424,6 +428,11 @@ export const CreateLoanDescription = styled.div`
 export const CreateLoanSection = styled(Section)`
   height: 121px;
   margin: 30px 0 40px 0;
+
+  @media (max-width: ${size.mobileL}) {
+    min-height: 121px;
+    height: auto;
+  }
 `;
 
 export const CreateAmountSection = styled(Section)`
