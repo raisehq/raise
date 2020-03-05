@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
+import AppContext from '../AppContext';
+import Queryies from '../../helpers/queryies';
 
 import useAsyncEffect from '../../hooks/useAsyncEffect';
+import useInterval from '../../hooks/useInterval';
 import { requestPage } from '../../helpers/butter';
 import { BorrowerProfile as BorrowerProfileType } from '../../interfaces/BorrowerProfile';
 import {
@@ -13,17 +16,19 @@ import {
   HeaderImage,
   CompanyDetails,
   BorrowerPage,
-  LoanContainer,
+  //LoanContainer,
   SideTitle,
   CardImageCrop,
   BorrowerLogo
 } from './BorrowerProfile.styles';
 import { KPIList } from './KPI';
 import Socials from './Socials';
-import BorrowerLoans from './BorrowerLoans';
+//import BorrowerLoans from './BorrowerLoans';
 import Borrower404 from './Borrower404';
 import BorrowerLoading from './BorrowerLoading';
 import { BorrowerInfo } from './BorrowerInfo';
+import { getActiveAuctions } from '../../utils/loanUtils';
+import BorrowerHeader from './BorrowerHeader';
 
 const defaultBorrower = {
   companyDetails: {
@@ -67,7 +72,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
       updated,
       address,
       foundationDate,
-      ethereumAddress,
+      ethereumAddress: account,
       background
     },
     extraResources,
@@ -75,10 +80,22 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
     kpis
   } = borrower;
   const lastUpdated = new Date(updated).toLocaleDateString('en-GB');
+  const [filteredAuctions, setFilteredAuctions] = useState();
+
+  const {
+    actions: {
+      loan: { onGetLiveAuctionsByAccountSubscription }
+    },
+    store: {
+      loan: { auctions }
+    },
+    webSocket: { webSocket }
+  }: any = useContext(AppContext);
 
   useAsyncEffect(async () => {
     try {
       const response = await requestPage('borrower_profile', slug);
+      console.log(response);
       setPayload(response);
       setLoading(false);
     } catch (error) {
@@ -86,6 +103,22 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (webSocket && account) {
+      const { query, subscriptionName } = Queryies.subscriptions.liveAuctionsByAccount;
+      const variables = {
+        address: account
+      };
+      const callback = onGetLiveAuctionsByAccountSubscription;
+      webSocket.subscribe(query, variables, subscriptionName, callback);
+    }
+  }, [webSocket, account]);
+
+  useInterval(() => {
+    const filtered = getActiveAuctions(auctions, [0]);
+    setFilteredAuctions(filtered);
+  }, 1000);
 
   if (loading) {
     return <BorrowerLoading />;
@@ -101,6 +134,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
           <HeaderImage>
             <CardImageCrop src={background} />
           </HeaderImage>
+          {filteredAuctions && <BorrowerHeader auction={filteredAuctions[0]} />}
           <CompanyDetails>
             <BorrowerLogo src={logo} />
             <CompanyName>{companyName}</CompanyName>
@@ -116,9 +150,17 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
           <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
         </SideInfo>
       </Container>
-      <LoanContainer>
+      {/* <LoanContainer>
         <BorrowerLoans account={ethereumAddress} />
       </LoanContainer>
+      */}
+      <div>
+        {filteredAuctions &&
+          filteredAuctions.map(item => {
+            console.log(item);
+            return <div>{filteredAuctions.length}</div>;
+          })}
+      </div>
     </BorrowerPage>
   );
 };
