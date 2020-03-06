@@ -16,14 +16,12 @@ import {
   HeaderImage,
   CompanyDetails,
   BorrowerPage,
-  //LoanContainer,
   SideTitle,
   CardImageCrop,
   BorrowerLogo
 } from './BorrowerProfile.styles';
 import { KPIList } from './KPI';
 import Socials from './Socials';
-//import BorrowerLoans from './BorrowerLoans';
 import Borrower404 from './Borrower404';
 import BorrowerLoading from './BorrowerLoading';
 import { BorrowerInfo } from './BorrowerInfo';
@@ -150,17 +148,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
           <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
         </SideInfo>
       </Container>
-      {/* <LoanContainer>
-        <BorrowerLoans account={ethereumAddress} />
-      </LoanContainer>
-      */}
-      <div>
-        {filteredAuctions &&
-          filteredAuctions.map(item => {
-            console.log(item);
-            return <div>{filteredAuctions.length}</div>;
-          })}
-      </div>
     </BorrowerPage>
   );
 };
