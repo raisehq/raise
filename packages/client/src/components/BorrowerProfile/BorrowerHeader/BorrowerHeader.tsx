@@ -33,6 +33,7 @@ const BorrowerHeader = ({ auction }) => {
           value={values && values.currentAmount}
           total={values && values.totalAmount}
           progress="percent"
+          precision={0}
         />
       </ProgressContainer>
       <LoanHeaderList>
@@ -62,7 +63,7 @@ const BorrowerHeader = ({ auction }) => {
         </LoanHeaderItem>
         <LoanHeaderItem>
           <LastTextWrapper>
-            <LoanHeaderLabel>APR</LoanHeaderLabel>
+            <LoanHeaderLabel>Current APR</LoanHeaderLabel>
             <LoanHeaderValue>{values && values.currentAPR}</LoanHeaderValue>
           </LastTextWrapper>
         </LoanHeaderItem>
