@@ -18,7 +18,6 @@ const BorrowerHeader = ({ auction }) => {
     <LoanHeader>
       <ProgressContainer>
         <ProgressRow
-          color="#eb3f93"
           value={values && values.currentAmount}
           total={values && values.totalAmount}
           progress="percent"

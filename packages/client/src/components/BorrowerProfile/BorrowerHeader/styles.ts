@@ -13,6 +13,9 @@ export const ProgressRow = styled(Progress)`
   &&&.ui.progress .bar {
     background: #eb3f93;
   }
+  &&&.ui.progress .bar > .progress {
+    right: 0.1em;
+  }
   width: 70%;
 
   @media (max-width: ${size.mobileL}) {
