@@ -3,12 +3,12 @@ import { Either } from '../utils';
 import { toWei } from 'web3-utils';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
-import AppContext from '../components/AppContext';
+import { useRootContext } from '../contexts/RootContext';
 
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const wallet = useWallet();
-  const { followTx }: any = useContext(AppContext);
+  const { followTx }: any = useRootContext();
 
   useAsyncEffect(async () => {
     const ready = Either.either(wallet);

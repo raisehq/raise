@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Loader } from 'semantic-ui-react';
 import {
   Header,
   ClaimButton,
@@ -10,8 +11,7 @@ import {
 import useWallet from '../../../hooks/useWallet';
 import { ClaimLoanContext, Stages } from '../ClaimLoan';
 import { ResumeItemProps } from '../../InvestModal/types';
-import { Loader } from 'semantic-ui-react';
-import AppContext from '../../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
   <ResumeItemBox>
@@ -32,7 +32,7 @@ const Confirm = () => {
   const { loan, setStage, calculatedLoan }: any = useContext(ClaimLoanContext);
   const {
     web3Status: { account }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
   const { id: loanAddress } = loan;
 
   const [loading, setLoading] = useState(false);

@@ -1,18 +1,19 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useAsyncEffect from './useAsyncEffect';
 import useWallet from './useWallet';
 import useWeb3 from './useWeb3';
 import ERC20 from '../commons/erc20';
 import { MAX_VALUE } from '../commons/constants';
 import { Stages } from '../components/RepayLoan/RepayLoan.context';
-import AppContext from '../components/AppContext';
+import { useAppContext } from '../contexts/AppContext';
+import { useRootContext } from '../contexts/RootContext';
 
 const useRepayment = (loan, open) => {
   const { borrowerDebt, id }: any = loan;
+  const { followTx }: any = useRootContext();
   const {
-    web3Status: { account },
-    followTx
-  }: any = useContext(AppContext);
+    web3Status: { account }
+  }: any = useAppContext();
   const { web3 } = useWeb3();
   const wallet = useWallet();
   const [approved, setApproved] = useState(false);

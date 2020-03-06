@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import daggy from 'daggy';
 // import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
 import { fromWei } from 'web3-utils';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import useRouter from '../../hooks/useRouter';
 import InvestState from './InvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
@@ -19,11 +21,11 @@ const UI = daggy.taggedSum('UI', {
 
 const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const {
-    web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
-  }: any = useContext(AppContext);
-  const {
-    history,
     modalRefs,
+    web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
+  }: any = useAppContext();
+  const { history }: any = useRouter();
+  const {
     store: {
       user: {
         details: { kyc_status }
@@ -35,7 +37,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
     actions: {
       onboarding: { showOnboarding }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Confirm);
   const [investment, setInvestment] = useState(0);
@@ -44,7 +46,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   // prettier-ignore
   const connected = (hasProvider && unlocked && accountMatches && networkMatches);
   const userActivated = connected && kyc_status === 3;
-  
+
   const buttonText = match(
     [connected, invested],
     [ANY, false],
@@ -60,9 +62,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
       setStage(UI.Confirm);
       setOpen(true);
     } else {
-      const isBorrowerProfile = history.location.pathname
-        .split('/')
-        .filter(pt => pt === 'c');
+      const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'c');
       tagManager.sendEventCategory(
         'Card',
         TMEvents.Click,

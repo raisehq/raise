@@ -1,52 +1,55 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import LogRocket from 'logrocket';
+
 import useGoogleTagManager from './hooks/useGoogleTagManager';
 import App from './components/App';
-import RootContext from './context';
-import connector from './store/actions';
-import reducers from './store/reducers';
-import FollowTx from './helpers/followTx';
-import initialState from './store/initialState';
+
+// Providers
+import RootContextProvider, { Updater as RootContextUpdater } from './contexts/RootContext';
+import BlockContextProvider, { Updater as BlockContextUpdater } from './contexts/BlockContext';
+import AppContextProvider, { Updater as AppContextUpdater } from './contexts/AppContext';
+
+// Import global tippngs for TS
+import './globals';
+
+// Import some inline css
 import 'semantic-ui-css/semantic.min.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './global.css';
 
-type PropsValueType = {
-  store: any;
-  actions: any;
-  isLogged: boolean;
-  followTx: any;
-};
-
-declare global {
-  interface Window {
-    fbq: any;
-  }
+function ContextProviders({ children }) {
+  return (
+    <RootContextProvider>
+      <AppContextProvider>
+        <BlockContextProvider>{children}</BlockContextProvider>
+      </AppContextProvider>
+    </RootContextProvider>
+  );
 }
 
-window.fbq = window.fbq || null;
+function ContextUpdaters() {
+  return (
+    <>
+      <RootContextUpdater />
+      <AppContextUpdater />
+      <BlockContextUpdater />
+    </>
+  );
+}
 
 const Root = () => {
-  const [store, dispatch]: any = useReducer<any, any>(reducers, initialState, () => initialState);
   const tagManager = useGoogleTagManager();
-  process.env.REACT_APP_LOGROCKET === 'true' && LogRocket.init('rjsyho/raisehq');
-
   tagManager.initialize();
-  const followTx = new FollowTx(
-    `wss://${store.config.network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`
-  );
-  const actions: any = connector(dispatch, store);
-  const values: PropsValueType = { store, actions, isLogged: false, followTx };
 
   return (
-    <RootContext.Provider value={values}>
+    <ContextProviders>
+      <ContextUpdaters />
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </RootContext.Provider>
+    </ContextProviders>
   );
 };
 

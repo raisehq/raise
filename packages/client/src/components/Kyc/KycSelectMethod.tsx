@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   CardTitle,
   CardSubTitle,
@@ -19,11 +19,10 @@ import {
 } from './Kyc.styles';
 import { Link } from '../Link';
 import OnboardingProgressBar from '../OnboardingProgressBar';
-import { isMobile } from 'react-device-detect';
-import AppContext from '../AppContext';
+import useRouter from '../../hooks/useRouter';
 
 const KycSelectMethod = () => {
-  const { history }: any = useContext(AppContext);
+  const { history }: any = useRouter();
   return (
     <KycWrapper>
       <OnboardingProgressBar step={3} isMobile={isMobile} />

@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import { Grid } from 'semantic-ui-react';
 // import Logout from '../Logout';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import useRouter from '../../hooks/useRouter';
 import {
   CenteredContainerStyled as CenteredContainer,
   HeroLayout,
@@ -30,12 +31,13 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
       auth: {
         login: { logged }
       }
-    },
+    }
+  }: any = useRootContext();
+  const {
     history: {
       location: { pathname }
     }
-  }: any = useContext(AppContext);
-
+  }: any = useRouter();
   // Check if is Logged
   if (!logged && checkLogged) {
     return <Redirect to="/join" />;

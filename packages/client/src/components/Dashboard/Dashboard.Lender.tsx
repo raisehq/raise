@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Element } from 'react-scroll';
+import useCookie from 'react-use-cookie';
 import { Header } from 'semantic-ui-react';
 import { DashboardContainer, DashboardWrapper, DashboardTab } from './Dashboard.styles';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import GetStarted from '../GetStarted';
 import Suggesteds from './Dashboard.Suggesteds';
 import Tab from './Dashboard.Tab';
 import Queryies from '../../helpers/queryies';
-import { Element } from 'react-scroll';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { findOne } from '../../helpers/butter';
-import useCookie from 'react-use-cookie';
 import WarningModal from '../WarningModal';
 
 const Dashboard = () => {
@@ -25,10 +26,11 @@ const Dashboard = () => {
       auth: {
         login: { logged }
       }
-    },
+    }
+  }: any = useRootContext();
+  const {
     webSocket: { webSocket }
-  }: any = useContext(AppContext);
-
+  }: any = useAppContext();
   const [warningCK, setWarningCK] = useCookie('warning', '');
   const [activeWarning, setWarning] = useState();
   const [open, setOpen] = useState(false);

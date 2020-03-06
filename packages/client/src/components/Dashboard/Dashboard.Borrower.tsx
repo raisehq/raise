@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   Button,
   DashboardContainer,
@@ -6,8 +6,8 @@ import {
   DashboardTab,
   Header
 } from './Dashboard.styles';
-import AppContext from '../AppContext';
 import Tab from './Dashboard.Tab';
+import { useAppContext } from '../../contexts/AppContext';
 import Queryies from '../../helpers/queryies';
 import { Element } from 'react-scroll';
 
@@ -24,7 +24,7 @@ const Dashboard = () => {
       }
     },
     webSocket: { webSocket }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
 
   const onCreateLoan = useCallback(() => history.push('/create-loan'), [history]);
 
@@ -64,10 +64,10 @@ const Dashboard = () => {
   return (
     <DashboardWrapper>
       <DashboardContainer>
-       <Element name="myActivity" className="element">
-        <Header as="h1" id="my-activity">
-          My Activity
-        </Header>
+        <Element name="myActivity" className="element">
+          <Header as="h1" id="my-activity">
+            My Activity
+          </Header>
         </Element>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
         <Button id="btn-create-loan" onClick={onCreateLoan}>

@@ -1,11 +1,11 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { match } from 'pampy';
 import { checkUsername } from '../../services/auth';
-import AppContext from '../AppContext';
 import { Content, Side, Line, Main } from './MyAccount.styles';
 import ProfileInfo from './components/ProfileInfo';
 import UpdateUsername from './components/UpdateUsername';
 import UpdatePassword from './components/UpdatePassword';
+import { useRootContext } from '../../contexts/RootContext';
 
 const MyAccount = () => {
   const [usernameExists, setUsernameExists] = useState(false);
@@ -25,7 +25,7 @@ const MyAccount = () => {
         details: { id, email, username: storedUsername, kyc_status }
       }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
 
   const changeUsername = async value => {
     clearUser();

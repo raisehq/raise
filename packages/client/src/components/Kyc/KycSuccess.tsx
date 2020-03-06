@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   KycSuccessWrapper,
   KycSuccessHeader,
@@ -8,11 +8,11 @@ import {
   MainImage,
   GreenActionTitleText
 } from './Kyc.styles';
-import AppContext from '../AppContext';
+import useRouter from '../../hooks/useRouter';
 import { IMAGES_PATH } from '../../commons/constants';
 
 const KycSuccess = () => {
-  const { history }: any = useContext(AppContext);
+  const { history }: any = useRouter();
   return (
     <KycSuccessWrapper>
       <KycSuccessHeader>

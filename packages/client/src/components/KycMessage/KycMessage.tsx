@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Icon, Message } from 'semantic-ui-react';
 import { OrangeMessage, KycMessageButton } from './KycMessage.styles';
 import { Link } from 'react-router-dom';
 import daggy from 'daggy';
-import AppContext from '../AppContext';
+import useRouter from '../../hooks/useRouter';
+import { useRootContext } from '../../contexts/RootContext';
 import { useEffect } from 'react';
 
 const Status = daggy.taggedSum('UI', {
@@ -23,14 +24,14 @@ const StatusSet = {
 };
 
 const KycMessage = () => {
+  const { history }: any = useRouter();
   const {
-    history,
     store: {
       user: {
         details: { kyc_status, accounttype_id }
       }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext;
   const [status, setStatus]: any = useState(Status.Start);
 
   const onKYC = () => history.push('/kyc');

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   CardTitle,
   SelectYourWalletTitle,
@@ -6,7 +6,7 @@ import {
   GoBack,
   WalletIcon,
   SetUpSubtitle,
-  OtherWalletsText,
+  OtherWalletsText
 } from './Web3Check.styles';
 
 import OnboardingProgressBar from '../OnboardingProgressBar';
@@ -16,7 +16,7 @@ import GoBackButton from '../GoBackButton';
 import { getWalletName } from '../../utils';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useWeb3 from '../../hooks/useWeb3';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import CryptoWallets from '../../commons/cryptoWallets';
 
 const WalletSetUp = ({ onNext, onBack }: any) => {
@@ -24,7 +24,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     store: {
       config: { network, networkId }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
   const tagManager = useGoogleTagManager('Wallet');
   const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
   const [defaultWallet, setDefaultWallet] = useState();
@@ -37,7 +37,10 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
 
-    if ((defaultWallet.name === -1 && walletName === 'metamask') || (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)) {
+    if (
+      (defaultWallet.name === -1 && walletName === 'metamask') ||
+      (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)
+    ) {
       window.open('http://metamask.app.link/', '_blank');
     } else {
       try {
@@ -73,9 +76,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
         walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`}
       />
       <GoBack>
-        <GoBackButton
-          onClickAction={onBack}
-        />
+        <GoBackButton onClickAction={onBack} />
       </GoBack>
     </Web3CheckWalletWrapper>
   );

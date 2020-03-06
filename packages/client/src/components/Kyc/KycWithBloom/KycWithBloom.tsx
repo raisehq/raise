@@ -15,14 +15,14 @@ import { Button, Image } from 'semantic-ui-react';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
-import AppContext from '../../AppContext';
+import useRouter from '../../../hooks/useRouter';
 import { URL } from '../../../services/kyc';
 import LocalData from '../../../helpers/localData';
 import useInterval from '../../../hooks/useInterval';
 import { getUser } from '../../../services/auth';
 
 const KycWithBloom = ({ onBack, token = '' }) => {
-  const { history }: any = useContext(AppContext);
+  const { history }: any = useRouter();
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');

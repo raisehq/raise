@@ -61,6 +61,16 @@ export const Right = (x: any) => ({
   inspect: () => `Right(${x})`
 });
 
+export function safeAccess(object, path) {
+  return object
+    ? path.reduce(
+        (accumulator, currentValue) =>
+          accumulator && accumulator[currentValue] ? accumulator[currentValue] : null,
+        object
+      )
+    : null;
+}
+
 export const Left = (x: any) => ({
   map: () => Left(x),
   fold: (f: any) => f(x),
@@ -116,7 +126,6 @@ export const getContractsDefinition = async () => {
   const contractsDef = window.Cypress ? window.contracts : remoteContracts.data;
   return contractsDef;
 };
-
 
 export const getWalletName = walletId => {
   switch (walletId) {
