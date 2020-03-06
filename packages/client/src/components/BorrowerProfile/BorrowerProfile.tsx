@@ -93,7 +93,6 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   useAsyncEffect(async () => {
     try {
       const response = await requestPage('borrower_profile', slug);
-      console.log(response);
       setPayload(response);
       setLoading(false);
     } catch (error) {
