@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Label, Icon } from 'semantic-ui-react';
 import { useAppContext } from '../../contexts/AppContext';
 
@@ -6,7 +6,7 @@ import { useAppContext } from '../../contexts/AppContext';
 const Web3Network = () => {
   const {
     web3Status: { network }
-  }: any = useContext(useAppContext);
+  }: any = useAppContext();
   const iconColor = !network ? 'green' : 'red';
 
   return (

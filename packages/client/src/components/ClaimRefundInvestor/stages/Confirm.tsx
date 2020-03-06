@@ -10,7 +10,7 @@ import {
 import useWallet from '../../../hooks/useWallet';
 import { ClaimRefundContext, Stages } from '../ClaimRefund';
 import { ResumeItemProps } from '../../InvestModal/types';
-import { useAppContext } from '../../contexts/AppContext';
+import { useAppContext } from '../../../contexts/AppContext';
 
 const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
   <ResumeItemBoxBig>

@@ -17,7 +17,7 @@ const BLOCK_NUMBER = 'BLOCK_NUMBER';
 
 const UPDATE_BLOCK_NUMBER = 'UPDATE_BLOCK_NUMBER';
 
-const BlockContext = createContext();
+const BlockContext = createContext({});
 
 function useBlockDataContext() {
   return useContext(BlockContext);
@@ -68,31 +68,34 @@ export function Updater() {
   }: any = useAppContext();
 
   // update block number
+  const update = (web3Library, stale) => {
+    web3Library.eth
+      .getBlockNumber()
+      .then(blockNumber => {
+        if (!stale) {
+          updateBlockNumber(chainId, blockNumber);
+        }
+      })
+      .catch(() => {
+        if (!stale) {
+          updateBlockNumber(chainId, null);
+        }
+      });
+  };
+
   useEffect(() => {
     if (library) {
-      let stale = false;
-      function update() {
-        library
-          .getBlockNumber()
-          .then(blockNumber => {
-            if (!stale) {
-              updateBlockNumber(chainId, blockNumber);
-            }
-          })
-          .catch(() => {
-            if (!stale) {
-              updateBlockNumber(chainId, null);
-            }
-          });
-      }
-      update();
-      library.on('block', update);
+      let isStale = false;
+
+      update(library, isStale);
+      const subscription = library.eth.subscribe('newBlockHeaders', () => update(library, isStale));
 
       return () => {
-        stale = true;
-        library.removeListener('block', update);
+        isStale = true;
+        subscription.unsubscribe();
       };
     }
+    return;
   }, [chainId, library, updateBlockNumber]);
 
   return null;
@@ -101,7 +104,7 @@ export function Updater() {
 export function useBlockNumber() {
   const {
     web3Status: { walletNetworkId: chainId }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
 
   const [state]: any = useBlockDataContext();
 

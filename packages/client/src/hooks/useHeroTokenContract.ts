@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { Either } from '../utils';
 import { toWei } from 'web3-utils';
 import useWallet from './useWallet';

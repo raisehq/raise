@@ -11,7 +11,7 @@ import {
 import useWallet from '../../../hooks/useWallet';
 import { ClaimLoanContext, Stages } from '../ClaimLoan';
 import { ResumeItemProps } from '../../InvestModal/types';
-import { useAppContext } from '../../contexts/AppContext';
+import { useAppContext } from '../../../contexts/AppContext';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
   <ResumeItemBox>
@@ -31,7 +31,7 @@ const Confirm = () => {
   const metamask = useWallet();
   const { loan, setStage, calculatedLoan }: any = useContext(ClaimLoanContext);
   const {
-    web3Status: { account }
+    web3Status: { walletAccount: account }
   }: any = useAppContext();
   const { id: loanAddress } = loan;
 

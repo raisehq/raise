@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import useWallet from './useWallet';
 import useWeb3 from './useWeb3';
 import useAsyncEffect from './useAsyncEffect';

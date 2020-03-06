@@ -20,9 +20,11 @@ import {
 import { Link } from '../Link';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import useRouter from '../../hooks/useRouter';
+import { useAppContext } from '../../contexts/AppContext';
 
 const KycSelectMethod = () => {
   const { history }: any = useRouter();
+  const { isMobile }: any = useAppContext();
   return (
     <KycWrapper>
       <OnboardingProgressBar step={3} isMobile={isMobile} />

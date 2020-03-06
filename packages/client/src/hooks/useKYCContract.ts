@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
 import { useRootContext } from '../contexts/RootContext';

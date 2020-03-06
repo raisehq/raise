@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Onboarding from '@raisehq/onboarding';
 import { useAppContext } from '../../contexts/AppContext';
 

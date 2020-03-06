@@ -10,14 +10,20 @@ import RootContextProvider, { Updater as RootContextUpdater } from './contexts/R
 import BlockContextProvider, { Updater as BlockContextUpdater } from './contexts/BlockContext';
 import AppContextProvider, { Updater as AppContextUpdater } from './contexts/AppContext';
 
-// Import global tippngs for TS
-import './globals';
-
 // Import some inline css
 import 'semantic-ui-css/semantic.min.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './global.css';
+
+// Declare global
+declare global {
+  interface Window {
+    fbq: any;
+  }
+}
+
+window.fbq = window.fbq || null;
 
 function ContextProviders({ children }) {
   return (

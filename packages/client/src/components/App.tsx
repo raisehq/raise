@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { Switch } from 'react-router-dom';
 import 'url-search-params-polyfill';
 import { Dimmer, Loader } from 'semantic-ui-react';

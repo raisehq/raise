@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { BrowserView } from 'react-device-detect';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { useAppContext } from '../../contexts/AppContext';

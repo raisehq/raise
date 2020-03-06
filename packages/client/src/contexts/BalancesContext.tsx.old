@@ -12,7 +12,7 @@ import BigNumber from 'bignumber.js';
 
 import useDebounce from './useDebounce';
 import { getEtherBalance, getTokenBalance, isAddress } from '../utils';
-import { useBlockNumber } from '../contexts/BlockContext';
+import { useBlockNumber } from './BlockContext';
 
 const LOCAL_STORAGE_KEY = 'BALANCES';
 

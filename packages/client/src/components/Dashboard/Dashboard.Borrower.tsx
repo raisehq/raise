@@ -8,12 +8,13 @@ import {
 } from './Dashboard.styles';
 import Tab from './Dashboard.Tab';
 import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import useRouter from '../../hooks/useRouter';
 import Queryies from '../../helpers/queryies';
 import { Element } from 'react-scroll';
 
 const Dashboard = () => {
   const {
-    history,
     actions: {
       loan: { onGetLiveAuctionsByAccountSubscription, onGetLoansByAccountSubscription }
     },
@@ -22,10 +23,12 @@ const Dashboard = () => {
       user: {
         cryptoAddress: { address }
       }
-    },
+    }
+  }: any = useRootContext();
+  const {
     webSocket: { webSocket }
   }: any = useAppContext();
-
+  const { history }: any = useRouter();
   const onCreateLoan = useCallback(() => history.push('/create-loan'), [history]);
 
   const panes = [

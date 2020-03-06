@@ -13,10 +13,15 @@ import LocalData from '../helpers/localData';
 export const AppContext = createContext({
   modalRefs: {},
   webSocket: {},
+  setWebSocket: {},
   daiWebSocket: {},
+  setDaiWebSocket: {},
   onSetGetStarted: {},
   getStarted: false,
-  web3Status: {}
+  web3Status: {},
+  isLoading: true,
+  setLoading: {},
+  setGetStarted: {}
 });
 
 export const useAppContext = () => useContext(AppContext);
@@ -180,7 +185,8 @@ export default function Provider({ children }) {
         onSetGetStarted,
         modalRefs,
         webSocket,
-        isLoading: isLoading,
+        setGetStarted,
+        isLoading,
         setLoading,
         daiWebSocket,
         web3Status,
