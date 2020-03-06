@@ -102,13 +102,18 @@ export const LoanDaysLeft = styled.div`
   align-items: center;
 
   position: absolute;
-  top: 28%;
+  top: 215px;
   right: 2%;
   height: 40px;
   width: 100px;
 
+  @media (max-width: 1020px) {
+    top: 80px;
+    right: 2%;
+  }
+
   @media (max-width: ${size.mobileL}) {
-    top: 8%;
+    top: 80px;
     right: 2%;
   }
 `;

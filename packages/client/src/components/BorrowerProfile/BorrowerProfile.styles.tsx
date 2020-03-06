@@ -50,6 +50,7 @@ export const BorrowerCard = styled(Card)`
     width: 100%;
     height: fit-content;
     background: none;
+    position: relative;
 
     max-width: 797px;
   }
@@ -164,7 +165,6 @@ export const HeaderImage = styled.div`
   height: 124px;
   overflow: hidden;
   flex-wrap: wrap;
-  position: relative;
 
   @media screen and ${device.laptop} {
     height: 267px;
