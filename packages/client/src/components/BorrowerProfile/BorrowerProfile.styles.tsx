@@ -148,7 +148,7 @@ export const HeaderBox = styled.div`
 `;
 
 export const CompanyDetails = styled.div`
-  padding: 53px 10px 0px 10px;
+  padding: 0 10px 0px 10px;
   @media screen and ${device.mobileM} {
     justify-content: space-between;
   }
@@ -164,6 +164,8 @@ export const HeaderImage = styled.div`
   height: 124px;
   overflow: hidden;
   flex-wrap: wrap;
+  position: relative;
+
   @media screen and ${device.laptop} {
     height: 267px;
   }

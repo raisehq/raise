@@ -5,10 +5,16 @@ import {
   LoanHeaderLabel,
   LoanHeaderValue,
   LoanTextWrapper,
-  LastTextWrapper,
   LoanHeaderList,
   ProgressRow,
-  ProgressContainer
+  ProgressContainer,
+  InvestButton,
+  LoanButtonRow,
+  LoanDaysLeft,
+  LoanDaysLeftWrapper,
+  LastTextWrapper,
+  LoanDaysLeftLabel,
+  LoanDaysLeftValue
 } from './styles';
 import { getCalculations } from '../../../utils/loanUtils';
 
@@ -16,6 +22,12 @@ const BorrowerHeader = ({ auction }) => {
   const values = auction ? getCalculations(auction) : null;
   return (
     <LoanHeader>
+      <LoanDaysLeft>
+        <LoanDaysLeftWrapper>
+          <LoanDaysLeftLabel>Days left</LoanDaysLeftLabel>
+          <LoanDaysLeftValue>{values && values.times.loanTerm}</LoanDaysLeftValue>
+        </LoanDaysLeftWrapper>
+      </LoanDaysLeft>
       <ProgressContainer>
         <ProgressRow
           value={values && values.currentAmount}
@@ -26,20 +38,14 @@ const BorrowerHeader = ({ auction }) => {
       <LoanHeaderList>
         <LoanHeaderItem>
           <LoanTextWrapper>
+            <LoanHeaderLabel>Raised so far</LoanHeaderLabel>
+            <LoanHeaderValue>{values && values.principal}</LoanHeaderValue>
+          </LoanTextWrapper>
+        </LoanHeaderItem>
+        <LoanHeaderItem>
+          <LoanTextWrapper>
             <LoanHeaderLabel>Investors</LoanHeaderLabel>
             <LoanHeaderValue>{auction && auction.investorCount}</LoanHeaderValue>
-          </LoanTextWrapper>
-        </LoanHeaderItem>
-        <LoanHeaderItem>
-          <LoanTextWrapper>
-            <LoanHeaderLabel>Loan Term</LoanHeaderLabel>
-            <LoanHeaderValue>{values && values.times.loanTerm}</LoanHeaderValue>
-          </LoanTextWrapper>
-        </LoanHeaderItem>
-        <LoanHeaderItem>
-          <LoanTextWrapper>
-            <LoanHeaderLabel>Raised</LoanHeaderLabel>
-            <LoanHeaderValue>{values && values.principal}</LoanHeaderValue>
           </LoanTextWrapper>
         </LoanHeaderItem>
         <LoanHeaderItem>
@@ -49,12 +55,23 @@ const BorrowerHeader = ({ auction }) => {
           </LoanTextWrapper>
         </LoanHeaderItem>
         <LoanHeaderItem>
-          <LastTextWrapper>
-            <LoanHeaderLabel>Days left</LoanHeaderLabel>
+          <LoanTextWrapper>
+            <LoanHeaderLabel>Loan Term</LoanHeaderLabel>
             <LoanHeaderValue>{values && values.times.loanTerm}</LoanHeaderValue>
+          </LoanTextWrapper>
+        </LoanHeaderItem>
+        <LoanHeaderItem>
+          <LastTextWrapper>
+            <LoanHeaderLabel>APR</LoanHeaderLabel>
+            <LoanHeaderValue>{values && values.currentAPR}</LoanHeaderValue>
           </LastTextWrapper>
         </LoanHeaderItem>
       </LoanHeaderList>
+      {auction && (
+        <LoanButtonRow>
+          <InvestButton loan={auction} />
+        </LoanButtonRow>
+      )}
     </LoanHeader>
   );
 };
