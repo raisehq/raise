@@ -31,7 +31,7 @@ const KycMessage = () => {
         details: { kyc_status, accounttype_id }
       }
     }
-  }: any = useRootContext;
+  }: any = useRootContext();
   const [status, setStatus]: any = useState(Status.Start);
 
   const onKYC = () => history.push('/kyc');
