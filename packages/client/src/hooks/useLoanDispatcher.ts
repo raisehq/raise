@@ -16,6 +16,14 @@ const useLoanDispatcher = () => {
         const contract = await wallet.addContract('LoanDispatcher');
         const account = await wallet.getPrimaryAccount();
         setActiveContract({
+          getOperatorFeeWei: async () => {
+            const fee = await contract.methods.operatorFee().call({ from: account });
+            return fee;
+          },
+          getOperatorFee: async () => {
+            const fee = await contract.methods.operatorFee().call({ from: account });
+            return Number(web3.utils.fromWei(fee));
+          },
           deploy: async (
             minAmount,
             amount,

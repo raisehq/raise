@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { BrowserView } from 'react-device-detect';
+import useAsyncEffect from '../../hooks/useAsyncEffect';
 import AppContext from '../AppContext';
 import { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
@@ -37,7 +38,8 @@ import {
   SLIDER_MAX_APR,
   MIN_APR_DEFAULT,
   MAX_APR_DEFAULT,
-  MARKS
+  MARKS,
+  OPERATOR_FEE_DEFAULT
 } from './constants';
 import {
   formatAmount,
@@ -66,7 +68,7 @@ const CreateLoan = () => {
   const {
     web3Status: { network }
   }: any = useContext(AppContext);
-
+  const [operatorFee, setOperatorFee] = useState(0);
   const [stage, setStage] = useState(UI.Confirm);
   const loanDispatcher = useLoanDispatcher();
   const [amountValidation, setAmountValidation] = useState({
@@ -96,6 +98,19 @@ const CreateLoan = () => {
 
   const monthOptions = useMemo(() => getMonths(network), [network]);
   const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(network), [network]);
+
+  useAsyncEffect(async () => {
+    if (operatorFee === 0 && loanDispatcher) {
+      try {
+        const contractOperatorFee = await loanDispatcher.getOperatorFee();
+        setOperatorFee(contractOperatorFee);
+      } catch (error) {
+        console.error(error);
+        setOperatorFee(OPERATOR_FEE_DEFAULT);
+      }
+    }
+  }, [loanDispatcher]);
+
   useEffect(() => {
     const coinsArrays: any = COINS.map(item => ({
       text: item.name,
@@ -247,13 +262,14 @@ const CreateLoan = () => {
       calculateTermFromSecondsToMonths(loan.term)
     ),
     netLoan: calculateNetLoan(loan.amount),
-    systemFees: calculateSystemFees(loan.amount),
+    systemFees: calculateSystemFees(loan.amount)(operatorFee),
     totalInterest: calculateTotalInterest(
       loan.amount,
       loan.maxMir,
       calculateTermFromSecondsToMonths(loan.term)
     ),
-    termsCond
+    termsCond,
+    operatorFee
   };
   const methods = { onSave, onRetry, onToggleTerms };
 

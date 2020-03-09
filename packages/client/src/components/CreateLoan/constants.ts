@@ -17,6 +17,7 @@ export const SLIDER_MIN_APR = 0;
 export const SLIDER_MAX_APR = 20;
 export const MIN_APR_DEFAULT = 10;
 export const MAX_APR_DEFAULT = 20;
+export const OPERATOR_FEE_DEFAULT = 4;
 
 export const MARKS = {
   5: '',

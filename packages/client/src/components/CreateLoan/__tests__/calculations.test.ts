@@ -46,7 +46,8 @@ test('Convert Term from seconds to  months', () => {
 
 test('Calculate System fees ', () => {
   const numberAmount = 10.0;
-  const result = calculateSystemFees(numberAmount);
+  const operatorFees = 1;
+  const result = calculateSystemFees(numberAmount)(operatorFees);
   expect(result).toBe('0,10');
 });
 

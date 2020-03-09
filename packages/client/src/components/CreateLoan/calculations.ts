@@ -8,7 +8,8 @@ export const calculateRepaymentAmount = (numberAmount, loanMaxMir, termMonths) =
 export const calculateNetLoan = numberAmount =>
   numeral(numberAmount - (numberAmount * 1) / 100).format();
 
-export const calculateSystemFees = numberAmount => numeral((numberAmount * 1) / 100).format();
+export const calculateSystemFees = numberAmount => operatorFree =>
+  numeral((numberAmount * operatorFree) / 100).format();
 
 export const calculateTotalInterest = (numberAmount, loanMaxMir, termMonths) =>
   numeral((numberAmount * (loanMaxMir * termMonths)) / 100).format();

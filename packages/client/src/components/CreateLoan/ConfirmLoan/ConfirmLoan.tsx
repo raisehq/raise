@@ -27,7 +27,8 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
     amountValidation,
     numberAmount,
     termsCond,
-    selectedCoinType
+    selectedCoinType,
+    operatorFee
   } = values;
   return (
     <LoanConfirmation>
@@ -52,8 +53,8 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
           </AmountRow>
           {!isMobile && <DividerConfirmLoan />}
           <AmountRow>
-            <AmountDescription>System fees (1%)</AmountDescription>
-            <AmountNumber>-{systemFees}</AmountNumber>
+            <AmountDescription>System fees</AmountDescription>
+            <AmountNumber>{operatorFee}%</AmountNumber>
           </AmountRow>
           {!isMobile && <DividerConfirmLoan />}
           <AmountRow>
