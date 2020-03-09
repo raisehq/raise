@@ -10,7 +10,10 @@ import {
   LoanResume,
   AmountRow,
   AmountDescription,
-  AmountNumber
+  AmountNumber,
+  FirstContainer,
+  SecondContainer,
+  HeaderRow
 } from '../CreateLoan.styles';
 
 const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
@@ -28,13 +31,15 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
   } = values;
   return (
     <LoanConfirmation>
+      <HeaderRow>
+        <AmountRow>
+          <AmountDescription bold fontSize={16}>
+            Summary
+          </AmountDescription>
+        </AmountRow>
+      </HeaderRow>
       <LoanResume>
-        <div>
-          <AmountRow>
-            <AmountDescription bold fontSize={16}>
-              Summary
-            </AmountDescription>
-          </AmountRow>
+        <FirstContainer>
           {!isMobile && <DividerConfirmLoan />}
           <AmountRow>
             <AmountDescription>Cryptocurrency</AmountDescription>
@@ -55,9 +60,10 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
             <AmountDescription>Net loan proceeds</AmountDescription>
             <AmountNumber bold>{netLoan}</AmountNumber>
           </AmountRow>
-        </div>
+        </FirstContainer>
         {!isMobile && <Divider />}
-        <div>
+        {isMobile && <Divider vertical />}
+        <SecondContainer>
           <AmountRow>
             <AmountDescription>Principal</AmountDescription>
             <AmountNumber>{formattedAmount}</AmountNumber>
@@ -72,7 +78,7 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
             <AmountDescription>Total repayment amount</AmountDescription>
             <AmountNumber bold>{repaymentAmount}</AmountNumber>
           </AmountRow>
-        </div>
+        </SecondContainer>
       </LoanResume>
       {!isMobile && <Divider />}
       <AmountRow>

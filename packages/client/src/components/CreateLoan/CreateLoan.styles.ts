@@ -50,7 +50,7 @@ export const Header = styled(HeaderUI)<HeaderProps>`
 export const Divider = styled(DividerUI)<DividerProps>`
   &&&.ui.divider {
     border-top: none;
-    border-bottom: 1px solid #b1b3b9;
+    border-bottom: 1px solid #b1b3b9
   }
 `;
 
@@ -454,6 +454,11 @@ export const AmountRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media ${maxDevice.mobileL} {
+    padding: 5px;
+    width: 100%;
+  }
 `;
 
 export const AmountDescription = styled.div<AmountDescriptionProps>`
@@ -464,6 +469,10 @@ export const AmountDescription = styled.div<AmountDescriptionProps>`
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '12px')};
   font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
   color: ${({ bold }) => (bold ? '#3c4251' : 'inherit')};
+
+  @media ${maxDevice.mobileL} {
+    line-height: 14px;
+  }
 `;
 
 export const AmountDescriptionBold = styled.div`
@@ -474,10 +483,37 @@ export const AmountDescriptionBold = styled.div`
 
 export const AmountNumber = styled(AmountDescription)`
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '20px')};
+
+  @media ${maxDevice.mobileL} {
+    font-size: 12px;
+    align-items: flex-start;
+  }
 `;
 
 export const DividerConfirmLoan = styled(Divider)`
   &&&.ui.divider {
     border-bottom: 1px solid #ecedee;
+  }
+`;
+
+export const FirstContainer = styled.div`
+  width: 100%;
+  @media ${maxDevice.mobileL} {
+    padding: 0 5px;
+  }
+`;
+
+export const HeaderRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: nowrap;
+`;
+
+export const SecondContainer = styled.div`
+  width: 100%;
+  @media ${maxDevice.mobileL} {
+    padding: 0 5px;
   }
 `;
