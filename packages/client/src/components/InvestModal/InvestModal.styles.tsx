@@ -155,14 +155,14 @@ export const Header = styled.h2`
 export const ModalInputContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   -webkit-flex-flow: row wrap;
 `;
 
 export const InputContainer = styled.div`
-
+  max-width: 173px;
+  width: 100%;
 `;
 
 export const ModalInputBox = styled.div<ModalInputProps>`
@@ -175,24 +175,29 @@ export const ModalInputBox = styled.div<ModalInputProps>`
   align-items: center;
   flex-grow: 1;
   justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 8px;
   & > div {
     flex: 0.99;
   }
 `;
 
+export const InvestorBalance = styled(Balance)`
+  cursor: pointer;
+  &:hover {
+    color: #00a76f;
+  }
+`;
+
 export const InputLabel = styled.div<InputLabelProps>`
-  margin-top: 12px;
-  text-align: center;
-  color: ${({ green }) => (green ? '#00A76F' : '#5A5A5A')};
+  color: #5a5a5a;
 `;
 
 export const FundAllLabel = styled.div<InputLabelProps>`
-display: inline-block
-  margin-top: 12px;
+  display: inline-block;
   text-align: center;
-  color: #00A76F;
+  color: #00a76f;
   cursor: pointer;
-  margin-left: 60px;
 `;
 
 export const InvestResume = styled.div`
@@ -324,7 +329,7 @@ export const ListItemPadding = styled(List.Item)`
   }
 `;
 
-export const LabelPadding = styled(Label) <LabelPaddingProps>`
+export const LabelPadding = styled(Label)<LabelPaddingProps>`
   &&& {
     font-size: 14px !important;
     margin-right: 8px !important;
@@ -337,7 +342,7 @@ export const IconSuccess = styled(Icon)`
     margin: 0 !important;
   }
 `;
-export const LabelPaddingLoader = styled(LabelPadding) <LabelPaddingProps>`
+export const LabelPaddingLoader = styled(LabelPadding)<LabelPaddingProps>`
   &&& {
     position: relative;
     margin-bottom: -7px;
@@ -432,4 +437,4 @@ export const Explanation = styled(Grid.Row)`
 
 export const UserBalance = styled(Balance)`
   margin-left: 30px;
-`
+`;
