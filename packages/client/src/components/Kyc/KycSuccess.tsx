@@ -24,7 +24,7 @@ const KycSuccess = () => {
         </KycSuccessDescription>
       </KycSuccessHeader>
       <GreenActionButton onClick={() => history.push('/')}>
-        <GreenActionTitleText>Go to the marketplace</GreenActionTitleText>
+        <GreenActionTitleText>Check loan offers</GreenActionTitleText>
       </GreenActionButton>
     </KycSuccessWrapper>
   );
