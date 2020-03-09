@@ -143,6 +143,10 @@ export const LoanHeaderLabel = styled.div`
     align-items: flex-end;
     padding-right: 10px;
   }
+
+  @media (max-width: ${size.mobileM}) {
+    width: 35%;
+  }
 `;
 
 export const LoanHeaderValue = styled.div`
@@ -153,10 +157,15 @@ export const LoanHeaderValue = styled.div`
   font-weight: bold;
   font-size: 18px;
   padding: 2px;
+
   @media (max-width: ${size.mobileL}) {
     width: 20%;
     align-items: flex-end;
     font-size: 14px;
+  }
+
+  @media (max-width: ${size.mobileM}) {
+    width: 30%;
   }
 `;
 export const LoanButtonRow = styled.div`
