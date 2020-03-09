@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import InvestCard from './InvestCard';
-import { Company } from '../../types';
+import { InvestCard } from '@raisehq/components';
+import { Company } from '@raisehq/components';
 
 const auction = {
   auctionEndTimestamp: '1575021892',

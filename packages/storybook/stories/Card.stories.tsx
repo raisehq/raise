@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
-import Card from './Card.component';
+import { Card } from '@raisehq/components';
 
 const Wrapper = styled.div`
   display: flex;

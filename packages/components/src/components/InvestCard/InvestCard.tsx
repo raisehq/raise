@@ -5,10 +5,11 @@ import { Company } from '../../types';
 
 interface LoanProps {
   auction: any;
-  borrower: Company;
+  borrower?: Company;
   link?: boolean;
   children?: ReactNode;
   className?: string;
+  borrowerInfo?: any;
 }
 
 const InvestCard: React.SFC<LoanProps> = (props: LoanProps) => {
