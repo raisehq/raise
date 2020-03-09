@@ -17,13 +17,13 @@ const useRepayment = (loan, open) => {
   const { web3 } = useWeb3();
   const wallet = useWallet();
   const [approved, setApproved] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
   const [stage, setStage] = useState(Stages.Confirm);
   const [hasBalance, setHasBalance] = useState(false);
 
   useEffect(() => {
     setApproved(false);
-    setError(null);
+    setError(false);
   }, [open]);
 
   useAsyncEffect(async () => {

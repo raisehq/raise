@@ -35,9 +35,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   const { web3 } = useWeb3();
   const metamask = useWallet();
 
-  const [contracts, setContracts] = useState();
-  const [approved, setAproved] = useState(false);
-  const [errors, setError] = useState();
+  const [contracts, setContracts]: any = useState();
+  const [approved, setAproved]: any = useState(false);
+  const [errors, setError]: any = useState();
 
   useAsyncEffect(async () => {
     if (metamask) {

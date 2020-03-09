@@ -14,7 +14,7 @@ export const Auctions = daggy.taggedSum('Auctions', {
 
 const Suggesteds = ({ auctions, states }) => {
   const [gracePeriod, setGracePeriod] = useState(0);
-  const [suggestedAuctions, setSuggestedAuctions] = useState();
+  const [suggestedAuctions, setSuggestedAuctions]: any = useState();
   const [suggestedState, setSuggestedState]: any = useState(Auctions.Loading);
 
   useEffect(() => {

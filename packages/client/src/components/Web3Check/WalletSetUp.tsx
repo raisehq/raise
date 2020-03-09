@@ -18,6 +18,7 @@ import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useWeb3 from '../../hooks/useWeb3';
 import { useRootContext } from '../../contexts/RootContext';
 import CryptoWallets from '../../commons/cryptoWallets';
+import { IWallet } from '../../commons/IWallet';
 
 const WalletSetUp = ({ onNext, onBack }: any) => {
   const {
@@ -27,7 +28,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
   }: any = useRootContext();
   const tagManager = useGoogleTagManager('Wallet');
   const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
-  const [defaultWallet, setDefaultWallet] = useState();
+  const [defaultWallet, setDefaultWallet] = useState<IWallet>(getDefaultWeb3());
 
   useEffect(() => {
     setDefaultWallet(getDefaultWeb3());
@@ -38,8 +39,8 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
 
     if (
-      (defaultWallet.name === -1 && walletName === 'metamask') ||
-      (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)
+      (defaultWallet?.name === -1 && walletName === 'metamask') ||
+      (walletName === 'metamask' && defaultWallet?.name !== CryptoWallets.Metamask)
     ) {
       window.open('http://metamask.app.link/', '_blank');
     } else {

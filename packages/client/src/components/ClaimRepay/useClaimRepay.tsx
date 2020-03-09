@@ -10,11 +10,11 @@ const useRepayment = (loan, open) => {
   }: any = useAppContext();
   const metamask = useWallet();
   const [pending, setPending] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
   const [stage, setStage] = useState(Stages.Confirm);
 
   useEffect(() => {
-    setError(null);
+    setError(false);
     setPending(false);
   }, [open]);
 

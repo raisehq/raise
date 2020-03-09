@@ -9,10 +9,10 @@ import React, {
   ReactNode
 } from 'react';
 import BigNumber from 'bignumber.js';
-
-import useDebounce from './useDebounce';
-import { getEtherBalance, getTokenBalance, isAddress } from '../utils';
+import useDebounce from '../hooks/useDebounce';
+import { getEtherBalance, getTokenBalance, isAddress } from '../utils/web3-utils';
 import { useBlockNumber } from './BlockContext';
+import { useRootContext } from './RootContext';
 
 const LOCAL_STORAGE_KEY = 'BALANCES';
 
@@ -50,9 +50,9 @@ function reducer(state: BalancesState, { type, payload }: { type: Action; payloa
       return {
         ...state,
         [chainId]: {
-          ...state?.[chainId],
+          ...(state?.[chainId] || null),
           [address]: {
-            ...state?.[chainId]?.[address],
+            ...(state?.[chainId]?.[address] || null),
             [tokenAddress]: uninitialized
               ? {
                   listenerCount: 1
@@ -157,7 +157,12 @@ export default function Provider({ children }: { children: ReactNode }) {
 }
 
 export function Updater() {
-  const { chainId, library } = useWeb3React();
+  const {
+    store: {
+      config: { networkId: chainId },
+      blockchain: { web3: library }
+    }
+  }: any = useRootContext();
   const blockNumber = useBlockNumber();
   const [state, { update }] = useBalancesContext();
 
@@ -196,8 +201,8 @@ export function Updater() {
   // ensure that all balances with >=1 listeners are updated every block
   useEffect(() => {
     if (typeof chainId === 'number' && typeof blockNumber === 'number') {
-      for (const address of Object.keys(debouncedState?.[chainId] ?? {})) {
-        for (const tokenAddress of Object.keys(debouncedState?.[chainId][address])) {
+      Object.keys(debouncedState?.[chainId] ?? {}).forEach(address => {
+        Object.keys(debouncedState?.[chainId][address]).forEach(tokenAddress => {
           const active = debouncedState[chainId][address][tokenAddress].listenerCount > 0;
           if (active) {
             const cachedFetchedAsOf =
@@ -222,8 +227,8 @@ export function Updater() {
               };
             }
           }
-        }
-      }
+        });
+      });
     }
   }, [chainId, blockNumber, debouncedState, fetchBalance, update]);
 
@@ -239,7 +244,11 @@ export function useAddressBalance(
   address: string,
   tokenAddress: string
 ): BigNumber | undefined | null {
-  const { chainId } = useWeb3React();
+  const {
+    store: {
+      config: { networkId: chainId }
+    }
+  }: any = useRootContext();
   const [state, { startListening, stopListening }] = useBalancesContext();
 
   useEffect(() => {

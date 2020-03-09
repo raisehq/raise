@@ -9,7 +9,8 @@ const Confirm = () => {
       <MainImage src={`${IMAGES_PATH}check.svg`} />
       <ConfirmHeader>Check your inbox!</ConfirmHeader>
       <ConfirmText>
-        We've sent a confirmation to your inbox to verify your email and instructions for the next steps.
+        We've sent a confirmation to your inbox to verify your email and instructions for the next
+        steps.
       </ConfirmText>
     </ConfirmWrapper>
   );

@@ -19,10 +19,12 @@ const Socials: React.SFC<SocialProps> = ({ socialNetworks, url }: SocialProps) =
     [socialNetworks]
   );
 
-  return ( 
+  return (
     <SocialsBox>
       {SocialDOM}
-      <Website href={url} rel="noopener noreferrer" target="_blank">Visit website</Website>
+      <Website href={url} rel="noopener noreferrer" target="_blank">
+        Visit website
+      </Website>
     </SocialsBox>
   );
 };

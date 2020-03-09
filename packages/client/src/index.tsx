@@ -9,6 +9,9 @@ import App from './components/App';
 import RootContextProvider, { Updater as RootContextUpdater } from './contexts/RootContext';
 import BlockContextProvider, { Updater as BlockContextUpdater } from './contexts/BlockContext';
 import AppContextProvider, { Updater as AppContextUpdater } from './contexts/AppContext';
+import BalancesContextProvider, {
+  Updater as BalancesContextUpdater
+} from './contexts/BalancesContext';
 
 // Import some inline css
 import 'semantic-ui-css/semantic.min.css';
@@ -29,7 +32,9 @@ function ContextProviders({ children }) {
   return (
     <RootContextProvider>
       <AppContextProvider>
-        <BlockContextProvider>{children}</BlockContextProvider>
+        <BlockContextProvider>
+          <BalancesContextProvider>{children}</BalancesContextProvider>
+        </BlockContextProvider>
       </AppContextProvider>
     </RootContextProvider>
   );
@@ -41,6 +46,7 @@ function ContextUpdaters() {
       <RootContextUpdater />
       <AppContextUpdater />
       <BlockContextUpdater />
+      <BalancesContextUpdater />
     </>
   );
 }

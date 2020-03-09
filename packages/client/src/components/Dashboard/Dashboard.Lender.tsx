@@ -32,7 +32,7 @@ const Dashboard = () => {
     webSocket: { webSocket }
   }: any = useAppContext();
   const [warningCK, setWarningCK] = useCookie('warning', '');
-  const [activeWarning, setWarning] = useState();
+  const [activeWarning, setWarning]: any = useState();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {

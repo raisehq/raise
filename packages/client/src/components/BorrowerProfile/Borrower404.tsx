@@ -10,6 +10,6 @@ const NotFound = () => (
       Return to home
     </Button>
   </Segment>
-)
+);
 
 export default NotFound;
