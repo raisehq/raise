@@ -50,7 +50,7 @@ export const Header = styled(HeaderUI)<HeaderProps>`
 export const Divider = styled(DividerUI)<DividerProps>`
   &&&.ui.divider {
     border-top: none;
-    border-bottom: 1px solid #b1b3b9
+    border-bottom: 1px solid #b1b3b9;
   }
 `;
 
@@ -509,6 +509,7 @@ export const HeaderRow = styled.div`
   justify-content: flex-start;
   width: 100%;
   flex-wrap: nowrap;
+  padding: 5px 0;
 `;
 
 export const SecondContainer = styled.div`
@@ -516,4 +517,8 @@ export const SecondContainer = styled.div`
   @media ${maxDevice.mobileL} {
     padding: 0 5px;
   }
+`;
+
+export const CheckboxRow = styled.div`
+  padding: 10px 0;
 `;

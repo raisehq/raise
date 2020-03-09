@@ -13,7 +13,8 @@ import {
   AmountNumber,
   FirstContainer,
   SecondContainer,
-  HeaderRow
+  HeaderRow,
+  CheckboxRow
 } from '../CreateLoan.styles';
 
 const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
@@ -83,12 +84,14 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
       </LoanResume>
       {!isMobile && <Divider />}
       <AmountRow>
-        <CheckboxControl
-          size="small"
-          id="btn-check-term-conditions"
-          onChange={onToggleTerms}
-          label="I agree to the Terms and Conditions of the Loan Agreement"
-        />
+        <CheckboxRow>
+          <CheckboxControl
+            size="small"
+            id="btn-check-term-conditions"
+            onChange={onToggleTerms}
+            label="I agree to the Terms and Conditions of the Loan Agreement"
+          />
+        </CheckboxRow>
       </AmountRow>
 
       <div>
