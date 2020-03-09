@@ -53,8 +53,8 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
           </AmountRow>
           {!isMobile && <DividerConfirmLoan />}
           <AmountRow>
-            <AmountDescription>System fees</AmountDescription>
-            <AmountNumber>{operatorFee}%</AmountNumber>
+            <AmountDescription>System fees ({operatorFee}%)</AmountDescription>
+            <AmountNumber>-{systemFees} DAI</AmountNumber>
           </AmountRow>
           {!isMobile && <DividerConfirmLoan />}
           <AmountRow>
