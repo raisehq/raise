@@ -51,6 +51,7 @@
     "@raisehq/components": "*",
     "cypress": "^3.8.2",
     "ganache-cli": "6.9.0",
+    "lint-staged": "^10.0.8",
     "mochawesome": "^4.1.0",
     "node-slack-upload": "^2.0.0",
     "prettier": "^1.19.1",

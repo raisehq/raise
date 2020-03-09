@@ -27,6 +27,7 @@
     "env-cmd": "^8.0.2",
     "htmr": "^0.8.7",
     "js-cookie": "^2.2.0",
+    "lint-staged": "^10.0.8",
     "lodash": "4.17.14",
     "logrocket": "^1.0.3",
     "moment": "^2.24.0",
