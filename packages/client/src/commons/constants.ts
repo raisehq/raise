@@ -6,8 +6,8 @@ export const IMAGES_PATH = `${process.env.REACT_APP_HOST_IMAGES}/images/`;
 export const HEADER_MENU_SIZE = { myActivity: -100, toGetStarted: -80 };
 
 export const COINS = [
-  { name: 'DAI', address: '0x6b175474e89094c44da98b954eedeac495271d0f', icon: 'coin-dai.svg', key: "0" },
-  { name: 'USDC', address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', icon: 'coin-usdc.svg', key: "1" }
+  { name: 'DAI', icon: 'coin-dai.svg', key: "0" },
+  { name: 'USDC',icon: 'coin-usdc.svg', key: "1" }
 ];
 
 export const CREATE_LOAN_DEFAULT_COIN = {

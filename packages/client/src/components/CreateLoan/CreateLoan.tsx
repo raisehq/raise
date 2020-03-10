@@ -73,7 +73,9 @@ const CreateLoan = ({ contracts }) => {
     actions: {
       loanDispatcher: { onGetAcceptedTokensSubscription }
     },
-    store: { acceptedTokens }
+    store: {
+      loanDispatcher: { acceptedTokens }
+    }
   }: any = useContext(AppContext);
 
   const [operatorFee, setOperatorFee] = useState(0);
@@ -131,8 +133,6 @@ const CreateLoan = ({ contracts }) => {
       const callback = onGetAcceptedTokensSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-    console.log(loanDispatcherAddress);
-
   }, [webSocket]);
 
   useEffect(() => {
@@ -178,9 +178,10 @@ const CreateLoan = ({ contracts }) => {
   };
 
   const onSetCoinAmount = option => () => {
-    console.log(acceptedTokens);
     setSelectedCoinType(option);
-    const coin = COINS.find(item => item.name === option);
+    const coins = COINS.map((coin, index) => ({ address: acceptedTokens[index], ...coin }));
+
+    const coin = coins.find(item => item.name === option);
     setSelectedCoinIndex(coin ? coin.key : 0);
     const addressCoin: any = coin ? coin.address : null;
 
