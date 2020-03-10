@@ -10,7 +10,7 @@
     "dev:int": "yarn run build:deps && lerna run dev:int --stream --scope client",
     "dev-all": "lerna run dev --stream --parallel",
     "dev-all:int": "lerna run dev:int --stream --parallel",
-    "clean": "lerna exec -- rm -rf ./node_modules ./lib ./build || true && rm -rf node_modules || true",
+    "clean": "lerna exec -- rm -rf ./node_modules ./dist ./build ./bundle.*.js || true && rm -rf node_modules || true && rm -rf yarn.lock || true",
     "build": "lerna run build --stream",
     "build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
