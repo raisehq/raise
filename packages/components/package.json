@@ -4,7 +4,6 @@
   "license": "MIT",
   "author": "Raise HQ",
   "main": "dist/index.js",
-  "module": "dist/components.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
