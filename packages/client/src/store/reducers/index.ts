@@ -6,6 +6,7 @@ import config from './config';
 import loan from './loan';
 import dai from './dai';
 import onboarding from './onboarding';
+import loanDispatcher from './loanDispatcher';
 
 const combineReducers = reducers => {
   return (state = {}, action) => {
@@ -24,5 +25,6 @@ export default combineReducers({
   blockchain,
   loan,
   dai,
-  onboarding
+  onboarding,
+  loanDispatcher
 });

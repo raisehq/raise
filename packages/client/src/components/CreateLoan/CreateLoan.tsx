@@ -4,6 +4,8 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 import AppContext from '../AppContext';
 import { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
+import get from 'lodash/get';
+import Queryies from '../../helpers/queryies';
 import {
   Header,
   Divider,
@@ -64,10 +66,16 @@ import InputNumber from '../commons/InputControl/InputNumber';
 
 const COIN_DEFAULT = CREATE_LOAN_DEFAULT_COIN;
 
-const CreateLoan = () => {
+const CreateLoan = ({ contracts }) => {
   const {
-    web3Status: { network }
+    web3Status: { network, walletNetworkId },
+    webSocket: { webSocket },
+    actions: {
+      loanDispatcher: { onGetAcceptedTokensSubscription }
+    },
+    store: { acceptedTokens }
   }: any = useContext(AppContext);
+
   const [operatorFee, setOperatorFee] = useState(0);
   const [stage, setStage] = useState(UI.Confirm);
   const loanDispatcher = useLoanDispatcher();
@@ -99,6 +107,9 @@ const CreateLoan = () => {
   const monthOptions = useMemo(() => getMonths(network), [network]);
   const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(network), [network]);
 
+  const getAddress = (netId, name) => get(contracts, `address.${walletNetworkId}.${name}`);
+  const loanDispatcherAddress = getAddress(walletNetworkId, 'LoanDispatcher');
+
   useAsyncEffect(async () => {
     if (operatorFee === 0 && loanDispatcher) {
       try {
@@ -110,6 +121,19 @@ const CreateLoan = () => {
       }
     }
   }, [loanDispatcher]);
+
+  useEffect(() => {
+    if (webSocket) {
+      const { query, subscriptionName } = Queryies.subscriptions.acceptedTokens;
+      const variables = {
+        address: loanDispatcherAddress
+      };
+      const callback = onGetAcceptedTokensSubscription;
+      webSocket.subscribe(query, variables, subscriptionName, callback);
+    }
+    console.log(loanDispatcherAddress);
+
+  }, [webSocket]);
 
   useEffect(() => {
     const coinsArrays: any = COINS.map(item => ({
@@ -154,6 +178,7 @@ const CreateLoan = () => {
   };
 
   const onSetCoinAmount = option => () => {
+    console.log(acceptedTokens);
     setSelectedCoinType(option);
     const coin = COINS.find(item => item.name === option);
     setSelectedCoinIndex(coin ? coin.key : 0);

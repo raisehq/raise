@@ -296,6 +296,7 @@ const App = ({ history, match }: any) => {
                   path="/create-loan"
                   component={CreateLoan}
                   roles={[1, 2]}
+                  contracts={contracts}
                 />
                 <Web3Layout
                   publicRoute
