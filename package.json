@@ -13,6 +13,7 @@
     "clean": "lerna exec -- rm -rf ./node_modules ./dist ./build ./bundle.*.js || true && rm -rf node_modules || true && rm -rf yarn.lock || true",
     "build": "lerna run build --stream",
     "build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
+    "rollup": "lerna exec   --scope '{@raisehq/components,@raisehq/onboarding}' -- rollup -c",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client",
     "watch": "lerna run --parallel --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/client}' watch",

@@ -1,11 +1,10 @@
 import typescript from '@rollup/plugin-typescript';
 import babel from 'rollup-plugin-babel';
-import babelrc from 'babelrc-rollup';
+
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import filesize from 'rollup-plugin-filesize';
 import json from '@rollup/plugin-json';
-import localResolve from 'rollup-plugin-local-resolve';
 import builtins from 'rollup-plugin-node-builtins';
 import pkg from './package.json';
 
@@ -14,8 +13,7 @@ const OUTPUT_NAME = 'external';
 
 const GLOBALS = {
   react: 'React',
-  'react-dom': 'ReactDOM',
-  lodash: 'lodash'
+  'react-dom': 'ReactDOM'
 };
 
 const PLUGINS = [
@@ -26,19 +24,18 @@ const PLUGINS = [
   json(),
   typescript(),
   babel({
-    exclude: 'node_modules/**'
+    exclude: ['node_modules/**']
   }),
   commonjs({
-    include: ['node_modules', 'node_modules/**', 'node_modules/**/*'],
+    include: [
+      'node_modules',
+      'node_modules/**',
+      'node_modules/**/**',
+      '@bloomprotocol/share-kit-react'
+    ],
     namedExports: {
       'node_modules/daggy/src/daggy.js': ['daggy'],
       'node_modules/react-is/index.js': ['isElement', 'isValidElementType', 'isForwardRef'],
-      'node_modules/semantic-ui-react/node_modules/prop-types/index.js': [
-        'element',
-        'func',
-        'object',
-        'oneOfType'
-      ],
       'node_modules/js-cookie/src/js.cookie.js': ['get', 'set'],
       'node_modules/react-dom/index.js': ['render', 'createPortal', 'findDOMNode'],
       'node_modules/prop-types/index.js': [
@@ -50,7 +47,13 @@ const PLUGINS = [
         'bool',
         'element'
       ],
-      'node_modules/lodash/lodash.js': ['debounce']
+      'node_modules/lodash/lodash.js': ['debounce'],
+      'node_modules/@bloomprotocol/share-kit-react/dist/index.js': [
+        'RequestElement',
+        'QROptions',
+        'Action',
+        'RequestData'
+      ]
     }
   }),
   filesize()
