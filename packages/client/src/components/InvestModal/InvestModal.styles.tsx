@@ -438,3 +438,17 @@ export const Explanation = styled(Grid.Row)`
 export const UserBalance = styled(Balance)`
   margin-left: 30px;
 `;
+
+export const SmallModalContent = styled(SemanticModal)`
+  &&&& {
+    max-width: 350px;
+    width: 100%;
+    height: fit-content;
+    background-color: #fcfcfc;
+    border-radius: 4px;
+    box-shadow: 0 10px 26px 0 rgba(6, 52, 40, 0.1);
+    &&& .content {
+      padding: 40px 50px;
+    }
+  }
+`;

@@ -7,11 +7,13 @@ import AppContext from '../AppContext';
 import InvestState from './InvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
+import VerifyKycModal from './VerifyKycState';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
 import { match, ANY } from 'pampy';
 
 const UI = daggy.taggedSum('UI', {
+  Kyc: [],
   Confirm: [],
   Processing: [],
   Success: []
@@ -44,7 +46,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   // prettier-ignore
   const connected = (hasProvider && unlocked && accountMatches && networkMatches);
   const userActivated = connected && kyc_status === 3;
-  
+
   const buttonText = match(
     [connected, invested],
     [ANY, false],
@@ -56,13 +58,11 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   );
 
   const openModal = () => {
-    if (isLogged) {
+    if (userActivated) {
       setStage(UI.Confirm);
       setOpen(true);
     } else {
-      const isBorrowerProfile = history.location.pathname
-        .split('/')
-        .filter(pt => pt === 'c');
+      const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'c');
       tagManager.sendEventCategory(
         'Card',
         TMEvents.Click,
@@ -82,6 +82,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
 
   const getInvestAction = stage => {
     return stage.cata({
+      Kyc: () => <VerifyKycModal />,
       Confirm: () => (
         <InvestState loan={loan} setStage={setStage} setInvestment={setInvestment} ui={UI} />
       ),
