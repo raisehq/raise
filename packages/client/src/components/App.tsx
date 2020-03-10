@@ -66,6 +66,7 @@ const App = ({ history, match }: any) => {
 
   const [webSocket, setWebSocket]: any = useState({});
   const [daiWebSocket, setDaiWebSocket]: any = useState({});
+
   const {
     hasProvider,
     unlocked,
