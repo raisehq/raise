@@ -3,4 +3,9 @@ export { default as Coin } from './components/Coin';
 export { default as InvestCardView } from './components/InvestCardView';
 export { default as InvestCard } from './components/InvestCard';
 export { default as CardPlaceholder } from './components/CardPlaceholder';
+export { default as BigSimpleModal } from './components/Modals/BigSimpleModal';
+export { default as Panel } from './components/Modals/Panel';
+export { default as PanelWithImage } from './components/Modals/PanelWithImage';
+export { default as Simple } from './components/Modals/Simple';
+
 export { AccountType, times, Company } from './types';

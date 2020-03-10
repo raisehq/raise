@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { IMAGES_PATH } from '../../commons/constants';
-import AppContext from '../App.context';
+
 import {
   OnboardingModal,
   OnboardingHeader,
@@ -13,15 +13,26 @@ import {
   OnboardingFormContent,
   OnboardingHeaderItemWrapper,
   OnboardingModalContent,
-  OnboardingCloseIcon
+  OnboardingCloseIcon,
 } from './styles';
 
-const PanelWithImage = ({ children, title }) => {
-  const { blur, mountNode, open, onClose, closeButton }: any = useContext(AppContext);
+const PanelWithImage = ({
+  children,
+  title,
+  blur,
+  mountNode,
+  open,
+  onClose,
+  closeButton,
+}) => {
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
-    <OnboardingModal {...dimmer} open={open} mountNode={mountNode ? mountNode : undefined}>
+    <OnboardingModal
+      {...dimmer}
+      open={open}
+      mountNode={mountNode ? mountNode : undefined}
+    >
       <OnboardingModalContent id="process">
         <OnboardingHeader>
           <OnboardingHeaderItemWrapper>
@@ -29,7 +40,12 @@ const PanelWithImage = ({ children, title }) => {
           </OnboardingHeaderItemWrapper>
           <OnboardingHeaderItemWrapper>
             {closeButton && (
-              <OnboardingCloseIcon link onClick={onClose} name="close" size="large" />
+              <OnboardingCloseIcon
+                link
+                onClick={onClose}
+                name="close"
+                size="large"
+              />
             )}
           </OnboardingHeaderItemWrapper>
         </OnboardingHeader>
@@ -41,7 +57,10 @@ const PanelWithImage = ({ children, title }) => {
                 The only marketplace that makes your money grow
               </OnboardingSubTitle>
             </OnboardingTitleWrapper>
-            <OnboardingImage className="visual" src={`${IMAGES_PATH}img_signin_raise.png`} />
+            <OnboardingImage
+              className="visual"
+              src={`${IMAGES_PATH}img_signin_raise.png`}
+            />
           </OnboardingImageWrapper>
           <OnboardingFormContent>{children}</OnboardingFormContent>
         </OnboardingContentWrapper>

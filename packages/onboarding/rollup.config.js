@@ -8,7 +8,7 @@ import localResolve from 'rollup-plugin-local-resolve';
 
 import pkg from './package.json';
 
-const INPUT_FILE_PATH = 'src/index.onboarding.tsx';
+const INPUT_FILE_PATH = 'src/index.tsx';
 const OUTPUT_NAME = 'external';
 
 const GLOBALS = {

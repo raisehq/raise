@@ -8,7 +8,7 @@ import localResolve from 'rollup-plugin-local-resolve';
 
 import pkg from './package.json';
 
-const INPUT_FILE_PATH = 'src/index.cards.ts';
+const INPUT_FILE_PATH = 'src/index.ts';
 const OUTPUT_NAME = 'external';
 
 const GLOBALS = {
