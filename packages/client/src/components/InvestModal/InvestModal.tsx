@@ -39,7 +39,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
     }
   }: any = useContext(AppContext);
   const [open, setOpen] = useState(false);
-  const [stage, setStage] = useState(UI.Confirm);
+  const [stage, setStage] = useState(UI.Kyc);
   const [investment, setInvestment] = useState(0);
   const tagManager = useGoogleTagManager();
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
@@ -49,17 +49,19 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
 
   const buttonText = match(
     [connected, invested],
-    [ANY, false],
-    () => 'INVEST',
-    [false, true],
+    [true, true],
     () => 'INVEST MORE',
     ANY,
     () => 'INVEST'
   );
 
+  const stageModalWidth = match(stage, s => UI.Kyc.is(s), 'mini', ANY, 'small');
+
   const openModal = () => {
-    if (userActivated) {
+    if (isLogged && userActivated) {
       setStage(UI.Confirm);
+      setOpen(true);
+    } else if (isLogged && !userActivated) {
       setOpen(true);
     } else {
       const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'c');
@@ -94,16 +96,10 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   };
   return (
     <>
-      <LenderButton
-        id="btn-lender-open"
-        className={className}
-        fluid
-        onClick={openModal}
-        disabled={isLogged ? !userActivated : false}
-      >
+      <LenderButton id="btn-lender-open" className={className} fluid onClick={openModal}>
         {buttonText}
       </LenderButton>
-      <Modal open={open} onClose={closeModal} size="small" mountNode={modalRefs.current}>
+      <Modal open={open} onClose={closeModal} size={stageModalWidth} mountNode={modalRefs.current}>
         <ModalContent>{getInvestAction(stage)}</ModalContent>
       </Modal>
     </>

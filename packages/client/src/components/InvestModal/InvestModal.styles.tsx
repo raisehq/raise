@@ -101,11 +101,8 @@ export const Modal = styled(SemanticModal)`
   border-radius: 4px;
   box-shadow: 0 10px 26px 0 rgba(6, 52, 40, 0.1);
 
-  @media ${device.laptop} {
-    max-width: 500px;
-  }
   @media ${device.tablet} {
-    max-width: 500px;
+    max-width: ${({ size }) => (size === 'mini' ? '330px' : '500px')};
   }
 
   @media (max-width: 500px) {
@@ -441,14 +438,6 @@ export const UserBalance = styled(Balance)`
 
 export const SmallModalContent = styled(SemanticModal)`
   &&&& {
-    max-width: 350px;
-    width: 100%;
-    height: fit-content;
-    background-color: #fcfcfc;
-    border-radius: 4px;
-    box-shadow: 0 10px 26px 0 rgba(6, 52, 40, 0.1);
-    &&& .content {
-      padding: 40px 50px;
-    }
+    padding: 40px 50px;
   }
 `;
