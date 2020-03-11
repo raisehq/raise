@@ -61,6 +61,7 @@
     "react-transition-group": "^4.3.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "slick-carousel": "^1.8.1",
     "tsdx": "^0.11.0",

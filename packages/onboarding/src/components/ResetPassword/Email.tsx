@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
-import { OnboardHeader, OnboardInput, OnboardButton, CallToSignIn, OnboardLogo } from '../styles';
+import { OnboardHeader, OnboardInput, OnboardButton, CallToSignIn } from '../styles';
 import validations from '../validations';
 import AppContext from '../App.context';
 

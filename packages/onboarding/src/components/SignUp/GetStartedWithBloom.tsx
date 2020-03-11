@@ -18,17 +18,16 @@ import {
   Action,
   RequestData
 } from '@bloomprotocol/share-kit-react/dist/index';
-import useInterval from '../../hooks/useInterval';
 import { bloomSignIn, verifyBloomLogin, redirectFromBloomApp } from '../../services';
 import bloomToken from 'uuid';
 import AppContext from '../App.context';
 import { isMobile } from 'react-device-detect';
 
-const GetStartedWithBloom = ({ onBack, method, token = null }) => {
+const GetStartedWithBloom = ({ onBack, method, token = '' }) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState(token !== null && token.length > 0 ? token : null);
-  const checkerTimeout = useRef(null);
+  const checkerTimeout: any = useRef(0);
   const { onLoginWithBloom }: any = useContext(AppContext);
 
   const watchBloom = async () => {
@@ -65,10 +64,10 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
     if (tokenBloom !== null) {
       // Start check bloom
       checkerTimeout.current = setTimeout(watchBloom, 3000);
-      return () => {
-        clearTimeout(checkerTimeout.current);
-      };
     }
+    return () => {
+      clearTimeout(checkerTimeout.current);
+    };
   }, [tokenBloom]);
 
   useEffect(() => {
