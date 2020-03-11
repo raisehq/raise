@@ -436,8 +436,4 @@ export const UserBalance = styled(Balance)`
   margin-left: 30px;
 `;
 
-export const SmallModalContent = styled(SemanticModal)`
-  &&&& {
-    padding: 40px 50px;
-  }
-`;
+
