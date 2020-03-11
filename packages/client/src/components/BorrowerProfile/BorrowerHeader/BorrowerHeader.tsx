@@ -25,7 +25,7 @@ const BorrowerHeader = ({ auction }) => {
       <LoanDaysLeft>
         <LoanDaysLeftWrapper>
           <LoanDaysLeftLabel>Days left</LoanDaysLeftLabel>
-          <LoanDaysLeftValue>{values && values.times.loanTerm}</LoanDaysLeftValue>
+          <LoanDaysLeftValue>{values && values.times.auctionTimeLeft}</LoanDaysLeftValue>
         </LoanDaysLeftWrapper>
       </LoanDaysLeft>
       <ProgressContainer>
