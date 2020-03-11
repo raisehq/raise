@@ -59,9 +59,15 @@ const Wallet = ({ onNext, onBack }: any) => {
           break;
       }
     } else {
-      if ((defaultWallet.name === -1 && walletName === 'metamask') || (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)) {
+      if (
+        (defaultWallet.name === -1 && walletName === 'metamask') ||
+        (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)
+      ) {
         window.open('http://metamask.app.link/', '_blank');
-      } else if ((defaultWallet.name === -1 && walletName === 'opera') || (walletName === 'opera' && defaultWallet.name !== CryptoWallets.Opera)) {
+      } else if (
+        (defaultWallet.name === -1 && walletName === 'opera') ||
+        (walletName === 'opera' && defaultWallet.name !== CryptoWallets.Opera)
+      ) {
         window.open('http://onelink.to/5xwf6x', '_blank');
       } else {
         try {
@@ -83,13 +89,6 @@ const Wallet = ({ onNext, onBack }: any) => {
           <CardSubTitle>Get started by connecting one of the wallets below</CardSubTitle>
         </SelectYourWalletTitle>
         <SelectYourWalletList>
-          <SelectWalletOptionItem key="coinbase">
-            <WalletButton
-              onClickAction={handlerWallet(CryptoWallets.Coinbase)}
-              walletName="Coinbase"
-              walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
-            />
-          </SelectWalletOptionItem>
           <SelectWalletOptionItem key="metamask">
             <WalletButton
               onClickAction={handlerWallet(CryptoWallets.Metamask)}
@@ -104,11 +103,16 @@ const Wallet = ({ onNext, onBack }: any) => {
               walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/opera.png`}
             />
           </SelectWalletOptionItem>
+          <SelectWalletOptionItem key="coinbase">
+            <WalletButton
+              onClickAction={handlerWallet(CryptoWallets.Coinbase)}
+              walletName="Coinbase"
+              walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
+            />
+          </SelectWalletOptionItem>
           {!isMobile && (
             <GoBack>
-              <GoBackButton
-                onClickAction={onBack}
-              />
+              <GoBackButton onClickAction={onBack} />
             </GoBack>
           )}
         </SelectYourWalletList>
@@ -117,4 +121,3 @@ const Wallet = ({ onNext, onBack }: any) => {
   );
 };
 export default Wallet;
-
