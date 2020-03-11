@@ -64,9 +64,7 @@ import CheckboxControl from '../commons/CheckboxControl';
 import SelectControl from '../commons/SelectControl';
 import InputNumber from '../commons/InputControl/InputNumber';
 
-
 const CreateLoan = ({ contracts }) => {
-
   const {
     web3Status: { network, walletNetworkId },
     webSocket: { webSocket },
@@ -91,9 +89,10 @@ const CreateLoan = ({ contracts }) => {
   const [minPercent, setMinPercent] = useState(MIN_PERCENT_DEFAULT);
   const [coins, setCoins] = useState([]);
   const [selectedCoinType, setSelectedCoinType] = useState('');
+  const [selectedCoin, setSelectedCoin] = useState<any>({});
   const [loan, setLoan] = useState({
     amount: AMOUNT_DEFAULT,
-    tokenAddress: '',
+    tokenAddress: selectedCoin.address,
     term: TERM_DEFAULT,
     auctionTerm: TERM_AUCTION_DEFAULT,
     minMir: parseFloat((MIN_APR_DEFAULT / 12).toString()),
@@ -192,12 +191,11 @@ const CreateLoan = ({ contracts }) => {
   };
 
   const onSetCoinAmount = option => () => {
-    console.log(option);
     setSelectedCoinType(option);
     const coins = COINS.map((coin, index) => ({ address: acceptedTokens[index], ...coin }));
 
     const coin = coins.find(item => item.name === option);
-    console.log(coin);
+    setSelectedCoin(coin);
     setSelectedCoinIndex(coin ? coin.key : 0);
     const addressCoin: any = coin ? coin.address : null;
 
@@ -265,7 +263,7 @@ const CreateLoan = ({ contracts }) => {
     setMinPercent(MIN_PERCENT_DEFAULT);
     setLoan({
       amount: AMOUNT_DEFAULT,
-      tokenAddress: '',
+      tokenAddress: selectedCoin.address,
       term: TERM_DEFAULT,
       auctionTerm: TERM_AUCTION_DEFAULT,
       minMir: parseFloat((MIN_APR_DEFAULT / 12).toString()),
@@ -282,10 +280,18 @@ const CreateLoan = ({ contracts }) => {
 
   const onBlur = e => {
     const currentValue = loan.amount;
-    setAmountValidation({
-      error: currentValue < MIN || currentValue > MAX,
-      msg: `Can not be ${currentValue < MIN ? `less than ${MIN} DAI` : `more than ${MAX} DAI`}`
-    });
+
+    if (currentValue === undefined) {
+      setAmountValidation({
+        error: true,
+        msg: 'Can not be empty'
+      });
+    } else {
+      setAmountValidation({
+        error: currentValue < MIN || currentValue > MAX,
+        msg: `Can not be ${currentValue < MIN ? `less than ${MIN} DAI` : `more than ${MAX} DAI`}`
+      });
+    }
   };
 
   const onToggleTerms = () => {
