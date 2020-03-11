@@ -58,15 +58,15 @@ import Slider from '../Slider';
 import { getMonths } from '../../commons/months';
 import { getLoanAuctionIntervalArray } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
-import { COINS, CREATE_LOAN_DEFAULT_COIN } from '../../commons/constants';
+import { COINS } from '../../commons/constants';
 import GroupButton from '../commons/ButtonControl/GroupButton';
 import CheckboxControl from '../commons/CheckboxControl';
 import SelectControl from '../commons/SelectControl';
 import InputNumber from '../commons/InputControl/InputNumber';
 
-const COIN_DEFAULT = CREATE_LOAN_DEFAULT_COIN;
 
 const CreateLoan = ({ contracts }) => {
+
   const {
     web3Status: { network, walletNetworkId },
     webSocket: { webSocket },
@@ -89,9 +89,11 @@ const CreateLoan = ({ contracts }) => {
   const [minAPR, setMinAPR] = useState(MIN_APR_DEFAULT);
   const [maxAPR, setMaxAPR] = useState(MAX_APR_DEFAULT);
   const [minPercent, setMinPercent] = useState(MIN_PERCENT_DEFAULT);
+  const [coins, setCoins] = useState([]);
+  const [selectedCoinType, setSelectedCoinType] = useState('');
   const [loan, setLoan] = useState({
     amount: AMOUNT_DEFAULT,
-    tokenAddress: COIN_DEFAULT.address,
+    tokenAddress: '',
     term: TERM_DEFAULT,
     auctionTerm: TERM_AUCTION_DEFAULT,
     minMir: parseFloat((MIN_APR_DEFAULT / 12).toString()),
@@ -101,8 +103,6 @@ const CreateLoan = ({ contracts }) => {
   });
   const [selectedMonth, setSelectedMonth] = useState(TERM_DEFAULT);
 
-  const [coins, setCoins] = useState([]);
-  const [selectedCoinType, setSelectedCoinType] = useState(COIN_DEFAULT.name);
   const [selectedCoinIndex, setSelectedCoinIndex] = useState<any>(0);
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<any>(2);
 
@@ -110,6 +110,24 @@ const CreateLoan = ({ contracts }) => {
   const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(network), [network]);
 
   const getAddress = (netId, name) => get(contracts, `address.${walletNetworkId}.${name}`);
+
+  const getCoinsFromContract = () => {
+    const contract = get(contracts, `address.${walletNetworkId}`);
+    const coins = COINS.map(coin =>
+      contract[coin.name]
+        ? {
+            address: contract[coin.name],
+            text: coin.name,
+            value: coin.name,
+            key: coin.key,
+            icon: coin.icon
+          }
+        : null
+    );
+    console.log('aa', coins);
+    return coins;
+  };
+
   const loanDispatcherAddress = getAddress(walletNetworkId, 'LoanDispatcher');
 
   useAsyncEffect(async () => {
@@ -136,15 +154,12 @@ const CreateLoan = ({ contracts }) => {
   }, [webSocket]);
 
   useEffect(() => {
-    const coinsArrays: any = COINS.map(item => ({
-      text: item.name,
-      value: item.name,
-      key: item.key,
-      icon: item.icon
-    }));
-    setCoins(coinsArrays);
-    setSelectedCoinType(coinsArrays[0].text);
-    setSelectedCoinIndex(coinsArrays[0].key);
+    const coinsArray: any = getCoinsFromContract();
+
+    setCoins(coinsArray);
+    setSelectedCoinType(coinsArray[0].text);
+    setSelectedCoinIndex(coinsArray[0].key);
+    setLoan({ ...loan, tokenAddress: coinsArray[0].address });
   }, []);
 
   useEffect(() => {
@@ -171,17 +186,18 @@ const CreateLoan = ({ contracts }) => {
   };
 
   const onSetTermAuction = option => () => {
-    //setSelectedLoanAuction(option);
     const auctionTerm = loanAuctionIntervalArray.find(item => item.value === option);
     setSelectedMonthIndex(auctionTerm && auctionTerm.key);
     setLoan({ ...loan, auctionTerm: option });
   };
 
   const onSetCoinAmount = option => () => {
+    console.log(option);
     setSelectedCoinType(option);
     const coins = COINS.map((coin, index) => ({ address: acceptedTokens[index], ...coin }));
 
     const coin = coins.find(item => item.name === option);
+    console.log(coin);
     setSelectedCoinIndex(coin ? coin.key : 0);
     const addressCoin: any = coin ? coin.address : null;
 
@@ -213,6 +229,7 @@ const CreateLoan = ({ contracts }) => {
 
   const onSave = async () => {
     setStage(UI.Waiting);
+    console.log(loan);
     try {
       await loanDispatcher.deploy(
         loan.minAmount,
@@ -248,7 +265,7 @@ const CreateLoan = ({ contracts }) => {
     setMinPercent(MIN_PERCENT_DEFAULT);
     setLoan({
       amount: AMOUNT_DEFAULT,
-      tokenAddress: COIN_DEFAULT.address,
+      tokenAddress: '',
       term: TERM_DEFAULT,
       auctionTerm: TERM_AUCTION_DEFAULT,
       minMir: parseFloat((MIN_APR_DEFAULT / 12).toString()),
@@ -287,7 +304,7 @@ const CreateLoan = ({ contracts }) => {
       loan.maxMir,
       calculateTermFromSecondsToMonths(loan.term)
     ),
-    netLoan: calculateNetLoan(loan.amount),
+    netLoan: calculateNetLoan(loan.amount)(operatorFee),
     systemFees: calculateSystemFees(loan.amount)(operatorFee),
     totalInterest: calculateTotalInterest(
       loan.amount,

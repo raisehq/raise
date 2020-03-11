@@ -24,7 +24,8 @@ test('Format amount to string', () => {
 
 test('Calculate Net Loan ', () => {
   const numberAmount = 10.0;
-  const result = calculateNetLoan(numberAmount);
+  const operatorFee = 1;
+  const result = calculateNetLoan(numberAmount)(operatorFee);
   expect(result).toBe('9,90');
 });
 
