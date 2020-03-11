@@ -4,6 +4,7 @@ import debounce from 'lodash/debounce';
 import { AccountType } from '@raisehq/components';
 import {
   OnboardHeader,
+  OnboardSubHeader,
   OnboardInputSignUp,
   OnboardButton,
   OnboardCountries,
@@ -23,9 +24,9 @@ import theme from '../../theme';
 import { checkEmail } from '../../services';
 
 const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
-  const { onSetStep, credentials, onSetCredentials, onSendCredentials } = useContext<IContext>(
-    AppContext
-  );
+  const { onSetStep, credentials, onSetCredentials, referralCode, onSendCredentials } = useContext<
+    IContext
+  >(AppContext);
   const [errors, setErrors] = useState<{
     password: boolean;
     country: boolean;
@@ -125,7 +126,7 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
 
   const onSetTagManagerAndStep = () => onSetStep('SignIn')();
 
-  // const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
+  const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
 
   if (mini) {
     return (

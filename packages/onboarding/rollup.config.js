@@ -1,6 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
 import babel from 'rollup-plugin-babel';
-import globals from 'rollup-plugin-node-globals';
+
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import filesize from 'rollup-plugin-filesize';
@@ -66,17 +66,13 @@ const OUTPUT_DATA = [
     file: 'bundle.umd.js',
     format: 'umd'
   },
-  // {
-  //   file: 'bundle.cjs.js',
-  //   format: 'cjs'
-  // },
-  // {
-  //   file: 'bundle.es.js',
-  //   format: 'es'
-  // },
   {
-    file: 'bundle.iife.js',
-    format: 'iife'
+    file: 'bundle.cjs.js',
+    format: 'cjs'
+  },
+  {
+    file: 'bundle.es.js',
+    format: 'es'
   }
 ];
 

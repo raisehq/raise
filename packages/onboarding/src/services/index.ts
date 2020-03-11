@@ -159,8 +159,9 @@ const checkDappBrowserCallback = token => {
 export const redirectFromBloomApp = token => {
   if (isMobile) {
     checkDappBrowserCallback(token);
+  } else {
+    return URL.REDIRECT.replace(':token', token);
   }
-  return URL.REDIRECT.replace(':token', token);
 };
 
 export const verifyBloomLogin = async tokenBloom => {

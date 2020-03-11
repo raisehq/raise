@@ -45,7 +45,7 @@ export interface ILoginWithBloom {
 export interface IContext {
   credentials: ICredentials;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
-  onSetStepWithParam: any;
+  onSetStepWithParam: (step: string) => (param: string) => () => null | void | Promise<any>;
   onSetCredentials: (input: string, value: string | boolean) => null | void | Promise<any>;
   onSendCredentials: () => null | void | Promise<any>;
   onResetPassword: (token: string, password: string) => null | void | Promise<any>;

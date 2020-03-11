@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Image } from 'semantic-ui-react';
 import {
   ChooseMethodWrapper,
@@ -8,7 +8,7 @@ import {
   ChooseMethodSubtitleWrapper,
   ChooseMethodSubTitle
 } from './styles';
-import { IContext } from '../types';
+import { IContext, Steps } from '../types';
 import AppContext from '../App.context';
 
 const AuthenticationMethods = ({ method }) => {
