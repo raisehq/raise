@@ -4,3 +4,13 @@ export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const IMAGES_PATH = `${process.env.REACT_APP_HOST_IMAGES}/images/`;
 
 export const HEADER_MENU_SIZE = { myActivity: -100, toGetStarted: -80 };
+
+export const COINS = [
+  { name: 'DAI', icon: 'coin-dai.svg', key: "0" },
+  { name: 'USDC',icon: 'coin-usdc.svg', key: "1" }
+];
+
+export const CREATE_LOAN_DEFAULT_COIN = {
+  name: 'DAI',
+  address: '0x6b175474e89094c44da98b954eedeac495271d0f'
+};

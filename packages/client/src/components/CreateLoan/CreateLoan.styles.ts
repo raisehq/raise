@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import {
-  Select,
-  Checkbox,
   Card,
   Header as HeaderUI,
   Button,
@@ -24,24 +22,16 @@ interface LoanFormInfoProps {
   isMobile: boolean;
 }
 
-export const LoanTermsCheckbox: any = styled(Checkbox)`
-  &&& {
-    position: relative;
-    margin-right: 4px;
-    top: 3px;
-    font-size: 12px;
-    line-height: 21px;
-    color: red;
-    @media ${device.laptop} {
-      font-size: 14px;
-    }
-  }
-`;
+interface AmountDescriptionProps {
+  bold?: boolean;
+  fontSize?: number;
+}
 
 export const CheckContainer = styled.div`
   line-height: 20px;
   margin-top: 20px;
   display: flex;
+  padding: 5px;
 
   @media ${device.mobileS} {
     color: #5a5a5a;
@@ -57,29 +47,10 @@ export const Header = styled(HeaderUI)<HeaderProps>`
   }
 `;
 
-export const TopHeader = styled(HeaderUI)<HeaderProps>`
-  && {
-    color: #3c4251;
-    max-width: 300px;
-    font-size: 22px;
-    @media ${device.laptop} {
-      font-size: 26px;
-    }
-  }
-`;
-
 export const Divider = styled(DividerUI)<DividerProps>`
-  &&&&& {
+  &&&.ui.divider {
     border-top: none;
-    border-bottom: 1px solid #9498a0;
-  }
-`;
-
-export const LoanSelect = styled(Select)`
-  padding: 20px !important;
-
-  i {
-    top: auto !important;
+    border-bottom: 1px solid #b1b3b9;
   }
 `;
 
@@ -138,52 +109,21 @@ export const LoanFormInput = styled.div`
   }
 `;
 
-export const LoanTerm = styled(LoanBox)`
-  & ${LoanFormInput} {
-    margin-top: 47px;
-    display: block;
-    width: 100%;
-  }
-  &&&& ${LoanSelect} {
-    display: block;
-    width: 100%;
-  }
-  @media ${device.laptop} {
-    & ${LoanFormInput} {
-      max-width: 180px;
-    }
-    &&&& ${LoanSelect} {
-      max-width: 180px;
-    }
-  }
+export const LoanFormWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: green;
 `;
 
-export const LoanDescriptionLowerAmount = styled(LoanDescription)`
+export const LoanAmountRow = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: row;
   flex-wrap: wrap;
-  margin-top: 60px;
-  & ${Header}:first-child {
-    font-size: 1.07142857rem;
-    flex: 1.6;
-  }
-  & ${LoanFormInput} {
-    flex: 1;
-  }
-  @media ${device.laptop} {
-    max-width: unset;
-    width: 100%;
-    & ${Header}:first-child {
-      max-width: 396px;
-      font-size: 1.28571429rem;
-      flex: unset;
-    }
-    & ${LoanFormInput} {
-      margin-top: 0px;
-      flex: unset;
-    }
-  }
+  background-color: gray;
+  align-items: center;
+  height: 100%;
 `;
 
 export const SliderWrapper = styled.div`
@@ -212,7 +152,7 @@ export const LoanConfirmation = styled(Card)`
     bottom: 0px;
     height: fit-content;
     width: 100%;
-    padding: 30px 20px 20px 20px;
+    padding: 0 32px;
     box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
 
     @media ${device.mobileS} {
@@ -231,7 +171,7 @@ export const LoanConfirmation = styled(Card)`
       top: 0px;
       width: 100%;
       max-width: 735px;
-      padding: 50px;
+      padding: 30px;
     }
   }
 
@@ -319,43 +259,6 @@ export const LoanFormValue = styled('p')<LoanFormValueProps>`
   }
 `;
 
-export const InputDescription = styled.div`
-  font-size: 14px;
-  font-family: Lato;
-  @media ${device.laptop} {
-    min-width: 190px;
-    margin-right: 24px;
-  }
-`;
-export const InputBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-`;
-export const LoanInputBox = styled.div`
-  border-bottom: 1px solid #90a1b5;
-  background-color: #eff4f7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  input {
-    max-width: 140px;
-    border: none !important;
-    margin-right: 5px;
-    box-sizing: border-box;
-    background: none !important;
-    font-size: 26px;
-    font-weight: bold;
-    color: #5c5d5d;
-    text-align: right;
-  }
-  @media ${device.laptop} {
-    justify-content: flex-end;
-    max-width: 200px;
-  }
-`;
-
 export const NewLoanAnchor = styled.div`
   cursor: pointer;
   margin-top: 10px;
@@ -364,16 +267,6 @@ export const NewLoanAnchor = styled.div`
   color: #00a76f;
   font-size: 14px;
   font-weight: bold;
-`;
-export const LoanAmountBox = styled(LoanBox)`
-  & ${LoanInputBox}:first-child {
-    margin-top: 10px;
-  }
-  @media ${device.laptop} {
-    & ${LoanInputBox}:first-child {
-      margin-top: 10px;
-    }
-  }
 `;
 
 export const LoanInputLabel = styled.div`
@@ -388,41 +281,6 @@ export const LoanInputLabel = styled.div`
   }
   @media ${device.laptop} {
     text-align: right;
-  }
-`;
-
-export const MininumLoanSelect = styled(LoanSelect)`
-  &&&& {
-    min-width: 120px;
-  }
-`;
-
-export const LoanCheckbox = styled(Checkbox)`
-  &&&&&& label:before {
-    background: #3c4251;
-  }
-  &&&&&&.checked label:before {
-    background: linear-gradient(180deg, #39b54a 0%, #34aa44 100%);
-  }
-`;
-
-export const InterestCard = styled.div`
-  height: 48px;
-  width: 200px;
-  border-radius: 4px;
-  background-color: white;
-  color: #495b70;
-  font-size: 14px;
-  line-height: 21px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  @media ${device.laptop} {
-    margin: unset;
-    order: 2;
-    font-weight: bold;
-    border: 1px solid #9398a0;
   }
 `;
 
@@ -477,14 +335,190 @@ export const InputError = styled.div`
   color: ${theme.colors.error};
 `;
 
-export const MinAmount = styled.div`
-  padding-top: 20px;
+/*************************** LAST DESIGN  *************************************/
+
+export const CreateLoanWrapper = styled.div`
+  box-shadow: ${theme.shadow};
+  box-sizing: border-box;
+  padding: 0 30px;
+  width: 100%;
+
+  @media ${device.laptop} {
+    max-width: 735px;
+    font-size: 14px;
+    background: #fff;
+  }
+`;
+export const Section = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+
+export const CreateLoanRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+
+  @media (max-width: ${size.mobileL}) {
+    padding-bottom: 20px;
+  }
+`;
+
+export const CreateAmountSubSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 177px;
+  padding-bottom: 20px;
+`;
+
+export const CreateLoanColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 79px;
+  padding-right: 15px;
+`;
+
+export const SectionTitle = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  color: #3c4251;
+  padding-bottom: 10px;
+`;
+
+export const ControlLabel = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 138.27%;
   display: flex;
   align-items: center;
+  color: #8a8e97;
+`;
 
-  p {
-    margin-right: 15px;
-    position: relative;
-    top: 5px;
+export const MinimumAmountControlLabel = styled(ControlLabel)`
+  align-items: flex-end;
+  font-size: 16px;
+  padding: 10px 0;
+`;
+
+export const CreateLoanDescription = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #5a5a5a;
+`;
+
+export const CreateLoanSection = styled(Section)`
+  height: 121px;
+  margin: 30px 0 40px 0;
+
+  @media (max-width: ${size.mobileL}) {
+    min-height: 121px;
+    height: auto;
   }
+`;
+
+export const CreateAmountSection = styled(Section)`
+  min-height: 177px;
+  margin: 30px 0 30px 0;
+  justify-content: flex-start;
+`;
+
+export const CreateLoanHeader = styled.div`
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+/*********************** ConfirmLoan ****************************/
+
+export const AmountRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media ${maxDevice.mobileL} {
+    padding: 5px;
+    width: 100%;
+  }
+`;
+
+export const AmountDescription = styled.div<AmountDescriptionProps>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '12px')};
+  font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
+  color: ${({ bold }) => (bold ? '#3c4251' : 'inherit')};
+
+  @media ${maxDevice.mobileL} {
+    line-height: 14px;
+  }
+`;
+
+export const AmountDescriptionBold = styled.div`
+  font-weight: bold;
+  color: #3c4251;
+  font-size: 20px;
+`;
+
+export const AmountNumber = styled(AmountDescription)`
+  font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '20px')};
+
+  @media ${maxDevice.mobileL} {
+    font-size: 12px;
+    align-items: flex-start;
+  }
+`;
+
+export const DividerConfirmLoan = styled(Divider)`
+  &&&.ui.divider {
+    border-bottom: 1px solid #ecedee;
+  }
+`;
+
+export const FirstContainer = styled.div`
+  width: 100%;
+  @media ${maxDevice.mobileL} {
+    padding: 0 5px;
+  }
+`;
+
+export const HeaderRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: nowrap;
+  padding: 5px 0;
+`;
+
+export const SecondContainer = styled.div`
+  width: 100%;
+  @media ${maxDevice.mobileL} {
+    padding: 0 5px;
+  }
+`;
+
+export const CheckboxRow = styled.div`
+  padding: 10px 0;
 `;

@@ -2,12 +2,23 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import InvestCard from './InvestCard';
 import { Company } from '../../types';
+import moment from 'moment';
+
+const oneMonth = 30 * 24 * 60 * 60;
+const daysToEnd = 1;
+const daysFromStart = 30 - daysToEnd;
+const hoursFromFinish = 23;
+const auctionStartTimestamp = moment()
+  .subtract(daysFromStart, "days")
+  .subtract(hoursFromFinish, "hours")
+  .unix();
+const auctionEndTimestamp = auctionStartTimestamp + oneMonth;
 
 const auction = {
-  auctionEndTimestamp: '1575021892',
+  auctionEndTimestamp,//: '1575021892',
   auctionEnded: false,
   auctionLength: '604800',
-  auctionStartTimestamp: '1574417092',
+  auctionStartTimestamp,//: '1574417092',
   borrowerDebt: '0',
   id: '0x4198645543440f6fd466078eb01dbc68f61a09ac',
   interestRate: null,

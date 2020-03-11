@@ -31,7 +31,8 @@ const useLoanDispatcher = () => {
             maxInterestRate,
             termMonthsLength,
             acceptMinimum,
-            auctionTermLength
+            auctionTermLength,
+            tokenAddress
           ) => {
             const auctionSecondsLength = auctionTermLength.toString();
             const termSecondsLength = termMonthsLength.toString();
@@ -41,7 +42,8 @@ const useLoanDispatcher = () => {
               web3.utils.toWei(minInterestRate.toString()),
               web3.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,
-              auctionSecondsLength
+              auctionSecondsLength,
+              tokenAddress
             ];
 
             return followTx.watchTx(
