@@ -391,7 +391,7 @@ const CreateLoan = ({ contracts }) => {
             </CreateLoanRow>
             <CreateLoanRow>
               <CreateLoanDescription>
-                Select how long do you want for your loan auction to be open.
+                Select how many days you want for your loan auction to be open.
               </CreateLoanDescription>
             </CreateLoanRow>
           </CreateLoanHeader>
