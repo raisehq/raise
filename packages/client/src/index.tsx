@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import LogRocket from 'logrocket';
 
 import useGoogleTagManager from './hooks/useGoogleTagManager';
 import App from './components/App';
@@ -54,6 +55,12 @@ function ContextUpdaters() {
 const Root = () => {
   const tagManager = useGoogleTagManager();
   tagManager.initialize();
+
+  useEffect(() => {
+    if (process.env.REACT_APP_LOGROCKET === 'true') {
+      LogRocket.init('rjsyho/raisehq');
+    }
+  }, []);
 
   return (
     <ContextProviders>

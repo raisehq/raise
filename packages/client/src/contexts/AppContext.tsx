@@ -60,10 +60,6 @@ export function Updater() {
     daiWebSocket
   }: any = useAppContext();
 
-  if (process.env.REACT_APP_LOGROCKET === 'true') {
-    LogRocket.init('rjsyho/raisehq');
-  }
-
   // Enabling connectionsStart
   useEffect(() => {
     if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {

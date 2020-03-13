@@ -35,7 +35,7 @@ generate_cache() {
   echo "- Install dependencies"
   npm i
   echo "- Migrate contracts inside ganache"
-  PRIVATE_KEY=$test_private_key npm run migration:cypress
+  BYPASS_VERSION_CHECK=true PRIVATE_KEY=$test_private_key npm run migration:cypress
   cd ..
   echo "- Retrieve generated contract addresses and abi"
   cp contracts/new.metadata.json cypress/fixtures/new.metadata.json
