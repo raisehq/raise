@@ -7,11 +7,13 @@ import AppContext from '../AppContext';
 import InvestState from './InvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
+import VerifyKycModal from './VerifyKycState';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
 import { match, ANY } from 'pampy';
 
 const UI = daggy.taggedSum('UI', {
+  Kyc: [],
   Confirm: [],
   Processing: [],
   Success: []
@@ -37,32 +39,32 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
     }
   }: any = useContext(AppContext);
   const [open, setOpen] = useState(false);
-  const [stage, setStage] = useState(UI.Confirm);
+  const [stage, setStage] = useState(UI.Kyc);
   const [investment, setInvestment] = useState(0);
   const tagManager = useGoogleTagManager();
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
   // prettier-ignore
   const connected = (hasProvider && unlocked && accountMatches && networkMatches);
   const userActivated = connected && kyc_status === 3;
-  
+
   const buttonText = match(
     [connected, invested],
-    [ANY, false],
-    () => 'INVEST',
-    [false, true],
+    [true, true],
     () => 'INVEST MORE',
     ANY,
     () => 'INVEST'
   );
 
+  const stageModalWidth = match(stage, s => UI.Kyc.is(s), 'mini', ANY, 'small');
+
   const openModal = () => {
-    if (isLogged) {
+    if (isLogged && userActivated) {
       setStage(UI.Confirm);
       setOpen(true);
+    } else if (isLogged && !userActivated) {
+      setOpen(true);
     } else {
-      const isBorrowerProfile = history.location.pathname
-        .split('/')
-        .filter(pt => pt === 'c');
+      const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'c');
       tagManager.sendEventCategory(
         'Card',
         TMEvents.Click,
@@ -82,6 +84,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
 
   const getInvestAction = stage => {
     return stage.cata({
+      Kyc: () => <VerifyKycModal />,
       Confirm: () => (
         <InvestState loan={loan} setStage={setStage} setInvestment={setInvestment} ui={UI} />
       ),
@@ -93,16 +96,10 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   };
   return (
     <>
-      <LenderButton
-        id="btn-lender-open"
-        className={className}
-        fluid
-        onClick={openModal}
-        disabled={isLogged ? !userActivated : false}
-      >
+      <LenderButton id="btn-lender-open" className={className} fluid onClick={openModal}>
         {buttonText}
       </LenderButton>
-      <Modal open={open} onClose={closeModal} size="small" mountNode={modalRefs.current}>
+      <Modal open={open} onClose={closeModal} size={stageModalWidth} mountNode={modalRefs.current}>
         <ModalContent>{getInvestAction(stage)}</ModalContent>
       </Modal>
     </>
