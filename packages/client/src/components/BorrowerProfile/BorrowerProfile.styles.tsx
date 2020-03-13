@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Card, Header, Popup } from 'semantic-ui-react';
-import { device, maxDevice } from '../../commons/breakpoints';
+import { device, maxDevice, size } from '../../commons/breakpoints';
 import theme from '../../theme';
 
 interface ImageCropProps {
@@ -50,6 +50,7 @@ export const BorrowerCard = styled(Card)`
     width: 100%;
     height: fit-content;
     background: none;
+    position: relative;
 
     max-width: 797px;
   }
@@ -148,9 +149,12 @@ export const HeaderBox = styled.div`
 `;
 
 export const CompanyDetails = styled.div`
-  padding: 53px 10px 0px 10px;
+  padding: 0 10px 0px 10px;
   @media screen and ${device.mobileM} {
     justify-content: space-between;
+  }
+  @media (max-width: ${size.mobileL}) {
+    padding-top: 0;
   }
 `;
 
@@ -161,6 +165,7 @@ export const HeaderImage = styled.div`
   height: 124px;
   overflow: hidden;
   flex-wrap: wrap;
+
   @media screen and ${device.laptop} {
     height: 267px;
   }

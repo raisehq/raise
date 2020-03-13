@@ -24,7 +24,7 @@ import {
 } from './InvestModal.styles';
 
 const errorMessages = {
-  inputGreaterThanBalance: 'Not enought balance.',
+  inputGreaterThanBalance: 'Not enough balance.',
   inputGreaterThanLoanAmount: 'Invest less than target.'
 };
 

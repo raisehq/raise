@@ -59,22 +59,21 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
       <SelectYourWalletTitle>
         <CardTitle>Set up your wallet</CardTitle>
         <SetUpSubtitle>
-          If you don't have a wallet there is no problem, click on the button bellow and create an
-          account in Coinbase. It's fast, easy and secure.
+          If you don't have a wallet there is no problem, click on the button bellow and install a
+          Metamask wallet. It's fast, easy and secure.
         </SetUpSubtitle>
       </SelectYourWalletTitle>
-      <WalletIcon src={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`} />
-
+      <WalletIcon src={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`} />
       <WalletButton
-        onClickAction={handlerWallet(CryptoWallets.Coinbase)}
-        walletName="Continue with Coinbase"
-        green={true}
+        onClickAction={handlerWallet(CryptoWallets.Metamask)}
+        walletName="Install Metamask"
+        green
       />
       <OtherWalletsText>You can also use:</OtherWalletsText>
       <WalletButton
-        onClickAction={handlerWallet(CryptoWallets.Metamask)}
-        walletName="Metamask"
-        walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`}
+        onClickAction={handlerWallet(CryptoWallets.Coinbase)}
+        walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
+        walletName="Coinbase"
       />
       <GoBack>
         <GoBackButton onClickAction={onBack} />

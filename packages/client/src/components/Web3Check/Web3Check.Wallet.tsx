@@ -89,13 +89,6 @@ const Wallet = ({ onNext, onBack }: any) => {
           <CardSubTitle>Get started by connecting one of the wallets below</CardSubTitle>
         </SelectYourWalletTitle>
         <SelectYourWalletList>
-          <SelectWalletOptionItem key="coinbase">
-            <WalletButton
-              onClickAction={handlerWallet(CryptoWallets.Coinbase)}
-              walletName="Coinbase"
-              walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
-            />
-          </SelectWalletOptionItem>
           <SelectWalletOptionItem key="metamask">
             <WalletButton
               onClickAction={handlerWallet(CryptoWallets.Metamask)}
@@ -108,6 +101,13 @@ const Wallet = ({ onNext, onBack }: any) => {
               onClickAction={handlerWallet(CryptoWallets.Opera)}
               walletName="Opera Wallet"
               walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/opera.png`}
+            />
+          </SelectWalletOptionItem>
+          <SelectWalletOptionItem key="coinbase">
+            <WalletButton
+              onClickAction={handlerWallet(CryptoWallets.Coinbase)}
+              walletName="Coinbase"
+              walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
             />
           </SelectWalletOptionItem>
           {!isMobile && (

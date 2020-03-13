@@ -19,10 +19,17 @@ const Socials: React.SFC<SocialProps> = ({ socialNetworks, url }: SocialProps) =
     [socialNetworks]
   );
 
+  const getWebURL = (weburl: string) => {
+    if (weburl.indexOf('http') > -1) {
+      return weburl;
+    }
+    return `https://${weburl}`;
+  };
+
   return (
     <SocialsBox>
       {SocialDOM}
-      <Website href={url} rel="noopener noreferrer" target="_blank">
+      <Website href={getWebURL(url)} rel="noopener noreferrer" target="_blank">
         Visit website
       </Website>
     </SocialsBox>
