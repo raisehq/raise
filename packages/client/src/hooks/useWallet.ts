@@ -60,7 +60,7 @@ const useWallet = () => {
             return instanceContracts[netId][name];
           }
           const contract = new web3.eth.Contract(
-            get(heroContracts, `abi.${name}`),
+            get(heroContracts, `abi.${netId}.${name}`),
             get(heroContracts, `address.${netId}.${name}`)
           );
           if (!instanceContracts[netId]) instanceContracts[netId] = {};
@@ -69,17 +69,20 @@ const useWallet = () => {
           return contract;
         },
         addContractByAddress: async (name: string, address: string) => {
+          const netId = await web3.eth.net.getId();
           if (!address || !isAddress(address)) {
             throw new Error('[useWallets] Address not valid or null');
           }
-          if (!hasIn(heroContracts, `abi.${name}`)) {
+          if (!hasIn(heroContracts, `abi.${netId}.${name}`)) {
             throw new Error('[useWallets] Contract not found in abi metadata list');
           }
-          const netId = await web3.eth.net.getId();
           if (instanceContracts[netId] && instanceContracts[netId][name]) {
             return instanceContracts[netId][name];
           }
-          const contract = new web3.eth.Contract(get(heroContracts, `abi.${name}`), address);
+          const contract = new web3.eth.Contract(
+            get(heroContracts, `abi.${netId}.${name}`),
+            address
+          );
           if (!instanceContracts[netId]) instanceContracts[netId] = {};
           instanceContracts[netId] = { ...instanceContracts[netId], [name]: contract };
           setNewInstance(instanceContracts);

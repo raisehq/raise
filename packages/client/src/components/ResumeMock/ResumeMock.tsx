@@ -24,20 +24,20 @@ const ResumeMock = () => {
       const netId = await web3.eth.net.getId();
       const BalanceETH = await web3.eth.getBalance(account);
       const HeroToken = new web3.eth.Contract(
-        get(heroContracts, 'abi.HeroToken'),
+        get(heroContracts, `abi.${netId}.HeroToken`),
         get(heroContracts, `address.${netId}.HeroToken`)
       );
 
       const BalanceHT = await HeroToken.methods.balanceOf(account).call();
 
       const DAI = new web3.eth.Contract(
-        get(heroContracts, 'abi.DAI'),
+        get(heroContracts, `abi.${netId}DAI`),
         get(heroContracts, `address.${netId}.DAI`)
       );
       const BalanceDAI = await DAI.methods.balanceOf(account).call();
 
       const Auth = new web3.eth.Contract(
-        get(heroContracts, 'abi.Auth'),
+        get(heroContracts, `abi.${netId}Auth`),
         get(heroContracts, `address.${netId}.Auth`)
       );
       const hasDeposit = await Auth.methods.hasDeposited(account).call();
