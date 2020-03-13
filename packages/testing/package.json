@@ -43,7 +43,6 @@
     "mochawesome-report-generator": "^3.1.5",
     "rimraf": "^2.6.3",
     "ts-loader": "^6.0.4",
-    "typescript": "^3.6.2",
     "webpack": "^4.39.3"
   },
   "dependencies": {
