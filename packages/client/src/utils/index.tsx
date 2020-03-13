@@ -117,7 +117,6 @@ export const getContractsDefinition = async () => {
   return contractsDef;
 };
 
-
 export const getWalletName = walletId => {
   switch (walletId) {
     case CryptoWallet.Metamask:
