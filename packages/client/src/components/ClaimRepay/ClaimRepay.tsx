@@ -1,11 +1,11 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext } from 'react';
 import daggy from 'daggy';
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
 import { tradeTokensForExactTokens } from '@uniswap/sdk';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { fromWei, toWei } from 'web3-utils';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 
 import useClaimRepay from './useClaimRepay';
 import ConfirmStage from './stages/Confirm';
@@ -29,7 +29,7 @@ const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
     store: {
       blockchain: { contracts }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
 
   const [open, setOpen] = useState(false);
   const { stage, setStage, ...rest }: any = useClaimRepay(loan, open);

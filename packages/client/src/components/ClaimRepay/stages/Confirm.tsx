@@ -6,7 +6,7 @@ import { ClaimRepayContext } from '../ClaimRepay';
 import { getCalculations } from '../../../utils/loanUtils';
 import numeral from '../../../commons/numeral';
 import { fromWei } from 'web3-utils';
-import AppContext from '../../AppContext';
+import { useAppContext } from '../../../contexts/AppContext';
 import {
   ClaimFundsResume,
   FlexSpacedLayout,
@@ -33,7 +33,7 @@ const Confirm = () => {
   const { claimRepayment, loan, pending, swap }: any = useContext(ClaimRepayContext);
   const {
     web3Status: { hasDeposit }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
 
   const [depositChecked, setDepositChecked] = useState(false);
   const [membership, setMembership] = useState(null);
