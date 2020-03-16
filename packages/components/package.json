@@ -29,7 +29,6 @@
     "@types/react-dom": "^16.9.4",
     "babel-loader": "^8.0.6",
     "husky": "^3.1.0",
-    "tsdx": "^0.11.0",
     "tslib": "^1.10.0",
     "typescript": "^3.7.2"
   },
