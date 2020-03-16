@@ -1,7 +1,7 @@
 import React from 'react';
+import BN from 'bn.js';
 import { fromWei } from 'web3-utils';
 import { TokenImage, Container, Child } from './TokenBalance.styles';
-
 import { useAddressBalance } from '../../contexts/BalancesContext';
 import { useRootContext } from '../../contexts/RootContext';
 import { useAppContext } from '../../contexts/AppContext';
@@ -21,11 +21,12 @@ const TokenBalance = ({ imageUrl, name, ...props }) => {
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
 
-  const balance = useAddressBalance(account, contractAddresses[chainId]?.[name]);
-  const stringBalance =
-    Number(fromWei(balance?.toString() || '0'))
+  const balance: BN = useAddressBalance(account, contractAddresses[chainId]?.[name]);
+  const stringBalance: string =
+    Number(fromWei(balance))
       .toFixed(2)
       .toString() || '0.00';
+
   return (
     <Container {...props}>
       <Child>
