@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import axios from 'axios';
 import BN from 'bn.js';
-import { Line, defaults as Chart } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import Card from '../Card';
 import { fromWei } from 'web3-utils';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
@@ -10,6 +10,8 @@ import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
 import numeral from '../../commons/numeral';
 import { chartBackground, todayVerticalLine } from './plugins';
 import { DAI_ADDRESS } from '../../commons/constants';
+
+import { Chart } from 'react-chartjs-2';
 
 interface APRGraphProps {
   maxInterestRate: BN;
