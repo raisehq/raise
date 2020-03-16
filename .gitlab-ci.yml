@@ -31,10 +31,14 @@ cache:
 
 build:
   stage: build
+  variables:
+    REACT_APP_COOKIE_DOMAIN: .${BUCKET_NAME}.${DOMAIN}
+    REACT_APP_HOST_URL: https://${BUCKET_NAME}.${DOMAIN}
   script:
-    - 'echo $REACT_APP_HOST_URL'
-    - 'yarn --pure-lockfile'
-    - 'yarn run client:build:production'
+    - |
+      echo $REACT_APP_HOST_URL
+      yarn --pure-lockfile
+      yarn run client:build:integration
   artifacts:
     when: always
     paths:
@@ -43,16 +47,11 @@ build:
 deploy:
   image: 'python:3.7-alpine'
   stage: deploy
-  variables:
-    BUILD: build_${CI_COMMIT_SHORT_SHA}
   before_script:
     - 'pip install awscli'
   script:
     - |
-      mv packages/client/build ${BUILD}
-      aws s3 sync --delete ${BUILD} s3://${BUCKET_NAME}/${BUILD} --metadata-directive REPLACE --cache-control max-age=86400000,public
-      aws s3 cp s3://${BUCKET_NAME}/${BUILD} s3://${BUCKET_NAME}/${BUILD} --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
-      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME" | cut -f1); do
-        echo $dist
-        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
-      done
+      mv packages/client/build latest
+      echo ${BUCKET_NAME}
+      aws s3 --recursive mv s3://${BUCKET_NAME}/latest s3://${BUCKET_NAME}/old
+      aws s3 sync --delete latest s3://${BUCKET_NAME}/latest
