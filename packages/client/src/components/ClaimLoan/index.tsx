@@ -1,5 +1,3 @@
 import ClaimLoan from './ClaimLoan';
 
-export {
-  ClaimLoan
-};
+export { ClaimLoan };

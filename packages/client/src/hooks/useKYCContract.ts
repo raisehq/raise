@@ -1,12 +1,12 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
-import AppContext from '../components/AppContext';
+import { useRootContext } from '../contexts/RootContext';
 
 const useKYCContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const wallet = useWallet();
-  const { followTx }: any = useContext(AppContext);
+  const { followTx }: any = useRootContext();
   useAsyncEffect(async () => {
     if (wallet) {
       try {

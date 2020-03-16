@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
-import AppContext from '../AppContext';
+import React from 'react';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import Web3Address from '../Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
@@ -44,12 +45,9 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
     <AddressContainer>
       <StyledAddress account={currentAddress} />
     </AddressContainer>
-    <ButtonGreenSmall onClick={uploadSignature}>
-      Click to confirm
-    </ButtonGreenSmall>
+    <ButtonGreenSmall onClick={uploadSignature}>Click to confirm</ButtonGreenSmall>
     <NeedHelp href="https://www.raise.it/help" />
   </ActionDescription>
-
 );
 // @ts-ignore
 const AccountNotMatchNotice = ({ verifiedAddress, walletId }: any) => (
@@ -73,20 +71,19 @@ const Success = () => (
 );
 
 const CurrentNotice = () => {
-  // @ts-ignore
+  const {
+    web3Status: { networkMatches, accountMatches, walletNetwork, targetNetwork, walletAccount }
+  }: any = useAppContext();
   const {
     actions: {
-      // @ts-ignore
       blockchain: { uploadSignature }
     },
     store: {
       user: {
-        // @ts-ignore
         cryptoAddress: { address: verifiedAddress, cryptotypeId }
       }
-    },
-    web3Status: { networkMatches, accountMatches, walletNetwork, targetNetwork, walletAccount }
-  }: any = useContext(AppContext);
+    }
+  }: any = useRootContext();
   const tagManager = useGoogleTagManager('Wallet');
   const { getCurrentProviderName, requestSignature } = useWeb3();
 

@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import AppContext from '../AppContext';
+import React, { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { MobileMenu, Logo } from './Menu.styles';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 import KycTopBanner from '../TopBanner/KycTopBanner';
 import Burger from './Burger';
-import { isMobile } from 'react-device-detect';
+import { useRootContext } from '../../contexts/RootContext';
+import useRouter from '../../hooks/useRouter';
 
 const TopMobileMenu = () => {
   const {
-    history,
     store: {
       config: { menu },
       user: {
@@ -21,7 +21,8 @@ const TopMobileMenu = () => {
     actions: {
       config: { showMenu }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
+  const { history }: any = useRouter();
   const [kycBCStatus, setKycBCStatus] = useState(false);
 
   useEffect(() => {

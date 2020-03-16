@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Link, animateScroll as scroll } from 'react-scroll';
 import { Icon } from 'semantic-ui-react';
 import {
@@ -13,7 +13,9 @@ import {
 } from './Menu.styles';
 import theme from '../../theme';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import useRouter from '../../hooks/useRouter';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 
 const navigateToOutsideNewTab = route => () => {
@@ -46,14 +48,9 @@ const commonRoutes = [
 
 const Menu = () => {
   const {
-    onSetGetStarted,
     actions: {
       config: { showMenu }
     },
-    history: {
-      location: { pathname }
-    },
-    history,
     store: {
       user: {
         details: { accounttype_id }
@@ -63,7 +60,14 @@ const Menu = () => {
       },
       config: { menu }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
+  const { onSetGetStarted }: any = useAppContext();
+  const {
+    history: {
+      location: { pathname }
+    },
+    history
+  }: any = useRouter();
   const { visibleMenu } = useMenuVisibility();
 
   const toRoute = () => {

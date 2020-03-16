@@ -1,27 +1,34 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import AppContext from '../../AppContext';
-
+import { AppContext } from '../../../contexts/AppContext';
+import { RootContext } from '../../../contexts/RootContext';
 import KycTopBanner, { KycTopBannerProps } from '../KycTopBanner';
 
 describe('<KycTopBanner />', () => {
   let container: any = null;
   let kycProps: KycTopBannerProps;
 
-  const contextProps = {
+  const rootContextProps = {
     store: {},
     actions: {},
-    history: { location: { pathname: '/' } },
+    followTx: {}
+  };
+  const appContextProps = {
     modalRefs: {},
     webSocket: {},
     daiWebSocket: {},
-    match: {},
     onSetGetStarted: {},
     getStarted: false,
-    web3Status: {},
-    followTx: {}
+    web3Status: {}
   };
+
+  const Providers = ({ children }) => (
+    <RootContext.Provider value={rootContextProps}>
+      <AppContext.Provider value={appContextProps}>{children}</AppContext.Provider>
+    </RootContext.Provider>
+  );
+
   describe('when KYC_STATUS is Pending (2) ', () => {
     beforeEach(() => {
       // setup a DOM element as a render target
@@ -46,9 +53,9 @@ describe('<KycTopBanner />', () => {
     it('should show message : "Your application is under review"', () => {
       act(() => {
         render(
-          <AppContext.Provider value={contextProps}>
+          <Providers>
             <KycTopBanner {...kycProps} />
-          </AppContext.Provider>,
+          </Providers>,
           container
         );
       });
@@ -79,9 +86,9 @@ describe('<KycTopBanner />', () => {
     it('should show message : "The blockchain is catching up 🍆"', () => {
       act(() => {
         render(
-          <AppContext.Provider value={contextProps}>
+          <Providers>
             <KycTopBanner {...kycProps} />
-          </AppContext.Provider>,
+          </Providers>,
           container
         );
       });
@@ -113,9 +120,9 @@ describe('<KycTopBanner />', () => {
       let rendered;
       act(() => {
         rendered = (
-          <AppContext.Provider value={contextProps}>
+          <Providers>
             <KycTopBanner {...kycProps} />
-          </AppContext.Provider>
+          </Providers>
         );
         render(rendered, container);
       });
@@ -146,12 +153,12 @@ describe('<KycTopBanner />', () => {
 
     it('should show button with the text : "The blockchain is catching up 🍆"', () => {
       let rendered;
-      let emptyContainer = document.createElement('div');
+      const emptyContainer = document.createElement('div');
       act(() => {
         rendered = (
-          <AppContext.Provider value={contextProps}>
+          <Providers>
             <KycTopBanner {...kycProps} />
-          </AppContext.Provider>
+          </Providers>
         );
         render(rendered, container);
       });
@@ -184,9 +191,9 @@ describe('<KycTopBanner />', () => {
       let emptyContainer = document.createElement('div');
       act(() => {
         rendered = (
-          <AppContext.Provider value={contextProps}>
+          <Providers>
             <KycTopBanner {...kycProps} />
-          </AppContext.Provider>
+          </Providers>
         );
         render(rendered, container);
       });

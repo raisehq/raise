@@ -6,7 +6,7 @@ const LoanInput = props => {
   const decimalScale = 2;
   const thousandSeparator = '.';
   const decimalSeparator = ',';
-  const numeralSize = numeral(props.value).length  ;
+  const numeralSize = numeral(props.value).length;
   return (
     <NumberFormat
       allowEmptyFormatting={false}

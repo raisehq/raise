@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import {
   CardTitle,
   CardSubTitle,
@@ -11,7 +10,7 @@ import {
   GoBack
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import { WalletButton } from '../WalletButton';
 import GoBackButton from '../GoBackButton';
 import CryptoWallets from '../../commons/cryptoWallets';
@@ -19,15 +18,16 @@ import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { isMobile } from 'react-device-detect';
+import { IWallet } from '../../commons/IWallet';
 
 const Wallet = ({ onNext, onBack }: any) => {
   const {
     store: {
       config: { network, networkId }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
   const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
-  const [defaultWallet, setDefaultWallet] = useState();
+  const [defaultWallet, setDefaultWallet] = useState<IWallet>(getDefaultWeb3());
   const tagManager = useGoogleTagManager('Wallet');
 
   useEffect(() => {
@@ -60,13 +60,13 @@ const Wallet = ({ onNext, onBack }: any) => {
       }
     } else {
       if (
-        (defaultWallet.name === -1 && walletName === 'metamask') ||
-        (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)
+        (defaultWallet?.name === -1 && walletName === 'metamask') ||
+        (walletName === 'metamask' && defaultWallet?.name !== CryptoWallets.Metamask)
       ) {
         window.open('http://metamask.app.link/', '_blank');
       } else if (
-        (defaultWallet.name === -1 && walletName === 'opera') ||
-        (walletName === 'opera' && defaultWallet.name !== CryptoWallets.Opera)
+        (defaultWallet?.name === -1 && walletName === 'opera') ||
+        (walletName === 'opera' && defaultWallet?.name !== CryptoWallets.Opera)
       ) {
         window.open('http://onelink.to/5xwf6x', '_blank');
       } else {

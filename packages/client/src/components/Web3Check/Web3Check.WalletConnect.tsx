@@ -63,7 +63,7 @@ const WalletConnect = ({ onBack }: any) => {
       <SelectYourWalletContainer>
         <SelectYourWalletTitle>{getMessage(getCurrentProviderName())}</SelectYourWalletTitle>
         <LoaderContainer>
-          <Loader active inline='centered' />
+          <Loader active inline="centered" />
         </LoaderContainer>
         <BackContainer>
           <GoBackButton onClickAction={onBack} />

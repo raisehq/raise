@@ -5,7 +5,7 @@ interface UniswapProps {
   className?: string;
 }
 
-const UniswapEmbedded: React.SFC<UniswapProps> = ({ iframeUrl, className }) =>
+const UniswapEmbedded: React.SFC<UniswapProps> = ({ iframeUrl, className }) => (
   <iframe
     className={className}
     src={iframeUrl}
@@ -16,9 +16,10 @@ const UniswapEmbedded: React.SFC<UniswapProps> = ({ iframeUrl, className }) =>
       margin: '0 auto',
       display: 'block',
       borderRadius: 10,
-      maxWidth: 600,
+      maxWidth: 600
     }}
     id="myId"
   />
+);
 
 export default UniswapEmbedded;
