@@ -109,7 +109,7 @@ const BalancesContext = createContext<[BalancesState, { [k: string]: (...args: a
   {}
 ]);
 
-function useBalancesContext() {
+export function useBalancesContext() {
   return useContext(BalancesContext);
 }
 
