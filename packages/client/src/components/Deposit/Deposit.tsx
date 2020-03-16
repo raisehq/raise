@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { toWei, fromWei } from 'web3-utils';
 import { tradeTokensForExactTokens } from '@uniswap/sdk';
@@ -17,7 +17,9 @@ import useWeb3 from '../../hooks/useWeb3';
 import useHeroTokenContract from '../../hooks/useHeroTokenContract';
 import useERC20BalancePooling from '../../hooks/useERC20BalancePooling';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import useRouter from '../../hooks/useRouter';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import LocalData from '../../helpers/localData';
 
@@ -26,13 +28,15 @@ const RAISE_MIN_BALANCE = 200;
 
 const Deposit = () => {
   const {
-    history,
+    web3Status: { walletAccount, walletNetworkId, hasDeposit }
+  }: any = useAppContext();
+  const { history }: any = useRouter();
+  const {
     followTx,
-    web3Status: { walletAccount, walletNetworkId, hasDeposit },
     store: {
       blockchain: { contracts: heroContracts }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
   const [pending, setPending] = useState(false);
   const [retries, setRetries] = useState(0);
   const [expectedPrice, setExpectedPrice] = useState(0);

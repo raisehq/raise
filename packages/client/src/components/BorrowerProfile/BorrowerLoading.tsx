@@ -5,6 +5,6 @@ const NotFound: React.SFC = () => (
   <Dimmer active inverted>
     <Loader inverted>Loading</Loader>
   </Dimmer>
-)
+);
 
 export default NotFound;

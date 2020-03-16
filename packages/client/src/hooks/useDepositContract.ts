@@ -1,11 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
-import AppContext from '../context';
+import { useRootContext } from '../contexts/RootContext';
 
 const useDepositContract = () => {
   const [activeContract, setActiveContract]: any = useState(null);
-  const { followTx }: any = useContext(AppContext);
+  const { followTx }: any = useRootContext();
 
   const wallet = useWallet();
 

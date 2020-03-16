@@ -55,6 +55,7 @@ const web3CheckList = (
 ) => ({
   hasProvider: matchProvider(web3),
   unlocked: walletAccount !== undefined && walletAccount !== null && walletAccount !== NULL_ADDRESS,
+  account: walletAccount,
   walletAccount,
   storedAccount,
   accountMatches: matchAccount(walletAccount, storedAccount),

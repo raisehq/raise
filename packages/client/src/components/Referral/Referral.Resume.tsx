@@ -1,9 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fromWei } from 'web3-utils';
 import { List, Grid } from 'semantic-ui-react';
 import { UI, getViewResponse } from './Referral.Response';
 import useReferralContract from '../../hooks/useReferralContract';
-
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import {
   ButtonGreen,
   MessageCoin,
@@ -16,7 +17,6 @@ import {
   RewardMessageSubTitle,
   RewardMessageFriends
 } from './Referral.styles';
-import AppContext from '../AppContext';
 
 const getView = friends => {
   if (friends.length === 0) {
@@ -52,9 +52,11 @@ const Resume = () => {
     },
     actions: {
       blockchain: { fetchReferrals }
-    },
+    }
+  }: any = useRootContext();
+  const {
     web3Status: { account, network }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
 
   const onWithdraw = async () => {
     setStatus(UI.Waiting);

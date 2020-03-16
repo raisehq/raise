@@ -7,7 +7,7 @@ import users from '../fixtures/users.json';
 import { createCard } from './cardManager';
 
 // Require only when start test
-import contracts from '../fixtures/contracts.json';
+import contracts from '../fixtures/new.metadata.json';
 
 /*
   Add plugin to make snapshots
@@ -82,10 +82,11 @@ Cypress.Commands.add('addLoanAndCard', function(type) {
       '10000000000000000000',
       '10000000000000000000',
       '300',
-      '2592000'
+      '2592000',
+      contracts.address[netId].DAI
     ];
     const LoanDispatcher = new web3.eth.Contract(
-      contracts.abi.LoanDispatcher,
+      contracts.abi[netId].LoanDispatcher,
       contracts.address[netId].LoanDispatcher
     );
     console.log(' LOAN DISPACHER : ', LoanDispatcher);

@@ -1,5 +1,3 @@
 import InvestModal from './InvestModal';
 
-export {
-  InvestModal
-};
+export { InvestModal };

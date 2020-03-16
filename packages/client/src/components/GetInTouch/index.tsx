@@ -1,5 +1,3 @@
 import GetInTouch from './GetInTouch';
 
-export {
-  GetInTouch
-};
+export { GetInTouch };

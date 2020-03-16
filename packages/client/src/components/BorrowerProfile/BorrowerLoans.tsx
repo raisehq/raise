@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Header } from 'semantic-ui-react';
 import Queryies from '../../helpers/queryies';
 import Tab from '../Dashboard/Dashboard.Tab';
 import { BorrowerLoansBox } from './BorrowerProfile.styles';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 
 interface BorrowerLoansProps {
   account: string | null | undefined;
@@ -16,9 +17,11 @@ const BorrowerLoans: React.SFC<BorrowerLoansProps> = ({ account }: BorrowerLoans
     },
     store: {
       loan: { auctions }
-    },
+    }
+  }: any = useRootContext();
+  const {
     webSocket: { webSocket }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
 
   useEffect(() => {
     if (webSocket && account) {

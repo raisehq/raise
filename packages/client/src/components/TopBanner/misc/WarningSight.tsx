@@ -11,5 +11,4 @@ export const WarningSight = () => (
       <Icon name="warning sign" inverted />
     </div>
   </WarningSignWrapper>
-)
-
+);

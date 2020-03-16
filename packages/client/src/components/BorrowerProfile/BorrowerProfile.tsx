@@ -1,7 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import Queryies from '../../helpers/queryies';
 
 import useAsyncEffect from '../../hooks/useAsyncEffect';
@@ -78,7 +79,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
     kpis
   } = borrower;
   const lastUpdated = new Date(updated).toLocaleDateString('en-GB');
-  const [filteredAuctions, setFilteredAuctions] = useState();
+  const [filteredAuctions, setFilteredAuctions] = useState([]);
 
   const {
     actions: {
@@ -86,9 +87,12 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
     },
     store: {
       loan: { auctions }
-    },
+    }
+  }: any = useRootContext();
+
+  const {
     webSocket: { webSocket }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
 
   useAsyncEffect(async () => {
     try {
@@ -131,11 +135,14 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
           <HeaderImage>
             <CardImageCrop src={background} />
           </HeaderImage>
-          {filteredAuctions && <BorrowerHeader auction={filteredAuctions[0]} />}
+          {filteredAuctions?.length && <BorrowerHeader auction={filteredAuctions[0]} />}
           <CompanyDetails>
             <BorrowerLogo src={logo} />
             <CompanyName>{companyName}</CompanyName>
-            <p>Last updated: {lastUpdated}</p>
+            <p>
+              Last updated:
+              {lastUpdated}
+            </p>
             <b>About</b>
             {description}
             <Socials socialNetworks={socialNetworks} url={url} />
@@ -143,7 +150,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
         </BorrowerCard>
         <SideInfo>
           <SideTitle>Overview</SideTitle>
-          <KPIList kpis={kpis}></KPIList>
+          <KPIList kpis={kpis} />
           <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
         </SideInfo>
       </Container>

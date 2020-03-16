@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { isMobile } from 'react-device-detect';
 import { List, Icon, Dimmer, Loader, Button } from 'semantic-ui-react';
 import { match, ANY, TAIL } from 'pampy';
 
 import Messages from './Web3Check.Messages';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
 import {
   Web3CheckWalletWrapper,
   SelectYourWalletContainer,
@@ -13,7 +14,6 @@ import {
   CardTitle
 } from './Web3Check.styles';
 import OnboardingProgressBar from '../OnboardingProgressBar';
-import { isMobile } from 'react-device-detect';
 
 const Check = ({ value, message }: any) => {
   const iconProps = match(
@@ -46,7 +46,7 @@ const capitalize = s => {
 const CheckList = ({ onBack, onSuccess }: any) => {
   const {
     web3Status: { hasProvider, unlocked, networkMatches, accountMatches, targetNetwork }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
 
   const matchConditions = [hasProvider && unlocked, networkMatches, accountMatches];
 
@@ -100,7 +100,7 @@ const CheckList = ({ onBack, onSuccess }: any) => {
           <SelectWalletOptionListItem>
             <Button basic color="black" onClick={onBack}>
               Go back
-              </Button>
+            </Button>
           </SelectWalletOptionListItem>
         </SelectYourWalletList>
       </SelectYourWalletContainer>

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { fromWei } from 'web3-utils';
 import { Card } from '@raisehq/components';
@@ -7,7 +7,8 @@ import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+
 import {
   Header,
   ModalInputContainer,
@@ -23,7 +24,7 @@ import {
 } from './InvestModal.styles';
 
 const errorMessages = {
-  inputGreaterThanBalance: 'Not enought balance.',
+  inputGreaterThanBalance: 'Not enough balance.',
   inputGreaterThanLoanAmount: 'Invest less than target.'
 };
 
@@ -55,7 +56,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       },
       dai: { balance }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
   const nMaxAmount = Number(fromWei(maxAmount));
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
   const { companyName } = useBorrowerInfo(loan.originator);
