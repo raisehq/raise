@@ -43,8 +43,6 @@ export interface ILoginWithBloom {
 }
 
 export interface IContext {
-  blur: boolean;
-  mountNode?: any | null;
   credentials: ICredentials;
   onSetStep: (step: Steps) => () => null | void | Promise<any>;
   onSetStepWithParam: (step: string) => (param: string) => () => null | void | Promise<any>;
@@ -60,8 +58,6 @@ export interface IContext {
   referralCode: string | null;
   onRecover: (email: string) => null | void | Promise<any>;
   onClose?: () => null | void;
-  open: boolean;
-  closeButton: boolean;
   onResetToken: () => null | void | Promise<any>;
   history: any;
 }

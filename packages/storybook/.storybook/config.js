@@ -6,7 +6,4 @@ import 'semantic-ui-css/semantic.min.css';
 addDecorator(story => <Router initialEntries={['/foo']}>{story()}</Router>);
 
 // automatically import all files ending in *.stories.tsx
-configure(
-  require.context('../src/components', true, /\.stories\.tsx?$/),
-  module
-);
+configure(require.context('../stories', true, /\.stories\.tsx?$/), module);

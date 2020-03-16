@@ -1,0 +1,55 @@
+{
+  "name": "@raisehq/libs",
+  "version": "0.1.1",
+  "private": true,
+  "dependencies": {
+    "@raisehq/components": "*",
+    "@raisehq/onboarding": "*",
+    "@types/node": "12.0.8",
+    "@types/react": "16.9.0",
+    "@types/react-dom": "16.9.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.9.0",
+    "react-scripts": "3.4.0",
+    "env-cmd": "^8.0.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "eslint": "^6.2.1",
+    "eslint-config-airbnb-typescript": "^4.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.14.3",
+    "jest": "^24.9.0",
+    "react-use-cookie": "^1.0.2",
+    "ts-jest": "^24.0.2"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production react-scripts start",
+    "build": "NODE_OPTIONS='--max-old-space-size=2048' react-scripts build",
+    "build:production": "NODE_ENV=production env-cmd .env.production yarn run build "
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(ts|tsx)?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}

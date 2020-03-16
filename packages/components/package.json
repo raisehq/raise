@@ -15,35 +15,21 @@
     "build": "tsdx build",
     "build:umd": "cp tsdx.umd.config.js tsdx.config.js && tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
     "test": "tsdx test --env=jsdom",
-    "lint": "tsdx lint",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "lint": "tsdx lint"
   },
   "peerDependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@storybook/addon-actions": "^5.2.6",
-    "@storybook/addon-knobs": "^5.2.6",
-    "@storybook/addon-links": "^5.2.6",
-    "@storybook/addons": "^5.2.6",
-    "@storybook/react": "^5.2.6",
     "@truffle-types/web3-utils": "^0.1.1",
     "@types/enzyme": "^3.10.3",
     "@types/jest": "^24.0.23",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "babel-loader": "^8.0.6",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.15.1",
-    "lint-staged": "^10.0.8",
-    "react-docgen-typescript-loader": "^3.6.0",
-    "react-test-renderer": "^16.9.0",
-    "tsdx": "^0.11.0",
-    "tslib": "^1.10.0",
-    "typescript": "^3.7.2"
+    "husky": "^3.1.0",
+    "tslib": "^1.10.0"
   },
   "prettier": {
     "printWidth": 80,
@@ -62,9 +48,6 @@
     "chart.js": "^2.8.0",
     "dompurify": "^2.0.7",
     "dotenv": "^8.2.0",
-    "enzyme": "3.8.0",
-    "enzyme-adapter-react-16": "1.15.1",
-    "lint-staged": "^10.0.8",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
     "moment": "^2.24.0",
@@ -76,7 +59,6 @@
     "react-docgen-typescript-loader": "^3.5.0",
     "react-spring": "^8.0.27",
     "semantic-ui-react": "^0.88.1",
-    "storybook-react-router": "^1.0.8",
     "styled-components": "^5.0.0-rc.2",
     "tsc": "^1.20150623.0",
     "tsdx": "^0.12.3",
