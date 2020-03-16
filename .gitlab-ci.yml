@@ -21,6 +21,8 @@ before_script:
 
 stages:
   - build
+  - deploy-canary
+  - test
   - deploy
 
 variables:
@@ -46,7 +48,7 @@ build:
 
 deploy canary:
   image: 'python:3.7-alpine'
-  stage: deploy
+  stage: deploy-canary
   before_script:
     - 'pip install awscli'
   script:
@@ -66,16 +68,16 @@ e2e:
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: https://api.herodev.es
   before_script:
-  - |
-    #!/bin/sh
-    apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    netcat \
-    git-all \
-    libudev-dev \
-    libusb-1.0-0-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    - |
+      #!/bin/sh
+      apt-get update && \
+      DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      netcat \
+      git-all \
+      libudev-dev \
+      libusb-1.0-0-dev && \
+      apt-get clean && \
+      rm -rf /var/lib/apt/lists/*
   script:
     - 'yarn --pure-lockfile'
     - 'cd packages/testing'
