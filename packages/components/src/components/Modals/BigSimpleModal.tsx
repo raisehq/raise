@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { IMAGES_PATH } from '../../commons/constants';
 
 import {
@@ -11,7 +11,6 @@ import {
 } from './styles';
 
 const BigSimpleModal = ({
-  localClose,
   children,
   blur,
   mountNode,

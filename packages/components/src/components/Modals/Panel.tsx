@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { IMAGES_PATH } from '../../commons/constants';
 import {
   OnboardingModal,
@@ -16,7 +16,7 @@ const PanelWithImage = ({
   open,
   onClose,
   closeButton,
-}) => {
+}: any) => {
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
