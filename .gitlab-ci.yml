@@ -63,8 +63,8 @@ e2e:
   image: 'cypress/browsers:node10.16.0-chrome77'
   stage: test
   variables:
-    CYPRESS_url: 'https://${BUCKET_NAME}/canary'
-    CYPRESS_baseUrl: 'https://${BUCKET_NAME}/canary'
+    CYPRESS_url: 'https://${BUCKET_NAME}'
+    CYPRESS_baseUrl: 'https://${BUCKET_NAME}'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: https://api.herodev.es
   before_script:
