@@ -69,7 +69,7 @@ interface IProps {
   open: boolean;
   blur: boolean;
   mountNode?: any;
-  onClose?: () => null;
+  onClose?: () => any;
   closeButton?: boolean;
   initStep?: number;
   pathRedirect?: string;

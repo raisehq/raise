@@ -16,7 +16,6 @@
     "dist"
   ],
   "scripts": {
-    "rollup": "rollup -c",
     "transpile": "tsc --watch",
     "dev": "tsc --watch",
     "dev:int": "yarn run dev",

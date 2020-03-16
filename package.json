@@ -13,7 +13,8 @@
     "clean": "lerna exec -- rm -rf ./node_modules ./dist ./build ./bundle.*.js || true && rm -rf node_modules || true && rm -rf yarn.lock || true",
     "build": "lerna run build --stream",
     "build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
-    "rollup": "lerna exec   --scope '{@raisehq/components,@raisehq/onboarding}' -- rollup -c",
+    "rollup": "lerna run --stream --scope '@raisehq/libs' build:production",
+    "dev:rollup": "lerna run --stream --scope '@raisehq/libs' start",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client",
     "watch": "lerna run --parallel --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/client}' watch",
@@ -22,25 +23,13 @@
   "dependencies": {
     "lerna": "^3.16.4",
     "typescript": "^3.5.3",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.4.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^11.0.2",
-    "@rollup/plugin-json": "^4.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.1",
-    "@rollup/plugin-typescript": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^1.11.0",
-    "autoprefixer": "^9.7.4",
     "eslint": "^6.2.1",
     "eslint-config-airbnb-typescript": "^4.0.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.14.3",
-    "rollup": "^1.31.1",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-filesize": "^6.2.1",
-    "rollup-plugin-local-resolve": "^1.0.7",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0"
+    "eslint-plugin-react": "^7.14.3"
   }
 }

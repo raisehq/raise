@@ -9,7 +9,6 @@
     "dist"
   ],
   "scripts": {
-    "rollup": "rollup -c",
     "transpile": "tsc --watch",
     "watch": "tsc -p tsconfig.json --watch",
     "dev": "tsc --watch",
