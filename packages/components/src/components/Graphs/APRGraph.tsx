@@ -188,13 +188,13 @@ const APRGraph = ({
   );
 
   const avgGraphData = datasetToGraph(
-    Array(30).fill(medianCompoundRate),
+    Array(arrayDays.length).fill(medianCompoundRate),
     '119,151,170',
     'Compound 30 day avg',
     false,
     2,
     true,
-    [...Array(nowIndex + 1).fill(0), ...Array(30 - nowIndex - 1).fill(2)],
+    [],
     3
   );
 
@@ -216,10 +216,10 @@ const APRGraph = ({
         params: {
           asset: DAI_ADDRESS,
           min_block_timestamp: moment()
-            .subtract(30, 'day')
+            .subtract(arrayDays.length, 'day')
             .unix(),
           max_block_timestamp: moment().unix(),
-          num_buckets: 30,
+          num_buckets: arrayDays.length,
         },
       }
     );
