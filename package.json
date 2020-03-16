@@ -14,11 +14,23 @@
     "build": "lerna run build --stream",
     "build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
-    "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client"
+    "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client",
+    "prettier": "prettier --write **/*.jsx"
   },
   "dependencies": {
     "lerna": "^3.16.4",
-    "typescript": "^3.5.3",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "typescript": "3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "devDependencies": {
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1"
   }
 }

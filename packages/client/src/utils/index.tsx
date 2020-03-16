@@ -61,6 +61,16 @@ export const Right = (x: any) => ({
   inspect: () => `Right(${x})`
 });
 
+export function safeAccess(object, path) {
+  return object
+    ? path.reduce(
+        (accumulator, currentValue) =>
+          accumulator && accumulator[currentValue] ? accumulator[currentValue] : null,
+        object
+      )
+    : null;
+}
+
 export const Left = (x: any) => ({
   map: () => Left(x),
   fold: (f: any) => f(x),
@@ -108,7 +118,7 @@ export const isSupportedBrowser = () =>
   );
 
 const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v5/contracts.json';
+  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v6/metadata/contracts_0.6.9.json';
 
 export const getContractsDefinition = async () => {
   const remoteContracts = await axios.get(HERO_CONTRACTS);

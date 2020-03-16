@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { BrowserView } from 'react-device-detect';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
 import numeral, { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
 import Coin from '../Coin';
@@ -70,7 +70,7 @@ const calculateMinAmount = (value, percent) => {
 const CreateLoan = () => {
   const {
     web3Status: { network }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
   const [operatorFee, setOperatorFee] = useState(0);
   const [stage, setStage] = useState(UI.Confirm);
   const loanDispatcher = useLoanDispatcher();

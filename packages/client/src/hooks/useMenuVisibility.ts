@@ -1,8 +1,8 @@
-import { useEffect, useState, useContext } from 'react';
-import AppContext from '../components/AppContext';
+import { useEffect, useState } from 'react';
+import useRouter from '../hooks/useRouter';
 
 const useMenuVisibility = () => {
-  const { history }: any = useContext(AppContext);
+  const { history }: any = useRouter();
   const [visible, setVisible] = useState(false);
   const [visibleMenu, setVisibleMenu] = useState(false);
 

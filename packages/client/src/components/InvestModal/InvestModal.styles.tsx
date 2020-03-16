@@ -435,5 +435,3 @@ export const Explanation = styled(Grid.Row)`
 export const UserBalance = styled(Balance)`
   margin-left: 30px;
 `;
-
-

@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import get from 'lodash/get';
 import { getContractsDefinition } from '../../utils';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useWeb3 from '../../hooks/useWeb3';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
 
 const ResumeMock = () => {
   const {
     web3Status: { network, account }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
   const [show] = useState(false);
   const [info, setInfo] = useState({ eth: 0, hto: 0, dai: 0, kyc: false, dep: false });
   const [heroContracts, setHeroContracts]: any = useState(null);
@@ -24,20 +24,20 @@ const ResumeMock = () => {
       const netId = await web3.eth.net.getId();
       const BalanceETH = await web3.eth.getBalance(account);
       const HeroToken = new web3.eth.Contract(
-        get(heroContracts, 'abi.HeroToken'),
+        get(heroContracts, `abi.${netId}.HeroToken`),
         get(heroContracts, `address.${netId}.HeroToken`)
       );
 
       const BalanceHT = await HeroToken.methods.balanceOf(account).call();
 
       const DAI = new web3.eth.Contract(
-        get(heroContracts, 'abi.DAI'),
+        get(heroContracts, `abi.${netId}DAI`),
         get(heroContracts, `address.${netId}.DAI`)
       );
       const BalanceDAI = await DAI.methods.balanceOf(account).call();
 
       const Auth = new web3.eth.Contract(
-        get(heroContracts, 'abi.Auth'),
+        get(heroContracts, `abi.${netId}Auth`),
         get(heroContracts, `address.${netId}.Auth`)
       );
       const hasDeposit = await Auth.methods.hasDeposited(account).call();

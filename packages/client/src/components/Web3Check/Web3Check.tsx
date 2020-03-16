@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 // URLSearchParams polyfill for IE 11
 import URLSearchParams from '@ungap/url-search-params';
 import Wallet from './Web3Check.Wallet';
@@ -8,7 +8,9 @@ import WalletConnectForm from './WalletConnectForm';
 import WalletSetUp from './WalletSetUp';
 import Stages from './Web3Check.stages';
 import useWeb3 from '../../hooks/useWeb3';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import useRouter from '../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 import { isMobile } from 'react-device-detect';
@@ -33,15 +35,16 @@ const getStage = (
 
 const Web3Check = () => {
   const {
-    web3Status: { unlocked },
-    history,
     store: {
       user: {
-        // @ts-ignore
         cryptoAddress: { cryptotypeId }
       }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
+  const {
+    web3Status: { unlocked }
+  }: any = useAppContext();
+  const { history }: any = useRouter();
   const redirect = new URLSearchParams(history.location.search).get('redirect');
   const { web3 }: any = useWeb3();
   const tagManager = useGoogleTagManager('Wallet');
@@ -65,7 +68,14 @@ const Web3Check = () => {
   }, []);
 
   useEffect(() => {
-    if (web3 && unlocked && ui !== Stages.Checks && ui !== Stages.WalletConnectForm && ui !== Stages.WalletSelector && ui !== Stages.WalletSetUp) {
+    if (
+      web3 &&
+      unlocked &&
+      ui !== Stages.Checks &&
+      ui !== Stages.WalletConnectForm &&
+      ui !== Stages.WalletSelector &&
+      ui !== Stages.WalletSetUp
+    ) {
       tagManager.sendEvent(
         TMEvents.Submit,
         'wallet_success',
@@ -111,21 +121,19 @@ const Web3Check = () => {
     history.push(redirect);
   };
 
-  const handleNext = (step) => {
+  const handleNext = step => {
     setUI(Stages.WalletConnect);
     setPrevStage(step);
   };
 
-  return (
-    getStage(
-      ui,
-      handleNext,
-      handleBack,
-      handleSuccess,
-      backToConnectForm,
-      onExists,
-      onNotExists
-    )
+  return getStage(
+    ui,
+    handleNext,
+    handleBack,
+    handleSuccess,
+    backToConnectForm,
+    onExists,
+    onNotExists
   );
 };
 

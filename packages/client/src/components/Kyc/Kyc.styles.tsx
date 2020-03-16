@@ -144,9 +144,9 @@ export const CardSubTitle = styled.div`
 `;
 
 export const KycButtonWrapper = styled.div`
-display: flex;
-flex-direction: column;
-align-items:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 5px 0;
   width: 100%;
 `;
