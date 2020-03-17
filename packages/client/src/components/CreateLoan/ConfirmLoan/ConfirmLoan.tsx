@@ -97,6 +97,7 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
       <div>
         <Button
           idAttr="btn-create"
+          className="btn-confirm-loan"
           onClick={onSave}
           text="Confirm"
           disabled={
