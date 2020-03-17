@@ -15,6 +15,12 @@ import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 import { isMobile } from 'react-device-detect';
 
+const tagLabelMapping = {
+  coinbase: 'coinbase_success',
+  opera: 'opera_success',
+  metamask: 'metamask_success'
+};
+
 const getStage = (
   stage,
   handleNext,
@@ -53,14 +59,15 @@ const Web3Check = () => {
 
   useEffect(() => {
     if (web3 && unlocked) {
-      tagManager.sendEvent(
-        TMEvents.Submit,
-        'wallet_success',
-        getWalletName(cryptotypeId).toLowerCase()
-      );
+      const walletName = getWalletName(cryptotypeId).toLowerCase();
+      tagManager.sendEvent(TMEvents.Submit, 'wallet_success', walletName);
+      tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
       if (window.fbq) {
         window.fbq('trackCustom', 'wallet_success', {
-          type: getWalletName(cryptotypeId).toLowerCase()
+          type: walletName
+        });
+        window.fbq('trackCustom', tagLabelMapping[walletName], {
+          type: walletName
         });
       }
       setUI(Stages.Checks);
@@ -76,14 +83,15 @@ const Web3Check = () => {
       ui !== Stages.WalletSelector &&
       ui !== Stages.WalletSetUp
     ) {
-      tagManager.sendEvent(
-        TMEvents.Submit,
-        'wallet_success',
-        getWalletName(cryptotypeId).toLowerCase()
-      );
+      const walletName = getWalletName(cryptotypeId).toLowerCase();
+      tagManager.sendEvent(TMEvents.Submit, 'wallet_success', walletName);
+      tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
       if (window.fbq) {
         window.fbq('trackCustom', 'wallet_success', {
-          type: getWalletName(cryptotypeId).toLowerCase()
+          type: walletName
+        });
+        window.fbq('trackCustom', tagLabelMapping[walletName], {
+          type: walletName
         });
       }
       setUI(Stages.Checks);
