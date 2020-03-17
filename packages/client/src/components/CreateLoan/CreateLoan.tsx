@@ -126,7 +126,6 @@ const CreateLoan = ({ contracts }) => {
           }
         : null
     );
-    console.log('aa', coins);
     return coins;
   };
 
