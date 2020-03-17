@@ -1,22 +1,32 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   OnboardingSimpleModal,
   OnboardingWrapper,
   commonModal,
-  ConfirmHeaderWrapper,
-  ConfirmLogo,
-  ConfirmCros
-} from '../styles';
-import AppContext from '../App.context';
+  ConfirmHeaderWrapper, // X
+  ConfirmLogo, // X
+  ConfirmCros,
+} from './styles';
 import { IMAGES_PATH } from '../../commons/constants';
 
-const SimpleModal = ({ localClose, children }: any) => {
-  const { blur, mountNode, open, onClose, closeButton }: any = useContext(AppContext);
-
+const SimpleModal = ({
+  localClose,
+  children,
+  blur,
+  mountNode,
+  open,
+  onClose,
+  closeButton,
+}: any) => {
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
-    <OnboardingSimpleModal {...dimmer} style={commonModal} open={open} mountNode={mountNode}>
+    <OnboardingSimpleModal
+      {...dimmer}
+      style={commonModal}
+      open={open}
+      mountNode={mountNode}
+    >
       <OnboardingWrapper>
         <div className="process">
           <ConfirmHeaderWrapper>

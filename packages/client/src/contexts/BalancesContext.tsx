@@ -8,7 +8,7 @@ import React, {
   useEffect,
   ReactNode
 } from 'react';
-import BigNumber from 'bignumber.js';
+import BN from 'bn.js';
 import useDebounce from '../hooks/useDebounce';
 import { getEtherBalance, getTokenBalance, isAddress } from '../utils/web3-utils';
 import { useBlockNumber } from './BlockContext';
@@ -109,7 +109,7 @@ const BalancesContext = createContext<[BalancesState, { [k: string]: (...args: a
   {}
 ]);
 
-function useBalancesContext() {
+export function useBalancesContext() {
   return useContext(BalancesContext);
 }
 
@@ -240,10 +240,7 @@ export function Updater() {
   return null;
 }
 
-export function useAddressBalance(
-  address: string,
-  tokenAddress: string
-): BigNumber | undefined | null {
+export function useAddressBalance(address: string, tokenAddress: string): BN {
   const {
     store: {
       config: { networkId: chainId }
@@ -262,7 +259,7 @@ export function useAddressBalance(
   }, [chainId, address, tokenAddress, startListening, stopListening]);
 
   const value =
-    typeof chainId === 'number' ? state?.[chainId]?.[address]?.[tokenAddress]?.value : undefined;
+    typeof chainId === 'number' ? state?.[chainId]?.[address]?.[tokenAddress]?.value || '0' : '0';
 
-  return useMemo(() => (typeof value === 'string' ? new BigNumber(value) : value), [value]);
+  return useMemo(() => (typeof value === 'string' ? new BN(value) : value), [value]);
 }

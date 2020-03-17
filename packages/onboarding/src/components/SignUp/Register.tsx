@@ -151,6 +151,9 @@ const Register = () => {
         sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
         render="explicit"
         onChange={onCaptchaCallback}
+        onLoadCallback={() => {
+          console.log('- Capcha Loaded -');
+        }}
       />
       <OnboardButton
         disabled={

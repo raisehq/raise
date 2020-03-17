@@ -20,6 +20,7 @@
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.17.0",
     "bignumber.js": "^9.0.0",
+    "bn.js": "^5.1.1",
     "buttercms": "^1.1.5",
     "chart.js": "^2.8.0",
     "daggy": "^1.4.0",
@@ -80,6 +81,7 @@
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "react-start": "react-scripts start ",
+    "watch": "npm run int",
     "dev": "env-cmd --no-override .env npm run react-start",
     "dev:int": "env-cmd --no-override .env.local npm run react-start",
     "int": "env-cmd --no-override .env.integration npm run react-start",

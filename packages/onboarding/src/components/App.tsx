@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import daggy from 'daggy';
 import 'url-search-params-polyfill';
-import { AccountType } from '@raisehq/components';
+import { AccountType, Panel, Simple, PanelWithImage } from '@raisehq/components';
 import AppContext from './App.context';
 import GetStarted from './SignUp/GetStarted';
 import GetStartedWithEmail from './SignUp/GetStartedWithEmail';
@@ -22,10 +22,6 @@ import ResetError from './ResetPassword/Error';
 import BorrowerSignUp from './BorrowerSignUp/Passwords';
 import BorrowerSignUpError from './BorrowerSignUp/Error';
 import BorrowerSignUpOK from './BorrowerSignUp/Success';
-import PanelWithImage from './Modals/PanelWithImage';
-import Panel from './Modals/Panel';
-import SimpleModal from './Modals/Simple';
-import BigSimpleModal from './Modals/BigSimpleModal';
 import { ICredentials, Steps } from './types';
 import useAsyncEffect from '../hooks/useAsyncEffect';
 import * as services from '../services';
@@ -46,9 +42,11 @@ window.fbq = window.fbq || null;
 const Step = daggy.taggedSum('UI', {
   Start: [],
   SignUpWithEmail: [],
+  SignUpWithEmailMini: [],
   SignUpWithBloom: [{}],
   SignInWithBloom: [{}],
   StartMini: [],
+  SignInWithEmailMini: [],
   SignIn: [],
   SignInWithEmail: [],
   ErrorWithBloom: [],
@@ -71,7 +69,7 @@ interface IProps {
   open: boolean;
   blur: boolean;
   mountNode?: any;
-  onClose?: () => null;
+  onClose?: () => any;
   closeButton?: boolean;
   initStep?: number;
   pathRedirect?: string;
@@ -93,9 +91,9 @@ const App = ({
   const [referralCode, setRefCode] = useState<string>('');
   const [startMini, setStartMini] = useState<boolean>(false);
   // @ts-ignore
-  const [user, setuserCookie] = useCookie('user', {});
+  const [, setuserCookie] = useCookie('user', {});
   // @ts-ignore
-  const [auth, setAuthCookie] = useCookie('auth', {});
+  const [, setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
 
@@ -462,7 +460,7 @@ const App = ({
     setStep(Step.Confirm);
   };
 
-  const onOnClose = () => {
+  const closeModal = () => {
     if (initStep) {
       setStep(initStep);
     } else {
@@ -472,21 +470,28 @@ const App = ({
       onClose();
     }
   };
-
+  const props = {
+    open,
+    mountNode,
+    blur,
+    onClose: closeModal,
+    closeButton
+  };
   const getStep = () =>
     step.cata({
       Start: () => (
-        <PanelWithImage title={'Get Started'}>
+        <PanelWithImage {...props} title={'Get Started'}>
           <GetStarted />
         </PanelWithImage>
       ),
       SignUpWithEmail: () => (
-        <PanelWithImage title={'Get Started'}>
+        <PanelWithImage {...props} title={'Get Started'}>
           <GetStartedWithEmail />
         </PanelWithImage>
       ),
+      SignUpWithEmailMini: () => <GetStartedWithEmail />,
       SignUpWithBloom: token => (
-        <Panel>
+        <Panel {...props}>
           <GetStartedWithBloom
             onBack={() => setStep(Step.Start)}
             token={token}
@@ -495,7 +500,7 @@ const App = ({
         </Panel>
       ),
       SignInWithBloom: token => (
-        <Panel>
+        <Panel {...props}>
           <GetStartedWithBloom
             onBack={() => setStep(Step.SignIn)}
             token={token}
@@ -505,84 +510,85 @@ const App = ({
       ),
       StartMini: () => <GetStarted />,
       SignIn: () => (
-        <PanelWithImage title={'Sign in'}>
+        <PanelWithImage {...props} title={'Sign in'}>
           <SignIn />
         </PanelWithImage>
       ),
       SignInWithEmail: () => (
-        <SimpleModal>
+        <Simple {...props}>
           <SignInWithEmail />
-        </SimpleModal>
+        </Simple>
       ),
+      SignInWithEmailMini: () => <SignInWithEmail />,
       ErrorWithBloom: () => (
-        <Panel>
+        <Panel {...props}>
           <ErrorBloom onBack={() => setStep(Step.Start)} method={'Get Started'} />
         </Panel>
       ),
       Confirm: () => (
-        <BigSimpleModal localClose>
+        <Panel {...props}>
           <Confirm />
-        </BigSimpleModal>
+        </Panel>
       ),
       Verified: () => (
-        <SimpleModal>
+        <Simple {...props}>
           <Verified />
-        </SimpleModal>
+        </Simple>
       ),
       Verifying: () => (
-        <SimpleModal>
+        <Simple {...props}>
           <Verifying />
-        </SimpleModal>
+        </Simple>
       ),
       VerifiedError: token => (
-        <SimpleModal>
+        <Simple {...props}>
           <VerifiedError token={token} />
-        </SimpleModal>
+        </Simple>
       ),
       Reset: () => (
-        <SimpleModal>
+        <Simple {...props}>
           <ResetPassword />
-        </SimpleModal>
+        </Simple>
       ),
       ResetOK: () => (
-        <SimpleModal>
+        <Simple {...props}>
           <ResetOK />
-        </SimpleModal>
+        </Simple>
       ),
       ResetError: () => (
-        <SimpleModal>
+        <Simple {...props}>
           <ResetError />
-        </SimpleModal>
+        </Simple>
       ),
       ResetConfirm: () => (
-        <SimpleModal>
+        <Simple {...props}>
           <ResetConfirm />
-        </SimpleModal>
+        </Simple>
       ),
       ResetPasswordInput: token => (
-        <SimpleModal>
+        <Simple {...props}>
           <ResetPasswordInput token={token} />
-        </SimpleModal>
+        </Simple>
       ),
       BorrowerSignUp: token => (
-        <SimpleModal>
+        <Simple {...props}>
           <BorrowerSignUp token={token} />
-        </SimpleModal>
+        </Simple>
       ),
       BorrowerSignUpError: () => (
-        <SimpleModal>
+        <Simple {...props}>
           <BorrowerSignUpError />
-        </SimpleModal>
+        </Simple>
       ),
       BorrowerSignUpOK: () => (
-        <SimpleModal>
+        <Simple {...props}>
           <BorrowerSignUpOK />
-        </SimpleModal>
+        </Simple>
       ),
       ResendValidationEmail: token => (
-        <SimpleModal>
+        <Simple {...props}>
           <ResendValidationEmail token={token} />
-        </SimpleModal>
+        </Simple>
       )
     });
 
@@ -603,12 +609,8 @@ const App = ({
         credentials,
         setLoginError,
         referralCode,
-        onClose: onOnClose,
-        blur,
+        onClose: closeModal,
         error: loginError,
-        mountNode,
-        closeButton,
-        open,
         history
       }}
     >

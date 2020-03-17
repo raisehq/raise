@@ -9,7 +9,7 @@ import {
   HeaderMenuItem,
   RaiseHeader
 } from './DesktopHeader.styles';
-import Balance from '../Balance';
+import HeaderBalance from '../HeaderBalance';
 import Web3Address from '../Web3Address';
 import theme from '../../theme';
 import { useAppContext } from '../../contexts/AppContext';
@@ -110,7 +110,7 @@ const DesktopHeader = () => {
             <>
               {isLogged && visibleMenu && (
                 <>
-                  <Balance />
+                  <HeaderBalance />
                   <Web3Address />
                   <MyAccountButton />
                 </>
