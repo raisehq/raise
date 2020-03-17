@@ -90,7 +90,6 @@ const SignInWithEmail = () => {
 
   const onCaptchaErrored = captchaError => {
     console.error('Captcha error. You should check the network and retry: ', captchaError);
-    recaptchaRef.current.reset();
   };
 
   return (
@@ -131,6 +130,9 @@ const SignInWithEmail = () => {
         onChange={onCaptchaCallback}
         onExpired={onCaptchaExpired}
         onErrored={onCaptchaErrored}
+        onLoadCallback={() => {
+          console.log('- Capcha Loaded -');
+        }}
       />
       <OnboardButton
         id="btn-login"

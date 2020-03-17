@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   CardTitle,
   SelectYourWalletTitle,
@@ -6,7 +6,7 @@ import {
   GoBack,
   WalletIcon,
   SetUpSubtitle,
-  OtherWalletsText,
+  OtherWalletsText
 } from './Web3Check.styles';
 
 import OnboardingProgressBar from '../OnboardingProgressBar';
@@ -16,18 +16,19 @@ import GoBackButton from '../GoBackButton';
 import { getWalletName } from '../../utils';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useWeb3 from '../../hooks/useWeb3';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import CryptoWallets from '../../commons/cryptoWallets';
+import { IWallet } from '../../commons/IWallet';
 
 const WalletSetUp = ({ onNext, onBack }: any) => {
   const {
     store: {
       config: { network, networkId }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
   const tagManager = useGoogleTagManager('Wallet');
   const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
-  const [defaultWallet, setDefaultWallet] = useState();
+  const [defaultWallet, setDefaultWallet] = useState<IWallet>(getDefaultWeb3());
 
   useEffect(() => {
     setDefaultWallet(getDefaultWeb3());
@@ -37,7 +38,10 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
 
-    if ((defaultWallet.name === -1 && walletName === 'metamask') || (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)) {
+    if (
+      (defaultWallet?.name === -1 && walletName === 'metamask') ||
+      (walletName === 'metamask' && defaultWallet?.name !== CryptoWallets.Metamask)
+    ) {
       window.open('http://metamask.app.link/', '_blank');
     } else {
       try {
@@ -55,27 +59,24 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
       <SelectYourWalletTitle>
         <CardTitle>Set up your wallet</CardTitle>
         <SetUpSubtitle>
-          If you don't have a wallet there is no problem, click on the button bellow and create an
-          account in Coinbase. It's fast, easy and secure.
+          If you don't have a wallet there is no problem, click on the button bellow and install a
+          Metamask wallet. It's fast, easy and secure.
         </SetUpSubtitle>
       </SelectYourWalletTitle>
-      <WalletIcon src={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`} />
-
+      <WalletIcon src={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`} />
       <WalletButton
-        onClickAction={handlerWallet(CryptoWallets.Coinbase)}
-        walletName="Continue with Coinbase"
-        green={true}
+        onClickAction={handlerWallet(CryptoWallets.Metamask)}
+        walletName="Install Metamask"
+        green
       />
       <OtherWalletsText>You can also use:</OtherWalletsText>
       <WalletButton
-        onClickAction={handlerWallet(CryptoWallets.Metamask)}
-        walletName="Metamask"
-        walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`}
+        onClickAction={handlerWallet(CryptoWallets.Coinbase)}
+        walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
+        walletName="Coinbase"
       />
       <GoBack>
-        <GoBackButton
-          onClickAction={onBack}
-        />
+        <GoBackButton onClickAction={onBack} />
       </GoBack>
     </Web3CheckWalletWrapper>
   );

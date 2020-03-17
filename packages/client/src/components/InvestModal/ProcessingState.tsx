@@ -1,4 +1,4 @@
-import React, { useContext, useState, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import { toWei } from 'web3-utils';
 import { List, Grid } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
@@ -25,19 +25,19 @@ import {
   BlankSpace,
   ModalFlexWrapper
 } from './InvestModal.styles';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui, setStage }) => {
   const {
     web3Status: { walletAccount }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
 
   const { web3 } = useWeb3();
   const metamask = useWallet();
 
-  const [contracts, setContracts] = useState();
-  const [approved, setAproved] = useState(false);
-  const [errors, setError] = useState();
+  const [contracts, setContracts]: any = useState();
+  const [approved, setAproved]: any = useState(false);
+  const [errors, setError]: any = useState();
 
   useAsyncEffect(async () => {
     if (metamask) {

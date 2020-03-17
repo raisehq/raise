@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BalanceBox, Title, Value } from './Balance.styles';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import Queryies from '../../helpers/queryies';
 
 const Balance = props => {
   const {
-    daiWebSocket: { webSocket },
     actions: {
       dai: { onGetBalance }
     },
@@ -15,7 +15,10 @@ const Balance = props => {
         cryptoAddress: { address: account }
       }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
+  const {
+    daiWebSocket: { webSocket }
+  }: any = useAppContext();
 
   useEffect(() => {
     if (account && webSocket) {

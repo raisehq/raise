@@ -12,7 +12,12 @@ import {
 import { Button, Image } from 'semantic-ui-react';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
-import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
+import {
+  RequestElement,
+  QROptions,
+  Action,
+  RequestData
+} from '@bloomprotocol/share-kit-react/dist/index';
 import useInterval from '../../hooks/useInterval';
 import { bloomSignIn, verifyBloomLogin, redirectFromBloomApp } from '../../services';
 import bloomToken from 'uuid';

@@ -1,8 +1,8 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Button } from 'semantic-ui-react';
-import AppContext from '../AppContext';
 import { getHost } from '../../utils/index';
 import { SignupButton, LoginButton } from './Logout.styles';
+import { useRootContext } from '../../contexts/RootContext';
 
 const Logout = ({ onLogin, onSignup, ...props }: any) => {
   const {
@@ -14,7 +14,7 @@ const Logout = ({ onLogin, onSignup, ...props }: any) => {
     actions: {
       auth: { onSignout }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
 
   const goToLogin = useCallback(() => {
     if (onLogin) return onLogin();

@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 import { SpecialDimmer } from './Layout.styles';
 import useWeb3 from '../../hooks/useWeb3';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import CryptoWallets from '../../commons/cryptoWallets';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 
@@ -17,6 +18,9 @@ const Web3Layout = ({
   ...rest
 }: any) => {
   const {
+    web3Status: { hasProvider, accountMatches, networkMatches, unlocked }
+  }: any = useAppContext();
+  const {
     store: {
       config: { network, networkId },
       auth: {
@@ -26,11 +30,8 @@ const Web3Layout = ({
         details: { accounttype_id: accounttypeId },
         cryptoAddress: { cryptotypeId }
       }
-    },
-
-    web3Status: { hasProvider, accountMatches, networkMatches, unlocked }
-  }: any = useContext(AppContext);
-
+    }
+  }: any = useRootContext();
   const { connectWallet }: any = useWeb3();
   const [connectionError, setConnectionError] = useState(false);
   const {

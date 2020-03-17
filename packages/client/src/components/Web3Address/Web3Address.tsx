@@ -1,7 +1,8 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import { Icon } from 'semantic-ui-react';
 import { LabelWeb3 } from './Web3Address.styles';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import { useAppContext } from '../../contexts/AppContext';
 import { NULL_ADDRESS } from '../../commons/constants';
 // import useWeb3Checker from '../../hooks/useWeb3Checker';
 
@@ -12,9 +13,11 @@ const Web3Address = ({ account = null }: any) => {
       user: {
         cryptoAddress: { address }
       }
-    },
+    }
+  }: any = useRootContext();
+  const {
     web3Status: { networkMatches }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
 
   const iconColor = networkMatches ? 'green' : 'red';
   const currentAddress = account || address || NULL_ADDRESS;

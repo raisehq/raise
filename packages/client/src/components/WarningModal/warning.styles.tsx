@@ -24,7 +24,7 @@ export const Modal = styled(SemanticModal)`
     height: 100%;
     box-shadow: none;
     margin: 0;
-    overflow-y:auto;
+    overflow-y: auto;
   }
 `;
 

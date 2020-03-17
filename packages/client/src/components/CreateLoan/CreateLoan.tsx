@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { BrowserView } from 'react-device-detect';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
 import get from 'lodash/get';
@@ -67,18 +68,20 @@ import InputNumber from '../commons/InputControl/InputNumber';
 const CreateLoan = ({ contracts }) => {
   const {
     web3Status: { network, walletNetworkId },
-    webSocket: { webSocket },
+    webSocket: { webSocket }
+  }: any = useAppContext();
+
+  const {
     actions: {
       loanDispatcher: { onGetAcceptedTokensSubscription }
     },
     store: {
       loanDispatcher: { acceptedTokens }
     }
-  }: any = useContext(AppContext);
-
+  }: any = useRootContext();
   const [operatorFee, setOperatorFee] = useState(0);
   const [stage, setStage] = useState(UI.Confirm);
-  const loanDispatcher = useLoanDispatcher();
+  const loanDispatcherContract = useLoanDispatcher();
   const [amountValidation, setAmountValidation] = useState({
     error: false,
     msg: ''
@@ -130,16 +133,16 @@ const CreateLoan = ({ contracts }) => {
   const loanDispatcherAddress = getAddress(walletNetworkId, 'LoanDispatcher');
 
   useAsyncEffect(async () => {
-    if (operatorFee === 0 && loanDispatcher) {
+    if (operatorFee === 0 && loanDispatcherContract) {
       try {
-        const contractOperatorFee = await loanDispatcher.getOperatorFee();
+        const contractOperatorFee = await loanDispatcherContract.getOperatorFee();
         setOperatorFee(contractOperatorFee);
       } catch (error) {
         console.error(error);
         setOperatorFee(OPERATOR_FEE_DEFAULT);
       }
     }
-  }, [loanDispatcher]);
+  }, [loanDispatcherContract]);
 
   useEffect(() => {
     if (webSocket) {
@@ -229,7 +232,7 @@ const CreateLoan = ({ contracts }) => {
     setStage(UI.Waiting);
     console.log(loan);
     try {
-      await loanDispatcher.deploy(
+      await loanDispatcherContract.deploy(
         loan.minAmount,
         loan.amount,
         loan.minMir,

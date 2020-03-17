@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import hasIn from 'lodash/hasIn';
 import { isAddress } from 'web3-utils';
 import get from 'lodash/get';
 import useWeb3 from './useWeb3';
-import RootContext from '../context';
+import { useRootContext } from '../contexts/RootContext';
 
 import { parseNetwork } from '../utils';
 
@@ -16,7 +16,7 @@ const useWallet = () => {
     actions: {
       blockchain: { setNewInstance }
     }
-  }: any = useContext(RootContext);
+  }: any = useRootContext();
 
   const [wallet, setWallet]: any = useState(null);
 

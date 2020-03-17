@@ -1,19 +1,23 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { IMAGES_PATH } from '../../commons/constants';
-import AppContext from '../App.context';
+
 import {
   OnboardingModal,
   OnboardingHeader,
-  OnboardingFormContent,
-  OnboardingCloseButton,
+  OnboardingContentWrapper,
   OnboardingHeaderItemWrapper,
   OnboardingModalContent,
-  OnboardingBloomContent
+  OnboardingCloseIcon,
 } from './styles';
 
-const PanelWithImage = ({ children }) => {
-  const { blur, mountNode, open, onClose, closeButton }: any = useContext(AppContext);
-
+const BigSimpleModal = ({
+  children,
+  blur,
+  mountNode,
+  open,
+  onClose,
+  closeButton,
+}: any) => {
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
@@ -24,13 +28,20 @@ const PanelWithImage = ({ children }) => {
             <img src={`${IMAGES_PATH}logo.svg`} />
           </OnboardingHeaderItemWrapper>
           <OnboardingHeaderItemWrapper>
-            {closeButton && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
+            {closeButton && (
+              <OnboardingCloseIcon
+                link
+                onClick={onClose}
+                name="close"
+                size="large"
+              />
+            )}
           </OnboardingHeaderItemWrapper>
         </OnboardingHeader>
-        <OnboardingBloomContent>{children}</OnboardingBloomContent>
+        <OnboardingContentWrapper>{children}</OnboardingContentWrapper>
       </OnboardingModalContent>
     </OnboardingModal>
   );
 };
 
-export default PanelWithImage;
+export default BigSimpleModal;

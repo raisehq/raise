@@ -80,16 +80,15 @@ export const SuggestedContainer = styled.div`
   display: grid;
   margin: 15px 0 15px 0;
   grid-template-columns: 100%;
-  grid-template-rows: 600px; 
+  grid-template-rows: 600px;
   grid-column-gap: 15px;
   grid-row-gap: 20px;
 
   @media ${device.mobileL} {
     grid-template-columns: repeat(auto-fill, 370px);
-    grid-template-rows: 570px; 
+    grid-template-rows: 570px;
   }
 `;
-
 
 export const NoResults = styled.div`
   width: 100%;
