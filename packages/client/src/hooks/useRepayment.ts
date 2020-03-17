@@ -47,18 +47,22 @@ const useRepayment = (loan, open) => {
         utils: { BN }
       } = web3;
       const DAIProxy = await wallet.addContract('DAIProxy');
-      const DAI = await wallet.addContract('DAI');
-      const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
+      const loanContract = await wallet.addContractByAddress('LoanContract', loan.id);
+      const tokenAddress = await loanContract.methods.tokenAddress().call();
+      const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
+
       const valueBN = new BN(borrowerDebt);
 
-      const amountApproved = await DAIContract.methods
+      const amountApproved = await ERC20Contract.methods
         .allowance(account, DAIProxy.options.address)
         .call({ from: account });
 
       if (valueBN.gt(new BN(amountApproved))) {
         try {
           await followTx.watchTx(
-            DAIContract.methods.approve(DAIProxy.options.address, MAX_VALUE).send({ from: account })
+            ERC20Contract.methods
+              .approve(DAIProxy.options.address, MAX_VALUE)
+              .send({ from: account })
           );
           setApproved(true);
         } catch (err) {
