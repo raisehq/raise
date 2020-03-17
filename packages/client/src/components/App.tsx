@@ -33,6 +33,7 @@ const App = () => {
       user: {
         details: { accounttype_id: accounttypeId }
       },
+      blockchain: { contracts },
       onboarding: { show: showOnboarding, troggle: troggleOnboarding }
     },
     actions: {
@@ -140,6 +141,7 @@ const App = () => {
                   path="/create-loan"
                   component={CreateLoan}
                   roles={[1, 2]}
+                  contracts={contracts}
                 />
                 <Web3Layout
                   publicRoute

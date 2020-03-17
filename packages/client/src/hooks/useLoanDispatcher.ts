@@ -8,18 +8,11 @@ const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const { web3 } = useWeb3();
   const wallet = useWallet();
-  const {
-    store: {
-      blockchain: { contracts }
-    },
-    followTx
-  }: any = useRootContext();
+  const { followTx }: any = useRootContext();
 
   useAsyncEffect(async () => {
     if (wallet) {
       try {
-        const netId = await web3.eth.net.getId();
-        const daiAddress = contracts?.address[netId]?.DAI;
         const contract = await wallet.addContract('LoanDispatcher');
         const account = await wallet.getPrimaryAccount();
         setActiveContract({
@@ -38,7 +31,8 @@ const useLoanDispatcher = () => {
             maxInterestRate,
             termMonthsLength,
             acceptMinimum,
-            auctionTermLength
+            auctionTermLength,
+            tokenAddress
           ) => {
             const auctionSecondsLength = auctionTermLength.toString();
             const termSecondsLength = termMonthsLength.toString();
@@ -49,7 +43,7 @@ const useLoanDispatcher = () => {
               web3.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,
               auctionSecondsLength,
-              daiAddress
+              tokenAddress
             ];
 
             return followTx.watchTx(

@@ -6,6 +6,7 @@ import config from './config';
 import loan from './loan';
 import dai from './dai';
 import onboarding from './onboarding';
+import loanDispatcher from './loanDispatcher';
 
 export default (dispatch, state) => ({
   config: config(dispatch, state),
@@ -15,5 +16,6 @@ export default (dispatch, state) => ({
   blockchain: blockchain(dispatch, state),
   loan: loan(dispatch, state),
   dai: dai(dispatch, state),
-  onboarding: onboarding(dispatch, state)
+  onboarding: onboarding(dispatch, state),
+  loanDispatcher: loanDispatcher(dispatch, state)
 });

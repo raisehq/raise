@@ -27,8 +27,7 @@ describe('BORROWER', function() {
       .type(10);
     cy.get('input#btn-check-term-conditions').check({ force: true });
 
-    cy.get('.card > .button').should('have.length', 1);
-    cy.get('.card > .button').click();
+    cy.get('.btn-confirm-loan').click();
 
     cy.get('#btn-check', { timeout: 12000 }).should('have.length', 1);
     cy.wait(300);
