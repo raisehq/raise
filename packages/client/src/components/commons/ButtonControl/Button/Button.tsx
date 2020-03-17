@@ -1,9 +1,9 @@
 import React from 'react';
 import { ButtonStyled } from './styles';
 
-const Button = ({ text, onClick, disabled = false, idAttr }) => {
+const Button = ({ text, onClick, disabled = false, idAttr, className }) => {
   return (
-    <ButtonStyled onClick={onClick} disabled={disabled} id={idAttr}>
+    <ButtonStyled onClick={onClick} disabled={disabled} id={idAttr} className={className}>
       {text}
     </ButtonStyled>
   );
