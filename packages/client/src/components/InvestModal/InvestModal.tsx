@@ -43,7 +43,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Kyc);
   const [investment, setInvestment] = useState(0);
-  const tagManager = useGoogleTagManager();
+  const tagManager = useGoogleTagManager('Loan');
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
   // prettier-ignore
   const connected = (hasProvider && unlocked && accountMatches && networkMatches);
@@ -61,9 +61,21 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
 
   const openModal = () => {
     if (isLogged && userActivated) {
+      tagManager.sendEvent(TMEvents.Click, 'loan', loan.id);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'loan', {
+          type: loan.id
+        });
+      }
       setStage(UI.Confirm);
       setOpen(true);
     } else if (isLogged && !userActivated) {
+      tagManager.sendEvent(TMEvents.Click, 'loan', loan.id);
+      if (window.fbq) {
+        window.fbq('trackCustom', 'loan', {
+          type: loan.id
+        });
+      }
       setOpen(true);
     } else {
       const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'c');
