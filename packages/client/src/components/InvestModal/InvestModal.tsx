@@ -43,7 +43,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Kyc);
   const [investment, setInvestment] = useState(0);
-  const tagManager = useGoogleTagManager('Loan');
+  const tagManager = useGoogleTagManager('Card');
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
   // prettier-ignore
   const connected = (hasProvider && unlocked && accountMatches && networkMatches);

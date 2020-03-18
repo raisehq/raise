@@ -50,7 +50,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
     principal: calcPrincipal
   } = getCalculations(loan);
 
-  const tagManager = useGoogleTagManager('Loan');
+  const tagManager = useGoogleTagManager('Card');
 
   const {
     store: {

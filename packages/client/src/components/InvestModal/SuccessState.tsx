@@ -12,7 +12,7 @@ import {
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
 const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }) => {
-  const tagManager = useGoogleTagManager('Loan');
+  const tagManager = useGoogleTagManager('Card');
   const onOK = () => {
     tagManager.sendEvent(TMEvents.Submit, 'invest_success');
     if (window.fbq) {
