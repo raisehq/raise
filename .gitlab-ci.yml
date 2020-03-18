@@ -34,7 +34,7 @@ trigger-deployment:
       #!/bin/sh
       ssh ubuntu@${BASTION}.${DOMAIN} \
       "cd /home/ubuntu/deployment && \
-      ./deploy.sh ${REVIEW_SLUG} ${DOMAIN}
+      ./deploy.sh ${REVIEW_SLUG} ${DOMAIN}"
   only:
     - merge_requests
   except:
