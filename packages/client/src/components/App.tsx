@@ -277,11 +277,7 @@ const App = ({ history, match }: any) => {
       />
       {!isLoading && (
         <>
-          <TopMobileMenu />
-          <DesktopHeader />
-          <Menu />
           <StyledToastContainer
-            position="bottom-right"
             autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
@@ -290,6 +286,9 @@ const App = ({ history, match }: any) => {
             draggable={false}
             pauseOnHover={false}
           />
+          <TopMobileMenu />
+          <DesktopHeader />
+          <Menu />
           <TransitionGroup component={null}>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
               <Switch>

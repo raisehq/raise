@@ -3,12 +3,10 @@ import { ToastContainer } from 'react-toastify';
 
 export const ToastCustomContainer = styled.div`
   display: flex;
-  z-index: -10000px;
   flex-direction: column;
   justify-content: flex-start;
   margin-left: 15px;
   margin-right: 15px;
-  max-width: 300px;
 `;
 
 export const ToastText = styled.div`
@@ -25,7 +23,7 @@ export const TxLink = styled.a`
 
 export const StyledToastContainer = styled(ToastContainer)`
   /* this is the container*/
-  top: 108px;
+  position: relative;
   .toast {
     background-color: red;
   }
@@ -44,7 +42,7 @@ export const StyledToastContainer = styled(ToastContainer)`
     background: red !important;
   }
   .Toastify__toast-body {
-    max-width: 320px !important;
+    /*max-width: 320px !important;*/
   }
   &&&.Toastify__progress-bar {
     background: red;
