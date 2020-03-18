@@ -61,19 +61,19 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
 
   const openModal = () => {
     if (isLogged && userActivated) {
-      tagManager.sendEvent(TMEvents.Click, 'loan', loan.id);
+      tagManager.sendEvent(TMEvents.Click, 'loan');
       if (window.fbq) {
         window.fbq('trackCustom', 'loan', {
-          type: loan.id
+          type: 'loan'
         });
       }
       setStage(UI.Confirm);
       setOpen(true);
     } else if (isLogged && !userActivated) {
-      tagManager.sendEvent(TMEvents.Click, 'loan', loan.id);
+      tagManager.sendEvent(TMEvents.Click, 'loan');
       if (window.fbq) {
         window.fbq('trackCustom', 'loan', {
-          type: loan.id
+          type: 'loan'
         });
       }
       setOpen(true);
