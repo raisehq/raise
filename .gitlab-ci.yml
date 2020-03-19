@@ -27,18 +27,18 @@ stages:
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1
-  BUCKET_NAME: test.herodev.es
+  ENV: test.herodev.es
 cache:
   key: '${CI_COMMIT_REF_SLUG}'
 
 build:
   stage: build
   variables:
-    REACT_APP_COOKIE_DOMAIN: .${BUCKET_NAME}
-    REACT_APP_HOST_URL: https://${BUCKET_NAME}
+    REACT_APP_COOKIE_DOMAIN: .${ENV}
+    REACT_APP_HOST_URL: https://${ENV}
   script:
     - |
-      echo ${BUCKET_NAME}
+      echo ${ENV}
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
       yarn run client:build:integration
@@ -55,8 +55,8 @@ deploy canary:
   script:
     - |
       mv packages/client/build canary
-      echo ${BUCKET_NAME}
-      aws s3 sync --delete canary s3://${BUCKET_NAME}/canary
+      echo ${ENV}
+      aws s3 sync --delete canary s3://${ENV}/canary
   dependencies:
     - build
 
@@ -64,8 +64,8 @@ e2e:
   image: 'cypress/browsers:node10.16.0-chrome77'
   stage: test
   variables:
-    CYPRESS_url: 'https://${BUCKET_NAME}'
-    CYPRESS_baseUrl: 'https://${BUCKET_NAME}'
+    CYPRESS_url: 'https://${ENV}'
+    CYPRESS_baseUrl: 'https://${ENV}'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: https://api.herodev.es
   before_script:
@@ -109,7 +109,7 @@ deploy latest:
   script:
     - |
       mv packages/client/build latest
-      echo ${BUCKET_NAME}
-      aws s3 sync --delete latest s3://${BUCKET_NAME}/latest
+      echo ${ENV}
+      aws s3 sync --delete latest s3://${ENV}/latest
   dependencies:
     - e2e
