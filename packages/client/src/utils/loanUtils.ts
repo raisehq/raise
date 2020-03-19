@@ -146,7 +146,7 @@ export const calculateInvestmentReturn = auction => {
 
 export const getCoinsFromContract = coinsMap => contract => {
   console.log(contract);
-  const coins: CoinsType[] = coinsMap.map(coin =>
+  const coins: CoinsType[] = contract && coinsMap.map(coin =>
     contract[coin.name]
       ? {
           address: contract[coin.name],
