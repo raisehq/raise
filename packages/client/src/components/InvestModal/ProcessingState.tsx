@@ -26,6 +26,7 @@ import {
   ModalFlexWrapper
 } from './InvestModal.styles';
 import { useAppContext } from '../../contexts/AppContext';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui, setStage }) => {
   const {
@@ -38,6 +39,8 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   const [contracts, setContracts]: any = useState();
   const [approved, setAproved]: any = useState(false);
   const [errors, setError]: any = useState();
+
+  const tagManager = useGoogleTagManager('Card');
 
   useAsyncEffect(async () => {
     if (metamask) {
@@ -109,6 +112,13 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   }, [approved]);
 
   const onRetry = () => {
+    tagManager.sendEvent(TMEvents.Click, 'invest_retry');
+
+    if (window.fbq) {
+      window.fbq('trackCustom', 'invest_retry', {
+        type: 'loan'
+      });
+    }
     setStage(ui.Confirm);
   };
 

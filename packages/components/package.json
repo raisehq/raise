@@ -1,6 +1,6 @@
 {
   "name": "@raisehq/components",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "license": "MIT",
   "author": "Raise HQ",
   "main": "dist/index.js",

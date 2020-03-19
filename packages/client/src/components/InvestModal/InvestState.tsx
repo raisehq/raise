@@ -8,6 +8,7 @@ import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
 import { useRootContext } from '../../contexts/RootContext';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useGetCoin from '../../hooks/useGetCoin';
 
 import {
@@ -51,6 +52,8 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   } = getCalculations(loan);
   const { coin } = useGetCoin(loan);
 
+  const tagManager = useGoogleTagManager('Card');
+
   const {
     store: {
       user: {
@@ -73,6 +76,12 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   };
 
   const onConfirm = async () => {
+    tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
+    if (window.fbq) {
+      window.fbq('trackCustom', 'invest_attempt', {
+        type: 'loan'
+      });
+    }
     setInvestment(value);
     setStage(ui.Processing);
   };
