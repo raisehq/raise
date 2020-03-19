@@ -145,18 +145,19 @@ export const calculateInvestmentReturn = auction => {
 };
 
 export const getCoinsFromContract = coinsMap => contract => {
-  console.log(contract);
-  const coins: CoinsType[] = contract && coinsMap.map(coin =>
-    contract[coin.name]
-      ? {
-          address: contract[coin.name],
-          text: coin.name,
-          value: coin.name,
-          key: coin.key,
-          icon: coin.icon
-        }
-      : null
-  );
+  const coins: CoinsType[] =
+    contract &&
+    coinsMap.map(coin =>
+      contract[coin.name]
+        ? {
+            address: contract[coin.name],
+            text: coin.name,
+            value: coin.name,
+            key: coin.key,
+            icon: coin.icon
+          }
+        : null
+    );
 
   return coins;
 };
