@@ -52,14 +52,14 @@ const Web3Check = () => {
   }: any = useAppContext();
   const { history }: any = useRouter();
   const redirect = new URLSearchParams(history.location.search).get('redirect');
-  const { web3 }: any = useWeb3();
+  const { web3, getCurrentProviderName }: any = useWeb3();
   const tagManager = useGoogleTagManager('Wallet');
   const [ui, setUI] = useState(isMobile ? Stages.WalletSelector : Stages.WalletConnectForm);
   const [prevStage, setPrevStage] = useState(isMobile ? 'WalletSelector' : 'WalletConnectForm');
 
   useEffect(() => {
     if (web3 && unlocked) {
-      const walletName = getWalletName(cryptotypeId).toLowerCase();
+      const walletName = getWalletName(getCurrentProviderName()).toLowerCase();
       tagManager.sendEvent(TMEvents.Submit, 'wallet_success', walletName);
       tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
       if (window.fbq) {

@@ -97,7 +97,7 @@ const CurrentNotice = () => {
     try {
       const { address, signature } = await requestSignature();
       await uploadSignature(address, getCurrentProviderName(), signature);
-      const walletName = getWalletName(cryptotypeId).toLowerCase();
+      const walletName = getWalletName(getCurrentProviderName()).toLowerCase();
       tagManager.sendEvent(TMEvents.Submit, 'new_wallet', walletName);
       tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
       if (window.fbq) {
