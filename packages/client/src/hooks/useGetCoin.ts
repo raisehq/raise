@@ -12,12 +12,15 @@ const useGetCoin = auction => {
   const {
     web3Status: { walletNetworkId }
   }: any = useAppContext();
+
   const {
     store: {
       blockchain: { contracts }
     }
   }: any = useRootContext();
 
+  console.log('walletNetworkId:', walletNetworkId);
+  console.log('Contract: ', contracts);
   useEffect(() => {
     const contract = get(contracts, `address.${walletNetworkId}`);
     const coins: CoinsType[] = getCoinsFromContract(COINS)(contract);
