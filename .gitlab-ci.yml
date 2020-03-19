@@ -38,6 +38,7 @@ build:
     REACT_APP_HOST_URL: https://${BUCKET_NAME}
   script:
     - |
+      echo ${BUCKET_NAME}
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
       yarn run client:build:integration
