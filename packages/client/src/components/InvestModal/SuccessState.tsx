@@ -9,9 +9,17 @@ import {
   ButtonWrapper,
   ModalFlexWrapper
 } from './InvestModal.styles';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
 const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }) => {
+  const tagManager = useGoogleTagManager('Card');
   const onOK = () => {
+    tagManager.sendEvent(TMEvents.Submit, 'invest_success');
+    if (window.fbq) {
+      window.fbq('trackCustom', 'invest_success', {
+        type: 'loan'
+      });
+    }
     closeModal();
     setStage(ui.Confirm);
   };
