@@ -28,7 +28,7 @@ const defiPulseToCompany = (defiPulseData: any) => {
 
 const useCompaniesScrapper = () => {
   const [companies, setCompanies]: any = useState([]);
-  const defiPulseData: any[] = useDefiPulse();
+  const defiPulseData: any[] = useDefiPulse(null);
   const raiseCompany = useRaiseData();
 
   useEffect(() => {
