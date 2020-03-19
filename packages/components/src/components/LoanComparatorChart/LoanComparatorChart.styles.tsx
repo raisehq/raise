@@ -11,6 +11,8 @@ export const ResumeContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 0 0 24px;
+  width: 100%;
+  max-width: 444px;
 `;
 
 export const CompanyContainer = styled.div<CompanyContainerProps>`
@@ -20,6 +22,7 @@ export const CompanyContainer = styled.div<CompanyContainerProps>`
   opacity: ${props => (!props.comingSoon ? '30%;' : '')};
   align-items: center;
   margin: 16px 0 16px 0px;
+  position: relative;
 `;
 
 export const CompanyInfo = styled.div`
@@ -27,6 +30,9 @@ export const CompanyInfo = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   margin-left: 24px;
+  max-width: 384px;
+  width: 100%;
+  position: relative;
 `;
 
 export const CompanyIcon = styled.img`
@@ -35,11 +41,6 @@ export const CompanyIcon = styled.img`
 `;
 
 export const Percentage = styled.div`
-  width: 35px;
-  height: 14px;
-  left: 900px;
-  top: 310px;
-
   font-family: Lato;
   font-style: normal;
   font-weight: 900;
@@ -51,7 +52,7 @@ export const Percentage = styled.div`
 `;
 export const PercentageBar = styled.div<PercentageProps>`
   margin-bottom: 6px;
-  width: ${props => (props.newWidth ? `${props.newWidth}px` : '0px')};
+  width: ${props => (props.newWidth ? `${props.newWidth}%` : '0%')};
   height: 8px;
 
   background: rgb(235, 63, 147);
@@ -61,7 +62,7 @@ export const PercentageBar = styled.div<PercentageProps>`
 
 export const PercentageBarBack = styled.div<PercentageProps>`
   margin-bottom: 6px;
-  width: ${props => (props.newWidth ? `${props.newWidth}px` : '0px')};
+  width: 100%;
   height: 8px;
   margin-top: 20px;
   position: absolute;

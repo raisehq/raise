@@ -1,4 +1,5 @@
 import React from 'react';
+import { ERC20_LOGOS } from '../../commons/constants';
 import {
   ResumeContainer,
   CompanyContainer,
@@ -25,13 +26,12 @@ const companyRes = (topPercentage: number) => (
   company: Company,
   index: number
 ) => {
-  console.log(topPercentage);
-  const width = 384;
+  const width = 100;
   const newWidth = (width * company.supplyRate) / topPercentage;
 
   return (
     <CompanyContainer key={index} comingSoon={company.enabled}>
-      <CompanyIcon src={company.logoUrl} />
+      <CompanyIcon src={ERC20_LOGOS[company.logoUrl] || company.logoUrl} />
       <CompanyInfo>
         <Percentage>{`${
           company.enabled ? Number(company.supplyRate * 100).toFixed(2) : 0
