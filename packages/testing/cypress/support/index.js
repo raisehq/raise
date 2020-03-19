@@ -19,4 +19,3 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-cy.setCookie('X-Canary', 'activated')
