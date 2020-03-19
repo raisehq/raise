@@ -12,6 +12,7 @@ stages:
 variables:
   AWS_DEFAULT_REGION: eu-west-1
   CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+  BASTION: "bastion"
 cache:
   key: '${CI_COMMIT_REF_SLUG}'
   paths:
@@ -19,12 +20,21 @@ cache:
 
 trigger-deployment:
   stage: deploy_backend
+  image: alpine:latest
   before_script:
     - |
       #!/bin/sh
-      apk add --no-cache curl
+      apk add --no-cache openssh-client bash
+      mkdir -p ~/.ssh && chmod 700 ~/.ssh
+      echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+      echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      chmod 600 ~/.ssh/config
   script:
-    - 'curl -X POST -F token=${DEPLOYMENT_TOKEN} -F ref=master -F variables[REVIEW_SLUG]=${CI_COMMIT_REF_SLUG} https://gitlab.com/api/v4/projects/15165091/trigger/pipeline'
+    - |
+      #!/bin/sh
+      ssh ubuntu@${BASTION}.${DOMAIN} \
+      "cd /home/ubuntu/deployment && \
+      ./deploy.sh ${CI_COMMIT_REF_SLUG} ${DOMAIN}"
   only:
     - merge_requests
   except:
@@ -201,7 +211,6 @@ stop-review:
   image: python:3.7-alpine
   stage: cleanup
   variables:
-    BASTION: "bastion"
     GIT_STRATEGY: none
   before_script:
     - apk add --no-cache openssh-client bash
