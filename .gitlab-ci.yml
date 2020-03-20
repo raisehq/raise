@@ -22,8 +22,7 @@ before_script:
 stages:
   - deploy-backend
   - build
-  - deploy-int
-  - deploy-canary
+  - deploy
   - review
   - test
   - deploy-prod
@@ -111,7 +110,7 @@ build-front-production:
 
 deploy-int:
   image: python:3.7-alpine
-  stage: deploy-int
+  stage: deploy
   before_script:
     - 'pip install awscli'
   script:
@@ -128,7 +127,7 @@ deploy-int:
 
 deploy-canary:
   image: python:3.7-alpine
-  stage: deploy-canary
+  stage: deploy
   before_script:
     - 'pip install awscli'
   script:
