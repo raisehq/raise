@@ -10,12 +10,12 @@
     "dist"
   ],
   "scripts": {
-    "start": "tsdx watch",
-    "dev": "tsdx watch",
-    "build": "tsdx build",
-    "build:umd": "cp tsdx.umd.config.js tsdx.config.js && tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
-    "test": "tsdx test --env=jsdom",
-    "lint": "tsdx lint"
+    "start": "env-cmd --no-override .env tsdx watch",
+    "dev": "env-cmd --no-override .env tsdx watch",
+    "build": "env-cmd --no-override .env tsdx build",
+    "build:umd": "cp tsdx.umd.config.js tsdx.config.js && env-cmd --no-override .env tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
+    "test": "env-cmd --no-override .env tsdx test --env=jsdom",
+    "lint": "env-cmd --no-override .env tsdx lint"
   },
   "peerDependencies": {
     "react": "^16.12.0",
@@ -48,6 +48,7 @@
     "chart.js": "^2.8.0",
     "dompurify": "^2.0.7",
     "dotenv": "^8.2.0",
+    "env-cmd": "8.0.2",
     "graphql.js": "^0.6.6",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",

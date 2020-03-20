@@ -1,5 +1,5 @@
-export const DAI_ADDRESS = '0x5d3a536e4d6dbd6114cc1ead35777bab948e3643';
-export const IMAGES_PATH = 'https://static.raise.it/images/';
+export const DAI_ADDRESS = process.env.REACT_APP_DAI_ADDRESS;
+export const IMAGES_PATH = `${process.env.REACT_APP_HOST_IMAGES}/images/`;
 
 type erc20Logos = {
   [key: string]: string;
