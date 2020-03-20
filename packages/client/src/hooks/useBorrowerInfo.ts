@@ -3,7 +3,7 @@ import useAsyncEffect from './useAsyncEffect';
 import { findOne } from '../helpers/butter';
 
 const APP_URL = process.env.REACT_APP_HOST_URL;
-
+const APP_STATIC = process.env.REACT_APP_HOST_IMAGES;
 interface Company {
   companyName: string;
   description: string;
@@ -18,7 +18,7 @@ const defaultCompany = {
   description: '',
   shortDescription: '',
   background: 'https://source.unsplash.com/372x120/?business',
-  logo: 'https://static.raise.it/images/logo.svg',
+  logo: `${APP_STATIC}/images/logo.svg`,
   slug: ''
 };
 

@@ -10004,10 +10004,10 @@ graceful-fs@^4.1.10, graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
   integrity sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=
 
-graphql.js@^0.6.6:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/graphql.js/-/graphql.js-0.6.6.tgz#ed61ce9c2bd22893054ec32b00577393b889f0ff"
-  integrity sha512-JPp3GlZBzr/xNxv2goT8bn54MjVENYEF8AyRoPCxAWyXEeRMGpo3IfK19trSlBJNYXpMcGO4sVh3olcO9iM7Bg==
+graphql.js@0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/graphql.js/-/graphql.js-0.6.1.tgz#7adaaf37b1ca221ce54751324156400c600d3d03"
+  integrity sha512-4QD4kciRSrBFW0SfLwD5TqSLeB2BugR9YwjULqGnewnu7q1H9qlD5WfwvggfKsrDvcav8QNcab7uHYlRljw9Ug==
 
 growl@1.10.5:
   version "1.10.5"
