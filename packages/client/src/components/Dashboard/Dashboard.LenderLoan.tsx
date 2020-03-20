@@ -13,6 +13,7 @@ import LenderExpired from '../Cards/LenderExpired';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
+
   // const { maxAmount, times, roi, lenderAmount, lenderRoiAmount } = calcs;
   const card = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];

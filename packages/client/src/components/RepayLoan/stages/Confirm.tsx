@@ -9,6 +9,7 @@ import {
   ResumeItemBox
 } from '../../ClaimLoan/ClaimLoan.styles';
 import { ResumeItemProps } from '../../InvestModal/types';
+import useGetCoin from '../../../hooks/useGetCoin';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }: any) => (
   <ResumeItemBox>
@@ -32,15 +33,22 @@ const Confirm = () => {
   const { principal, borrowerDebt, totalInterest, totalInterestAmount }: any = getCalculations(
     loan
   );
+  const { coin } = useGetCoin(loan);
 
   return (
     <>
       <Header>Repay Loan</Header>
       <ClaimFundsResume>
         <FlexSpacedLayout>
-          <ResumeItem title="Loan Amount" value={`${principal} DAI`} />
-          <ResumeItem title={`Interests ${totalInterest}`} value={`${totalInterestAmount} DAI`} />
-          <ResumeItemBig title="Total repayment amount" value={`${borrowerDebt} DAI`} />
+          <ResumeItem title="Loan Amount" value={`${principal} ${coin && coin.text}`} />
+          <ResumeItem
+            title={`Interests ${totalInterest}`}
+            value={`${totalInterestAmount} ${coin && coin.text}`}
+          />
+          <ResumeItemBig
+            title="Total repayment amount"
+            value={`${borrowerDebt} ${coin && coin.text}`}
+          />
         </FlexSpacedLayout>
       </ClaimFundsResume>
       <BorrowerButton onClick={onConfirm}>Repay</BorrowerButton>

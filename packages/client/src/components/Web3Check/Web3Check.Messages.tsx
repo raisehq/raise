@@ -16,6 +16,12 @@ import {
   ButtonGreenSmall
 } from './Web3Check.styles';
 
+const tagLabelMapping = {
+  coinbase: 'new_wallet_coinbase',
+  opera: 'new_wallet_opera',
+  metamask: 'new_wallet_metamask'
+};
+
 const NeedHelp = ({ href }: any) => (
   <HelpMessage>
     <Href target="_blank" href={href}>
@@ -91,14 +97,15 @@ const CurrentNotice = () => {
     try {
       const { address, signature } = await requestSignature();
       await uploadSignature(address, getCurrentProviderName(), signature);
-      tagManager.sendEvent(
-        TMEvents.Submit,
-        'new_wallet',
-        getWalletName(cryptotypeId).toLowerCase()
-      );
+      const walletName = getWalletName(getCurrentProviderName()).toLowerCase();
+      tagManager.sendEvent(TMEvents.Submit, 'new_wallet', walletName);
+      tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
       if (window.fbq) {
         window.fbq('trackCustom', 'new_wallet', {
-          type: getWalletName(cryptotypeId).toLowerCase()
+          type: walletName
+        });
+        window.fbq('trackCustom', tagLabelMapping[walletName], {
+          type: walletName
         });
       }
     } catch (error) {

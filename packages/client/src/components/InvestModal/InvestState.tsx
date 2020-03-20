@@ -8,6 +8,8 @@ import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
 import { useRootContext } from '../../contexts/RootContext';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import useGetCoin from '../../hooks/useGetCoin';
 
 import {
   Header,
@@ -48,6 +50,9 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
     maxAmount: calcMaxAmount,
     principal: calcPrincipal
   } = getCalculations(loan);
+  const { coin } = useGetCoin(loan);
+
+  const tagManager = useGoogleTagManager('Card');
 
   const {
     store: {
@@ -71,6 +76,12 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   };
 
   const onConfirm = async () => {
+    tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
+    if (window.fbq) {
+      window.fbq('trackCustom', 'invest_attempt', {
+        type: 'loan'
+      });
+    }
     setInvestment(value);
     setStage(ui.Processing);
   };
@@ -131,12 +142,12 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
             <Card.Header
               fontSize="22px"
               title="Raised amount"
-              amount={<Amount principal={calcPrincipal} />}
+              amount={<Amount principal={calcPrincipal} coin={coin} />}
             />
             <Card.Header
               fontSize="22px"
               title="Target"
-              amount={<Amount principal={calcMaxAmount} />}
+              amount={<Amount principal={calcMaxAmount} coin={coin} />}
             />
           </Card.Grid>
           <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />

@@ -1,8 +1,11 @@
 import { match, ANY } from 'pampy';
 import { fromWei } from 'web3-utils';
 import cloneDeep from 'lodash/cloneDeep';
+import first from 'lodash/first';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
+import { toChecksumAddress } from 'web3-utils';
+import { CoinsType } from '../commons/coins';
 
 const secondUnits = {
   month: 2592000,
@@ -139,6 +142,37 @@ export const calculateInvestmentReturn = auction => {
   const lenderAmount = Number(fromWei(auction.lenderAmount));
   const lenderRoiAmount = lenderAmount + lenderAmount * calculateROI(auction);
   return lenderRoiAmount;
+};
+
+export const getCoinsFromContract = coinsMap => contract => {
+  const coins: CoinsType[] =
+    contract &&
+    coinsMap.map(coin =>
+      contract[coin.name]
+        ? {
+            address: contract[coin.name],
+            text: coin.name,
+            value: coin.name,
+            key: coin.key,
+            icon: coin.icon
+          }
+        : null
+    );
+
+  return coins;
+};
+
+export const getCoin = (coins: CoinsType[]) => tokenAddress => {
+  let result;
+  if (tokenAddress) {
+    result = coins.filter(
+      coin => toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)
+    );
+  } else {
+    result = coins.filter(coin => coin.text === 'DAI');
+  }
+
+  return first(result);
 };
 
 export const getCalculations = auction => {

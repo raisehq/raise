@@ -26,6 +26,7 @@ import {
   ModalFlexWrapper
 } from './InvestModal.styles';
 import { useAppContext } from '../../contexts/AppContext';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui, setStage }) => {
   const {
@@ -39,24 +40,24 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   const [approved, setAproved]: any = useState(false);
   const [errors, setError]: any = useState();
 
+  const tagManager = useGoogleTagManager('Card');
+
   useAsyncEffect(async () => {
     if (metamask) {
+      const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
       try {
-        const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
         const DaiProxyAddress = await loanContract.methods.proxyContractAddress().call();
         const DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
-        const DAI = await metamask.addContract('DAI');
         setContracts({
-          DAIProxy,
-          DAI
+          loanContract,
+          DAIProxy
         });
       } catch (error) {
         console.error('failed to retrieve daiproxy, using current one');
         const DAIProxy = await metamask.addContract('DAIProxy');
-        const DAI = await metamask.addContract('DAI');
         setContracts({
-          DAIProxy,
-          DAI
+          loanContract,
+          DAIProxy
         });
       }
     }
@@ -65,16 +66,17 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   useAsyncEffect(async () => {
     if (contracts) {
       const { BN } = web3.utils;
-      const { DAIProxy, DAI } = contracts;
+      const { DAIProxy, loanContract } = contracts;
+      const tokenAddress = await loanContract.methods.tokenAddress().call();
       const valueBN = new BN(toWei(investment.toString()));
-      const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
+      const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
 
-      const amountApproved = await DAIContract.methods
+      const amountApproved = await ERC20Contract.methods
         .allowance(walletAccount, DAIProxy.options.address)
         .call({ from: walletAccount });
       if (valueBN.gt(new BN(amountApproved))) {
         try {
-          await DAIContract.methods
+          await ERC20Contract.methods
             .approve(DAIProxy.options.address, MAX_VALUE)
             .send({ from: walletAccount });
           setAproved(true);
@@ -110,6 +112,13 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   }, [approved]);
 
   const onRetry = () => {
+    tagManager.sendEvent(TMEvents.Click, 'invest_retry');
+
+    if (window.fbq) {
+      window.fbq('trackCustom', 'invest_retry', {
+        type: 'loan'
+      });
+    }
     setStage(ui.Confirm);
   };
 

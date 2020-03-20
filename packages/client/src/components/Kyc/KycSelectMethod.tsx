@@ -21,10 +21,39 @@ import { Link } from '../Link';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import useRouter from '../../hooks/useRouter';
 import { useAppContext } from '../../contexts/AppContext';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
 const KycSelectMethod = () => {
   const { history }: any = useRouter();
   const { isMobile }: any = useAppContext();
+  const tagManager = useGoogleTagManager('Kyc');
+
+  const kycLabelMapps = {
+    sumsub: 'sumsub',
+    bloom: 'bloom'
+  };
+
+  const providerKYC = provider => {
+    tagManager.sendEvent(TMEvents.Click, kycLabelMapps[provider]);
+
+    if (window.fbq) {
+      window.fbq('trackCustom', kycLabelMapps[provider], {
+        type: provider
+      });
+    }
+
+    switch (provider) {
+      case 'sumsub':
+        history.push('/kyc-sumsub');
+        break;
+      case 'bloom':
+        history.push('/kyc-bloom');
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <KycWrapper>
       <OnboardingProgressBar step={3} isMobile={isMobile} />
@@ -42,7 +71,7 @@ const KycSelectMethod = () => {
         </KycTitleWrapper>
         <SelectKycMethodList>
           <KycButtonWrapper>
-            <KycButton className="btn-kyc-sumsub" onClick={() => history.push('/kyc-sumsub')}>
+            <KycButton className="btn-kyc-sumsub" onClick={() => providerKYC('sumsub')}>
               <KycButtonMethodName>
                 <KycButtonLogo
                   src={`${process.env.REACT_APP_HOST_IMAGES}/images/sumsub_icon_80x80.png`}
@@ -55,7 +84,7 @@ const KycSelectMethod = () => {
             </KycButton>
           </KycButtonWrapper>
           <KycButtonWrapper>
-            <KycButton onClick={() => history.push('/kyc-bloom')}>
+            <KycButton onClick={() => providerKYC('bloom')}>
               <KycButtonMethodName>
                 <KycButtonLogo
                   src={`${process.env.REACT_APP_HOST_IMAGES}/images/bloom_icon_80x80.png`}
