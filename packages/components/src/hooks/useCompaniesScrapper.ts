@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { COMPANY_LOGOS } from '../commons/constants';
 import useDefiPulse from './useDefiPulse';
 import useRaiseData from './useRaiseData';
 import map from 'lodash/map';
@@ -17,7 +18,7 @@ const defiPulseToCompany = (defiPulseData: any) => {
           name,
           supplyRate: Number(Number(rate).toFixed(2)) / 100,
           enabled: true,
-          // logoUrl: '',
+          logoUrl: COMPANY_LOGOS[name] || null,
         })
       );
       return [...convertToCompanies];

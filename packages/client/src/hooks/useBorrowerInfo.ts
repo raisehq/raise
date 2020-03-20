@@ -18,7 +18,7 @@ const defaultCompany = {
   description: '',
   shortDescription: '',
   background: 'https://source.unsplash.com/372x120/?business',
-  logo: 'https://static.herodev.es/images/logo.svg',
+  logo: 'https://static.raise.it/images/logo.svg',
   slug: ''
 };
 

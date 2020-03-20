@@ -1,5 +1,5 @@
 export const DAI_ADDRESS = '0x5d3a536e4d6dbd6114cc1ead35777bab948e3643';
-export const IMAGES_PATH = `${process.env.REACT_APP_HOST_IMAGES}/images/`;
+export const IMAGES_PATH = 'https://static.raise.it/images/';
 
 type erc20Logos = {
   [key: string]: string;
@@ -11,4 +11,12 @@ export const ERC20_LOGOS: erc20Logos = {
   USDT: `${IMAGES_PATH}coins/coin-theter.svg`,
   TUSD: `${IMAGES_PATH}coins/coin-trueusd.svg`,
   USDC: `${IMAGES_PATH}coins/coin-usdc.svg`,
+};
+
+export const COMPANY_LOGOS: erc20Logos = {
+  Compound: `${IMAGES_PATH}companies/compound-logo.png`,
+  Maker: `${IMAGES_PATH}companies/maker.svg`,
+  Raise: `${IMAGES_PATH}isotype.png`,
+  dYdX: `${IMAGES_PATH}companies/dydx-vector-logo.png`,
+  Fulcrum: `${IMAGES_PATH}companies/bZx-Logo.jpg`,
 };

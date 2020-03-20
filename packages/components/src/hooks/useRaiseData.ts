@@ -3,6 +3,7 @@ import { calculateInterest } from '../utils/raiseUtils';
 import useAsyncEffect from './useAsyncEffect';
 import graphql from 'graphql.js';
 import web3Utils from 'web3-utils';
+import { COMPANY_LOGOS } from '../commons/constants';
 
 const raiseGraph = graphql(
   'https://api.thegraph.com/subgraphs/name/raisehq/raise',
@@ -38,6 +39,7 @@ const getRaiseData = async () => {
     ).toString(),
     name: 'Raise',
     image: 'raise',
+    logoUrl: COMPANY_LOGOS.Raise,
     tvl: raise.loans.reduce(
       (total: any, { principal }: any) =>
         total +
