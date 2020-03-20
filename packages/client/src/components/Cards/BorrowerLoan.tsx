@@ -8,11 +8,12 @@ import Amount from '../Dashboard/Dashboard.Amount';
 import { ClaimLoan } from '../ClaimLoan';
 import { RepayLoan } from '../RepayLoan';
 import { GetInTouch } from '../GetInTouch';
+import useGetCoin from '../../hooks/useGetCoin';
 
 const Loan = ({ auction }: { auction: any }) => {
   const calcs = getCalculations(auction);
   const { principal, finalAPR, borrowerDebt, times, systemFees, netBalance } = calcs;
-
+  const { coin } = useGetCoin(auction);
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.loanWithdrawn, auction.loanRepaid];
     return match(
@@ -40,14 +41,14 @@ const Loan = ({ auction }: { auction: any }) => {
   return (
     <BorrowerLoanCard width="350px" size="325px">
       <Card.Content>
-        <Card.Header title="Loan amount" amount={<Amount principal={principal} />} />
+        <Card.Header title="Loan amount" amount={<Amount principal={principal} coin={coin} />} />
         <Fragment>
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Fragment>
         <Card.Grid noGraph>
           <Card.Row title="System Fees" content={systemFees} />
           <Card.Row title="APR" content={finalAPR} />
-          <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0} DAI`} />
+          <Card.Row title="Net Loan Proceeds" content={`${netBalance || 0}`} />
         </Card.Grid>
         <Card.Separator />
         <Card.Grid notop>

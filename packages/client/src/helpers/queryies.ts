@@ -24,6 +24,7 @@ const queryies = {
             maxInterestRate
             operatorBalance
             originator
+            tokenAddress
           }
         }`,
       variables: {},
@@ -56,6 +57,7 @@ const queryies = {
             maxInterestRate
             operatorBalance
             originator
+            tokenAddress
           }
         }
       }`,
@@ -93,6 +95,7 @@ const queryies = {
               loanWithdrawn
               loanRepaid
               originator
+              tokenAddress
             }
           }
         }
@@ -129,6 +132,7 @@ const queryies = {
             loanWithdrawn,
             loanRepaid
             originator
+            tokenAddress
           }
         }
       }`,

@@ -17,6 +17,7 @@ interface InvestInfoProps {
   times: times;
   principal: string;
   link?: boolean;
+  coinIcon: string;
 }
 interface aPropsInterface {
   href: string | undefined;
@@ -39,6 +40,7 @@ const InvestInfo = (props: InvestInfoProps) => {
     times,
     principal,
     link,
+    coinIcon,
   } = props;
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
   const aProps: aPropsInterface = { href: undefined };
@@ -60,11 +62,11 @@ const InvestInfo = (props: InvestInfoProps) => {
         <Card.Grid spaceBetween alignBottom nobottom>
           <Card.Header
             title="Raised so far"
-            amount={<Amount principal={principal} />}
+            amount={<Amount principal={principal} coinIcon={coinIcon} />}
           />
           <Card.Header
             title="Target"
-            amount={<Amount principal={maxAmount} />}
+            amount={<Amount principal={maxAmount} coinIcon={coinIcon} />}
           />
         </Card.Grid>
         <Card.Progress

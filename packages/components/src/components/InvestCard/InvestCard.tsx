@@ -9,10 +9,11 @@ interface LoanProps {
   link?: boolean;
   children?: ReactNode;
   className?: string;
+  coinIcon: string;
 }
 
 const InvestCard: React.SFC<LoanProps> = (props: LoanProps) => {
-  const { auction, className, children, borrower } = props;
+  const { auction, className, children, borrower, coinIcon } = props;
   const link = !!props.link;
   const calculations = getCalculations(auction);
 
@@ -21,6 +22,7 @@ const InvestCard: React.SFC<LoanProps> = (props: LoanProps) => {
     ...borrower,
     ...calculations,
     link,
+    coinIcon,
   };
   return (
     <InvestCardView {...investProps} className={className}>
