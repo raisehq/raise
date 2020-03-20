@@ -1,7 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
-import AppContext from '../AppContext';
-import { NotificationBar } from './banners/StepsReminder';
+import React, { useState, useEffect } from 'react';
 import daggy from 'daggy';
+import useRouter from '../../hooks/useRouter';
+
+import { NotificationBar } from './banners/StepsReminder';
 
 export const Status = daggy.taggedSum('UI', {
   Pending: [],
@@ -35,7 +36,7 @@ const KycTopBanner = ({
   kycBCStatus
 }: KycTopBannerProps) => {
   const [path, setPath] = useState('');
-  const { history }: any = useContext(AppContext);
+  const { history }: any = useRouter();
 
   useEffect(() => {
     setPath(history.location.pathname);

@@ -1,13 +1,17 @@
 import React from 'react';
 import { AmountComponent } from './Dashboard.styles';
 import Coin from '../Coin';
+import { CoinsType } from '../../commons/coins';
 
-const Amount = ({ principal, roi }: { principal: any; roi?: string }) => (
-  <AmountComponent>
-    {principal}
-    <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.png`} />
-    {roi && <span>{roi} ROI</span>}
-  </AmountComponent>
-);
+const Amount = ({ principal, roi, coin }: { principal: any; roi?: string; coin: CoinsType }) => {
+  return (
+    <AmountComponent>
+      {principal}
+      <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${coin && coin.icon}`} />
+
+      {roi && <span>{roi} ROI</span>}
+    </AmountComponent>
+  );
+};
 
 export default Amount;

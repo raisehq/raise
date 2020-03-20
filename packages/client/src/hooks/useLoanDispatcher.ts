@@ -1,14 +1,14 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import useWallet from './useWallet';
 import useWeb3 from './useWeb3';
 import useAsyncEffect from './useAsyncEffect';
-import AppContext from '../components/AppContext';
+import { useRootContext } from '../contexts/RootContext';
 
 const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
   const { web3 } = useWeb3();
   const wallet = useWallet();
-  const { followTx }: any = useContext(AppContext);
+  const { followTx }: any = useRootContext();
 
   useAsyncEffect(async () => {
     if (wallet) {
@@ -31,7 +31,8 @@ const useLoanDispatcher = () => {
             maxInterestRate,
             termMonthsLength,
             acceptMinimum,
-            auctionTermLength
+            auctionTermLength,
+            tokenAddress
           ) => {
             const auctionSecondsLength = auctionTermLength.toString();
             const termSecondsLength = termMonthsLength.toString();
@@ -41,7 +42,8 @@ const useLoanDispatcher = () => {
               web3.utils.toWei(minInterestRate.toString()),
               web3.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,
-              auctionSecondsLength
+              auctionSecondsLength,
+              tokenAddress
             ];
 
             return followTx.watchTx(

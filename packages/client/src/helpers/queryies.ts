@@ -24,6 +24,7 @@ const queryies = {
             maxInterestRate
             operatorBalance
             originator
+            tokenAddress
           }
         }`,
       variables: {},
@@ -56,6 +57,7 @@ const queryies = {
             maxInterestRate
             operatorBalance
             originator
+            tokenAddress
           }
         }
       }`,
@@ -93,6 +95,7 @@ const queryies = {
               loanWithdrawn
               loanRepaid
               originator
+              tokenAddress
             }
           }
         }
@@ -129,6 +132,7 @@ const queryies = {
             loanWithdrawn,
             loanRepaid
             originator
+            tokenAddress
           }
         }
       }`,
@@ -145,6 +149,16 @@ const queryies = {
       }`,
       variables: {},
       subscriptionName: 'daiBalance'
+    },
+    acceptedTokens: {
+      query: `subscription acceptedTokens($address: String)
+      {
+        loanDispatchers(where:{address:$address}) {
+          acceptedTokens
+        }
+      }`,
+      variables: {},
+      subscriptionName: 'acceptedTokens'
     },
     userStatus: {
       query: `subscription userStatus($address: String)

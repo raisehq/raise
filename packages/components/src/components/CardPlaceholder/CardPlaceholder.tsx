@@ -1,6 +1,6 @@
-import React from "react";
-import ContentLoader from "react-content-loader";
-import { CardSegment } from "./CardPlaceholder.styles";
+import React from 'react';
+import ContentLoader from 'react-content-loader';
+import { CardSegment } from './CardPlaceholder.styles';
 
 const CardPlaceholder = () => {
   return (

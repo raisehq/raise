@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Image } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import {
@@ -8,14 +8,14 @@ import {
   GetStartedSumSubtitle,
   GetStartedSumDescription
 } from './Kyc.styles';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import useRouter from '../../hooks/useRouter';
 import useInterval from '../../hooks/useInterval';
 import LocalData from '../../helpers/localData';
 import { getUser } from '../../services/auth';
 
 const KYC = () => {
   const {
-    history,
     store,
     store: {
       kyc: { token }
@@ -23,12 +23,12 @@ const KYC = () => {
     actions: {
       kyc: { onConnect }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
+  const { history }: any = useRouter();
   const [userObj, setUserObj] = useState<any>(null);
 
   useEffect(() => {
     setUserObj(LocalData.getObj('user'));
-    console.log(userObj);
   }, []);
 
   useAsyncEffect(async () => {

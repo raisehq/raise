@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { ConfirmButton } from './InvestModal.styles';
-import AppContext from '../AppContext';
 
 const VerifyKycState = () => {
-  const { history }: any = useContext(AppContext);
+  const history: any = useHistory();
 
   return (
     <>

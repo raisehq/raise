@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import {
   CardTitle,
   CardSubTitle,
@@ -11,23 +11,29 @@ import {
   GoBack
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import { WalletButton } from '../WalletButton';
 import GoBackButton from '../GoBackButton';
 import CryptoWallets from '../../commons/cryptoWallets';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 import OnboardingProgressBar from '../OnboardingProgressBar';
-import { isMobile } from 'react-device-detect';
+import { IWallet } from '../../commons/IWallet';
+
+const tagLabelMapping = {
+  coinbase: 'coinbase_attempt',
+  opera: 'opera_attempt',
+  metamask: 'metamask_attempt'
+};
 
 const Wallet = ({ onNext, onBack }: any) => {
   const {
     store: {
       config: { network, networkId }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
   const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
-  const [defaultWallet, setDefaultWallet] = useState();
+  const [defaultWallet, setDefaultWallet] = useState<IWallet>(getDefaultWeb3());
   const tagManager = useGoogleTagManager('Wallet');
 
   useEffect(() => {
@@ -37,9 +43,13 @@ const Wallet = ({ onNext, onBack }: any) => {
   const handlerWallet = walletSelected => async () => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
+    tagManager.sendEvent(TMEvents.Click, tagLabelMapping[walletName], walletName);
 
     if (window.fbq) {
       window.fbq('trackCustom', 'wallet_attempt', {
+        type: walletName
+      });
+      window.fbq('trackCustom', tagLabelMapping[walletName], {
         type: walletName
       });
     }
@@ -58,24 +68,22 @@ const Wallet = ({ onNext, onBack }: any) => {
         default:
           break;
       }
+    } else if (
+      (defaultWallet?.name === -1 && walletName === 'metamask') ||
+      (walletName === 'metamask' && defaultWallet?.name !== CryptoWallets.Metamask)
+    ) {
+      window.open('http://metamask.app.link/', '_blank');
+    } else if (
+      (defaultWallet?.name === -1 && walletName === 'opera') ||
+      (walletName === 'opera' && defaultWallet?.name !== CryptoWallets.Opera)
+    ) {
+      window.open('http://onelink.to/5xwf6x', '_blank');
     } else {
-      if (
-        (defaultWallet.name === -1 && walletName === 'metamask') ||
-        (walletName === 'metamask' && defaultWallet.name !== CryptoWallets.Metamask)
-      ) {
-        window.open('http://metamask.app.link/', '_blank');
-      } else if (
-        (defaultWallet.name === -1 && walletName === 'opera') ||
-        (walletName === 'opera' && defaultWallet.name !== CryptoWallets.Opera)
-      ) {
-        window.open('http://onelink.to/5xwf6x', '_blank');
-      } else {
-        try {
-          await connectWallet(walletSelected, network, networkId);
-          onNext('WalletSelector');
-        } catch (error) {
-          // console.log(error)
-        }
+      try {
+        await connectWallet(walletSelected, network, networkId);
+        onNext('WalletSelector');
+      } catch (error) {
+        // console.log(error)
       }
     }
   };

@@ -1,10 +1,10 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import _ from 'lodash';
 import { browserName, isMobile } from 'react-device-detect';
 import Web3 from 'web3';
 import WalletLink from 'walletlink';
 import CryptoWallets from '../commons/cryptoWallets';
-import _ from 'underscore';
-import RootContext from '../context';
+import { useRootContext } from '../contexts/RootContext';
 
 const Connection = {
   get: () => {
@@ -67,10 +67,6 @@ const getWalletLinkClient = (network, networkId) => {
     networkId
   );
 
-  // FIX BUG: Walletlink bug with web3
-  // @ts-ignore
-  ethereum.on = null;
-
   return ethereum;
 };
 
@@ -82,7 +78,7 @@ const useWeb3 = () => {
     actions: {
       blockchain: { setWeb3 }
     }
-  }: any = useContext(RootContext);
+  }: any = useRootContext();
   const [connection, setConnnection]: any = useState(web3);
 
   useEffect(() => {

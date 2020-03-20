@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { getHost } from '../../utils/index';
 
 import useImages from '../../hooks/useImages';
@@ -30,7 +30,7 @@ import {
 } from './Invite.styles';
 import { Input, Responsive, Grid } from 'semantic-ui-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import AppContext from '../AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 
 const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
 
@@ -43,7 +43,7 @@ const Invite = () => {
         details: { referral_code }
       }
     }
-  }: any = useContext(AppContext);
+  }: any = useRootContext();
 
   const shareLink = `${REFERAFRIEND}=${referral_code ? referral_code : ''}`;
   const encodedSharedLink = encodeURIComponent(shareLink);

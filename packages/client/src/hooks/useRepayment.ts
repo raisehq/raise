@@ -1,28 +1,29 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useAsyncEffect from './useAsyncEffect';
 import useWallet from './useWallet';
 import useWeb3 from './useWeb3';
 import ERC20 from '../commons/erc20';
 import { MAX_VALUE } from '../commons/constants';
 import { Stages } from '../components/RepayLoan/RepayLoan.context';
-import AppContext from '../components/AppContext';
+import { useAppContext } from '../contexts/AppContext';
+import { useRootContext } from '../contexts/RootContext';
 
 const useRepayment = (loan, open) => {
   const { borrowerDebt, id }: any = loan;
+  const { followTx }: any = useRootContext();
   const {
-    web3Status: { account },
-    followTx
-  }: any = useContext(AppContext);
+    web3Status: { account }
+  }: any = useAppContext();
   const { web3 } = useWeb3();
   const wallet = useWallet();
   const [approved, setApproved] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
   const [stage, setStage] = useState(Stages.Confirm);
   const [hasBalance, setHasBalance] = useState(false);
 
   useEffect(() => {
     setApproved(false);
-    setError(null);
+    setError(false);
   }, [open]);
 
   useAsyncEffect(async () => {
@@ -46,18 +47,22 @@ const useRepayment = (loan, open) => {
         utils: { BN }
       } = web3;
       const DAIProxy = await wallet.addContract('DAIProxy');
-      const DAI = await wallet.addContract('DAI');
-      const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
+      const loanContract = await wallet.addContractByAddress('LoanContract', loan.id);
+      const tokenAddress = await loanContract.methods.tokenAddress().call();
+      const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
+
       const valueBN = new BN(borrowerDebt);
 
-      const amountApproved = await DAIContract.methods
+      const amountApproved = await ERC20Contract.methods
         .allowance(account, DAIProxy.options.address)
         .call({ from: account });
 
       if (valueBN.gt(new BN(amountApproved))) {
         try {
           await followTx.watchTx(
-            DAIContract.methods.approve(DAIProxy.options.address, MAX_VALUE).send({ from: account })
+            ERC20Contract.methods
+              .approve(DAIProxy.options.address, MAX_VALUE)
+              .send({ from: account })
           );
           setApproved(true);
         } catch (err) {

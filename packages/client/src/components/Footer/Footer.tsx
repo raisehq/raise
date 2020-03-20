@@ -63,7 +63,7 @@ const FooterCmp = () => (
         </FooterIcons>
       </FooterFirst>
       <FooterLogo>
-        <img src="https://static.herodev.es/images/logo.svg" />
+        <img src="https://static.raise.it/images/logo.svg" />
       </FooterLogo>
       <FooterImage />
     </FooterWrapper>

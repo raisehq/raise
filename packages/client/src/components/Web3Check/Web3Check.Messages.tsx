@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
-import AppContext from '../AppContext';
+import React from 'react';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import Web3Address from '../Web3Address';
 import useWeb3 from '../../hooks/useWeb3';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
@@ -14,6 +15,12 @@ import {
   ActionDescription,
   ButtonGreenSmall
 } from './Web3Check.styles';
+
+const tagLabelMapping = {
+  coinbase: 'new_wallet_coinbase',
+  opera: 'new_wallet_opera',
+  metamask: 'new_wallet_metamask'
+};
 
 const NeedHelp = ({ href }: any) => (
   <HelpMessage>
@@ -44,12 +51,9 @@ const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
     <AddressContainer>
       <StyledAddress account={currentAddress} />
     </AddressContainer>
-    <ButtonGreenSmall onClick={uploadSignature}>
-      Click to confirm
-    </ButtonGreenSmall>
+    <ButtonGreenSmall onClick={uploadSignature}>Click to confirm</ButtonGreenSmall>
     <NeedHelp href="https://www.raise.it/help" />
   </ActionDescription>
-
 );
 // @ts-ignore
 const AccountNotMatchNotice = ({ verifiedAddress, walletId }: any) => (
@@ -73,20 +77,19 @@ const Success = () => (
 );
 
 const CurrentNotice = () => {
-  // @ts-ignore
+  const {
+    web3Status: { networkMatches, accountMatches, walletNetwork, targetNetwork, walletAccount }
+  }: any = useAppContext();
   const {
     actions: {
-      // @ts-ignore
       blockchain: { uploadSignature }
     },
     store: {
       user: {
-        // @ts-ignore
         cryptoAddress: { address: verifiedAddress, cryptotypeId }
       }
-    },
-    web3Status: { networkMatches, accountMatches, walletNetwork, targetNetwork, walletAccount }
-  }: any = useContext(AppContext);
+    }
+  }: any = useRootContext();
   const tagManager = useGoogleTagManager('Wallet');
   const { getCurrentProviderName, requestSignature } = useWeb3();
 
@@ -94,14 +97,15 @@ const CurrentNotice = () => {
     try {
       const { address, signature } = await requestSignature();
       await uploadSignature(address, getCurrentProviderName(), signature);
-      tagManager.sendEvent(
-        TMEvents.Submit,
-        'new_wallet',
-        getWalletName(cryptotypeId).toLowerCase()
-      );
+      const walletName = getWalletName(getCurrentProviderName()).toLowerCase();
+      tagManager.sendEvent(TMEvents.Submit, 'new_wallet', walletName);
+      tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
       if (window.fbq) {
         window.fbq('trackCustom', 'new_wallet', {
-          type: getWalletName(cryptotypeId).toLowerCase()
+          type: walletName
+        });
+        window.fbq('trackCustom', tagLabelMapping[walletName], {
+          type: walletName
         });
       }
     } catch (error) {

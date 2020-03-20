@@ -2,26 +2,18 @@ import styled from 'styled-components';
 // eslint-disable-next-line
 import { Menu as SemanticMenu, Button, ButtonProps, ImageProps, Image } from 'semantic-ui-react';
 import { AddressStatus as Web3RawAddress } from '../Web3Address';
-import Balance from '../Balance';
-import { Value, Title } from '../Balance/Balance.styles';
+import Balance from '../HeaderBalance';
 import Logout from '../Logout';
 import theme from '../../theme';
 import { maxDevice, device } from '../../commons/breakpoints';
 
 export const BalanceMobile = styled(Balance)`
-  & {
-    margin-top: 20px;
-    color: #5a5a5a;
-    ${Title} {
-      font-size: 16px;
-    }
-    ${Value} {
-      font-size: 16px;
-    }
+  &&&& {
+    margin-top: 40px;
   }
 `;
 
-export const Logo = styled(Image) <ImageProps>`
+export const Logo = styled(Image)<ImageProps>`
   &&&&& {
     display: block;
     max-width: 90px;
@@ -53,7 +45,6 @@ export const RaiseMenu = styled(SemanticMenu)`
   &&&.inverted {
     visibility: hidden;
     background: ${theme.colors.background};
-    color: white;
     position: fixed;
     top: 0px;
     right: 60em;
@@ -99,7 +90,7 @@ export const RaiseMenu = styled(SemanticMenu)`
   }
 `;
 
-export const BurgerButton = styled(Button) <ButtonProps>`
+export const BurgerButton = styled(Button)<ButtonProps>`
   &&&& {
     position: absolute;
     top: 10px;
@@ -112,7 +103,7 @@ export const BurgerButton = styled(Button) <ButtonProps>`
   }
 `;
 
-export const CloseButton = styled(Button) <ButtonProps>`
+export const CloseButton = styled(Button)<ButtonProps>`
   &&&& {
     position: absolute;
     top: 10px;
@@ -129,9 +120,10 @@ export const CloseButton = styled(Button) <ButtonProps>`
 `;
 
 export const MobileWrapper = styled.div`
-@media ${device.laptop} {
-  display: none;
-}`
+  @media ${device.laptop} {
+    display: none;
+  }
+`;
 export const MobileMenu = styled(SemanticMenu)`
   &&&& {
     top: 0;
@@ -174,7 +166,7 @@ export const MenuList = styled('div')`
       font-size: 16px;
       font-weight: 600;
       align-items: center;
-      color: #3C4251;
+      color: #3c4251;
       padding: 15px 20px;
 
       .icon:last-child {

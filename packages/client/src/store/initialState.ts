@@ -113,7 +113,8 @@ const initialState = {
   onboarding: {
     show: false,
     troggle: ''
-  }
+  },
+  loanDispatcher: {}
 };
 
 export default initialState;

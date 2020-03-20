@@ -8,10 +8,12 @@ import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import { ClaimRepay } from '../ClaimRepay';
 import { ClaimRefund } from '../ClaimRefundInvestor';
 import { GetInTouch } from '../GetInTouch';
+import useGetCoin from '../../hooks/useGetCoin';
 
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, slug } = useBorrowerInfo(auction.originator);
   const { roi, times, maxAmount, lenderRoiAmount, lenderAmount } = calcs;
+  const { coin } = useGetCoin(auction);
 
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
@@ -49,7 +51,7 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Card.Grid>
         <Card.Grid spaceBetween notop>
-          <Card.Header title="Investment return" amount={<Amount principal={lenderRoiAmount} />} />
+          <Card.Header title="Investment return" amount={<Amount principal={lenderRoiAmount} coin={coin}/>} />
           <Card.RoiHeader roi={roi} />
         </Card.Grid>
         <Card.Separator />

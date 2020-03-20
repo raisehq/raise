@@ -7,7 +7,6 @@ const FollowSteps = ({ isMobile }) => {
       <FollowingStepsTitle>Follow these steps:</FollowingStepsTitle>
       {!isMobile ? (
         <p>1. Scan the QR Code with your Bloom mobile app</p>
-        
       ) : (
         <p>1. Tap on the button above</p>
       )}

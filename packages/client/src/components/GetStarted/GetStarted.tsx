@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 import { Element } from 'react-scroll';
 import Slider from 'react-slick';
@@ -12,7 +12,7 @@ import {
   NoSlider
 } from './GetStarted.styles';
 import { Wrapper } from './GetStarted.styles';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
 import { getGetStarted } from '../../helpers/butter';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 
@@ -44,7 +44,7 @@ const getSlides = slides =>
   ));
 
 const GetStarted = () => {
-  const { getStarted, onSetGetStarted }: any = useContext(AppContext);
+  const { getStarted, onSetGetStarted }: any = useAppContext();
   const [slides, setSlides]: any = useState([]);
 
   useAsyncEffect(async () => {

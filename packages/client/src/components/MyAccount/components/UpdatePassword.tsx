@@ -1,23 +1,35 @@
 import React from 'react';
 import { Loader } from 'semantic-ui-react';
-import {
-  FormInput,
-  Label,
-  Submit,
-  FlexBox,
-  Message
-} from '../MyAccount.styles';
+import { FormInput, Label, Submit, FlexBox, Message } from '../MyAccount.styles';
 
-const UpdatePassword = ({ oldPassword, updateState, newPassword, newPasswordRepeat, savePassword, passMessage, loading }) => {
-  const message = passMessage.includes('body') ? `${passMessage.split(': ')[1].split(' ')[0].split('-').join(' ')} not valid` : passMessage;
+const UpdatePassword = ({
+  oldPassword,
+  updateState,
+  newPassword,
+  newPasswordRepeat,
+  savePassword,
+  passMessage,
+  loading
+}) => {
+  const message = passMessage.includes('body')
+    ? `${passMessage
+        .split(': ')[1]
+        .split(' ')[0]
+        .split('-')
+        .join(' ')} not valid`
+    : passMessage;
   const passwordNotMatch = newPassword && newPasswordRepeat && newPassword !== newPasswordRepeat;
   const passLength = 6;
   const newPasswordLength = newPassword && newPassword.length < passLength;
   const isDisabled =
-    !oldPassword || !oldPassword.length ||
-    !newPassword || !newPassword.length || newPasswordLength ||
-    !newPasswordRepeat || !newPasswordRepeat ||
-    passwordNotMatch
+    !oldPassword ||
+    !oldPassword.length ||
+    !newPassword ||
+    !newPassword.length ||
+    newPasswordLength ||
+    !newPasswordRepeat ||
+    !newPasswordRepeat ||
+    passwordNotMatch;
 
   const passwordNotMatchMessage = 'Passwords does not match';
   const passwordLessMinLength = `Password should have a minimum of ${passLength} characters`;
@@ -53,16 +65,16 @@ const UpdatePassword = ({ oldPassword, updateState, newPassword, newPasswordRepe
         error={passwordNotMatch}
       />
       <FlexBox>
-        <Submit
-          disabled={isDisabled}
-          onClick={savePassword}>Save</Submit>
+        <Submit disabled={isDisabled} onClick={savePassword}>
+          Save
+        </Submit>
         <Loader inline active={loading} />
         {passMessage && <Message>{message}</Message>}
         {passwordNotMatch && <Message>{passwordNotMatchMessage}</Message>}
-        {(newPasswordLength) && <Message>{passwordLessMinLength}</Message>}
+        {newPasswordLength && <Message>{passwordLessMinLength}</Message>}
       </FlexBox>
     </>
-  )
-}
+  );
+};
 
 export default UpdatePassword;

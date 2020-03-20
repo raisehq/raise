@@ -35,10 +35,10 @@ generate_cache() {
   echo "- Install dependencies"
   npm i
   echo "- Migrate contracts inside ganache"
-  PRIVATE_KEY=$test_private_key npm run migration:cypress
+  BYPASS_VERSION_CHECK=true PRIVATE_KEY=$test_private_key npm run migration:cypress
   cd ..
   echo "- Retrieve generated contract addresses and abi"
-  cp contracts/contracts.json cypress/fixtures/contracts.json
+  cp contracts/new.metadata.json cypress/fixtures/new.metadata.json
   cp -r .db ganache_db
   echo "- Save current commit checksum of integration branch into ganache_db dir"
   git --git-dir=contracts/.git rev-parse origin/integration > ganache_db/git_commit_hash

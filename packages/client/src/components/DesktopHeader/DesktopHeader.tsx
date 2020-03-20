@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, animateScroll as scroll } from 'react-scroll';
 import {
   HeaderWrapper,
@@ -9,19 +9,22 @@ import {
   HeaderMenuItem,
   RaiseHeader
 } from './DesktopHeader.styles';
-import Balance from '../Balance';
+import HeaderBalance from '../HeaderBalance';
 import Web3Address from '../Web3Address';
 import theme from '../../theme';
-import AppContext from '../AppContext';
+import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import useRouter from '../../hooks/useRouter';
+
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 import MyAccountButton from './MyAccountButton';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
 const DesktopHeader = () => {
+  const { onSetGetStarted }: any = useAppContext();
+  const { history }: any = useRouter();
   const {
-    history,
-    onSetGetStarted,
     store: {
       user,
       auth: {
@@ -31,8 +34,7 @@ const DesktopHeader = () => {
     actions: {
       onboarding: { showOnboarding }
     }
-  }: // web3Status: { hasDeposit }
-  any = useContext(AppContext);
+  }: any = useRootContext();
   const { visible, visibleMenu } = useMenuVisibility();
   const tagManager = useGoogleTagManager();
 
@@ -108,7 +110,7 @@ const DesktopHeader = () => {
             <>
               {isLogged && visibleMenu && (
                 <>
-                  <Balance />
+                  <HeaderBalance />
                   <Web3Address />
                   <MyAccountButton />
                 </>

@@ -7,3 +7,4 @@ packages/*/.rts2_cache_cjs
 packages/*/.rts2_cache_esm
 lerna-debug*
 .vscode/
+package-lock.json

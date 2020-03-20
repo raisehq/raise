@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Header,
   ClaimButton,
@@ -10,15 +10,8 @@ import {
 import useWallet from '../../../hooks/useWallet';
 import { ClaimRefundContext, Stages } from '../ClaimRefund';
 import { ResumeItemProps } from '../../InvestModal/types';
-// import { Loader } from 'semantic-ui-react';
-import AppContext from '../../AppContext';
-
-// const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
-//   <ResumeItemBox>
-//     <p>{title}</p>
-//     <p>{value}</p>
-//   </ResumeItemBox>
-// );
+import { useAppContext } from '../../../contexts/AppContext';
+import useGetCoin from '../../../hooks/useGetCoin';
 
 const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
   <ResumeItemBoxBig>
@@ -30,9 +23,10 @@ const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
 const Confirm = () => {
   const metamask = useWallet();
   const { loan, setStage, calculatedLoan }: any = useContext(ClaimRefundContext);
+  const { coin } = useGetCoin(loan);
   const {
     web3Status: { account }
-  }: any = useContext(AppContext);
+  }: any = useAppContext();
   const { id: loanAddress } = loan;
 
   const [loading, setLoading] = useState(false);
@@ -56,7 +50,10 @@ const Confirm = () => {
       <Header>Claim Refund</Header>
       <ClaimFundsResume>
         <FlexSpacedLayout>
-          <ResumeItemBig title="Invested amount" value={`${calculatedLoan.lenderAmount} DAI`} />
+          <ResumeItemBig
+            title="Invested amount"
+            value={`${calculatedLoan.lenderAmount} ${coin && coin.text}`}
+          />
         </FlexSpacedLayout>
       </ClaimFundsResume>
       <ClaimButton loading={loading} onClick={onConfirm}>
