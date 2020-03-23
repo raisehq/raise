@@ -62,14 +62,7 @@ const Web3Check = () => {
       const walletName = getWalletName(getCurrentProviderName()).toLowerCase();
       tagManager.sendEvent(TMEvents.Submit, 'wallet_success', walletName);
       tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
-      if (window.fbq) {
-        window.fbq('trackCustom', 'wallet_success', {
-          type: walletName
-        });
-        window.fbq('trackCustom', tagLabelMapping[walletName], {
-          type: walletName
-        });
-      }
+
       setUI(Stages.Checks);
     }
   }, []);
@@ -86,14 +79,7 @@ const Web3Check = () => {
       const walletName = getWalletName(cryptotypeId).toLowerCase();
       tagManager.sendEvent(TMEvents.Submit, 'wallet_success', walletName);
       tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
-      if (window.fbq) {
-        window.fbq('trackCustom', 'wallet_success', {
-          type: walletName
-        });
-        window.fbq('trackCustom', tagLabelMapping[walletName], {
-          type: walletName
-        });
-      }
+
       setUI(Stages.Checks);
       handleSuccess();
     }

@@ -114,11 +114,6 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   const onRetry = () => {
     tagManager.sendEvent(TMEvents.Click, 'invest_retry');
 
-    if (window.fbq) {
-      window.fbq('trackCustom', 'invest_retry', {
-        type: 'loan'
-      });
-    }
     setStage(ui.Confirm);
   };
 

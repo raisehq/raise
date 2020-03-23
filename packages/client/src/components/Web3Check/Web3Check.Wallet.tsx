@@ -45,15 +45,6 @@ const Wallet = ({ onNext, onBack }: any) => {
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
     tagManager.sendEvent(TMEvents.Click, tagLabelMapping[walletName], walletName);
 
-    if (window.fbq) {
-      window.fbq('trackCustom', 'wallet_attempt', {
-        type: walletName
-      });
-      window.fbq('trackCustom', tagLabelMapping[walletName], {
-        type: walletName
-      });
-    }
-
     if (isMobile) {
       switch (walletName) {
         case 'metamask':
