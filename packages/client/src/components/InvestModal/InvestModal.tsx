@@ -62,20 +62,10 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const openModal = () => {
     if (isLogged && userActivated) {
       tagManager.sendEvent(TMEvents.Click, 'loan');
-      if (window.fbq) {
-        window.fbq('trackCustom', 'loan', {
-          type: 'loan'
-        });
-      }
       setStage(UI.Confirm);
       setOpen(true);
     } else if (isLogged && !userActivated) {
       tagManager.sendEvent(TMEvents.Click, 'loan');
-      if (window.fbq) {
-        window.fbq('trackCustom', 'loan', {
-          type: 'loan'
-        });
-      }
       setOpen(true);
     } else {
       const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'c');
@@ -84,11 +74,6 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
         TMEvents.Click,
         isBorrowerProfile ? 'borrower_profile' : 'marketplace'
       );
-      if (window.fbq) {
-        window.fbq('trackCustom', 'Card', {
-          type: isBorrowerProfile ? 'borrower_profile' : 'marketplace'
-        });
-      }
       showOnboarding();
     }
   };

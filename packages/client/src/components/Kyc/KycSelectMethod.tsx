@@ -36,12 +36,6 @@ const KycSelectMethod = () => {
   const providerKYC = provider => {
     tagManager.sendEvent(TMEvents.Click, kycLabelMapps[provider]);
 
-    if (window.fbq) {
-      window.fbq('trackCustom', kycLabelMapps[provider], {
-        type: provider
-      });
-    }
-
     switch (provider) {
       case 'sumsub':
         history.push('/kyc-sumsub');

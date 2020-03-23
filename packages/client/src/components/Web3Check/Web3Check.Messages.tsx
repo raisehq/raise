@@ -100,14 +100,6 @@ const CurrentNotice = () => {
       const walletName = getWalletName(getCurrentProviderName()).toLowerCase();
       tagManager.sendEvent(TMEvents.Submit, 'new_wallet', walletName);
       tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
-      if (window.fbq) {
-        window.fbq('trackCustom', 'new_wallet', {
-          type: walletName
-        });
-        window.fbq('trackCustom', tagLabelMapping[walletName], {
-          type: walletName
-        });
-      }
     } catch (error) {
       console.error('[Web3Check.Message][HandleUploadSignature] Error : ', error);
     }

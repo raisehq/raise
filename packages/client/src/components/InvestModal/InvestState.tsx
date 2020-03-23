@@ -77,11 +77,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
 
   const onConfirm = async () => {
     tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
-    if (window.fbq) {
-      window.fbq('trackCustom', 'invest_attempt', {
-        type: 'loan'
-      });
-    }
+
     setInvestment(value);
     setStage(ui.Processing);
   };
