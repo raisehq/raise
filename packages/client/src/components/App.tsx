@@ -77,12 +77,13 @@ const App = () => {
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: false,
-            draggable: false
+            draggable: false,
+            toastId: tx
           });
         } else {
           toast.update(tx, {
             render: <Toast text={text} tx={tx} state="success" />,
-            type: toast.TYPE.INFO,
+            type: toast.TYPE.SUCCESS,
             autoClose: 5000,
             hideProgressBar: true,
             closeOnClick: true,
@@ -94,17 +95,19 @@ const App = () => {
       // followTx.on('error_tx', ({ tx, text }) => {
       //   if (!toast.isActive(tx)) {
       //     toast(<Toast text={text} tx={tx} state="error" />, {
-      //       type: toast.TYPE.INFO,
+      //       type: toast.TYPE.ERROR,
       //       autoClose: 5000,
       //       hideProgressBar: true,
       //       closeOnClick: true,
       //       pauseOnHover: false,
-      //       draggable: false
+      //       draggable: false,
+      //       toastId: tx
+
       //     });
       //   } else {
       //     toast.update(tx, {
       //       render: <Toast text={text} tx={tx} state="error" />,
-      //       type: toast.TYPE.INFO,
+      //       type: toast.TYPE.ERROR,
       //       autoClose: 5000,
       //       hideProgressBar: true,
       //       closeOnClick: true,
