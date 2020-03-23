@@ -1,12 +1,31 @@
-image: 'node:11-alpine'
+image: node:11-alpine
+
 before_script:
-  - "#!/bin/sh\napk add --no-cache --virtual .build-deps \\\nca-certificates \\\nmake \\\ng++ \\\nwget \\\ngit \\\npython \\\npy-pip \\\ntar && \\\ncd /usr/local/bin && \\\nwget https://yarnpkg.com/latest.tar.gz && \\\ntar zvxf latest.tar.gz && \\\nln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \\\ncd - \\\napk del .build-deps\n"
+  - |
+    #!/bin/sh
+    apk add --no-cache --virtual .build-deps \
+    ca-certificates \
+    make \
+    g++ \
+    wget \
+    git \
+    python \
+    py-pip \
+    tar && \
+    cd /usr/local/bin && \
+    wget https://yarnpkg.com/latest.tar.gz && \
+    tar zvxf latest.tar.gz && \
+    ln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \
+    cd - \
+    apk del .build-deps
+
 stages:
-  - deploy_backend
+  - deploy-backend
   - build
   - deploy
   - review
   - test
+  - deploy-prod
   - cleanup
 
 variables:
@@ -18,8 +37,8 @@ cache:
   paths:
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
 
-trigger-deployment:
-  stage: deploy_backend
+deploy-backend:
+  stage: deploy-backend
   image: alpine:latest
   before_script:
     - |
@@ -62,19 +81,6 @@ build-front-review:
     paths:
       - packages/client/build
 
-build-front-production:
-  stage: build
-  script:
-    - 'echo $REACT_APP_HOST_URL'
-    - 'yarn --pure-lockfile'
-    - 'yarn run client:build:production'
-  only:
-    - master
-  artifacts:
-    when: always
-    paths:
-      - packages/client/build
-
 build-front-integration:
   stage: build
   script:
@@ -89,8 +95,21 @@ build-front-integration:
     paths:
       - packages/client/build_int
 
+build-front-production:
+  stage: build
+  script:
+    - 'echo $REACT_APP_HOST_URL'
+    - 'yarn --pure-lockfile'
+    - 'yarn run client:build:production'
+  only:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build
+
 deploy-int:
-  image: 'python:3.7-alpine'
+  image: python:3.7-alpine
   stage: deploy
   before_script:
     - 'pip install awscli'
@@ -106,27 +125,25 @@ deploy-int:
   only:
     - master
 
-deploy-prod:
-  image: 'python:3.7-alpine'
+deploy-canary:
+  image: python:3.7-alpine
   stage: deploy
   before_script:
     - 'pip install awscli'
   script:
     - |
       #!/bin/sh
-      mv packages/client/build build
-      aws s3 sync --delete build s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --cache-control max-age=86400000
-      aws s3 cp s3://${BUCKET_NAME_PROD}/ s3://${BUCKET_NAME_PROD}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      mv packages/client/build canary
+      aws s3 sync --delete canary s3://${BUCKET_NAME_PROD}/canary --metadata-directive REPLACE --cache-control max-age=86400000
+      aws s3 cp s3://${BUCKET_NAME_PROD}/canary/ s3://${BUCKET_NAME_PROD}/canary/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
       for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
         echo $dist
-        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/canary/*";
       done
-
-  when: manual
   only:
     - master
 
-cypress-e2e:
+cypress-e2e-review:
   image: 'cypress/browsers:node10.16.0-chrome77'
   stage: test
   variables:
@@ -158,14 +175,14 @@ cypress-e2e:
     paths:
       - packages/testing/ganache_db
 
-cypress-e2e-integration:
+cypress-e2e-production:
   image: 'cypress/browsers:node10.16.0-chrome77'
   stage: test
   variables:
-    CYPRESS_url: 'https://app.herodev.es'
-    CYPRESS_baseUrl: 'https://app.herodev.es'
+    CYPRESS_url: 'https://app.raise.it'
+    CYPRESS_baseUrl: 'https://app.raise.it'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: https://api.herodev.es
+    CYPRESS_api: https://api.raise.it
   before_script:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
@@ -190,8 +207,26 @@ cypress-e2e-integration:
   only:
     - master
 
+deploy-prod:
+  image: python:3.7-alpine
+  stage: deploy-prod
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/client/build latest
+      aws s3 sync --delete latest s3://${BUCKET_NAME_PROD}/latest --metadata-directive REPLACE --cache-control max-age=86400000
+      aws s3 cp s3://${BUCKET_NAME_PROD}/latest/ s3://${BUCKET_NAME_PROD}/latest/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/latest/*";
+      done
+  only:
+    - master
+
 review:
-  image: 'python:3.7-alpine'
+  image: python:3.7-alpine
   stage: review
   before_script:
     - 'pip install awscli'
