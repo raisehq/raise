@@ -5,6 +5,7 @@ describe('BORROWER', function() {
     cy.login('borrower');
     cy.mockAPI('borrower');
     cy.web3('borrower');
+    cy.setCookie('X-Canary', 'activated')
   });
 
   it('Go to create loan', function() {

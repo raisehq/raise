@@ -9,6 +9,10 @@ import { createCard } from './cardManager';
 // Require only when start test
 import contracts from '../fixtures/new.metadata.json';
 
+Cypress.Cookies.defaults({
+  whitelist: 'canary_release'
+})
+
 /*
   Add plugin to make snapshots
 */

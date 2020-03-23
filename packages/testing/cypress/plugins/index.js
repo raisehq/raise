@@ -19,7 +19,6 @@ module.exports = (on, config) => {
       args.push('--disable-dev-shm-usage');
       return args;
     }
-
     return args;
   });
   addMatchImageSnapshotPlugin(on, config);

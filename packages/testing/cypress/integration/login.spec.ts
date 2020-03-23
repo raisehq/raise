@@ -14,6 +14,7 @@ describe('Login', function() {
     cy.wait(1000);
     cy.get('.process').matchImageSnapshot('login_modal_filled');
     cy.get('#btn-login').click();
+    cy.setCookie('X-Canary', 'activated')
   });
 });
 
