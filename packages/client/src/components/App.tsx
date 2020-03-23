@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch } from 'react-router-dom';
 import 'url-search-params-polyfill';
 import { Dimmer, Loader } from 'semantic-ui-react';
@@ -26,6 +26,8 @@ import { BorrowerProfile } from '../components/BorrowerProfile';
 import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
 import NotFound404 from '../components/BorrowerProfile/Borrower404';
+import { toast } from 'react-toastify';
+import Toast, { StyledToastContainer } from './Toast';
 
 const App = () => {
   const {
@@ -39,7 +41,8 @@ const App = () => {
     actions: {
       user: { onGetUser },
       onboarding: { hiddeOnboarding }
-    }
+    },
+    followTx
   }: any = useRootContext();
   const { isLoading, modalRefs }: any = useAppContext();
   const { history } = useRouter();
@@ -51,6 +54,67 @@ const App = () => {
       dashboard: DashboardLender
     }
   };
+
+  useEffect(() => {
+    if (followTx) {
+      followTx.on('start_tx', ({ tx, text }) => {
+        toast(<Toast text={text} tx={tx} state="pending" />, {
+          position: 'top-right',
+          autoClose: false,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          type: toast.TYPE.INFO,
+          toastId: tx
+        });
+      });
+      followTx.on('finish_tx', ({ tx, text }) => {
+        if (!toast.isActive(tx)) {
+          toast(<Toast text={text} tx={tx} state="success" />, {
+            type: toast.TYPE.INFO,
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false
+          });
+        } else {
+          toast.update(tx, {
+            render: <Toast text={text} tx={tx} state="success" />,
+            type: toast.TYPE.INFO,
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false
+          });
+        }
+      });
+      // followTx.on('error_tx', ({ tx, text }) => {
+      //   if (!toast.isActive(tx)) {
+      //     toast(<Toast text={text} tx={tx} state="error" />, {
+      //       type: toast.TYPE.INFO,
+      //       autoClose: 5000,
+      //       hideProgressBar: true,
+      //       closeOnClick: true,
+      //       pauseOnHover: false,
+      //       draggable: false
+      //     });
+      //   } else {
+      //     toast.update(tx, {
+      //       render: <Toast text={text} tx={tx} state="error" />,
+      //       type: toast.TYPE.INFO,
+      //       autoClose: 5000,
+      //       hideProgressBar: true,
+      //       closeOnClick: true,
+      //       pauseOnHover: false,
+      //       draggable: false
+      //     });
+      //   }
+      // });
+    }
+  }, [followTx]);
 
   return (
     <>
@@ -69,6 +133,15 @@ const App = () => {
       />
       {!isLoading && (
         <>
+          <StyledToastContainer
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            draggable={false}
+            pauseOnHover={false}
+          />
           <TopMobileMenu />
           <DesktopHeader />
           <Menu />
