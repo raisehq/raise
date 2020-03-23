@@ -55,18 +55,6 @@ const App = () => {
     }
   };
 
-  const notify = () =>
-    toast(<Toast text="text" tx="1" state="pending" />, {
-      position: 'top-right',
-      autoClose: false,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      type: toast.TYPE.INFO,
-      toastId: '1'
-    });
-
   useEffect(() => {
     if (followTx) {
       followTx.on('start_tx', ({ tx, text }) => {
@@ -77,13 +65,14 @@ const App = () => {
           closeOnClick: true,
           pauseOnHover: false,
           draggable: false,
-          type: toast.TYPE.INFO
+          type: toast.TYPE.INFO,
+          toastId: tx
         });
       });
       followTx.on('finish_tx', ({ tx, text }) => {
         if (!toast.isActive(tx)) {
           toast(<Toast text={text} tx={tx} state="success" />, {
-            type: toast.TYPE.INFO,
+            type: toast.TYPE.SUCCESS,
             autoClose: 5000,
             hideProgressBar: true,
             closeOnClick: true,
@@ -157,9 +146,6 @@ const App = () => {
           <DesktopHeader />
           <Menu />
           <TransitionGroup component={null}>
-            <div>
-              <button onClick={() => notify()}>Notify !</button>
-            </div>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
               <Switch>
                 <Web3Layout

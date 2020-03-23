@@ -9,11 +9,11 @@ const Toast = ({ text, tx, state }) => {
     }
   }: any = useRootContext();
 
-  const states = {
-    pending: 'Processing',
-    success: 'Done!',
-    error: 'Something went wrong'
-  };
+  // const states = {
+  //   pending: 'Processing',
+  //   success: 'uccessful!',
+  //   error: 'Something went wrong'
+  // };
 
   const createLink = transaction =>
     `https://${
@@ -24,7 +24,7 @@ const Toast = ({ text, tx, state }) => {
     <ToastCustomContainer>
       <ToastText>{text}</ToastText>
       <TxLink href={createLink(tx)} target="_blank">
-        {states[state]}
+        View on Etherscan
       </TxLink>
     </ToastCustomContainer>
   );

@@ -3,16 +3,19 @@ import { ToastContainer } from 'react-toastify';
 
 export const ToastCustomContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  flex-direction: row;
+  justify-content: center;
   margin-left: 15px;
   margin-right: 15px;
+  align-items: center;
 `;
 
 export const ToastText = styled.div`
   font-height: 24px;
   font-size: 16px;
-  color: #546978;
+  color: #3c4251;
+  justify-content: center;
+  margin-right: 20px;
 `;
 
 export const TxLink = styled.a`
@@ -28,6 +31,7 @@ export const StyledToastContainer = styled(ToastContainer)`
   padding: 0;
   top: 0px;
   right: 0px;
+  z-index: 0;
 
   .toast {
     background-color: red;
