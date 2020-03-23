@@ -24,22 +24,33 @@ export const TxLink = styled.a`
 export const StyledToastContainer = styled(ToastContainer)`
   /* this is the container*/
   position: relative;
+  width: 100%;
+  padding: 0;
+  top: 0px;
+  right: 0px;
+
   .toast {
     background-color: red;
   }
   .Toastify__toast {
+    margin: 0;
+    border-radius: 0 !important;
   }
   .Toastify__toast--error {
-    background: red;
+    background: #fbd9e9 !important;
+    box-shadow: none;
   }
   .Toastify__toast--info {
-    background: white !important;
+    background: #d8f4ff !important;
+    box-shadow: none;
   }
   .Toastify__toast--warning {
-    background: red;
+    background: #fef2d5 !important;
+    box-shadow: none;
   }
   .Toastify__toast--success {
-    background: red !important;
+    background: #ccf8ec !important;
+    box-shadow: none;
   }
   .Toastify__toast-body {
     /*max-width: 320px !important;*/
