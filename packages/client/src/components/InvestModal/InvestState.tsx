@@ -109,7 +109,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   return (
     <>
       <Header>How much would you like to invest?</Header>
-      <InvestorBalance id="btn-invest-all" onClick={fundAll} />
+      {coin && <InvestorBalance coin={coin} id="btn-invest-all" onClick={fundAll} />}
       <ModalInputContainer>
         <InputContainer>
           <InputLabel>Investment</InputLabel>

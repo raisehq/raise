@@ -1,40 +1,39 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import BN from 'bn.js';
+import { fromWei } from 'web3-utils';
 import { BalanceBox, Title, Value } from './Balance.styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
-import Queryies from '../../helpers/queryies';
+import { useAddressBalance } from '../../contexts/BalancesContext';
 
-const Balance = props => {
+const Balance = ({ coin, ...props }) => {
   const {
-    actions: {
-      dai: { onGetBalance }
-    },
     store: {
-      dai: { balance },
+      blockchain: {
+        contracts: { address: contractAddresses }
+      },
       user: {
         cryptoAddress: { address: account }
       }
     }
   }: any = useRootContext();
   const {
-    daiWebSocket: { webSocket }
+    web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
 
-  useEffect(() => {
-    if (account && webSocket) {
-      const { query, subscriptionName } = Queryies.subscriptions.daiBalance;
-      const variables = {
-        address: account
-      };
-      const callback = onGetBalance;
-      webSocket.subscribe(query, variables, subscriptionName, callback);
-    }
-  }, [account, webSocket]);
+  const balanceBN: BN = useAddressBalance(account, contractAddresses[chainId]?.[coin.value]);
+
+  const stringBalance: string =
+    Number(fromWei(balanceBN))
+      .toFixed(2)
+      .toString() || '0.00';
 
   return (
     <BalanceBox {...props}>
       <Title>Balance:</Title>
-      <Value>{balance} DAI</Value>
+      <Value>
+        {stringBalance} {coin.value}
+      </Value>
     </BalanceBox>
   );
 };
