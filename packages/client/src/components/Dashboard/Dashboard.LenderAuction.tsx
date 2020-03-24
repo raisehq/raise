@@ -28,11 +28,17 @@ const Auction = ({ auction }: { auction: any }) => {
       <Card.Image src={background} to={borrowerUrl} />
       <Card.Content topRight={auctionTimeLeft} logo={logo} to={borrowerUrl}>
         <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
-        <Card.Header title="Amount invested" amount={<Amount principal={lenderAmount} coin={coin}/>} />
+        <Card.Header
+          title="Amount invested"
+          amount={<Amount principal={lenderAmount} coin={coin} />}
+        />
         <Card.Separator />
         <Card.Grid spaceBetween nobottom>
-          <Card.SubHeader title="Raised so far" amount={<Amount principal={principal} coin={coin}/>} />
-          <Card.SubHeader title="Target" amount={<Amount principal={maxAmount} coin={coin}/>} />
+          <Card.SubHeader
+            title="Raised so far"
+            amount={<Amount principal={principal} coin={coin} />}
+          />
+          <Card.SubHeader title="Target" amount={<Amount principal={maxAmount} coin={coin} />} />
         </Card.Grid>
         <Card.Separator />
         <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />

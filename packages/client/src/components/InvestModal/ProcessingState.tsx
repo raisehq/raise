@@ -28,7 +28,13 @@ import {
 import { useAppContext } from '../../contexts/AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
-const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui, setStage }) => {
+const ProcessingState: React.SFC<ProcessingStateProps> = ({
+  loan,
+  investment,
+  ui,
+  setStage,
+  coinName
+}) => {
   const {
     web3Status: { walletAccount }
   }: any = useAppContext();
@@ -182,9 +188,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
                 <Grid columns={2}>
                   <Grid.Column width={2}>{stepNumber(1, 'aproval')}</Grid.Column>
                   <Grid.Column width={14}>
-                    <Action>Allow Raise to interact with your DAI</Action>
+                    <Action>{`Allow Raise to interact with your ${coinName}`}</Action>
                     <Explanation>
-                      Once you give us allowance, you will be able to make investments in DAI
+                      {`Once you give us allowance, you will be able to make investments in ${coinName}`}
                     </Explanation>
                   </Grid.Column>
                 </Grid>
@@ -195,7 +201,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
                   <Grid.Column width={14}>
                     <Action>Confirm the transaction</Action>
                     <Explanation>
-                      {`${investment} DAI will be transferred from your wallet to the loan`}
+                      {`${investment} ${coinName} will be transferred from your wallet to the loan`}
                     </Explanation>
                   </Grid.Column>
                 </Grid>

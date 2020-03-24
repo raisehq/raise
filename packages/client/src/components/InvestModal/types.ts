@@ -26,6 +26,7 @@ export interface ProcessingStateProps {
   investment: any;
   ui: any;
   setStage: Function;
+  coinName: string;
 }
 
 export interface SuccessStateProps {
