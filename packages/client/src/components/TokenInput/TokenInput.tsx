@@ -14,12 +14,14 @@ interface TokenInputProps {
   error_msg?: any;
   decimalScale?: number;
   displayType?: string;
+  coinIcon: string;
 }
 
 const TokenInput: React.SFC<TokenInputProps> = ({
   onValueChange: onChange,
   displayType,
   value,
+  coinIcon,
   ...props
 }) => {
   const onValueChange = ({ floatValue }) => (onChange ? onChange(floatValue) : undefined);
@@ -30,7 +32,7 @@ const TokenInput: React.SFC<TokenInputProps> = ({
       ) : (
         <LoanInput value={value} onValueChange={onValueChange} {...props} />
       )}
-      <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/ico_dai.png`} />
+      <Coin src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${coinIcon}`} />
     </LoanInputBox>
   );
 };
