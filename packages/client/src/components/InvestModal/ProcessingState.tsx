@@ -28,6 +28,7 @@ import {
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import useGetCoin from '../../hooks/useGetCoin';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui, setStage }) => {
   const {
@@ -37,6 +38,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
 
   const { web3 } = useWeb3();
   const metamask = useWallet();
+  const { coin } = useGetCoin(loan);
 
   const [contracts, setContracts]: any = useState();
   const [approved, setAproved]: any = useState(false);
@@ -82,7 +84,8 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
             ERC20Contract.methods
               .approve(DAIProxy.options.address, MAX_VALUE)
               .send({ from: walletAccount }),
-            'approval'
+            'approval',
+            { id: 'approval' }
           );
           setAproved(true);
         } catch (error) {
@@ -110,7 +113,10 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
             .fund(loan.id, toWei(investment.toString()))
             .send({ from: walletAccount }),
           'investLoan',
-          [investment]
+          {
+            id: 'investLoan',
+            vars: [investment, coin.value]
+          }
         );
         setStage(ui.Success);
       } catch (error) {

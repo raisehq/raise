@@ -50,7 +50,10 @@ const Confirm = () => {
           from: account
         }),
         'withdrawLoan',
-        [calculatedLoan.netBalance]
+        {
+          id: 'withdrawLoan',
+          vars: [calculatedLoan.netBalance, coin.value]
+        }
       );
       setStage(Stages.Success);
     } catch (error) {

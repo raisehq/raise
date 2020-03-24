@@ -42,7 +42,10 @@ const Confirm = () => {
           from: account
         }),
         'withdrawRefund',
-        [calculatedLoan.lenderAmount]
+        {
+          id: 'withdrawRefund',
+          vars: [calculatedLoan.lenderAmount, coin.value]
+        }
       );
       setStage(Stages.Success);
     } catch (error) {

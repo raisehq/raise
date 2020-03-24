@@ -57,8 +57,8 @@ const App = () => {
 
   useEffect(() => {
     if (followTx) {
-      followTx.on('start_tx', ({ tx, text }) => {
-        toast(<Toast text={text} tx={tx} state="pending" />, {
+      followTx.on('start_tx', ({ tx, params }) => {
+        toast(<Toast params={params} tx={tx} state="pending" />, {
           position: 'top-right',
           autoClose: false,
           hideProgressBar: false,
@@ -69,9 +69,9 @@ const App = () => {
           toastId: tx
         });
       });
-      followTx.on('finish_tx', ({ tx, text }) => {
+      followTx.on('finish_tx', ({ tx, params }) => {
         if (!toast.isActive(tx)) {
-          toast(<Toast text={text} tx={tx} state="success" />, {
+          toast(<Toast params={params} tx={tx} state="success" />, {
             type: toast.TYPE.SUCCESS,
             autoClose: 5000,
             hideProgressBar: true,
@@ -82,7 +82,7 @@ const App = () => {
           });
         } else {
           toast.update(tx, {
-            render: <Toast text={text} tx={tx} state="success" />,
+            render: <Toast params={params} tx={tx} state="success" />,
             type: toast.TYPE.SUCCESS,
             autoClose: 5000,
             hideProgressBar: true,
@@ -92,9 +92,9 @@ const App = () => {
           });
         }
       });
-      // followTx.on('error_tx', ({ tx, text }) => {
+      // followTx.on('error_tx', ({ tx, params }) => {
       //   if (!toast.isActive(tx)) {
-      //     toast(<Toast text={text} tx={tx} state="error" />, {
+      //     toast(<Toast params={params} tx={tx} state="error" />, {
       //       type: toast.TYPE.ERROR,
       //       autoClose: 5000,
       //       hideProgressBar: true,
@@ -106,7 +106,7 @@ const App = () => {
       //     });
       //   } else {
       //     toast.update(tx, {
-      //       render: <Toast text={text} tx={tx} state="error" />,
+      //       render: <Toast params={params} tx={tx} state="error" />,
       //       type: toast.TYPE.ERROR,
       //       autoClose: 5000,
       //       hideProgressBar: true,

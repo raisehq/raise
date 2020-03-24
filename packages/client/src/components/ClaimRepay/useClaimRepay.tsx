@@ -27,12 +27,14 @@ const useRepayment = (loan, open) => {
       if (depositChecked) {
         await followTx.watchTx(
           LoanContract.methods.withdrawRepaymentAndDeposit().send({ from: account }),
-          'withdrawRepaymentAndDeposit'
+          'withdrawRepaymentAndDeposit',
+          { id: 'withdrawRepaymentAndDeposit' }
         );
       } else {
         await followTx.watchTx(
           LoanContract.methods.withdrawRepayment().send({ from: account }),
-          'withdrawRepayment'
+          'withdrawRepayment',
+          { id: 'withdrawRepayment' }
         );
       }
 

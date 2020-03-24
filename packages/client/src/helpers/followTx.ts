@@ -1,7 +1,6 @@
 import { EventEmitter } from 'events';
 import PromiEvent from 'promievent';
 import Web3 from 'web3';
-import toastMessages from '../helpers/toastMessages';
 
 //@ts-ignore
 const isTest = !!window.Cypress;
@@ -51,25 +50,11 @@ class FollowTx extends EventEmitter {
     }
   }
 
-  private format(text, params) {
-    if (!params || params.length === 0) {
-      return text;
-    }
-    let result = text;
-    for (let i = 0; i < params.length; i++) {
-      result = result.replace(new RegExp('\\{' + i + '\\}', 'g'), params[i]);
-    }
-
-    return result;
-  }
-
   private save(token, params?) {
     const data = JSON.parse(this.storage.getItem(this.storeName));
     data.push(token);
     this.storage.setItem(this.storeName, JSON.stringify(data));
-    const name: string | undefined = this.getName(token);
-    const textToast = name ? this.format(toastMessages[name], params) : '';
-    this.emit('start_tx', { tx: this.getHash(token), text: textToast });
+    this.emit('start_tx', { tx: this.getHash(token), params });
   }
 
   private remove(token, params?) {
@@ -79,17 +64,16 @@ class FollowTx extends EventEmitter {
       JSON.stringify(data.filter(value => this.getHash(value) !== this.getHash(token)))
     );
 
-    const name: string | undefined = this.getName(token);
-    const textToast = name ? this.format(toastMessages[name], params) : '';
-    this.emit('finish_tx', { tx: this.getHash(token), text: textToast });
+    this.emit('finish_tx', { tx: this.getHash(token), params });
   }
+
   public hasPendingTx(name) {
     const data = JSON.parse(this.storage.getItem(this.storeName));
     return data.filter(value => this.getName(value) === this.getName(name)).pop();
   }
 
   // @ts-ignore
-  public watchTx(method: any, name?, params?) {
+  public watchTx(method: any, name, params?) {
     const self = this;
     // @ts-ignore
     const pe = new PromiEvent<any>((resolve, reject) => {
