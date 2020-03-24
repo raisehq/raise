@@ -114,7 +114,12 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         <InputContainer>
           <InputLabel>Investment</InputLabel>
           <ModalInputBox error={value !== undefined && (value > balance || value > nMaxAmount)}>
-            <TokenInput id="input-invest-value" value={value} onValueChange={onSetValue} />
+            <TokenInput
+              id="input-invest-value"
+              value={value}
+              onValueChange={onSetValue}
+              coinIcon={coin && coin.icon}
+            />
           </ModalInputBox>
           <ErrorBox>
             {errorMessage()}
@@ -124,7 +129,12 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         <InputContainer>
           <InputLabel>Expected ROI</InputLabel>
           <ModalInputBox roi>
-            <TokenInput value={roi} decimalScale={4} displayType="text" />
+            <TokenInput
+              value={roi}
+              decimalScale={4}
+              displayType="text"
+              coinIcon={coin && coin.icon}
+            />
           </ModalInputBox>
         </InputContainer>
       </ModalInputContainer>
