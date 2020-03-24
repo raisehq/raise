@@ -11,7 +11,6 @@ const Toast = ({ params, tx, state }) => {
   }: any = useRootContext();
 
   const format = (text, params) => {
-    console.log('text ======> ', text);
     if (!params || params.length === 0) {
       return text;
     }
@@ -25,15 +24,10 @@ const Toast = ({ params, tx, state }) => {
 
   const getText = () => {
     if (!params) {
-      console.log('params undef');
       return 'Processing transaction';
     }
     const { id, vars } = params;
-    console.log('id::: ', id);
-    console.log('vars::: ', vars);
-    console.log('state::: ', state);
     const unparsedText = toastMessages[state][id];
-    console.log('unparsedText:: ', unparsedText);
     const parsedText = format(unparsedText, vars);
     return parsedText;
   };
@@ -45,7 +39,7 @@ const Toast = ({ params, tx, state }) => {
 
   return (
     <ToastCustomContainer>
-      {params && <ToastText>{getText()}</ToastText>}
+      <ToastText>{getText()}</ToastText>
       <TxLink href={createLink(tx)} target="_blank">
         View on Etherscan
       </TxLink>
