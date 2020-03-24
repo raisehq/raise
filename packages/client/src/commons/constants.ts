@@ -8,5 +8,5 @@ export const HEADER_MENU_SIZE = { myActivity: -100, toGetStarted: -80 };
 export const COINS = [
   { name: 'DAI', icon: 'coin-dai.svg', key: "0" },
   { name: 'USDC',icon: 'coin-usdc.svg', key: "1" },
-  { name: 'USDT',icon: 'coin-trueusd.svg', key: "2" }
+  { name: 'USDT',icon: 'coin-theter.svg', key: "2" }
 ];
