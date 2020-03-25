@@ -26,7 +26,9 @@ import {
   ModalFlexWrapper
 } from './InvestModal.styles';
 import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import useGetCoin from '../../hooks/useGetCoin';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({
   loan,
@@ -38,9 +40,11 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   const {
     web3Status: { walletAccount }
   }: any = useAppContext();
+  const { followTx }: any = useRootContext();
 
   const { web3 } = useWeb3();
   const metamask = useWallet();
+  const { coin } = useGetCoin(loan);
 
   const [contracts, setContracts]: any = useState();
   const [approved, setAproved]: any = useState(false);
@@ -82,9 +86,13 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
         .call({ from: walletAccount });
       if (valueBN.gt(new BN(amountApproved))) {
         try {
-          await ERC20Contract.methods
-            .approve(DAIProxy.options.address, MAX_VALUE)
-            .send({ from: walletAccount });
+          await followTx.watchTx(
+            ERC20Contract.methods
+              .approve(DAIProxy.options.address, MAX_VALUE)
+              .send({ from: walletAccount }),
+            'approval',
+            { id: 'approval' }
+          );
           setAproved(true);
         } catch (error) {
           console.error(
@@ -106,9 +114,16 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
     if (approved) {
       const { DAIProxy } = contracts;
       try {
-        await DAIProxy.methods
-          .fund(loan.id, toWei(investment.toString()))
-          .send({ from: walletAccount });
+        await followTx.watchTx(
+          DAIProxy.methods
+            .fund(loan.id, toWei(investment.toString()))
+            .send({ from: walletAccount }),
+          'investLoan',
+          {
+            id: 'investLoan',
+            vars: [investment, coin.value]
+          }
+        );
         setStage(ui.Success);
       } catch (error) {
         console.error('[DAIProxy ERROR]', 'address:', loan.id, ' stacktrace: ', error);

@@ -15,7 +15,8 @@ const useKYCContract = () => {
         setActiveContract({
           add: followTx.watchTx(
             account => contract.methods.add(account).send({ from: account }),
-            'KYC'
+            'KYC',
+            { id: 'KYC' }
           ),
           isConfirmed: account => contract.methods.isConfirmed(account).call()
         });
