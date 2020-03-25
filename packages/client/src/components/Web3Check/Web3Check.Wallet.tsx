@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import {
   CardTitle,
   CardSubTitle,
@@ -17,8 +18,13 @@ import CryptoWallets from '../../commons/cryptoWallets';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 import OnboardingProgressBar from '../OnboardingProgressBar';
-import { isMobile } from 'react-device-detect';
 import { IWallet } from '../../commons/IWallet';
+
+const tagLabelMapping = {
+  coinbase: 'coinbase_attempt',
+  opera: 'opera_attempt',
+  metamask: 'metamask_attempt'
+};
 
 const Wallet = ({ onNext, onBack }: any) => {
   const {
@@ -37,12 +43,7 @@ const Wallet = ({ onNext, onBack }: any) => {
   const handlerWallet = walletSelected => async () => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
-
-    if (window.fbq) {
-      window.fbq('trackCustom', 'wallet_attempt', {
-        type: walletName
-      });
-    }
+    tagManager.sendEvent(TMEvents.Click, tagLabelMapping[walletName], walletName);
 
     if (isMobile) {
       switch (walletName) {
@@ -58,24 +59,22 @@ const Wallet = ({ onNext, onBack }: any) => {
         default:
           break;
       }
+    } else if (
+      (defaultWallet?.name === -1 && walletName === 'metamask') ||
+      (walletName === 'metamask' && defaultWallet?.name !== CryptoWallets.Metamask)
+    ) {
+      window.open('http://metamask.app.link/', '_blank');
+    } else if (
+      (defaultWallet?.name === -1 && walletName === 'opera') ||
+      (walletName === 'opera' && defaultWallet?.name !== CryptoWallets.Opera)
+    ) {
+      window.open('http://onelink.to/5xwf6x', '_blank');
     } else {
-      if (
-        (defaultWallet?.name === -1 && walletName === 'metamask') ||
-        (walletName === 'metamask' && defaultWallet?.name !== CryptoWallets.Metamask)
-      ) {
-        window.open('http://metamask.app.link/', '_blank');
-      } else if (
-        (defaultWallet?.name === -1 && walletName === 'opera') ||
-        (walletName === 'opera' && defaultWallet?.name !== CryptoWallets.Opera)
-      ) {
-        window.open('http://onelink.to/5xwf6x', '_blank');
-      } else {
-        try {
-          await connectWallet(walletSelected, network, networkId);
-          onNext('WalletSelector');
-        } catch (error) {
-          // console.log(error)
-        }
+      try {
+        await connectWallet(walletSelected, network, networkId);
+        onNext('WalletSelector');
+      } catch (error) {
+        // console.log(error)
       }
     }
   };

@@ -23,17 +23,23 @@ const useDepositContract = () => {
           deposit: address =>
             followTx.watchTx(
               contract.methods.depositFor(address).send({ from: address }),
-              'deposit'
+              'deposit',
+              { id: 'deposit' }
             ),
           depositWithReferral: (address, referralAddress) =>
             followTx.watchTx(
               contract.methods
                 .depositForWithReferral(address, referralAddress)
                 .send({ from: address }),
-              'depositReferal'
+              'depositReferal',
+              { id: 'depositReferal' }
             ),
           withdraw: address =>
-            followTx.watchTx(contract.methods.withdraw(address).send({ from: address }))
+            followTx.watchTx(
+              contract.methods.withdraw(address).send({ from: address }),
+              'withdrawDeposit',
+              { id: 'withdrawDeposit' }
+            )
         });
       } catch (error) {
         console.error('Contract Deposit not found in current network.', error);

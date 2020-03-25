@@ -67,10 +67,6 @@ const getWalletLinkClient = (network, networkId) => {
     networkId
   );
 
-  // FIX BUG: Walletlink bug with web3
-  // @ts-ignore
-  ethereum.on = null;
-
   return ethereum;
 };
 

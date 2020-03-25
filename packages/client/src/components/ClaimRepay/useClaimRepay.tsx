@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import useWallet from '../../hooks/useWallet';
 import { Stages } from './ClaimRepay';
 import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
 
 const useRepayment = (loan, open) => {
   const { id }: any = loan;
   const {
     web3Status: { account }
   }: any = useAppContext();
+  const { followTx }: any = useRootContext();
   const metamask = useWallet();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState(false);
@@ -23,9 +25,17 @@ const useRepayment = (loan, open) => {
     const LoanContract = await metamask.addContractByAddress('LoanContract', id);
     try {
       if (depositChecked) {
-        await LoanContract.methods.withdrawRepaymentAndDeposit().send({ from: account });
+        await followTx.watchTx(
+          LoanContract.methods.withdrawRepaymentAndDeposit().send({ from: account }),
+          'withdrawRepaymentAndDeposit',
+          { id: 'withdrawRepaymentAndDeposit' }
+        );
       } else {
-        await LoanContract.methods.withdrawRepayment().send({ from: account });
+        await followTx.watchTx(
+          LoanContract.methods.withdrawRepayment().send({ from: account }),
+          'withdrawRepayment',
+          { id: 'withdrawRepayment' }
+        );
       }
 
       setStage(Stages.Success);

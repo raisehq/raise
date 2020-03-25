@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import BN from 'bn.js';
 import styled from 'styled-components';
 import { fromWei } from 'web3-utils';
 import { Card } from '@raisehq/components';
@@ -8,6 +9,10 @@ import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
 import { useRootContext } from '../../contexts/RootContext';
+import { useAppContext } from '../../contexts/AppContext';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import useGetCoin from '../../hooks/useGetCoin';
+import { useAddressBalance } from '../../contexts/BalancesContext';
 
 import {
   Header,
@@ -48,21 +53,43 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
     maxAmount: calcMaxAmount,
     principal: calcPrincipal
   } = getCalculations(loan);
+  const { coin } = useGetCoin(loan);
+
+  const tagManager = useGoogleTagManager('Card');
 
   const {
     store: {
       user: {
         details: { kyc_status }
       },
-      dai: { balance }
+      blockchain: {
+        contracts: { address: contractAddresses }
+      },
+      user: {
+        cryptoAddress: { address: account }
+      }
     }
   }: any = useRootContext();
+  const {
+    web3Status: { walletNetworkId: chainId }
+  }: any = useAppContext();
+
   const nMaxAmount = Number(fromWei(maxAmount));
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
   const { companyName } = useBorrowerInfo(loan.originator);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
-
+  const [balance, setBalance] = useState(0);
   const roi = useMemo(() => value + value * expectedROI, [value, expectedROI]);
+
+  const coinName = coin ? contractAddresses[chainId]?.[coin.value] : null;
+  const balanceBN: BN = useAddressBalance(account, coinName);
+
+  useEffect(() => {
+    if (balanceBN) {
+      const pBalance: string = Number(fromWei(balanceBN)).toFixed(2);
+      setBalance(Number(pBalance));
+    }
+  }, [balanceBN]);
 
   const fundAll = () => {
     const nPrincipal = nMaxAmount - Number(fromWei(principal));
@@ -71,6 +98,8 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   };
 
   const onConfirm = async () => {
+    tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
+
     setInvestment(value);
     setStage(ui.Processing);
   };
@@ -102,12 +131,19 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   return (
     <>
       <Header>How much would you like to invest?</Header>
-      <InvestorBalance id="btn-invest-all" onClick={fundAll} />
+      {coin && (
+        <InvestorBalance coin={coin} balance={balance} id="btn-invest-all" onClick={fundAll} />
+      )}
       <ModalInputContainer>
         <InputContainer>
           <InputLabel>Investment</InputLabel>
           <ModalInputBox error={value !== undefined && (value > balance || value > nMaxAmount)}>
-            <TokenInput id="input-invest-value" value={value} onValueChange={onSetValue} />
+            <TokenInput
+              id="input-invest-value"
+              value={value}
+              onValueChange={onSetValue}
+              coinIcon={coin && coin.icon}
+            />
           </ModalInputBox>
           <ErrorBox>
             {errorMessage()}
@@ -117,7 +153,12 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         <InputContainer>
           <InputLabel>Expected ROI</InputLabel>
           <ModalInputBox roi>
-            <TokenInput value={roi} decimalScale={4} displayType="text" />
+            <TokenInput
+              value={roi}
+              decimalScale={4}
+              displayType="text"
+              coinIcon={coin && coin.icon}
+            />
           </ModalInputBox>
         </InputContainer>
       </ModalInputContainer>
@@ -131,12 +172,12 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
             <Card.Header
               fontSize="22px"
               title="Raised amount"
-              amount={<Amount principal={calcPrincipal} />}
+              amount={<Amount principal={calcPrincipal} coin={coin} />}
             />
             <Card.Header
               fontSize="22px"
               title="Target"
-              amount={<Amount principal={calcMaxAmount} />}
+              amount={<Amount principal={calcMaxAmount} coin={coin} />}
             />
           </Card.Grid>
           <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />

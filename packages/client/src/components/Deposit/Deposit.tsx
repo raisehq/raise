@@ -112,9 +112,6 @@ const Deposit = () => {
       if (depositContract && raiseTokenContract && !pending) {
         const { BN } = web3.utils;
         tagManager.sendEvent(TMEvents.Click, 'deposit_attempt');
-        if (window.fbq) {
-          window.fbq('trackCustom', 'Deposit', { type: 'deposit_attempt' });
-        }
 
         setStatus(UI.Waiting(UISteps.Approve));
         const allowance = new BN(
@@ -126,9 +123,7 @@ const Deposit = () => {
         setStatus(UI.Waiting(UISteps.Transaction));
         await depositContract.deposit(walletAccount);
         tagManager.sendEvent(TMEvents.Submit, 'deposit_success');
-        if (window.fbq) {
-          window.fbq('trackCustom', 'Deposit', { type: 'deposit_success' });
-        }
+
         setStatus(UI.Success);
       } else {
         console.error(
@@ -140,9 +135,6 @@ const Deposit = () => {
       }
     } catch (error) {
       tagManager.sendEvent(TMEvents.Submit, 'deposit_error');
-      if (window.fbq) {
-        window.fbq('trackCustom', 'Deposit', { type: 'deposit_error' });
-      }
       console.error('[DEPOSIT]', error);
       setStatus(UI.Error);
     }

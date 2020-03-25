@@ -7,6 +7,7 @@ import { MAX_VALUE } from '../commons/constants';
 import { Stages } from '../components/RepayLoan/RepayLoan.context';
 import { useAppContext } from '../contexts/AppContext';
 import { useRootContext } from '../contexts/RootContext';
+import useGetCoin from '../hooks/useGetCoin';
 
 const useRepayment = (loan, open) => {
   const { borrowerDebt, id }: any = loan;
@@ -20,6 +21,7 @@ const useRepayment = (loan, open) => {
   const [error, setError] = useState(false);
   const [stage, setStage] = useState(Stages.Confirm);
   const [hasBalance, setHasBalance] = useState(false);
+  const { coin } = useGetCoin(loan);
 
   useEffect(() => {
     setApproved(false);
@@ -34,6 +36,7 @@ const useRepayment = (loan, open) => {
       const DAI = await wallet.addContract('DAI');
       const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
       const valueBN = new BN(borrowerDebt);
+
       const currentBalance = await DAIContract.methods.balanceOf(account).call({ from: account });
       if (new BN(currentBalance).gte(valueBN)) {
         setHasBalance(true);
@@ -47,18 +50,24 @@ const useRepayment = (loan, open) => {
         utils: { BN }
       } = web3;
       const DAIProxy = await wallet.addContract('DAIProxy');
-      const DAI = await wallet.addContract('DAI');
-      const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
+      const loanContract = await wallet.addContractByAddress('LoanContract', loan.id);
+      const tokenAddress = await loanContract.methods.tokenAddress().call();
+      const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
+
       const valueBN = new BN(borrowerDebt);
 
-      const amountApproved = await DAIContract.methods
+      const amountApproved = await ERC20Contract.methods
         .allowance(account, DAIProxy.options.address)
         .call({ from: account });
 
       if (valueBN.gt(new BN(amountApproved))) {
         try {
           await followTx.watchTx(
-            DAIContract.methods.approve(DAIProxy.options.address, MAX_VALUE).send({ from: account })
+            ERC20Contract.methods
+              .approve(DAIProxy.options.address, MAX_VALUE)
+              .send({ from: account }),
+            'approval',
+            { id: 'approval' }
           );
           setApproved(true);
         } catch (err) {
@@ -74,8 +83,16 @@ const useRepayment = (loan, open) => {
   useAsyncEffect(async () => {
     if (open && approved) {
       const DAIProxy = await wallet.addContract('DAIProxy');
+
       try {
-        await followTx.watchTx(DAIProxy.methods.repay(id, borrowerDebt).send({ from: account }));
+        await followTx.watchTx(
+          DAIProxy.methods.repay(id, borrowerDebt).send({ from: account }),
+          'repayLoan',
+          {
+            id: 'repayLoan',
+            vars: [web3.utils.fromWei(borrowerDebt), coin.value]
+          }
+        );
         setStage(Stages.Success);
       } catch (err) {
         console.error('[useRepayment] Error: ', err);

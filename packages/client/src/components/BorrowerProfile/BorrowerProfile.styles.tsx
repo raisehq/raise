@@ -7,6 +7,10 @@ interface ImageCropProps {
   src?: string | null;
 }
 
+interface CompanyDetailsProps {
+  extraPadding: boolean;
+}
+
 export const Container = styled.div`
   display: flex;
   height: fit-content;
@@ -148,13 +152,14 @@ export const HeaderBox = styled.div`
   }
 `;
 
-export const CompanyDetails = styled.div`
-  padding: 0 10px 0px 10px;
+export const CompanyDetails = styled.div<CompanyDetailsProps>`
+  padding: 0px 10px 0px 10px;
+  padding-top: ${({ extraPadding }) => (extraPadding ? '50px' : '0px')};
   @media screen and ${device.mobileM} {
     justify-content: space-between;
   }
   @media (max-width: ${size.mobileL}) {
-    padding-top: 0;
+    padding-top: ${({ extraPadding }) => (extraPadding ? '20px' : '0px')};
   }
 `;
 

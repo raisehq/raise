@@ -29,7 +29,6 @@ const KYC = () => {
 
   useEffect(() => {
     setUserObj(LocalData.getObj('user'));
-    console.log(userObj);
   }, []);
 
   useAsyncEffect(async () => {

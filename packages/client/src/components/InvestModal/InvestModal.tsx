@@ -13,6 +13,7 @@ import VerifyKycModal from './VerifyKycState';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
 import { match, ANY } from 'pampy';
+import useGetCoin from '../../hooks/useGetCoin';
 
 const UI = daggy.taggedSum('UI', {
   Kyc: [],
@@ -40,10 +41,11 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
       onboarding: { showOnboarding }
     }
   }: any = useRootContext();
+  const { coin } = useGetCoin(loan);
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Kyc);
   const [investment, setInvestment] = useState(0);
-  const tagManager = useGoogleTagManager();
+  const tagManager = useGoogleTagManager('Card');
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
   // prettier-ignore
   const connected = (hasProvider && unlocked && accountMatches && networkMatches);
@@ -61,9 +63,11 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
 
   const openModal = () => {
     if (isLogged && userActivated) {
+      tagManager.sendEvent(TMEvents.Click, 'loan');
       setStage(UI.Confirm);
       setOpen(true);
     } else if (isLogged && !userActivated) {
+      tagManager.sendEvent(TMEvents.Click, 'loan');
       setOpen(true);
     } else {
       const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'c');
@@ -72,11 +76,6 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
         TMEvents.Click,
         isBorrowerProfile ? 'borrower_profile' : 'marketplace'
       );
-      if (window.fbq) {
-        window.fbq('trackCustom', 'Card', {
-          type: isBorrowerProfile ? 'borrower_profile' : 'marketplace'
-        });
-      }
       showOnboarding();
     }
   };
@@ -91,7 +90,13 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
         <InvestState loan={loan} setStage={setStage} setInvestment={setInvestment} ui={UI} />
       ),
       Processing: () => (
-        <ProcessingState loan={loan} investment={investment} ui={UI} setStage={setStage} />
+        <ProcessingState
+          loan={loan}
+          investment={investment}
+          ui={UI}
+          setStage={setStage}
+          coinName={coin.text}
+        />
       ),
       Success: () => <SuccessState setStage={setStage} ui={UI} closeModal={closeModal} />
     });

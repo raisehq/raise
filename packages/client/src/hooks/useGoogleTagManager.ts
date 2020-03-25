@@ -21,8 +21,8 @@ function useGoogleTagManager(category?) {
     }
   };
 
-  const sendEvent = (event, label, value?) =>
-    TagManager.dataLayer({
+  const sendEvent = (event, label, value?) => {
+    return TagManager.dataLayer({
       gtmId: GTMID,
       dataLayer: {
         event,
@@ -32,6 +32,7 @@ function useGoogleTagManager(category?) {
         label
       }
     });
+  };
   const sendEventCategory = (newCategory, event, label, value?) =>
     TagManager.dataLayer({
       gtmId: GTMID,

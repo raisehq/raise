@@ -33,6 +33,7 @@ interface InvestProps {
   className?: string;
   link?: boolean;
   children?: ReactChild;
+  coinIcon: string;
 }
 
 const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {

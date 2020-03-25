@@ -3,9 +3,12 @@ import { Card } from '@raisehq/components';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
+import useGetCoin from '../../hooks/useGetCoin';
 
 const Auction = ({ auction }: { auction: any }) => {
+
   const calcs = getCalculations(auction);
+  const { coin } = useGetCoin(auction);
   const {
     principal,
     netBalance,
@@ -30,7 +33,7 @@ const Auction = ({ auction }: { auction: any }) => {
     <Card width="350px" size="315px">
       <Card.Content>
         {state >= 1 && <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>}
-        <Card.Header title="Raised amount" amount={<Amount principal={principal} />} />
+        <Card.Header title="Raised amount" amount={<Amount principal={principal} coin={coin} />} />
         <Card.Graph
           color={state === 1 ? '#7e8286' : '#00DA9E'}
           currentAmount={currentAmount}
@@ -43,12 +46,12 @@ const Auction = ({ auction }: { auction: any }) => {
         </Card.Grid>
         <Card.Separator />
         <Card.Grid nobottom notop>
-          <Card.Row title="System Fees" content={`${systemFees} DAI`} />
+          <Card.Row title="System Fees" content={`${systemFees} ${coin && coin.text}`} />
           <Card.Row title="Loan Term" content={`${times.loanTerm} `} />
-          <Card.Row title="Net Loan Proceeds" content={`${netBalance} DAI`} />
-          <Card.Row title="Target Amount" content={`${maxAmount} DAI`} />
+          <Card.Row title="Net Loan Proceeds" content={`${netBalance} `} />
+          <Card.Row title="Target Amount" content={`${maxAmount} `} />
           <Card.Row title="Max APR" content={maxAPR} />
-          <Card.Row title="Total Repayment" content={`${borrowerDebt} DAI`} />
+          <Card.Row title="Total Repayment" content={`${borrowerDebt} `} />
         </Card.Grid>
       </Card.Content>
     </Card>

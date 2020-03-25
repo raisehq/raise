@@ -29,7 +29,7 @@ class FollowTx extends EventEmitter {
       data.map(hash => self.connection.eth.getTransactionReceipt(self.getHash(hash)))
     );
 
-    res.filter(el => el).map((el: any) => self.remove(el.transactionHash));
+    res.filter(el => el).map((el: any) => self.remove(el.transactionHash)); // TODO: check when is this called
     // check again pass 2 seconds
     setTimeout(() => self.lastTx(), 2000);
   }
@@ -50,45 +50,48 @@ class FollowTx extends EventEmitter {
     }
   }
 
-  private save(token) {
+  private save(token, params?) {
     const data = JSON.parse(this.storage.getItem(this.storeName));
     data.push(token);
     this.storage.setItem(this.storeName, JSON.stringify(data));
-    this.emit('start_tx', this.getHash(token));
+    this.emit('start_tx', { tx: this.getHash(token), params });
   }
 
-  private remove(token) {
+  private remove(token, params?) {
     const data = JSON.parse(this.storage.getItem(this.storeName));
     this.storage.setItem(
       this.storeName,
       JSON.stringify(data.filter(value => this.getHash(value) !== this.getHash(token)))
     );
-    this.emit('finish_tx', this.getHash(token));
+
+    this.emit('finish_tx', { tx: this.getHash(token), params });
   }
+
   public hasPendingTx(name) {
     const data = JSON.parse(this.storage.getItem(this.storeName));
     return data.filter(value => this.getName(value) === this.getName(name)).pop();
   }
 
   // @ts-ignore
-  public watchTx(method: any, name?) {
+  public watchTx(method: any, name, params?) {
     const self = this;
     // @ts-ignore
     const pe = new PromiEvent<any>((resolve, reject) => {
       // emit the start of the process
       return method
         .on('transactionHash', function(hash) {
-          if (!isTest) self.save(self.mixNameAndHash(name, hash));
+          if (!isTest) self.save(self.mixNameAndHash(name, hash), params);
           pe.emit('transactionHash', hash);
         })
         .on('receipt', function(receipt) {
-          if (!isTest) self.remove(self.mixNameAndHash(name, receipt.transactionHash));
+          if (!isTest) self.remove(self.mixNameAndHash(name, receipt.transactionHash), params);
           pe.emit('receipt', receipt);
           pe.emit('tx_finished');
           return resolve(receipt);
         })
         .on('error', function(error) {
           pe.emit('tx_finished');
+          //TODO: check how to emit tx error so we can show in a toast
           return reject(error);
         });
     });

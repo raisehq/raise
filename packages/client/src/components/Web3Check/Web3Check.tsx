@@ -15,6 +15,12 @@ import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 import { isMobile } from 'react-device-detect';
 
+const tagLabelMapping = {
+  coinbase: 'coinbase_success',
+  opera: 'opera_success',
+  metamask: 'metamask_success'
+};
+
 const getStage = (
   stage,
   handleNext,
@@ -46,23 +52,17 @@ const Web3Check = () => {
   }: any = useAppContext();
   const { history }: any = useRouter();
   const redirect = new URLSearchParams(history.location.search).get('redirect');
-  const { web3 }: any = useWeb3();
+  const { web3, getCurrentProviderName }: any = useWeb3();
   const tagManager = useGoogleTagManager('Wallet');
   const [ui, setUI] = useState(isMobile ? Stages.WalletSelector : Stages.WalletConnectForm);
   const [prevStage, setPrevStage] = useState(isMobile ? 'WalletSelector' : 'WalletConnectForm');
 
   useEffect(() => {
     if (web3 && unlocked) {
-      tagManager.sendEvent(
-        TMEvents.Submit,
-        'wallet_success',
-        getWalletName(cryptotypeId).toLowerCase()
-      );
-      if (window.fbq) {
-        window.fbq('trackCustom', 'wallet_success', {
-          type: getWalletName(cryptotypeId).toLowerCase()
-        });
-      }
+      const walletName = getWalletName(getCurrentProviderName()).toLowerCase();
+      tagManager.sendEvent(TMEvents.Submit, 'wallet_success', walletName);
+      tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
+
       setUI(Stages.Checks);
     }
   }, []);
@@ -76,16 +76,10 @@ const Web3Check = () => {
       ui !== Stages.WalletSelector &&
       ui !== Stages.WalletSetUp
     ) {
-      tagManager.sendEvent(
-        TMEvents.Submit,
-        'wallet_success',
-        getWalletName(cryptotypeId).toLowerCase()
-      );
-      if (window.fbq) {
-        window.fbq('trackCustom', 'wallet_success', {
-          type: getWalletName(cryptotypeId).toLowerCase()
-        });
-      }
+      const walletName = getWalletName(cryptotypeId).toLowerCase();
+      tagManager.sendEvent(TMEvents.Submit, 'wallet_success', walletName);
+      tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
+
       setUI(Stages.Checks);
       handleSuccess();
     }

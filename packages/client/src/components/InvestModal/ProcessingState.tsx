@@ -26,37 +26,48 @@ import {
   ModalFlexWrapper
 } from './InvestModal.styles';
 import { useAppContext } from '../../contexts/AppContext';
+import { useRootContext } from '../../contexts/RootContext';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import useGetCoin from '../../hooks/useGetCoin';
 
-const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui, setStage }) => {
+const ProcessingState: React.SFC<ProcessingStateProps> = ({
+  loan,
+  investment,
+  ui,
+  setStage,
+  coinName
+}) => {
   const {
     web3Status: { walletAccount }
   }: any = useAppContext();
+  const { followTx }: any = useRootContext();
 
   const { web3 } = useWeb3();
   const metamask = useWallet();
+  const { coin } = useGetCoin(loan);
 
   const [contracts, setContracts]: any = useState();
   const [approved, setAproved]: any = useState(false);
   const [errors, setError]: any = useState();
 
+  const tagManager = useGoogleTagManager('Card');
+
   useAsyncEffect(async () => {
     if (metamask) {
+      const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
       try {
-        const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
         const DaiProxyAddress = await loanContract.methods.proxyContractAddress().call();
         const DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
-        const DAI = await metamask.addContract('DAI');
         setContracts({
-          DAIProxy,
-          DAI
+          loanContract,
+          DAIProxy
         });
       } catch (error) {
         console.error('failed to retrieve daiproxy, using current one');
         const DAIProxy = await metamask.addContract('DAIProxy');
-        const DAI = await metamask.addContract('DAI');
         setContracts({
-          DAIProxy,
-          DAI
+          loanContract,
+          DAIProxy
         });
       }
     }
@@ -65,18 +76,23 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   useAsyncEffect(async () => {
     if (contracts) {
       const { BN } = web3.utils;
-      const { DAIProxy, DAI } = contracts;
+      const { DAIProxy, loanContract } = contracts;
+      const tokenAddress = await loanContract.methods.tokenAddress().call();
       const valueBN = new BN(toWei(investment.toString()));
-      const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
+      const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
 
-      const amountApproved = await DAIContract.methods
+      const amountApproved = await ERC20Contract.methods
         .allowance(walletAccount, DAIProxy.options.address)
         .call({ from: walletAccount });
       if (valueBN.gt(new BN(amountApproved))) {
         try {
-          await DAIContract.methods
-            .approve(DAIProxy.options.address, MAX_VALUE)
-            .send({ from: walletAccount });
+          await followTx.watchTx(
+            ERC20Contract.methods
+              .approve(DAIProxy.options.address, MAX_VALUE)
+              .send({ from: walletAccount }),
+            'approval',
+            { id: 'approval' }
+          );
           setAproved(true);
         } catch (error) {
           console.error(
@@ -98,9 +114,16 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
     if (approved) {
       const { DAIProxy } = contracts;
       try {
-        await DAIProxy.methods
-          .fund(loan.id, toWei(investment.toString()))
-          .send({ from: walletAccount });
+        await followTx.watchTx(
+          DAIProxy.methods
+            .fund(loan.id, toWei(investment.toString()))
+            .send({ from: walletAccount }),
+          'investLoan',
+          {
+            id: 'investLoan',
+            vars: [investment, coin.value]
+          }
+        );
         setStage(ui.Success);
       } catch (error) {
         console.error('[DAIProxy ERROR]', 'address:', loan.id, ' stacktrace: ', error);
@@ -110,6 +133,8 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
   }, [approved]);
 
   const onRetry = () => {
+    tagManager.sendEvent(TMEvents.Click, 'invest_retry');
+
     setStage(ui.Confirm);
   };
 
@@ -178,9 +203,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
                 <Grid columns={2}>
                   <Grid.Column width={2}>{stepNumber(1, 'aproval')}</Grid.Column>
                   <Grid.Column width={14}>
-                    <Action>Allow Raise to interact with your DAI</Action>
+                    <Action>{`Allow Raise to interact with your ${coinName}`}</Action>
                     <Explanation>
-                      Once you give us allowance, you will be able to make investments in DAI
+                      {`Once you give us allowance, you will be able to make investments in ${coinName}`}
                     </Explanation>
                   </Grid.Column>
                 </Grid>
@@ -191,7 +216,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({ loan, investment, ui
                   <Grid.Column width={14}>
                     <Action>Confirm the transaction</Action>
                     <Explanation>
-                      {`${investment} DAI will be transferred from your wallet to the loan`}
+                      {`${investment} ${coinName} will be transferred from your wallet to the loan`}
                     </Explanation>
                   </Grid.Column>
                 </Grid>

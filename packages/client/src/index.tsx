@@ -19,6 +19,7 @@ import 'semantic-ui-css/semantic.min.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './global.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Declare global
 declare global {

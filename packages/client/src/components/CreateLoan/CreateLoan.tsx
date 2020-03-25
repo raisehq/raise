@@ -229,7 +229,6 @@ const CreateLoan = ({ contracts }) => {
 
   const onSave = async () => {
     setStage(UI.Waiting);
-    console.log(loan);
     try {
       await loanDispatcherContract.deploy(
         loan.minAmount,
@@ -291,7 +290,11 @@ const CreateLoan = ({ contracts }) => {
     } else {
       setAmountValidation({
         error: currentValue < MIN || currentValue > MAX,
-        msg: `Can not be ${currentValue < MIN ? `less than ${MIN} DAI` : `more than ${MAX} DAI`}`
+        msg: `Can not be ${
+          currentValue < MIN
+            ? `less than ${MIN} ${selectedCoinType}`
+            : `more than ${MAX} ${selectedCoinType}`
+        }`
       });
     }
   };
