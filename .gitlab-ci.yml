@@ -242,7 +242,7 @@ tag to latest:
       ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
       chmod 644 ~/.ssh/known_hosts
   script:
-    - git tag latest
+    - git tag latest --force
     - git push origin --tags
 #  only:
 #    - master
