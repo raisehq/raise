@@ -236,7 +236,7 @@ tag to latest:
       #!/bin/sh
       apk add --update openssh-client bash git
       eval $(ssh-agent -s)
-      echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+      echo "$GITLAB_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
       mkdir -p ~/.ssh
       chmod 700 ~/.ssh
       ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
