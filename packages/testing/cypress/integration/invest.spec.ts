@@ -4,7 +4,7 @@ describe('LENDER', function() {
     cy.login('lender');
     cy.mockAPI('lender');
     cy.web3('lender');
-    cy.setCookie('X-Canary', 'activated')
+    cy.setCookie('X-Canary', 'activated');
   });
   it('Invest', function() {
     cy.visit(Cypress.env('url'));
@@ -14,6 +14,7 @@ describe('LENDER', function() {
     cy.checkFakeDai(); // Send totally fake GraphQL daiBalances ws message
     cy.get('#btn-lender-open').should('have.length', 1);
     cy.get('#btn-lender-open').click();
+    cy.wait(300);
     cy.get('#btn-invest-all').should('have.length', 1);
     cy.wait(300);
     cy.get('.small > .content').matchImageSnapshot('modal_invest_lender_empty');

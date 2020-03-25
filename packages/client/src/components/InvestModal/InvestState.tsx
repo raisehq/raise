@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import BN from 'bn.js';
 import styled from 'styled-components';
 import { fromWei } from 'web3-utils';
 import { Card } from '@raisehq/components';
@@ -8,8 +9,10 @@ import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
 import { useRootContext } from '../../contexts/RootContext';
+import { useAppContext } from '../../contexts/AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useGetCoin from '../../hooks/useGetCoin';
+import { useAddressBalance } from '../../contexts/BalancesContext';
 
 import {
   Header,
@@ -59,15 +62,34 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
       user: {
         details: { kyc_status }
       },
-      dai: { balance }
+      blockchain: {
+        contracts: { address: contractAddresses }
+      },
+      user: {
+        cryptoAddress: { address: account }
+      }
     }
   }: any = useRootContext();
+  const {
+    web3Status: { walletNetworkId: chainId }
+  }: any = useAppContext();
+
   const nMaxAmount = Number(fromWei(maxAmount));
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
   const { companyName } = useBorrowerInfo(loan.originator);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
-
+  const [balance, setBalance] = useState(0);
   const roi = useMemo(() => value + value * expectedROI, [value, expectedROI]);
+
+  const coinName = coin ? contractAddresses[chainId]?.[coin.value] : null;
+  const balanceBN: BN = useAddressBalance(account, coinName);
+
+  useEffect(() => {
+    if (balanceBN) {
+      const pBalance: string = Number(fromWei(balanceBN)).toFixed(2);
+      setBalance(Number(pBalance));
+    }
+  }, [balanceBN]);
 
   const fundAll = () => {
     const nPrincipal = nMaxAmount - Number(fromWei(principal));
@@ -109,7 +131,9 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
   return (
     <>
       <Header>How much would you like to invest?</Header>
-      <InvestorBalance id="btn-invest-all" onClick={fundAll} />
+      {coin && (
+        <InvestorBalance coin={coin} balance={balance} id="btn-invest-all" onClick={fundAll} />
+      )}
       <ModalInputContainer>
         <InputContainer>
           <InputLabel>Investment</InputLabel>
