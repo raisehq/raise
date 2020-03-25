@@ -81,6 +81,7 @@ build-front-review:
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
       yarn run client:build:integration
+      mv  packages/client/build  packages/client/build_review
   only:
     - merge_requests
     - latest
@@ -89,7 +90,7 @@ build-front-review:
   artifacts:
     when: always
     paths:
-      - packages/client/build_merge
+      - packages/client/build_review
 
 build-front-integration:
   stage: build
@@ -262,7 +263,7 @@ review:
   before_script:
     - 'pip install awscli'
   script:
-    - 'mv packages/client/build_merge $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+    - 'mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
     - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
   environment:
     name: review/$CI_COMMIT_REF_SLUG
