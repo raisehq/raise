@@ -64,6 +64,7 @@ import GroupButton from '../commons/ButtonControl/GroupButton';
 import CheckboxControl from '../commons/CheckboxControl';
 import SelectControl from '../commons/SelectControl';
 import InputNumber from '../commons/InputControl/InputNumber';
+import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 
 const CreateLoan = ({ contracts }) => {
   const {
@@ -76,7 +77,10 @@ const CreateLoan = ({ contracts }) => {
       loanDispatcher: { onGetAcceptedTokensSubscription }
     },
     store: {
-      loanDispatcher: { acceptedTokens }
+      loanDispatcher: { acceptedTokens },
+      user: {
+        cryptoAddress: { address: userAddress }
+      }
     }
   }: any = useRootContext();
   const [operatorFee, setOperatorFee] = useState(0);
@@ -86,7 +90,9 @@ const CreateLoan = ({ contracts }) => {
     error: false,
     msg: ''
   });
+
   const [termsCond, setTermsCond] = useState(false);
+  const [authTerms, setAuthTerms] = useState(false);
   const [minAPR, setMinAPR] = useState(MIN_APR_DEFAULT);
   const [maxAPR, setMaxAPR] = useState(MAX_APR_DEFAULT);
   const [minPercent, setMinPercent] = useState(MIN_PERCENT_DEFAULT);
@@ -110,7 +116,7 @@ const CreateLoan = ({ contracts }) => {
 
   const monthOptions = useMemo(() => getMonths(network), [network]);
   const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(network), [network]);
-
+  const borrowerCompany = useBorrowerInfo(userAddress);
   const getAddress = (netId, name) => get(contracts, `address.${walletNetworkId}.${name}`);
 
   const getCoinsFromContract = () => {
@@ -273,7 +279,7 @@ const CreateLoan = ({ contracts }) => {
       minAmount: calculateMinAmount(AMOUNT_DEFAULT, MIN_PERCENT_DEFAULT)
     });
     setTermsCond(false);
-
+    setAuthTerms(false);
     //Reseting control values to default in case of create a new loan without refreshing the screen
     onSetTermAuction(TERM_AUCTION_DEFAULT)();
     onSetTerm(null, { value: TERM_DEFAULT });
@@ -304,6 +310,11 @@ const CreateLoan = ({ contracts }) => {
     setTermsCond(toggleTerms);
   };
 
+  const onToggleAuthTerms = () => {
+    const toggleAuthTerms = !authTerms;
+    setAuthTerms(toggleAuthTerms);
+  };
+
   const values = {
     loan,
     selectedCoinType,
@@ -323,9 +334,11 @@ const CreateLoan = ({ contracts }) => {
       calculateTermFromSecondsToMonths(loan.term)
     ),
     termsCond,
-    operatorFee
+    authTerms,
+    operatorFee,
+    borrowerCompany
   };
-  const methods = { onSave, onRetry, onToggleTerms };
+  const methods = { onSave, onRetry, onToggleTerms, onToggleAuthTerms };
 
   return (
     <LoanContainer>
