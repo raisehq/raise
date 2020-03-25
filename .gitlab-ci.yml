@@ -26,6 +26,7 @@ stages:
   - review
   - test
   - deploy-prod
+  - tag
   - cleanup
 
 variables:
@@ -69,17 +70,27 @@ build-front-review:
     REACT_APP_HOST_URL_FILE: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
   script:
     - |
+      #!/bin/sh
+      if [ -n "${REVIEW_SLUG}" ]; then 
+        REACT_APP_COOKIE_DOMAIN=.${REVIEW_SLUG}.review.${DOMAIN}
+        REACT_APP_HOST_URL=https://${REVIEW_SLUG}.review.${DOMAIN}
+        REACT_APP_HOST_URL_AUTH=https://${REVIEW_SLUG}.api.${DOMAIN}
+        REACT_APP_HOST_URL_CORE=https://${REVIEW_SLUG}.api.${DOMAIN}
+        REACT_APP_HOST_URL_FILE=https://${REVIEW_SLUG}.api.${DOMAIN}
+      fi
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
       yarn run client:build:integration
+      mv  packages/client/build  packages/client/build_review
   only:
     - merge_requests
+    - latest
   except:
     - master
   artifacts:
     when: always
     paths:
-      - packages/client/build
+      - packages/client/build_review
 
 build-front-integration:
   stage: build
@@ -115,6 +126,7 @@ deploy-int:
     - 'pip install awscli'
   script:
     - |
+      #!/bin/sh
       mv packages/client/build_int build_int
       aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
       aws s3 cp s3://${BUCKET_NAME_INT}/ s3://${BUCKET_NAME_INT}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
@@ -225,13 +237,33 @@ deploy-prod:
   only:
     - master
 
+tag to latest:
+  image: alpine:latest
+  stage: tag
+  before_script:
+    - |
+      #!/bin/sh
+      apk add --update openssh-client bash git
+      eval $(ssh-agent -s)
+      echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+      mkdir -p ~/.ssh
+      chmod 700 ~/.ssh
+      ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+      chmod 644 ~/.ssh/known_hosts
+  script:
+    - git remote set-url origin git@gitlab.com:raisehq/${CI_PROJECT_NAME}.git
+    - git tag latest --force
+    - git push --force origin --tags
+  only:
+   - master
+
 review:
   image: python:3.7-alpine
   stage: review
   before_script:
     - 'pip install awscli'
   script:
-    - 'mv packages/client/build $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+    - 'mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
     - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
   environment:
     name: review/$CI_COMMIT_REF_SLUG
@@ -239,6 +271,7 @@ review:
     on_stop: stop-review
   only:
     - merge_requests
+    - latest
   except:
     - master
 
