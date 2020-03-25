@@ -236,14 +236,15 @@ tag to latest:
       #!/bin/sh
       apk add --update openssh-client bash git
       eval $(ssh-agent -s)
-      echo "$GITLAB_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
+      echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
       mkdir -p ~/.ssh
       chmod 700 ~/.ssh
       ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
       chmod 644 ~/.ssh/known_hosts
   script:
+#    - git remote set-url origin git@gitlab.com:raisehq/${CI_PROJECT_NAME}.git
     - git tag latest --force
-    - git push origin --tags
+    - git push --force origin --tags
 #  only:
 #    - master
 
