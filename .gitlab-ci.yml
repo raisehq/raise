@@ -242,7 +242,7 @@ tag to latest:
       ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
       chmod 644 ~/.ssh/known_hosts
   script:
-#    - git remote set-url origin git@gitlab.com:raisehq/${CI_PROJECT_NAME}.git
+    - git remote set-url origin git@gitlab.com:raisehq/${CI_PROJECT_NAME}.git
     - git tag latest --force
     - git push --force origin --tags
 #  only:
