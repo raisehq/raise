@@ -38,4 +38,5 @@ const useBorrowerInfo = borrowerAddress => {
   }, []);
   return company;
 };
+
 export default useBorrowerInfo;
