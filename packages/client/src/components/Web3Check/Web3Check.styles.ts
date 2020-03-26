@@ -275,6 +275,18 @@ export const WhiteActionButton = styled.div`
   margin: 10px 0;
 `;
 
+export const ConnectWalletButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 338px;
+  border-radius: 4px;
+  background-color: #00da9e;
+  cursor: pointer;
+  margin: 10px 0;
+`;
+
 export const GreenActionText = styled.div`
   width: 219px;
   color: #ffffff;

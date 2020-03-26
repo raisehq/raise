@@ -71,8 +71,13 @@ const Wallet = ({ onNext, onBack }: any) => {
       window.open('http://onelink.to/5xwf6x', '_blank');
     } else {
       try {
-        await connectWallet(walletSelected, network, networkId);
-        onNext('WalletSelector');
+        if (walletName === 'coinbase') {
+          // await connectWallet(walletSelected, network, networkId);
+          onNext('WalletSelector');
+        } else {
+          await connectWallet(walletSelected, network, networkId);
+          onNext('WalletSelector');
+        }
       } catch (error) {
         // console.log(error)
       }
@@ -105,7 +110,7 @@ const Wallet = ({ onNext, onBack }: any) => {
           <SelectWalletOptionItem key="coinbase">
             <WalletButton
               onClickAction={handlerWallet(CryptoWallets.Coinbase)}
-              walletName="Coinbase"
+              walletName="Coinbase Wallet"
               walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
             />
           </SelectWalletOptionItem>

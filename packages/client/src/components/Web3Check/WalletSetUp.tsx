@@ -76,7 +76,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
       <WalletButton
         onClickAction={handlerWallet(CryptoWallets.Coinbase)}
         walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
-        walletName="Coinbase"
+        walletName="Coinbase Wallet"
       />
       <GoBack>
         <GoBackButton onClickAction={onBack} />

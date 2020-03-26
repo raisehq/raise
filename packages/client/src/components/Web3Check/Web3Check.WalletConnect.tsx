@@ -10,12 +10,23 @@ import {
   SelectYourWalletTitle,
   SelectYourWalletContainer,
   BackContainer,
-  TextDescription
+  TextDescription,
+  ConnectWalletButton
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import { isMobile } from 'react-device-detect';
+import { useRootContext } from '../../contexts/RootContext';
 
-const getMessage = walletId => {
+const getMessage = (walletId, network, networkId, connectWallet) => {
+  const connectCoinbase = async () => {
+    try {
+      console.log('-------------------');
+      await connectWallet(walletId, network, networkId);
+    } catch (error) {
+      // console.log('');
+    }
+  };
+
   switch (walletId) {
     case CryptoWallets.Metamask:
       return (
@@ -34,8 +45,9 @@ const getMessage = walletId => {
     case CryptoWallets.Coinbase:
       return (
         <CardCenteredText>
-          <CardTitle>Following Coinbase Instructions</CardTitle>
+          <CardTitle>Following Coinbase Wallet Instructions</CardTitle>
           <p>You may need to scan the wallet link QR Code</p>
+          <ConnectWalletButton onClick={connectCoinbase}>test button</ConnectWalletButton>
         </CardCenteredText>
       );
     case CryptoWallets.WebWallet:
@@ -51,7 +63,12 @@ const getMessage = walletId => {
 };
 
 const WalletConnect = ({ onBack }: any) => {
-  const { enableWeb3, getCurrentProviderName } = useWeb3();
+  const { enableWeb3, getCurrentProviderName, connectWallet } = useWeb3();
+  const {
+    store: {
+      config: { network, networkId }
+    }
+  }: any = useRootContext();
 
   useEffect(() => {
     enableWeb3();
@@ -61,7 +78,9 @@ const WalletConnect = ({ onBack }: any) => {
     <>
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletContainer>
-        <SelectYourWalletTitle>{getMessage(getCurrentProviderName())}</SelectYourWalletTitle>
+        <SelectYourWalletTitle>
+          {getMessage(getCurrentProviderName(), network, networkId, connectWallet)}
+        </SelectYourWalletTitle>
         <LoaderContainer>
           <Loader active inline="centered" />
         </LoaderContainer>
