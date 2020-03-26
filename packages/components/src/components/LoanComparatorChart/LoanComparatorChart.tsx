@@ -49,12 +49,14 @@ const printResumes = (companies: Company[]) => {
   if (!companies.length) {
     return null;
   }
-  const sortedCompanies = companies.sort((companyA, companyB) => {
-    if (!companyA.enabled) {
-      return 1;
-    }
-    return companyB.supplyRate - companyA.supplyRate;
-  });
+  const sortedCompanies = companies
+    .filter(x => !!x && x.supplyRate >= 0)
+    .sort((companyA, companyB) => {
+      if (!companyA.enabled) {
+        return 1;
+      }
+      return companyB.supplyRate - companyA.supplyRate;
+    });
   return sortedCompanies.map(companyRes(sortedCompanies[0].supplyRate));
 };
 
