@@ -59,7 +59,7 @@
     return _setPrototypeOf(o, p);
   }
 
-  function isNativeReflectConstruct() {
+  function _isNativeReflectConstruct() {
     if (typeof Reflect === "undefined" || !Reflect.construct) return false;
     if (Reflect.construct.sham) return false;
     if (typeof Proxy === "function") return true;
@@ -73,7 +73,7 @@
   }
 
   function _construct(Parent, args, Class) {
-    if (isNativeReflectConstruct()) {
+    if (_isNativeReflectConstruct()) {
       _construct = Reflect.construct;
     } else {
       _construct = function _construct(Parent, args, Class) {
@@ -157,6 +157,43 @@
 
     strings.raw = raw;
     return strings;
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _createForOfIteratorHelperLoose(o) {
+    var i = 0;
+
+    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+      if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) return function () {
+        if (i >= o.length) return {
+          done: true
+        };
+        return {
+          done: false,
+          value: o[i++]
+        };
+      };
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+
+    i = o[Symbol.iterator]();
+    return i.next.bind(i);
   }
 
   var size = {
@@ -1238,19 +1275,8 @@
     if (!active) return false;
     var time = now();
 
-    for (var _iterator = controllers, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-      var _ref10;
-
-      if (_isArray) {
-        if (_i >= _iterator.length) break;
-        _ref10 = _iterator[_i++];
-      } else {
-        _i = _iterator.next();
-        if (_i.done) break;
-        _ref10 = _i.value;
-      }
-
-      var controller = _ref10;
+    for (var _iterator = _createForOfIteratorHelperLoose(controllers), _step; !(_step = _iterator()).done;) {
+      var controller = _step.value;
       var isActive = false;
 
       for (var configIdx = 0; configIdx < controller.configs.length; configIdx++) {
@@ -2179,16 +2205,7 @@
     var deleted = state.current.deleted;
 
     var _loop2 = function _loop2() {
-      if (_isArray2) {
-        if (_i2 >= _iterator2.length) return "break";
-        _ref11 = _iterator2[_i2++];
-      } else {
-        _i2 = _iterator2.next();
-        if (_i2.done) return "break";
-        _ref11 = _i2.value;
-      }
-
-      var _ref7 = _ref11;
+      var _ref7 = _step2.value;
       var key = _ref7.key;
 
       var filter = function filter(t) {
@@ -2202,12 +2219,8 @@
       }
     };
 
-    for (var _iterator2 = deleted, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-      var _ref11;
-
-      var _ret = _loop2();
-
-      if (_ret === "break") break;
+    for (var _iterator2 = _createForOfIteratorHelperLoose(deleted), _step2; !(_step2 = _iterator2()).done;) {
+      _loop2();
     }
 
     state.current.forceUpdate();
@@ -25104,9 +25117,10 @@
 
   var Amount = function Amount(_ref) {
     var principal = _ref.principal,
-        roi = _ref.roi;
+        roi = _ref.roi,
+        coinIcon = _ref.coinIcon;
     return React__default.createElement(AmountComponent, null, principal, React__default.createElement(Coin, {
-      src: REACT_APP_HOST_IMAGES + "/images/ico_dai.png"
+      src: REACT_APP_HOST_IMAGES + "/images/coins/" + coinIcon
     }), roi && React__default.createElement("span", null, roi, " ROI"));
   };
 
@@ -25121,7 +25135,8 @@
         maxAmount = props.maxAmount,
         times = props.times,
         principal = props.principal,
-        link = props.link;
+        link = props.link,
+        coinIcon = props.coinIcon;
     var auctionTimeLeft = times.auctionTimeLeft + " left";
     var aProps = {
       href: undefined
@@ -25147,12 +25162,14 @@
     }, React__default.createElement(Card.Header, {
       title: "Raised so far",
       amount: React__default.createElement(Amount, {
-        principal: principal
+        principal: principal,
+        coinIcon: coinIcon
       })
     }), React__default.createElement(Card.Header, {
       title: "Target",
       amount: React__default.createElement(Amount, {
-        principal: maxAmount
+        principal: maxAmount,
+        coinIcon: coinIcon
       })
     })), React__default.createElement(Card.Progress, {
       color: "#eb3f93",
@@ -25970,12 +25987,14 @@
     var auction = props.auction,
         className = props.className,
         children = props.children,
-        borrower = props.borrower;
+        borrower = props.borrower,
+        coinIcon = props.coinIcon;
     var link = !!props.link;
     var calculations = getCalculations(auction);
 
     var investProps = _extends({}, auction, {}, borrower, {}, calculations, {
-      link: link
+      link: link,
+      coinIcon: coinIcon
     });
 
     return React__default.createElement(InvestCardView, Object.assign({}, investProps, {
@@ -26512,7 +26531,7 @@
   var raiseGraph = /*#__PURE__*/graphql('https://api.thegraph.com/subgraphs/name/raisehq/raise', {
     asJSON: true
   });
-  var raiseLoansQuery = "query($currentUnix: Int) {\n\tloans( where: { interestRate_gt: 0, state: 0, auctionEndTimestamp_gt: $currentUnix } ) {\n        state\n        operatorFee\n        interestRate\n        principal\n        termLength\n        minInterestRate\n        maxInterestRate\n        auctionStartTimestamp\n        auctionEndTimestamp\n        id\n\t}\n}";
+  var raiseLoansQuery = "query($currentUnix: Int) {\n\tloans( where: { state: 0, auctionEndTimestamp_gt: $currentUnix } ) {\n        state\n        operatorFee\n        interestRate\n        principal\n        termLength\n        minInterestRate\n        maxInterestRate\n        auctionStartTimestamp\n        auctionEndTimestamp\n        id\n\t}\n}";
 
   var average = function average(arr) {
     return arr.reduce(function (p, c) {
