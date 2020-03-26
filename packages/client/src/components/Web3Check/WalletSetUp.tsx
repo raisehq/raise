@@ -63,9 +63,9 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
           We recommend you to install Metamask wallet, it's fast, easy and secure. Just click on
           "Install Metamask" to download the web extension and follow the steps.
         </SetUpSubtitle>
-        <SetUpSubSubSubtitle>
+        <SetUpSubtitle>
           Once you are all set up to connect your new wallet, refresh your browser.
-        </SetUpSubSubSubtitle>
+        </SetUpSubtitle>
       </SelectYourWalletTitle>
       <WalletIcon src={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`} />
       <WalletButton

@@ -337,15 +337,6 @@ export const SetUpSubtitle = styled.div`
   margin-bottom: 22px;
 `;
 
-export const SetUpSubSubSubtitle = styled.div`
-  width: 512px;
-  color: #3c4251;
-  font-size: 14px;
-  line-height: 24px;
-  text-align: center;
-  margin-bottom: 22px;
-`;
-
 export const WalletIcon = styled.img`
   height: 76px;
   width: 76px;
