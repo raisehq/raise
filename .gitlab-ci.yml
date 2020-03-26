@@ -150,7 +150,7 @@ deploy-canary:
       aws s3 cp s3://${BUCKET_NAME_PROD}/canary/ s3://${BUCKET_NAME_PROD}/canary/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
       for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
         echo $dist
-        aws cloudfront create-invalidation --distribution-id $dist --paths "/canary/*";
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
       done
   only:
     - master
@@ -232,7 +232,7 @@ deploy-prod:
       aws s3 cp s3://${BUCKET_NAME_PROD}/latest/ s3://${BUCKET_NAME_PROD}/latest/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
       for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
         echo $dist
-        aws cloudfront create-invalidation --distribution-id $dist --paths "/latest/*";
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
       done
   only:
     - master
