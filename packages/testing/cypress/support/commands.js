@@ -11,7 +11,18 @@ import contracts from '../fixtures/new.metadata.json';
 
 Cypress.Cookies.defaults({
   whitelist: 'canary_release'
-})
+});
+
+Cypress.Commands.add('CookieXCanary', function() {
+  const timeStampInMs =
+    window.performance &&
+    window.performance.now &&
+    window.performance.timing &&
+    window.performance.timing.navigationStart
+      ? window.performance.now() + window.performance.timing.navigationStart
+      : Date.now();
+  cy.setCookie('X-Canary', timeStampInMs.toString());
+});
 
 /*
   Add plugin to make snapshots
