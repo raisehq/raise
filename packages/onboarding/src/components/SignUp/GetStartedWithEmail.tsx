@@ -69,7 +69,8 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
     validateEmail.fold(
       () => setError({ ...error, validation: true }),
       async () => {
-        const alreadyExist: any = await checkEmail(value);
+        const emailLowerCase = value.toLowerCase();
+        const alreadyExist: any = await checkEmail(emailLowerCase);
 
         alreadyExist.fold(
           () => {
@@ -77,7 +78,7 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
           },
           () => {
             setError({ validation: false, exist: false, terms: error.terms });
-            onSetCredentials('email', value);
+            onSetCredentials('email', emailLowerCase);
           }
         );
       }
