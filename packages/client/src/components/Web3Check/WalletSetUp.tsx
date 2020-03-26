@@ -6,7 +6,8 @@ import {
   GoBack,
   WalletIcon,
   SetUpSubtitle,
-  OtherWalletsText
+  OtherWalletsText,
+  SetUpSubSubSubtitle
 } from './Web3Check.styles';
 
 import OnboardingProgressBar from '../OnboardingProgressBar';
@@ -57,11 +58,14 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     <Web3CheckWalletWrapper>
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletTitle>
-        <CardTitle>Set up your wallet</CardTitle>
+        <CardTitle>Let's create your wallet</CardTitle>
         <SetUpSubtitle>
-          If you don't have a wallet there is no problem, click on the button bellow and install a
-          Metamask wallet. It's fast, easy and secure.
+          We recommend you to install Metamask wallet, it's fast, easy and secure. Just click on
+          "Install Metamask" to download the web extension and follow the steps.
         </SetUpSubtitle>
+        <SetUpSubSubSubtitle>
+          Once you are all set up to connect your new wallet, refresh your browser.
+        </SetUpSubSubSubtitle>
       </SelectYourWalletTitle>
       <WalletIcon src={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`} />
       <WalletButton
