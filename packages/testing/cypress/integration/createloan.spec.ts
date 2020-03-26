@@ -5,7 +5,7 @@ describe('BORROWER', function() {
     cy.login('borrower');
     cy.mockAPI('borrower');
     cy.web3('borrower');
-    cy.setCookie('X-Canary', 'activated')
+    cy.setCookie('X-Canary', 'activated');
   });
 
   it('Go to create loan', function() {
@@ -27,6 +27,7 @@ describe('BORROWER', function() {
       .clear()
       .type(10);
     cy.get('input#btn-check-term-conditions').check({ force: true });
+    cy.get('input#btn-check-auth-term-conditions').check({ force: true });
 
     cy.get('.btn-confirm-loan').click();
 

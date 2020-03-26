@@ -1,6 +1,6 @@
 {
   "name": "@raisehq/components",
-  "version": "0.1.37",
+  "version": "0.1.38",
   "license": "MIT",
   "author": "Raise HQ",
   "main": "dist/index.js",
@@ -63,7 +63,7 @@
     "semantic-ui-react": "^0.88.1",
     "styled-components": "^5.0.0-rc.2",
     "tsc": "^1.20150623.0",
-    "tsdx": "^0.12.3",
+    "tsdx": "^0.13.0",
     "typescript": "3.8.3",
     "web3-utils": "^1.2.4"
   }

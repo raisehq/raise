@@ -12,6 +12,7 @@ import useWallet from '../../../hooks/useWallet';
 import { ClaimLoanContext, Stages } from '../ClaimLoan';
 import { ResumeItemProps } from '../../InvestModal/types';
 import { useAppContext } from '../../../contexts/AppContext';
+import { useRootContext } from '../../../contexts/RootContext';
 import useGetCoin from '../../../hooks/useGetCoin';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
@@ -35,6 +36,7 @@ const Confirm = () => {
   const {
     web3Status: { walletAccount: account }
   }: any = useAppContext();
+  const { followTx }: any = useRootContext();
   const { id: loanAddress } = loan;
 
   const [loading, setLoading] = useState(false);
@@ -43,9 +45,16 @@ const Confirm = () => {
 
     try {
       const loanContract = await metamask.addContractByAddress('LoanContract', loanAddress);
-      await loanContract.methods.withdrawLoan().send({
-        from: account
-      });
+      await followTx.watchTx(
+        loanContract.methods.withdrawLoan().send({
+          from: account
+        }),
+        'withdrawLoan',
+        {
+          id: 'withdrawLoan',
+          vars: [calculatedLoan.netBalance, coin.value]
+        }
+      );
       setStage(Stages.Success);
     } catch (error) {
       console.error(error);

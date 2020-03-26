@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
 import connector from '../store/actions';
 import reducers from '../store/reducers';
 import FollowTx from '../helpers/followTx';
@@ -24,10 +24,17 @@ export function Updater() {
 
 export default function Provider({ children }) {
   const [store, dispatch]: any = useReducer<any, any>(reducers, initialState, () => initialState);
+  const [followTx, setFollowTx]: any = useState();
 
-  const followTx = new FollowTx(
-    `wss://${store.config.network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`
-  );
+  useEffect(() => {
+    if (!followTx) {
+      const preFollowTx = new FollowTx(
+        `wss://${store.config.network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`
+      );
+      setFollowTx(preFollowTx);
+    }
+  });
+
   const actions: any = connector(dispatch, store);
   const values: PropsValueType = { store, actions, isLogged: false, followTx };
 

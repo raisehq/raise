@@ -13,7 +13,7 @@ const raiseGraph = graphql(
 );
 
 const raiseLoansQuery = `query($currentUnix: Int) {
-	loans( where: { interestRate_gt: 0, state: 0, auctionEndTimestamp_gt: $currentUnix } ) {
+	loans( where: { state: 0, auctionEndTimestamp_gt: $currentUnix } ) {
         state
         operatorFee
         interestRate
