@@ -6,8 +6,7 @@ import {
   GoBack,
   WalletIcon,
   SetUpSubtitle,
-  OtherWalletsText,
-  SetUpSubSubSubtitle
+  OtherWalletsText
 } from './Web3Check.styles';
 
 import OnboardingProgressBar from '../OnboardingProgressBar';
