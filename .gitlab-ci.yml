@@ -32,7 +32,7 @@ stages:
 variables:
   AWS_DEFAULT_REGION: eu-west-1
   CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-  BASTION: "bastion"
+  BASTION: 'bastion'
 cache:
   key: '${CI_COMMIT_REF_SLUG}'
   paths:
@@ -255,7 +255,7 @@ tag to latest:
     - git tag latest --force
     - git push --force origin --tags
   only:
-   - master
+    - master
 
 review:
   image: python:3.7-alpine
