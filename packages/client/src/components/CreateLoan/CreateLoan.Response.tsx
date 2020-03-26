@@ -14,10 +14,17 @@ export const UI = daggy.taggedSum('UI', {
 });
 
 export const getLoanAction = (stage, values, methods) => {
-  const { onSave, onRetry, onToggleTerms } = methods;
+  const { onSave, onRetry, onToggleTerms, onToggleAuthTerms } = methods;
 
   return stage.cata({
-    Confirm: () => <ConfirmLoan values={values} onToggleTerms={onToggleTerms} onSave={onSave} />,
+    Confirm: () => (
+      <ConfirmLoan
+        values={values}
+        onToggleTerms={onToggleTerms}
+        onToggleAuthTerms={onToggleAuthTerms}
+        onSave={onSave}
+      />
+    ),
     Waiting: () => (
       <LoanConfirmation>
         <Header as="h2">Please wait</Header>
