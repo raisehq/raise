@@ -20,7 +20,6 @@ describe('LENDER', function() {
     cy.get('.small > .content').matchImageSnapshot('modal_invest_lender_empty');
     cy.get('#btn-invest-all').click({ force: true });
     cy.get('#btn-check-term-condition-invest').check({ force: true });
-    cy.get('#btn-check-auth-term-condition-invest').check({ force: true });
     cy.get('#btn-invest-confirm').should('have.length', 1);
     cy.wait(300);
     cy.get('.small > .content').matchImageSnapshot('modal_invest_lender_full');
