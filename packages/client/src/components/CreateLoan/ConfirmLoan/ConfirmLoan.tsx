@@ -17,7 +17,7 @@ import {
   CheckboxRow
 } from '../CreateLoan.styles';
 
-const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
+const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
   const {
     formattedAmount,
     systemFees,
@@ -28,9 +28,12 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
     amountValidation,
     numberAmount,
     termsCond,
+    authTerms,
     selectedCoinType,
-    operatorFee
+    operatorFee,
+    borrowerCompany
   } = values;
+
   return (
     <LoanConfirmation>
       <HeaderRow>
@@ -93,6 +96,16 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
           />
         </CheckboxRow>
       </AmountRow>
+      <AmountRow>
+        <CheckboxRow>
+          <CheckboxControl
+            size="small"
+            id="btn-check-auth-term-conditions"
+            onChange={onToggleAuthTerms}
+            label={`I hereby declare under penalty of perjury that I am an authorized person of ${borrowerCompany.companyName}`}
+          />
+        </CheckboxRow>
+      </AmountRow>
 
       <div>
         <Button
@@ -105,7 +118,8 @@ const ConfirmLoan = ({ values, onToggleTerms, onSave }) => {
             loan.term === 0 ||
             loan.mir === 0 ||
             numberAmount === 0 ||
-            !termsCond
+            !termsCond ||
+            !authTerms
           }
         />
       </div>
