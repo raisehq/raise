@@ -12,7 +12,7 @@
   "scripts": {
     "start": "env-cmd --no-override .env tsdx watch",
     "dev": "env-cmd --no-override .env tsdx watch",
-    "build": "env-cmd --no-override .env tsdx build",
+    "build": "rm tsdx.config.js && env-cmd --no-override .env tsdx build",
     "build:umd": "cp tsdx.umd.config.js tsdx.config.js && env-cmd --no-override .env tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
     "test": "env-cmd --no-override .env tsdx test --env=jsdom",
     "lint": "env-cmd --no-override .env tsdx lint"
