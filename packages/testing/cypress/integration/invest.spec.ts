@@ -4,7 +4,7 @@ describe('LENDER', function() {
     cy.login('lender');
     cy.mockAPI('lender');
     cy.web3('lender');
-    cy.setCookie('X-Canary', 'activated');
+    cy.setCookie('X-Canary', 'activate');
   });
   it('Invest', function() {
     cy.visit(Cypress.env('url'));
