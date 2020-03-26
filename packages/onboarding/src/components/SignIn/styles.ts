@@ -12,7 +12,6 @@ export const ChooseMethodWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 480px;
   @media (max-width: ${size.mobileL}) {
     min-height: 0;
   }

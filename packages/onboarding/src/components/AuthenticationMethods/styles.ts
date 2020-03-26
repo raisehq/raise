@@ -13,7 +13,6 @@ export const ChooseMethodWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 480px;
   @media (max-width: ${size.mobileL}) {
     min-height: 0;
   }
@@ -30,6 +29,9 @@ export const ChooseMethodButtonList = styled.div`
 export const OnboardButton = styled.button`
   height: 60px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 15px 0px;
   border-radius: 4px;
   border: none;
@@ -57,8 +59,8 @@ export const ChooseBloomMethodButton = styled(ChooseMethodButton)`
   color: #6067f1;
   border: 1px solid #6067f1;
 
-  span {
-    padding: 0 10px;
+  img {
+    margin-left: 8px;
   }
 `;
 
