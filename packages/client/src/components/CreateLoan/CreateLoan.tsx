@@ -150,7 +150,7 @@ const CreateLoan = ({ contracts }) => {
   }, [loanDispatcherContract]);
 
   useEffect(() => {
-    if (webSocket) {
+    if (webSocket && loanDispatcherAddress) {
       const { query, subscriptionName } = Queryies.subscriptions.acceptedTokens;
       const variables = {
         address: loanDispatcherAddress
@@ -158,7 +158,7 @@ const CreateLoan = ({ contracts }) => {
       const callback = onGetAcceptedTokensSubscription;
       webSocket.subscribe(query, variables, subscriptionName, callback);
     }
-  }, [webSocket]);
+  }, [webSocket, loanDispatcherAddress]);
 
   useEffect(() => {
     const coinsArray: any = getCoinsFromContract();
