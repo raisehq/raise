@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <!-- External dependencies for RaiseComponents module -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+    />
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
+    ></script>
+    <!-- GraphQL client to query from TheGraph -->
+    <script src="//cdn.jsdelivr.net/npm/graphql.js@0.6.6/graphql.min.js"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-is@16/umd/react-is.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/styled-components@5.0.0/dist/styled-components.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/semantic-ui-react/dist/umd/semantic-ui-react.min.js"
+    ></script>
+    <script crossorigin src="https://unpkg.com/htmr/lib/htmr.min.js"></script>
+    <script
+      crossorigin
+      src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.7/purify.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <!-- Raise Components UI library -->
+    <script crossorigin src="./raisecomponents.umd.development.js"></script>
+  </head>
+  <body>
+    <h2>Hello Loan Charts</h2>
+    <div id="charts"></div>
+
+    <script>
+      const e = React.createElement;
+
+      const LoanComparatorChart = RaiseComponents.LoanComparatorChart;
+      const useCompaniesScrapper = RaiseComponents.useCompaniesScrapper;
+
+      const LoanComparator = () => {
+        const allCompanies = useCompaniesScrapper();
+        return e('div', null, [
+          e(LoanComparatorChart, { companies: allCompanies }, null),
+        ]);
+      };
+
+      ReactDOM.render(e(LoanComparator), document.getElementById('charts'));
+    </script>
+  </body>
+</html>

@@ -394,7 +394,8 @@ export const OnboardHeaderSubtitle = styled.div`
 `;
 
 export const MiniBody = styled.div`
-  width: 290px;
+  max-width: 290px;
+  width: 100%;
   border-radius: 6px;
   background-color: #ffffff;
   box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
@@ -423,7 +424,8 @@ export const OnboardingSubTitle: any = styled.div`
   color: #3c4251;
   font-family: Lato;
   height: 72px;
-  width: 290px;
+  max-width: 290px;
+  width: 100%;
   margin: 5%;
 
   @media (max-width: ${size.mobileL}) {
@@ -439,7 +441,6 @@ export const ChooseMethodWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 480px;
   @media (max-width: ${size.mobileL}) {
     min-height: 0;
   }
@@ -447,6 +448,7 @@ export const ChooseMethodWrapper = styled.div`
 /************** GET STARTED BLOOM SCREEN ******************/
 
 export const GetStartedBloomHeader = styled.div`
+  margin-top: 38px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -455,6 +457,8 @@ export const GetStartedBloomHeader = styled.div`
 export const GetStartedBloomTitle = styled.div`
   text-align: center;
   font-size: 50px;
+  font-weight: bold;
+  color: #3c4251;
   @media (max-width: ${size.mobileL}) {
     font-size: 25px;
   }
@@ -488,7 +492,7 @@ export const GetStartedBloomWrapper = styled.div`
   justify-content: flex-start;
   align-items: stretch;
   flex: 0 1 100%;
-  min-height: 400px;
+  min-height: 250px;
 
   @media (max-width: ${size.mobileL}) {
     flex-wrap: wrap;
@@ -498,7 +502,7 @@ export const GetStartedBloomWrapper = styled.div`
 
 export const GetStartedBloomQRSection = styled.div`
   flex: 1 1 100%;
-  padding: 5%;
+  padding: 38px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -569,6 +573,7 @@ export const FollowingStepsTitle = styled.div`
 
 export const HelpWithBloomWrapper = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   padding: 5%;
   max-width: 250px;
@@ -576,6 +581,8 @@ export const HelpWithBloomWrapper = styled.div`
   text-align: center;
   box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
   line-height: 21px;
+  justify-content: center;
+  align-items: center;
   @media (max-width: ${size.mobileL}) {
     width: 100%;
     max-width: none;
@@ -584,5 +591,8 @@ export const HelpWithBloomWrapper = styled.div`
 `;
 
 export const IconWrapper = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
   align-self: flex-end;
 `;

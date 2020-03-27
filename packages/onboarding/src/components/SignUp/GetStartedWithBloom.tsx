@@ -114,7 +114,7 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
       <GetStartedBloomHeader>
         <GetStartedBloomTitle>{method}</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
-          <span>With</span>
+          <span>with</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
         </GetStartedBloomSubtitle>
       </GetStartedBloomHeader>

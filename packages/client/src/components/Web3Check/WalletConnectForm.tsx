@@ -9,7 +9,6 @@ import {
   WhiteActionText,
   GreenActionTitleText,
   WhiteActionTitleText,
-  TextWrapper,
   ConnectFormSubtitle
 } from './Web3Check.styles';
 
@@ -27,16 +26,12 @@ const WalletConnectForm = ({ onExists, onNotExists }: any) => {
         </ConnectFormSubtitle>
       </SelectYourWalletTitle>
       <GreenActionButton onClick={onExists}>
-        <TextWrapper>
-          <GreenActionTitleText>Connect to my existing wallet</GreenActionTitleText>
-          <GreenActionText>Metamask, Coinbase or Opera Wallet</GreenActionText>
-        </TextWrapper>
+        <GreenActionTitleText>Connect to my existing wallet</GreenActionTitleText>
+        <GreenActionText>Metamask, Coinbase or Opera Wallet</GreenActionText>
       </GreenActionButton>
       <WhiteActionButton onClick={onNotExists}>
-        <TextWrapper>
-          <WhiteActionTitleText>I don't have a wallet</WhiteActionTitleText>
-          <WhiteActionText>No problem, we can help you with that</WhiteActionText>
-        </TextWrapper>
+        <WhiteActionTitleText>I don't have a wallet</WhiteActionTitleText>
+        <WhiteActionText>No problem, we can help you with that</WhiteActionText>
       </WhiteActionButton>
     </Web3CheckWalletWrapper>
   );

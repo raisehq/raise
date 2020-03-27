@@ -16,7 +16,6 @@ export const ChooseMethodWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 480px;
   @media (max-width: ${size.mobileL}) {
     min-height: 0;
   }
@@ -132,9 +131,12 @@ export const FollowingStepsTitle = styled.div`
 `;
 
 export const HelpWithBloomWrapper = styled.div<KycStatus>`
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 7%;
+  justify-content: center;
+  align-items: center;
   max-width: 250px;
   min-height: 250px;
   text-align: center;
@@ -150,6 +152,9 @@ export const HelpWithBloomWrapper = styled.div<KycStatus>`
 `;
 
 export const IconWrapper = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
   align-self: flex-end;
 `;
 

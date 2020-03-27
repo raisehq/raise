@@ -38,12 +38,14 @@ const SignInWithEmail = () => {
     _.debounce((_e: any, data: any) => {
       setLoginError(false);
       const { value } = data;
-      const validateEmail = validations.isEmail(value);
+      const emailLowerCase = value.toLowerCase();
+      const validateEmail = validations.isEmail(emailLowerCase);
       validateEmail.fold(
         () => setErrors({ ...errors, email: true }),
         () => {
           setErrors({ ...errors, email: false });
-          onSetCredentials('email', value);
+
+          onSetCredentials('email', emailLowerCase);
         }
       );
     }, 800),

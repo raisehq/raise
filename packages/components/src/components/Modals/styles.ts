@@ -65,11 +65,17 @@ export const OnboardingModal: any = styled(Modal)`
 `;
 
 export const OnboardingModalContent: any = styled(Modal.Content)`
-  @media (max-width: 500px) {
-    border-radius: 0;
-    margin: 0;
-    padding: 0;
-    overflow: auto;
+  &&&& {
+    display: flex;
+    flex-direction: column;
+    min-height: 770px;
+    @media (max-width: 500px) {
+      border-radius: 0;
+      margin: 0;
+      padding: 0;
+      overflow: auto;
+      min-height: unset;
+    }
   }
 `;
 
@@ -99,6 +105,7 @@ export const OnboardingHeader: any = styled.div`
 export const OnboardingContentWrapper: any = styled.div`
   display: flex;
   flex-direction: row;
+  flex-grow: 1;
 
   @media (max-width: ${size.mobileL}) {
     flex-wrap: wrap;
@@ -109,21 +116,17 @@ export const OnboardingContentWrapper: any = styled.div`
 export const OnboardingImageWrapper: any = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 0 1 45%;
   justify-content: space-between;
-
-  @media (max-width: ${size.mobileL}) {
-    flex: 0 1 100%;
-  }
+  flex: 50%;
 `;
 
 export const OnboardingFormContent: any = styled.div`
-  flex: 0 1 55%;
   padding: 5%;
   border-left: 1px solid #dfe3e9;
+  flex: 50%;
 
   @media (max-width: ${size.mobileL}) {
-    flex: 0 1 100%;
+    flex: 60%;
     border-left: none;
   }
 `;
@@ -144,8 +147,8 @@ export const OnboardingTitle: any = styled.div`
   line-height: 60px;
   color: #3c4251;
   font-weight: bold;
-  height: 60px;
-  width: 260px;
+  max-width: 260px;
+  width: 100%;
   margin: 5%;
 
   @media (max-width: ${size.mobileL}) {
@@ -165,7 +168,8 @@ export const OnboardingSubTitle: any = styled.div`
   color: #3c4251;
   font-family: Lato;
   height: 72px;
-  width: 290px;
+  max-width: 290px;
+  width: 100%;
   margin: 5%;
 
   @media (max-width: ${size.mobileL}) {
