@@ -57,7 +57,7 @@ const App = () => {
 
   useEffect(() => {
     if (followTx) {
-      followTx.on('start_tx', ({ tx, params }) => {
+      followTx.on('start_tx', (tx, params) => {
         toast(<Toast params={params} tx={tx} state="pending" />, {
           position: 'top-right',
           autoClose: false,
@@ -69,7 +69,7 @@ const App = () => {
           toastId: tx
         });
       });
-      followTx.on('finish_tx', ({ tx, params }) => {
+      followTx.on('finish_tx', (tx, params) => {
         if (!toast.isActive(tx)) {
           toast(<Toast params={params} tx={tx} state="success" />, {
             type: toast.TYPE.SUCCESS,
@@ -92,30 +92,29 @@ const App = () => {
           });
         }
       });
-      // followTx.on('error_tx', ({ tx, params }) => {
-      //   if (!toast.isActive(tx)) {
-      //     toast(<Toast params={params} tx={tx} state="error" />, {
-      //       type: toast.TYPE.ERROR,
-      //       autoClose: 5000,
-      //       hideProgressBar: true,
-      //       closeOnClick: true,
-      //       pauseOnHover: false,
-      //       draggable: false,
-      //       toastId: tx
-
-      //     });
-      //   } else {
-      //     toast.update(tx, {
-      //       render: <Toast params={params} tx={tx} state="error" />,
-      //       type: toast.TYPE.ERROR,
-      //       autoClose: 5000,
-      //       hideProgressBar: true,
-      //       closeOnClick: true,
-      //       pauseOnHover: false,
-      //       draggable: false
-      //     });
-      //   }
-      // });
+      followTx.on('error_tx', (tx, params) => {
+        if (!toast.isActive(tx)) {
+          toast(<Toast params={params} tx={tx} state="error" />, {
+            type: toast.TYPE.ERROR,
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            toastId: tx
+          });
+        } else {
+          toast.update(tx, {
+            render: <Toast params={params} tx={tx} state="error" />,
+            type: toast.TYPE.ERROR,
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false
+          });
+        }
+      });
     }
   }, [followTx]);
 

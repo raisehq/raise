@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
 import connector from '../store/actions';
 import reducers from '../store/reducers';
-import FollowTx from '../helpers/followTx';
+import FollowTx from 'followtx';
+import Web3 from 'web3';
 import initialState from '../store/initialState';
 
 export const RootContext = createContext({});
@@ -29,7 +30,7 @@ export default function Provider({ children }) {
   useEffect(() => {
     if (!followTx) {
       const preFollowTx = new FollowTx(
-        `wss://${store.config.network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`
+        new Web3(`wss://${store.config.network}.infura.io/ws/v3/${process.env.REACT_APP_INFURA}`)
       );
       setFollowTx(preFollowTx);
     }

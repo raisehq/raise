@@ -35,8 +35,8 @@ const useDepositContract = () => {
                       .send({
                         from: account
                       }),
-                    'approval',
-                    { id: 'approval' }
+                    { id: 'approval' },
+                    'approval'
                   );
                 }
               });

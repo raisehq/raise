@@ -90,8 +90,8 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
             ERC20Contract.methods
               .approve(DAIProxy.options.address, MAX_VALUE)
               .send({ from: walletAccount }),
-            'approval',
-            { id: 'approval' }
+            { id: 'approval' },
+            'approval'
           );
           setAproved(true);
         } catch (error) {
@@ -118,11 +118,11 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
           DAIProxy.methods
             .fund(loan.id, toWei(investment.toString()))
             .send({ from: walletAccount }),
-          'investLoan',
           {
             id: 'investLoan',
             vars: [investment, coin.value]
-          }
+          },
+          'investLoan'
         );
         setStage(ui.Success);
       } catch (error) {

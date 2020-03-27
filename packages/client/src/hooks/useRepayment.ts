@@ -66,8 +66,8 @@ const useRepayment = (loan, open) => {
             ERC20Contract.methods
               .approve(DAIProxy.options.address, MAX_VALUE)
               .send({ from: account }),
-            'approval',
-            { id: 'approval' }
+            { id: 'approval' },
+            'approval'
           );
           setApproved(true);
         } catch (err) {
@@ -87,11 +87,11 @@ const useRepayment = (loan, open) => {
       try {
         await followTx.watchTx(
           DAIProxy.methods.repay(id, borrowerDebt).send({ from: account }),
-          'repayLoan',
           {
             id: 'repayLoan',
             vars: [web3.utils.fromWei(borrowerDebt), coin.value]
-          }
+          },
+          'repayLoan'
         );
         setStage(Stages.Success);
       } catch (err) {
