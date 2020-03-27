@@ -5,7 +5,7 @@ export default (dispatch: any, state: any) => {
     } else {
       dispatch({
         type: 'SET_ACCEPTED_TOKENS',
-        data: data.loanDispatchers[0].acceptedTokens
+        data: data.loanDispatchers.length? data.loanDispatchers[0].acceptedTokens: []
       });
     }
   };
