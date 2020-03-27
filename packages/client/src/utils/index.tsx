@@ -117,8 +117,7 @@ export const isSupportedBrowser = () =>
     browserName.toLowerCase().includes(supportedBrowser)
   );
 
-const HERO_CONTRACTS =
-  'https://blockchain-definitions.s3-eu-west-1.amazonaws.com/v6/metadata/contracts_0.6.11.json';
+const HERO_CONTRACTS: any = process.env.REACT_APP_METADATA_URL;
 
 export const getContractsDefinition = async () => {
   const remoteContracts = await axios.get(HERO_CONTRACTS);
