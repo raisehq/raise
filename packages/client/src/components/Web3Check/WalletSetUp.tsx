@@ -46,7 +46,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     } else {
       try {
         await connectWallet(walletSelected, network, networkId);
-        onNext('WalletSetUp');
+        onNext('WalletSetUp', false);
       } catch (error) {
         // console.log(error)
       }

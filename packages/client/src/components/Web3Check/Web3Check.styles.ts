@@ -272,15 +272,26 @@ export const WhiteActionButton = styled(ActionButton)`
 `;
 
 export const ConnectWalletButton = styled.div`
+  background-color: #00da9e;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70px;
-  width: 338px;
+  box-sizing: border-box;
+  height: 42px;
+  width: 122px;
+  border: 1px solid #3c4251;
   border-radius: 4px;
-  background-color: #00da9e;
   cursor: pointer;
-  margin: 10px 0;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+`;
+
+export const ButtonText = styled.div`
+  color: #3c4251;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
 `;
 
 export const GreenActionText = styled.div`
@@ -337,6 +348,15 @@ export const ConnectFormSubtitle = styled.div`
 `;
 
 export const SetUpSubtitle = styled.div`
+  width: 512px;
+  color: #3c4251;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 22px;
+`;
+
+export const CoinbaseInstrucctions = styled.div`
   width: 512px;
   color: #3c4251;
   font-size: 16px;

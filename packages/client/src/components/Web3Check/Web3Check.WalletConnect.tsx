@@ -11,17 +11,17 @@ import {
   SelectYourWalletContainer,
   BackContainer,
   TextDescription,
-  ConnectWalletButton
+  ConnectWalletButton,
+  CoinbaseInstrucctions,
+  ButtonText
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import { isMobile } from 'react-device-detect';
-import { useRootContext } from '../../contexts/RootContext';
 
-const getMessage = (walletId, network, networkId, connectWallet) => {
+const getMessage = (walletId, enableWeb3, hasWallet) => {
   const connectCoinbase = async () => {
     try {
-      console.log('-------------------');
-      await connectWallet(walletId, network, networkId);
+      enableWeb3();
     } catch (error) {
       // console.log('');
     }
@@ -46,8 +46,27 @@ const getMessage = (walletId, network, networkId, connectWallet) => {
       return (
         <CardCenteredText>
           <CardTitle>Following Coinbase Wallet Instructions</CardTitle>
-          <p>You may need to scan the wallet link QR Code</p>
-          <ConnectWalletButton onClick={connectCoinbase}>test button</ConnectWalletButton>
+          {hasWallet ? (
+            <CoinbaseInstrucctions>
+              {`Make sure you have Coinbase Wallet app in your mobile and have registered. You will be
+              required to scan a QR code with the app`}
+            </CoinbaseInstrucctions>
+          ) : (
+            <>
+              <CoinbaseInstrucctions>
+                {`Download Coinbase Wallet app in your phone and create a wallet. This process takes between 1 or 2 minutes`}
+              </CoinbaseInstrucctions>
+              <CoinbaseInstrucctions>
+                {'Once you have your wallet, access ⚙️and click WalletLink.'}
+              </CoinbaseInstrucctions>
+              <CoinbaseInstrucctions>
+                Click continue to scan the QR code that connects your new wallet to Raise.
+              </CoinbaseInstrucctions>
+            </>
+          )}
+          <ConnectWalletButton onClick={connectCoinbase}>
+            <ButtonText>Continue</ButtonText>
+          </ConnectWalletButton>
         </CardCenteredText>
       );
     case CryptoWallets.WebWallet:
@@ -62,16 +81,13 @@ const getMessage = (walletId, network, networkId, connectWallet) => {
   }
 };
 
-const WalletConnect = ({ onBack }: any) => {
-  const { enableWeb3, getCurrentProviderName, connectWallet } = useWeb3();
-  const {
-    store: {
-      config: { network, networkId }
-    }
-  }: any = useRootContext();
-
+const WalletConnect = ({ onBack, hasWallet }: any) => {
+  const { enableWeb3, getCurrentProviderName } = useWeb3();
+  const currentProviderName = getCurrentProviderName();
   useEffect(() => {
-    enableWeb3();
+    if (currentProviderName !== CryptoWallets.Coinbase) {
+      enableWeb3();
+    }
   }, []);
 
   return (
@@ -79,11 +95,13 @@ const WalletConnect = ({ onBack }: any) => {
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletContainer>
         <SelectYourWalletTitle>
-          {getMessage(getCurrentProviderName(), network, networkId, connectWallet)}
+          {getMessage(currentProviderName, enableWeb3, hasWallet)}
         </SelectYourWalletTitle>
-        <LoaderContainer>
-          <Loader active inline="centered" />
-        </LoaderContainer>
+        {CryptoWallets.Coinbase !== currentProviderName && (
+          <LoaderContainer>
+            <Loader active inline="centered" />
+          </LoaderContainer>
+        )}
         <BackContainer>
           <GoBackButton onClickAction={onBack} />
         </BackContainer>

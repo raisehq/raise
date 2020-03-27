@@ -71,13 +71,8 @@ const Wallet = ({ onNext, onBack }: any) => {
       window.open('http://onelink.to/5xwf6x', '_blank');
     } else {
       try {
-        if (walletName === 'coinbase') {
-          // await connectWallet(walletSelected, network, networkId);
-          onNext('WalletSelector');
-        } else {
-          await connectWallet(walletSelected, network, networkId);
-          onNext('WalletSelector');
-        }
+        await connectWallet(walletSelected, network, networkId);
+        onNext('WalletSelector', true);
       } catch (error) {
         // console.log(error)
       }
