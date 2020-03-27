@@ -251,28 +251,24 @@ export const CardBottom = styled.div`
   width: 324px;
 `;
 
-export const GreenActionButton = styled.div`
+export const ActionButton = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 70px;
   width: 338px;
   border-radius: 4px;
-  background-color: #00da9e;
   cursor: pointer;
   margin: 10px 0;
 `;
 
-export const WhiteActionButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70px;
-  width: 338px;
-  border-radius: 4px;
+export const GreenActionButton = styled(ActionButton)`
+  background-color: #00da9e;
+`;
+
+export const WhiteActionButton = styled(ActionButton)`
   border: 1px solid #3c4251;
-  cursor: pointer;
-  margin: 10px 0;
 `;
 
 export const GreenActionText = styled.div`
