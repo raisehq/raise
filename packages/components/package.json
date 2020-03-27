@@ -13,7 +13,7 @@
     "start": "env-cmd --no-override .env tsdx watch",
     "dev": "env-cmd --no-override .env tsdx watch",
     "dev:int": "yarn run dev",
-    "build": "env-cmd --no-override .env tsdx build",
+    "build": "rm -f tsdx.config.js && env-cmd --no-override .env tsdx build",
     "build:umd": "cp tsdx.umd.config.js tsdx.config.js && env-cmd --no-override .env tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
     "test": "env-cmd --no-override .env tsdx test --env=jsdom",
     "lint": "env-cmd --no-override .env tsdx lint"
@@ -64,7 +64,7 @@
     "semantic-ui-react": "^0.88.1",
     "styled-components": "^5.0.0-rc.2",
     "tsc": "^1.20150623.0",
-    "tsdx": "^0.12.3",
+    "tsdx": "^0.13.0",
     "typescript": "3.8.3",
     "web3-utils": "^1.2.4"
   }
