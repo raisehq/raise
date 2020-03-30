@@ -3,7 +3,9 @@ import { CheckboxStyled, CheckboxLabel } from './styles';
 
 interface CheckBoxControlProps {
   label?: any;
-  size: string;
+  size?: string;
+  id?: string;
+  onChange?: Function;
 }
 
 const CheckboxControl: React.SFC<CheckBoxControlProps> = ({
