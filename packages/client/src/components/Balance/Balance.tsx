@@ -1,9 +1,9 @@
 import React from 'react';
-import { BalanceBox, Title, Value } from './Balance.styles';
+import { BalanceBox, Value } from './Balance.styles';
 
 const Balance = props => (
   <BalanceBox {...props}>
-    <Title>Balance:</Title>
+    <div>Your balance: </div>
     <Value>
       {props.balance} {props.coin.value}
     </Value>

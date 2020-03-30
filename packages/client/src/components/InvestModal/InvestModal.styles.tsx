@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import Balance from '../Balance';
 import { device } from '../../commons/breakpoints';
+import InvestInput from './components/InvestInput';
 
 interface ModalInputProps {
   roi?: boolean;
@@ -27,6 +28,10 @@ interface LabelPaddingProps {
   color?: string;
 }
 
+export const InvestSection = styled(InvestInput)`
+  margin-top: 38px;
+  padding: 27px;
+`;
 export const LoanTermsCheckbox: any = styled(Checkbox)`
   &&& {
     position: relative;
@@ -181,6 +186,9 @@ export const ModalInputBox = styled.div<ModalInputProps>`
 
 export const InvestorBalance = styled(Balance)`
   cursor: pointer;
+  color: #b1b3b9;
+  font-size: 14px;
+
   &:hover {
     color: #00a76f;
   }

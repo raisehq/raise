@@ -6,6 +6,7 @@ import { InvestHeader, InvestorBalance } from '../InvestModal.styles';
 import LoanInput from '../../CreateLoan/LoanInput';
 
 const BigInput = styled(LoanInput)`
+  margin-top: 34px;
   font-size: 48px;
   line-height: 56px;
   text-align: center;
@@ -20,9 +21,28 @@ const BigInput = styled(LoanInput)`
   margin-right: 5px;
   box-sizing: border-box;
   background: none !important;
+  text-decoration: underline;
+
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-input-placeholder {
+    /* Edge */
+    color: #c5c7cb;
+  }
+
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #c5c7cb;
+  }
+
+  &::placeholder {
+    color: #c5c7cb;
+  }
 `;
 
-const InvestInput = ({ loan, coin, balance, value, setValue }) => {
+const InvestInput = ({ loan, coin, balance, value, setValue, ...props }) => {
   const { principal, maxAmount } = loan;
 
   const fundAll = () => {
@@ -33,24 +53,24 @@ const InvestInput = ({ loan, coin, balance, value, setValue }) => {
   };
 
   const onSetValue = v => {
-    if (v < 0) {
+    if (v.floatValue < 0) {
       return setValue(0);
     }
-    return setValue(v);
+    return setValue(v.floatValue);
   };
 
+  const readValue = value > 0 ? value : null;
   return (
-    <Card size="310px" width="400px">
-      <Card.Content>
-        <InvestHeader>How much you would like to invest?</InvestHeader>
-        <InvestorBalance coin={coin} balance={balance} id="btn-invest-all" onClick={fundAll} />
-        <BigInput
-          id="input-invest-value"
-          value={value}
-          onValueChange={onSetValue}
-          coinIcon={coin?.icon || null}
-        />
-      </Card.Content>
+    <Card size="310px" width="400px" {...props}>
+      <InvestHeader>How much you would like to invest?</InvestHeader>
+      <InvestorBalance coin={coin} balance={balance} id="btn-invest-all" onClick={fundAll} />
+      <BigInput
+        autocomplete="off"
+        id="input-invest-value"
+        placeholder="0.00"
+        value={readValue}
+        onValueChange={onSetValue}
+      />
     </Card>
   );
 };

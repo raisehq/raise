@@ -15,11 +15,11 @@ import {
   ConfirmButton,
   LoanTermsCheckbox,
   CheckContainer,
-  InvestHeader
+  InvestHeader,
+  InvestSection
 } from './InvestModal.styles';
 
 import CollapsedTable from './components/CollapsedTable';
-import InvestInput from './components/InvestInput';
 
 const errorMessages = {
   inputGreaterThanBalance: 'Not enough balance.',
@@ -33,6 +33,23 @@ const ErrorBox = styled.div`
   display: block;
   content: '';
   margin-top: 8px;
+`;
+
+const HelperText = styled.div`
+  margin-top: 18px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #b1b3b9;
+`;
+
+const ContinueButton = styled(ConfirmButton)`
+  &&&&& {
+    margin-top: 36px;
+  }
 `;
 
 const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
@@ -95,7 +112,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
     <>
       <InvestHeader>Loan Information</InvestHeader>
       <CollapsedTable items={loanInfo} />
-      <InvestInput {...InvestInputProps} />
+      <InvestSection {...InvestInputProps} />
       <ErrorBox>
         {errorMessage()}
         &nbsp;
@@ -104,7 +121,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
         to the Terms and Conditions of the Loan Agreement
       </CheckContainer>
-      <ConfirmButton
+      <ContinueButton
         id="btn-invest-confirm"
         onClick={onConfirm}
         disabled={
@@ -116,8 +133,9 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
           kyc_status !== 3
         }
       >
-        CONFIRM
-      </ConfirmButton>
+        CONTINUE
+      </ContinueButton>
+      <HelperText>In the next step you will be able to review before confirm</HelperText>
     </>
   );
 };
