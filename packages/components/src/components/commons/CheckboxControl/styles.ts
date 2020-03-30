@@ -21,7 +21,8 @@ export const CheckboxStyled = styled(Checkbox)<CheckBoxProps>`
     .box:before,
     label:after,
     label:before {
-      transform: ${({ size }) => (size === 'small' ? 'inherit' : `scale(1.28571429)`)};
+      transform: ${({ size }) =>
+        size === 'small' ? 'inherit' : `scale(1.28571429)`};
       transform-origin: left;
       top: ${({ size }) => (size === 'small' ? '-1px' : '3px')};
     }

@@ -3,10 +3,22 @@ import { ButtonStyledGroup, ButtonStyled, ButtonContent } from './styles';
 
 import { Image } from 'semantic-ui-react';
 
-const GroupButton = ({ options, withIcon = false, onClick, selectedIndex, ...rest }) => {
+interface GroupButtonProps {
+  options: any;
+  onClick: Function;
+  withIcon: boolean;
+  selectedIndex: number;
+}
+
+const GroupButton: React.SFC<GroupButtonProps> = ({
+  options,
+  withIcon = false,
+  onClick,
+  selectedIndex,
+}) => {
   return (
     <ButtonStyledGroup>
-      {options.map(item => (
+      {options.map((item: any) => (
         <ButtonStyled
           icon
           key={item.key}
@@ -14,7 +26,11 @@ const GroupButton = ({ options, withIcon = false, onClick, selectedIndex, ...res
           className={item.key === selectedIndex.toString() && 'selected'}
         >
           <ButtonContent>
-            {withIcon && <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${item.icon}`}/>}
+            {withIcon && (
+              <Image
+                src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${item.icon}`}
+              />
+            )}
             {item.text}
           </ButtonContent>
         </ButtonStyled>

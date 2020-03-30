@@ -60,10 +60,10 @@ import { getMonths } from '../../commons/months';
 import { getLoanAuctionIntervalArray } from '../../commons/months';
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS } from '../../commons/constants';
-import GroupButton from '../commons/ButtonControl/GroupButton';
-import CheckboxControl from '../commons/CheckboxControl';
-import SelectControl from '../commons/SelectControl';
-import InputNumber from '../commons/InputControl/InputNumber';
+import { GroupButton } from '@raisehq/components';
+import { CheckboxControl } from '@raisehq/components';
+import { InputNumber } from '@raisehq/components';
+import { SelectControl } from '@raisehq/components';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 
 const CreateLoan = ({ contracts }) => {
