@@ -9,6 +9,7 @@ before_script:
     g++ \
     wget \
     git \
+    jq \
     python \
     py-pip \
     tar && \
@@ -27,6 +28,7 @@ stages:
   - test
   - deploy-prod
   - tag
+  - publish
   - cleanup
 
 variables:
@@ -256,6 +258,32 @@ tag to latest:
     - git push --force origin --tags
   only:
     - master
+
+publish-components:
+  stage: publish
+  before_script:
+    - LOCAL_VERSION=$(cat packages/components/package.json | jq -r .version)
+    - PUBLISH_VERSION=$(npm view @raisehq/components version)
+  rules:
+    - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
+      changes:
+        - packages/components/package.json
+  script:
+    - cd ./packages/components/
+    - npm publish
+
+publish-onboarding:
+  stage: publish
+  before_script:
+    - LOCAL_VERSION=$(cat packages/onboarding/package.json | jq -r .version)
+    - PUBLISH_VERSION=$(npm view @raisehq/onboarding version)
+  rules:
+    - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
+      changes:
+        - packages/onboarding/package.json
+  script:
+    - cd ./packages/onboarding/
+    - npm publish
 
 review:
   image: python:3.7-alpine
