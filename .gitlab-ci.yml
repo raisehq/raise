@@ -21,13 +21,6 @@ before_script:
     apk del .build-deps
 
 stages:
-  - deploy-backend
-  - build
-  - deploy
-  - review
-  - test
-  - deploy-prod
-  - tag
   - publish
   - cleanup
 
@@ -262,7 +255,7 @@ tag to latest:
 publish-components:
   stage: publish
   before_script:
-    - 'apk add --update jq'
+    - 'apk add --no-cache --virtual jq git '
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - LOCAL_VERSION=$(cat packages/components/package.json | jq -r .version)
     - PUBLISH_VERSION=$(npm view @raisehq/components version)
