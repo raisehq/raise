@@ -34,10 +34,15 @@ import defaultContext from './defaults';
 declare global {
   interface Window {
     fbq: any;
+    recaptchaOptions: any;
   }
 }
 
 window.fbq = window.fbq || null;
+
+window.recaptchaOptions = {
+  useRecaptchaNet: true
+};
 
 const Step = daggy.taggedSum('UI', {
   Start: [],
