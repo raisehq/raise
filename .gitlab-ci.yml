@@ -263,6 +263,7 @@ publish-components:
   stage: publish
   before_script:
     - 'apk add --update jq'
+    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - LOCAL_VERSION=$(cat packages/components/package.json | jq -r .version)
     - PUBLISH_VERSION=$(npm view @raisehq/components version)
   rules:
@@ -280,6 +281,7 @@ publish-onboarding:
   stage: publish
   before_script:
     - 'apk add --update jq'
+    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - LOCAL_VERSION=$(cat packages/onboarding/package.json | jq -r .version)
     - PUBLISH_VERSION=$(npm view @raisehq/onboarding version)
   rules:
