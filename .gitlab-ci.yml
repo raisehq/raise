@@ -19,7 +19,8 @@ before_script:
     ln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \
     cd - \
     apk del .build-deps
-
+  - LOCAL_VERSION=$(cat packages/onboarding/package.json | jq -r .version)
+  - PUBLISH_VERSION=$(npm view @raisehq/onboarding version)
 stages:
   - deploy-backend
   - build
@@ -261,18 +262,13 @@ cache:
 
 publish-components:
   stage: publish
-  before_script:
-    - apk add --no-cache jq
-    - apk add --no-cache git
-    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-    - LOCAL_VERSION=$(cat packages/components/package.json | jq -r .version)
-    - PUBLISH_VERSION=$(npm view @raisehq/components version)
   rules:
     - changes:
         - packages/components/package.json
     - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
     - when: never
   script:
+    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - 'yarn run bootstrap:deps'
     - 'yarn run build:deps'
     - cd ./packages/components/
@@ -280,18 +276,13 @@ publish-components:
 
 publish-onboarding:
   stage: publish
-  before_script:
-    - apk add --no-cache jq
-    - apk add --no-cache git
-    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-    - LOCAL_VERSION=$(cat packages/onboarding/package.json | jq -r .version)
-    - PUBLISH_VERSION=$(npm view @raisehq/onboarding version)
   rules:
     - changes:
         - packages/onboarding/package.json
     - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
     - when: never
   script:
+    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - 'npm run bootstrap:deps'
     - 'npm run build:deps'
     - cd ./packages/onboarding/
