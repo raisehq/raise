@@ -285,14 +285,13 @@ publish-onboarding:
       when: never
     - when: never
   script:
-    - 'echo '$LOCAL_VERSION '
-    - 'echo '$PUBLISH_VERSION '
+    - 'echo $LOCAL_VERSION '
+    - 'echo $PUBLISH_VERSION '
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - 'npm run bootstrap:deps'
     - 'npm run build:deps'
     - cd ./packages/onboarding/
     - npm publish
-    
 # review:
 #   image: python:3.7-alpine
 #   stage: review
