@@ -266,7 +266,8 @@ publish-components:
     - changes:
         - packages/components/package.json
     - if: '$CI_COMMIT_REF_SLUG == "master"'
-    - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
+    - if: '$LOCAL_VERSION == $PUBLISH_VERSION'
+      when: never
     - when: never
   script:
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
