@@ -271,6 +271,8 @@ publish-components:
   script:
     - cd ./packages/components/
     - npm publish
+  only:
+    - merge_requests
 
 publish-onboarding:
   stage: publish
@@ -284,6 +286,8 @@ publish-onboarding:
   script:
     - cd ./packages/onboarding/
     - npm publish
+  only:
+    - merge_requests
 
 review:
   image: python:3.7-alpine
