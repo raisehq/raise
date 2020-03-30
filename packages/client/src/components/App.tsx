@@ -57,7 +57,7 @@ const App = () => {
 
   useEffect(() => {
     if (followTx) {
-      followTx.on('start_tx', (tx, params) => {
+      followTx.on('tx_start', (tx, params) => {
         toast(<Toast params={params} tx={tx} state="pending" />, {
           position: 'top-right',
           autoClose: false,
@@ -69,7 +69,7 @@ const App = () => {
           toastId: tx
         });
       });
-      followTx.on('finish_tx', (tx, params) => {
+      followTx.on('tx_finish', (tx, params) => {
         if (!toast.isActive(tx)) {
           toast(<Toast params={params} tx={tx} state="success" />, {
             type: toast.TYPE.SUCCESS,
@@ -92,7 +92,7 @@ const App = () => {
           });
         }
       });
-      followTx.on('error_tx', (tx, params) => {
+      followTx.on('tx_error', (tx, params) => {
         if (!toast.isActive(tx)) {
           toast(<Toast params={params} tx={tx} state="error" />, {
             type: toast.TYPE.ERROR,
