@@ -294,45 +294,44 @@ publish-onboarding:
     - 'npm run build:deps'
     - cd ./packages/onboarding/
     - npm publish
+# review:
+#   image: python:3.7-alpine
+#   stage: review
+#   before_script:
+#     - 'pip install awscli'
+#   script:
+#     - 'mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+#     - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+#   environment:
+#     name: review/$CI_COMMIT_REF_SLUG
+#     url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+#     on_stop: stop-review
+#   only:
+#     - merge_requests
+#     - latest
+#   except:
+#     - master
 
-review:
-  image: python:3.7-alpine
-  stage: review
-  before_script:
-    - 'pip install awscli'
-  script:
-    - 'mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
-    on_stop: stop-review
-  only:
-    - merge_requests
-    - latest
-  except:
-    - master
-
-stop-review:
-  image: python:3.7-alpine
-  stage: cleanup
-  variables:
-    GIT_STRATEGY: none
-  before_script:
-    - apk add --no-cache openssh-client bash
-    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - chmod 600 ~/.ssh/config
-    - pip install awscli
-  script:
-    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
-    - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
-  when: manual
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    action: stop
-  only:
-    - merge_requests
-  except:
-    - master
+# stop-review:
+#   image: python:3.7-alpine
+#   stage: cleanup
+#   variables:
+#     GIT_STRATEGY: none
+#   before_script:
+#     - apk add --no-cache openssh-client bash
+#     - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+#     - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+#     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+#     - chmod 600 ~/.ssh/config
+#     - pip install awscli
+#   script:
+#     - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+#     - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
+#   when: manual
+#   environment:
+#     name: review/$CI_COMMIT_REF_SLUG
+#     action: stop
+#   only:
+#     - merge_requests
+#   except:
+#     - master
