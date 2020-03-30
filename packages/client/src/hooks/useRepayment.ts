@@ -21,7 +21,7 @@ const useRepayment = (loan, open) => {
   const [error, setError] = useState(false);
   const [stage, setStage] = useState(Stages.Confirm);
   const [hasBalance, setHasBalance] = useState(false);
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
 
   useEffect(() => {
     setApproved(false);

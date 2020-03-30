@@ -9,9 +9,15 @@ interface LoanProps {
 
 const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
   const borrower = useBorrowerInfo(auction.originator);
-  const { coin } = useGetCoin(auction);
+  const coin = useGetCoin(auction);
   return (
-    <InvestCard coinIcon={coin && coin.icon} auction={auction} borrower={borrower} link className="suggested-card">
+    <InvestCard
+      coinIcon={coin && coin.icon}
+      auction={auction}
+      borrower={borrower}
+      link
+      className="suggested-card"
+    >
       <InvestButton loan={auction} />
     </InvestCard>
   );

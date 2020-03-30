@@ -6,9 +6,8 @@ import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const Auction = ({ auction }: { auction: any }) => {
-
   const calcs = getCalculations(auction);
-  const { coin } = useGetCoin(auction);
+  const coin = useGetCoin(auction);
   const {
     principal,
     netBalance,

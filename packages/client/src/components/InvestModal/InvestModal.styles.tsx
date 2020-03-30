@@ -435,3 +435,11 @@ export const Explanation = styled(Grid.Row)`
 export const UserBalance = styled(Balance)`
   margin-left: 30px;
 `;
+
+export const InvestHeader = styled.h3`
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000;
+`;

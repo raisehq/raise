@@ -41,7 +41,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
       onboarding: { showOnboarding }
     }
   }: any = useRootContext();
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Kyc);
   const [investment, setInvestment] = useState(0);

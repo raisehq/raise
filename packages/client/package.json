@@ -55,6 +55,7 @@
     "react-spring": "^8.0.27",
     "react-toastify": "^5.5.0",
     "react-transition-group": "^4.3.0",
+    "resize-observer-polyfill": "^1.5.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.85.0",
     "slick-carousel": "^1.8.1",

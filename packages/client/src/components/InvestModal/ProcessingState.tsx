@@ -44,7 +44,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
 
   const { web3 } = useWeb3();
   const metamask = useWallet();
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
 
   const [contracts, setContracts]: any = useState();
   const [approved, setAproved]: any = useState(false);

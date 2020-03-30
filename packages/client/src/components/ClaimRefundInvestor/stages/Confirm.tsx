@@ -24,7 +24,7 @@ const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
 const Confirm = () => {
   const metamask = useWallet();
   const { loan, setStage, calculatedLoan }: any = useContext(ClaimRefundContext);
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
   const {
     web3Status: { account }
   }: any = useAppContext();

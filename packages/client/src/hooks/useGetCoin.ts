@@ -1,26 +1,26 @@
-import { useEffect, useState } from 'react';
+import get from 'lodash/get';
 import { COINS } from '../commons/constants';
 import { CoinsType } from '../commons/coins';
 import { getCoin, getCoinsFromContract } from '../utils/loanUtils';
-import get from 'lodash/get';
 import { useRootContext } from '../contexts/RootContext';
+import { useAppContext } from '../contexts/AppContext';
 
-const useGetCoin = auction => {
-  const [coin, setCoin] = useState<any>(null);
-
+const useGetCoin = (auction): CoinsType => {
   const {
     store: {
       blockchain: { contracts },
       config: { networkId }
     }
   }: any = useRootContext();
+  const {
+    web3Status: { walletNetworkId: currentNetworkId }
+  }: any = useAppContext();
 
-  useEffect(() => {
-    const contract = get(contracts, `address.${networkId}`);
-    const coins: CoinsType[] = getCoinsFromContract(COINS)(contract);
-    setCoin(getCoin(coins)(auction.tokenAddress));
-  }, [auction]);
-  return { coin };
+  const desiredNetwork = currentNetworkId > 0 ? currentNetworkId : networkId;
+  const contract = get(contracts, `address.${desiredNetwork}`);
+  const coins: CoinsType[] = getCoinsFromContract(COINS)(contract);
+  const coin = getCoin(coins)(auction.tokenAddress);
+  return coin;
 };
 
 export default useGetCoin;

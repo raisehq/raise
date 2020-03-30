@@ -1,7 +1,6 @@
 import { match, ANY } from 'pampy';
 import { fromWei } from 'web3-utils';
 import cloneDeep from 'lodash/cloneDeep';
-import first from 'lodash/first';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
 import { toChecksumAddress } from 'web3-utils';
@@ -162,17 +161,26 @@ export const getCoinsFromContract = coinsMap => contract => {
   return coins;
 };
 
-export const getCoin = (coins: CoinsType[]) => tokenAddress => {
+export const getCoin = (coins: CoinsType[]) => (tokenAddress): CoinsType => {
   let result;
-  if (tokenAddress) {
-    result = coins.filter(
-      coin => toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)
-    );
-  } else {
-    result = coins.filter(coin => coin.text === 'DAI');
+  const defaultCoin = {
+    address: '',
+    text: '',
+    value: '',
+    key: '',
+    icon: ''
+  };
+  if (!coins || !coins.length) {
+    return defaultCoin;
   }
-
-  return first(result);
+  if (tokenAddress) {
+    result =
+      coins.find(coin => toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)) ||
+      defaultCoin;
+  } else {
+    result = coins.find(coin => coin.text === 'DAI') || defaultCoin;
+  }
+  return result;
 };
 
 export const getCalculations = auction => {
