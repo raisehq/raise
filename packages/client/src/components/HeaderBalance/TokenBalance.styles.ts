@@ -1,10 +1,12 @@
-import { Image } from 'semantic-ui-react';
+import { Image, Dropdown } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+export const Container = styled(Dropdown.Item)`
+  &&&&&&& {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 export const Child = styled.div`

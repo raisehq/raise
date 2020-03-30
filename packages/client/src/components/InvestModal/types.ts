@@ -9,6 +9,8 @@ export interface InvestStateProps {
   loan: Loan;
   setStage: Function;
   setInvestment: Function;
+  setCoin: Function;
+  selectedCoin: string;
   ui: any;
 }
 

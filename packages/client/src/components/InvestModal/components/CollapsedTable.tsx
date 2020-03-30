@@ -53,7 +53,7 @@ const TableItemContainer = styled.div<TableItemContainerProps>`
   }
 `;
 
-const TableItem: SFC<TableItemProps> = ({ title, content, latest }) => (
+export const TableItem: SFC<TableItemProps> = ({ title, content, latest }) => (
   <TableItemContainer latest={latest}>
     <div>{title}</div>
     <div>{content}</div>

@@ -6,7 +6,7 @@ import { useAddressBalance } from '../../contexts/BalancesContext';
 import { useRootContext } from '../../contexts/RootContext';
 import { useAppContext } from '../../contexts/AppContext';
 
-const TokenBalance = ({ imageUrl, name, ...props }) => {
+const TokenBalance = ({ imageUrl, name, value, ...props }) => {
   const {
     store: {
       blockchain: {
@@ -28,7 +28,7 @@ const TokenBalance = ({ imageUrl, name, ...props }) => {
       .toString() || '0.00';
 
   return (
-    <Container {...props}>
+    <Container value={value} {...props}>
       <Child>
         <TokenImage src={imageUrl} />
         <div>{name}</div>

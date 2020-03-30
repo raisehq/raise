@@ -4,6 +4,7 @@ import { Card } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
 import { InvestHeader, InvestorBalance } from '../InvestModal.styles';
 import LoanInput from '../../CreateLoan/LoanInput';
+import CoinSelector from '../../CoinSelector';
 
 const BigInput = styled(LoanInput)`
   margin-top: 34px;
@@ -42,8 +43,12 @@ const BigInput = styled(LoanInput)`
   }
 `;
 
-const InvestInput = ({ loan, coin, balance, value, setValue, ...props }) => {
+const InvestInput = ({ loan, coin, balance, value, setValue, selectedCoin, setCoin, ...props }) => {
   const { principal, maxAmount } = loan;
+
+  const handleChange = (e, { value }) => {
+    setCoin(value);
+  };
 
   const fundAll = () => {
     const nMaxAmount = Number(fromWei(maxAmount));
@@ -64,8 +69,9 @@ const InvestInput = ({ loan, coin, balance, value, setValue, ...props }) => {
     <Card size="310px" width="400px" {...props}>
       <InvestHeader>How much you would like to invest?</InvestHeader>
       <InvestorBalance coin={coin} balance={balance} id="btn-invest-all" onClick={fundAll} />
+      <CoinSelector value={selectedCoin} onChange={handleChange} />
       <BigInput
-        autocomplete="off"
+        autoComplete="off"
         id="input-invest-value"
         placeholder="0.00"
         value={readValue}

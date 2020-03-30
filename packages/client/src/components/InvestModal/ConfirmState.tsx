@@ -5,11 +5,19 @@ import { fromWei } from 'web3-utils';
 import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import { useRootContext } from '../../contexts/RootContext';
+//import { useAppContext } from '../../contexts/AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
+import useGetCoin from '../../hooks/useGetCoin';
 import { useAddressBalance } from '../../contexts/BalancesContext';
 import { generateInfo } from './investUtils';
-import { ConfirmButton, InvestHeader, InvestSection } from './InvestModal.styles';
+
+import {
+  ConfirmButton,
+  LoanTermsCheckbox,
+  CheckContainer,
+  InvestHeader,
+  InvestSection
+} from './InvestModal.styles';
 
 import CollapsedTable from './components/CollapsedTable';
 
@@ -44,14 +52,7 @@ const ContinueButton = styled(ConfirmButton)`
   }
 `;
 
-const InvestState: React.SFC<InvestStateProps> = ({
-  loan,
-  setStage,
-  setInvestment,
-  ui,
-  selectedCoin,
-  setCoin
-}) => {
+const ConfirmState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
   const {
     store: {
       user: {
@@ -66,19 +67,26 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const { maxAmount } = loan;
   const nMaxAmount = Number(fromWei(maxAmount));
   const calcs = getCalculations(loan);
-  const coin = useGetCoinMetadata(selectedCoin);
+  const coin = useGetCoin(loan);
   const tagManager = useGoogleTagManager('Card');
-  const balanceBN: BN = useAddressBalance(account, coin?.address || '');
+  console.log(coin);
+  const balanceBN: BN = useAddressBalance(account, coin.address);
   const balance: number = Number(Number(fromWei(balanceBN)).toFixed(2));
-
+  console.log(balance);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
 
   const onConfirm = async () => {
     tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
 
     setInvestment(value);
-    // Change to state confirmation
     setStage(ui.Processing);
+  };
+
+  const [termsCond, setTermsCond] = useState(false);
+
+  const onToggleTerms = () => {
+    const toggleTerms = !termsCond;
+    setTermsCond(toggleTerms);
   };
 
   const errorMessage = () => {
@@ -98,9 +106,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
     value,
     setValue,
     coin,
-    balance,
-    selectedCoin,
-    setCoin
+    balance
   };
 
   return (
@@ -112,6 +118,10 @@ const InvestState: React.SFC<InvestStateProps> = ({
         {errorMessage()}
         &nbsp;
       </ErrorBox>
+      <CheckContainer>
+        <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
+        to the Terms and Conditions of the Loan Agreement
+      </CheckContainer>
       <ContinueButton
         id="btn-invest-confirm"
         onClick={onConfirm}
@@ -130,4 +140,4 @@ const InvestState: React.SFC<InvestStateProps> = ({
   );
 };
 
-export default InvestState;
+export default ConfirmState;

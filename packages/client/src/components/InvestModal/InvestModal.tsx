@@ -45,6 +45,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Kyc);
   const [investment, setInvestment] = useState(0);
+  const [selectedCoin, setCoin] = useState(coin.text);
   const tagManager = useGoogleTagManager('Card');
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
   // prettier-ignore
@@ -87,7 +88,14 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
     return stage.cata({
       Kyc: () => <VerifyKycModal />,
       Confirm: () => (
-        <InvestState loan={loan} setStage={setStage} setInvestment={setInvestment} ui={UI} />
+        <InvestState
+          loan={loan}
+          setStage={setStage}
+          setInvestment={setInvestment}
+          setCoin={setCoin}
+          selectedCoin={selectedCoin}
+          ui={UI}
+        />
       ),
       Processing: () => (
         <ProcessingState
