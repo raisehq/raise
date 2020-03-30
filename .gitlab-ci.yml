@@ -269,11 +269,8 @@ publish-components:
   rules:
     - changes:
         - packages/components/package.json
-      when: never
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
-      when: always
     - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
-      when: never
+    - when: never
   script:
     - 'yarn --pure-lockfile'
     - 'yarn run build:deps'
@@ -290,11 +287,8 @@ publish-onboarding:
   rules:
     - changes:
         - packages/onboarding/package.json
-      when: never
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
-      when: always
     - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
-      when: never
+    - when: never
   script:
     - 'yarn --pure-lockfile'
     - 'yarn run build:deps'
