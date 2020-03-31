@@ -265,7 +265,7 @@ tag to latest:
 publish-components:
   stage: publish
   rules:
-    - if: '$CI_COMMIT_REF_SLUG == "master"'
+    - if: '$CI_COMMIT_REF_SLUG != "master"'
       when: never
     - changes:
         - packages/components/package.json
