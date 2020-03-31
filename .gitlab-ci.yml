@@ -279,10 +279,8 @@ cache:
 publish-onboarding:
   stage: publish
   rules:
-    - if: '$LOCAL_VERSION == $PUBLISH_VERSION'
-      when: never
-    - changes:
-        - packages/onboarding/package.json
+    - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
+      when: always
     - when: never
   script:
     - 'echo $LOCAL_VERSION '
