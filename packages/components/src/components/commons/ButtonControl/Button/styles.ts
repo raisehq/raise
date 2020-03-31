@@ -25,7 +25,8 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
         : globalTheme.buttonPatterns[type].default.textColor};
 
     border-radius: 3px;
-    padding: 21px 109px;
+    padding: 21px 50px;
+    min-width: 298px;
 
     font-family: Lato;
     font-style: normal;
