@@ -280,20 +280,22 @@ publish-onboarding:
   stage: publish
   rules:
     - changes:
-        - packages/components/package.json
+        - packages/onboarding/package.json
+    - if: '$CI_COMMIT_REF_SLUG == "master"'
     - when: never
   script:
     - 'echo $LOCAL_VERSION '
     - 'echo $PUBLISH_VERSION '
+    - 'echo $CI_COMMIT_REF_SLUG'
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - |
       #!/bin/sh
-        if [ "${LOCAL_VERSION}" == "${PUBLISH_VERSION}" ]; then
-          yarn run bootstrap:deps
-          yarn run build:deps
-          cd ./packages/onboarding/
-          npm publish
-        fi
+      if [ "${LOCAL_VERSION}" == "${PUBLISH_VERSION}" ]; then
+        yarn run bootstrap:deps
+        yarn run build:deps
+        cd ./packages/onboarding/
+        npm publish
+      fi
 
 # review:
 #   image: python:3.7-alpine
