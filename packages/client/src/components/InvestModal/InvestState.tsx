@@ -25,7 +25,8 @@ import {
   // FundAllLabel,
   LoanTermsCheckbox,
   CheckContainer,
-  InvestorBalance
+  InvestorBalance,
+  ButtonContainer
 } from './InvestModal.styles';
 
 const errorMessages = {
@@ -194,21 +195,23 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
         to the Terms and Conditions of the Loan Agreement
       </CheckContainer>
-      <Button
-        idAttr="btn-invest-confirm"
-        onClick={onConfirm}
-        text="Confirm"
-        type="secondary"
-        size="large"
-        disabled={
-          value === 0 ||
-          value === undefined ||
-          !termsCond ||
-          value > balance ||
-          value > nMaxAmount ||
-          kyc_status !== 3
-        }
-      />
+      <ButtonContainer>
+        <Button
+          idAttr="btn-invest-confirm"
+          onClick={onConfirm}
+          text="Confirm"
+          type="secondary"
+          size="large"
+          disabled={
+            value === 0 ||
+            value === undefined ||
+            !termsCond ||
+            value > balance ||
+            value > nMaxAmount ||
+            kyc_status !== 3
+          }
+        />
+      </ButtonContainer>
     </>
   );
 };
