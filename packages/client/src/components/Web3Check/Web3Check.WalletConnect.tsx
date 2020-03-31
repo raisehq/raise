@@ -51,7 +51,10 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
           {hasWallet ? (
             <CoinbaseInstrucctions>
               Make sure you have
-              <WalletLink> Coinbase Wallet </WalletLink>
+              <WalletLink href="https://onelink.to/dvu97k" target="_blank">
+                {' '}
+                Coinbase Wallet{' '}
+              </WalletLink>
               app in your mobile and have registered. You will be required to scan a QR code with
               the app
             </CoinbaseInstrucctions>
@@ -59,7 +62,10 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
             <InstructionsContainer>
               <CoinbaseInstrucctions>
                 1. Download
-                <WalletLink> Coinbase Wallet </WalletLink>
+                <WalletLink href="https://onelink.to/dvu97k" target="_blank">
+                  {' '}
+                  Coinbase Wallet{' '}
+                </WalletLink>
                 app in your phone and create a wallet. This process takes between 1 or 2 minutes
               </CoinbaseInstrucctions>
               <CoinbaseInstrucctions>
