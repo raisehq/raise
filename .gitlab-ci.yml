@@ -265,10 +265,10 @@ tag to latest:
 publish-components:
   stage: publish
   rules:
-    - changes:
-        - packages/components/package.json
     - if: '$CI_COMMIT_REF_SLUG != "master"'
       when: never
+    - changes:
+        - packages/components/package.json
     - when: never
   script:
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
@@ -286,9 +286,9 @@ publish-components:
 publish-onboarding:
   stage: publish
   rules:
+    - if: '$CI_COMMIT_REF_SLUG != "master"'
     - changes:
         - packages/onboarding/package.json
-    - if: '$CI_COMMIT_REF_SLUG != "master"'
       when: never
     - when: never
   script:
