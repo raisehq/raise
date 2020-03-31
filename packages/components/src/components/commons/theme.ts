@@ -117,9 +117,27 @@ const globalTheme: any = {
     },
   },
   buttonSizes: {
-    large: { height: '72px', width: '231px' },
-    standard: { height: '48px', width: '147px' },
-    small: { height: '40px', width: '116px' },
+    large: {
+      height: '72px',
+      width: '240px',
+      padding: '24px 64px',
+      fontSize: '20px',
+      lineHeight: '24px',
+    },
+    standard: {
+      height: '48px',
+      width: '147px',
+      padding: '13px 32px',
+      fontSize: '16px',
+      lineHeight: '19px',
+    },
+    small: {
+      height: '40px',
+      width: '116px',
+      padding: '11px 16px',
+      fontSize: '16px',
+      lineHeight: '19px',
+    },
   },
 };
 

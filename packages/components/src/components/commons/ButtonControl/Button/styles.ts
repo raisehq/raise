@@ -25,15 +25,16 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
         : globalTheme.buttonPatterns[type].default.textColor};
 
     border-radius: 3px;
-    padding: 21px 50px;
-    min-width: 298px;
+
+    padding: ${props => globalTheme.buttonSizes[props.size].padding};
+    height: ${props => globalTheme.buttonSizes[props.size].height};
+    width: ${props => globalTheme.buttonSizes[props.size].width};
+    font-size: ${props => globalTheme.buttonSizes[props.size].fontSize};
+    line-height: ${props => globalTheme.buttonSizes[props.size].lineHeight};
 
     font-family: Lato;
     font-style: normal;
     font-weight: bold;
-    font-size: 20px;
-    line-height: 24px;
-
     text-align: center;
 
     &&&:hover {

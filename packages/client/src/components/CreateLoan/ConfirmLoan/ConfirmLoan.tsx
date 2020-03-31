@@ -14,7 +14,8 @@ import {
   FirstContainer,
   SecondContainer,
   HeaderRow,
-  CheckboxRow
+  CheckboxRow,
+  ButtonContainer
 } from '../CreateLoan.styles';
 
 const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
@@ -107,7 +108,7 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
         </CheckboxRow>
       </AmountRow>
 
-      <div>
+      <ButtonContainer>
         <Button
           idAttr="btn-create"
           className="btn-confirm-loan"
@@ -124,7 +125,7 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
             !authTerms
           }
         />
-      </div>
+      </ButtonContainer>
     </LoanConfirmation>
   );
 };

@@ -79,8 +79,8 @@ const Dashboard = () => {
             onClick={onCreateLoan}
             idAttr="btn-create-loan"
             text="Create Loan"
-            type={'secondary'}
-            size={'large'}
+            type="secondary"
+            size="large"
             disabled={false}
           />
         </ButtonRow>
