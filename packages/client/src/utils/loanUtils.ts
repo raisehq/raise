@@ -189,6 +189,7 @@ export const getCalculations = auction => {
   const operatorFee: any = calculateFromWei(auction.operatorFee);
   const operatorFeeNum = Number(fromWei(auction.operatorFee.toString())) / 100;
   const principal: any = calculateFromWei(auction.principal);
+  const principalNum = Number(fromWei(auction.principal));
   const borrowerDebt: any = Number(fromWei(auction.borrowerDebt)).toLocaleString('es-ES');
   const maxSystemFees: any = numeral(maxAmountNum * operatorFeeNum).format();
   const systemFees: any = `-${numeral(
@@ -236,9 +237,11 @@ export const getCalculations = auction => {
     borrowerDebt,
     interest,
     maxAmount,
+    maxAmountNum,
     netBalance,
     operatorFee,
     principal,
+    principalNum,
     systemFees,
     maxSystemFees,
     currentAmount,

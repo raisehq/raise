@@ -29,7 +29,7 @@ interface LabelPaddingProps {
 }
 
 export const InvestSection = styled(InvestInput)`
-  margin-top: 38px;
+  margin: 29px auto 0px auto;
   padding: 27px;
 `;
 export const LoanTermsCheckbox: any = styled(Checkbox)`

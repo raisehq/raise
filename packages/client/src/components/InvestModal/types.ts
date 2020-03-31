@@ -1,4 +1,5 @@
 import { Loan } from '../../interfaces/Loan';
+import { CoinsType } from '../../commons/coins';
 
 export interface InvestModalProps {
   loan: Loan;
@@ -12,6 +13,7 @@ export interface InvestStateProps {
   setCoin: Function;
   selectedCoin: string;
   ui: any;
+  loanCoin: CoinsType;
 }
 
 export interface ResumeItemProps {

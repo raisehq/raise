@@ -1,25 +1,45 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Card } from '@raisehq/components';
+import { Card as RaiseCard } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
 import { InvestHeader, InvestorBalance } from '../InvestModal.styles';
 import LoanInput from '../../CreateLoan/LoanInput';
-import CoinSelector from '../../CoinSelector';
+import CoinSelectorRaw from '../../CoinSelector';
+
+const CoinSelector = styled(CoinSelectorRaw)``;
+
+const Card = styled(RaiseCard)`
+  display: flex;
+  align-items: center;
+`;
+
+const BalanceWrapper = styled.div`
+  width: 100%;
+  margin-top: 40px;
+
+  &&&& ${CoinSelector} {
+    max-width: 100%;
+  }
+  &&&& .ui.selection.dropdown > .dropdown.icon {
+    margin: unset;
+    top: unset;
+    padding: unset;
+  }
+`;
 
 const BigInput = styled(LoanInput)`
-  margin-top: 34px;
   font-size: 48px;
   line-height: 56px;
-  text-align: center;
+  text-align: ${({ value }) => (value ? 'center' : 'left')};
+  width: ${({ value }) => (value ? '100%' : '100px')};
   color: #00da9e;
+  margin: 34px auto 0px auto;
   background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
   display: block;
   border: none !important;
-  margin-right: 5px;
   box-sizing: border-box;
   background: none !important;
   text-decoration: underline;
@@ -39,7 +59,7 @@ const BigInput = styled(LoanInput)`
   }
 
   &::placeholder {
-    color: #c5c7cb;
+    text-align: center;
   }
 `;
 
@@ -68,8 +88,10 @@ const InvestInput = ({ loan, coin, balance, value, setValue, selectedCoin, setCo
   return (
     <Card size="310px" width="400px" {...props}>
       <InvestHeader>How much you would like to invest?</InvestHeader>
-      <InvestorBalance coin={coin} balance={balance} id="btn-invest-all" onClick={fundAll} />
-      <CoinSelector value={selectedCoin} onChange={handleChange} />
+      <BalanceWrapper>
+        <CoinSelector value={selectedCoin} onChange={handleChange} />
+        <InvestorBalance coin={coin} balance={balance} id="btn-invest-all" onClick={fundAll} />
+      </BalanceWrapper>
       <BigInput
         autoComplete="off"
         id="input-invest-value"

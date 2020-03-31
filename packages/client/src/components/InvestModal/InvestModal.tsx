@@ -90,6 +90,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
       Confirm: () => (
         <InvestState
           loan={loan}
+          loanCoin={coin}
           setStage={setStage}
           setInvestment={setInvestment}
           setCoin={setCoin}
