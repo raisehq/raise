@@ -19,8 +19,7 @@ before_script:
     ln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \
     cd - \
     apk del .build-deps
-  - LOCAL_VERSION=$(cat packages/onboarding/package.json | jq -r .version)
-  - PUBLISH_VERSION=$(npm view @raisehq/onboarding version)
+
 stages:
   - deploy-backend
   - build
@@ -36,6 +35,8 @@ variables:
   AWS_DEFAULT_REGION: eu-west-1
   CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
   BASTION: 'bastion'
+  LOCAL_VERSION_ONBOARDING: $(cat packages/onboarding/package.json | jq -r .version)
+  PUBLISH_VERSION_ONBOARDING: $(npm view @raisehq/onboarding version)
 cache:
   key: '${CI_COMMIT_REF_SLUG}'
   paths:
@@ -279,12 +280,12 @@ cache:
 publish-onboarding:
   stage: publish
   rules:
-    - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
+    - if: '$LOCAL_VERSION_ONBOARDING != $PUBLISH_VERSION_ONBOARDING'
       when: always
     - when: never
   script:
-    - 'echo $LOCAL_VERSION '
-    - 'echo $PUBLISH_VERSION '
+    - 'echo $LOCAL_VERSION_ONBOARDING '
+    - 'echo $PUBLISH_VERSION_ONBOARDING '
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - 'npm run bootstrap:deps'
     - 'npm run build:deps'
