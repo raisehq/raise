@@ -10,12 +10,25 @@ import {
   SelectYourWalletTitle,
   SelectYourWalletContainer,
   BackContainer,
-  TextDescription
+  TextDescription,
+  ConnectWalletButton,
+  CoinbaseInstrucctions,
+  WalletLink,
+  Web3CheckWalletWrapper,
+  InstructionsContainer
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import { isMobile } from 'react-device-detect';
 
-const getMessage = walletId => {
+const getMessage = (walletId, enableWeb3, hasWallet) => {
+  const connectCoinbase = async () => {
+    try {
+      enableWeb3();
+    } catch (error) {
+      // console.log('');
+    }
+  };
+
   switch (walletId) {
     case CryptoWallets.Metamask:
       return (
@@ -28,14 +41,42 @@ const getMessage = walletId => {
       return (
         <CardCenteredText>
           <CardTitle>Following Opera Instructions</CardTitle>
-          <p>You may need to scan the wallet link QR Code</p>
+          <TextDescription>You may need to scan the wallet link QR Code</TextDescription>
         </CardCenteredText>
       );
     case CryptoWallets.Coinbase:
       return (
         <CardCenteredText>
-          <CardTitle>Following Coinbase Instructions</CardTitle>
-          <p>You may need to scan the wallet link QR Code</p>
+          <CardTitle>Following Coinbase Wallet Instructions</CardTitle>
+          {hasWallet ? (
+            <CoinbaseInstrucctions>
+              Make sure you have
+              <WalletLink href="https://onelink.to/dvu97k" target="_blank">
+                {' '}
+                Coinbase Wallet{' '}
+              </WalletLink>
+              app in your mobile and have registered. You will be required to scan a QR code with
+              the app
+            </CoinbaseInstrucctions>
+          ) : (
+            <InstructionsContainer>
+              <CoinbaseInstrucctions>
+                1.
+                <WalletLink href="https://onelink.to/dvu97k" target="_blank">
+                  {' '}
+                  Download Coinbase Wallet{' '}
+                </WalletLink>
+                app in your phone and create a wallet. This process takes between 1 or 2 minutes
+              </CoinbaseInstrucctions>
+              <CoinbaseInstrucctions>
+                2. Once you have your wallet, access ⚙️and click WalletLink.
+              </CoinbaseInstrucctions>
+              <CoinbaseInstrucctions>
+                3. Click continue to scan the QR code that connects your new wallet to Raise.
+              </CoinbaseInstrucctions>
+            </InstructionsContainer>
+          )}
+          <ConnectWalletButton onClick={connectCoinbase}>Continue</ConnectWalletButton>
         </CardCenteredText>
       );
     case CryptoWallets.WebWallet:
@@ -50,26 +91,32 @@ const getMessage = walletId => {
   }
 };
 
-const WalletConnect = ({ onBack }: any) => {
+const WalletConnect = ({ onBack, hasWallet }: any) => {
   const { enableWeb3, getCurrentProviderName } = useWeb3();
-
+  const currentProviderName = getCurrentProviderName();
   useEffect(() => {
-    enableWeb3();
+    if (currentProviderName !== CryptoWallets.Coinbase) {
+      enableWeb3();
+    }
   }, []);
 
   return (
-    <>
+    <Web3CheckWalletWrapper>
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletContainer>
-        <SelectYourWalletTitle>{getMessage(getCurrentProviderName())}</SelectYourWalletTitle>
-        <LoaderContainer>
-          <Loader active inline="centered" />
-        </LoaderContainer>
+        <SelectYourWalletTitle>
+          {getMessage(currentProviderName, enableWeb3, hasWallet)}
+        </SelectYourWalletTitle>
+        {CryptoWallets.Coinbase !== currentProviderName && (
+          <LoaderContainer>
+            <Loader active inline="centered" />
+          </LoaderContainer>
+        )}
         <BackContainer>
           <GoBackButton onClickAction={onBack} />
         </BackContainer>
       </SelectYourWalletContainer>
-    </>
+    </Web3CheckWalletWrapper>
   );
 };
 

@@ -34,7 +34,7 @@ const getStage = (
     WalletConnectForm: () => <WalletConnectForm onExists={onExists} onNotExists={onNotExists} />,
     WalletSetUp: () => <WalletSetUp onNext={handleNext} onBack={backToConnectForm} />,
     WalletSelector: () => <Wallet onNext={handleNext} onBack={backToConnectForm} />,
-    WalletConnect: () => <WalletConnect onBack={handleBack} />,
+    WalletConnect: hasWallet => <WalletConnect onBack={handleBack} hasWallet={hasWallet} />,
     Checks: () => <List onSuccess={handleSuccess} onBack={handleBack} />
   });
 };
@@ -115,8 +115,8 @@ const Web3Check = () => {
     history.push(redirect);
   };
 
-  const handleNext = step => {
-    setUI(Stages.WalletConnect);
+  const handleNext = (step, hasWallet) => {
+    setUI(Stages.WalletConnect(hasWallet));
     setPrevStage(step);
   };
 

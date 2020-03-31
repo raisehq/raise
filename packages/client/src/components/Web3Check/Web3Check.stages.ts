@@ -4,7 +4,7 @@ const Stages = Daggy.taggedSum('UI', {
   WalletConnectForm: [],
   WalletSetUp: [],
   WalletSelector: [],
-  WalletConnect: [],
+  WalletConnect: ['hasWallet'],
   Checks: []
 });
 
