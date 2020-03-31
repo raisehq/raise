@@ -9,6 +9,8 @@ interface ButtonProps {
   className?: string;
   type: string;
   size: string;
+  as?: any;
+  to?: any;
 }
 
 const Button: React.SFC<ButtonProps> = ({
