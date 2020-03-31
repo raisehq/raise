@@ -11,9 +11,10 @@ import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
 import VerifyKycModal from './VerifyKycState';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
+import { Modal, ModalContent } from './InvestModal.styles';
 import { match, ANY } from 'pampy';
 import useGetCoin from '../../hooks/useGetCoin';
+import { Button } from '@raisehq/components';
 
 const UI = daggy.taggedSum('UI', {
   Kyc: [],
@@ -103,9 +104,16 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   };
   return (
     <>
-      <LenderButton id="btn-lender-open" className={className} fluid onClick={openModal}>
-        {buttonText}
-      </LenderButton>
+      <Button
+        idAttr="btn-lender-open"
+        className={className}
+        onClick={openModal}
+        text={buttonText}
+        disabled={false}
+        type={'primary'}
+        size={'large'}
+      />
+
       <Modal open={open} onClose={closeModal} size={stageModalWidth} mountNode={modalRefs.current}>
         <ModalContent>{getInvestAction(stage)}</ModalContent>
       </Modal>

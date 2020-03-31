@@ -4,9 +4,11 @@ import { ButtonStyled } from './styles';
 interface ButtonProps {
   text?: string;
   onClick: Function;
-  disabled: boolean;
+  disabled?: boolean;
   idAttr?: string;
   className?: string;
+  type: string;
+  size: string;
 }
 
 const Button: React.SFC<ButtonProps> = ({
@@ -15,6 +17,8 @@ const Button: React.SFC<ButtonProps> = ({
   disabled = false,
   idAttr,
   className,
+  type,
+  size,
 }) => {
   return (
     <ButtonStyled
@@ -22,6 +26,8 @@ const Button: React.SFC<ButtonProps> = ({
       disabled={disabled}
       id={idAttr}
       className={className}
+      type={type}
+      size={size}
     >
       {text}
     </ButtonStyled>

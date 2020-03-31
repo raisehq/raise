@@ -6,7 +6,7 @@ import { Image } from 'semantic-ui-react';
 interface GroupButtonProps {
   options: any;
   onClick: Function;
-  withIcon: boolean;
+  withIcon?: boolean;
   selectedIndex: number;
 }
 

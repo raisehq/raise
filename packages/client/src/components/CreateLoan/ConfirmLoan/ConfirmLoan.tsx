@@ -113,6 +113,8 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
           className="btn-confirm-loan"
           onClick={onSave}
           text="Confirm"
+          type={'primary'}
+          size={'large'}
           disabled={
             amountValidation.error ||
             loan.term === 0 ||
