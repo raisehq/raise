@@ -283,7 +283,7 @@ publish-onboarding:
   rules:
     - changes:
         - packages/onboarding/package.json
-    - if: '$CI_COMMIT_REF_SLUG != "master"'
+    - if: '$CI_COMMIT_REF_SLUG != "lp-1139"'
       when: never
     - when: never
   script:
