@@ -19,6 +19,7 @@ const Button: React.SFC<ButtonProps> = ({
   className,
   type,
   size,
+  ...rest
 }) => {
   return (
     <ButtonStyled
@@ -28,6 +29,7 @@ const Button: React.SFC<ButtonProps> = ({
       className={className}
       type={type}
       size={size}
+      {...rest}
     >
       {text}
     </ButtonStyled>

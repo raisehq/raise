@@ -32,16 +32,16 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
     font-weight: bold;
     font-size: 20px;
     line-height: 24px;
-    height: ${({ size }) => globalTheme.buttonSizes[size].height};
-    width: 100%;
+
     text-align: center;
 
     &&&:hover {
       background: ${props =>
         globalTheme.buttonPatterns[props.type].hover.backgroundColor};
-      border: 1px solid;
-      border-color: ${props =>
-        globalTheme.buttonPatterns[props.type].hover.borderColor};
+      border: ${props =>
+        `1px solid ${
+          globalTheme.buttonPatterns[props.type].hover.borderColor
+        }`};
       box-shadow: ${props =>
         globalTheme.buttonPatterns[props.type].hover.boxShadow};
     }
