@@ -279,8 +279,8 @@ cache:
 publish-onboarding:
   stage: publish
   rules:
-    - if: '"$LOCAL_VERSION" != "$PUBLISH_VERSION"'
-      when: always
+    - changes:
+        - packages/components/package.json
     - when: never
   script:
     - 'echo $LOCAL_VERSION '
@@ -288,12 +288,12 @@ publish-onboarding:
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - |
       #!/bin/sh
-      if [[ "$LOCAL_VERSION" == "$PUBLISH_VERSION" ]]; then
-        yarn run bootstrap:deps
-        yarn run build:deps
-        cd ./packages/onboarding/
-        npm publish
-      fi
+        if [ "${LOCAL_VERSION}" == "${PUBLISH_VERSION}" ]; then
+          yarn run bootstrap:deps
+          yarn run build:deps
+          cd ./packages/onboarding/
+          npm publish
+        fi
 
 # review:
 #   image: python:3.7-alpine
