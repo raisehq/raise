@@ -260,29 +260,27 @@ cache:
 #   only:
 #     - master
 
-publish-components:
-  stage: publish
-  rules:
-    - changes:
-        - packages/components/package.json
-    - if: '$CI_COMMIT_REF_SLUG == "master"'
-    - if: '$LOCAL_VERSION == $PUBLISH_VERSION'
-      when: never
-    - when: never
-  script:
-    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-    - 'yarn run bootstrap:deps'
-    - 'yarn run build:deps'
-    - cd ./packages/components/
-    - npm publish
+# publish-components:
+#   stage: publish
+#   rules:
+#     - changes:
+#         - packages/components/package.json
+#     - if: '$CI_COMMIT_REF_SLUG == "master"'
+#     - if: '$LOCAL_VERSION == $PUBLISH_VERSION'
+#       when: never
+#     - when: never
+#   script:
+#     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+#     - 'yarn run bootstrap:deps'
+#     - 'yarn run build:deps'
+#     - cd ./packages/components/
+#     - npm publish
 
 publish-onboarding:
   stage: publish
   rules:
-    - if: '$CI_COMMIT_REF_SLUG == "master"'
-      when: always
-    - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
-      when: always
+    - if: '$LOCAL_VERSION == $PUBLISH_VERSION'
+      when: never
     - changes:
         - packages/onboarding/package.json
 
