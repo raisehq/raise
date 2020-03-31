@@ -61,10 +61,10 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
           ) : (
             <InstructionsContainer>
               <CoinbaseInstrucctions>
-                1. Download
+                1.
                 <WalletLink href="https://onelink.to/dvu97k" target="_blank">
                   {' '}
-                  Coinbase Wallet{' '}
+                  Download Coinbase Wallet{' '}
                 </WalletLink>
                 app in your phone and create a wallet. This process takes between 1 or 2 minutes
               </CoinbaseInstrucctions>
