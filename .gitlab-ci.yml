@@ -282,7 +282,7 @@ publish-onboarding:
     - changes:
         - packages/onboarding/package.json
     - if: '$CI_COMMIT_REF_SLUG == "master"'
-    - if: '$LOCAL_VERSION != $PUBLISH_VERSION'
+    - if: '$LOCAL_VERSION == $PUBLISH_VERSION'
       when: never
     - when: never
   script:
