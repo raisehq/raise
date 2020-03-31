@@ -48,8 +48,8 @@ const useLoanDispatcher = () => {
 
             return followTx.watchTx(
               contract.methods.deploy(...params).send({ from: account }),
-              'createLoan',
-              { id: 'createLoan' }
+              { id: 'createLoan' },
+              'createLoan'
             );
           }
         });

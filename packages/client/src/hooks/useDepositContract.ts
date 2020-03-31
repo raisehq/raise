@@ -23,22 +23,22 @@ const useDepositContract = () => {
           deposit: address =>
             followTx.watchTx(
               contract.methods.depositFor(address).send({ from: address }),
-              'deposit',
-              { id: 'deposit' }
+              { id: 'deposit' },
+              'deposit'
             ),
           depositWithReferral: (address, referralAddress) =>
             followTx.watchTx(
               contract.methods
                 .depositForWithReferral(address, referralAddress)
                 .send({ from: address }),
-              'depositReferal',
-              { id: 'depositReferal' }
+              { id: 'depositReferal' },
+              'depositReferal'
             ),
           withdraw: address =>
             followTx.watchTx(
               contract.methods.withdraw(address).send({ from: address }),
-              'withdrawDeposit',
-              { id: 'withdrawDeposit' }
+              { id: 'withdrawDeposit' },
+              'withdrawDeposit'
             )
         });
       } catch (error) {

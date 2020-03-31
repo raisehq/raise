@@ -72,7 +72,7 @@ const Wallet = ({ onNext, onBack }: any) => {
     } else {
       try {
         await connectWallet(walletSelected, network, networkId);
-        onNext('WalletSelector');
+        onNext('WalletSelector', true);
       } catch (error) {
         // console.log(error)
       }
@@ -105,7 +105,7 @@ const Wallet = ({ onNext, onBack }: any) => {
           <SelectWalletOptionItem key="coinbase">
             <WalletButton
               onClickAction={handlerWallet(CryptoWallets.Coinbase)}
-              walletName="Coinbase"
+              walletName="Coinbase Wallet"
               walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
             />
           </SelectWalletOptionItem>

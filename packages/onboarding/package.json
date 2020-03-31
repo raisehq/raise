@@ -1,7 +1,7 @@
 {
   "name": "@raisehq/onboarding",
   "private": false,
-  "version": "1.0.64",
+  "version": "1.0.66",
   "description": "Raise signup/login modal",
   "author": "RaiseHQ",
   "homepage": "http://www.raise.it",
