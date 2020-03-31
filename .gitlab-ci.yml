@@ -283,7 +283,6 @@ publish-onboarding:
       when: never
     - changes:
         - packages/onboarding/package.json
-
     - when: never
   script:
     - 'echo $LOCAL_VERSION '
