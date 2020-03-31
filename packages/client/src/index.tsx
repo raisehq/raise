@@ -58,7 +58,8 @@ const Root = () => {
   tagManager.initialize();
 
   useEffect(() => {
-    if (process.env.REACT_APP_LOGROCKET === 'true') {
+    const { Cypress }: any = window;
+    if (process.env.REACT_APP_LOGROCKET === 'true' && Cypress === undefined) {
       LogRocket.init('rjsyho/raisehq');
     }
   }, []);

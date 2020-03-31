@@ -119,7 +119,8 @@ export function Updater() {
   }, [isLogged, token, address, network]);
 
   useEffect(() => {
-    if (process.env.REACT_APP_LOGROCKET === 'true') {
+    const { Cypress }: any = window;
+    if (process.env.REACT_APP_LOGROCKET === 'true' && Cypress === undefined) {
       if (isLogged) {
         LogRocket.identify(id, {
           id,
