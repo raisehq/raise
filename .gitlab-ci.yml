@@ -262,34 +262,36 @@ cache:
 #   only:
 #     - master
 
-# publish-components:
-#   stage: publish
-#   rules:
-#     - changes:
-#         - packages/components/package.json
-#     - if: '$CI_COMMIT_REF_SLUG == "master"'
-#     - if: '$LOCAL_VERSION == $PUBLISH_VERSION'
-#       when: never
-#     - when: never
-#   script:
-#     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-#     - 'yarn run bootstrap:deps'
-#     - 'yarn run build:deps'
-#     - cd ./packages/components/
-#     - npm publish
+publish-components:
+  stage: publish
+  rules:
+    - changes:
+        - packages/components/package.json
+    - if: '$CI_COMMIT_REF_SLUG != "master"'
+      when: never
+    - when: never
+  script:
+    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+    - |
+      #!/bin/sh
+      if [ "${LOCAL_VERSION_COMPONENTS}" != "${PUBLISH_VERSION_COMPONENTS}" ]; then
+        yarn run bootstrap:deps
+        yarn run build:deps
+        cd ./packages/components/
+        npm publish
+      else
+        echo "Package not updated, the latest version published is ${PUBLISH_VERSION_COMPONENTS} and the local verison is ${LOCAL_VERSION_COMPONENTS}."
+      fi
 
 publish-onboarding:
   stage: publish
   rules:
     - changes:
         - packages/onboarding/package.json
-    - if: '$CI_COMMIT_REF_SLUG != "lp-1139"'
+    - if: '$CI_COMMIT_REF_SLUG != "master"'
       when: never
     - when: never
   script:
-    - 'echo $LOCAL_VERSION '
-    - 'echo $PUBLISH_VERSION '
-    - 'echo $CI_COMMIT_REF_SLUG'
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - |
       #!/bin/sh
@@ -299,7 +301,7 @@ publish-onboarding:
         cd ./packages/onboarding/
         npm publish
       else
-        echo "Package not updated, has the latest version. If you want to change the version published, please update the version."
+        echo "Package not updated, the latest version published is ${PUBLISH_VERSION_ONBOARDING} and the local verison is ${LOCAL_VERSION_ONBOARDING}."
       fi
 
 # review:
