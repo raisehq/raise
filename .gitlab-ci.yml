@@ -35,8 +35,7 @@ variables:
   AWS_DEFAULT_REGION: eu-west-1
   CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
   BASTION: 'bastion'
-  LOCAL_VERSION_ONBOARDING: $(cat packages/onboarding/package.json | jq -r .version)
-  PUBLISH_VERSION_ONBOARDING: $(npm view @raisehq/onboarding version)
+
 cache:
   key: '${CI_COMMIT_REF_SLUG}'
   paths:
@@ -280,7 +279,7 @@ cache:
 publish-onboarding:
   stage: publish
   rules:
-    - if: '$LOCAL_VERSION_ONBOARDING != $PUBLISH_VERSION_ONBOARDING'
+    - if: '$(cat packages/onboarding/package.json | jq -r .version) != $(npm view @raisehq/onboarding version)'
       when: always
     - when: never
   script:
