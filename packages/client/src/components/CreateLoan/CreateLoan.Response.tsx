@@ -50,10 +50,11 @@ export const getLoanAction = (stage, values, methods) => {
             as={Link}
             to="/"
             onClick={onSave}
-            text="Check loans"
+            text="Check your loans"
             type={'secondary'}
-            size={'large'}
+            size={'small'}
             disabled={false}
+            fullWidth={true}
           />
         </ButtonContainer>
         <NewLoanAnchor onClick={onRetry}>Create a new loan</NewLoanAnchor>
@@ -71,6 +72,7 @@ export const getLoanAction = (stage, values, methods) => {
             type={'secondary'}
             size={'large'}
             disabled={false}
+            fullWidth={true}
           />
         </ButtonContainer>
       </LoanConfirmation>

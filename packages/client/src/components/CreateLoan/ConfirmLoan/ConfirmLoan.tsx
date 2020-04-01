@@ -116,6 +116,7 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
           text="Confirm"
           type="secondary"
           size="large"
+          fullWidth={true}
           disabled={
             amountValidation.error ||
             loan.term === 0 ||

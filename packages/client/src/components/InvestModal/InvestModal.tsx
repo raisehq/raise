@@ -113,6 +113,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
           disabled={false}
           type={'primary'}
           size={'large'}
+          fullWidth={true}
         />
       </ButtonContainer>
       <Modal open={open} onClose={closeModal} size={stageModalWidth} mountNode={modalRefs.current}>

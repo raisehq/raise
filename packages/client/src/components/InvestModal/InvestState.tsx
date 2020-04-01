@@ -202,6 +202,7 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
           text="Confirm"
           type="secondary"
           size="large"
+          fullWidth={true}
           disabled={
             value === 0 ||
             value === undefined ||

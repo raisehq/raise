@@ -11,6 +11,7 @@ interface ButtonProps {
   size: string;
   as?: any;
   to?: any;
+  fullWidth?: boolean;
 }
 
 const Button: React.SFC<ButtonProps> = ({
@@ -21,6 +22,7 @@ const Button: React.SFC<ButtonProps> = ({
   className,
   type,
   size,
+  fullWidth = false,
   ...rest
 }) => {
   return (
@@ -31,6 +33,7 @@ const Button: React.SFC<ButtonProps> = ({
       className={className}
       type={type}
       size={size}
+      fullWidth={fullWidth}
       {...rest}
     >
       {text}

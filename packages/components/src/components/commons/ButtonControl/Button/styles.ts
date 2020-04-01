@@ -28,7 +28,8 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
 
     padding: ${props => globalTheme.buttonSizes[props.size].padding};
     height: ${props => globalTheme.buttonSizes[props.size].height};
-    width: ${props => globalTheme.buttonSizes[props.size].width};
+    width: ${props =>
+      props.fullWidth ? '100%' : globalTheme.buttonSizes[props.size].width};
     font-size: ${props => globalTheme.buttonSizes[props.size].fontSize};
     line-height: ${props => globalTheme.buttonSizes[props.size].lineHeight};
 
