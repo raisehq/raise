@@ -29,6 +29,14 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
     }
   };
 
+  const getCoinbaseLink = () => {
+    if (isMobile) {
+      return 'https://onelink.to/dvu97k';
+    }
+
+    return 'https://wallet.coinbase.com/#signup';
+  };
+
   switch (walletId) {
     case CryptoWallets.Metamask:
       return (
@@ -49,15 +57,15 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
         <CardCenteredText>
           <CardTitle>Following Coinbase Wallet Instructions</CardTitle>
           {hasWallet ? (
-            <CoinbaseInstrucctions>
+            <TextDescription>
               Make sure you have
-              <WalletLink href="https://onelink.to/dvu97k" target="_blank">
+              <WalletLink href={getCoinbaseLink()} target="_blank">
                 {' '}
                 Coinbase Wallet{' '}
               </WalletLink>
               app in your mobile and have registered. You will be required to scan a QR code with
               the app
-            </CoinbaseInstrucctions>
+            </TextDescription>
           ) : (
             <InstructionsContainer>
               <CoinbaseInstrucctions>
