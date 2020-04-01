@@ -226,6 +226,7 @@ export const CardCenteredText = styled.div`
 export const TextDescription = styled.div`
   text-align: center;
   padding: 10px;
+  width: 512px;
 `;
 
 export const SelectYourWalletTitle = styled.div`
