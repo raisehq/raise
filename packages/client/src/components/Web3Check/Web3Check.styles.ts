@@ -219,9 +219,8 @@ export const CardSubTitle = styled.div`
 `;
 
 export const CardCenteredText = styled.div`
-  &&& {
-    text-align: center;
-  }
+  display: flex;
+  flex-direction: column;
 `;
 
 export const TextDescription = styled.div`
@@ -333,6 +332,14 @@ export const SetUpSubtitle = styled.div`
   margin-bottom: 22px;
 `;
 
+export const CoinbaseInstrucctions = styled.div`
+  width: 512px;
+  color: #3c4251;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 22px;
+`;
+
 export const WalletIcon = styled.img`
   height: 76px;
   width: 76px;
@@ -348,4 +355,53 @@ export const OtherWalletsText = styled.div`
   text-align: center;
   margin-top: 39px;
   margin-bottom: 9.5px;
+`;
+
+export const WalletLink = styled.a`
+  color: #00da9e;
+`;
+
+export const ConnectWalletButton = styled.div`
+  background-color: #00da9e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 48px;
+  width: min-content;
+  border-radius: 3px;
+  padding: 0px 32px 0px 32px;
+
+  cursor: pointer;
+
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+
+  text-align: center;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: bold;
+
+  :hover {
+    background-color: #33e1b1;
+    box-shadow: 0px 8px 15px rgba(60, 66, 81, 0.25);
+  }
+  :active {
+    background-color: #00a76f;
+  }
+`;
+
+export const ButtonText = styled.div`
+  color: #3c4251;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+`;
+
+export const InstructionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top 40px;
 `;
