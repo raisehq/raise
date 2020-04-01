@@ -1,7 +1,7 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
-import Button from '../../commons/ButtonControl/Button';
-import CheckboxControl from '../../commons/CheckboxControl';
+import { Button } from '@raisehq/components';
+import { CheckboxControl } from '@raisehq/components';
 
 import {
   Divider,
@@ -14,7 +14,8 @@ import {
   FirstContainer,
   SecondContainer,
   HeaderRow,
-  CheckboxRow
+  CheckboxRow,
+  ButtonContainer
 } from '../CreateLoan.styles';
 
 const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
@@ -107,12 +108,15 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
         </CheckboxRow>
       </AmountRow>
 
-      <div>
+      <ButtonContainer>
         <Button
           idAttr="btn-create"
           className="btn-confirm-loan"
           onClick={onSave}
           text="Confirm"
+          type="secondary"
+          size="large"
+          fullWidth={true}
           disabled={
             amountValidation.error ||
             loan.term === 0 ||
@@ -122,7 +126,7 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
             !authTerms
           }
         />
-      </div>
+      </ButtonContainer>
     </LoanConfirmation>
   );
 };

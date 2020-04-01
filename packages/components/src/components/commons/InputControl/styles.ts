@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { Input } from 'semantic-ui-react';
 
 export const InputFieldStyled = styled(Input)`
-  border: ${({ disabled }) => (disabled ? '1px solid #D8D9DC' : '1px solid #c5c7cb')};
+  border: ${({ disabled }) =>
+    disabled ? '1px solid #D8D9DC' : '1px solid #c5c7cb'};
   background: #ffffff;
   box-sizing: border-box;
   border-radius: 3px;

@@ -13,19 +13,20 @@ import { useAppContext } from '../../contexts/AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useGetCoin from '../../hooks/useGetCoin';
 import { useAddressBalance } from '../../contexts/BalancesContext';
+import { Button } from '@raisehq/components';
 
 import {
   Header,
   ModalInputContainer,
   ModalInputBox,
   InputLabel,
-  ConfirmButton,
   InputContainer,
   // Amount,
   // FundAllLabel,
   LoanTermsCheckbox,
   CheckContainer,
-  InvestorBalance
+  InvestorBalance,
+  ButtonContainer
 } from './InvestModal.styles';
 
 const errorMessages = {
@@ -194,20 +195,24 @@ const InvestState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestmen
         <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
         to the Terms and Conditions of the Loan Agreement
       </CheckContainer>
-      <ConfirmButton
-        id="btn-invest-confirm"
-        onClick={onConfirm}
-        disabled={
-          value === 0 ||
-          value === undefined ||
-          !termsCond ||
-          value > balance ||
-          value > nMaxAmount ||
-          kyc_status !== 3
-        }
-      >
-        CONFIRM
-      </ConfirmButton>
+      <ButtonContainer>
+        <Button
+          idAttr="btn-invest-confirm"
+          onClick={onConfirm}
+          text="Confirm"
+          type="secondary"
+          size="large"
+          fullWidth={true}
+          disabled={
+            value === 0 ||
+            value === undefined ||
+            !termsCond ||
+            value > balance ||
+            value > nMaxAmount ||
+            kyc_status !== 3
+          }
+        />
+      </ButtonContainer>
     </>
   );
 };

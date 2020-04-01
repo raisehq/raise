@@ -3,7 +3,7 @@ import numeral from 'numeral';
 import NumberFormat from 'react-number-format';
 import { InputFieldStyled } from '../styles';
 
-const InputNumber = props => {
+const InputNumber = (props: any) => {
   const decimalScale = 2;
   const thousandSeparator = '.';
   const decimalSeparator = ',';

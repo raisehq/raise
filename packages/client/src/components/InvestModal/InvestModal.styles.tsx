@@ -96,6 +96,15 @@ export const BorrowerButton = styled(LenderButton)`
     }
   }
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
 export const Modal = styled(SemanticModal)`
   background-color: #fcfcfc;
   border-radius: 4px;
