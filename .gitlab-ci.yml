@@ -168,6 +168,7 @@ cypress-e2e-review:
     CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+    CYPRESS_isCanary: 'false'
   before_script:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
@@ -200,6 +201,7 @@ cypress-e2e-production:
     CYPRESS_baseUrl: 'https://app.raise.it'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: https://api.raise.it
+    CYPRESS_isCanary: 'false'
   before_script:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:

@@ -14,14 +14,7 @@ Cypress.Cookies.defaults({
 });
 
 Cypress.Commands.add('CookieXCanary', function() {
-  const timeStampInMs =
-    window.performance &&
-    window.performance.now &&
-    window.performance.timing &&
-    window.performance.timing.navigationStart
-      ? window.performance.now() + window.performance.timing.navigationStart
-      : Date.now();
-  cy.setCookie('X-Canary', timeStampInMs.toString());
+  cy.setCookie('X-Canary', Date.now().toString());
 });
 
 /*
@@ -147,56 +140,58 @@ Cypress.Commands.add('login', function(type, env = 'local') {
   Mock API requests
 */
 Cypress.Commands.add('mockAPI', function(type) {
-  cy.on('window:before:load', win => {
-    const user = Cypress.env('user');
-    win.AxiosMockResponses = [
-      ['POST', `${Cypress.env('api')}/jwt/verify`, 200, { mock: true, success: true }], //'https://api.herodev.es
-      [
-        'GET',
-        `${Cypress.env('api')}/cryptoaddress/user/user:12345`,
-        200,
-        {
-          mock: true,
-          success: true,
-          data: [
-            {
-              id: 'cryptoaddress:eaabbd22-7c22-4be6-9a4d-09dd660ee50c',
-              herouser_id: 'user:12345',
-              address: user[type].address,
-              cryptotype_id: 1,
-              site: null,
-              created_on: '2019-09-03T15:20:44.038Z',
-              deleted: 0
-            }
-          ]
-        }
-      ],
-      [
-        'PUT',
-        `${Cypress.env('api')}/users/user:12345`,
-        200,
-        {
-          mock: true,
-          success: true,
-          data: {
-            id: 'user:12345',
-            username: 'Mr.Rob',
-            email: 'noreply@herotoken.io',
-            referral_code: 'XXX1',
-            referrer_code: null,
-            firstname: null,
-            lastname: null,
-            status: 2,
-            kyc_status: 3,
-            accounttype_id: type === 'lender' ? 2 : 1,
-            delete: 0,
-            phone: null,
-            birthday: null
+  const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
+  !isCanary &&
+    cy.on('window:before:load', win => {
+      const user = Cypress.env('user');
+      win.AxiosMockResponses = [
+        ['POST', `${Cypress.env('api')}/jwt/verify`, 200, { mock: true, success: true }], //'https://api.herodev.es
+        [
+          'GET',
+          `${Cypress.env('api')}/cryptoaddress/user/user:12345`,
+          200,
+          {
+            mock: true,
+            success: true,
+            data: [
+              {
+                id: 'cryptoaddress:eaabbd22-7c22-4be6-9a4d-09dd660ee50c',
+                herouser_id: 'user:12345',
+                address: user[type].address,
+                cryptotype_id: 1,
+                site: null,
+                created_on: '2019-09-03T15:20:44.038Z',
+                deleted: 0
+              }
+            ]
           }
-        }
-      ]
-    ];
-  });
+        ],
+        [
+          'PUT',
+          `${Cypress.env('api')}/users/user:12345`,
+          200,
+          {
+            mock: true,
+            success: true,
+            data: {
+              id: 'user:12345',
+              username: 'Mr.Rob',
+              email: 'noreply@herotoken.io',
+              referral_code: 'XXX1',
+              referrer_code: null,
+              firstname: null,
+              lastname: null,
+              status: 2,
+              kyc_status: 3,
+              accounttype_id: type === 'lender' ? 2 : 1,
+              delete: 0,
+              phone: null,
+              birthday: null
+            }
+          }
+        ]
+      ];
+    });
 });
 
 /* 
