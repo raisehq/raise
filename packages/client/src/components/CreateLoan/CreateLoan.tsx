@@ -122,7 +122,6 @@ const CreateLoan = ({ contracts }) => {
 
   const getCoinsFromContract = () => {
     const contract = get(contracts, `address.${walletNetworkId}`);
-    console.log(COINS);
     const mappedCoins: CoinsType[] = COINS.map(coin => ({
       address: contract[coin.name],
       text: coin.name,
