@@ -1,11 +1,11 @@
 describe('LENDER', function() {
   beforeEach(function() {
     const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
+    cy.CookieXCanary();
     cy.butterCMS();
     cy.login('lender', isCanary);
-    cy.mockAPI('borrower', isCanary);
+    cy.mockAPI('lender', isCanary);
     cy.web3('lender');
-    cy.CookieXCanary();
   });
   it('Invest', function() {
     cy.visit(Cypress.env('url'));

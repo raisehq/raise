@@ -9,11 +9,12 @@ describe('Login', function() {
     cy.get('#btn-sign-in-email').click();
     cy.wait(2000);
     cy.get('.process').matchImageSnapshot('login_modal');
-    const user = Cypress.env('user');
+    const userEmail = Cypress.env('userEmail');
+    const userPassword = Cypress.env('userPassword');
     cy.get('#input-login').should('have.length', 1);
-    cy.get('#input-login').type(user['lender'].email);
+    cy.get('#input-login').type(userEmail);
     cy.get('#input-password').should('have.length', 1);
-    cy.get('#input-password').type(user['lender'].password);
+    cy.get('#input-password').type(userPassword);
     cy.wait(1000);
     cy.get('.process').matchImageSnapshot('login_modal_filled');
     cy.get('#btn-login').click();

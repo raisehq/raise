@@ -114,12 +114,13 @@ Cypress.Commands.add('addLoanAndCard', function(type) {
 */
 Cypress.Commands.add('login', function(type, isCanary = false) {
   if (isCanary) {
+    console.log('- Mock Login disabled by Canary');
     // Request to the real API
     const userEmail = Cypress.env('userEmail');
     const userPassword = Cypress.env('userPassword');
     cy.request({
       method: 'POST',
-      url: Cypress.env('api') + 'api/jwt/authenticate',
+      url: Cypress.env('api') + '/jwt/authenticate',
       body: {
         email: userEmail,
         password: userPassword,
@@ -168,7 +169,7 @@ Cypress.Commands.add('login', function(type, isCanary = false) {
   Mock API requests
 */
 Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
-  !isCanary &&
+  if (!isCanary) {
     cy.on('window:before:load', win => {
       const user = Cypress.env('user');
       win.AxiosMockResponses = [
@@ -189,6 +190,20 @@ Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
                 site: null,
                 created_on: '2019-09-03T15:20:44.038Z',
                 deleted: 0
+              }
+            ]
+          }
+        ],
+        [
+          'GET',
+          `${Cypress.env('api')}/kyc/auth/user:12345`,
+          200,
+          {
+            mock: true,
+            success: true,
+            data: [
+              {
+                token: '123123123123123123123123'
               }
             ]
           }
@@ -219,6 +234,9 @@ Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
         ]
       ];
     });
+  } else {
+    console.log('- MockApi disabled by Canary');
+  }
 });
 
 /* 
