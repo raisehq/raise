@@ -15,6 +15,7 @@ export { default as useDefiPulse } from './hooks/useDefiPulse';
 export { default as useCompaniesScrapper } from './hooks/useCompaniesScrapper';
 
 export { default as Button } from './components/commons/ButtonControl/Button';
+export { default as BloomButton } from './components/commons/ButtonControl/BloomButton';
 export { default as GroupButton } from './components/commons/ButtonControl/GroupButton';
 export { default as CheckboxControl } from './components/commons/CheckboxControl';
 export { default as InputNumber } from './components/commons/InputControl/InputNumber';

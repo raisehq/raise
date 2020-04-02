@@ -6,6 +6,7 @@ import { globalTheme } from '../../theme';
 interface ButtonProps {
   type: string;
   disabled: boolean;
+  size: string;
 }
 
 export const ButtonStyled = styled(Button)<ButtonProps>`
@@ -58,4 +59,11 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
         globalTheme.buttonPatterns[props.type].onClick.borderColor};
     }
   }
+`;
+
+export const ButtonContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
