@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import BN from 'bn.js';
 import styled from 'styled-components';
+import { tradeTokensForExactTokens } from '@uniswap/sdk';
 import { fromWei, toWei } from 'web3-utils';
 import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
@@ -9,7 +10,6 @@ import { useAppContext } from '../../contexts/AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { useAddressBalance } from '../../contexts/BalancesContext';
-import { tradeExactTokensForTokens } from '@uniswap/sdk';
 import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
 
 import { generateInfo } from './investUtils';
@@ -60,7 +60,9 @@ const InvestState: React.SFC<InvestStateProps> = ({
   ui,
   selectedCoin,
   setCoin,
-  loan
+  loan,
+  setInputTokenAmount,
+  inputTokenAmount
 }: InvestStateProps) => {
   const { text: loanCoinName } = loanCoin;
   const {
@@ -84,7 +86,6 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const balance = Number(Number(fromWei(balanceBN)).toFixed(2));
   const { expectedROI } = calcs;
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
-  const [output, setOutput] = useState<BN>(new BN('0'));
   const onConfirm = async () => {
     tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
 
@@ -105,19 +106,22 @@ const InvestState: React.SFC<InvestStateProps> = ({
 
   const getSwapOutput = async (): Promise<BN> => {
     const defaultValue = new BN('0');
-    const inputAmount = toWei(value.toString());
+    if (!value) {
+      return defaultValue;
+    }
+    const outputAmount = toWei(value.toString());
     try {
       if (!inputCoin || !loanCoin) {
         return defaultValue;
       }
-      const tradeDetails = await tradeExactTokensForTokens(
+      const tradeDetails = await tradeTokensForExactTokens(
         inputCoin.address,
         loanCoin.address,
-        inputAmount,
+        outputAmount,
         chainId
       );
 
-      const totalOutput = new BN(tradeDetails.outputAmount.amount.toString(10));
+      const totalOutput = new BN(tradeDetails.inputAmount.amount.toString(10));
       return totalOutput;
     } catch (error) {
       console.error(error);
@@ -126,12 +130,16 @@ const InvestState: React.SFC<InvestStateProps> = ({
   };
 
   useAsyncEffect(async () => {
+    if (!value) {
+      setInputTokenAmount(new BN('0'));
+      return;
+    }
     if (inputCoin?.text === loanCoin.text) {
-      setOutput(new BN(toWei(value.toString())));
+      setInputTokenAmount(new BN(toWei(value.toString())));
       return;
     }
     const outputAmount = await getSwapOutput();
-    setOutput(outputAmount);
+    setInputTokenAmount(outputAmount);
   }, [value, selectedCoin]);
 
   const loanInfo = useMemo(() => generateInfo({ ...calcs, coin: loanCoinName, loan }), [
@@ -139,13 +147,15 @@ const InvestState: React.SFC<InvestStateProps> = ({
     loanCoinName,
     loan
   ]);
+  const [termsCond, setTermsCond] = useState(false);
 
-  const outputString = fromWei(output) || '0';
+  const inputTokenAmountString = fromWei(inputTokenAmount) || '0';
   const buttonRules =
     value === 0 ||
     value === undefined ||
     value > balance ||
     value > maxAmountNum ||
+    !termsCond ||
     kyc_status !== 3;
 
   const InvestInputProps = {
@@ -153,12 +163,11 @@ const InvestState: React.SFC<InvestStateProps> = ({
     value,
     setValue,
     coin: inputCoin,
+    loanCoin,
     balance,
     selectedCoin,
     setCoin
   };
-
-  const [termsCond, setTermsCond] = useState(false);
 
   const onToggleTerms = () => {
     const toggleTerms = !termsCond;
@@ -170,7 +179,14 @@ const InvestState: React.SFC<InvestStateProps> = ({
       <InvestHeader>Loan Information</InvestHeader>
       <CollapsedTable items={loanInfo} />
       <InvestSection {...InvestInputProps} />
-      <TableItem title="The equivalent in DAI" content={<>{outputString} DAI</>} />
+      <TableItem
+        title={`The equivalent in ${selectedCoin}`}
+        content={
+          <>
+            {inputTokenAmountString} {selectedCoin}
+          </>
+        }
+      />
       <TableItem title="Expected ROI after repayment" content={<>{expectedROI} DAI</>} latest />
       <ErrorBox>
         {errorMessage()}

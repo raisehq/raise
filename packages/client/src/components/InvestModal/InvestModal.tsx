@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import daggy from 'daggy';
-// import { Modal as SemanticModal } from 'semantic-ui-react';
-import { InvestModalProps } from './types';
+import BN from 'bn.js';
+import { match, ANY } from 'pampy';
 import { fromWei } from 'web3-utils';
+import { InvestModalProps } from './types';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
@@ -12,7 +13,6 @@ import SuccessState from './SuccessState';
 import VerifyKycModal from './VerifyKycState';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
-import { match, ANY } from 'pampy';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const UI = daggy.taggedSum('UI', {
@@ -45,6 +45,8 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Kyc);
   const [investment, setInvestment] = useState(0);
+  const [inputTokenAmount, setInputTokenAmount] = useState<BN>(new BN('0'));
+
   const [selectedCoin, setCoin] = useState(coin.text);
   const tagManager = useGoogleTagManager('Card');
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
@@ -93,6 +95,8 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
           loanCoin={coin}
           setStage={setStage}
           setInvestment={setInvestment}
+          inputTokenAmount={inputTokenAmount}
+          setInputTokenAmount={setInputTokenAmount}
           setCoin={setCoin}
           selectedCoin={selectedCoin}
           ui={UI}
@@ -101,10 +105,12 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
       Processing: () => (
         <ProcessingState
           loan={loan}
+          loanCoin={coin}
           investment={investment}
+          inputTokenAmount={inputTokenAmount}
           ui={UI}
           setStage={setStage}
-          coinName={coin.text}
+          selectedCoin={selectedCoin}
         />
       ),
       Success: () => <SuccessState setStage={setStage} ui={UI} closeModal={closeModal} />

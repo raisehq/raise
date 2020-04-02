@@ -6,8 +6,8 @@ interface CoinProps {
   name?: string;
 }
 
-export const Coin: React.SFC<CoinProps> = ({ src, name }) => (
-  <CoinBox>
+export const Coin: React.SFC<CoinProps> = ({ src, name, ...props }) => (
+  <CoinBox {...props}>
     <CoinImage src={src} />
     {name ? <div>{name}</div> : null}
   </CoinBox>

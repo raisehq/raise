@@ -52,7 +52,13 @@ const ContinueButton = styled(ConfirmButton)`
   }
 `;
 
-const ConfirmState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
+const ConfirmState: React.SFC<InvestStateProps> = ({
+  loan,
+  setStage,
+  setInvestment,
+  ui,
+  selectedCoin
+}) => {
   const {
     store: {
       user: {
@@ -69,10 +75,8 @@ const ConfirmState: React.SFC<InvestStateProps> = ({ loan, setStage, setInvestme
   const calcs = getCalculations(loan);
   const coin = useGetCoin(loan);
   const tagManager = useGoogleTagManager('Card');
-  console.log(coin);
   const balanceBN: BN = useAddressBalance(account, coin.address);
   const balance: number = Number(Number(fromWei(balanceBN)).toFixed(2));
-  console.log(balance);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
 
   const onConfirm = async () => {

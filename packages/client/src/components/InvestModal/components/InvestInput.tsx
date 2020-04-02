@@ -5,18 +5,42 @@ import { fromWei } from 'web3-utils';
 import { InvestHeader, InvestorBalance } from '../InvestModal.styles';
 import LoanInput from '../../CreateLoan/LoanInput';
 import CoinSelectorRaw from '../../CoinSelector';
+import RawCoin from '../../Coin';
 
 const CoinSelector = styled(CoinSelectorRaw)``;
+
+const Coin = styled(RawCoin)``;
 
 const Card = styled(RaiseCard)`
   display: flex;
   align-items: center;
 `;
 
+const InvestBox = styled.div`
+  font-size: 16px;
+  color: #8a8e97;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 34px auto 0px auto;
+
+  &&&&&&&&&&&&&&&&&& ${Coin} {
+    font-size: 16px;
+    color: #8a8e97;
+    font-weight: normal;
+  }
+`;
+
 const BalanceWrapper = styled.div`
   width: 100%;
   margin-top: 40px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
   &&&& ${CoinSelector} {
     max-width: 100%;
   }
@@ -25,15 +49,19 @@ const BalanceWrapper = styled.div`
     top: unset;
     padding: unset;
   }
+  div:first-child {
+    margin-bottom: 6px;
+    color: #8a8e97;
+  }
 `;
 
 const BigInput = styled(LoanInput)`
   font-size: 48px;
   line-height: 56px;
   text-align: ${({ value }) => (value ? 'center' : 'left')};
-  width: ${({ value }) => (value ? '100%' : '100px')};
+  width: ${({ value }) => (value ? '160px' : '100px')};
   color: #00da9e;
-  margin: 34px auto 0px auto;
+  margin: ${({ value }) => (value ? '0px auto' : '0px 30px')};
   background-color: transparent;
   display: flex;
   align-items: center;
@@ -63,8 +91,19 @@ const BigInput = styled(LoanInput)`
   }
 `;
 
-const InvestInput = ({ loan, coin, balance, value, setValue, selectedCoin, setCoin, ...props }) => {
+const InvestInput = ({
+  loan,
+  loanCoin,
+  coin,
+  balance,
+  value,
+  setValue,
+  selectedCoin,
+  setCoin,
+  ...props
+}) => {
   const { principal, maxAmount } = loan;
+  const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin.icon}`;
 
   const handleChange = (e, { value }) => {
     setCoin(value);
@@ -87,18 +126,23 @@ const InvestInput = ({ loan, coin, balance, value, setValue, selectedCoin, setCo
   const readValue = value > 0 ? value : null;
   return (
     <Card size="310px" width="400px" {...props}>
-      <InvestHeader>How much you would like to invest?</InvestHeader>
+      <InvestHeader>How much would you like to invest?</InvestHeader>
+      <InvestBox>
+        <div>INVEST</div>
+        <BigInput
+          autoComplete="off"
+          id="input-invest-value"
+          placeholder="0.00"
+          value={readValue}
+          onValueChange={onSetValue}
+        />
+        <Coin src={loanCoinImage} name={loanCoin?.text} />
+      </InvestBox>
       <BalanceWrapper>
+        <div>Invest with</div>
         <CoinSelector value={selectedCoin} onChange={handleChange} />
         <InvestorBalance coin={coin} balance={balance} id="btn-invest-all" onClick={fundAll} />
       </BalanceWrapper>
-      <BigInput
-        autoComplete="off"
-        id="input-invest-value"
-        placeholder="0.00"
-        value={readValue}
-        onValueChange={onSetValue}
-      />
     </Card>
   );
 };

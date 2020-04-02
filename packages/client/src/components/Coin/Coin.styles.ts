@@ -8,12 +8,13 @@ export const CoinBox = styled.div`
   align-items: center;
   justify-content: center;
   color: #eeb345;
+  font-weight: bold;
+  font-size: 14px;
   & > ${CoinImage} {
-    width: 18px;
-    height: 18px;
+    width: 24px;
+    height: 24px;
   }
-  & > div {
-    font-weight: bold;
-    font-size: 14px;
+  & > div:last-child {
+    margin-left: 10px;
   }
 `;
