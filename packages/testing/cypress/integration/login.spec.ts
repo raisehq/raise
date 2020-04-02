@@ -1,4 +1,7 @@
 describe('Login', function() {
+  beforeEach(function() {
+    cy.CookieXCanary();
+  });
   it('Make Login', function() {
     cy.web3('lender');
     cy.visit(`${Cypress.env('url')}/login`, { failOnStatusCode: false }); // int server returns 404 instead of 200 when a http request is done to the server if not /index
@@ -14,8 +17,5 @@ describe('Login', function() {
     cy.wait(1000);
     cy.get('.process').matchImageSnapshot('login_modal_filled');
     cy.get('#btn-login').click();
-    cy.setCookie('X-Canary', 'activated')
   });
 });
-
-

@@ -112,35 +112,62 @@ Cypress.Commands.add('addLoanAndCard', function(type) {
 /*
   Mock Login process
 */
-Cypress.Commands.add('login', function(type, env = 'local') {
-  const auth = {
-    id: 'user:12345',
-    status: 2,
-    token: 'XXXXXX',
-    type: type === 'lender' ? 2 : 1
-  };
-  const user = {
-    id: 'user:12345',
-    email: 'noreply@raise.it',
-    firstname: null,
-    lastname: null,
-    kyc_status: 3,
-    status: 2,
-    accounttype_id: type === 'lender' ? 2 : 1,
-    delete: 0,
-    referral_code: 'TEST01'
-  };
-  cy.window().then(win => {
-    win.localStorage.setItem('auth', JSON.stringify(auth));
-    win.localStorage.setItem('user', JSON.stringify(user));
-  });
+Cypress.Commands.add('login', function(type, isCanary = false) {
+  if (isCanary) {
+    // Request to the real API
+    const userEmail = Cypress.env('userEmail');
+    const userPassword = Cypress.env('userPassword');
+    cy.request({
+      method: 'POST',
+      url: Cypress.env('api') + 'api/jwt/authenticate',
+      body: {
+        email: userEmail,
+        password: userPassword,
+        'g-recaptcha-response': 'xxxxxxxxx'
+      }
+    }).then(({ body: { data }, status }) => {
+      if (status !== 200) throw new Error('Error login');
+
+      const auth = {
+        id: data.user.id,
+        status: data.user.status,
+        token: data.JwtToken,
+        type: data.user.accounttype_id
+      };
+
+      window.localStorage.setItem('auth', JSON.stringify(auth));
+      window.localStorage.setItem('user', JSON.stringify(data.user));
+    });
+  } else {
+    // Fake connection
+    const auth = {
+      id: 'user:12345',
+      status: 2,
+      token: 'XXXXXX',
+      type: type === 'lender' ? 2 : 1
+    };
+    const user = {
+      id: 'user:12345',
+      email: 'noreply@raise.it',
+      firstname: null,
+      lastname: null,
+      kyc_status: 3,
+      status: 2,
+      accounttype_id: type === 'lender' ? 2 : 1,
+      delete: 0,
+      referral_code: 'TEST01'
+    };
+    cy.window().then(win => {
+      win.localStorage.setItem('auth', JSON.stringify(auth));
+      win.localStorage.setItem('user', JSON.stringify(user));
+    });
+  }
 });
 
 /*
   Mock API requests
 */
-Cypress.Commands.add('mockAPI', function(type) {
-  const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
+Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
   !isCanary &&
     cy.on('window:before:load', win => {
       const user = Cypress.env('user');

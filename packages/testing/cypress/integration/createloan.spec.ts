@@ -2,8 +2,9 @@
 
 describe('BORROWER', function() {
   beforeEach(function() {
-    cy.login('borrower');
-    cy.mockAPI('borrower');
+    const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
+    cy.login('borrower', isCanary);
+    cy.mockAPI('borrower', isCanary);
     cy.web3('borrower');
     cy.CookieXCanary();
   });
