@@ -139,6 +139,15 @@ const globalTheme: any = {
       lineHeight: '19px',
     },
   },
+  buttonWithLogoSizes: {
+    large: {
+      height: '72px',
+      width: '240px',
+      padding: '16px24px',
+      fontSize: '20px',
+      lineHeight: '24px',
+    },
+  },
 };
 
 export { globalTheme };

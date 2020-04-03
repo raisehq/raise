@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonStyled, ButtonContent } from './styles';
+import { ButtonStyled, ButtonContent, LeftSide } from './styles';
 import { ButtonLinkProps } from '../types';
 import { Image } from 'semantic-ui-react';
 
@@ -13,6 +13,7 @@ const ButtonLink: React.SFC<ButtonLinkProps> = ({
   size,
   fullWidth = false,
   icon,
+  logo,
   ...rest
 }) => {
   return (
@@ -27,7 +28,13 @@ const ButtonLink: React.SFC<ButtonLinkProps> = ({
       {...rest}
     >
       <ButtonContent>
-        <span>{text}</span>
+        <LeftSide>
+          <Image
+            src={`${process.env.REACT_APP_HOST_IMAGES}/images/${logo}`}
+            size="tiny"
+          />
+          <span>{text}</span>
+        </LeftSide>
         <Image
           src={`${process.env.REACT_APP_HOST_IMAGES}/images/${icon}`}
           size="tiny"

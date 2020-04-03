@@ -3,6 +3,7 @@ import GoBackButton from '../GoBackButton';
 import { Loader } from 'semantic-ui-react';
 import CryptoWallets from '../../commons/cryptoWallets';
 import OnboardingProgressBar from '../OnboardingProgressBar';
+import { Button } from '@raisehq/components';
 import {
   CardCenteredText,
   CardTitle,
@@ -11,11 +12,11 @@ import {
   SelectYourWalletContainer,
   BackContainer,
   TextDescription,
-  ConnectWalletButton,
   CoinbaseInstrucctions,
   WalletLink,
   Web3CheckWalletWrapper,
-  InstructionsContainer
+  InstructionsContainer,
+  ButtonContainer
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import { isMobile } from 'react-device-detect';
@@ -84,7 +85,15 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
               </CoinbaseInstrucctions>
             </InstructionsContainer>
           )}
-          <ConnectWalletButton onClick={connectCoinbase}>Continue</ConnectWalletButton>
+          <ButtonContainer>
+            <Button
+              onClick={connectCoinbase}
+              text="Continue"
+              type="secondary"
+              size="large"
+              disabled={false}
+            />
+          </ButtonContainer>
         </CardCenteredText>
       );
     case CryptoWallets.WebWallet:

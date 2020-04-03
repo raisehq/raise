@@ -4,7 +4,6 @@ import {
   SelectYourWalletTitle,
   Web3CheckWalletWrapper,
   GoBack,
-  WalletIcon,
   SetUpSubtitle,
   OtherWalletsText,
   ButtonContainer
@@ -14,7 +13,6 @@ import { ButtonLink } from '@raisehq/components';
 
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { isMobile } from 'react-device-detect';
-import { WalletButton } from '../WalletButton';
 import GoBackButton from '../GoBackButton';
 import { getWalletName } from '../../utils';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
@@ -69,7 +67,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
           Once you are all set up to connect your new wallet, refresh your browser.
         </SetUpSubtitle>
       </SelectYourWalletTitle>
-      <WalletIcon src={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`} />
+
       <ButtonContainer>
         <ButtonLink
           onClick={handlerWallet(CryptoWallets.Metamask)}
@@ -78,12 +76,17 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
           fullWidth={true}
           icon={`external_link.svg`}
           type="secondary"
+          logo={`metamask.png`}
         />
         <OtherWalletsText>You can also use:</OtherWalletsText>
-        <WalletButton
-          onClickAction={handlerWallet(CryptoWallets.Coinbase)}
-          walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
-          walletName="Coinbase Wallet"
+        <ButtonLink
+          onClick={handlerWallet(CryptoWallets.Coinbase)}
+          size="large"
+          text={`Coinbase Wallet`}
+          fullWidth={true}
+          icon={`external_link.svg`}
+          type="tertiary"
+          logo={`coinbase.png`}
         />
       </ButtonContainer>
 

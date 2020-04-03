@@ -27,12 +27,15 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
 
     border-radius: 3px;
 
-    padding: ${props => globalTheme.buttonSizes[props.size].padding};
-    height: ${props => globalTheme.buttonSizes[props.size].height};
+    padding: ${props => globalTheme.buttonWithLogoSizes[props.size].padding};
+    height: ${props => globalTheme.buttonWithLogoSizes[props.size].height};
     width: ${props =>
-      props.fullWidth ? '100%' : globalTheme.buttonSizes[props.size].width};
-    font-size: ${props => globalTheme.buttonSizes[props.size].fontSize};
-    line-height: ${props => globalTheme.buttonSizes[props.size].lineHeight};
+      props.fullWidth
+        ? '100%'
+        : globalTheme.buttonWithLogoSizes[props.size].width};
+    font-size: ${props => globalTheme.buttonWithLogoSizes[props.size].fontSize};
+    line-height: ${props =>
+      globalTheme.buttonWithLogoSizes[props.size].lineHeight};
 
     font-family: Lato;
     font-style: normal;
@@ -65,9 +68,22 @@ export const ButtonContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: stretch;
-
+  align-items: center;
   &&& > img {
-    width: auto;
+    max-width: 20px;
+  }
+`;
+
+export const LeftSide = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 205px;
+  &&& span {
+    padding-left: 10px;
+  }
+  &&& > img {
+    max-width: 40px;
   }
 `;
