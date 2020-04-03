@@ -164,7 +164,7 @@ const Menu = () => {
       <Logo src={logoPath} />
       {isLogged && visibleMenu && (
         <>
-          <Web3Address />
+          <Web3Address border={false} />
           <BalanceMobile />
         </>
       )}
