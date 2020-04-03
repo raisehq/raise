@@ -14,6 +14,7 @@ export const BalanceDropdown = styled(Dropdown)`
     display: flex;
     align-items: center;
     height: 40px;
+    border: 1px solid transparent;
   }
 
   &&&& .dropdown.icon {
@@ -49,6 +50,7 @@ export const BalanceMenu = styled(Dropdown.Menu)`
     width: 280px;
     border-radius: 3px;
     box-shadow: 0px 8px 15px rgba(60, 66, 81, 0.25);
+    border: none;
     @media screen and ${device.tablet} {
       right: 0px;
       left: unset;

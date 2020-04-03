@@ -101,7 +101,7 @@ export const LinkContent = styled(Link)`
 
 export const ButtonMyAccount = styled(Button)`
   &&&&&&&& {
-    border: none;
+    border: 1px solid transparent;
     box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
     height: 40px;
     color: rgba(0, 0, 0, 0.6) !important;
