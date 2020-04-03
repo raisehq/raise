@@ -7,12 +7,13 @@ export const TokenBalance = styled(TokenBalanceNotStyled)``;
 export const BalanceDropdown = styled(Dropdown)`
   &&& {
     padding: 12px 18px;
-    border: 1px solid #c5c7cb;
+    box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
     border-radius: 3px;
     max-width: 148px;
     font-size: 16px;
     display: flex;
     align-items: center;
+    height: 40px;
   }
 
   &&&& .dropdown.icon {
@@ -20,6 +21,14 @@ export const BalanceDropdown = styled(Dropdown)`
   }
 
   &&&.active {
+    border: 1px solid #eb3f93;
+    box-shadow: 0px 8px 15px rgba(60, 66, 81, 0.25);
+
+    .dropdown.icon {
+      color: #eb3f93;
+    }
+  }
+  &&&:hover {
     border: 1px solid #eb3f93;
     box-shadow: 0px 8px 15px rgba(60, 66, 81, 0.25);
 

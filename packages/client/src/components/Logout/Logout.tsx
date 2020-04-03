@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
-import { Button } from 'semantic-ui-react';
 import { getHost } from '../../utils/index';
-import { SignupButton, LoginButton } from './Logout.styles';
+import { SignupButton, LoginButton, LogoutButton } from './Logout.styles';
 import { useRootContext } from '../../contexts/RootContext';
 
 const Logout = ({ onLogin, onSignup, ...props }: any) => {
@@ -27,9 +26,9 @@ const Logout = ({ onLogin, onSignup, ...props }: any) => {
 
   if (isLogged) {
     return (
-      <Button onClick={onSignout} {...props}>
+      <LogoutButton onClick={onSignout} {...props}>
         Log out
-      </Button>
+      </LogoutButton>
     );
   }
   return (

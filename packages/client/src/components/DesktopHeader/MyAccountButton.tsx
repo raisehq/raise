@@ -1,12 +1,12 @@
 import React from 'react';
-import { LinkContent } from './DesktopHeader.styles';
-import { Button, Icon } from 'semantic-ui-react';
+import { LinkContent, ButtonMyAccount } from './DesktopHeader.styles';
+import { Icon } from 'semantic-ui-react';
 
 const MyAccountButton = () => (
   <LinkContent to="/account">
-    <Button basic icon>
+    <ButtonMyAccount basic icon>
       <Icon name="user" />
-    </Button>
+    </ButtonMyAccount>
   </LinkContent>
 );
 
