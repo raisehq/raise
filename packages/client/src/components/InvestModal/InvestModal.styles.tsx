@@ -13,7 +13,7 @@ import {
 } from 'semantic-ui-react';
 import Balance from '../Balance';
 import { device } from '../../commons/breakpoints';
-import InvestInput from './components/InvestInput';
+import InvestmentBox from './components/InvestmentBox';
 
 interface ModalInputProps {
   roi?: boolean;
@@ -28,7 +28,7 @@ interface LabelPaddingProps {
   color?: string;
 }
 
-export const InvestSection = styled(InvestInput)`
+export const InvestSection = styled(InvestmentBox)`
   margin: 29px auto 0px auto;
   padding: 27px;
 `;
@@ -170,8 +170,8 @@ export const InputContainer = styled.div`
 export const ModalInputBox = styled.div<ModalInputProps>`
   height: 48px;
   width: 173px;
-  border: 1px solid ${({ error }) => (error ? 'red' : '#cfd0d4')};
   border-radius: 4px;
+  border: 1px solid ${({ error }) => (error ? 'red' : '#cfd0d4')};
   background-color: ${({ roi }) => (roi ? '#ECEDEE' : '#FFFFFF')};
   display: flex;
   align-items: center;

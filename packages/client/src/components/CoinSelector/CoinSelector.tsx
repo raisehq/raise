@@ -1,6 +1,5 @@
 import React from 'react';
 import { BalanceDropdown, TokenBalance } from './CoinSelector.styles';
-import Selection from './Selection';
 const { REACT_APP_HOST_IMAGES } = process.env;
 
 const TOKEN_URLS = {
@@ -22,7 +21,9 @@ const CoinSelector = ({ value, ...rest }) => {
     return { ...props, content: <TokenBalance {...props} /> };
   });
 
-  const CurrentSelection = <Selection imageUrl={TOKEN_URLS[value]} name={value} />;
+  const CurrentSelection = (
+    <TokenBalance value={value} name={value} key={value} imageUrl={TOKEN_URLS[value]} />
+  );
   return (
     <BalanceDropdown
       trigger={CurrentSelection}

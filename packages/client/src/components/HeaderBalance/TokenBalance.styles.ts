@@ -12,6 +12,17 @@ export const Container = styled(Dropdown.Item)`
 export const Child = styled.div`
   display: flex;
   align-items: center;
+  font-size: 12px;
+  color: #8a8e97;
+`;
+
+export const Balance = styled.div`
+  font-weight: bold;
+  margin-left: 3px;
+`;
+
+export const TokenName = styled.div`
+  font-size: 16px;
 `;
 
 export const TokenImage = styled(Image)`

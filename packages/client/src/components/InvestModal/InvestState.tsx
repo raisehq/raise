@@ -12,7 +12,7 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { useAddressBalance } from '../../contexts/BalancesContext';
 import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
 
-import { generateInfo } from './investUtils';
+import { generateInfo, CoinValue } from './investUtils';
 import {
   ConfirmButton,
   InvestHeader,
@@ -79,13 +79,19 @@ const InvestState: React.SFC<InvestStateProps> = ({
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
   const calcs = getCalculations(loan);
-  const { maxAmountNum } = calcs;
+  const { maxAmountNum, expectedROI } = calcs;
   const inputCoin = useGetCoinMetadata(selectedCoin);
+  const inputCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${inputCoin?.icon}`;
+  const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin?.icon}`;
   const tagManager = useGoogleTagManager('Card');
   const balanceBN: BN = useAddressBalance(account, inputCoin?.address || '');
   const balance = Number(Number(fromWei(balanceBN)).toFixed(2));
-  const { expectedROI } = calcs;
-  const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
+  const [value, setValue] = useState<number>(0);
+  const expectedInputRoi = (expectedROI * value || 0).toLocaleString('en-US', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+  });
+
   const onConfirm = async () => {
     tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
 
@@ -142,7 +148,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
     setInputTokenAmount(outputAmount);
   }, [value, selectedCoin]);
 
-  const loanInfo = useMemo(() => generateInfo({ ...calcs, coin: loanCoinName, loan }), [
+  const loanInfo = useMemo(() => generateInfo({ ...calcs, coin: loanCoin, loan }), [
     calcs,
     loanCoinName,
     loan
@@ -182,12 +188,14 @@ const InvestState: React.SFC<InvestStateProps> = ({
       <TableItem
         title={`The equivalent in ${selectedCoin}`}
         content={
-          <>
-            {inputTokenAmountString} {selectedCoin}
-          </>
+          <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
         }
       />
-      <TableItem title="Expected ROI after repayment" content={<>{expectedROI} DAI</>} latest />
+      <TableItem
+        title="Expected ROI after repayment"
+        latest
+        content={<CoinValue value={expectedInputRoi} name={loanCoin?.text} src={loanCoinImage} />}
+      />
       <ErrorBox>
         {errorMessage()}
         &nbsp;

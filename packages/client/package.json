@@ -59,7 +59,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.85.0",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^5.0.0-rc.2",
+    "styled-components": "^5.0.0",
     "tsc": "^1.20150623.0",
     "typescript": "3.8.3",
     "url-search-params-polyfill": "^7.0.0",

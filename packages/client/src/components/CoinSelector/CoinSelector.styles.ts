@@ -3,7 +3,9 @@ import { Dropdown } from 'semantic-ui-react';
 import { TokenBalance as TokenBalanceNotStyled } from '../HeaderBalance';
 import { device } from '../../commons/breakpoints';
 
-export const TokenBalance = styled(TokenBalanceNotStyled)``;
+export const TokenBalance = styled(TokenBalanceNotStyled)`
+  width: 100%;
+`;
 
 export const BalanceDropdown = styled(Dropdown)`
   &&& {
@@ -11,7 +13,7 @@ export const BalanceDropdown = styled(Dropdown)`
     border: 1px solid #c5c7cb;
     border-radius: 3px;
     max-width: 148px;
-    font-size: 16px;
+    font-size: 12px;
     display: flex;
     align-items: center;
   }

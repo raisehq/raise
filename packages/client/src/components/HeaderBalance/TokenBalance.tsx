@@ -1,7 +1,7 @@
 import React from 'react';
 import BN from 'bn.js';
 import { fromWei } from 'web3-utils';
-import { TokenImage, Container, Child } from './TokenBalance.styles';
+import { TokenImage, Container, Child, Balance, TokenName } from './TokenBalance.styles';
 import { useAddressBalance } from '../../contexts/BalancesContext';
 import { useRootContext } from '../../contexts/RootContext';
 import { useAppContext } from '../../contexts/AppContext';
@@ -31,10 +31,10 @@ const TokenBalance = ({ imageUrl, name, value, ...props }) => {
     <Container value={value} {...props}>
       <Child>
         <TokenImage src={imageUrl} />
-        <div>{name}</div>
+        <TokenName>{name}</TokenName>
       </Child>
       <Child>
-        <div>{stringBalance}</div>
+        Balance: <Balance> {stringBalance}</Balance>
       </Child>
     </Container>
   );

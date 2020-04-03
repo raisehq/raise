@@ -1,13 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Card as RaiseCard } from '@raisehq/components';
+import { tradeExactTokensForTokens } from 'unsiwap';
 import { fromWei } from 'web3-utils';
-import { InvestHeader, InvestorBalance } from '../InvestModal.styles';
+import { InvestHeader } from '../InvestModal.styles';
 import LoanInput from '../../CreateLoan/LoanInput';
 import CoinSelectorRaw from '../../CoinSelector';
 import RawCoin from '../../Coin';
+import MaxInputsRaw from './MaxInputs';
 
-const CoinSelector = styled(CoinSelectorRaw)``;
+const MaxInputs = styled(MaxInputsRaw)`
+  margin-top: 39px;
+`;
+
+const CoinSelector = styled(CoinSelectorRaw)`
+  max-width: 100%;
+  width: 100%;
+  height: 48px;
+`;
 
 const Coin = styled(RawCoin)``;
 
@@ -40,17 +50,19 @@ const BalanceWrapper = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 12px;
-  font-weight: bold;
   &&&& ${CoinSelector} {
     max-width: 100%;
   }
   &&&& .ui.selection.dropdown > .dropdown.icon {
-    margin: unset;
     top: unset;
     padding: unset;
+    right: unset;
+    position: unset;
+    margin: 0px 0px 0px 17px;
   }
-  div:first-child {
+  & > div:first-child {
     margin-bottom: 6px;
+    font-weight: bold;
     color: #8a8e97;
   }
 `;
@@ -59,9 +71,9 @@ const BigInput = styled(LoanInput)`
   font-size: 48px;
   line-height: 56px;
   text-align: ${({ value }) => (value ? 'center' : 'left')};
-  width: ${({ value }) => (value ? '160px' : '100px')};
+  width: ${({ value }) => (value ? '120px' : '40px')};
+  margin: ${({ value }) => (value ? '0px auto' : '0px 40px')};
   color: #00da9e;
-  margin: ${({ value }) => (value ? '0px auto' : '0px 30px')};
   background-color: transparent;
   display: flex;
   align-items: center;
@@ -91,7 +103,29 @@ const BigInput = styled(LoanInput)`
   }
 `;
 
-const InvestInput = ({
+const getSwapOutput = async (inputAmount, inputAddress, outputAddress, chainId): Promise<BN> => {
+  const defaultValue = new BN('0');
+  if (!inputAmount) {
+    return defaultValue;
+  }
+  const inputAmountWei = toWei(inputAmount.toString());
+  try {
+    const tradeDetails = await tradeExactTokensForTokens(
+      inputAddress,
+      outputAddress,
+      inputAmountWei,
+      chainId
+    );
+
+    const totalOutput = new BN(tradeDetails.inputAmount.amount.toString(10));
+    return totalOutput;
+  } catch (error) {
+    console.error(error);
+    return defaultValue;
+  }
+};
+
+const InvestmentBox = ({
   loan,
   loanCoin,
   coin,
@@ -109,11 +143,17 @@ const InvestInput = ({
     setCoin(value);
   };
 
-  const fundAll = () => {
+  const fundAll = async divisor => {
     const nMaxAmount = Number(fromWei(maxAmount));
     const nPrincipal = nMaxAmount - Number(fromWei(principal));
-    const minValue = Math.min(...[balance, nPrincipal]);
-    setValue(minValue);
+
+    if (loanCoin.text === selectedCoin) {
+      const minValue = Math.min(...[balance / divisor, nPrincipal]);
+      return setValue(minValue);
+    } else {
+      // Return converted input and divide by divisor
+      // const convertedInput = await getSwapOutput()
+    }
   };
 
   const onSetValue = v => {
@@ -132,19 +172,20 @@ const InvestInput = ({
         <BigInput
           autoComplete="off"
           id="input-invest-value"
-          placeholder="0.00"
+          placeholder="0"
           value={readValue}
           onValueChange={onSetValue}
+          fixedDecimalScale={false}
         />
         <Coin src={loanCoinImage} name={loanCoin?.text} />
       </InvestBox>
       <BalanceWrapper>
         <div>Invest with</div>
         <CoinSelector value={selectedCoin} onChange={handleChange} />
-        <InvestorBalance coin={coin} balance={balance} id="btn-invest-all" onClick={fundAll} />
+        <MaxInputs onClick={fundAll} />
       </BalanceWrapper>
     </Card>
   );
 };
 
-export default InvestInput;
+export default InvestmentBox;

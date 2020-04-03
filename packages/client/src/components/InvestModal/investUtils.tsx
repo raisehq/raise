@@ -1,4 +1,25 @@
 import React from 'react';
+import styled from 'styled-components';
+import RawCoin from '../Coin';
+
+const Coin = styled(RawCoin)``;
+
+const Box = styled.div`
+  display: flex;
+  justify-content: flex;
+  align-items: flex;
+  ${Coin} {
+    color: #5a5a5a;
+    margin-left: 8px;
+  }
+`;
+
+export const CoinValue = ({ value, name, src }) => (
+  <Box>
+    {value}
+    <Coin pxWidth="20px" pxHeight="20px" src={src} name={name} />
+  </Box>
+);
 
 export const generateInfo = ({
   totalAmount,
@@ -8,19 +29,19 @@ export const generateInfo = ({
   currentAmount,
   loan: { investorCount }
 }) => {
+  const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${coin.icon}`;
+
   return [
     {
       title: 'Target amount',
-      content: (
-        <>
-          {totalAmount}
-          {coin?.text || 'DAI'}
-        </>
-      )
+      content: <CoinValue value={totalAmount} name={coin.text} src={loanCoinImage} />
     },
     { title: 'Loan APR', content: currentAPR },
     { title: 'Days left', content: auctionTimeLeft },
-    { title: 'Raised so far', content: currentAmount },
+    {
+      title: 'Raised so far',
+      content: <CoinValue value={currentAmount} name={coin.text} src={loanCoinImage} />
+    },
     { title: 'Loan term', content: loanTerm },
     { title: 'Investors', content: investorCount }
   ];

@@ -10,7 +10,6 @@ export const BalanceDropdown = styled(Dropdown)`
     border: 1px solid #c5c7cb;
     border-radius: 3px;
     max-width: 148px;
-    font-size: 16px;
     display: flex;
     align-items: center;
   }
