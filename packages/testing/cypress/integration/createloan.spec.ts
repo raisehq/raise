@@ -2,10 +2,11 @@
 
 describe('BORROWER', function() {
   beforeEach(function() {
-    cy.login('borrower');
-    cy.mockAPI('borrower');
-    cy.web3('borrower');
+    const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
     cy.CookieXCanary();
+    cy.login('borrower', isCanary);
+    cy.mockAPI('borrower', isCanary);
+    cy.web3('borrower');
   });
 
   it('Go to create loan', function() {
