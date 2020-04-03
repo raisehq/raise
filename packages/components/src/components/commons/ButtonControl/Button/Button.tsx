@@ -1,18 +1,6 @@
 import React from 'react';
 import { ButtonStyled } from './styles';
-
-interface ButtonProps {
-  text?: string;
-  onClick: Function;
-  disabled?: boolean;
-  idAttr?: string;
-  className?: string;
-  type: string;
-  size: string;
-  as?: any;
-  to?: any;
-  fullWidth?: boolean;
-}
+import { ButtonProps } from '../types';
 
 const Button: React.SFC<ButtonProps> = ({
   text,

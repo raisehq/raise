@@ -60,3 +60,14 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
     }
   }
 `;
+
+export const ButtonContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+
+  &&& > img {
+    width: auto;
+  }
+`;

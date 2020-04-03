@@ -1,16 +1,18 @@
 import React from 'react';
 import { ButtonStyled, ButtonContent } from './styles';
+import { ButtonLinkProps } from '../types';
 import { Image } from 'semantic-ui-react';
-import { BloomButtonProps } from '../types';
 
-const BloomButton: React.SFC<BloomButtonProps> = ({
+const ButtonLink: React.SFC<ButtonLinkProps> = ({
   text,
   onClick,
   disabled = false,
   idAttr,
   className,
+  type,
   size,
   fullWidth = false,
+  icon,
   ...rest
 }) => {
   return (
@@ -19,6 +21,7 @@ const BloomButton: React.SFC<BloomButtonProps> = ({
       disabled={disabled}
       id={idAttr}
       className={className}
+      type={type}
       size={size}
       fullWidth={fullWidth}
       {...rest}
@@ -26,7 +29,7 @@ const BloomButton: React.SFC<BloomButtonProps> = ({
       <ButtonContent>
         <span>{text}</span>
         <Image
-          src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
+          src={`${process.env.REACT_APP_HOST_IMAGES}/images/${icon}`}
           size="tiny"
         />
       </ButtonContent>
@@ -34,4 +37,4 @@ const BloomButton: React.SFC<BloomButtonProps> = ({
   );
 };
 
-export default BloomButton;
+export default ButtonLink;
