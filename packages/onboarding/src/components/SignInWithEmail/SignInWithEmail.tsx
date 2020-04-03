@@ -4,7 +4,6 @@ import * as _ from 'lodash';
 import {
   OnboardHeader,
   OnboardInput,
-  OnboardButton,
   CallToSignIn,
   Separator,
   MyRecapcha,
@@ -12,6 +11,7 @@ import {
 } from '../styles';
 import validations from '../validations';
 import AppContext from '../App.context';
+import { Button } from '@raisehq/components';
 
 const SignInWithEmail = () => {
   const {
@@ -136,13 +136,16 @@ const SignInWithEmail = () => {
           console.log('- Capcha Loaded -');
         }}
       />
-      <OnboardButton
-        id="btn-login"
+      <Button
+        idAttr="btn-login"
         disabled={error || errors.email || !credentials.email || !credentials.password}
         onClick={onLoginCaptcha}
-      >
-        Log In
-      </OnboardButton>
+        type="secondary"
+        size="large"
+        text="Login"
+        fullWidth={true}
+      />
+
       <CallToSignIn>
         <button className="callToSignIn" type="button" onClick={onSetStep('Reset')}>
           Forgot password?

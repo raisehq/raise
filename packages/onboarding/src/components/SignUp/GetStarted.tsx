@@ -14,7 +14,7 @@ const GetStarted = () => {
         <CallToSignIn>
           Already have an account?
           <button className="callToSignIn" type="button" onClick={() => onSetStep('SignIn')()}>
-            Sign In
+            Login
           </button>
         </CallToSignIn>
       </ChooseSignUpSignInWrapper>
