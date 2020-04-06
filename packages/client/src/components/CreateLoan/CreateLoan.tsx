@@ -65,6 +65,7 @@ import { CheckboxControl } from '@raisehq/components';
 import { InputNumber } from '@raisehq/components';
 import { SelectControl } from '@raisehq/components';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
+import { CoinsType } from '../../commons/coins';
 
 const CreateLoan = ({ contracts }) => {
   const {
@@ -96,7 +97,7 @@ const CreateLoan = ({ contracts }) => {
   const [minAPR, setMinAPR] = useState(MIN_APR_DEFAULT);
   const [maxAPR, setMaxAPR] = useState(MAX_APR_DEFAULT);
   const [minPercent, setMinPercent] = useState(MIN_PERCENT_DEFAULT);
-  const [coins, setCoins] = useState([]);
+  const [coins, setCoins] = useState<CoinsType[]>([]);
   const [selectedCoinType, setSelectedCoinType] = useState('');
   const [selectedCoin, setSelectedCoin] = useState<any>({});
   const [loan, setLoan] = useState({
@@ -121,18 +122,16 @@ const CreateLoan = ({ contracts }) => {
 
   const getCoinsFromContract = () => {
     const contract = get(contracts, `address.${walletNetworkId}`);
-    const coins = COINS.map(coin =>
-      contract[coin.name]
-        ? {
-            address: contract[coin.name],
-            text: coin.name,
-            value: coin.name,
-            key: coin.key,
-            icon: coin.icon
-          }
-        : null
+    const mappedCoins: CoinsType[] = COINS.map(coin => ({
+      address: contract[coin.name],
+      text: coin.name,
+      value: coin.name,
+      key: coin.key,
+      icon: coin.icon
+    }));
+    return mappedCoins.filter(({ address }) =>
+      acceptedTokens.find(a => a.toLowerCase() === address.toLowerCase())
     );
-    return coins;
   };
 
   const loanDispatcherAddress = getAddress(walletNetworkId, 'LoanDispatcher');
@@ -161,13 +160,18 @@ const CreateLoan = ({ contracts }) => {
   }, [webSocket, loanDispatcherAddress]);
 
   useEffect(() => {
-    const coinsArray: any = getCoinsFromContract();
+    const coinsArray: CoinsType[] = getCoinsFromContract();
+    const dai = coinsArray.find(({ text }) => text === 'DAI');
 
-    setCoins(coinsArray);
-    setSelectedCoinType(coinsArray[0].text);
-    setSelectedCoinIndex(coinsArray[0].key);
-    setLoan({ ...loan, tokenAddress: coinsArray[0].address });
-  }, []);
+    if (coinsArray.length) {
+      setCoins(coinsArray);
+      if (dai) {
+        setSelectedCoinType(dai.text);
+        setSelectedCoinIndex(dai.key);
+        setLoan({ ...loan, tokenAddress: dai.address });
+      }
+    }
+  }, [acceptedTokens]);
 
   useEffect(() => {
     const { amount: currentAmount, term: termSeconds, minMir, maxMir } = loan;
@@ -199,15 +203,15 @@ const CreateLoan = ({ contracts }) => {
   };
 
   const onSetCoinAmount = option => () => {
-    setSelectedCoinType(option);
-    const coins = COINS.map((coin, index) => ({ address: acceptedTokens[index], ...coin }));
+    const coin = coins.find(item => item.text === option);
 
-    const coin = coins.find(item => item.name === option);
-    setSelectedCoin(coin);
-    setSelectedCoinIndex(coin ? coin.key : 0);
-    const addressCoin: any = coin ? coin.address : null;
+    if (coin) {
+      setSelectedCoin(coin);
+      setSelectedCoinIndex(coin ? coin.key : 0);
+      const addressCoin: any = coin ? coin.address : null;
 
-    setLoan({ ...loan, tokenAddress: addressCoin });
+      setLoan({ ...loan, tokenAddress: addressCoin });
+    }
   };
 
   const onSetMIR = minMir => maxMir => setLoan({ ...loan, minMir, maxMir });
