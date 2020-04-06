@@ -18,15 +18,32 @@ import {
   InvestHeader,
   InvestSection,
   LoanTermsCheckbox,
-  CheckContainer
+  CheckContainer,
+  ExitButton
 } from './InvestModal.styles';
-
 import CollapsedTable, { TableItem } from './components/CollapsedTable';
 
 const errorMessages = {
   inputGreaterThanBalance: 'Not enough balance.',
   inputGreaterThanLoanAmount: 'Invest less than target.'
 };
+
+const InvestBody = styled.div`
+  padding: 0px 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const InvestInput = styled.div`
+  overflow-y: auto;
+  height: 78%;
+  padding: 0px 10px;
+`;
+
+const ButtonWrapper = styled.div`
+  flex: 1;
+`;
 
 const ErrorBox = styled.div`
   width: 100%;
@@ -37,10 +54,7 @@ const ErrorBox = styled.div`
   margin-top: 8px;
 `;
 
-const ContinueButton = styled(ConfirmButton)`
-  &&&&& {
-  }
-`;
+const ContinueButton = styled(ConfirmButton)``;
 
 const InvestState: React.SFC<InvestStateProps> = ({
   loanCoin,
@@ -51,7 +65,8 @@ const InvestState: React.SFC<InvestStateProps> = ({
   setCoin,
   loan,
   setInputTokenAmount,
-  inputTokenAmount
+  inputTokenAmount,
+  closeModal
 }: InvestStateProps) => {
   const { text: loanCoinName } = loanCoin;
   const {
@@ -168,33 +183,38 @@ const InvestState: React.SFC<InvestStateProps> = ({
   };
 
   return (
-    <>
-      <InvestHeader>Loan Information</InvestHeader>
-      <CollapsedTable items={loanInfo} />
-      <InvestSection {...InvestInputProps} />
-      <TableItem
-        title={`The equivalent in ${selectedCoin}`}
-        content={
-          <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
-        }
-      />
-      <TableItem
-        title="Expected ROI after repayment"
-        latest
-        content={<CoinValue value={expectedInputRoi} name={loanCoin?.text} src={loanCoinImage} />}
-      />
-      <ErrorBox>
-        {errorMessage()}
-        &nbsp;
-      </ErrorBox>
-      <CheckContainer>
-        <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
-        to the Terms and Conditions of the Loan Agreement
-      </CheckContainer>
-      <ContinueButton id="btn-invest-confirm" onClick={onConfirm} disabled={buttonRules}>
-        Continue
-      </ContinueButton>
-    </>
+    <InvestBody>
+      <InvestInput>
+        <ExitButton name="close" color="black" onClick={closeModal} />
+        <InvestHeader>Loan Information</InvestHeader>
+        <CollapsedTable items={loanInfo} />
+        <InvestSection {...InvestInputProps} />
+        <TableItem
+          title={`The equivalent in ${selectedCoin}`}
+          content={
+            <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
+          }
+        />
+        <TableItem
+          title="Expected ROI after repayment"
+          latest
+          content={<CoinValue value={expectedInputRoi} name={loanCoin?.text} src={loanCoinImage} />}
+        />
+      </InvestInput>
+      <ButtonWrapper>
+        <ErrorBox>
+          {errorMessage()}
+          &nbsp;
+        </ErrorBox>
+        <CheckContainer>
+          <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
+          to the Terms and Conditions of the Loan Agreement
+        </CheckContainer>
+        <ContinueButton id="btn-invest-confirm" onClick={onConfirm} disabled={buttonRules}>
+          Continue
+        </ContinueButton>
+      </ButtonWrapper>
+    </InvestBody>
   );
 };
 

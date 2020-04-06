@@ -59,6 +59,9 @@ export const ExitButton = styled(Icon)`
     top: 10px;
     right: 10px;
     cursor: pointer;
+    @media (screen and ${device.tablet}) {
+      display: none;
+    }
   }
 `;
 
@@ -140,6 +143,9 @@ export const ModalContent: any = styled(SemanticModal.Content)`
     margin: 0;
     height: 100%;
     overflow: auto;
+    &&&.content {
+      padding: 9px;
+    }
   }
 `;
 

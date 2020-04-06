@@ -7,7 +7,6 @@ import InvestState from '../InvestModal/InvestState';
 import ProcessingState from '../InvestModal/ProcessingState';
 import SuccessState from '../InvestModal/SuccessState';
 import VerifyKycModal from '../InvestModal/VerifyKycState';
-import { ModalContent } from '../InvestModal/InvestModal.styles';
 import useGetCoin from '../../hooks/useGetCoin';
 import { useAppContext } from '../../contexts/AppContext';
 
@@ -80,6 +79,7 @@ const InvestSidebar = () => {
           setCoin={setCoin}
           selectedCoin={selectedCoin}
           ui={UI}
+          closeModal={closeSidebar}
         />
       ),
       Processing: () => (
@@ -91,16 +91,13 @@ const InvestSidebar = () => {
           ui={UI}
           setStage={setStage}
           selectedCoin={selectedCoin}
+          closeModal={closeSidebar}
         />
       ),
       Success: () => <SuccessState setStage={setStage} ui={UI} closeModal={closeSidebar} />
     });
   };
-  return (
-    <>
-      <ModalContent>{getInvestAction(stage)}</ModalContent>
-    </>
-  );
+  return <>{getInvestAction(stage)}</>;
 };
 
 export default InvestSidebar;

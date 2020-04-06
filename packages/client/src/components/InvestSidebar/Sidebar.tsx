@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { animated, useSpring } from 'react-spring';
 import { Dimmer } from 'semantic-ui-react';
 import { useSidebarContext } from '../../contexts/SidebarContext';
+import { device } from '../../commons/breakpoints';
 
 const RightSidebar = styled(animated.div)`
   position: fixed;
@@ -10,8 +11,12 @@ const RightSidebar = styled(animated.div)`
   z-index: 1001;
   top: 0;
   right: 0;
-  width: 480px;
+  width: 100%;
+  padding: 30px 20px;
   height: 100vh;
+  @media screen and ${device.laptop} {
+    width: 520px;
+  }
 `;
 
 const FixedDimmer = styled(Dimmer)`

@@ -17,6 +17,7 @@ export interface InvestStateProps {
   loanCoin: CoinsType;
   setInputTokenAmount: Function;
   inputTokenAmount: BN;
+  closeModal?: Function;
 }
 
 export interface ResumeItemProps {
@@ -36,6 +37,7 @@ export interface ProcessingStateProps {
   setStage: Function;
   selectedCoin: string;
   inputTokenAmount: BN;
+  closeModal?: Function;
 }
 
 export interface SuccessStateProps {

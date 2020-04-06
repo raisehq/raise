@@ -23,7 +23,8 @@ import {
   IconSuccess as IconError,
   RetryButton,
   BlankSpace,
-  ModalFlexWrapper
+  ModalFlexWrapper,
+  ExitButton
 } from './InvestModal.styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
@@ -38,7 +39,8 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   setStage,
   selectedCoin,
   inputTokenAmount,
-  loanCoin
+  loanCoin,
+  closeModal
 }) => {
   const {
     web3Status: { walletAccount }
@@ -224,6 +226,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   return (
     <ModalFlexWrapper>
       <Fragment>
+        <ExitButton name="close" color="black" onClick={closeModal} />
         <CardCenteredText>
           <CardTitle>Processing</CardTitle>
           <CardSubtitle>Check your MetaMask wallet to proceed</CardSubtitle>
