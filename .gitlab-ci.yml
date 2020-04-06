@@ -169,6 +169,8 @@ cypress-e2e-review:
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
     CYPRESS_isCanary: 'false'
+  before_script:
+    - echo "Rewrite before script"
   script:
     - 'yarn --pure-lockfile'
     - 'cd packages/testing'
@@ -200,6 +202,8 @@ cypress-e2e-production:
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: https://api.raise.it
     CYPRESS_isCanary: 'false'
+  before_script:
+    - echo "Rewrite before script"
   script:
     - 'yarn --pure-lockfile'
     - 'cd packages/testing'
