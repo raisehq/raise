@@ -9,6 +9,15 @@ set -o errexit
 # Executes cleanup function at script exit.
 trap cleanup EXIT
 
+install_dependencies() {
+  apt-get update && \
+  DEBIAN_FRONTEND=noninteractive \
+  apt-get install -y \
+  netcat \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
+}
+
 cleanup() {
   # Kill the ganache instance that we started (if we started one and if it's still running).
   if [ -n "$ganache_pid" ] && ps -p $ganache_pid > /dev/null; then
@@ -78,6 +87,7 @@ start_ganache() {
     mkdir .db
   fi
   [ ! -d "./tmp" ] && mkdir ./tmp
+
   TEMP=./tmp npx ganache-cli --db .db  --allowUnlimitedContractSize --gasLimit 0xfffffffffff --gasPrice 0x01 -i 6969 -m "stamp polar cup smart ill agree human episode reform trigger text forget" --secure -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 --port "$ganache_port" > /dev/null &
   ganache_pid=$!
 
@@ -97,6 +107,7 @@ if ganache_running; then
     exit 1
 else
     echo "- Starting our own ganache instance"
+    install_dependencies
     start_ganache
     $@
 fi
