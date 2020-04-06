@@ -43,3 +43,10 @@ export interface SuccessStateProps {
   closeModal: Function;
   ui: any;
 }
+
+export interface OldInvestStateProps {
+  loan: Loan;
+  setStage: Function;
+  setInvestment: Function;
+  ui: any;
+}

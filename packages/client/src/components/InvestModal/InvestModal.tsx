@@ -8,12 +8,15 @@ import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import InvestState from './InvestState';
+import OldInvestState from './OldInvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
 import VerifyKycModal from './VerifyKycState';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
 import useGetCoin from '../../hooks/useGetCoin';
+
+const FEATURE_FLAG_SWAP = process.env.REACT_APP_SWAP_ON === 'true';
 
 const UI = daggy.taggedSum('UI', {
   Kyc: [],
@@ -89,19 +92,22 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const getInvestAction = stage => {
     return stage.cata({
       Kyc: () => <VerifyKycModal />,
-      Confirm: () => (
-        <InvestState
-          loan={loan}
-          loanCoin={coin}
-          setStage={setStage}
-          setInvestment={setInvestment}
-          inputTokenAmount={inputTokenAmount}
-          setInputTokenAmount={setInputTokenAmount}
-          setCoin={setCoin}
-          selectedCoin={selectedCoin}
-          ui={UI}
-        />
-      ),
+      Confirm: () =>
+        FEATURE_FLAG_SWAP ? (
+          <InvestState
+            loan={loan}
+            loanCoin={coin}
+            setStage={setStage}
+            setInvestment={setInvestment}
+            inputTokenAmount={inputTokenAmount}
+            setInputTokenAmount={setInputTokenAmount}
+            setCoin={setCoin}
+            selectedCoin={selectedCoin}
+            ui={UI}
+          />
+        ) : (
+          <OldInvestState loan={loan} setStage={setStage} setInvestment={setInvestment} ui={UI} />
+        ),
       Processing: () => (
         <ProcessingState
           loan={loan}
