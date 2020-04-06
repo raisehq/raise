@@ -11,7 +11,7 @@ import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { useAddressBalance } from '../../contexts/BalancesContext';
 import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
-
+import localeConfig from '../../commons/localeConfig';
 import { generateInfo, CoinValue } from './investUtils';
 import {
   ConfirmButton,
@@ -87,10 +87,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const balanceBN: BN = useAddressBalance(account, inputCoin?.address || '');
   const balance = Number(Number(fromWei(balanceBN)).toFixed(2));
   const [value, setValue] = useState<number>(0);
-  const expectedInputRoi = (expectedROI * value || 0).toLocaleString('en-US', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 0
-  });
+  const expectedInputRoi = Number(expectedROI * value || 0).toLocaleString(...localeConfig);
 
   const onConfirm = async () => {
     tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
@@ -155,7 +152,8 @@ const InvestState: React.SFC<InvestStateProps> = ({
   ]);
   const [termsCond, setTermsCond] = useState(false);
 
-  const inputTokenAmountString = fromWei(inputTokenAmount) || '0';
+  const inputTokenAmountString =
+    Number(fromWei(inputTokenAmount)).toLocaleString(...localeConfig) || '0';
   const buttonRules =
     value === 0 ||
     value === undefined ||

@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Card as RaiseCard } from '@raisehq/components';
-import { tradeExactTokensForTokens } from 'unsiwap';
-import { fromWei } from 'web3-utils';
+import { tradeExactTokensForTokensWithData, getTokenReserves } from '@uniswap/sdk';
+import { TokenReservesNormalized } from '@uniswap/sdk/dist/types';
+import BN from 'bn.js';
+import { fromWei, toWei } from 'web3-utils';
 import { InvestHeader } from '../InvestModal.styles';
 import LoanInput from '../../CreateLoan/LoanInput';
 import CoinSelectorRaw from '../../CoinSelector';
 import RawCoin from '../../Coin';
 import MaxInputsRaw from './MaxInputs';
+import { useAppContext } from '../../../contexts/AppContext';
+import useAsyncEffect from '../../../hooks/useAsyncEffect';
 
 const MaxInputs = styled(MaxInputsRaw)`
   margin-top: 39px;
@@ -17,6 +21,12 @@ const CoinSelector = styled(CoinSelectorRaw)`
   max-width: 100%;
   width: 100%;
   height: 48px;
+  &&&&.disabled {
+    opacity: 1;
+    & .dropdown.icon {
+      display: none;
+    }
+  }
 `;
 
 const Coin = styled(RawCoin)``;
@@ -103,21 +113,39 @@ const BigInput = styled(LoanInput)`
   }
 `;
 
-const getSwapOutput = async (inputAmount, inputAddress, outputAddress, chainId): Promise<BN> => {
+const swapBlacklist = {
+  USDT: true
+};
+
+const setTokenReserves = async (
+  inputAddress,
+  outputAddress,
+  setInputReserves,
+  setOutputReserves,
+  chainId
+) => {
+  if (inputAddress !== outputAddress) {
+    const inputReserves = await getTokenReserves(inputAddress, chainId);
+    const outputReserves = await getTokenReserves(outputAddress, chainId);
+    setInputReserves(inputReserves);
+    setOutputReserves(outputReserves);
+  }
+};
+
+const getSwapOutput = async (inputAmount, inputReserves, outputReserves): Promise<BN> => {
   const defaultValue = new BN('0');
   if (!inputAmount) {
     return defaultValue;
   }
-  const inputAmountWei = toWei(inputAmount.toString());
+  const inputAmountWei: string = toWei(inputAmount.toString()).toString();
   try {
-    const tradeDetails = await tradeExactTokensForTokens(
-      inputAddress,
-      outputAddress,
-      inputAmountWei,
-      chainId
+    const tradeDetails = await tradeExactTokensForTokensWithData(
+      inputReserves,
+      outputReserves,
+      inputAmountWei
     );
 
-    const totalOutput = new BN(tradeDetails.inputAmount.amount.toString(10));
+    const totalOutput = new BN(tradeDetails.outputAmount.amount.toString(10));
     return totalOutput;
   } catch (error) {
     console.error(error);
@@ -136,7 +164,12 @@ const InvestmentBox = ({
   setCoin,
   ...props
 }) => {
+  const [inputReserves, setInputReserves] = useState<TokenReservesNormalized>();
+  const [outputReserves, setOutputReserves] = useState<TokenReservesNormalized>();
   const { principal, maxAmount } = loan;
+  const {
+    web3Status: { walletNetworkId: chainId }
+  }: any = useAppContext();
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin.icon}`;
 
   const handleChange = (e, { value }) => {
@@ -144,16 +177,19 @@ const InvestmentBox = ({
   };
 
   const fundAll = async divisor => {
+    if (!loanCoin || !coin) {
+      throw Error('no coin loaded');
+    }
     const nMaxAmount = Number(fromWei(maxAmount));
     const nPrincipal = nMaxAmount - Number(fromWei(principal));
 
-    if (loanCoin.text === selectedCoin) {
+    if (loanCoin?.text === selectedCoin) {
       const minValue = Math.min(...[balance / divisor, nPrincipal]);
       return setValue(minValue);
-    } else {
-      // Return converted input and divide by divisor
-      // const convertedInput = await getSwapOutput()
     }
+    const output = await getSwapOutput(balance / divisor, inputReserves, outputReserves);
+    const minValue = Math.min(...[Number(fromWei(output)), nPrincipal]);
+    return setValue(minValue);
   };
 
   const onSetValue = v => {
@@ -164,6 +200,16 @@ const InvestmentBox = ({
   };
 
   const readValue = value > 0 ? value : null;
+
+  useAsyncEffect(async () => {
+    await setTokenReserves(
+      coin.address,
+      loanCoin.address,
+      setInputReserves,
+      setOutputReserves,
+      chainId
+    );
+  }, [loanCoin.address, coin.address, chainId]);
   return (
     <Card size="310px" width="400px" {...props}>
       <InvestHeader>How much would you like to invest?</InvestHeader>
@@ -181,7 +227,11 @@ const InvestmentBox = ({
       </InvestBox>
       <BalanceWrapper>
         <div>Invest with</div>
-        <CoinSelector value={selectedCoin} onChange={handleChange} />
+        <CoinSelector
+          disabled={!!swapBlacklist[selectedCoin]}
+          value={selectedCoin}
+          onChange={handleChange}
+        />
         <MaxInputs onClick={fundAll} />
       </BalanceWrapper>
     </Card>
