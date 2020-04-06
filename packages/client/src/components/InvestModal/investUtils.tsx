@@ -31,6 +31,7 @@ export const generateInfo = ({
   loan: { investorCount }
 }) => {
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${coin.icon}`;
+  console.log(totalAmount);
   const totalAmountString = totalAmount.toLocaleString(...localeConfig);
   const currentAmountString = currentAmount.toLocaleString(...localeConfig);
   return [

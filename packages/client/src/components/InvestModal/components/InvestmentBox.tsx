@@ -236,6 +236,7 @@ const InvestmentBox = ({
       <BalanceWrapper>
         <div>Invest with</div>
         <CoinSelector
+          loanCoin={loanCoin}
           disabled={!!swapBlacklist[selectedCoin]}
           value={selectedCoin}
           onChange={handleChange}

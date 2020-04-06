@@ -19,7 +19,7 @@ const useGetCoin = (auction): CoinsType => {
   const desiredNetwork = currentNetworkId > 0 ? currentNetworkId : networkId;
   const contract = get(contracts, `address.${desiredNetwork}`);
   const coins: CoinsType[] = getCoinsFromContract(COINS)(contract);
-  const coin = getCoin(coins)(auction.tokenAddress);
+  const coin = getCoin(coins)(auction?.tokenAddress);
   return coin;
 };
 
