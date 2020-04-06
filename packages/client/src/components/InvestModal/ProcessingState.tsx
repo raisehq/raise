@@ -97,8 +97,8 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
             ERC20Contract.methods
               .approve(DAIProxy.options.address, MAX_VALUE)
               .send({ from: walletAccount }),
-            'approval',
-            { id: 'approval' }
+            { id: 'approval' },
+            'approval'
           );
           setAproved(true);
         } catch (error) {

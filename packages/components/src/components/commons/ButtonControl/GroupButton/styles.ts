@@ -47,11 +47,9 @@ export const ButtonContent = styled.span`
   display: flex;
   flex-direction: row;
   justify-content: center;
- 
 
   &&& > .ui.image {
     width: 16px;
     margin: 2px;
   }
-
 `;

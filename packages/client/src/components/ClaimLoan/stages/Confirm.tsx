@@ -49,11 +49,11 @@ const Confirm = () => {
         loanContract.methods.withdrawLoan().send({
           from: account
         }),
-        'withdrawLoan',
         {
           id: 'withdrawLoan',
           vars: [calculatedLoan.netBalance, coin.value]
-        }
+        },
+        'withdrawLoan'
       );
       setStage(Stages.Success);
     } catch (error) {

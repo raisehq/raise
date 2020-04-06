@@ -45,7 +45,7 @@ const InvestBox = styled.div`
   align-items: center;
   margin: 34px auto 0px auto;
 
-  &&&&&&&&&&&&&&&&&& ${Coin} {
+  &&&&&&&& ${Coin} {
     font-size: 16px;
     color: #8a8e97;
     font-weight: normal;
@@ -124,6 +124,12 @@ const setTokenReserves = async (
   setOutputReserves,
   chainId
 ) => {
+  if (!inputAddress) {
+    throw Error('no-input-address');
+  }
+  if (!outputAddress) {
+    throw Error('no-output-address');
+  }
   if (inputAddress !== outputAddress) {
     const inputReserves = await getTokenReserves(inputAddress, chainId);
     const outputReserves = await getTokenReserves(outputAddress, chainId);
@@ -202,14 +208,16 @@ const InvestmentBox = ({
   const readValue = value > 0 ? value : null;
 
   useAsyncEffect(async () => {
-    await setTokenReserves(
-      coin.address,
-      loanCoin.address,
-      setInputReserves,
-      setOutputReserves,
-      chainId
-    );
-  }, [loanCoin.address, coin.address, chainId]);
+    try {
+      await setTokenReserves(
+        coin?.address,
+        loanCoin?.address,
+        setInputReserves,
+        setOutputReserves,
+        chainId
+      );
+    } catch (err) {}
+  }, [loanCoin?.address, coin?.address, chainId]);
   return (
     <Card size="310px" width="400px" {...props}>
       <InvestHeader>How much would you like to invest?</InvestHeader>

@@ -4,6 +4,7 @@ import useAsyncEffect from '../hooks/useAsyncEffect';
 import UseWebSockets from '../hooks/useWebSockets';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 
+import useGoogleTagManager, { TMEvents } from '../hooks/useGoogleTagManager';
 import Queryies from '../helpers/queryies';
 
 import useWeb3Checker from '../hooks/useWeb3Checker';
@@ -119,7 +120,8 @@ export function Updater() {
   }, [isLogged, token, address, network]);
 
   useEffect(() => {
-    if (process.env.REACT_APP_LOGROCKET === 'true') {
+    const { Cypress }: any = window;
+    if (process.env.REACT_APP_LOGROCKET === 'true' && Cypress === undefined) {
       if (isLogged) {
         LogRocket.identify(id, {
           id,
@@ -163,6 +165,8 @@ export default function Provider({ children }) {
       }
     }
   }: any = useRootContext();
+
+  const tagManager = useGoogleTagManager();
   const [getStarted, setGetStarted] = useState(!!(firstLogin && firstLogin.includes('first')));
   const [isLoading, setLoading] = useState(true);
 
@@ -172,7 +176,10 @@ export default function Provider({ children }) {
   const [daiWebSocket, setDaiWebSocket]: any = useState({});
   const web3Status = useWeb3Checker(address);
 
-  const onSetGetStarted = () => setGetStarted(!getStarted);
+  const onSetGetStarted = () => {
+    tagManager.sendEventCategory('Dashboard', TMEvents.Click, 'getstarted');
+    setGetStarted(!getStarted);
+  };
 
   return (
     <AppContext.Provider

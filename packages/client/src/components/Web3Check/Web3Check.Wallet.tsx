@@ -10,9 +10,10 @@ import {
   SelectWalletOptionItem,
   GoBack
 } from './Web3Check.styles';
+import { ButtonLink } from '@raisehq/components';
 import useWeb3 from '../../hooks/useWeb3';
 import { useRootContext } from '../../contexts/RootContext';
-import { WalletButton } from '../WalletButton';
+
 import GoBackButton from '../GoBackButton';
 import CryptoWallets from '../../commons/cryptoWallets';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
@@ -72,7 +73,7 @@ const Wallet = ({ onNext, onBack }: any) => {
     } else {
       try {
         await connectWallet(walletSelected, network, networkId);
-        onNext('WalletSelector');
+        onNext('WalletSelector', true);
       } catch (error) {
         // console.log(error)
       }
@@ -89,24 +90,39 @@ const Wallet = ({ onNext, onBack }: any) => {
         </SelectYourWalletTitle>
         <SelectYourWalletList>
           <SelectWalletOptionItem key="metamask">
-            <WalletButton
-              onClickAction={handlerWallet(CryptoWallets.Metamask)}
-              walletName="Metamask"
-              walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`}
+            <ButtonLink
+              onClick={handlerWallet(CryptoWallets.Metamask)}
+              text="Metamask"
+              type="tertiary"
+              size="large"
+              disabled={false}
+              icon={`external_link.svg`}
+              logo={`metamask.png`}
+              fullWidth={true}
             />
           </SelectWalletOptionItem>
           <SelectWalletOptionItem key="opera">
-            <WalletButton
-              onClickAction={handlerWallet(CryptoWallets.Opera)}
-              walletName="Opera Wallet"
-              walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/opera.png`}
+            <ButtonLink
+              onClick={handlerWallet(CryptoWallets.Opera)}
+              text="Opera Wallet"
+              type="tertiary"
+              size="large"
+              disabled={false}
+              icon={`external_link.svg`}
+              logo={`opera.png`}
+              fullWidth={true}
             />
           </SelectWalletOptionItem>
           <SelectWalletOptionItem key="coinbase">
-            <WalletButton
-              onClickAction={handlerWallet(CryptoWallets.Coinbase)}
-              walletName="Coinbase"
-              walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
+            <ButtonLink
+              onClick={handlerWallet(CryptoWallets.Coinbase)}
+              text="Coinbase Wallet"
+              type="tertiary"
+              size="large"
+              disabled={false}
+              icon={`external_link.svg`}
+              logo={`coinbase.png`}
+              fullWidth={true}
             />
           </SelectWalletOptionItem>
           {!isMobile && (

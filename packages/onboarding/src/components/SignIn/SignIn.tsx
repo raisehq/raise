@@ -10,7 +10,7 @@ const Signin = () => {
 
   return (
     <ChooseMethodWrapper>
-      <AuthenticationMethods method={'Sign In'} />
+      <AuthenticationMethods method={'Login'} />
       <ChooseSignUpSignInWrapper>
         <CallToSignIn>
           Don't you have an account?

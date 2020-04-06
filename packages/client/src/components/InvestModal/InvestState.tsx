@@ -37,17 +37,6 @@ const ErrorBox = styled.div`
   margin-top: 8px;
 `;
 
-const HelperText = styled.div`
-  margin-top: 18px;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 16px;
-  text-align: center;
-  color: #b1b3b9;
-`;
-
 const ContinueButton = styled(ConfirmButton)`
   &&&&& {
   }
@@ -205,7 +194,6 @@ const InvestState: React.SFC<InvestStateProps> = ({
       <ContinueButton id="btn-invest-confirm" onClick={onConfirm} disabled={buttonRules}>
         Continue
       </ContinueButton>
-      <HelperText>In the next step you will be able to review before confirm</HelperText>
     </>
   );
 };

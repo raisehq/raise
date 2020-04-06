@@ -34,10 +34,15 @@ import defaultContext from './defaults';
 declare global {
   interface Window {
     fbq: any;
+    recaptchaOptions: any;
   }
 }
 
 window.fbq = window.fbq || null;
+
+window.recaptchaOptions = {
+  useRecaptchaNet: true
+};
 
 const Step = daggy.taggedSum('UI', {
   Start: [],
@@ -440,7 +445,7 @@ const App = ({
       ),
       StartMini: () => <GetStarted />,
       SignIn: () => (
-        <PanelWithImage {...props} title={'Sign in'}>
+        <PanelWithImage {...props} title={'Login'}>
           <SignIn />
         </PanelWithImage>
       ),

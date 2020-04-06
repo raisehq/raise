@@ -23,6 +23,16 @@ export const DashboardWrapper = styled.div`
 `;
 
 export const DashboardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+`;
+
+export const ButtonRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   width: 100%;
 `;
 
@@ -86,7 +96,7 @@ export const SuggestedContainer = styled.div`
 
   @media ${device.mobileL} {
     grid-template-columns: repeat(auto-fill, 370px);
-    grid-template-rows: 570px;
+    grid-template-rows: 585px;
   }
 `;
 

@@ -54,7 +54,7 @@ const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvest
     maxAmount: calcMaxAmount,
     principal: calcPrincipal
   } = getCalculations(loan);
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
 
   const tagManager = useGoogleTagManager('Card');
 

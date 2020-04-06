@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { Select } from 'semantic-ui-react';
 
-export const SelectStyled = styled(Select)`
+export const SelectControlStyled: any = styled(Select)`
   background: #ffffff;
   border: 1px solid #cfd0d4;
   box-sizing: border-box;

@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import {
-  Button,
   DashboardContainer,
   DashboardWrapper,
   DashboardTab,
-  Header
+  Header,
+  ButtonRow
 } from './Dashboard.styles';
 import Tab from './Dashboard.Tab';
 import { useAppContext } from '../../contexts/AppContext';
@@ -12,6 +12,7 @@ import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import Queryies from '../../helpers/queryies';
 import { Element } from 'react-scroll';
+import { Button } from '@raisehq/components';
 
 const Dashboard = () => {
   const {
@@ -73,9 +74,16 @@ const Dashboard = () => {
           </Header>
         </Element>
         <DashboardTab renderActiveOnly menu={{ secondary: true, pointing: true }} panes={panes} />
-        <Button id="btn-create-loan" onClick={onCreateLoan}>
-          create loan
-        </Button>
+        <ButtonRow>
+          <Button
+            onClick={onCreateLoan}
+            idAttr="btn-create-loan"
+            text="Create Loan"
+            type="secondary"
+            size="large"
+            disabled={false}
+          />
+        </ButtonRow>
       </DashboardContainer>
     </DashboardWrapper>
   );

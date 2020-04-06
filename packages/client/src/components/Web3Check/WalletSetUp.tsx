@@ -4,14 +4,15 @@ import {
   SelectYourWalletTitle,
   Web3CheckWalletWrapper,
   GoBack,
-  WalletIcon,
   SetUpSubtitle,
-  OtherWalletsText
+  OtherWalletsText,
+  ButtonContainer
 } from './Web3Check.styles';
+
+import { ButtonLink } from '@raisehq/components';
 
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { isMobile } from 'react-device-detect';
-import { WalletButton } from '../WalletButton';
 import GoBackButton from '../GoBackButton';
 import { getWalletName } from '../../utils';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
@@ -46,7 +47,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     } else {
       try {
         await connectWallet(walletSelected, network, networkId);
-        onNext('WalletSetUp');
+        onNext('WalletSetUp', false);
       } catch (error) {
         // console.log(error)
       }
@@ -66,18 +67,29 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
           Once you are all set up to connect your new wallet, refresh your browser.
         </SetUpSubtitle>
       </SelectYourWalletTitle>
-      <WalletIcon src={`${process.env.REACT_APP_HOST_IMAGES}/images/metamask.png`} />
-      <WalletButton
-        onClickAction={handlerWallet(CryptoWallets.Metamask)}
-        walletName="Install Metamask"
-        green
-      />
-      <OtherWalletsText>You can also use:</OtherWalletsText>
-      <WalletButton
-        onClickAction={handlerWallet(CryptoWallets.Coinbase)}
-        walletIcon={`${process.env.REACT_APP_HOST_IMAGES}/images/coinbase.png`}
-        walletName="Coinbase"
-      />
+
+      <ButtonContainer>
+        <ButtonLink
+          onClick={handlerWallet(CryptoWallets.Metamask)}
+          size="large"
+          text={`Install Metamask`}
+          fullWidth={true}
+          icon={`external_link.svg`}
+          type="secondary"
+          logo={`metamask.png`}
+        />
+        <OtherWalletsText>You can also use:</OtherWalletsText>
+        <ButtonLink
+          onClick={handlerWallet(CryptoWallets.Coinbase)}
+          size="large"
+          text={`Coinbase Wallet`}
+          fullWidth={true}
+          icon={`external_link.svg`}
+          type="tertiary"
+          logo={`coinbase.png`}
+        />
+      </ButtonContainer>
+
       <GoBack>
         <GoBackButton onClickAction={onBack} />
       </GoBack>

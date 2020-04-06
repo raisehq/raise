@@ -3,13 +3,12 @@ import { Image } from 'semantic-ui-react';
 import {
   ChooseMethodWrapper,
   ChooseMethodButtonList,
-  ChooseMethodButton,
-  ChooseBloomMethodButton,
   ChooseMethodSubtitleWrapper,
   ChooseMethodSubTitle
 } from './styles';
 import { IContext, Steps } from '../types';
 import AppContext from '../App.context';
+import { Button, BloomButton } from '@raisehq/components';
 
 const AuthenticationMethods = ({ method }) => {
   const { onSetStep, onSetStepWithParam } = useContext<IContext>(AppContext);
@@ -17,23 +16,25 @@ const AuthenticationMethods = ({ method }) => {
   return (
     <ChooseMethodWrapper>
       <ChooseMethodSubtitleWrapper>
-        <ChooseMethodSubTitle>Select how you want to {method.toLowerCase()}</ChooseMethodSubTitle>
+        <ChooseMethodSubTitle>Select how to {method.toLowerCase()}</ChooseMethodSubTitle>
       </ChooseMethodSubtitleWrapper>
       <ChooseMethodButtonList>
-        <ChooseMethodButton
-          id="btn-sign-in-email"
+        <Button
+          idAttr="btn-sign-in-email"
           onClick={() => onSetStep(method === 'Sign Up' ? 'SignUpWithEmail' : 'SignInWithEmail')()}
-        >
-          {method} with email
-        </ChooseMethodButton>
-        <ChooseBloomMethodButton
+          size="large"
+          type="secondary"
+          text={`with Email`}
+          fullWidth={true}
+        />
+        <BloomButton
           onClick={() =>
             onSetStepWithParam(method === 'Sign Up' ? 'SignUpWithBloom' : 'SignInWithBloom')('')()
           }
-        >
-          <span>{method} with</span>
-          <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
-        </ChooseBloomMethodButton>
+          size="large"
+          text={`with`}
+          fullWidth={true}
+        />
       </ChooseMethodButtonList>
     </ChooseMethodWrapper>
   );

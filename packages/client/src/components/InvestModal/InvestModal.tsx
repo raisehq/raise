@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import daggy from 'daggy';
 import BN from 'bn.js';
 import { match, ANY } from 'pampy';
+import { Button } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
 import { InvestModalProps } from './types';
 import { useAppContext } from '../../contexts/AppContext';
@@ -13,7 +14,7 @@ import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
 import VerifyKycModal from './VerifyKycState';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-import { LenderButton, Modal, ModalContent } from './InvestModal.styles';
+import { Modal, ModalContent, ButtonContainer } from './InvestModal.styles';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const FEATURE_FLAG_SWAP = process.env.REACT_APP_SWAP_ON === 'true';
@@ -124,9 +125,18 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   };
   return (
     <>
-      <LenderButton id="btn-lender-open" className={className} fluid onClick={openModal}>
-        {buttonText}
-      </LenderButton>
+      <ButtonContainer>
+        <Button
+          idAttr="btn-lender-open"
+          className={className}
+          onClick={openModal}
+          text={buttonText}
+          disabled={false}
+          type={'primary'}
+          size={'large'}
+          fullWidth={true}
+        />
+      </ButtonContainer>
       <Modal open={open} onClose={closeModal} size={stageModalWidth} mountNode={modalRefs.current}>
         <ModalContent>{getInvestAction(stage)}</ModalContent>
       </Modal>

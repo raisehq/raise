@@ -2,7 +2,13 @@ import React from 'react';
 import daggy from 'daggy';
 import { Link } from 'react-router-dom';
 import { Loader, Header } from 'semantic-ui-react';
-import { LoanConfirmation, ConfirmButton, NewLoanAnchor, WaitingButton } from './CreateLoan.styles';
+import {
+  LoanConfirmation,
+  NewLoanAnchor,
+  WaitingButton,
+  ButtonContainer
+} from './CreateLoan.styles';
+import { Button } from '@raisehq/components';
 
 import ConfirmLoan from './ConfirmLoan';
 
@@ -38,9 +44,19 @@ export const getLoanAction = (stage, values, methods) => {
       <LoanConfirmation>
         <Header as="h2">Congrats!</Header>
         <p>Your loan request have been created.</p>
-        <ConfirmButton id="btn-check" as={Link} to="/">
-          Check your loans
-        </ConfirmButton>
+        <ButtonContainer>
+          <Button
+            idAttr="btn-check"
+            as={Link}
+            to="/"
+            onClick={onSave}
+            text="Check your loans"
+            type={'secondary'}
+            size={'small'}
+            disabled={false}
+            fullWidth={true}
+          />
+        </ButtonContainer>
         <NewLoanAnchor onClick={onRetry}>Create a new loan</NewLoanAnchor>
       </LoanConfirmation>
     ),
@@ -48,9 +64,17 @@ export const getLoanAction = (stage, values, methods) => {
       <LoanConfirmation>
         <Header as="h2">Sorry</Header>
         <p>Something went wrong while creating the loan. Contact support if you need help.</p>
-        <ConfirmButton id="btn-retry" onClick={onRetry}>
-          Retry
-        </ConfirmButton>
+        <ButtonContainer>
+          <Button
+            idAttr="btn-retry"
+            onClick={onRetry}
+            text="Retry"
+            type={'secondary'}
+            size={'large'}
+            disabled={false}
+            fullWidth={true}
+          />
+        </ButtonContainer>
       </LoanConfirmation>
     )
   });
