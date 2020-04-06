@@ -19,10 +19,20 @@ before_script:
     ln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \
     cd - \
     apk del .build-deps
+  - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
+  - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
+  - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
+  - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
 stages:
+  - deploy-backend
   - build
   - deploy
+  - review
   - test
+  - deploy-prod
+  - tag
+  - publish
+  - cleanup
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1
@@ -33,19 +43,88 @@ cache:
   paths:
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
 
-build:
+deploy-backend:
+  stage: deploy-backend
+  image: alpine:latest
+  before_script:
+    - |
+      #!/bin/sh
+      apk add --no-cache openssh-client bash
+      mkdir -p ~/.ssh && chmod 700 ~/.ssh
+      echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+      echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      chmod 600 ~/.ssh/config
+  script:
+    - |
+      #!/bin/sh
+      ssh ubuntu@${BASTION}.${DOMAIN} \
+      "cd /home/ubuntu/deployment && \
+      ./deploy.sh ${CI_COMMIT_REF_SLUG} ${DOMAIN}"
+  only:
+    - merge_requests
+  except:
+    - master
+
+build-front-review:
+  stage: build
+  variables:
+    REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.${DOMAIN}
+    REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}
+    REACT_APP_HOST_URL_AUTH: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+    REACT_APP_HOST_URL_CORE: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+    REACT_APP_HOST_URL_FILE: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+  script:
+    - |
+      #!/bin/sh
+      if [ -n "${REVIEW_SLUG}" ]; then
+        REACT_APP_COOKIE_DOMAIN=.${REVIEW_SLUG}.review.${DOMAIN}
+        REACT_APP_HOST_URL=https://${REVIEW_SLUG}.review.${DOMAIN}
+        REACT_APP_HOST_URL_AUTH=https://${REVIEW_SLUG}.api.${DOMAIN}
+        REACT_APP_HOST_URL_CORE=https://${REVIEW_SLUG}.api.${DOMAIN}
+        REACT_APP_HOST_URL_FILE=https://${REVIEW_SLUG}.api.${DOMAIN}
+      fi
+      echo $REACT_APP_HOST_URL
+      yarn --pure-lockfile
+      yarn run client:build:integration
+      mv  packages/client/build  packages/client/build_review
+  only:
+    - merge_requests
+    - latest
+  except:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build_review
+
+build-front-integration:
   stage: build
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
     - 'yarn run client:build:integration'
     - 'mv  packages/client/build  packages/client/build_int'
+  only:
+    - master
   artifacts:
     when: always
     paths:
       - packages/client/build_int
 
-deploy:
+build-front-production:
+  stage: build
+  script:
+    - 'echo $REACT_APP_HOST_URL'
+    - 'yarn --pure-lockfile'
+    - 'yarn run client:build:production'
+  only:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build
+
+deploy-int:
   image: python:3.7-alpine
   stage: deploy
   before_script:
@@ -60,15 +139,35 @@ deploy:
         echo $dist
         aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
       done
+  only:
+    - master
 
-cypress-e2e:
+deploy-canary:
+  image: python:3.7-alpine
+  stage: deploy
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/client/build canary
+      aws s3 sync --delete canary s3://${BUCKET_NAME_PROD}/canary --metadata-directive REPLACE --cache-control max-age=86400000
+      aws s3 cp s3://${BUCKET_NAME_PROD}/canary/ s3://${BUCKET_NAME_PROD}/canary/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
+      done
+  only:
+    - master
+
+cypress-e2e-review:
   image: 'cypress/browsers:node10.16.0-chrome77'
   stage: test
   variables:
-    CYPRESS_url: 'https://app.herodev.es'
-    CYPRESS_baseUrl: 'https://app.herodev.es'
+    CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
+    CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: https://api.herodev.es
+    CYPRESS_api: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
     CYPRESS_isCanary: 'false'
   script:
     - 'yarn --pure-lockfile'
@@ -85,7 +184,162 @@ cypress-e2e:
       - packages/testing/cypress/screenshots
       - packages/testing/cypress/videos
       - packages/testing/cypress/snapshots
+  only:
+    - merge_requests
   cache:
     key: ganache-global-cache
     paths:
       - packages/testing/ganache_db
+
+cypress-e2e-production:
+  image: 'cypress/browsers:node10.16.0-chrome77'
+  stage: test
+  variables:
+    CYPRESS_url: 'https://app.raise.it'
+    CYPRESS_baseUrl: 'https://app.raise.it'
+    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+    CYPRESS_api: https://api.raise.it
+    CYPRESS_isCanary: 'false'
+  script:
+    - 'yarn --pure-lockfile'
+    - 'cd packages/testing'
+    - 'yarn run cypress cache path'
+    - 'yarn run cypress cache list'
+    - 'yarn run cypress verify'
+    - 'yarn run ci:run'
+  artifacts:
+    expire_in: '1 week'
+    when: always
+    paths:
+      - packages/testing/cypress/screenshots
+      - packages/testing/ganache_db
+      - packages/testing/cypress/videos
+      - packages/testing/cypress/snapshots
+  cache:
+    key: ganache-global-cache
+    paths:
+      - packages/testing/ganache_db
+  only:
+    - master
+
+deploy-prod:
+  image: python:3.7-alpine
+  stage: deploy-prod
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/client/build latest
+      aws s3 sync --delete latest s3://${BUCKET_NAME_PROD}/latest --metadata-directive REPLACE --cache-control max-age=86400000
+      aws s3 cp s3://${BUCKET_NAME_PROD}/latest/ s3://${BUCKET_NAME_PROD}/latest/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
+      done
+  only:
+    - master
+
+tag to latest:
+  image: alpine:latest
+  stage: tag
+  before_script:
+    - |
+      #!/bin/sh
+      apk add --update openssh-client bash git
+      eval $(ssh-agent -s)
+      echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+      mkdir -p ~/.ssh
+      chmod 700 ~/.ssh
+      ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+      chmod 644 ~/.ssh/known_hosts
+  script:
+    - git remote set-url origin git@gitlab.com:raisehq/${CI_PROJECT_NAME}.git
+    - git tag latest --force
+    - git push --force origin --tags
+  only:
+    - master
+
+publish-components:
+  stage: publish
+  rules:
+    - if: '$CI_COMMIT_REF_SLUG != "master"'
+      when: never
+    - changes:
+        - packages/components/package.json
+    - when: never
+  script:
+    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+    - |
+      #!/bin/sh
+      if [ "${LOCAL_VERSION_COMPONENTS}" != "${PUBLISH_VERSION_COMPONENTS}" ]; then
+        yarn run bootstrap:deps
+        yarn run build:deps
+        cd ./packages/components/
+        npm publish
+      else
+        echo "Package not updated, the latest version published is ${PUBLISH_VERSION_COMPONENTS} and the local verison is ${LOCAL_VERSION_COMPONENTS}."
+      fi
+
+publish-onboarding:
+  stage: publish
+  rules:
+    - if: '$CI_COMMIT_REF_SLUG != "master"'
+      when: never
+    - changes:
+        - packages/onboarding/package.json
+    - when: never
+  script:
+    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+    - |
+      #!/bin/sh
+      if [ "${LOCAL_VERSION_ONBOARDING}" != "${PUBLISH_VERSION_ONBOARDING}" ]; then
+        yarn run bootstrap:deps
+        yarn run build:deps
+        cd ./packages/onboarding/
+        npm publish
+      else
+        echo "Package not updated, the latest version published is ${PUBLISH_VERSION_ONBOARDING} and the local verison is ${LOCAL_VERSION_ONBOARDING}."
+      fi
+
+review:
+  image: python:3.7-alpine
+  stage: review
+  before_script:
+    - 'pip install awscli'
+  script:
+    - 'mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+    - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    on_stop: stop-review
+  only:
+    - merge_requests
+    - latest
+  except:
+    - master
+
+stop-review:
+  image: python:3.7-alpine
+  stage: cleanup
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - apk add --no-cache openssh-client bash
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - chmod 600 ~/.ssh/config
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+    - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
+  when: manual
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
+  only:
+    - merge_requests
+  except:
+    - master
