@@ -114,7 +114,9 @@ const initialState = {
     show: false,
     troggle: ''
   },
-  loanDispatcher: {}
+  loanDispatcher: {
+    acceptedTokens: []
+  }
 };
 
 export default initialState;
