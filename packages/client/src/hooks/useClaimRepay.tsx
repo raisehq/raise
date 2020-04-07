@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import useWallet from '../../hooks/useWallet';
-import { Stages } from './ClaimRepay';
-import { useAppContext } from '../../contexts/AppContext';
-import { useRootContext } from '../../contexts/RootContext';
+import useWallet from './useWallet';
+import { Stages } from '../components/ClaimRepay/ClaimRepay';
+import { useAppContext } from '../contexts/AppContext';
+import { useRootContext } from '../contexts/RootContext';
 
 const useRepayment = (loan, open) => {
   const { id }: any = loan;
