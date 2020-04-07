@@ -76,9 +76,9 @@ const useWallet = () => {
           if (!hasIn(heroContracts, `abi.${netId}.${name}`)) {
             throw new Error('[useWallets] Contract not found in abi metadata list');
           }
-          if (instanceContracts[netId] && instanceContracts[netId][name]) {
-            return instanceContracts[netId][name];
-          }
+          // if (instanceContracts[netId] && instanceContracts[netId][name]) {
+          //   return instanceContracts[netId][name];
+          // }
           const contract = new web3.eth.Contract(
             get(heroContracts, `abi.${netId}.${name}`),
             address

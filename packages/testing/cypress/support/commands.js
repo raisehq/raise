@@ -239,6 +239,37 @@ Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
   }
 });
 
+/*
+  Mock The graph response
+*/
+Cypress.Commands.add('acceptedTokens', function() {
+  cy.window().then(async win => {
+    const user = Cypress.env('user');
+    const provider = new PrivateKeyProvider(
+      user['borrower'].private_key,
+      Cypress.env('eth_provider'),
+      0,
+      10
+    );
+    const web3 = new Web3(provider); // eslint-disable-line no-param-reassign
+
+    const netId = await web3.eth.net.getId();
+
+    const cyDAI = contracts.address[netId].DAI;
+    const cyUSDC = contracts.address[netId].USDC;
+    const cyUSDT = contracts.address[netId].USDT;
+    const acceptedTokens = [cyDAI, cyUSDC, cyUSDT];
+    const data = {
+      loanDispatchers: [
+        {
+          acceptedTokens
+        }
+      ]
+    };
+    win.UseWebsocket.trigger('acceptedTokens', data);
+  });
+});
+
 /* 
   Mock Butter cms responses
 */

@@ -7,7 +7,7 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { fromWei, toWei } from 'web3-utils';
 import { useRootContext } from '../../contexts/RootContext';
 
-import useClaimRepay from './useClaimRepay';
+import useClaimRepay from '../../hooks/useClaimRepay';
 import ConfirmStage from './stages/Confirm';
 import ErrorStage from './stages/Retry';
 import SuccessStage from './stages/Success';
