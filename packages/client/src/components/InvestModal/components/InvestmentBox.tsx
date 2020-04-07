@@ -12,9 +12,15 @@ import RawCoin from '../../Coin';
 import MaxInputsRaw from './MaxInputs';
 import { useAppContext } from '../../../contexts/AppContext';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
+import { CoinsType } from '../../../commons/coins';
+
+const errorMessages = {
+  inputGreaterThanBalance: 'Not enough balance.',
+  inputGreaterThanLoanAmount: 'Invest less than target.'
+};
 
 const MaxInputs = styled(MaxInputsRaw)`
-  margin-top: 39px;
+  margin-top: 10px;
 `;
 
 const CoinSelector = styled(CoinSelectorRaw)`
@@ -43,6 +49,7 @@ const InvestBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   margin: 34px auto 0px auto;
 
   &&&&&&&& ${Coin} {
@@ -78,11 +85,20 @@ const BalanceWrapper = styled.div`
 `;
 
 const BigInput = styled(LoanInput)`
-  font-size: 48px;
+  font-size: ${({ value }) => {
+    if (value?.toString()?.length > 8) {
+      return 28;
+    }
+    if (value?.toString()?.length > 6) {
+      return 36;
+    }
+    return 48;
+  }}px;
   line-height: 56px;
+  width: ${({ value }) => (value?.toString()?.length > 1 ? value?.toString()?.length + 1 : 1)}ch;
   text-align: ${({ value }) => (value ? 'center' : 'left')};
-  width: ${({ value }) => (value ? '120px' : '40px')};
-  margin: ${({ value }) => (value ? '0px auto' : '0px 40px')};
+  min-width: ${({ value }) => (value ? '0px' : '1ch')};
+  margin: ${({ value }) => (value ? '0px 1ch' : '0px 1ch')};
   color: #00da9e;
   background-color: transparent;
   display: flex;
@@ -113,23 +129,26 @@ const BigInput = styled(LoanInput)`
   }
 `;
 
+const ErrorBox = styled.div`
+  width: 100%;
+  min-height: 30px;
+  color: red;
+  display: block;
+  content: '';
+  margin-top: 8px;
+`;
+
 const swapBlacklist = {
   USDT: true
 };
 
 const setTokenReserves = async (
-  inputAddress,
-  outputAddress,
-  setInputReserves,
-  setOutputReserves,
-  chainId
+  inputAddress: string,
+  outputAddress: string,
+  setInputReserves: Function,
+  setOutputReserves: Function,
+  chainId: number
 ) => {
-  if (!inputAddress) {
-    throw Error('no-input-address');
-  }
-  if (!outputAddress) {
-    throw Error('no-output-address');
-  }
   if (inputAddress !== outputAddress) {
     const inputReserves = await getTokenReserves(inputAddress, chainId);
     const outputReserves = await getTokenReserves(outputAddress, chainId);
@@ -168,11 +187,13 @@ const InvestmentBox = ({
   setValue,
   selectedCoin,
   setCoin,
+  maxAmountNum,
   ...props
 }) => {
   const [inputReserves, setInputReserves] = useState<TokenReservesNormalized>();
   const [outputReserves, setOutputReserves] = useState<TokenReservesNormalized>();
   const { principal, maxAmount } = loan;
+
   const {
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
@@ -182,14 +203,11 @@ const InvestmentBox = ({
     setCoin(value);
   };
 
-  const fundAll = async divisor => {
-    if (!loanCoin || !coin) {
-      throw Error('no coin loaded');
-    }
+  const fundAll = (loanCurrency: CoinsType, selectedCurrency: CoinsType) => async divisor => {
     const nMaxAmount = Number(fromWei(maxAmount));
     const nPrincipal = nMaxAmount - Number(fromWei(principal));
 
-    if (loanCoin?.text === selectedCoin) {
+    if (loanCurrency?.text === selectedCurrency?.text) {
       const minValue = Math.min(...[balance / divisor, nPrincipal]);
       return setValue(minValue);
     }
@@ -199,13 +217,35 @@ const InvestmentBox = ({
   };
 
   const onSetValue = v => {
-    if (v.floatValue < 0) {
+    if (!v?.floatValue) {
+      return setValue(0);
+    }
+    if (v?.floatValue < 0) {
       return setValue(0);
     }
     return setValue(v.floatValue);
   };
 
   const readValue = value > 0 ? value : null;
+
+  const errorMessage = () => {
+    if (value && value > balance) {
+      return errorMessages.inputGreaterThanBalance;
+    }
+    if (value && value > maxAmountNum) {
+      return errorMessages.inputGreaterThanLoanAmount;
+    }
+    return null;
+  };
+
+  const preventOverflow = e => {
+    const char = String.fromCharCode(e.which);
+    const finalValue = `${value}${char}`;
+    const max = 9;
+    if (Number(char) >= 0 && finalValue.length > max) {
+      e.preventDefault();
+    }
+  };
 
   useAsyncEffect(async () => {
     try {
@@ -216,10 +256,14 @@ const InvestmentBox = ({
         setOutputReserves,
         chainId
       );
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+      throw Error('error-getting-token-reserves');
+    }
   }, [loanCoin?.address, coin?.address, chainId]);
+
   return (
-    <Card size="310px" width="400px" {...props}>
+    <Card size="310px" width="100%" {...props}>
       <InvestHeader>How much would you like to invest?</InvestHeader>
       <InvestBox>
         <div>INVEST</div>
@@ -230,6 +274,7 @@ const InvestmentBox = ({
           value={readValue}
           onValueChange={onSetValue}
           fixedDecimalScale={false}
+          onKeyDown={preventOverflow}
         />
         <Coin src={loanCoinImage} name={loanCoin?.text} />
       </InvestBox>
@@ -241,7 +286,11 @@ const InvestmentBox = ({
           value={selectedCoin}
           onChange={handleChange}
         />
-        <MaxInputs onClick={fundAll} />
+        <ErrorBox>
+          {errorMessage()}
+          &nbsp;
+        </ErrorBox>
+        <MaxInputs onClick={fundAll(loanCoin, coin)} />
       </BalanceWrapper>
     </Card>
   );

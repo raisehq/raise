@@ -63,7 +63,8 @@ const Dashboard = () => {
         setWarning(warning);
       }
     } catch (error) {
-      console.error('[DASBOARD.LENDER] ', error);
+      // Reminder: Missing companies in Kovan testnet network shows 404 errors
+      //console.error('[DASBOARD.LENDER] ', error);
     }
   }, []);
 

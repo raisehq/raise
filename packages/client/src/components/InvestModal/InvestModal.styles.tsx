@@ -48,7 +48,7 @@ export const LoanTermsCheckbox: any = styled(Checkbox)`
 
 export const CheckContainer = styled.div`
   line-height: 20px;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 20px;
   display: flex;
 `;

@@ -20,9 +20,6 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const { history }: any = useRouter();
   const {
     store: {
-      user: {
-        details: { kyc_status }
-      },
       auth: {
         login: { logged: isLogged }
       }
@@ -35,7 +32,6 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
   // prettier-ignore
   const connected = (hasProvider && unlocked && accountMatches && networkMatches);
-  const userActivated = connected && kyc_status === 3;
 
   const buttonText = match(
     [connected, invested],
@@ -46,10 +42,7 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
   );
 
   const openSlide = () => {
-    if (isLogged && userActivated) {
-      tagManager.sendEvent(TMEvents.Click, 'loan');
-      setLoanId(loan?.id);
-    } else if (isLogged && !userActivated) {
+    if (isLogged) {
       tagManager.sendEvent(TMEvents.Click, 'loan');
       setLoanId(loan?.id);
     } else {
@@ -64,20 +57,18 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
   };
 
   return (
-    <>
-      <ButtonContainer>
-        <Button
-          idAttr="btn-lender-open"
-          className={className}
-          onClick={openSlide}
-          text={buttonText}
-          disabled={false}
-          type={'primary'}
-          size={'large'}
-          fullWidth={true}
-        />
-      </ButtonContainer>
-    </>
+    <ButtonContainer>
+      <Button
+        idAttr="btn-lender-open"
+        className={className}
+        onClick={openSlide}
+        text={buttonText}
+        disabled={false}
+        type={'primary'}
+        size={'large'}
+        fullWidth
+      />
+    </ButtonContainer>
   );
 };
 

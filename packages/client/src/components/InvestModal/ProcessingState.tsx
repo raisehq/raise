@@ -122,6 +122,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   useAsyncEffect(async () => {
     if (approved) {
       const { DAIProxy } = contracts;
+      if (!inputCoin?.address) {
+        throw Error('[LoanFund] input coin is null');
+      }
       const isSwap = inputCoin?.address.toLowerCase() !== loanCoin?.address.toLowerCase();
       if (isSwap) {
         try {
@@ -129,7 +132,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
             DAIProxy.methods
               .swapTokenAndFund(
                 loan.id,
-                inputCoin?.address,
+                inputCoin.address,
                 inputTokenAmount.toString(),
                 toWei(investment.toString())
               )

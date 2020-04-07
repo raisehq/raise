@@ -12,7 +12,6 @@ const RightSidebar = styled(animated.div)`
   top: 0;
   right: 0;
   width: 100%;
-  padding: 30px 20px;
   height: 100vh;
   @media screen and ${device.laptop} {
     width: 520px;

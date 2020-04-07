@@ -59,8 +59,6 @@ const InvestSidebar = () => {
     if (loanId) {
       if (userActivated) {
         setStage(UI.Confirm);
-      } else {
-        setStage(UI.Kyc);
       }
     }
   }, [loanId]);

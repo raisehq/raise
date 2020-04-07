@@ -161,8 +161,7 @@ export const getCoinsFromContract = coinsMap => contract => {
   return coins;
 };
 
-export const getCoin = (coins: CoinsType[]) => (tokenAddress): CoinsType => {
-  let result;
+export const getCoin = (coins: CoinsType[]) => (tokenAddress: string): CoinsType => {
   const defaultCoin = {
     address: '',
     text: '',
@@ -173,14 +172,10 @@ export const getCoin = (coins: CoinsType[]) => (tokenAddress): CoinsType => {
   if (!coins || !coins.length) {
     return defaultCoin;
   }
-  if (tokenAddress) {
-    result =
-      coins.find(coin => toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)) ||
-      defaultCoin;
-  } else {
-    result = coins.find(coin => coin.text === 'DAI') || defaultCoin;
-  }
-  return result;
+  return (
+    coins.find(coin => toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)) ||
+    defaultCoin
+  );
 };
 
 export const getCalculations = auction => {

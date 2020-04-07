@@ -23,35 +23,22 @@ import {
 } from './InvestModal.styles';
 import CollapsedTable, { TableItem } from './components/CollapsedTable';
 
-const errorMessages = {
-  inputGreaterThanBalance: 'Not enough balance.',
-  inputGreaterThanLoanAmount: 'Invest less than target.'
-};
-
 const InvestBody = styled.div`
-  padding: 0px 10px;
   height: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 const InvestInput = styled.div`
+  padding: 30px 40px 0px;
   overflow-y: auto;
-  height: 78%;
-  padding: 0px 10px;
+  height: 84%;
 `;
 
 const ButtonWrapper = styled.div`
   flex: 1;
-`;
-
-const ErrorBox = styled.div`
-  width: 100%;
-  min-height: 30px;
-  color: red;
-  display: block;
-  content: '';
-  margin-top: 8px;
+  border-top: 1px solid #cfd0d4;
+  padding: 0px 40px 30px;
 `;
 
 const ContinueButton = styled(ConfirmButton)``;
@@ -99,16 +86,6 @@ const InvestState: React.SFC<InvestStateProps> = ({
     setInvestment(value);
     // Change to state confirmation
     setStage(ui.Processing);
-  };
-
-  const errorMessage = () => {
-    if (value && value > balance) {
-      return errorMessages.inputGreaterThanBalance;
-    }
-    if (value && value > maxAmountNum) {
-      return errorMessages.inputGreaterThanLoanAmount;
-    }
-    return null;
   };
 
   const getSwapOutput = async (): Promise<BN> => {
@@ -174,7 +151,8 @@ const InvestState: React.SFC<InvestStateProps> = ({
     loanCoin,
     balance,
     selectedCoin,
-    setCoin
+    setCoin,
+    maxAmountNum
   };
 
   const onToggleTerms = () => {
@@ -202,10 +180,6 @@ const InvestState: React.SFC<InvestStateProps> = ({
         />
       </InvestInput>
       <ButtonWrapper>
-        <ErrorBox>
-          {errorMessage()}
-          &nbsp;
-        </ErrorBox>
         <CheckContainer>
           <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
           to the Terms and Conditions of the Loan Agreement

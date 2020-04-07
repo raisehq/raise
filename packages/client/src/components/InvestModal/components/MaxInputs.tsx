@@ -14,6 +14,7 @@ const MaxButton = styled.div`
   text-align: center;
   text-decoration-line: underline;
   color: #00da9e;
+  cursor: pointer;
 `;
 
 const Divider = styled.div`
