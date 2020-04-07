@@ -44,7 +44,7 @@ const Sidebar = props => {
           setDisplay(false);
         }}
       />
-      <RightSidebar style={rightMenuAnimation} {...props}>
+      <RightSidebar id="sidebar" style={rightMenuAnimation} {...props}>
         {!!display && props?.children}
       </RightSidebar>
     </>
