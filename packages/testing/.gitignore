@@ -1,7 +1,0 @@
-cypress/screenshots/*
-cypress/videos/*
-cypress/snapshots/*
-cypress/results
-contracts
-.db
-ganache_db
