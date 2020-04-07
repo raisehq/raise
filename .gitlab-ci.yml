@@ -12,7 +12,7 @@ cache:
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
 
 build-front-integration:
-  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise
+  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:latest
   stage: build
   script:
     - 'echo $REACT_APP_HOST_URL'
