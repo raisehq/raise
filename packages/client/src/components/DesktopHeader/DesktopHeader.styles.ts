@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import Logout from '../Logout';
+import { Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import Logout from '../Logout';
+
 import { maxDevice } from '../../commons/breakpoints';
 
 export const HeaderWrapper: any = styled.div`
@@ -95,4 +97,17 @@ export const HeaderMenuItem = styled.button`
 
 export const LinkContent = styled(Link)`
   margin: 0px 10px;
+`;
+
+export const ButtonMyAccount = styled(Button)`
+  &&&&&&&& {
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
+    height: 40px;
+    color: rgba(0, 0, 0, 0.6) !important;
+  }
+  &&&&&&&&:hover {
+    border: 1px solid #eb3f93;
+    box-shadow: 0px 8px 15px rgba(60, 66, 81, 0.25);
+  }
 `;

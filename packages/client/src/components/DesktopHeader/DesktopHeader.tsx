@@ -106,8 +106,9 @@ const DesktopHeader = () => {
             <>
               {isLogged && visibleMenu && (
                 <>
+                  <Web3Address border={false} />
                   <HeaderBalance />
-                  <Web3Address />
+
                   <MyAccountButton />
                 </>
               )}
