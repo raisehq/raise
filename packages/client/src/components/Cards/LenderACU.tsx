@@ -25,6 +25,8 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
       () => <GetInTouch />,
       [1, false],
       () => <ClaimRefund loan={auction} />,
+      [6, false],
+      () => <ClaimRefund loan={auction} />,
       ANY,
       () => null
     );
@@ -51,7 +53,10 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Card.Grid>
         <Card.Grid spaceBetween notop>
-          <Card.Header title="Investment return" amount={<Amount principal={lenderRoiAmount} coin={coin}/>} />
+          <Card.Header
+            title="Investment return"
+            amount={<Amount principal={lenderRoiAmount} coin={coin} />}
+          />
           <Card.RoiHeader roi={roi} />
         </Card.Grid>
         <Card.Separator />

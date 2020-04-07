@@ -31,7 +31,7 @@ const Loan = ({ auction }: { auction: any }) => {
       [5, ANY],
       () => <LenderACU auction={auction} calcs={calcs} />,
       [6, false],
-      () => <LenderExpired auction={auction} calcs={calcs} />,
+      () => <LenderACU auction={auction} calcs={calcs} />,
       ANY,
       () => null
     );
