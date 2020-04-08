@@ -40,7 +40,9 @@ describe('BORROWER', function() {
     cy.get('.heroCard', { timeout: 12000 })
       .its('length')
       .should('be.gte', 1);
-    cy.get('.heroCard:nth-child(1)').matchImageSnapshot('new_loan_created');
+    cy.get('.heroCard')
+      .first()
+      .matchImageSnapshot('new_loan_created');
   });
 });
 /* tslint:enable */
