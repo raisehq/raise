@@ -14,7 +14,6 @@ const getUnixTimestamp = (plus = 0) => {
 */
 export const createCard = (type, address, tokenAddress) => {
   if (!address) address = '0xf98f42a68a7fec388b93189889774a' + getUnixTimestamp();
-  if (!tokenAddress) tokenAddress = window.contracts.address[netId].DAI;
   switch (type) {
     case 'CREATED':
       return {
