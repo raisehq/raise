@@ -25,6 +25,8 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
       () => <GetInTouch />,
       [1, false],
       () => <ClaimRefund loan={auction} />,
+      [6, false],
+      () => <ClaimRefund loan={auction} />,
       ANY,
       () => null
     );
