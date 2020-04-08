@@ -5,9 +5,6 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  &&&&&:not(:last-child) {
-    margin-bottom: 24px;
-  }
 `;
 
 export const Child = styled.div`

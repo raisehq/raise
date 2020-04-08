@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import BN from 'bn.js';
 import { fromWei } from 'web3-utils';
-import { TokenImage, Container, Child, IconEye, SpanValues } from './TokenBalance.styles';
+import {
+  TokenImage,
+  TokenName,
+  Container,
+  Child,
+  IconEye,
+  SpanValues,
+  Balance
+} from './TokenBalance.styles';
 import { useAddressBalance } from '../../contexts/BalancesContext';
 import { useRootContext } from '../../contexts/RootContext';
 import { useAppContext } from '../../contexts/AppContext';
 
-const TokenBalance = ({ imageUrl, name, value, ...props }) => {
+const TokenBalance = ({ imageUrl, name, value, hider, ...props }) => {
   const {
     store: {
       blockchain: {
@@ -33,27 +41,29 @@ const TokenBalance = ({ imageUrl, name, value, ...props }) => {
   };
 
   return (
-    <Container value={value} {...props}>
+    <Container {...props}>
       <Child>
         <TokenImage src={imageUrl} />
         <TokenName>{name}</TokenName>
       </Child>
       <Child>
-<<<<<<< HEAD
-        Balance: <Balance> {stringBalance}</Balance>
-=======
-        {hidde ? (
-          <div>
-            <SpanValues>{stringBalance}</SpanValues>
-            <IconEye onClick={handleTroggleHidde} name="eye" />
-          </div>
+        {hider ? (
+          hidde ? (
+            <div>
+              <SpanValues>{stringBalance}</SpanValues>
+              <IconEye onClick={handleTroggleHidde} name="eye" />
+            </div>
+          ) : (
+            <div>
+              <SpanValues>• • • • •</SpanValues>
+              <IconEye onClick={handleTroggleHidde} name="eye slash outline" />
+            </div>
+          )
         ) : (
-          <div>
-            <SpanValues>• • • • •</SpanValues>
-            <IconEye onClick={handleTroggleHidde} name="eye slash outline" />
-          </div>
+          <>
+            Balance: <Balance> {stringBalance}</Balance>
+          </>
         )}
->>>>>>> d34552df175603a30c350eec57b1bc57cdd007af
       </Child>
     </Container>
   );
