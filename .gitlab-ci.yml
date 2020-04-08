@@ -8,7 +8,7 @@ cache:
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
 
 cypress-private-image:
-  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:latest
+  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
   stage: test
   variables:
     CYPRESS_url: 'https://app.herodev.es'
@@ -33,30 +33,3 @@ cypress-private-image:
   only:
     - merge_requests
 
-cypress-public-image:
-  image: cypress/browsers:node10.16.0-chrome77
-  stage: test
-  variables:
-    CYPRESS_url: 'https://app.herodev.es'
-    CYPRESS_baseUrl: 'https://app.herodev.es'
-    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: https://api.herodev.es
-    CYPRESS_isCanary: 'false'
-  before_script:
-    - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
-  script:
-    - yarn run ci:run
-  artifacts:
-    expire_in: '1 week'
-    when: always
-    paths:
-      - packages/testing/cypress/screenshots
-      - packages/testing/ganache_db
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  cache:
-    key: ganache-global-cache
-    paths:
-      - packages/testing/ganache_db
-  only:
-    - merge_requests
