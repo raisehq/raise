@@ -37,16 +37,29 @@ const Confirm = () => {
 
     try {
       const loanContract = await metamask.addContractByAddress('LoanContract', loanAddress);
-      await followTx.watchTx(
-        loanContract.methods.withdrawRefund().send({
-          from: account
-        }),
-        {
-          id: 'withdrawRefund',
-          vars: [calculatedLoan.lenderAmount, coin.value]
-        },
-        'withdrawRefund'
-      );
+      if (loan.state === 1) {
+        await followTx.watchTx(
+          loanContract.methods.withdrawRefund().send({
+            from: account
+          }),
+          {
+            id: 'withdrawRefund',
+            vars: [calculatedLoan.lenderAmount, coin.value]
+          },
+          'withdrawRefund'
+        );
+      } else if (loan.state === 6) {
+        await followTx.watchTx(
+          loanContract.methods.withdrawFundsUnlocked().send({
+            from: account
+          }),
+          {
+            id: 'withdrawFundsUnlocked',
+            vars: [calculatedLoan.lenderAmount, coin.value]
+          },
+          'withdrawFundsUnlocked'
+        );
+      }
       setStage(Stages.Success);
     } catch (error) {
       console.error(error);
