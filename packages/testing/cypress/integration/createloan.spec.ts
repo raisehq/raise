@@ -13,7 +13,6 @@ describe('BORROWER', function() {
     cy.visit(Cypress.env('url'));
 
     cy.acceptedTokens();
-    cy.addCards('CREATED');
     cy.wait(300);
 
     cy.get('#btn-create-loan').should('have.length', 1);

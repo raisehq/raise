@@ -12,8 +12,9 @@ const getUnixTimestamp = (plus = 0) => {
   5: 'CLOSED', // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
   6: 'FROZEN' // when admin unlocks withdrawals
 */
-export const createCard = (type, address) => {
+export const createCard = (type, address, tokenAddress) => {
   if (!address) address = '0xf98f42a68a7fec388b93189889774a' + getUnixTimestamp();
+  if (!tokenAddress) tokenAddress = window.contracts.address[netId].DAI;
   switch (type) {
     case 'CREATED':
       return {
@@ -23,6 +24,7 @@ export const createCard = (type, address) => {
         auctionStartTimestamp: getUnixTimestamp(),
         borrowerDebt: '0',
         id: address.toString(),
+        tokenAddress,
         address,
         interestRate: null,
         investorCount: 0,

@@ -102,7 +102,11 @@ Cypress.Commands.add('addLoanAndCard', function(type) {
       .deploy(...params)
       .send({ from: user['borrower'].address });
     console.log('>>> TX : ', tx);
-    const newCard = createCard(type, tx.events.LoanContractCreated.returnValues.contractAddress);
+    const newCard = createCard(
+      type,
+      tx.events.LoanContractCreated.returnValues.contractAddress,
+      contracts.address[netId].DAI
+    );
     cardsLender.loans.push(newCard);
     console.log('CARDS :', cardsLender);
     win.UseWebsocket.trigger('suggestedLender', cardsLender);
