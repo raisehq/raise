@@ -17,6 +17,7 @@ cypress-private-image:
     CYPRESS_api: https://api.herodev.es
     CYPRESS_isCanary: 'false'
   script:
+    - ls -la
     - sh cypress/scripts/run_ganache.sh
     - $(npm bin)/cypress run --browser chrome
   artifacts:
