@@ -7,7 +7,7 @@ cache:
   paths:
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
 
-cypress:
+cypress-private-image:
   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:latest
   stage: test
   variables:
@@ -17,19 +17,13 @@ cypress:
     CYPRESS_api: https://api.herodev.es
     CYPRESS_isCanary: 'false'
   script:
-    - ls -la
-    - 'yarn --pure-lockfile'
-    - ls -la
-    - 'cd packages/testing'
-    - ls -la
-    - 'yarn run cypress cache path'
-    - ls -la
-    - 'yarn run cypress cache list'
-    - ls -la
-    - 'yarn run cypress verify'
-    - ls -la
-    - 'yarn run ci:run'
-    - ls -la
+    - npm ci
+    # show where the Cypress test runner binaries are cached
+    - $(npm bin)/cypress cache path
+    # show all installed versions of Cypress binary
+    - $(npm bin)/cypress cache list
+    - $(npm bin)/cypress verify
+    - $(npm bin)/cypress run
   artifacts:
     expire_in: '1 week'
     when: always
@@ -45,7 +39,7 @@ cypress:
   only:
     - merge_requests
 
-cypress-e2e-production:
+cypress-public-image:
   image: cypress/browsers:node10.16.0-chrome77
   stage: test
   variables:
@@ -57,19 +51,13 @@ cypress-e2e-production:
   before_script:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
-    - ls -la
-    - 'yarn --pure-lockfile'
-    - ls -la
-    - 'cd packages/testing'
-    - ls -la
-    - 'yarn run cypress cache path'
-    - ls -la
-    - 'yarn run cypress cache list'
-    - ls -la
-    - 'yarn run cypress verify'
-    - ls -la
-    - 'yarn run ci:run'
-    - ls -la
+    - npm ci
+    # show where the Cypress test runner binaries are cached
+    - $(npm bin)/cypress cache path
+    # show all installed versions of Cypress binary
+    - $(npm bin)/cypress cache list
+    - $(npm bin)/cypress verify
+    - $(npm bin)/cypress run
   artifacts:
     expire_in: '1 week'
     when: always
