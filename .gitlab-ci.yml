@@ -17,13 +17,7 @@ cypress-private-image:
     CYPRESS_api: https://api.herodev.es
     CYPRESS_isCanary: 'false'
   script:
-    - npm ci
-    # show where the Cypress test runner binaries are cached
-    - $(npm bin)/cypress cache path
-    # show all installed versions of Cypress binary
-    - $(npm bin)/cypress cache list
-    - $(npm bin)/cypress verify
-    - $(npm bin)/cypress run
+    - yarn run ci:run
   artifacts:
     expire_in: '1 week'
     when: always
@@ -51,13 +45,7 @@ cypress-public-image:
   before_script:
     - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
-    - npm ci
-    # show where the Cypress test runner binaries are cached
-    - $(npm bin)/cypress cache path
-    # show all installed versions of Cypress binary
-    - $(npm bin)/cypress cache list
-    - $(npm bin)/cypress verify
-    - $(npm bin)/cypress run
+    - yarn run ci:run
   artifacts:
     expire_in: '1 week'
     when: always
