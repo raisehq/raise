@@ -10,6 +10,9 @@ import App from './components/App';
 import RootContextProvider, { Updater as RootContextUpdater } from './contexts/RootContext';
 import BlockContextProvider, { Updater as BlockContextUpdater } from './contexts/BlockContext';
 import AppContextProvider, { Updater as AppContextUpdater } from './contexts/AppContext';
+import SidebarContextProvider, {
+  Updater as SidebarContextUpdater
+} from './contexts/SidebarContext';
 import BalancesContextProvider, {
   Updater as BalancesContextUpdater
 } from './contexts/BalancesContext';
@@ -34,9 +37,11 @@ function ContextProviders({ children }) {
   return (
     <RootContextProvider>
       <AppContextProvider>
-        <BlockContextProvider>
-          <BalancesContextProvider>{children}</BalancesContextProvider>
-        </BlockContextProvider>
+        <SidebarContextProvider>
+          <BlockContextProvider>
+            <BalancesContextProvider>{children}</BalancesContextProvider>
+          </BlockContextProvider>
+        </SidebarContextProvider>
       </AppContextProvider>
     </RootContextProvider>
   );
@@ -49,6 +54,7 @@ function ContextUpdaters() {
       <AppContextUpdater />
       <BlockContextUpdater />
       <BalancesContextUpdater />
+      <SidebarContextUpdater />
     </>
   );
 }

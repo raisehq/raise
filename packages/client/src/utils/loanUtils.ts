@@ -1,7 +1,6 @@
 import { match, ANY } from 'pampy';
 import { fromWei } from 'web3-utils';
 import cloneDeep from 'lodash/cloneDeep';
-import first from 'lodash/first';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
 import { toChecksumAddress } from 'web3-utils';
@@ -162,17 +161,21 @@ export const getCoinsFromContract = coinsMap => contract => {
   return coins;
 };
 
-export const getCoin = (coins: CoinsType[]) => tokenAddress => {
-  let result;
-  if (tokenAddress) {
-    result = coins.filter(
-      coin => toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)
-    );
-  } else {
-    result = coins.filter(coin => coin.text === 'DAI');
+export const getCoin = (coins: CoinsType[]) => (tokenAddress: string): CoinsType => {
+  const defaultCoin = {
+    address: '',
+    text: '',
+    value: '',
+    key: '',
+    icon: ''
+  };
+  if (!coins || !coins.length) {
+    return defaultCoin;
   }
-
-  return first(result);
+  return (
+    coins.find(coin => toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)) ||
+    defaultCoin
+  );
 };
 
 export const getCalculations = auction => {
@@ -181,6 +184,7 @@ export const getCalculations = auction => {
   const operatorFee: any = calculateFromWei(auction.operatorFee);
   const operatorFeeNum = Number(fromWei(auction.operatorFee.toString())) / 100;
   const principal: any = calculateFromWei(auction.principal);
+  const principalNum = Number(fromWei(auction.principal));
   const borrowerDebt: any = Number(fromWei(auction.borrowerDebt)).toLocaleString('es-ES');
   const maxSystemFees: any = numeral(maxAmountNum * operatorFeeNum).format();
   const systemFees: any = `-${numeral(
@@ -228,9 +232,11 @@ export const getCalculations = auction => {
     borrowerDebt,
     interest,
     maxAmount,
+    maxAmountNum,
     netBalance,
     operatorFee,
     principal,
+    principalNum,
     systemFees,
     maxSystemFees,
     currentAmount,

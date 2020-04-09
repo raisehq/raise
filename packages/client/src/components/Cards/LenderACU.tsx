@@ -13,7 +13,7 @@ import useGetCoin from '../../hooks/useGetCoin';
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, slug } = useBorrowerInfo(auction.originator);
   const { roi, times, maxAmount, lenderRoiAmount, lenderAmount } = calcs;
-  const { coin } = useGetCoin(auction);
+  const coin = useGetCoin(auction);
 
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
