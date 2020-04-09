@@ -1,0 +1,27 @@
+variables:
+    REPO_URL: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${CI_PROJECT_NAME}
+
+stages:
+  - build
+
+Build:
+  services:
+    - docker:dind
+  stage: build
+  image: docker:latest
+  variables:
+    TAG: latest
+    DOCKER_DRIVER: overlay
+  before_script:
+    - |
+      #!/bin/sh
+      apk add --no-cache curl python py-pip
+      pip install awscli
+      $(aws ecr get-login --no-include-email --region "${AWS_DEFAULT_REGION}")
+      aws ecr describe-repositories --repository-names ${CI_PROJECT_NAME} || aws ecr create-repository --repository-name ${CI_PROJECT_NAME}
+  script:
+    - |
+      #!/bin/sh
+      docker pull ${REPO_URL}/base-frontend:${TAG} || true
+      docker build --cache-from ${REPO_URL}:${TAG} -f Dockerfile -t ${REPO_URL}:${TAG} .
+      docker push ${REPO_URL}
