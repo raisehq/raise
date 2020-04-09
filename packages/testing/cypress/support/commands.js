@@ -49,8 +49,17 @@ Cypress.Commands.add('web3', function(type) {
   Mock the graph and the card creation
 */
 Cypress.Commands.add('addCards', function(type) {
-  cy.window().then(win => {
-    const newCard = createCard(type);
+  cy.window().then(async win => {
+    const user = Cypress.env('user');
+    const provider = new PrivateKeyProvider(
+      user['borrower'].private_key,
+      Cypress.env('eth_provider'),
+      0,
+      10
+    );
+    const web3 = new Web3(provider); // eslint-disable-line no-param-reassign
+    const netId = await web3.eth.net.getId();
+    const newCard = createCard(type, null, contracts.address[netId].DAI);
     cardsBorrower.users[0].loanRequests.push(newCard);
     win.UseWebsocket.trigger('loansByAccount', cardsBorrower);
     win.UseWebsocket.trigger('liveAuctionsByAccount', cardsBorrower);
@@ -102,7 +111,11 @@ Cypress.Commands.add('addLoanAndCard', function(type) {
       .deploy(...params)
       .send({ from: user['borrower'].address });
     console.log('>>> TX : ', tx);
-    const newCard = createCard(type, tx.events.LoanContractCreated.returnValues.contractAddress);
+    const newCard = createCard(
+      type,
+      tx.events.LoanContractCreated.returnValues.contractAddress,
+      contracts.address[netId].DAI
+    );
     cardsLender.loans.push(newCard);
     console.log('CARDS :', cardsLender);
     win.UseWebsocket.trigger('suggestedLender', cardsLender);

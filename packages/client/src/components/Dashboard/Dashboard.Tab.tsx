@@ -5,7 +5,6 @@ import { DashboardTab, NoResults } from './Dashboard.styles';
 import BorrowerLoan from '../Cards/BorrowerLoan';
 import BorrowerAuction from '../Cards/BorrowerAuction';
 import { getActiveAuctions } from '../../utils/loanUtils';
-import useInterval from '../../hooks/useInterval';
 import LenderAuction from './Dashboard.LenderAuction';
 import LenderLoan from './Dashboard.LenderLoan';
 import SuggestedAuction from '../Cards/Suggested';
@@ -38,8 +37,8 @@ const Auctions = daggy.taggedSum('Auctions', {
 });
 
 const Tab = ({ auctions, states, type }) => {
-  const [filteredAuctions, setFilteredAuctions]: [[], any] = useState([]);
   const [tabState, setTabState]: any = useState(Auctions.Loading);
+  const filteredAuctions = getActiveAuctions(auctions, states);
 
   useEffect(() => {
     if (!filteredAuctions) {
@@ -49,12 +48,7 @@ const Tab = ({ auctions, states, type }) => {
     } else {
       setTabState(Auctions.Success);
     }
-  }, [filteredAuctions]);
-
-  useInterval(() => {
-    const filtered = getActiveAuctions(auctions, states);
-    setFilteredAuctions(filtered);
-  }, 1000);
+  }, [auctions]);
 
   return tabState.cata({
     Loading: () => <DashboardTab.Pane loading />,

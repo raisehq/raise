@@ -35,7 +35,7 @@ const Confirm = () => {
   const {
     web3Status: { hasDeposit }
   }: any = useAppContext();
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
   const [depositChecked, setDepositChecked] = useState(false);
   const [membership, setMembership] = useState(null);
   const [hasFunds, setHasFunds] = useState(false);
@@ -68,7 +68,10 @@ const Confirm = () => {
         <FlexSpacedLayout>
           <ResumeItem title="Amount invested" value={`${lenderAmount} ${coin && coin.text}`} />
           <ResumeItem title="ROI" value={`${roi}`} />
-          <ResumeItemBig title="Investment return" value={`${lenderRoiAmount} ${coin && coin.text}`} />
+          <ResumeItemBig
+            title="Investment return"
+            value={`${lenderRoiAmount} ${coin && coin.text}`}
+          />
         </FlexSpacedLayout>
         {!membership && hasFunds && (
           <CheckboxContainer>

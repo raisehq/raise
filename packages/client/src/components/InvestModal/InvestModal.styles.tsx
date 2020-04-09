@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import Balance from '../Balance';
 import { device } from '../../commons/breakpoints';
+import InvestmentBox from './components/InvestmentBox';
 
 interface ModalInputProps {
   roi?: boolean;
@@ -27,6 +28,10 @@ interface LabelPaddingProps {
   color?: string;
 }
 
+export const InvestSection = styled(InvestmentBox)`
+  margin: 29px auto 0px auto;
+  padding: 27px;
+`;
 export const LoanTermsCheckbox: any = styled(Checkbox)`
   &&& {
     position: relative;
@@ -43,7 +48,7 @@ export const LoanTermsCheckbox: any = styled(Checkbox)`
 
 export const CheckContainer = styled.div`
   line-height: 20px;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 20px;
   display: flex;
 `;
@@ -54,6 +59,9 @@ export const ExitButton = styled(Icon)`
     top: 10px;
     right: 10px;
     cursor: pointer;
+    @media (screen and ${device.tablet}) {
+      display: none;
+    }
   }
 `;
 
@@ -135,6 +143,9 @@ export const ModalContent: any = styled(SemanticModal.Content)`
     margin: 0;
     height: 100%;
     overflow: auto;
+    &&&.content {
+      padding: 9px;
+    }
   }
 `;
 
@@ -174,8 +185,8 @@ export const InputContainer = styled.div`
 export const ModalInputBox = styled.div<ModalInputProps>`
   height: 48px;
   width: 173px;
-  border: 1px solid ${({ error }) => (error ? 'red' : '#cfd0d4')};
   border-radius: 4px;
+  border: 1px solid ${({ error }) => (error ? 'red' : '#cfd0d4')};
   background-color: ${({ roi }) => (roi ? '#ECEDEE' : '#FFFFFF')};
   display: flex;
   align-items: center;
@@ -190,6 +201,9 @@ export const ModalInputBox = styled.div<ModalInputProps>`
 
 export const InvestorBalance = styled(Balance)`
   cursor: pointer;
+  color: #b1b3b9;
+  font-size: 14px;
+
   &:hover {
     color: #00a76f;
   }
@@ -443,4 +457,12 @@ export const Explanation = styled(Grid.Row)`
 
 export const UserBalance = styled(Balance)`
   margin-left: 30px;
+`;
+
+export const InvestHeader = styled.h3`
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000;
 `;

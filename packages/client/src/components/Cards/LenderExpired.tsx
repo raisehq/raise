@@ -12,11 +12,10 @@ import { ClaimRefund } from '../ClaimRefundInvestor';
 import { GetInTouch } from '../GetInTouch';
 import useGetCoin from '../../hooks/useGetCoin';
 
-
 const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, slug } = useBorrowerInfo(auction.originator);
   const { maxAmount, times, currentAmount, totalAmount, principal } = calcs;
-  const { coin } = useGetCoin(auction);
+  const coin = useGetCoin(auction);
   const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
 
   const cta = useMemo(() => {
@@ -52,12 +51,18 @@ const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Card.Grid>
         <Card.Grid notop>
-          <Card.Header title="Amount invested" amount={<Amount principal={lenderAmount} coin={coin}/>} />
+          <Card.Header
+            title="Amount invested"
+            amount={<Amount principal={lenderAmount} coin={coin} />}
+          />
         </Card.Grid>
         <Card.Separator />
         <Card.Grid spaceBetween>
-          <Card.SubHeader title="Raised so far" amount={<Amount principal={principal} coin={coin}/>} />
-          <Card.SubHeader title="Target" amount={<Amount principal={maxAmount} coin={coin}/>} />
+          <Card.SubHeader
+            title="Raised so far"
+            amount={<Amount principal={principal} coin={coin} />}
+          />
+          <Card.SubHeader title="Target" amount={<Amount principal={maxAmount} coin={coin} />} />
         </Card.Grid>
         <Card.Progress color="#5A5A5A" currentAmount={currentAmount} totalAmount={totalAmount} />
         <Card.Grid>
