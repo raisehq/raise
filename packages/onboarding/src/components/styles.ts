@@ -445,7 +445,8 @@ export const ChooseMethodWrapper = styled.div`
     min-height: 0;
   }
 `;
-/************** GET STARTED BLOOM SCREEN ******************/
+
+/*   GET STARTED BLOOM SCREEN   */
 
 export const GetStartedBloomHeader = styled.div`
   margin-top: 38px;

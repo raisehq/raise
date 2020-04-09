@@ -9,7 +9,7 @@ export enum TMEvents {
 const GTMID = process.env.REACT_APP_GTM_ID;
 
 function useGoogleTagManager(category?) {
-  const sendEvent = (event, label, value?) =>
+  const sendEvent = (event: TMEvents, label: string, value?: string) =>
     TagManager.dataLayer({
       gtmId: GTMID,
       dataLayer: {
@@ -20,7 +20,7 @@ function useGoogleTagManager(category?) {
         label
       }
     });
-  const sendEventCategory = (newCategory, event, label, value?) =>
+  const sendEventCategory = (newCategory: string, event: TMEvents, label: string, value?: string) =>
     TagManager.dataLayer({
       gtmId: GTMID,
       dataLayer: {
@@ -31,7 +31,7 @@ function useGoogleTagManager(category?) {
         label
       }
     });
-  const pageView = (path, title) =>
+  const pageView = (path: string, title: string) =>
     TagManager.initialize({
       gtmId: GTMID,
       dataLayer: {
@@ -40,8 +40,6 @@ function useGoogleTagManager(category?) {
         pageTitle: title
       }
     });
-
-  // Esta funcion sirve para todo.
 
   return { sendEvent, pageView, sendEventCategory };
 }

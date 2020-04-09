@@ -1,4 +1,14 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
+import { Button, Image } from 'semantic-ui-react';
+import {
+  RequestElement,
+  QROptions,
+  Action,
+  RequestData
+} from '@bloomprotocol/share-kit-react/dist/index';
+import bloomToken from 'uuid';
+import { isMobile } from 'react-device-detect';
+
 import {
   ChooseMethodWrapper,
   GetStartedBloomHeader,
@@ -9,22 +19,12 @@ import {
   GetStartedBloomInstructionsSection,
   GetStartedBloomFooter
 } from '../styles';
-import { Button, Image } from 'semantic-ui-react';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
-import {
-  RequestElement,
-  QROptions,
-  Action,
-  RequestData
-} from '@bloomprotocol/share-kit-react/dist/index';
-import useInterval from '../../hooks/useInterval';
 import { bloomSignIn, verifyBloomLogin, redirectFromBloomApp } from '../../services';
-import bloomToken from 'uuid';
 import AppContext from '../App.context';
-import { isMobile } from 'react-device-detect';
 
-const GetStartedWithBloom = ({ onBack, method, token = null }) => {
+const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState(token !== null && token.length > 0 ? token : null);
@@ -65,10 +65,8 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
     if (tokenBloom !== null) {
       // Start check bloom
       checkerTimeout.current = setTimeout(watchBloom, 3000);
-      return () => {
-        clearTimeout(checkerTimeout.current);
-      };
     }
+    return () => checkerTimeout && clearTimeout(checkerTimeout.current);
   }, [tokenBloom]);
 
   useEffect(() => {
@@ -77,7 +75,7 @@ const GetStartedWithBloom = ({ onBack, method, token = null }) => {
     const resetTimeout = () => {
       setIsScreenIdle(false);
     };
-
+    // eslint-disable-next-line
     for (let i in events) {
       window.addEventListener(events[i], resetTimeout);
     }

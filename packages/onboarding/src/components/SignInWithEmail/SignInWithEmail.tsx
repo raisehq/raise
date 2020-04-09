@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useState, useCallback, useEffect } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
+import { Button } from '@raisehq/components';
 import * as _ from 'lodash';
 import {
   OnboardHeader,
@@ -11,7 +12,6 @@ import {
 } from '../styles';
 import validations from '../validations';
 import AppContext from '../App.context';
-import { Button } from '@raisehq/components';
 
 const SignInWithEmail = () => {
   const {
@@ -52,7 +52,7 @@ const SignInWithEmail = () => {
     []
   );
 
-  const onSetPassword = e => {
+  const onSetPassword = (e: any) => {
     setLoginError(false);
     onSetCredentials('password', e.target.value);
   };
@@ -62,7 +62,7 @@ const SignInWithEmail = () => {
     recaptchaRef.current.execute();
   };
 
-  const onKeyPress = event => {
+  const onKeyPress = (event: any) => {
     if (
       event.key === 'Enter' &&
       !error &&
@@ -107,7 +107,7 @@ const SignInWithEmail = () => {
         />
         {errors.email && (
           <div className="errorText">
-            This format doesn't look right. Make sure there aren't any typos.
+            This format doesn&apos;t look right. Make sure there aren&apos;t any typos.
           </div>
         )}
         <Icon size="big" name="mail" />
@@ -121,7 +121,9 @@ const SignInWithEmail = () => {
           error={error}
           onKeyPress={onKeyPress}
         />
-        {error && <div className="errorText">Sorry, I can't find anyone with these details.</div>}
+        {error && (
+          <div className="errorText">Sorry, I can&apos;t find anyone with these details.</div>
+        )}
         <Icon size="big" name="lock" />
       </OnboardInput>
       <MyRecapcha
@@ -143,7 +145,7 @@ const SignInWithEmail = () => {
         type="secondary"
         size="large"
         text="Login"
-        fullWidth={true}
+        fullWidth
       />
 
       <CallToSignIn>
@@ -153,7 +155,7 @@ const SignInWithEmail = () => {
       </CallToSignIn>
       <Separator />
       <CallToSignIn>
-        You don't have an account?
+        You don&apos;t have an account?
         <button className="callToSignIn" type="button" onClick={onSetStep('Start')}>
           Get Started
         </button>

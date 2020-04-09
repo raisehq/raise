@@ -7,17 +7,15 @@ import * as Cookies from 'js-cookie';
  * @param {Object|string} [initialValue]  Value will be assign if cookie doesn't exist.
  * @returns {Array} Returns cookie value, and the function to update it.
  */
-function useCookie(key, initialValue) {
-  const [item, setInnerValue] = useState(() => {
-    return Cookies.get(key) || initialValue;
-  });
+function useCookie(key: string, initialValue: any) {
+  const [item, setInnerValue] = useState(() => Cookies.get(key) || initialValue);
 
   /**
    * Set value of cookie
    * @param {Object|string} value
    * @param {Cookies.CookieAttributes} [options]
    */
-  const setValue = (value, options) => {
+  const setValue = (value: any, options: any) => {
     setInnerValue(value);
     Cookies.set(key, value, options);
   };
