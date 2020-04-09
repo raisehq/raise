@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import BN from 'bn.js';
-import { fromWei } from 'web3-utils';
+import useGetCoinByAddress from '../../hooks/useGetCoinByAddress';
+import { fromDecimal } from '../../utils/web3-utils';
 import {
   TokenImage,
   TokenName,
@@ -30,8 +31,9 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }) => {
   }: any = useAppContext();
   const [hidde, setHidde] = useState(false);
   const balance: BN = useAddressBalance(account, contractAddresses[chainId]?.[name]);
+  const coin = useGetCoinByAddress(contractAddresses[chainId]?.[name]);
   const stringBalance: string =
-    Number(fromWei(balance))
+    Number(fromDecimal(balance.toString(10), coin.decimals))
       .toFixed(2)
       .toString() || '0.00';
 
