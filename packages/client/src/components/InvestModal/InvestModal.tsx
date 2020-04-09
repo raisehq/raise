@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import daggy from 'daggy';
-// import { Modal as SemanticModal } from 'semantic-ui-react';
-import { InvestModalProps } from './types';
+import BN from 'bn.js';
+import { match, ANY } from 'pampy';
+import { Button } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
+import { InvestModalProps } from './types';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import InvestState from './InvestState';
+import OldInvestState from './OldInvestState';
 import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
 import VerifyKycModal from './VerifyKycState';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { Modal, ModalContent, ButtonContainer } from './InvestModal.styles';
-import { match, ANY } from 'pampy';
 import useGetCoin from '../../hooks/useGetCoin';
-import { Button } from '@raisehq/components';
+
+const FEATURE_FLAG_SWAP = process.env.REACT_APP_SWAP_ON === 'true';
 
 const UI = daggy.taggedSum('UI', {
   Kyc: [],
@@ -42,10 +45,13 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
       onboarding: { showOnboarding }
     }
   }: any = useRootContext();
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(UI.Kyc);
   const [investment, setInvestment] = useState(0);
+  const [inputTokenAmount, setInputTokenAmount] = useState<BN>(new BN('0'));
+
+  const [selectedCoin, setCoin] = useState(coin.text);
   const tagManager = useGoogleTagManager('Card');
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
   // prettier-ignore
@@ -87,16 +93,31 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const getInvestAction = stage => {
     return stage.cata({
       Kyc: () => <VerifyKycModal />,
-      Confirm: () => (
-        <InvestState loan={loan} setStage={setStage} setInvestment={setInvestment} ui={UI} />
-      ),
+      Confirm: () =>
+        FEATURE_FLAG_SWAP ? (
+          <InvestState
+            loan={loan}
+            loanCoin={coin}
+            setStage={setStage}
+            setInvestment={setInvestment}
+            inputTokenAmount={inputTokenAmount}
+            setInputTokenAmount={setInputTokenAmount}
+            setCoin={setCoin}
+            selectedCoin={selectedCoin}
+            ui={UI}
+          />
+        ) : (
+          <OldInvestState loan={loan} setStage={setStage} setInvestment={setInvestment} ui={UI} />
+        ),
       Processing: () => (
         <ProcessingState
           loan={loan}
+          loanCoin={coin}
           investment={investment}
+          inputTokenAmount={inputTokenAmount}
           ui={UI}
           setStage={setStage}
-          coinName={coin.text}
+          selectedCoin={selectedCoin}
         />
       ),
       Success: () => <SuccessState setStage={setStage} ui={UI} closeModal={closeModal} />

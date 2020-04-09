@@ -13,7 +13,7 @@ import useGetCoin from '../../hooks/useGetCoin';
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, slug } = useBorrowerInfo(auction.originator);
   const { roi, times, maxAmount, lenderRoiAmount, lenderAmount } = calcs;
-  const { coin } = useGetCoin(auction);
+  const coin = useGetCoin(auction);
 
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
@@ -24,6 +24,8 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
       [3, ANY],
       () => <GetInTouch />,
       [1, false],
+      () => <ClaimRefund loan={auction} />,
+      [6, false],
       () => <ClaimRefund loan={auction} />,
       ANY,
       () => null
@@ -51,7 +53,10 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
         </Card.Grid>
         <Card.Grid spaceBetween notop>
-          <Card.Header title="Investment return" amount={<Amount principal={lenderRoiAmount} coin={coin}/>} />
+          <Card.Header
+            title="Investment return"
+            amount={<Amount principal={lenderRoiAmount} coin={coin} />}
+          />
           <Card.RoiHeader roi={roi} />
         </Card.Grid>
         <Card.Separator />

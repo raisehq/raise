@@ -33,7 +33,8 @@ const useBorrowerInfo = borrowerAddress => {
       response.slug = `${APP_URL}/c/${response.slug}`;
       setCompany(response);
     } catch (error) {
-      console.error(error);
+      // Reminder: Missing companies in Kovan testnet network shows 404 errors
+      // console.error(error);
     }
   }, []);
   return company;

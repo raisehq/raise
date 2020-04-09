@@ -21,7 +21,7 @@ const useRepayment = (loan, open) => {
   const [error, setError] = useState(false);
   const [stage, setStage] = useState(Stages.Confirm);
   const [hasBalance, setHasBalance] = useState(false);
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
 
   useEffect(() => {
     setApproved(false);
@@ -33,11 +33,12 @@ const useRepayment = (loan, open) => {
       const {
         utils: { BN }
       } = web3;
-      const DAI = await wallet.addContract('DAI');
-      const DAIContract = new web3.eth.Contract(ERC20, DAI.options.address);
+      const Token = await wallet.addContract(coin.value);
+
+      const ERC20Contract = new web3.eth.Contract(ERC20, Token.options.address);
       const valueBN = new BN(borrowerDebt);
 
-      const currentBalance = await DAIContract.methods.balanceOf(account).call({ from: account });
+      const currentBalance = await ERC20Contract.methods.balanceOf(account).call({ from: account });
       if (new BN(currentBalance).gte(valueBN)) {
         setHasBalance(true);
       }

@@ -1,5 +1,6 @@
 export interface Loan {
   id: string;
+  tokenAddress: string;
   principal: string;
   maxAmount: string;
   operatorFee: string;

@@ -12,7 +12,7 @@ describe('BORROWER', function() {
   it('Go to create loan', function() {
     cy.visit(Cypress.env('url'));
 
-    cy.addCards('CREATED');
+    cy.acceptedTokens();
     cy.wait(300);
 
     cy.get('#btn-create-loan').should('have.length', 1);
@@ -40,7 +40,9 @@ describe('BORROWER', function() {
     cy.get('.heroCard', { timeout: 12000 })
       .its('length')
       .should('be.gte', 1);
-    cy.get('.heroCard:nth-child(1)').matchImageSnapshot('new_loan_created');
+    cy.get('.heroCard')
+      .first()
+      .matchImageSnapshot('new_loan_created');
   });
 });
 /* tslint:enable */

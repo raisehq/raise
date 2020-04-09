@@ -239,6 +239,7 @@ const CreateLoan = ({ contracts }) => {
 
   const onSave = async () => {
     setStage(UI.Waiting);
+
     try {
       await loanDispatcherContract.deploy(
         loan.minAmount,
@@ -284,7 +285,7 @@ const CreateLoan = ({ contracts }) => {
     });
     setTermsCond(false);
     setAuthTerms(false);
-    //Reseting control values to default in case of create a new loan without refreshing the screen
+    // Reseting control values to default in case of create a new loan without refreshing the screen
     onSetTermAuction(TERM_AUCTION_DEFAULT)();
     onSetTerm(null, { value: TERM_DEFAULT });
   };
