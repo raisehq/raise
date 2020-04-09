@@ -4,4 +4,5 @@ export interface CoinsType {
   value: string;
   key: string;
   icon: string;
+  decimals: number;
 }

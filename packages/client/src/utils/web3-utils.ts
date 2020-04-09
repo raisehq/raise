@@ -1,5 +1,6 @@
 import web3Utils from 'web3-utils';
 import ABI_ERC20 from '../commons/erc20';
+import BigNumber from 'bignumber.js';
 
 export function isAddress(value) {
   try {
@@ -32,3 +33,11 @@ export async function getTokenBalance(tokenAddress, address, library) {
     .methods.balanceOf(address)
     .call();
 }
+
+export const toDecimal = (etherAmount: string | number | BigNumber, factor = 18): string =>
+  new BigNumber(etherAmount)
+    .multipliedBy(new BigNumber('10').pow(new BigNumber(factor.toString())))
+    .toString();
+
+export const fromDecimal = (decimal: string | number | BigNumber, factor = 18): string =>
+  new BigNumber(decimal).div(new BigNumber('10').pow(new BigNumber(factor.toString()))).toString();

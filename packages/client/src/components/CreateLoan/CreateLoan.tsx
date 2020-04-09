@@ -127,7 +127,8 @@ const CreateLoan = ({ contracts }) => {
       text: coin.name,
       value: coin.name,
       key: coin.key,
-      icon: coin.icon
+      icon: coin.icon,
+      decimals: coin.decimals
     }));
     return mappedCoins.filter(({ address }) =>
       acceptedTokens.find(a => a.toLowerCase() === address.toLowerCase())

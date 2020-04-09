@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from 'react';
-import { toWei } from 'web3-utils';
 import { List, Grid } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useWallet from '../../hooks/useWallet';
@@ -31,6 +30,7 @@ import { useRootContext } from '../../contexts/RootContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useGetCoin from '../../hooks/useGetCoin';
 import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
+import { toDecimal } from '../../utils/web3-utils';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({
   loan,
@@ -87,7 +87,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
       if (!tokenAddress) {
         throw Error('Input token not set');
       }
-      const valueBN = new BN(toWei(investment.toString()));
+      const valueBN = new BN(toDecimal(investment.toString(), inputCoin?.decimals));
       const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
 
       const amountApproved = await ERC20Contract.methods
@@ -134,7 +134,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
                 loan.id,
                 inputCoin.address,
                 inputTokenAmount.toString(),
-                toWei(investment.toString())
+                toDecimal(investment.toString(), inputCoin?.decimals)
               )
               .send({ from: walletAccount }),
             'investLoan',
@@ -152,7 +152,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
         try {
           await followTx.watchTx(
             DAIProxy.methods
-              .fund(loan.id, toWei(investment.toString()))
+              .fund(loan.id, toDecimal(investment.toString(), inputCoin.decimals))
               .send({ from: walletAccount }),
             'investLoan',
             {

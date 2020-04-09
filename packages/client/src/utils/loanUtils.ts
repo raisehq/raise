@@ -153,7 +153,8 @@ export const getCoinsFromContract = coinsMap => contract => {
             text: coin.name,
             value: coin.name,
             key: coin.key,
-            icon: coin.icon
+            icon: coin.icon,
+            decimals: coin.decimals
           }
         : null
     );
@@ -167,7 +168,8 @@ export const getCoin = (coins: CoinsType[]) => (tokenAddress: string): CoinsType
     text: '',
     value: '',
     key: '',
-    icon: ''
+    icon: '',
+    decimals: 18
   };
   if (!coins || !coins.length) {
     return defaultCoin;
