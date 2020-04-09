@@ -1,4 +1,4 @@
-image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise:latest
+image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:latest
 
 stages:
   - deploy-backend
