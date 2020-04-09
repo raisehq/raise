@@ -171,7 +171,7 @@ export const getCoin = (coins: CoinsType[]) => (tokenAddress: string): CoinsType
     icon: '',
     decimals: 18
   };
-  if (!coins || !coins.length) {
+  if (!coins || !coins.length || !tokenAddress) {
     return defaultCoin;
   }
   return (
