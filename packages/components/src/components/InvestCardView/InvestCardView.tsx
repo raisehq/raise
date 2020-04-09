@@ -47,7 +47,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
     setGraphView(viewGraph ? 0 : 1);
   };
 
-  const AuctionGraph = <AuctionAPR onOpenGraph={onOpenGraph} {...props} />;
+  const AuctionGraph = <AuctionAPR {...props} />;
 
   const domList = [
     { key: 0, component: <InvestInfo onOpenGraph={onOpenGraph} {...props} /> },
