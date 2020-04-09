@@ -9,7 +9,7 @@ import useGetCoin from '../../hooks/useGetCoin';
 const Auction = ({ auction }: { auction: any }) => {
   const { companyName, background, logo, slug } = useBorrowerInfo(auction.originator);
   const calcs = getCalculations(auction);
-  const { coin } = useGetCoin(auction);
+  const coin = useGetCoin(auction);
   const {
     maxAmount,
     expectedRoiFormated,

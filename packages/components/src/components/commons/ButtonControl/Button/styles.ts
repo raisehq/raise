@@ -7,6 +7,7 @@ interface ButtonProps {
   type: string;
   disabled: boolean;
   size: string;
+  fullWidth?: boolean;
 }
 
 export const ButtonStyled = styled(Button)<ButtonProps>`

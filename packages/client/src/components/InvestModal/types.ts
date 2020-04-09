@@ -1,4 +1,6 @@
+import BN from 'bn.js';
 import { Loan } from '../../interfaces/Loan';
+import { CoinsType } from '../../commons/coins';
 
 export interface InvestModalProps {
   loan: Loan;
@@ -9,7 +11,13 @@ export interface InvestStateProps {
   loan: Loan;
   setStage: Function;
   setInvestment: Function;
+  setCoin: Function;
+  selectedCoin: string;
   ui: any;
+  loanCoin: CoinsType;
+  setInputTokenAmount: Function;
+  inputTokenAmount: BN;
+  closeModal?: Function;
 }
 
 export interface ResumeItemProps {
@@ -23,14 +31,24 @@ export interface RaisedAmountProps {
 
 export interface ProcessingStateProps {
   loan: Loan;
+  loanCoin: CoinsType;
   investment: any;
   ui: any;
   setStage: Function;
-  coinName: string;
+  selectedCoin: string;
+  inputTokenAmount: BN;
+  closeModal?: Function;
 }
 
 export interface SuccessStateProps {
   setStage: Function;
   closeModal: Function;
+  ui: any;
+}
+
+export interface OldInvestStateProps {
+  loan: Loan;
+  setStage: Function;
+  setInvestment: Function;
   ui: any;
 }

@@ -51,7 +51,6 @@
     "tslib": "^1.10.0",
     "typescript": "^3.7.2",
     "semantic-ui-react": "^0.88.1",
-    "styled-components": "^5.0.0-rc.2",
     "env-cmd": "^8.0.2"
   },
   "husky": {
@@ -89,7 +88,7 @@
     "react-spring": "^8.0.27",
     "semantic-ui-react": "^0.88.1",
     "storybook-react-router": "^1.0.8",
-    "styled-components": "^5.0.0-rc.2",
+    "styled-components": "^5.0.0",
     "web3-utils": "^1.2.4",
     "tsdx": "^0.12.3"
   }

@@ -23,19 +23,24 @@ import {
   IconSuccess as IconError,
   RetryButton,
   BlankSpace,
-  ModalFlexWrapper
+  ModalFlexWrapper,
+  ExitButton
 } from './InvestModal.styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useGetCoin from '../../hooks/useGetCoin';
+import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({
   loan,
   investment,
   ui,
   setStage,
-  coinName
+  selectedCoin,
+  inputTokenAmount,
+  loanCoin,
+  closeModal
 }) => {
   const {
     web3Status: { walletAccount }
@@ -44,13 +49,14 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
 
   const { web3 } = useWeb3();
   const metamask = useWallet();
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
 
   const [contracts, setContracts]: any = useState();
   const [approved, setAproved]: any = useState(false);
   const [errors, setError]: any = useState();
 
   const tagManager = useGoogleTagManager('Card');
+  const inputCoin = useGetCoinMetadata(selectedCoin);
 
   useAsyncEffect(async () => {
     if (metamask) {
@@ -76,8 +82,11 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   useAsyncEffect(async () => {
     if (contracts) {
       const { BN } = web3.utils;
-      const { DAIProxy, loanContract } = contracts;
-      const tokenAddress = await loanContract.methods.tokenAddress().call();
+      const { DAIProxy } = contracts;
+      const tokenAddress = inputCoin?.address || null;
+      if (!tokenAddress) {
+        throw Error('Input token not set');
+      }
       const valueBN = new BN(toWei(investment.toString()));
       const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
 
@@ -113,21 +122,49 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   useAsyncEffect(async () => {
     if (approved) {
       const { DAIProxy } = contracts;
-      try {
-        await followTx.watchTx(
-          DAIProxy.methods
-            .fund(loan.id, toWei(investment.toString()))
-            .send({ from: walletAccount }),
-          {
-            id: 'investLoan',
-            vars: [investment, coin.value]
-          },
-          'investLoan'
-        );
-        setStage(ui.Success);
-      } catch (error) {
-        console.error('[DAIProxy ERROR]', 'address:', loan.id, ' stacktrace: ', error);
-        setError({ transactionError: error });
+      if (!inputCoin?.address) {
+        throw Error('[LoanFund] input coin is null');
+      }
+      const isSwap = inputCoin?.address.toLowerCase() !== loanCoin?.address.toLowerCase();
+      if (isSwap) {
+        try {
+          await followTx.watchTx(
+            DAIProxy.methods
+              .swapTokenAndFund(
+                loan.id,
+                inputCoin.address,
+                inputTokenAmount.toString(),
+                toWei(investment.toString())
+              )
+              .send({ from: walletAccount }),
+            'investLoan',
+            {
+              id: 'investLoan',
+              vars: [investment, coin.value]
+            }
+          );
+          setStage(ui.Success);
+        } catch (error) {
+          console.error('[DAIProxy ERROR][Swap]', 'address:', loan.id, ' stacktrace: ', error);
+          setError({ transactionError: error });
+        }
+      } else {
+        try {
+          await followTx.watchTx(
+            DAIProxy.methods
+              .fund(loan.id, toWei(investment.toString()))
+              .send({ from: walletAccount }),
+            'investLoan',
+            {
+              id: 'investLoan',
+              vars: [investment, coin.value]
+            }
+          );
+          setStage(ui.Success);
+        } catch (error) {
+          console.error('[DAIProxy ERROR][No swap]', 'address:', loan.id, ' stacktrace: ', error);
+          setError({ transactionError: error });
+        }
       }
     }
   }, [approved]);
@@ -192,6 +229,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   return (
     <ModalFlexWrapper>
       <Fragment>
+        <ExitButton name="close" color="black" onClick={closeModal} />
         <CardCenteredText>
           <CardTitle>Processing</CardTitle>
           <CardSubtitle>Check your MetaMask wallet to proceed</CardSubtitle>
@@ -203,9 +241,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
                 <Grid columns={2}>
                   <Grid.Column width={2}>{stepNumber(1, 'aproval')}</Grid.Column>
                   <Grid.Column width={14}>
-                    <Action>{`Allow Raise to interact with your ${coinName}`}</Action>
+                    <Action>{`Allow Raise to interact with your ${selectedCoin}`}</Action>
                     <Explanation>
-                      {`Once you give us allowance, you will be able to make investments in ${coinName}`}
+                      {`Once you give us allowance, you will be able to make investments in ${selectedCoin}`}
                     </Explanation>
                   </Grid.Column>
                 </Grid>
@@ -216,7 +254,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
                   <Grid.Column width={14}>
                     <Action>Confirm the transaction</Action>
                     <Explanation>
-                      {`${investment} ${coinName} will be transferred from your wallet to the loan`}
+                      {`${investment} ${selectedCoin} will be transferred from your wallet to the loan`}
                     </Explanation>
                   </Grid.Column>
                 </Grid>

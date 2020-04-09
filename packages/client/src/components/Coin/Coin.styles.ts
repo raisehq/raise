@@ -1,19 +1,25 @@
 import styled from 'styled-components';
-import { Image, ImageProps } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 
-export const CoinImage = styled(Image)<ImageProps>``;
+interface CoinBoxProps {
+  pxWidth?: string | null | undefined;
+  pxHeight?: string | null | undefined;
+}
 
-export const CoinBox = styled.div`
+export const CoinImage = styled(Image)``;
+
+export const CoinBox = styled('div')<CoinBoxProps>`
   display: flex;
   align-items: center;
   justify-content: center;
   color: #eeb345;
+  font-weight: bold;
+  font-size: 14px;
   & > ${CoinImage} {
-    width: 18px;
-    height: 18px;
+    width: ${({ pxWidth }) => pxWidth || '24px'};
+    height: ${({ pxHeight }) => pxHeight || '24px'};
   }
-  & > div {
-    font-weight: bold;
-    font-size: 14px;
+  & > div:last-child {
+    margin-left: 6px;
   }
 `;

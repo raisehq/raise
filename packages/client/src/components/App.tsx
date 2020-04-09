@@ -28,6 +28,7 @@ import DesktopHeader from './DesktopHeader';
 import NotFound404 from '../components/BorrowerProfile/Borrower404';
 import { toast } from 'react-toastify';
 import Toast, { StyledToastContainer } from './Toast';
+import { Sidebar, InvestSidebar } from './InvestSidebar';
 
 const App = () => {
   const {
@@ -243,6 +244,9 @@ const App = () => {
         </>
       )}
       <div ref={modalRefs} />
+      <Sidebar>
+        <InvestSidebar />
+      </Sidebar>
     </>
   );
 };

@@ -19,7 +19,7 @@ const Balance = props => {
         name: tokenName,
         key: tokenName
       };
-      return <TokenBalance {...props} />;
+      return <TokenBalance hider {...props} />;
     });
 
   return (

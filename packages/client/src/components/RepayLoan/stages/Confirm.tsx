@@ -33,7 +33,7 @@ const Confirm = () => {
   const { principal, borrowerDebt, totalInterest, totalInterestAmount }: any = getCalculations(
     loan
   );
-  const { coin } = useGetCoin(loan);
+  const coin = useGetCoin(loan);
 
   return (
     <>

@@ -10,9 +10,13 @@ export default function useEffectAsync(effect, destroy?, inputs?) {
 
       const maybePromise = effect(() => mounted);
 
-      Promise.resolve(maybePromise).then(value => {
-        result = value;
-      });
+      Promise.resolve(maybePromise)
+        .then(value => {
+          result = value;
+        })
+        .catch(error => {
+          console.error('[useAsyncEffect][Error] ', error);
+        });
 
       return () => {
         mounted = false;

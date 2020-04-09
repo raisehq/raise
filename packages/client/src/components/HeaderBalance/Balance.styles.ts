@@ -10,7 +10,6 @@ export const BalanceDropdown = styled(Dropdown)`
     box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
     border-radius: 3px;
     max-width: 148px;
-    font-size: 16px;
     display: flex;
     align-items: center;
     height: 40px;
