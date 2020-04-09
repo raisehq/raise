@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { getCalculations } from '../../utils/loanUtils';
-import InvestCardView from '../InvestCardView';
+import { InvestCardView } from '../InvestCardView';
 import { Company } from '../../types';
 
 interface LoanProps {
@@ -13,10 +13,8 @@ interface LoanProps {
 }
 
 const InvestCard: React.SFC<LoanProps> = (props: LoanProps) => {
-  const { auction, className, children, borrower, coinIcon } = props;
-  const link = !!props.link;
+  const { auction, className, children, borrower, coinIcon, link } = props;
   const calculations = getCalculations(auction);
-
   const investProps = {
     ...auction,
     ...borrower,

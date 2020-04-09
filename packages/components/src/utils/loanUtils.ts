@@ -1,9 +1,9 @@
 import { match, ANY } from 'pampy';
 import { fromWei } from 'web3-utils';
+import BN from 'bn.js';
 import cloneDeep from 'lodash/cloneDeep';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
-import BN from 'bn.js';
 
 const secondUnits = {
   month: 2592000,
@@ -74,10 +74,12 @@ export const getDesiredTime = (seconds: number, type?: string) =>
 
 const defaultZero = numeral(0).format();
 
-export const calculateFromWei = (number: BN) =>
-  number
+export const calculateFromWei = (number: BN) => {
+  const calc = number
     ? numeral(Number(fromWei(number.toString(), 'ether'))).format(numeralFormat)
     : defaultZero;
+  return calc;
+};
 
 export const calculateTimes = (auction: any) => {
   try {
@@ -252,11 +254,12 @@ export const getActiveAuctions = (auctions: any[], states: any[]) => {
   const updatedAuctions = auctions
     ? auctions.map(auction => assumeStateMachine(auction))
     : [];
+
+  const getStates = (auction: any) =>
+    states.some(st => st === auction.state) || states.indexOf('all') > -1;
+
   const activeAuctions = updatedAuctions
-    ? updatedAuctions.filter(
-        auction =>
-          states.some(st => st === auction.state) || states.indexOf('all') > -1
-      )
+    ? updatedAuctions.filter(getStates)
     : [];
   return activeAuctions;
 };

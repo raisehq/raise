@@ -17,9 +17,10 @@ export const getDates = (startDate: Date, stopDate: Date) => {
 };
 
 export const getClosestIndexByDate = (dateList: Date[], targetDate: Date) => {
+  // prettier-ignore
   const tempDiff = dateList.map(d =>
-    Math.abs(moment(d).diff(moment(targetDate)))
-  );
+    Math.abs(moment(d).diff(moment(targetDate))));
+
   const index = tempDiff.indexOf(Math.min(...tempDiff));
   return index;
 };

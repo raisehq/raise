@@ -28,15 +28,11 @@ const PanelWithImage = ({
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
-    <OnboardingModal
-      {...dimmer}
-      open={open}
-      mountNode={mountNode ? mountNode : undefined}
-    >
+    <OnboardingModal {...dimmer} open={open} mountNode={mountNode || undefined}>
       <OnboardingModalContent id="process">
         <OnboardingHeader>
           <OnboardingHeaderItemWrapper>
-            <img src={`${IMAGES_PATH}logo.svg`} />
+            <img src={`${IMAGES_PATH}logo.svg`} alt="Raise.it" />
           </OnboardingHeaderItemWrapper>
           <OnboardingHeaderItemWrapper>
             {closeButton && (

@@ -8,7 +8,7 @@ interface ButtonProps {
   disabled: boolean;
   size: string;
 }
-
+/* eslint-disable */
 export const ButtonStyled = styled(Button)<ButtonProps>`
   &&& {
     background: ${({ disabled, type }) =>
@@ -63,7 +63,7 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
     }
   }
 `;
-
+/* eslint-enable */
 export const ButtonContent = styled.div`
   display: flex;
   flex-direction: row;

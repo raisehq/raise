@@ -60,6 +60,7 @@
     "react-chartjs-2": "^2.9.0",
     "react-content-loader": "^4.3.2",
     "react-docgen-typescript-loader": "^3.5.0",
+    "react-number-format": "^4.4.1",
     "react-spring": "^8.0.27",
     "semantic-ui-react": "^0.88.1",
     "styled-components": "^5.0.0",

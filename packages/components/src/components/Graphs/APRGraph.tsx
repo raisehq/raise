@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import axios from 'axios';
 import BN from 'bn.js';
-import { Line } from 'react-chartjs-2';
-import Card from '../Card';
+import { Line, Chart } from 'react-chartjs-2';
 import { fromWei } from 'web3-utils';
+import Card from '../Card';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
 import numeral from '../../commons/numeral';
 import { chartBackground, todayVerticalLine } from './plugins';
 import { DAI_ADDRESS } from '../../commons/constants';
-
-import { Chart } from 'react-chartjs-2';
 
 interface APRGraphProps {
   maxInterestRate: BN;
@@ -72,7 +70,7 @@ const options: any = {
     backgroundColor: 'rgba(248,248,248,1)',
   },
   lineAtIndex: [0],
-  onHover: () => {},
+  onHover: () => null,
   layout: {
     padding: {
       left: 5,
@@ -117,15 +115,14 @@ const getRaiseDataset = (
   auctionEnd: Date,
   maxInterest: number,
   minInterest: number
-) => {
-  return dates.map(
+) =>
+  dates.map(
     (d: Date) =>
       ((maxInterest - minInterest) *
         Math.abs(d.valueOf() - auctionStart.valueOf())) /
         Math.abs(auctionEnd.valueOf() - auctionStart.valueOf()) +
       minInterest
   );
-};
 
 const APRGraph = ({
   maxInterestRate,
@@ -261,6 +258,7 @@ const APRGraph = ({
     }
     // Return current index to be able to show tooltip outside canvas
     if (datapoint.length) {
+      // eslint-disable-next-line
       const index = datapoint[0]._index;
       setSelectedDate(arrayDays[index]);
 

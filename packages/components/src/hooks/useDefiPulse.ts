@@ -14,7 +14,9 @@ const useDefiPulse = (apiKey: string | null | undefined) => {
     try {
       const { data } = await axios.get(request(apiKey));
       setLendingRates(data);
-    } catch (error) {}
+    } catch (error) {
+      console.error('[useDefiPulse] Error on set Lending Rates ');
+    }
   }, []);
 
   return lendingRates;

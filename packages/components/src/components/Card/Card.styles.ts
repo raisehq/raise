@@ -57,7 +57,7 @@ export const CardLogo: any = styled.div<ImageCropProps>`
     background-color: white;
     border-radius: 6px;
     border: 1px solid #cfd0d4;
-  
+
     background-position: center;
     background-position-x: 0;
     background-size: contain;
@@ -128,7 +128,6 @@ export const CardContent = styled.div<{
     position: absolute;
     top: -35px;
     left: 14px;
-
   }
   &&& > ${TimeLeft} {
     position: absolute;
@@ -140,8 +139,10 @@ export const CardContent = styled.div<{
 export const Grid: any = styled.div<GridProps>`
   display: flex;
   margin: 20px 0px;
-  justify-content: ${({ spaceBetween }) =>
-    spaceBetween ? 'space-between' : 'unset'};
+  justify-content: ${({ spaceBetween }) => {
+    const resp = spaceBetween ? 'space-between' : 'unset';
+    return resp;
+  }};
   ${({ nobottom }) => nobottom && 'margin-bottom: 0;'}
   ${({ notop }) => notop && 'margin-top: 0;'}
   ${({ alignCenter }) => alignCenter && 'align-items: center;'}
@@ -163,7 +164,7 @@ export const Row = styled.div<RowWrapperProps>`
 `;
 
 export const RowContent = styled.div<RowContentProps>`
-  color: ${({ contentColor }) => (contentColor ? contentColor : '#5a5a5a')};
+  color: ${({ contentColor }) => contentColor || '#5a5a5a'};
   font-size: 14px;
   font-weight: bold;
   text-align: center;

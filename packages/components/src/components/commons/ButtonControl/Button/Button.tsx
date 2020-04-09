@@ -12,21 +12,19 @@ const Button: React.SFC<ButtonProps> = ({
   size,
   fullWidth = false,
   ...rest
-}) => {
-  return (
-    <ButtonStyled
-      onClick={onClick}
-      disabled={disabled}
-      id={idAttr}
-      className={className}
-      type={type}
-      size={size}
-      fullWidth={fullWidth}
-      {...rest}
-    >
-      {text}
-    </ButtonStyled>
-  );
-};
+}: any) => (
+  <ButtonStyled
+    onClick={onClick}
+    disabled={disabled}
+    id={idAttr}
+    className={className}
+    type={type}
+    size={size}
+    fullWidth={fullWidth}
+    {...rest}
+  >
+    {text}
+  </ButtonStyled>
+);
 
 export default Button;
