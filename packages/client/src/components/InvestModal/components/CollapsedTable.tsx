@@ -1,12 +1,13 @@
 import React, { ReactNode, SFC, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Popup } from 'semantic-ui-react';
 import { useSpring, animated } from 'react-spring';
 import useMeasure from '../../../hooks/useMeasure';
 
 interface TableItemObj {
   title: string;
   content: string | ReactNode;
+  tooltip?: string;
 }
 
 interface CollapsedTableProps {
@@ -53,9 +54,30 @@ const TableItemContainer = styled.div<TableItemContainerProps>`
   }
 `;
 
-export const TableItem: SFC<TableItemProps> = ({ title, content, latest }) => (
+const TitleWithTooltip = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const InvestmentTooltip = styled(Popup)`
+  margin-left: 5px !important;
+  width: 190px;
+  text-align: center;
+`;
+
+export const TableItem: SFC<TableItemProps> = ({ title, content, latest, tooltip }) => (
   <TableItemContainer latest={latest}>
-    <div>{title}</div>
+    <TitleWithTooltip>
+      {title}
+      {tooltip && (
+        <InvestmentTooltip
+          content={tooltip}
+          inverted
+          position="center top"
+          trigger={<Icon color="teal" name="info circle" />}
+        />
+      )}
+    </TitleWithTooltip>
     <div>{content}</div>
   </TableItemContainer>
 );
