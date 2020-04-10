@@ -70,9 +70,9 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const {
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
-  const calcs = getCalculations(loan);
-  const { maxAmountNum, expectedROI } = calcs;
   const inputCoin = useGetCoinMetadata(selectedCoin);
+  const calcs = getCalculations(loan, loanCoin.decimals);
+  const { maxAmountNum, expectedROI } = calcs;
   const inputCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${inputCoin?.icon}`;
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin?.icon}`;
   const tagManager = useGoogleTagManager('Card');

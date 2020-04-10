@@ -4,9 +4,11 @@ import { getCalculations } from '../../utils/loanUtils';
 import Amount from '../Dashboard/Dashboard.Amount';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import useGetCoin from '../../hooks/useGetCoin';
+import useGetCoinByAddress from '../../hooks/useGetCoinByAddress';
 
 const Auction = ({ auction }: { auction: any }) => {
-  const calcs = getCalculations(auction);
+  const { decimals } = useGetCoinByAddress(auction.tokenAddress);
+  const calcs = getCalculations(auction, decimals);
   const coin = useGetCoin(auction);
   const {
     principal,

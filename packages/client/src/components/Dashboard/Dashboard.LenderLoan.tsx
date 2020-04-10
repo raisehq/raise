@@ -10,9 +10,11 @@ import { getCalculations } from '../../utils/loanUtils';
 // import { ClaimRefund } from '../ClaimRefundInvestor';
 import LenderACU from '../Cards/LenderACU';
 import LenderExpired from '../Cards/LenderExpired';
+import useGetCoin from '../../hooks/useGetCoin';
 
 const Loan = ({ auction }: { auction: any }) => {
-  const calcs = getCalculations(auction);
+  const coin = useGetCoin(auction);
+  const calcs = getCalculations(auction, coin.decimals);
 
   // const { maxAmount, times, roi, lenderAmount, lenderRoiAmount } = calcs;
   const card = useMemo(() => {

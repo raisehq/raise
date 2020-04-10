@@ -40,7 +40,7 @@ const Confirm = () => {
   const [membership, setMembership] = useState(null);
   const [hasFunds, setHasFunds] = useState(false);
 
-  const { roi }: any = getCalculations(loan);
+  const { roi }: any = getCalculations(loan, coin.decimals);
   const lenderAmount = numeral(fromWei(loan.lenderAmount)).format();
 
   const lenderGains =
