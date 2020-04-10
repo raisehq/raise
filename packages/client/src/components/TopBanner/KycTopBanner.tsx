@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import daggy from 'daggy';
 import useRouter from '../../hooks/useRouter';
 
@@ -26,6 +26,7 @@ export interface KycTopBannerProps {
   kycAction?: Function;
   isMobile: boolean;
   kycBCStatus: boolean;
+  kycProvider: number;
 }
 
 const KycTopBanner = ({
@@ -33,27 +34,23 @@ const KycTopBanner = ({
   kycStatus,
   kycAction,
   isMobile,
-  kycBCStatus
+  kycBCStatus,
+  kycProvider
 }: KycTopBannerProps) => {
-  const [path, setPath] = useState('');
   const { history }: any = useRouter();
-
-  useEffect(() => {
-    setPath(history.location.pathname);
-  }, [history.location.pathname]);
 
   const view = Status[StatusSet[kycStatus || 5]];
 
   const stepsForBanner = {
     kycAction,
     isMobile,
-    kycStatus: kycStatus === 3 && kycBCStatus ? 3 : kycStatus === 3 ? 4 : kycStatus
+    kycStatus: kycStatus === 3 && kycBCStatus ? 3 : kycStatus === 3 ? 4 : kycStatus,
+    history,
+    kycProvider
   };
 
-  const showNotificationBar = () => path === '/' || path === '/account';
-
   const getStepsReminder = () => {
-    return enabled && showNotificationBar() && <NotificationBar {...stepsForBanner} />;
+    return enabled && <NotificationBar {...stepsForBanner} />;
   };
 
   const getView = () =>

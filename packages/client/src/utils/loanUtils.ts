@@ -1,5 +1,5 @@
 import { match, ANY } from 'pampy';
-import { fromWei } from 'web3-utils';
+import { fromDecimal } from '../utils/web3-utils';
 import cloneDeep from 'lodash/cloneDeep';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
@@ -12,6 +12,7 @@ const secondUnits = {
   hour: 3600,
   minute: 60
 };
+
 const stringUnixToDate = stringUnix => new Date(Number(stringUnix) * 1000);
 
 export const isAuctionExpired = ({ auctionEndTimestamp }) =>
@@ -64,8 +65,10 @@ export const getDesiredTime = (seconds, type?) =>
 
 const defaultZero = numeral(0).format();
 
-export const calculateFromWei = number =>
-  number ? numeral(Number(fromWei(number.toString(), 'ether'))).format(numeralFormat) : defaultZero;
+export const calculatefromDecimal = (number, decimals = 18) =>
+  number
+    ? numeral(Number(fromDecimal(number.toString(), decimals))).format(numeralFormat)
+    : defaultZero;
 
 export const calculateTimes = auction => {
   try {
@@ -76,16 +79,16 @@ export const calculateTimes = auction => {
     const loanTermLeft = getDesiredTime(Number(auction.termEndTimestamp) - today, 'loan');
     return { loanTerm, auctionTimeLeft, loanTermLeft };
   } catch (error) {
-    console.error('[LOANUTILS][CalculateFromWei]', error);
+    console.error('[LOANUTILS][CalculatefromDecimal]', error);
     return error;
   }
 };
 
 export const calculateInterest = auction => {
   const nowTimestamp = Date.now() / 1000;
-  const maxInterestRate = Number(fromWei(auction.maxInterestRate.toString())) / 100;
+  const maxInterestRate = Number(fromDecimal(auction.maxInterestRate.toString())) / 100;
   const minInterestRate = auction.minInterestRate
-    ? Number(fromWei(auction.minInterestRate.toString())) / 100
+    ? Number(fromDecimal(auction.minInterestRate.toString())) / 100
     : 0;
 
   let interest = 0;
@@ -106,7 +109,8 @@ export const calculateInterest = auction => {
 
 export const calculateROI = auction => {
   const roi =
-    (Number(fromWei(auction.interestRate.toString())) * (auction.termLength / 30 / 24 / 60 / 60)) /
+    (Number(fromDecimal(auction.interestRate.toString())) *
+      (auction.termLength / 30 / 24 / 60 / 60)) /
     100;
   return roi;
 };
@@ -118,27 +122,27 @@ export const calculateExpectedRoi = (auction, interest) => {
 
 export const calculateTotalInterest = auction => {
   const interest =
-    Number(fromWei(auction.interestRate.toString())) *
+    Number(fromDecimal(auction.interestRate.toString())) *
     (auction.termLength / 30 / 24 / 60 / 60 / 100);
   return interest;
 };
 
-export const calculateTotalInterestAmount = auction => {
+export const calculateTotalInterestAmount = (auction, decimals) => {
   const interest =
-    Number(fromWei(auction.interestRate.toString())) *
+    Number(fromDecimal(auction.interestRate.toString())) *
     (auction.termLength / 30 / 24 / 60 / 60 / 100);
-  const principal = Number(fromWei(auction.principal));
+  const principal = Number(fromDecimal(auction.principal, decimals));
   return principal * interest;
 };
 
 export const calculateAPR = auction => {
-  const interest = Number(fromWei(auction.interestRate.toString())) / 100;
+  const interest = Number(fromDecimal(auction.interestRate.toString())) / 100;
   const apr = interest * 12;
   return apr;
 };
 
-export const calculateInvestmentReturn = auction => {
-  const lenderAmount = Number(fromWei(auction.lenderAmount));
+export const calculateInvestmentReturn = (auction, decimals = 18) => {
+  const lenderAmount = Number(fromDecimal(auction.lenderAmount, decimals));
   const lenderRoiAmount = lenderAmount + lenderAmount * calculateROI(auction);
   return lenderRoiAmount;
 };
@@ -153,7 +157,8 @@ export const getCoinsFromContract = coinsMap => contract => {
             text: coin.name,
             value: coin.name,
             key: coin.key,
-            icon: coin.icon
+            icon: coin.icon,
+            decimals: coin.decimals
           }
         : null
     );
@@ -167,9 +172,10 @@ export const getCoin = (coins: CoinsType[]) => (tokenAddress: string): CoinsType
     text: '',
     value: '',
     key: '',
-    icon: ''
+    icon: '',
+    decimals: 18
   };
-  if (!coins || !coins.length) {
+  if (!coins || !coins.length || !tokenAddress) {
     return defaultCoin;
   }
   return (
@@ -178,23 +184,20 @@ export const getCoin = (coins: CoinsType[]) => (tokenAddress: string): CoinsType
   );
 };
 
-export const getCalculations = auction => {
-  const maxAmount: any = calculateFromWei(auction.maxAmount);
-  const maxAmountNum = Number(fromWei(auction.maxAmount));
-  const operatorFee: any = calculateFromWei(auction.operatorFee);
-  const operatorFeeNum = Number(fromWei(auction.operatorFee.toString())) / 100;
-  const principal: any = calculateFromWei(auction.principal);
-  const principalNum = Number(fromWei(auction.principal));
-  const borrowerDebt: any = Number(fromWei(auction.borrowerDebt)).toLocaleString('es-ES');
+export const getCalculations = (auction, decimals = 18) => {
+  const maxAmount: any = calculatefromDecimal(auction.maxAmount, decimals);
+  const maxAmountNum = Number(fromDecimal(auction.maxAmount, decimals));
+  const operatorFee: any = calculatefromDecimal(auction.operatorFee);
+  const operatorFeeNum = Number(fromDecimal(auction.operatorFee.toString())) / 100;
+  const principal: any = calculatefromDecimal(auction.principal, decimals);
+  const principalNum = Number(fromDecimal(auction.principal, decimals));
+  const borrowerDebt: any = numeral(Number(fromDecimal(auction.borrowerDebt, decimals))).format();
   const maxSystemFees: any = numeral(maxAmountNum * operatorFeeNum).format();
-  const systemFees: any = `-${numeral(
-    Number(fromWei(auction.principal)) * operatorFeeNum
-  ).format()}`;
+  const systemFees: any = `-${numeral(principalNum * operatorFeeNum).format()}`;
 
-  let netBalance = calculateFromWei(auction.netBalance);
-  if (auction.netBalance) {
-    netBalance = numeral(Number(fromWei(auction.netBalance.toString()))).format();
-  }
+  const netBalance = numeral(
+    Number(fromDecimal(auction.netBalance?.toString() || '0', decimals))
+  ).format();
 
   const calculatedInterest = calculateInterest(auction);
   const expectedROI = calculatedInterest * (Number(auction.termLength) / 2628000);
@@ -202,9 +205,9 @@ export const getCalculations = auction => {
   const currentAPR = numeral(calculatedInterest * 12).format('0.00%');
   const currentAmount = numeral(principal).value();
   const totalAmount = numeral(maxAmount).value();
-  const maxAPR = numeral((Number(fromWei(auction.maxInterestRate.toString())) / 100) * 12).format(
-    '0.00%'
-  );
+  const maxAPR = numeral(
+    (Number(fromDecimal(auction.maxInterestRate.toString())) / 100) * 12
+  ).format('0.00%');
   const expectedRoiFormated = numeral(expectedROI).format('0.00%');
 
   let lenderAmount;
@@ -217,11 +220,11 @@ export const getCalculations = auction => {
     finalAPR = numeral(calculateAPR(auction)).format('0.00%');
     roi = numeral(calculateROI(auction)).format('0.00%');
     totalInterest = numeral(calculateTotalInterest(auction)).format('0.00%');
-    totalInterestAmount = numeral(calculateTotalInterestAmount(auction)).format();
+    totalInterestAmount = numeral(calculateTotalInterestAmount(auction, decimals)).format();
   }
   if (auction.lenderAmount) {
-    lenderAmount = numeral(Number(fromWei(auction.lenderAmount))).format();
-    const lenderRoiAmountCalc = calculateInvestmentReturn(auction);
+    lenderAmount = numeral(Number(fromDecimal(auction.lenderAmount, decimals))).format();
+    const lenderRoiAmountCalc = calculateInvestmentReturn(auction, decimals);
     lenderRoiAmount = numeral(lenderRoiAmountCalc).format();
   }
 

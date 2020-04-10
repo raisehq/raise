@@ -5,11 +5,12 @@ import { KycStatus } from '../../../commons/kycStatus';
 const ProfileInfo = ({ email, kyc_status, storedUsername }) => {
   const kycStatus =
     kyc_status === null || kyc_status === undefined ? KycStatus.Error : KycStatus[kyc_status];
+
   return (
     <>
       <ReadTitle>KYC status</ReadTitle>
       <p>
-        Account verified
+        {kyc_status !== 3 ? 'Account not verified' : 'Account verified'}
         <KYCIcon name="circle" value={KycStatus[kycStatus]} />
       </p>
       <EmailBox>

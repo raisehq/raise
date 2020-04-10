@@ -14,6 +14,7 @@ import {
   Action,
   IconSuccess as IconError
 } from '../../InvestModal/InvestModal.styles';
+import useGetCoin from '../../../hooks/useGetCoin';
 
 const PassDOM = (
   <LabelPaddingLoader circular color="#00DA9E">
@@ -55,7 +56,9 @@ const stepNumber = (step, pass, errors) =>
 
 const Processing = () => {
   const { approved, error, loan }: any = useContext(RepayLoanContext);
-  const { borrowerDebt }: any = getCalculations(loan);
+  const coin = useGetCoin(loan);
+
+  const { borrowerDebt }: any = getCalculations(loan, coin.decimals);
   const ApprovalIcon = useMemo(() => stepNumber(1, approved, error), [approved, error]);
   const RepayIcon = useMemo(() => stepNumber(2, approved, error), [approved, error]);
   return (
@@ -78,7 +81,7 @@ const Processing = () => {
             <Grid.Column width={14}>
               <Action>Confirm the transaction</Action>
               <Explanation>
-                {`${borrowerDebt} DAI will be transferred from your wallet to the loan`}
+                {`${borrowerDebt} ${coin.text} will be transferred from your wallet to the loan`}
               </Explanation>
             </Grid.Column>
           </Grid>

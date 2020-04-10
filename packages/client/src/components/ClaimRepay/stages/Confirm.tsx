@@ -5,7 +5,7 @@ import { CheckboxDeposit, CheckboxDepositLabel, CheckboxContainer } from '../sty
 import { ClaimRepayContext } from '../ClaimRepay';
 import { getCalculations } from '../../../utils/loanUtils';
 import numeral from '../../../commons/numeral';
-import { fromWei } from 'web3-utils';
+import { fromDecimal } from '../../../utils/web3-utils';
 import { useAppContext } from '../../../contexts/AppContext';
 import {
   ClaimFundsResume,
@@ -40,11 +40,12 @@ const Confirm = () => {
   const [membership, setMembership] = useState(null);
   const [hasFunds, setHasFunds] = useState(false);
 
-  const { roi }: any = getCalculations(loan);
-  const lenderAmount = numeral(fromWei(loan.lenderAmount)).format();
+  const { roi }: any = getCalculations(loan, coin.decimals);
+  const lenderAmount = numeral(fromDecimal(loan.lenderAmount, coin.decimals)).format();
 
   const lenderGains =
-    Number(fromWei(loan.lenderAmount)) + Number(fromWei(loan.lenderAmount)) * numeral(roi).value();
+    Number(fromDecimal(loan.lenderAmount, coin.decimals)) +
+    Number(fromDecimal(loan.lenderAmount, coin.decimals)) * numeral(roi).value();
   const lenderRoiAmount = numeral(lenderGains).format();
 
   useEffect(() => {

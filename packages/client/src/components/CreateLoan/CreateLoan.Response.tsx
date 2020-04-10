@@ -49,7 +49,6 @@ export const getLoanAction = (stage, values, methods) => {
             idAttr="btn-check"
             as={Link}
             to="/"
-            onClick={onSave}
             text="Check your loans"
             type={'secondary'}
             size={'small'}

@@ -4,7 +4,7 @@ import { ButtonProps } from '../types';
 
 const Button: React.SFC<ButtonProps> = ({
   text,
-  onClick,
+  onClick = () => null,
   disabled = false,
   idAttr,
   className,

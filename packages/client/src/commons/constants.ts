@@ -9,7 +9,7 @@ export const IMAGES_PATH = `${process.env.REACT_APP_HOST_IMAGES}/images/`;
 export const HEADER_MENU_SIZE = { myActivity: -100, toGetStarted: -80 };
 
 export const COINS = [
-  { name: 'DAI', icon: 'coin-dai.svg', key: '0' },
-  { name: 'USDC', icon: 'coin-usdc.svg', key: '1' },
-  { name: 'USDT', icon: 'coin-theter.svg', key: '2' }
+  { name: 'DAI', icon: 'coin-dai.svg', key: '0', decimals: 18 },
+  { name: 'USDC', icon: 'coin-usdc.svg', key: '1', decimals: 6 },
+  { name: 'USDT', icon: 'coin-theter.svg', key: '2', decimals: 6 }
 ];

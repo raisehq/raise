@@ -14,7 +14,7 @@ import ProcessingState from './ProcessingState';
 import SuccessState from './SuccessState';
 import VerifyKycModal from './VerifyKycState';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-import { Modal, ModalContent, ButtonContainer } from './InvestModal.styles';
+import { Modal, ModalContent } from './InvestModal.styles';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const FEATURE_FLAG_SWAP = process.env.REACT_APP_SWAP_ON === 'true';
@@ -125,18 +125,17 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   };
   return (
     <>
-      <ButtonContainer>
-        <Button
-          idAttr="btn-lender-open"
-          className={className}
-          onClick={openModal}
-          text={buttonText}
-          disabled={false}
-          type={'primary'}
-          size={'large'}
-          fullWidth={true}
-        />
-      </ButtonContainer>
+      <Button
+        idAttr="btn-lender-open"
+        className={className}
+        onClick={openModal}
+        text={buttonText}
+        disabled={false}
+        type={'primary'}
+        size={'large'}
+        fullWidth={true}
+      />
+
       <Modal open={open} onClose={closeModal} size={stageModalWidth} mountNode={modalRefs.current}>
         <ModalContent>{getInvestAction(stage)}</ModalContent>
       </Modal>

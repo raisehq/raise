@@ -102,3 +102,8 @@ export const WarningSignWrapper = styled.div`
     width: 30px;
   }
 `;
+
+export const WarningLink = styled.div`
+  color: #00ad63;
+  cursor: pointer;
+`;

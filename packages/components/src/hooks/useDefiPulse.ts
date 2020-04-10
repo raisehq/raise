@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import useAsyncEffect from './useAsyncEffect';
 import axios from 'axios';
+import useAsyncEffect from './useAsyncEffect';
 
 const request = (apiKey: string | null | undefined) =>
   `https://public.defipulse.com/api/GetRates${

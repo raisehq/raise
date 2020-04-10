@@ -66,3 +66,5 @@ const printResumes = (companies: Company[]) => {
 export const LoanComparatorChart: React.SFC<ChartProps> = ({
   companies,
 }: any) => <ResumeContainer>{printResumes(companies)}</ResumeContainer>;
+
+export default LoanComparatorChart;

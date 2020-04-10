@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import BN from 'bn.js';
 import styled from 'styled-components';
 import { tradeTokensForExactTokens } from '@uniswap/sdk';
-import { fromWei, toWei } from 'web3-utils';
 import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import { useRootContext } from '../../contexts/RootContext';
@@ -13,6 +12,8 @@ import { useAddressBalance } from '../../contexts/BalancesContext';
 import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
 import localeConfig from '../../commons/localeConfig';
 import { generateInfo, CoinValue } from './investUtils';
+import { toDecimal, fromDecimal } from '../../utils/web3-utils';
+
 import {
   ConfirmButton,
   InvestHeader,
@@ -69,14 +70,16 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const {
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
-  const calcs = getCalculations(loan);
-  const { maxAmountNum, expectedROI } = calcs;
   const inputCoin = useGetCoinMetadata(selectedCoin);
+  const calcs = getCalculations(loan, loanCoin.decimals);
+  const { maxAmountNum, expectedROI } = calcs;
   const inputCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${inputCoin?.icon}`;
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin?.icon}`;
   const tagManager = useGoogleTagManager('Card');
   const balanceBN: BN = useAddressBalance(account, inputCoin?.address || '');
-  const balance = Number(Number(fromWei(balanceBN)).toFixed(2));
+  const balance = Number(
+    Number(fromDecimal(balanceBN.toString(10), inputCoin?.decimals)).toFixed(2)
+  );
   const [value, setValue] = useState<number>(0);
   const expectedInputRoi = Number(expectedROI * value || 0).toLocaleString(...localeConfig);
 
@@ -93,11 +96,11 @@ const InvestState: React.SFC<InvestStateProps> = ({
     if (!value) {
       return defaultValue;
     }
-    const outputAmount = toWei(value.toString());
     try {
       if (!inputCoin || !loanCoin) {
         return defaultValue;
       }
+      const outputAmount = toDecimal(value, loanCoin.decimals);
       const tradeDetails = await tradeTokensForExactTokens(
         inputCoin.address,
         loanCoin.address,
@@ -105,7 +108,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
         chainId
       );
 
-      const totalOutput = new BN(tradeDetails.inputAmount.amount.toString(10));
+      const totalOutput = new BN(tradeDetails.inputAmount.amount.toString());
       return totalOutput;
     } catch (error) {
       console.error(error);
@@ -119,7 +122,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
       return;
     }
     if (inputCoin?.text === loanCoin.text) {
-      setInputTokenAmount(new BN(toWei(value.toString())));
+      setInputTokenAmount(new BN(toDecimal(value, loanCoin.decimals)));
       return;
     }
     const outputAmount = await getSwapOutput();
@@ -134,7 +137,9 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const [termsCond, setTermsCond] = useState(false);
 
   const inputTokenAmountString =
-    Number(fromWei(inputTokenAmount)).toLocaleString(...localeConfig) || '0';
+    Number(fromDecimal(inputTokenAmount.toString(10), inputCoin?.decimals)).toLocaleString(
+      ...localeConfig
+    ) || '0';
   const buttonRules =
     value === 0 ||
     value === undefined ||
@@ -172,11 +177,13 @@ const InvestState: React.SFC<InvestStateProps> = ({
           content={
             <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
           }
+          tooltip="Total invested will always be converted to the currency set by the borrower."
         />
         <TableItem
           title="Expected ROI after repayment"
           latest
           content={<CoinValue value={expectedInputRoi} name={loanCoin?.text} src={loanCoinImage} />}
+          tooltip="This includes the original amount invested in addition to your return on investment."
         />
       </InvestInput>
       <ButtonWrapper>

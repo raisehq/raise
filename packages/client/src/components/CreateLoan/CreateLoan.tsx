@@ -102,7 +102,7 @@ const CreateLoan = ({ contracts }) => {
   const [selectedCoin, setSelectedCoin] = useState<any>({});
   const [loan, setLoan] = useState({
     amount: AMOUNT_DEFAULT,
-    tokenAddress: selectedCoin.address,
+    tokenAddress: selectedCoin?.address,
     term: TERM_DEFAULT,
     auctionTerm: TERM_AUCTION_DEFAULT,
     minMir: parseFloat((MIN_APR_DEFAULT / 12).toString()),
@@ -127,7 +127,8 @@ const CreateLoan = ({ contracts }) => {
       text: coin.name,
       value: coin.name,
       key: coin.key,
-      icon: coin.icon
+      icon: coin.icon,
+      decimals: coin.decimals
     }));
     return mappedCoins.filter(({ address }) =>
       acceptedTokens.find(a => a.toLowerCase() === address.toLowerCase())
@@ -166,6 +167,7 @@ const CreateLoan = ({ contracts }) => {
     if (coinsArray.length) {
       setCoins(coinsArray);
       if (dai) {
+        setSelectedCoin(dai);
         setSelectedCoinType(dai.text);
         setSelectedCoinIndex(dai.key);
         setLoan({ ...loan, tokenAddress: dai.address });
@@ -249,7 +251,8 @@ const CreateLoan = ({ contracts }) => {
         loan.term,
         loan.accept,
         loan.auctionTerm,
-        loan.tokenAddress
+        loan.tokenAddress,
+        selectedCoin?.decimals
       );
       setStage(UI.Success);
     } catch (error) {

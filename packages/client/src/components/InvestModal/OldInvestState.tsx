@@ -45,6 +45,7 @@ const ErrorBox = styled.div`
 
 const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
   const { principal, investorCount, maxAmount } = loan;
+  const coin = useGetCoin(loan);
   const {
     times,
     currentAmount,
@@ -53,8 +54,7 @@ const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvest
     expectedRoiFormated,
     maxAmount: calcMaxAmount,
     principal: calcPrincipal
-  } = getCalculations(loan);
-  const coin = useGetCoin(loan);
+  } = getCalculations(loan, coin.decimals);
 
   const tagManager = useGoogleTagManager('Card');
 

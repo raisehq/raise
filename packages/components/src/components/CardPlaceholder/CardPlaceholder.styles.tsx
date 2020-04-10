@@ -8,3 +8,5 @@ export const CardSegment: any = styled(Segment)`
   margin: 0px !important;
   padding: 0px !important;
 `;
+
+export default CardSegment;
