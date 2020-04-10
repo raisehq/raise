@@ -2,6 +2,8 @@ import web3Utils from 'web3-utils';
 import ABI_ERC20 from '../commons/erc20';
 import BigNumber from 'bignumber.js';
 
+BigNumber.config({ EXPONENTIAL_AT: 1e18 });
+
 export function isAddress(value) {
   try {
     return web3Utils.isAddress(value);
