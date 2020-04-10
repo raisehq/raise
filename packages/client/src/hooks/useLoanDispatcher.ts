@@ -42,7 +42,7 @@ const useLoanDispatcher = () => {
               acceptMinimum ? minAmount.toString() : amount.toString(),
               decimals
             );
-            console.log('what', amount.toString(), minAmount.toString(), minAmountWei);
+
             const params = [
               minAmountWei,
               toDecimal(amount.toString(), decimals),
