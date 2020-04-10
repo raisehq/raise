@@ -4,7 +4,7 @@ import { WarningSight, RightArrow, StepButton } from '../misc';
 
 export const getMessages = kcyStatus => {
   const messages = {
-    2: 'Your application is under review',
+    2: 'to start investing. If you already did, soon you will be able to invest 👍',
     4: 'Your account is being verified, this process won’t take long 🤓'
   };
   return messages[kcyStatus];
@@ -25,26 +25,29 @@ export const getView = (kycStatus, isMobile, kycAction, history, kycProvider) =>
     }
   };
 
-  const getLink = () => {
-    return <WarningLink onClick={goToKYC}>more information</WarningLink>;
-  };
-
-  if (kycStatus === 2 || kycStatus === 4) {
+  if (kycStatus === 2) {
     return (
       <WarningBanner isMobile={isMobile}>
-        {`${getMessages(kycStatus)} `}
-        {getLink()}
-      </WarningBanner>
-    );
-  } else {
-    return (
-      <WarningBanner isMobile={isMobile}>
-        <StepButton id="kyc-verify-button" onClick={kycAction}>
-          Verify Account
-        </StepButton>
+        <WarningLink onClick={goToKYC}>Complete your account verification </WarningLink>
+        {`${getMessages(kycStatus)}`}
       </WarningBanner>
     );
   }
+  if (kycStatus === 4) {
+    return (
+      <WarningBanner isMobile={isMobile}>
+        {`${getMessages(kycStatus)} `}
+        <WarningLink onClick={goToKYC}>more information</WarningLink>
+      </WarningBanner>
+    );
+  }
+  return (
+    <WarningBanner isMobile={isMobile}>
+      <StepButton id="kyc-verify-button" onClick={kycAction}>
+        Verify Account
+      </StepButton>
+    </WarningBanner>
+  );
 };
 
 export const NotificationBar = ({ kycStatus, kycAction, isMobile, history, kycProvider }) => {
