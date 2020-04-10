@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { match, ANY } from 'pampy';
 import { Button } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
@@ -7,7 +7,9 @@ import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-import { ButtonContainer } from '../InvestModal/InvestModal.styles';
+import { ButtonContainer, Modal, ModalContent } from '../InvestModal/InvestModal.styles';
+import VerifyKycModal from '../InvestModal/VerifyKycState';
+
 import { useSidebarContext } from '../../contexts/SidebarContext';
 
 const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
@@ -22,12 +24,16 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
     store: {
       auth: {
         login: { logged: isLogged }
+      },
+      user: {
+        details: { kyc_status }
       }
     },
     actions: {
       onboarding: { showOnboarding }
     }
   }: any = useRootContext();
+  const [open, setOpen] = useState(false);
   const tagManager = useGoogleTagManager('Card');
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
   // prettier-ignore
@@ -40,8 +46,15 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
     ANY,
     () => 'INVEST'
   );
+  const closeModal = () => {
+    setOpen(false);
+  };
 
   const openSlide = () => {
+    if (kyc_status !== 3) {
+      setOpen(true);
+      return;
+    }
     if (isLogged) {
       tagManager.sendEvent(TMEvents.Click, 'loan');
       setLoanId(loan?.id);
@@ -57,18 +70,26 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
   };
 
   return (
-    <ButtonContainer>
-      <Button
-        idAttr="btn-lender-open"
-        className={className}
-        onClick={openSlide}
-        text={buttonText}
-        disabled={false}
-        type={'primary'}
-        size={'large'}
-        fullWidth
-      />
-    </ButtonContainer>
+    <>
+      <ButtonContainer>
+        <Button
+          idAttr="btn-lender-open"
+          className={className}
+          onClick={openSlide}
+          text={buttonText}
+          disabled={false}
+          type={'primary'}
+          size={'large'}
+          fullWidth={true}
+        />
+      </ButtonContainer>
+
+      <Modal open={open} onClose={closeModal}>
+        <ModalContent>
+          <VerifyKycModal />
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
