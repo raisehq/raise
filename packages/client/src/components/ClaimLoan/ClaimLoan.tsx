@@ -10,6 +10,7 @@ import Error from './stages/Error';
 import { Modal } from './ClaimLoan.styles';
 
 import { BorrowerButton, ExitButton } from '../InvestModal/InvestModal.styles';
+import useGetCoin from '../../hooks/useGetCoin';
 
 export const ClaimLoanContext = createContext({});
 
@@ -20,7 +21,8 @@ export const Stages = daggy.taggedSum('UI', {
 });
 
 const ClaimLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
-  const calculatedLoan = getCalculations(loan);
+  const coin = useGetCoin(loan);
+  const calculatedLoan = getCalculations(loan, coin.decimals);
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState(Stages.Confirm);
 

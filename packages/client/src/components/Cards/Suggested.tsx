@@ -15,6 +15,7 @@ const Loan: React.SFC<LoanProps> = ({ auction }: LoanProps) => {
   return (
     <InvestCard
       coinIcon={coin && coin.icon}
+      decimals={coin && coin.decimals}
       auction={auction}
       borrower={borrower}
       link

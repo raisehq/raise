@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { Card as RaiseCard } from '@raisehq/components';
 import { tradeExactTokensForTokensWithData, getTokenReserves } from '@uniswap/sdk';
 import { TokenReservesNormalized } from '@uniswap/sdk/dist/types';
-import BN from 'bn.js';
-import { fromWei, toWei } from 'web3-utils';
 import { InvestHeader } from '../InvestModal.styles';
 import LoanInput from '../../CreateLoan/LoanInput';
 import CoinSelectorRaw from '../../CoinSelector';
@@ -13,6 +11,7 @@ import MaxInputsRaw from './MaxInputs';
 import { useAppContext } from '../../../contexts/AppContext';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
 import { CoinsType } from '../../../commons/coins';
+import { fromDecimal, toDecimal } from '../../../utils/web3-utils';
 
 const errorMessages = {
   inputGreaterThanBalance: 'Not enough balance.',
@@ -157,12 +156,18 @@ const setTokenReserves = async (
   }
 };
 
-const getSwapOutput = async (inputAmount, inputReserves, outputReserves): Promise<BN> => {
-  const defaultValue = new BN('0');
+const getSwapOutput = async (
+  inputAmount,
+  inputCoin,
+  inputReserves,
+  outputReserves
+): Promise<number> => {
+  const defaultValue = 0;
   if (!inputAmount) {
     return defaultValue;
   }
-  const inputAmountWei: string = toWei(inputAmount.toString()).toString();
+
+  const inputAmountWei = toDecimal(inputAmount.toString(), inputCoin.decimals);
   try {
     const tradeDetails = await tradeExactTokensForTokensWithData(
       inputReserves,
@@ -170,7 +175,12 @@ const getSwapOutput = async (inputAmount, inputReserves, outputReserves): Promis
       inputAmountWei
     );
 
-    const totalOutput = new BN(tradeDetails.outputAmount.amount.toString(10));
+    const totalOutput = Number(
+      fromDecimal(
+        tradeDetails.outputAmount.amount.toString(10),
+        tradeDetails.outputAmount.token.decimals
+      )
+    );
     return totalOutput;
   } catch (error) {
     console.error(error);
@@ -204,15 +214,20 @@ const InvestmentBox = ({
   };
 
   const fundAll = (loanCurrency: CoinsType, selectedCurrency: CoinsType) => async divisor => {
-    const nMaxAmount = Number(fromWei(maxAmount));
-    const nPrincipal = nMaxAmount - Number(fromWei(principal));
+    const nMaxAmount = Number(fromDecimal(maxAmount, loanCurrency.decimals));
+    const nPrincipal = nMaxAmount - Number(fromDecimal(principal, loanCurrency.decimals));
 
     if (loanCurrency?.text === selectedCurrency?.text) {
       const minValue = Math.min(...[balance / divisor, nPrincipal]);
       return setValue(minValue);
     }
-    const output = await getSwapOutput(balance / divisor, inputReserves, outputReserves);
-    const minValue = Math.min(...[Number(fromWei(output)), nPrincipal]);
+    const output = await getSwapOutput(
+      balance / divisor,
+      selectedCurrency,
+      inputReserves,
+      outputReserves
+    );
+    const minValue = Math.min(...[output, nPrincipal]);
     return setValue(minValue);
   };
 

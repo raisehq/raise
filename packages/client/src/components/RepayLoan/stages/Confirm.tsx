@@ -30,10 +30,11 @@ const Confirm = () => {
   const onConfirm = async () => {
     setStage(Stages.Processing);
   };
-  const { principal, borrowerDebt, totalInterest, totalInterestAmount }: any = getCalculations(
-    loan
-  );
   const coin = useGetCoin(loan);
+  const { principal, borrowerDebt, totalInterest, totalInterestAmount }: any = getCalculations(
+    loan,
+    coin.decimals
+  );
 
   return (
     <>

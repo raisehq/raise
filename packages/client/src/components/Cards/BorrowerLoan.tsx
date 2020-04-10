@@ -11,9 +11,9 @@ import { GetInTouch } from '../GetInTouch';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const Loan = ({ auction }: { auction: any }) => {
-  const calcs = getCalculations(auction);
-  const { principal, finalAPR, borrowerDebt, times, systemFees, netBalance } = calcs;
   const coin = useGetCoin(auction);
+  const calcs = getCalculations(auction, coin.decimals);
+  const { principal, finalAPR, borrowerDebt, times, systemFees, netBalance } = calcs;
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.loanWithdrawn, auction.loanRepaid];
     return match(

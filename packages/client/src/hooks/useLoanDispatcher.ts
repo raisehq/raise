@@ -3,6 +3,7 @@ import useWallet from './useWallet';
 import useWeb3 from './useWeb3';
 import useAsyncEffect from './useAsyncEffect';
 import { useRootContext } from '../contexts/RootContext';
+import { toDecimal } from '../utils/web3-utils';
 
 const useLoanDispatcher = () => {
   const [activeContract, setActiveContract]: any = useState(null);
@@ -32,13 +33,14 @@ const useLoanDispatcher = () => {
             termMonthsLength,
             acceptMinimum,
             auctionTermLength,
-            tokenAddress
+            tokenAddress,
+            decimals
           ) => {
             const auctionSecondsLength = auctionTermLength.toString();
             const termSecondsLength = termMonthsLength.toString();
             const params = [
-              web3.utils.toWei(acceptMinimum ? minAmount.toString() : amount.toString(), 'ether'),
-              web3.utils.toWei(amount.toString(), 'ether'),
+              toDecimal(acceptMinimum ? minAmount.toString() : amount.toString(), decimals),
+              toDecimal(amount.toString(), decimals),
               web3.utils.toWei(minInterestRate.toString()),
               web3.utils.toWei(maxInterestRate.toString()),
               termSecondsLength,

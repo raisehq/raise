@@ -10,12 +10,21 @@ interface LoanProps {
   children?: ReactNode;
   className?: string;
   coinIcon: string;
+  decimals?: number;
 }
 
 const InvestCard: React.SFC<LoanProps> = (props: LoanProps) => {
-  const { auction, className, children, borrower, coinIcon } = props;
+  const {
+    auction,
+    className,
+    children,
+    borrower,
+    coinIcon,
+    decimals = 18,
+  } = props;
   const link = !!props.link;
-  const calculations = getCalculations(auction);
+
+  const calculations = getCalculations(auction, decimals);
 
   const investProps = {
     ...auction,
