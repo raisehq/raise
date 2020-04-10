@@ -38,8 +38,13 @@ const useLoanDispatcher = () => {
           ) => {
             const auctionSecondsLength = auctionTermLength.toString();
             const termSecondsLength = termMonthsLength.toString();
+            const minAmountWei = toDecimal(
+              acceptMinimum ? minAmount.toString() : amount.toString(),
+              decimals
+            );
+            console.log('what', amount.toString(), minAmount.toString(), minAmountWei);
             const params = [
-              toDecimal(acceptMinimum ? minAmount.toString() : amount.toString(), decimals),
+              minAmountWei,
               toDecimal(amount.toString(), decimals),
               web3.utils.toWei(minInterestRate.toString()),
               web3.utils.toWei(maxInterestRate.toString()),
