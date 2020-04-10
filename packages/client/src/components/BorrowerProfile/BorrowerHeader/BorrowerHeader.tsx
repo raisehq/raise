@@ -18,7 +18,7 @@ import {
 } from './styles';
 import { getCalculations } from '../../../utils/loanUtils';
 
-const BorrowerHeader = ({ auction }) => {
+const BorrowerHeader = ({ auction }: any) => {
   const values = auction ? getCalculations(auction) : null;
   return (
     <LoanHeader>

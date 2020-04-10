@@ -12,8 +12,9 @@
     "dev-all:int": "lerna run dev:int --stream --parallel",
     "clean": "lerna exec -- rm -rf ./node_modules ./dist ./build ./bundle.*.js || true && rm -rf node_modules || true && rm -rf yarn.lock || true",
     "build": "lerna run build --stream",
-    "bootstrap:deps": "yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'",
-    "build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
+    "lint": "lerna run lint --stream",
+    "bootstrap:deps": "NODE_ENV=production yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'",
+    "build:deps": "NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
     "rollup": "lerna run --stream --scope '@raisehq/libs' build:production",
     "dev:rollup": "lerna run --stream --scope '@raisehq/libs' start",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
@@ -25,7 +26,12 @@
   "dependencies": {
     "lerna": "^3.16.4",
     "react-scripts": "3.4.0",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.85.0",
+    "moment": "^2.24.0",
+    "styled-components": "^5.0.0",
+    "axios": "^0.19.0"
   },
   "husky": {
     "hooks": {

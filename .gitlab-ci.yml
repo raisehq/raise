@@ -124,6 +124,18 @@ build-front-production:
     paths:
       - packages/client/build
 
+lint-front:
+  stage: build
+  script:
+    - 'yarn --pure-lockfile'
+    - 'yarn run lint'
+  only:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build
+
 deploy-int:
   image: python:3.7-alpine
   stage: deploy

@@ -31,8 +31,9 @@ module.exports = {
     '@typescript-eslint/semi': 'off',
     'comma-dangle': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
     'import/order': 'warn',
+    'no-console': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '/../../')] }

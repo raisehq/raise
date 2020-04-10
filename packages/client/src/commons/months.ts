@@ -20,7 +20,7 @@ export const getLoanAuctionInterval = (network: string) => [
   }))
 ];
 
-export const getLoanAuctionIntervalArray = (network: string) => [
+export const getLoanAuctionIntervalArray = () => [
   ...[7, 15, 30, 45].map((item, index) => ({
     key: `${index}`,
     value: daysToSecond(item),
