@@ -81,7 +81,7 @@ const Processing = () => {
             <Grid.Column width={14}>
               <Action>Confirm the transaction</Action>
               <Explanation>
-                {`${borrowerDebt} DAI will be transferred from your wallet to the loan`}
+                {`${borrowerDebt} ${coin.text} will be transferred from your wallet to the loan`}
               </Explanation>
             </Grid.Column>
           </Grid>

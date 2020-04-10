@@ -127,11 +127,11 @@ export const calculateTotalInterest = auction => {
   return interest;
 };
 
-export const calculateTotalInterestAmount = auction => {
+export const calculateTotalInterestAmount = (auction, decimals) => {
   const interest =
     Number(fromDecimal(auction.interestRate.toString())) *
     (auction.termLength / 30 / 24 / 60 / 60 / 100);
-  const principal = Number(fromDecimal(auction.principal));
+  const principal = Number(fromDecimal(auction.principal, decimals));
   return principal * interest;
 };
 
@@ -191,9 +191,7 @@ export const getCalculations = (auction, decimals = 18) => {
   const operatorFeeNum = Number(fromDecimal(auction.operatorFee.toString())) / 100;
   const principal: any = calculatefromDecimal(auction.principal, decimals);
   const principalNum = Number(fromDecimal(auction.principal, decimals));
-  const borrowerDebt: any = Number(fromDecimal(auction.borrowerDebt, decimals)).toLocaleString(
-    'es-ES'
-  );
+  const borrowerDebt: any = numeral(Number(fromDecimal(auction.borrowerDebt, decimals))).format();
   const maxSystemFees: any = numeral(maxAmountNum * operatorFeeNum).format();
   const systemFees: any = `-${numeral(principalNum * operatorFeeNum).format()}`;
 
@@ -222,7 +220,7 @@ export const getCalculations = (auction, decimals = 18) => {
     finalAPR = numeral(calculateAPR(auction)).format('0.00%');
     roi = numeral(calculateROI(auction)).format('0.00%');
     totalInterest = numeral(calculateTotalInterest(auction)).format('0.00%');
-    totalInterestAmount = numeral(calculateTotalInterestAmount(auction)).format();
+    totalInterestAmount = numeral(calculateTotalInterestAmount(auction, decimals)).format();
   }
   if (auction.lenderAmount) {
     lenderAmount = numeral(Number(fromDecimal(auction.lenderAmount, decimals))).format();
