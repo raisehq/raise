@@ -12,7 +12,7 @@ const TopMobileMenu = () => {
     store: {
       config: { menu },
       user: {
-        details: { accounttype_id, kyc_status }
+        details: { accounttype_id, kyc_status, kyc_provider }
       },
       auth: {
         login: { logged: isLogged }
@@ -50,6 +50,7 @@ const TopMobileMenu = () => {
           kycAction={onKYC}
           isMobile={isMobile}
           kycBCStatus={kycBCStatus}
+          kycProvider={kyc_provider}
         />
       )}
       <MobileMenu>

@@ -177,11 +177,13 @@ const InvestState: React.SFC<InvestStateProps> = ({
           content={
             <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
           }
+          tooltip="Total invested will always be converted to the currency set by the borrower."
         />
         <TableItem
           title="Expected ROI after repayment"
           latest
           content={<CoinValue value={expectedInputRoi} name={loanCoin?.text} src={loanCoinImage} />}
+          tooltip="This includes the original amount invested in addition to your return on investment."
         />
       </InvestInput>
       <ButtonWrapper>
