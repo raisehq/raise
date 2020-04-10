@@ -1,8 +1,7 @@
-import LocalData from '../helpers/localData';
 import { browserName } from 'react-device-detect';
 import axios from 'axios';
-import CryptoWallet from '../commons/cryptoWallets';
 import CryptoWallets from '../commons/cryptoWallets';
+import LocalData from '../helpers/localData';
 
 const HOSTS: any = {
   AUTH: process.env.REACT_APP_HOST_URL_AUTH,
@@ -61,6 +60,8 @@ export const Right = (x: any) => ({
   inspect: () => `Right(${x})`
 });
 
+/* eslint-disable */
+// TODO : Check the logic of this function
 export function safeAccess(object, path) {
   return object
     ? path.reduce(
@@ -70,6 +71,7 @@ export function safeAccess(object, path) {
       )
     : null;
 }
+/* eslint-enable */
 
 export const Left = (x: any) => ({
   map: () => Left(x),
@@ -81,15 +83,7 @@ export const Either = {
   either: (coor: any) => (coor ? Right(true) : Left(false))
 };
 
-export const to = (promise: any) => {
-  return promise
-    .then((data: any) => {
-      return Right(data);
-    })
-    .catch((err: any) => {
-      return Left(err);
-    });
-};
+export const to = (promise: any) => promise.then(Right).catch(Left);
 
 export const checkAuth = () => LocalData.getObj('auth') !== null;
 
@@ -112,10 +106,9 @@ export const parseNetwork = id => {
   }
 };
 
+const LIST_BROWSERS = ['brave', 'chrome', 'chromium', 'firefox', 'opera'];
 export const isSupportedBrowser = () =>
-  ['brave', 'chrome', 'chromium', 'firefox', 'opera'].some(supportedBrowser =>
-    browserName.toLowerCase().includes(supportedBrowser)
-  );
+  LIST_BROWSERS.some(supportedBrowser => browserName.toLowerCase().includes(supportedBrowser));
 
 const HERO_CONTRACTS: any = process.env.REACT_APP_METADATA_URL;
 
@@ -128,7 +121,7 @@ export const getContractsDefinition = async () => {
 
 export const getWalletName = walletId => {
   switch (walletId) {
-    case CryptoWallet.Metamask:
+    case CryptoWallets.Metamask:
       return 'Metamask';
     case CryptoWallets.Opera:
       return 'Opera';

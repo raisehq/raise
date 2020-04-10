@@ -1,5 +1,5 @@
 import Observable from './observable';
-import { refreshToken } from '../services/auth';
+import { refreshToken } from '../services/auth'; // eslint-disable-line
 
 const observer = new Observable();
 

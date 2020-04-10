@@ -1,4 +1,4 @@
-export default (dispatch: any, state: any) => {
+export default (dispatch: any) => {
   const onGetAcceptedTokensSubscription = (error, data) => {
     if (error) {
       console.log('[onGetAcceptedTokensSubscription] error on get tokens subscription :: ', error);

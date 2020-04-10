@@ -5,16 +5,12 @@ const LocalData = {
   setObj: (name: string, data: object) => {
     window.localStorage.setItem(name, JSON.stringify(data));
   },
-  get: (name: string): string | null => {
-    return window.localStorage.getItem(name) || null;
-  },
+  get: (name: string): string | null => window.localStorage.getItem(name) || null,
   getObj: (name: string) => {
     const data = window.localStorage.getItem(name);
     const jsonData = JSON.parse(data || '{}');
     return Object.keys(jsonData).length > 0 ? jsonData : null;
   },
-  remove: (name: string) => {
-    return window.localStorage.removeItem(name);
-  }
+  remove: (name: string) => window.localStorage.removeItem(name)
 };
 export default LocalData;

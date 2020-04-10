@@ -1,6 +1,6 @@
 import web3Utils from 'web3-utils';
-import ABI_ERC20 from '../commons/erc20';
 import BigNumber from 'bignumber.js';
+import ABI_ERC20 from '../commons/erc20';
 
 BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 

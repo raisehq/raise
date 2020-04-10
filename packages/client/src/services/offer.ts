@@ -20,7 +20,7 @@ export const getAllOffersByLoanId = async loanId => {
 
   return response.fold(
     error => Left(error),
-    response => Right(response.data.data)
+    resp => Right(resp.data.data)
   );
 };
 
@@ -38,7 +38,7 @@ export const getOfferById = async loanId => {
 
   return response.fold(
     error => Left(error),
-    response => Right(response.data.data)
+    resp => Right(resp.data.data)
   );
 };
 
@@ -53,7 +53,7 @@ export const addOffer = async offer => {
 
   return response.fold(
     error => Left(error),
-    response => Right(response.data.result)
+    resp => Right(resp.data.result)
   );
 };
 

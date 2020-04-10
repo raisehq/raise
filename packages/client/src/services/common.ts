@@ -1,7 +1,8 @@
 import axios from 'axios';
 import LocalData from '../helpers/localData';
-import MemorizeRefresh from '../helpers/memorizeRefresh';
+import MemorizeRefresh from '../helpers/memorizeRefresh'; // eslint-disable-line
 import AxiosMock from '../__mocks__/axiosMocks';
+
 const DEFAULT_RETRY_TIMES = 1;
 
 const getBearer = (token: string) => {
@@ -12,12 +13,14 @@ const instance = axios.create({
   headers: { 'X-Custom-Header': 'dashboard' }
 });
 
-//@ts-ignore
+// @ts-ignore
+// eslint-disable-next-line
 window.Cypress && AxiosMock(instance);
 
 const useBearer = config => {
   const { token } = LocalData.getObj('auth') || '{}';
   if (token) {
+    // eslint-disable-next-line
     config.headers['Authorization'] = getBearer(token);
   }
   return config;
@@ -29,6 +32,7 @@ const useError = error => {
 
 instance.interceptors.request.use(useBearer, useError);
 
+/* eslint-disable */
 instance.interceptors.response.use(
   response => response,
   async error => {
@@ -54,11 +58,14 @@ instance.interceptors.response.use(
           if (!config || config.retry === false) {
             return new Error(error.response.status);
           }
+
           if (config.headers['Authorization'] !== getBearer(auth.token)) {
             config.headers['Authorization'] = getBearer(auth.token);
             return axios.request(config);
           }
+
           config.__retryCount = config.__retryCount || 0;
+
           if (config.__retryCount >= DEFAULT_RETRY_TIMES) return rejectUser();
           config.__retryCount += 1;
 
@@ -81,5 +88,5 @@ instance.interceptors.response.use(
     }
   }
 );
-
+/* eslint-enable */
 export default instance;

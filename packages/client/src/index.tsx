@@ -33,7 +33,7 @@ declare global {
 
 window.fbq = window.fbq || null;
 
-function ContextProviders({ children }) {
+function ContextProviders({ children }: any) {
   return (
     <RootContextProvider>
       <AppContextProvider>

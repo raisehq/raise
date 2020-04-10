@@ -32,7 +32,7 @@ class UseWebsocket {
     // subscribe to events
     this.client = new WebSocket(this.url, this.protocol);
 
-    this.client.onopen = event => {
+    this.client.onopen = () => {
       this.client.send(
         JSON.stringify({
           type: GQL.CONNECTION_INIT,

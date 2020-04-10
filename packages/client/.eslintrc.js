@@ -33,7 +33,9 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'import/order': 'warn',
+    'operator-linebreak': 'off',
     'no-console': 'off',
+    '@typescript-eslint/ban-ts-ignore': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '/../../')] }

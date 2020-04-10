@@ -1,3 +1,5 @@
+/* eslint-disable */
+// TODO : Old types we need to change to interfaces
 export type onSignin = {
   email: string;
   password: string;
@@ -82,8 +84,8 @@ export type Loan = {
 
 export type Store = {
   config: {
-    targetNetwork: Number;
-    targetAddressId: Number;
+    targetNetwork: number;
+    targetAddressId: number;
   };
   auth: {
     login: { error: boolean };
@@ -147,3 +149,4 @@ export type getPath = {
   auth: { status?: userStatus };
   type: accountTypes;
 };
+/* eslint-enable */
