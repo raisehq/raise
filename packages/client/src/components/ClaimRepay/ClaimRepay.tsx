@@ -6,6 +6,7 @@ import { tradeTokensForExactTokens } from '@uniswap/sdk';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { fromWei, toWei } from 'web3-utils';
 import { useRootContext } from '../../contexts/RootContext';
+import useGetCoin from '../../hooks/useGetCoin';
 
 import useClaimRepay from '../../hooks/useClaimRepay';
 import ConfirmStage from './stages/Confirm';
@@ -38,11 +39,12 @@ const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
     mainnet: 1,
     kovan: 42
   };
+  const coin = useGetCoin(loan);
   const getMarketSwap = async () => {
     try {
       const addresses = contracts.address[netNumbers['mainnet']];
       const tradeDetails = await tradeTokensForExactTokens(
-        addresses['DAI'] || '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI address
+        coin.address,
         addresses['RaiseToken'] || '0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c', // RAISE address
         toWei('200'), // output tokens (200 RAISE)
         netNumbers['mainnet'] // chain id, 1 mainnet
@@ -58,7 +60,6 @@ const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
   useAsyncEffect(async () => {
     try {
       const market = await getMarketSwap();
-      console.log(market);
       setSwap(Number(market));
     } catch (error) {
       console.error(error);
