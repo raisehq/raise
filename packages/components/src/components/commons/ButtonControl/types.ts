@@ -1,6 +1,6 @@
 export interface ButtonProps {
   text?: string;
-  onClick: Function;
+  onClick?: Function;
   disabled?: boolean;
   idAttr?: string;
   className?: string;
