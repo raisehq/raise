@@ -48,7 +48,7 @@ const Tab = ({ auctions, states, type }) => {
     } else {
       setTabState(Auctions.Success);
     }
-  }, [auctions]);
+  }, [filteredAuctions?.length]);
 
   return tabState.cata({
     Loading: () => <DashboardTab.Pane loading />,

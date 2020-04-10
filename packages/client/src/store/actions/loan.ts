@@ -33,7 +33,6 @@ export default (dispatch: any, state: any) => {
     }
   };
 
-
   /** LENDER **/
 
   const onGetSuggestedAuctionsSubscription = (error, data) => {
