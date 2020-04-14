@@ -175,7 +175,7 @@ const APRGraph = ({
 
   const raiseGraphData = datasetToGraph(
     raiseDataset,
-    '235,63,147',
+    '0, 218, 158',
     'Raise',
     false,
     3,
@@ -300,11 +300,7 @@ const APRGraph = ({
       </Header>
 
       <Card.Grid>
-        <Card.Row
-          notop
-          big
-          content={moment(selectedDate).format('LL')}
-        />
+        <Card.Row notop big content={moment(selectedDate).format('LL')} />
         <Card.Vertical />
         <Card.Row
           notop
