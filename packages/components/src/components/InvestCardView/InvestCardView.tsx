@@ -1,13 +1,8 @@
 import React, { useState, ReactChild } from 'react';
 import BN from 'bn.js';
-import { Icon } from 'semantic-ui-react';
+
 import { useTransition, animated } from 'react-spring';
-import {
-  GraphButton,
-  CardBottom,
-  InvestCardBody,
-  SpacedDiv,
-} from './InvestCardView.styles';
+import { CardBottom, InvestCardBody } from './InvestCardView.styles';
 import Card from '../Card';
 import AuctionAPR from '../Graphs/APRGraph';
 import { times } from '../../types';
@@ -45,6 +40,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
     children,
     className,
   } = props;
+
   const [viewGraph, setGraphView] = useState(0);
 
   const onOpenGraph = () => {
@@ -54,11 +50,11 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
   const AuctionGraph = <AuctionAPR {...props} />;
 
   const domList = [
-    { key: 0, component: <InvestInfo {...props} /> },
+    { key: 0, component: <InvestInfo onOpenGraph={onOpenGraph} {...props} /> },
     { key: 1, component: AuctionGraph },
   ];
 
-  const [previousTab, setPreviousTab] = useState(viewGraph);
+  const [previousTab, setPreviousTab] = useState(0);
 
   const transitions = useTransition(domList[viewGraph], i => i.key, {
     unique: true,
@@ -80,7 +76,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
     return <CardPlaceholder />;
   }
 
-  if (viewGraph !== previousTab) setPreviousTab(viewGraph);
+  if (0 !== previousTab) setPreviousTab(0);
 
   return (
     <InvestCardBody style={{ overflow: 'hidden' }} className={className}>
@@ -100,27 +96,18 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
       </div>
       <CardBottom>
         <Card.Grid alignCenter>
-          <Card.Row notop small title="Loan Term" content={times.loanTerm} />
+          <Card.Row notop small title="Current APR" content={currentAPR} />
           <Card.Vertical />
           <Card.Row notop small title="Investors" content={investorCount} />
-          <GraphButton basic onClick={onOpenGraph}>
-            {viewGraph === 0 ? (
-              <>
-                <Icon name="line graph" size="large" />
-                <Card.Row
-                  notop
-                  small
-                  title="Current APR"
-                  content={currentAPR}
-                />
-              </>
-            ) : (
-              <>
-                <Icon name="line graph" size="large" />
-                <SpacedDiv>Go back</SpacedDiv>
-              </>
-            )}
-          </GraphButton>
+          <Card.Vertical />
+          <Card.Row
+            notop
+            small
+            title="Days Left"
+            content={times.auctionTimeLeft}
+          />
+
+          <Card.Row notop small title="Loan Term" content={times.loanTerm} />
         </Card.Grid>
         {children}
       </CardBottom>

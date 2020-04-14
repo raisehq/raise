@@ -170,7 +170,6 @@ const TooltipComponent = () => (
 const ContentWithLogo = ({
   children,
   logo,
-  topRight,
   size,
   to,
   className,
@@ -195,7 +194,6 @@ const ContentWithLogo = ({
           <CardLogo src={logo} />
         </a>
       )}
-      {topRight && <TimeLeft>{topRight}</TimeLeft>}
       {children}
     </CardContent>
   );
