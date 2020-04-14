@@ -34,11 +34,11 @@ interface InvestProps {
 const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
   const {
     companyName,
-    times,
-    currentAPR,
-    investorCount,
     children,
     className,
+    currentAPR,
+    times,
+    investorCount,
   } = props;
 
   const [viewGraph, setGraphView] = useState(0);
@@ -47,7 +47,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
     setGraphView(viewGraph ? 0 : 1);
   };
 
-  const AuctionGraph = <AuctionAPR {...props} />;
+  const AuctionGraph = <AuctionAPR onOpenGraph={onOpenGraph} {...props} />;
 
   const domList = [
     { key: 0, component: <InvestInfo onOpenGraph={onOpenGraph} {...props} /> },
@@ -76,7 +76,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
     return <CardPlaceholder />;
   }
 
-  if (0 !== previousTab) setPreviousTab(0);
+  if (viewGraph !== previousTab) setPreviousTab(viewGraph);
 
   return (
     <InvestCardBody style={{ overflow: 'hidden' }} className={className}>

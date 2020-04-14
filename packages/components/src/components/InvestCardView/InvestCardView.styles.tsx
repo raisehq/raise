@@ -36,3 +36,33 @@ export const SpacedDiv = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const Title = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 35px 0;
+  flex: 2;
+  &&& > span {
+    padding-left: 50px;
+  }
+`;
+
+export const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+`;
+
+export const IconContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 65px;
+  padding: 0 10px;
+`;

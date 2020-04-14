@@ -10,6 +10,12 @@ import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
 import numeral from '../../commons/numeral';
 import { chartBackground, todayVerticalLine } from './plugins';
 import { DAI_ADDRESS } from '../../commons/constants';
+import {
+  Title,
+  Header,
+  IconContainer,
+} from '../InvestCardView/InvestCardView.styles';
+import { Icon } from 'semantic-ui-react';
 
 import { Chart } from 'react-chartjs-2';
 
@@ -19,6 +25,7 @@ interface APRGraphProps {
   auctionStartTimestamp: number;
   auctionEndTimestamp: number;
   currentAPR: string;
+  onOpenGraph: any;
 }
 
 const datasetToGraph = (
@@ -133,6 +140,7 @@ const APRGraph = ({
   auctionStartTimestamp,
   auctionEndTimestamp,
   currentAPR,
+  onOpenGraph,
 }: APRGraphProps) => {
   const [compoundDataset, setCompoundDataset] = useState([0]);
   const [fullCompoundDataset, setFullCompoundDataset] = useState([0]);
@@ -282,6 +290,15 @@ const APRGraph = ({
 
   return (
     <>
+      <Header>
+        <Title>
+          <span>Compare APRs</span>
+        </Title>
+        <IconContainer>
+          <Icon name={'close'} size="large" onClick={onOpenGraph} />
+        </IconContainer>
+      </Header>
+
       <Card.Grid>
         <Card.Row
           notop
