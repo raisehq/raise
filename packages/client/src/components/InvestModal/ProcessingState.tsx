@@ -4,7 +4,8 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useWallet from '../../hooks/useWallet';
 import useWeb3 from '../../hooks/useWeb3';
 
-import ERC20 from '../../commons/erc20';
+// import ERC20 from '../../commons/erc20';
+import WERC20 from '../../commons/wErc20';
 import { MAX_VALUE } from '../../commons/constants';
 import { ProcessingStateProps } from './types';
 import {
@@ -61,20 +62,20 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   useAsyncEffect(async () => {
     if (metamask) {
       const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
+      let DAIProxy;
       try {
-        const DaiProxyAddress = await loanContract.methods.proxyContractAddress().call();
-        const DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
+        if (loanContract.methods.proxyContractAddress) {
+          const DaiProxyAddress = await loanContract.methods.proxyContractAddress().call();
+          DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
+        } else {
+          DAIProxy = await metamask.addContract('DAIProxy');
+        }
         setContracts({
           loanContract,
           DAIProxy
         });
       } catch (error) {
-        console.error('failed to retrieve daiproxy, using current one');
-        const DAIProxy = await metamask.addContract('DAIProxy');
-        setContracts({
-          loanContract,
-          DAIProxy
-        });
+        console.error('[ProcessingState] Failed to retrieve DAIProxy', error);
       }
     }
   }, [metamask]);
@@ -88,16 +89,19 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
         throw Error('Input token not set');
       }
       const valueBN = new BN(toDecimal(investment.toString(), inputCoin?.decimals));
-      const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
+      const ERC20Contract = new web3.eth.Contract(
+        WERC20,
+        '0x26b5C4c5A06bDFdF141d3BdD5515Ea619ACD1456'
+      );
 
       const amountApproved = await ERC20Contract.methods
-        .allowance(walletAccount, DAIProxy.options.address)
+        .allowance(tokenAddress, walletAccount, DAIProxy.options.address)
         .call({ from: walletAccount });
       if (valueBN.gt(new BN(amountApproved))) {
         try {
           await followTx.watchTx(
             ERC20Contract.methods
-              .approve(DAIProxy.options.address, MAX_VALUE)
+              .approve(tokenAddress, DAIProxy.options.address, MAX_VALUE)
               .send({ from: walletAccount }),
             { id: 'approval' },
             'approval'

@@ -46,7 +46,7 @@ function reducer(state: BalancesState, { type, payload }: { type: Action; payloa
   switch (type) {
     case Action.START_LISTENING: {
       const { chainId, address, tokenAddress } = payload;
-      const uninitialized = !!!state?.[chainId]?.[address]?.[tokenAddress];
+      const uninitialized = !state?.[chainId]?.[address]?.[tokenAddress];
       return {
         ...state,
         [chainId]: {
@@ -160,7 +160,7 @@ export function Updater() {
   const {
     store: {
       config: { networkId: chainId },
-      blockchain: { web3: library }
+      blockchain: { web3: library, address }
     }
   }: any = useRootContext();
   const blockNumber = useBlockNumber();
@@ -181,7 +181,7 @@ export function Updater() {
       };
     };
   }>({});
-
+  console.log('library', library);
   // generic balances fetcher abstracting away difference between fetching ETH + token balances
   const fetchBalance = useCallback(
     (address: string, tokenAddress: string) =>
@@ -195,7 +195,7 @@ export function Updater() {
         .catch(() => {
           return null;
         }),
-    [library]
+    [address]
   );
 
   // ensure that all balances with >=1 listeners are updated every block
@@ -211,6 +211,7 @@ export function Updater() {
               debouncedState[chainId][address][tokenAddress]?.blockNumber ?? cachedFetchedAsOf;
             if (fetchedAsOf !== blockNumber) {
               // fetch the balance...
+              console.log('BlogNumber ', blockNumber);
               fetchBalance(address, tokenAddress).then(value => {
                 update(chainId, address, tokenAddress, value, blockNumber);
               });

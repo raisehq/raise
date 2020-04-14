@@ -116,7 +116,7 @@ const CreateLoan = ({ contracts }) => {
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<any>(2);
 
   const monthOptions = useMemo(() => getMonths(network), [network]);
-  const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(network), [network]);
+  const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(), [network]);
   const borrowerCompany = useBorrowerInfo(userAddress);
   const getAddress = (netId, name) => get(contracts, `address.${walletNetworkId}.${name}`);
 
