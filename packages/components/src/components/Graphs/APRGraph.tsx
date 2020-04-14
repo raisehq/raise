@@ -303,8 +303,7 @@ const APRGraph = ({
         <Card.Row
           notop
           big
-          title="Date"
-          content={selectedDate.toLocaleDateString('es')}
+          content={moment(selectedDate).format('LL')}
         />
         <Card.Vertical />
         <Card.Row

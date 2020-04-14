@@ -93,8 +93,6 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
             {item.component}
           </animated.div>
         ))}
-      </div>
-      <CardBottom>
         <Card.Grid alignCenter>
           <Card.Row notop small title="Current APR" content={currentAPR} />
           <Card.Vertical />
@@ -107,10 +105,10 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
             content={times.auctionTimeLeft}
           />
 
-          <Card.Row notop small title="Loan Term" content={times.loanTerm} />
+          <Card.Row small title="Loan Term" content={times.loanTerm} />
         </Card.Grid>
-        {children}
-      </CardBottom>
+      </div>
+      <CardBottom>{children}</CardBottom>
     </InvestCardBody>
   );
 };

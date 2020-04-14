@@ -159,7 +159,6 @@ export const Row = styled.div<RowWrapperProps>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3px 0;
 `;
 
 export const RowContent = styled.div<RowContentProps>`
