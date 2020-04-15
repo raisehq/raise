@@ -3,25 +3,14 @@
   <head>
     <meta charset="utf-8" />
 
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="shortcut icon" href="%REACT_APP_HOST_IMAGES%/favicons/favicon.ico" />
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
-    />
-    <style>
-      .preload-zendesk {
-        display: none;
-      }
-    </style>
+    <link href="%REACT_APP_HOST_IMAGES%/zendesk/styles.css" rel="stylesheet" />
+
     <script src="https://%REACT_APP_SUMSUB_API%/idensic/static/sumsub-kyc.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -47,69 +36,6 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-    <!-- Start of raisehq Zendesk Widget script -->
-
-    <!-- End of raisehq Zendesk Widget script -->
-    <script type="text/javascript">
-      window.zESettings = {
-        webWidget: {
-          position: { horizontal: 'left', vertical: 'bottom' },
-          chat: {
-            connectOnPageLoad: false
-          }
-        }
-      };
-      (function() {
-        function loadZendeskChat(callback) {
-          var zdscript = document.createElement('script');
-          zdscript.setAttribute('id', 'ze-snippet');
-          zdscript.src =
-            'https://static.zdassets.com/ekr/snippet.js?key=d074590b-6078-4326-9857-b202702253eb';
-          document.getElementsByTagName('body')[0].appendChild(zdscript);
-
-          window.zdonload = setInterval(
-            function() {
-              if (typeof zE !== 'undefined' && typeof zE.activate !== 'undefined') {
-                clearInterval(window.zdonload);
-                callback();
-              }
-            },
-            50,
-            null
-          );
-        }
-        window.loadAndOpenZendeskChat = function() {
-          var button = document.getElementById('zdbutton');
-          localStorage.setItem('ff_zd_hasOpened', true);
-          button.innerHTML = 'Loading...';
-          loadZendeskChat(function() {
-            window.setTimeout(function() {
-              zE.activate();
-              button.parentNode.removeChild(button);
-            }, 1000);
-          });
-        };
-        if (localStorage.getItem('ff_zd_hasOpened')) {
-          loadZendeskChat(function() {});
-        } else {
-          document
-            .getElementsByTagName('body')[0]
-            .insertAdjacentHTML(
-              'beforeend',
-              '<button id="zdbutton" class="preload-zendesk " aria-label="Launch Help Chat Window" onClick="window.loadAndOpenZendeskChat();">Help</button>'
-            );
-        }
-      })();
-    </script>
+    <script type="text/javascript" src="%REACT_APP_HOST_IMAGES%/zendesk/index.js"></script>
   </body>
 </html>
