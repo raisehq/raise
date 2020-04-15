@@ -65,4 +65,5 @@ export const IconContainer = styled.div`
   align-items: stretch;
   height: 65px;
   padding: 0 10px;
+  cursor: pointer;
 `;
