@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Switch } from 'react-router-dom';
 import 'url-search-params-polyfill';
+import { toast } from 'react-toastify';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Onboarding from '@raisehq/onboarding';
@@ -12,23 +13,37 @@ import useRouter from '../hooks/useRouter';
 
 // Pages and components
 import { MainLayout, SimpleLayout, Web3Layout, BorrowerProfileLayout } from './Layout';
-import { DashboardLender, DashboardBorrower } from './Dashboard';
-import CreateLoan from './CreateLoan';
-import MyAccount from './MyAccount';
-import Join from './Join';
-import Kyc from '../components/Kyc';
-import KycSuccess from '../components/Kyc/KycSuccess';
-import KycSelectMethod from '../components/Kyc/KycSelectMethod';
-import KycWithBloom from '../components/Kyc/KycWithBloom/KycWithBloom';
-import Deposit from '../components/Deposit';
-import { Web3Check } from '../components/Web3Check';
-import { BorrowerProfile } from '../components/BorrowerProfile';
 import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
 import NotFound404 from '../components/BorrowerProfile/Borrower404';
-import { toast } from 'react-toastify';
 import Toast, { StyledToastContainer } from './Toast';
 import { Sidebar, InvestSidebar } from './InvestSidebar';
+
+// Lazy routes
+const DashboardLender = lazy(() =>
+  import('./Dashboard/Dashboard.Lender' /* webpackChunkName: "Dashboard.Lender" */)
+);
+const DashboardBorrower = lazy(() =>
+  import('./Dashboard/Dashboard.Borrower' /* webpackChunkName: "Dashboard.Borrower" */)
+);
+const Deposit = lazy(() => import('./Deposit' /* webpackChunkName: "Deposit" */));
+const Join = lazy(() => import('./Join' /* webpackChunkName: "Join" */));
+const MyAccount = lazy(() => import('./MyAccount' /* webpackChunkName: "MyAccount" */));
+const CreateLoan = lazy(() => import('./CreateLoan' /* webpackChunkName: "CreateLoan" */));
+const Kyc = lazy(() => import('./Kyc' /* webpackChunkName: "Kyc" */));
+const KycSuccess = lazy(() => import('./Kyc/KycSuccess' /* webpackChunkName: "KycSuccess" */));
+const KycWithBloom = lazy(() =>
+  import('./Kyc/KycWithBloom/KycWithBloom' /* webpackChunkName: "KycWithBloom" */)
+);
+const KycSelectMethod = lazy(() =>
+  import('./Kyc/KycSelectMethod' /* webpackChunkName: "KycSelectMethod" */)
+);
+const Web3Check = lazy(() => import('./Web3Check' /* webpackChunkName: "Web3Check" */));
+const BorrowerProfile = lazy(() =>
+  import('./BorrowerProfile' /* webpackChunkName: "BorrowerProfile" */)
+);
+
+// Lazy components
 
 const App = () => {
   const {
@@ -119,11 +134,14 @@ const App = () => {
     }
   }, [followTx]);
 
+  const DimmerLoader = ({ active }) => (
+    <Dimmer active={active} inverted>
+      <Loader>Loading app</Loader>
+    </Dimmer>
+  );
   return (
     <>
-      <Dimmer active={isLoading} inverted>
-        <Loader>Loading app</Loader>
-      </Dimmer>
+      <DimmerLoader active={isLoading} />
       <Onboarding
         blur={false}
         open={showOnboarding}
@@ -135,113 +153,115 @@ const App = () => {
         mountNode={modalRefs.current}
       />
       {!isLoading && (
-        <>
-          <StyledToastContainer
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            draggable={false}
-            pauseOnHover={false}
-          />
-          <TopMobileMenu />
-          <DesktopHeader />
-          <Menu />
-          <TransitionGroup component={null}>
-            <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
-              <Switch>
-                <Web3Layout
-                  layout={SimpleLayout}
-                  exact
-                  path="/deposit"
-                  component={Deposit}
-                  roles={[2]}
-                />
-                <Web3Layout
-                  marketplace
-                  layout={SimpleLayout}
-                  exact
-                  path="/kyc"
-                  component={KycSelectMethod}
-                  roles={[1, 2]}
-                />
-                <Web3Layout
-                  marketplace
-                  layout={SimpleLayout}
-                  exact
-                  path="/kyc-sumsub"
-                  component={Kyc}
-                  roles={[1, 2]}
-                />
-                <Web3Layout
-                  marketplace
-                  layout={SimpleLayout}
-                  exact
-                  path="/kyc-bloom"
-                  component={KycWithBloom}
-                  onBack={onGetUser}
-                  roles={[1, 2]}
-                />
-                <Web3Layout
-                  marketplace
-                  layout={SimpleLayout}
-                  exact
-                  path="/kyc-success"
-                  component={KycSuccess}
-                  roles={[1, 2]}
-                />
-                <Web3Layout
-                  marketplace
-                  layout={MainLayout}
-                  exact
-                  path="/account"
-                  component={MyAccount}
-                  roles={[1, 2]}
-                />
-                <Web3Layout
-                  publicRoute
-                  marketplace
-                  layout={MainLayout}
-                  exact
-                  path="/"
-                  component={
-                    accounttypeId ? componentsByRole[accounttypeId].dashboard : DashboardLender
-                  }
-                  roles={[1, 2]}
-                />
-                <Web3Layout
-                  marketplaceSuggesteds
-                  layout={MainLayout}
-                  exact
-                  path="/create-loan"
-                  component={CreateLoan}
-                  roles={[1, 2]}
-                  contracts={contracts}
-                />
-                <Web3Layout
-                  publicRoute
-                  marketplace
-                  layout={BorrowerProfileLayout}
-                  exact
-                  path="/c/:slug"
-                  component={BorrowerProfile}
-                  roles={[1, 2]}
-                />
-                {/* Onboarding */}
-                <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
-                <SimpleLayout exact path="/join" component={Join} />
-                <SimpleLayout exact path="/login" component={Join} />
-                <SimpleLayout exact path="/login/bloom/:token" component={Join} />
-                <SimpleLayout exact path="/login/email" component={Join} />
-                <SimpleLayout exact path="/join/verify/token/:token" component={Join} />
-                <SimpleLayout exact path="/join/password/reset/:token" component={Join} />
-                <SimpleLayout exact path="/join/activate/:token" component={Join} />
-                <MainLayout component={NotFound404} />
-              </Switch>
-            </CSSTransition>
-          </TransitionGroup>
-        </>
+        <Suspense fallback={<DimmerLoader active />}>
+          <>
+            <StyledToastContainer
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              draggable={false}
+              pauseOnHover={false}
+            />
+            <TopMobileMenu />
+            <DesktopHeader />
+            <Menu />
+            <TransitionGroup component={null}>
+              <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
+                <Switch>
+                  <Web3Layout
+                    layout={SimpleLayout}
+                    exact
+                    path="/deposit"
+                    component={Deposit}
+                    roles={[2]}
+                  />
+                  <Web3Layout
+                    marketplace
+                    layout={SimpleLayout}
+                    exact
+                    path="/kyc"
+                    component={KycSelectMethod}
+                    roles={[1, 2]}
+                  />
+                  <Web3Layout
+                    marketplace
+                    layout={SimpleLayout}
+                    exact
+                    path="/kyc-sumsub"
+                    component={Kyc}
+                    roles={[1, 2]}
+                  />
+                  <Web3Layout
+                    marketplace
+                    layout={SimpleLayout}
+                    exact
+                    path="/kyc-bloom"
+                    component={KycWithBloom}
+                    onBack={onGetUser}
+                    roles={[1, 2]}
+                  />
+                  <Web3Layout
+                    marketplace
+                    layout={SimpleLayout}
+                    exact
+                    path="/kyc-success"
+                    component={KycSuccess}
+                    roles={[1, 2]}
+                  />
+                  <Web3Layout
+                    marketplace
+                    layout={MainLayout}
+                    exact
+                    path="/account"
+                    component={MyAccount}
+                    roles={[1, 2]}
+                  />
+                  <Web3Layout
+                    publicRoute
+                    marketplace
+                    layout={MainLayout}
+                    exact
+                    path="/"
+                    component={
+                      accounttypeId ? componentsByRole[accounttypeId].dashboard : DashboardLender
+                    }
+                    roles={[1, 2]}
+                  />
+                  <Web3Layout
+                    marketplaceSuggesteds
+                    layout={MainLayout}
+                    exact
+                    path="/create-loan"
+                    component={CreateLoan}
+                    roles={[1, 2]}
+                    contracts={contracts}
+                  />
+                  <Web3Layout
+                    publicRoute
+                    marketplace
+                    layout={BorrowerProfileLayout}
+                    exact
+                    path="/c/:slug"
+                    component={BorrowerProfile}
+                    roles={[1, 2]}
+                  />
+                  {/* Onboarding */}
+                  <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
+                  <SimpleLayout exact path="/join" component={Join} />
+                  <SimpleLayout exact path="/login" component={Join} />
+                  <SimpleLayout exact path="/login/bloom/:token" component={Join} />
+                  <SimpleLayout exact path="/login/email" component={Join} />
+                  <SimpleLayout exact path="/join/verify/token/:token" component={Join} />
+                  <SimpleLayout exact path="/join/password/reset/:token" component={Join} />
+                  <SimpleLayout exact path="/join/activate/:token" component={Join} />
+                  <MainLayout component={NotFound404} />
+                </Switch>
+              </CSSTransition>
+            </TransitionGroup>
+          </>
+        </Suspense>
       )}
       <div ref={modalRefs} />
       <Sidebar>
