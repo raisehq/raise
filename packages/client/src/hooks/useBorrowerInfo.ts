@@ -11,27 +11,32 @@ interface Company {
   background: string;
   logo: string;
   slug: string;
+  route: string;
 }
 
-const defaultCompany = {
+const defaultCompany = () => ({
   companyName: 'Auction',
   description: '',
   shortDescription: '',
   background: 'https://source.unsplash.com/372x120/?business',
   logo: `${APP_STATIC}/images/logo.svg`,
-  slug: ''
-};
+  slug: '',
+  route: ''
+});
 
 const useBorrowerInfo = borrowerAddress => {
-  const [company, setCompany]: [Company, any] = useState(defaultCompany);
+  const [company, setCompany]: [Company, any] = useState(defaultCompany());
 
   useAsyncEffect(async () => {
     try {
       const response = await findOne('companies', {
         'fields.ethereum_address': borrowerAddress
       });
-      response.slug = `${APP_URL}/c/${response.slug}`;
-      setCompany(response);
+      const clonedResponse = Object.assign(defaultCompany(), response);
+      clonedResponse.slug = `${APP_URL}/c/${response.slug}`;
+      clonedResponse.route = `/c/${response.slug}`;
+
+      setCompany(clonedResponse);
     } catch (error) {
       // Reminder: Missing companies in Kovan testnet network shows 404 errors
       // console.error(error);
