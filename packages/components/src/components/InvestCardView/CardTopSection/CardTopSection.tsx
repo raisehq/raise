@@ -4,7 +4,7 @@ import { Icon } from 'semantic-ui-react';
 import { TopSection, Logo, MenuSpots, Container } from './styles';
 
 interface CardTopSectionProps {
-  href: string;
+  href: string | undefined;
   src: string;
   onOpenGraph: any;
 }
