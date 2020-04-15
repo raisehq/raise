@@ -54,7 +54,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
     { key: 1, component: AuctionGraph },
   ];
 
-  const [previousTab, setPreviousTab] = useState(0);
+  const [previousTab, setPreviousTab] = useState(viewGraph);
 
   const transitions = useTransition(domList[viewGraph], i => i.key, {
     unique: true,
