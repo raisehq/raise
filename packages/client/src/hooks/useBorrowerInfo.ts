@@ -14,7 +14,7 @@ interface Company {
   route: string;
 }
 
-const defaultCompany = () => ({
+const defaultCompany = {
   companyName: 'Auction',
   description: '',
   shortDescription: '',
@@ -22,10 +22,10 @@ const defaultCompany = () => ({
   logo: `${APP_STATIC}/images/logo.svg`,
   slug: '',
   route: ''
-});
+};
 
 const useBorrowerInfo = borrowerAddress => {
-  const [company, setCompany]: [Company, any] = useState(defaultCompany());
+  const [company, setCompany]: [Company, any] = useState(defaultCompany);
 
   useAsyncEffect(async () => {
     try {
