@@ -10,7 +10,7 @@ const CardTopSection = (props: any) => {
         <Logo src={props.src} />
         <MenuSpots>
           <Icon
-            name={'ellipsis horizontal'}
+            name={'ellipsis vertical'}
             size="large"
             onClick={props.onOpenGraph}
           />
