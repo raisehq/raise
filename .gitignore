@@ -5,6 +5,10 @@ packages/*/lib
 packages/*/dist
 packages/*/.rts2_cache_cjs
 packages/*/.rts2_cache_esm
+packages/testing/screenshots
+packages/testing/ganache_db
+packages/testing/videos
+packages/testing/snapshots
 lerna-debug*
 .vscode/
 package-lock.json
