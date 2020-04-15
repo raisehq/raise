@@ -10,6 +10,12 @@ import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
 import numeral from '../../commons/numeral';
 import { chartBackground, todayVerticalLine } from './plugins';
 import { DAI_ADDRESS } from '../../commons/constants';
+import {
+  Title,
+  Header,
+  IconContainer,
+} from '../InvestCardView/InvestCardView.styles';
+import { Icon } from 'semantic-ui-react';
 
 import { Chart } from 'react-chartjs-2';
 
@@ -19,6 +25,7 @@ interface APRGraphProps {
   auctionStartTimestamp: number;
   auctionEndTimestamp: number;
   currentAPR: string;
+  onOpenGraph: any;
 }
 
 const datasetToGraph = (
@@ -133,6 +140,7 @@ const APRGraph = ({
   auctionStartTimestamp,
   auctionEndTimestamp,
   currentAPR,
+  onOpenGraph,
 }: APRGraphProps) => {
   const [compoundDataset, setCompoundDataset] = useState([0]);
   const [fullCompoundDataset, setFullCompoundDataset] = useState([0]);
@@ -167,7 +175,7 @@ const APRGraph = ({
 
   const raiseGraphData = datasetToGraph(
     raiseDataset,
-    '235,63,147',
+    '0, 218, 158',
     'Raise',
     false,
     3,
@@ -282,13 +290,17 @@ const APRGraph = ({
 
   return (
     <>
+      <Header>
+        <Title>
+          <span>Compare APRs</span>
+        </Title>
+        <IconContainer>
+          <Icon name={'close'} size="large" onClick={onOpenGraph} />
+        </IconContainer>
+      </Header>
+
       <Card.Grid>
-        <Card.Row
-          notop
-          big
-          title="Date"
-          content={selectedDate.toLocaleDateString('es')}
-        />
+        <Card.Row notop big content={moment(selectedDate).format('LL')} />
         <Card.Vertical />
         <Card.Row
           notop
