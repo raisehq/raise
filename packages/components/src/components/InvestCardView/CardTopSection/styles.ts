@@ -15,7 +15,7 @@ export const TopSection = styled.div`
   margin-top: 8px;
 `;
 
-export const Logo = styled.div<LogoProps>`
+export const Logo = styled.a<LogoProps>`
   width: 151px;
   height: 56px;
   background-image: ${({ src }) => `url(${src})`};

@@ -55,7 +55,7 @@ const InvestInfo = (props: InvestInfoProps) => {
 
   return (
     <>
-      <CardTopSection src={logo} onOpenGraph={onOpenGraph} />
+      <CardTopSection src={logo} onOpenGraph={onOpenGraph} href={aProps.href} />
       <CardContent {...toProps} topRight={auctionTimeLeft}>
         <a {...aProps}>
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
