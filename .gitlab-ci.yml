@@ -1,28 +1,5 @@
-image: node:11-alpine
+image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:latest
 
-before_script:
-  - |
-    #!/bin/sh
-    apk add --no-cache --virtual .build-deps \
-    ca-certificates \
-    make \
-    g++ \
-    wget \
-    git \
-    jq \
-    python \
-    py-pip \
-    tar && \
-    cd /usr/local/bin && \
-    wget https://yarnpkg.com/latest.tar.gz && \
-    tar zvxf latest.tar.gz && \
-    ln -s /usr/local/bin/dist/bin/yarn.js /usr/local/bin/yarn.js && \
-    cd - \
-    apk del .build-deps
-  - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
-  - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
-  - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
-  - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
 stages:
   - deploy-backend
   - build
@@ -161,7 +138,7 @@ deploy-canary:
     - master
 
 cypress-e2e-review:
-  image: 'cypress/browsers:node10.16.0-chrome77'
+  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
   stage: test
   variables:
     CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
@@ -169,15 +146,13 @@ cypress-e2e-review:
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
     CYPRESS_isCanary: 'false'
-  before_script:
-    - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
-    - 'yarn --pure-lockfile'
-    - 'cd packages/testing'
-    - 'yarn run cypress cache path'
-    - 'yarn run cypress cache list'
-    - 'yarn run cypress verify'
-    - 'yarn run ci:run'
+    - yarn --pure-lockfile
+    - cd packages/testing
+    - yarn run cypress cache path
+    - yarn run cypress cache list
+    - yarn run cypress verify
+    - yarn run ci:run
   artifacts:
     expire_in: '1 week'
     when: always
@@ -194,7 +169,7 @@ cypress-e2e-review:
       - packages/testing/ganache_db
 
 cypress-e2e-production:
-  image: 'cypress/browsers:node10.16.0-chrome77'
+  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
   stage: test
   variables:
     CYPRESS_url: 'https://app.raise.it'
@@ -202,15 +177,13 @@ cypress-e2e-production:
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: https://api.raise.it
     CYPRESS_isCanary: 'false'
-  before_script:
-    - 'apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat && apt-get install git-all -y && apt-get install libudev-dev libusb-1.0-0-dev -y && apt-get clean && rm -rf /var/lib/apt/lists/*'
   script:
-    - 'yarn --pure-lockfile'
-    - 'cd packages/testing'
-    - 'yarn run cypress cache path'
-    - 'yarn run cypress cache list'
-    - 'yarn run cypress verify'
-    - 'yarn run ci:run'
+    - yarn --pure-lockfile
+    - cd packages/testing
+    - yarn run cypress cache path
+    - yarn run cypress cache list
+    - yarn run cypress verify
+    - yarn run ci:run
   artifacts:
     expire_in: '1 week'
     when: always
@@ -272,6 +245,11 @@ publish-components:
     - changes:
         - packages/components/package.json
     - when: never
+  before_script:
+    - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
+    - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
+    - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
+    - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
   script:
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - |
@@ -293,6 +271,11 @@ publish-onboarding:
     - changes:
         - packages/onboarding/package.json
     - when: never
+  before_script:
+    - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
+    - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
+    - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
+    - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
   script:
     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
     - |
