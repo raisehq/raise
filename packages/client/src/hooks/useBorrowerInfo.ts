@@ -32,11 +32,10 @@ const useBorrowerInfo = borrowerAddress => {
       const response = await findOne('companies', {
         'fields.ethereum_address': borrowerAddress
       });
-      const clonedResponse = Object.assign(defaultCompany(), response);
-      clonedResponse.slug = `${APP_URL}/c/${response.slug}`;
-      clonedResponse.route = `/c/${response.slug}`;
+      const slug = `${APP_URL}/c/${response.slug}`;
+      const route = `/c/${response.slug}`;
 
-      setCompany(clonedResponse);
+      setCompany({ ...company, ...response, slug, route });
     } catch (error) {
       // Reminder: Missing companies in Kovan testnet network shows 404 errors
       // console.error(error);
