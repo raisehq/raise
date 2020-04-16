@@ -3,6 +3,7 @@ import { List, Grid } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useWallet from '../../hooks/useWallet';
 import useWeb3 from '../../hooks/useWeb3';
+import { Button } from '@raisehq/components';
 
 import ERC20 from '../../commons/erc20';
 import { MAX_VALUE } from '../../commons/constants';
@@ -20,10 +21,10 @@ import {
   Explanation,
   Action,
   IconSuccess as IconError,
-  RetryButton,
   BlankSpace,
   ModalFlexWrapper,
-  ExitButton
+  ExitButton,
+  ButtonContainerProcessing
 } from './InvestModal.styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
@@ -176,7 +177,19 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   };
 
   const printRetry = () => {
-    return <RetryButton onClick={onRetry}>RETRY</RetryButton>;
+    return (
+      <ButtonContainerProcessing>
+        <Button
+          idAttr="btn-check"
+          onClick={onRetry}
+          text="RETRY"
+          type={'secondary'}
+          size={'large'}
+          disabled={false}
+          fullWidth={true}
+        />
+      </ButtonContainerProcessing>
+    );
   };
 
   const stepNumber = (number, action) => {

@@ -396,6 +396,7 @@ export const SegmentPadded = styled(Segment)`
 export const CardCenteredText = styled.div`
   &&& {
     text-align: center;
+    padding: 0 10px;
   }
 `;
 
@@ -465,4 +466,14 @@ export const InvestHeader = styled.h3`
   font-size: 20px;
   line-height: 24px;
   color: #000;
+`;
+
+
+export const ButtonContainerProcessing = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
 `;
