@@ -46,7 +46,7 @@ function reducer(state: BalancesState, { type, payload }: { type: Action; payloa
   switch (type) {
     case Action.START_LISTENING: {
       const { chainId, address, tokenAddress } = payload;
-      const uninitialized = !state?.[chainId]?.[address]?.[tokenAddress];
+      const uninitialized = !!!state?.[chainId]?.[address]?.[tokenAddress];
       return {
         ...state,
         [chainId]: {
@@ -160,7 +160,7 @@ export function Updater() {
   const {
     store: {
       config: { networkId: chainId },
-      blockchain: { web3: library, address }
+      blockchain: { web3: library }
     }
   }: any = useRootContext();
   const blockNumber = useBlockNumber();
@@ -195,7 +195,7 @@ export function Updater() {
         .catch(() => {
           return null;
         }),
-    [address]
+    [library]
   );
 
   // ensure that all balances with >=1 listeners are updated every block

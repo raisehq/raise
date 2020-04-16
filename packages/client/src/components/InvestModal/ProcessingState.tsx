@@ -5,7 +5,7 @@ import useWallet from '../../hooks/useWallet';
 import useWeb3 from '../../hooks/useWeb3';
 
 // import ERC20 from '../../commons/erc20';
-import WERC20 from '../../commons/wErc20';
+import ERC20 from '../../commons/erc20';
 import { MAX_VALUE } from '../../commons/constants';
 import { ProcessingStateProps } from './types';
 import {
@@ -89,19 +89,18 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
         throw Error('Input token not set');
       }
       const valueBN = new BN(toDecimal(investment.toString(), inputCoin?.decimals));
-      const ERC20Contract = new web3.eth.Contract(
-        WERC20,
-        '0x26b5C4c5A06bDFdF141d3BdD5515Ea619ACD1456'
-      );
+      const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
 
       const amountApproved = await ERC20Contract.methods
-        .allowance(tokenAddress, walletAccount, DAIProxy.options.address)
+        .allowance(walletAccount, DAIProxy.options.address)
         .call({ from: walletAccount });
+
       if (valueBN.gt(new BN(amountApproved))) {
         try {
+          console.log(tokenAddress, DAIProxy.options.address, MAX_VALUE);
           await followTx.watchTx(
             ERC20Contract.methods
-              .approve(tokenAddress, DAIProxy.options.address, MAX_VALUE)
+              .approve(DAIProxy.options.address, MAX_VALUE)
               .send({ from: walletAccount }),
             { id: 'approval' },
             'approval'
