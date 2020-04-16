@@ -11,7 +11,7 @@ import { GetInTouch } from '../GetInTouch';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
-  const { companyName, slug } = useBorrowerInfo(auction.originator);
+  const { companyName, route } = useBorrowerInfo(auction.originator);
   const { roi, times, maxAmount, lenderRoiAmount, lenderAmount } = calcs;
   const coin = useGetCoin(auction);
 
@@ -41,13 +41,12 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
 
   const contentColor = state === 3 ? 'red' : null;
   const loanTermLeft = state === 5 ? '-' : times.loanTermLeft;
-  const borrowerUrl = `/c/${slug}`;
 
   return (
     <Card width="372px">
       <Card.Content size="100%">
         <Card.Grid>
-          <Link to={borrowerUrl}>
+          <Link to={route}>
             <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
           </Link>
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
