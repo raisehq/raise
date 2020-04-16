@@ -180,10 +180,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
     return (
       <ButtonContainerProcessing>
         <Button
-          idAttr="btn-check"
           onClick={onRetry}
           text="RETRY"
-          type={'secondary'}
+          type={'primary'}
           size={'large'}
           disabled={false}
           fullWidth={true}
