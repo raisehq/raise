@@ -53,13 +53,13 @@ const getInstalmentDates = loan => {
   return instalmentDates;
 };
 
-const getStateByDate = (loan, date) => {
-  const instalment = getCurrentInstalment(loan, date);
+const getStateByDate = (funding, date) => {
+  const instalment = getCurrentInstalment(funding.loan, date);
   const currentDate = Date.now() / 1000;
-  const currentInstalment = getCurrentInstalment(loan, currentDate);
+  const currentInstalment = getCurrentInstalment(funding.loan, currentDate);
   const lastInstalmentWithdrawn = getCurrentInstalment(
-    loan,
-    loan.debtWithdrawnDate
+    funding.loan,
+    funding.debtWithdrawnDate
   );
   if (instalment === currentInstalment) {
     return 'Not paid';
@@ -68,13 +68,14 @@ const getStateByDate = (loan, date) => {
   } else if (instalment > lastInstalmentWithdrawn) {
     return 'Paid';
   } else {
-    return 'Withdrawed ';
+    return 'Withdrawed';
   }
 };
 
 // external
-const getCurrentPenalty = loan => {
-  const instalmentsToPay = loan.instalments - loan.instalmentsPaid;
+const getCurrentPenalty = (loan, date) => {
+  const currentInstalment = getCurrentInstalment(loan, date);
+  const instalmentsToPay = currentInstalment - loan.instalmentsPaid;
   const penaltiesToPay = instalmentsToPay - 1;
   const totalPenaltyAmount = getInstalmentPenalty(loan) * penaltiesToPay;
 
@@ -82,7 +83,7 @@ const getCurrentPenalty = loan => {
 };
 
 const getCurrentDebt = (loan, decimals, date) => {
-  const totalPenaltyAmount = getCurrentPenalty(loan);
+  const totalPenaltyAmount = getCurrentPenalty(loan, date);
   const totalInstalmentAmount = getPendingInstalmentsAmount(
     loan,
     decimals,
@@ -96,12 +97,12 @@ const getCurrentDebt = (loan, decimals, date) => {
 // returns current state of loan. with state of every instalment.
 // what instalments are remaining, expired, paid, penalties, etc
 // total amounts: total debdt, debt + total penalties, etc
-const getProgressiveState = (loan, decimals, date) => {
-  const currentTotalDebt = getCurrentDebt(loan, decimals, date);
+const getProgressiveState = (funding, decimals, date) => {
+  const currentTotalDebt = getCurrentDebt(funding.loan, decimals, date);
 
-  const instalmentDates = getInstalmentDates(loan);
+  const instalmentDates = getInstalmentDates(funding.loan);
   const instalments = instalmentDates.map(date => {
-    const state = getStateByDate(loan, date);
+    const state = getStateByDate(funding, date);
 
     return {
       date,
@@ -110,7 +111,7 @@ const getProgressiveState = (loan, decimals, date) => {
   });
 
   const currentDate = Date.now();
-  const currentInstalment = getCurrentInstalment(loan, currentDate);
+  const currentInstalment = getCurrentInstalment(funding.loan, currentDate);
 
   const nextInstalment = instalmentDates[currentInstalment];
 
@@ -130,4 +131,5 @@ export {
   getProgressiveState,
   getPendingInstalmentsAmount,
   getInstalmentDates,
+  getStateByDate,
 };
