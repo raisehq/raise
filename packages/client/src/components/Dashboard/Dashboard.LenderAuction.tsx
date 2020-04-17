@@ -7,7 +7,7 @@ import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const Auction = ({ auction }: { auction: any }) => {
-  const { companyName, background, logo, slug } = useBorrowerInfo(auction.originator);
+  const { companyName, background, logo, route } = useBorrowerInfo(auction.originator);
   const coin = useGetCoin(auction);
   const calcs = getCalculations(auction, coin.decimals);
   const {
@@ -21,12 +21,11 @@ const Auction = ({ auction }: { auction: any }) => {
   } = calcs;
 
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
-  const borrowerUrl = `/c/${slug}`;
 
   return (
     <Card>
-      <Card.Image src={background} to={borrowerUrl} />
-      <Card.Content topRight={auctionTimeLeft} logo={logo} to={borrowerUrl}>
+      <Card.Image src={background} to={route} />
+      <Card.Content topRight={auctionTimeLeft} logo={logo} to={route}>
         <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
         <Card.Header
           title="Amount invested"

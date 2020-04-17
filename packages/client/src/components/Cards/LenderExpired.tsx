@@ -13,7 +13,7 @@ import { GetInTouch } from '../GetInTouch';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
-  const { companyName, slug } = useBorrowerInfo(auction.originator);
+  const { companyName, route } = useBorrowerInfo(auction.originator);
   const { maxAmount, times, currentAmount, totalAmount, principal } = calcs;
   const coin = useGetCoin(auction);
   const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
@@ -40,12 +40,11 @@ const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
     }
     return auction.state;
   }, [auction.state, auction.loanRepaid]);
-  const borrowerUrl = `/c/${slug}`;
   return (
     <Card width="372px">
       <Card.Content size="100%">
         <Card.Grid>
-          <Link to={borrowerUrl}>
+          <Link to={route}>
             <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
           </Link>
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
