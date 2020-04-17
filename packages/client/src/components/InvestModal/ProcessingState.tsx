@@ -134,7 +134,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
                 loan.id,
                 inputCoin.address,
                 inputTokenAmount.toString(),
-                toDecimal(investment.toString(), inputCoin?.decimals)
+                toDecimal(investment.toString(), loanCoin?.decimals)
               )
               .send({ from: walletAccount }),
             'investLoan',
