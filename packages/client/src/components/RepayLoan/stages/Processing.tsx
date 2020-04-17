@@ -71,7 +71,7 @@ const Processing = () => {
             <Grid.Column width={2}>{ApprovalIcon}</Grid.Column>
             <Grid.Column width={14}>
               <Action>Allow Raise to interact with your wallet</Action>
-              <Explanation>Once you allow us, you will be able to repay yout loans</Explanation>
+              <Explanation>This is required so your wallet can interact with us</Explanation>
             </Grid.Column>
           </Grid>
         </ListItemPadding>
