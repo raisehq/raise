@@ -172,18 +172,24 @@ const InvestState: React.SFC<InvestStateProps> = ({
         <InvestHeader>Loan Information</InvestHeader>
         <CollapsedTable items={loanInfo} />
         <InvestSection {...InvestInputProps} />
-        <TableItem
-          title={`The equivalent in ${selectedCoin}`}
-          content={
-            <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
-          }
-          tooltip="Total invested will always be converted to the currency set by the borrower."
-        />
+        {selectedCoin !== loanCoin.text && (
+          <TableItem
+            title={`The equivalent in ${selectedCoin}`}
+            content={
+              <CoinValue
+                value={inputTokenAmountString}
+                name={inputCoin?.text}
+                src={inputCoinImage}
+              />
+            }
+            tooltip="How much will be charged from your account. This will be converted to the currency set by the borrower."
+          />
+        )}
         <TableItem
           title="Expected ROI after repayment"
           latest
           content={<CoinValue value={expectedInputRoi} name={loanCoin?.text} src={loanCoinImage} />}
-          tooltip="This includes the original amount invested in addition to your return on investment."
+          tooltip="The return on your investment, when the loan is repaid."
         />
       </InvestInput>
       <ButtonWrapper>
