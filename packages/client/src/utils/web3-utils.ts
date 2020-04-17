@@ -43,3 +43,8 @@ export const toDecimal = (etherAmount: string | number | BigNumber, factor = 18)
 
 export const fromDecimal = (decimal: string | number | BigNumber, factor = 18): string =>
   new BigNumber(decimal).div(new BigNumber('10').pow(new BigNumber(factor.toString()))).toString();
+
+export const fromDecimalFixed = (decimal: string | number | BigNumber, factor = 18): string =>
+  new BigNumber(decimal)
+    .div(new BigNumber('10').pow(new BigNumber(factor.toString())))
+    .toFixed(2, BigNumber.ROUND_DOWN);

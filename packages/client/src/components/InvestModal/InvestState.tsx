@@ -12,7 +12,7 @@ import { useAddressBalance } from '../../contexts/BalancesContext';
 import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
 import localeConfig from '../../commons/localeConfig';
 import { generateInfo, CoinValue } from './investUtils';
-import { toDecimal, fromDecimal } from '../../utils/web3-utils';
+import { toDecimal, fromDecimal, fromDecimalFixed } from '../../utils/web3-utils';
 
 import {
   ConfirmButton,
@@ -77,9 +77,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin?.icon}`;
   const tagManager = useGoogleTagManager('Card');
   const balanceBN: BN = useAddressBalance(account, inputCoin?.address || '');
-  const balance = Number(
-    Number(fromDecimal(balanceBN.toString(10), inputCoin?.decimals)).toFixed(2)
-  );
+  const balance = Number(fromDecimalFixed(balanceBN.toString(10), inputCoin?.decimals));
   const [value, setValue] = useState<number>(0);
   const expectedInputRoi = Number(expectedROI * value || 0).toLocaleString(...localeConfig);
 
@@ -117,10 +115,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   };
 
   useAsyncEffect(async () => {
-    if (!value) {
-      setInputTokenAmount(new BN('0'));
-      return;
-    }
+    setInputTokenAmount(new BN('0'));
     if (inputCoin?.text === loanCoin.text) {
       setInputTokenAmount(new BN(toDecimal(value, loanCoin.decimals)));
       return;
@@ -143,7 +138,8 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const buttonRules =
     value === 0 ||
     value === undefined ||
-    value > balance ||
+    inputTokenAmount.gt(balanceBN) ||
+    inputTokenAmount.lte(new BN('0')) ||
     value > maxAmountNum ||
     !termsCond ||
     kyc_status !== 3;
