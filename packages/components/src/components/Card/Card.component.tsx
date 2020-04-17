@@ -35,7 +35,7 @@ import {
 import useGraphWidth from '../../hooks/useGraphWidth';
 
 interface RowComponentProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string;
+  title?: string;
   content: string | number | null;
   contentColor?: string | null;
   small?: boolean | null;
@@ -55,7 +55,7 @@ const BadgeComponent = ({ children, color }: BadgeProps) => (
 );
 
 const RowComponent: React.SFC<RowComponentProps> = ({
-  title,
+  title = null,
   content,
   contentColor,
   small,
@@ -64,7 +64,7 @@ const RowComponent: React.SFC<RowComponentProps> = ({
 }: any) => (
   <Row small={small} big={big} notop={notop}>
     <RowContent contentColor={contentColor}>{content}</RowContent>
-    <RowTitle big={big}>{title}</RowTitle>
+    {title && <RowTitle big={big}>{title}</RowTitle>}
   </Row>
 );
 
@@ -176,7 +176,6 @@ const TooltipComponent = () => (
 const ContentWithLogo = ({
   children,
   logo,
-  topRight,
   size,
   to,
   className,
@@ -201,7 +200,6 @@ const ContentWithLogo = ({
           <CardLogo src={logo} />
         </a>
       )}
-      {topRight && <TimeLeft>{topRight}</TimeLeft>}
       {children}
     </CardContent>
   );

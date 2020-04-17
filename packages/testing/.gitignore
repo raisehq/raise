@@ -5,3 +5,5 @@ cypress/results
 contracts
 .db
 ganache_db
+node_modules/*
+

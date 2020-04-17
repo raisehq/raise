@@ -1,7 +1,8 @@
 import React from 'react';
 import Card from '../Card';
 import { CardContent } from './InvestCardView.styles';
-import { Amount } from '../Amount';
+import Amount from '../Amount';
+import CardTopSection from './CardTopSection';
 
 import { Times } from '../../types';
 
@@ -18,6 +19,7 @@ interface InvestInfoProps {
   principal: string;
   link?: boolean;
   coinIcon: string;
+  onOpenGraph?: any;
 }
 interface APropsInterface {
   href: string | undefined;
@@ -31,7 +33,6 @@ const InvestInfo = (props: InvestInfoProps) => {
   const {
     companyName,
     shortDescription,
-    background,
     logo,
     slug,
     currentAmount,
@@ -41,6 +42,7 @@ const InvestInfo = (props: InvestInfoProps) => {
     principal,
     link,
     coinIcon,
+    onOpenGraph,
   } = props;
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
   const aProps: APropsInterface = { href: undefined };
@@ -53,8 +55,8 @@ const InvestInfo = (props: InvestInfoProps) => {
 
   return (
     <>
-      <Card.Image {...toProps} src={background} />
-      <CardContent {...toProps} topRight={auctionTimeLeft} logo={logo}>
+      <CardTopSection src={logo} onOpenGraph={onOpenGraph} href={aProps.href} />
+      <CardContent {...toProps} topRight={auctionTimeLeft}>
         <a {...aProps}>
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
           <Card.Description>{shortDescription}</Card.Description>

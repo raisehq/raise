@@ -209,6 +209,7 @@ const CreateLoan = ({ contracts }) => {
 
     if (coin) {
       setSelectedCoin(coin);
+      setSelectedCoinType(coin?.text);
       setSelectedCoinIndex(coin ? coin.key : 0);
       const addressCoin: any = coin ? coin.address : null;
 

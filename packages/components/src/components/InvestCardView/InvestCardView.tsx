@@ -1,13 +1,8 @@
 import React, { useState, ReactChild } from 'react';
 import BN from 'bn.js';
-import { Icon } from 'semantic-ui-react';
+
 import { useTransition, animated } from 'react-spring';
-import {
-  GraphButton,
-  CardBottom,
-  InvestCardBody,
-  SpacedDiv,
-} from './InvestCardView.styles';
+import { CardBottom, InvestCardBody } from './InvestCardView.styles';
 import Card from '../Card';
 import AuctionAPR from '../Graphs/APRGraph';
 import { Times } from '../../types';
@@ -40,22 +35,23 @@ interface InvestProps {
 const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
   const {
     companyName,
-    times,
-    currentAPR,
-    investorCount,
     children,
     className,
+    currentAPR,
+    times,
+    investorCount,
   } = props;
+
   const [viewGraph, setGraphView] = useState(0);
 
   const onOpenGraph = () => {
     setGraphView(viewGraph ? 0 : 1);
   };
 
-  const AuctionGraph = <AuctionAPR {...props} />;
+  const AuctionGraph = <AuctionAPR onOpenGraph={onOpenGraph} {...props} />;
 
   const domList = [
-    { key: 0, component: <InvestInfo {...props} /> },
+    { key: 0, component: <InvestInfo onOpenGraph={onOpenGraph} {...props} /> },
     { key: 1, component: AuctionGraph },
   ];
 
@@ -98,33 +94,22 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
             {item.component}
           </animated.div>
         ))}
-      </div>
-      <CardBottom>
         <Card.Grid alignCenter>
-          <Card.Row notop small title="Loan Term" content={times.loanTerm} />
+          <Card.Row notop small title="Current APR" content={currentAPR} />
           <Card.Vertical />
           <Card.Row notop small title="Investors" content={investorCount} />
-          <GraphButton basic onClick={onOpenGraph}>
-            {viewGraph === 0 ? (
-              <>
-                <Icon name="line graph" size="large" />
-                <Card.Row
-                  notop
-                  small
-                  title="Current APR"
-                  content={currentAPR}
-                />
-              </>
-            ) : (
-              <>
-                <Icon name="line graph" size="large" />
-                <SpacedDiv>Go back</SpacedDiv>
-              </>
-            )}
-          </GraphButton>
+          <Card.Vertical />
+          <Card.Row
+            notop
+            small
+            title="Days Left"
+            content={times.auctionTimeLeft}
+          />
+
+          <Card.Row small title="Loan Term" content={times.loanTerm} />
         </Card.Grid>
-        {children}
-      </CardBottom>
+      </div>
+      <CardBottom>{children}</CardBottom>
     </InvestCardBody>
   );
 };

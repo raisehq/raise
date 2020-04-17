@@ -3,6 +3,7 @@ import { List, Grid } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useWallet from '../../hooks/useWallet';
 import useWeb3 from '../../hooks/useWeb3';
+import { Button } from '@raisehq/components';
 
 // import ERC20 from '../../commons/erc20';
 import ERC20 from '../../commons/erc20';
@@ -21,10 +22,10 @@ import {
   Explanation,
   Action,
   IconSuccess as IconError,
-  RetryButton,
   BlankSpace,
   ModalFlexWrapper,
-  ExitButton
+  ExitButton,
+  ButtonContainerProcessing
 } from './InvestModal.styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
@@ -137,7 +138,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
                 loan.id,
                 inputCoin.address,
                 inputTokenAmount.toString(),
-                toDecimal(investment.toString(), inputCoin?.decimals)
+                toDecimal(investment.toString(), loanCoin?.decimals)
               )
               .send({ from: walletAccount }),
             'investLoan',
@@ -179,7 +180,18 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   };
 
   const printRetry = () => {
-    return <RetryButton onClick={onRetry}>RETRY</RetryButton>;
+    return (
+      <ButtonContainerProcessing>
+        <Button
+          onClick={onRetry}
+          text="RETRY"
+          type={'primary'}
+          size={'large'}
+          disabled={false}
+          fullWidth={true}
+        />
+      </ButtonContainerProcessing>
+    );
   };
 
   const stepNumber = (number, action) => {

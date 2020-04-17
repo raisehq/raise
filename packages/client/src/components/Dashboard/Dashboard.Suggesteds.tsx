@@ -23,7 +23,7 @@ const Suggesteds = ({ auctions, states }) => {
     } else {
       setSuggestedState(Auctions.Success);
     }
-  }, [auctions]);
+  }, [suggested?.length]);
 
   return suggestedState.cata({
     Loading: () => (

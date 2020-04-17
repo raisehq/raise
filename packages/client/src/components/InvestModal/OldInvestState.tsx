@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import BN from 'bn.js';
 import styled from 'styled-components';
-import { fromWei } from 'web3-utils';
+import { fromDecimal } from '../../utils/web3-utils';
 import { Card } from '@raisehq/components';
 import { TokenInput } from '../TokenInput';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
@@ -75,7 +75,7 @@ const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvest
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
 
-  const nMaxAmount = Number(fromWei(maxAmount));
+  const nMaxAmount = Number(fromDecimal(maxAmount, coin.decimals));
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
   const { companyName } = useBorrowerInfo(loan.originator);
   const [value, setValue]: [number, React.Dispatch<React.SetStateAction<number>>] = useState(0);
@@ -87,13 +87,15 @@ const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvest
 
   useEffect(() => {
     if (balanceBN) {
-      const pBalance: string = Number(fromWei(balanceBN)).toFixed(2);
+      const pBalance: string = Number(fromDecimal(balanceBN.toString(10), coin.decimals)).toFixed(
+        2
+      );
       setBalance(Number(pBalance));
     }
   }, [balanceBN]);
 
   const fundAll = () => {
-    const nPrincipal = nMaxAmount - Number(fromWei(principal));
+    const nPrincipal = nMaxAmount - Number(fromDecimal(principal, coin.decimals));
     const minValue = Math.min(...[balance, nPrincipal]);
     setValue(minValue);
   };
