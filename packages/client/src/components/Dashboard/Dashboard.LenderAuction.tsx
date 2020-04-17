@@ -9,7 +9,7 @@ import CardTopSection from './CardTopSection';
 import { Content } from './Dashboard.styles';
 
 const Auction = ({ auction }: { auction: any }) => {
-  const { companyName, logo, route } = useBorrowerInfo(auction.originator);
+  const { companyName, logo, route, slug } = useBorrowerInfo(auction.originator);
   const coin = useGetCoin(auction);
   const calcs = getCalculations(auction, coin.decimals);
   const {
@@ -26,7 +26,7 @@ const Auction = ({ auction }: { auction: any }) => {
 
   return (
     <Card>
-      <CardTopSection src={logo} />
+      <CardTopSection src={logo} href={slug} />
       <Card.Content topRight={auctionTimeLeft} to={route}>
         <Content>
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
