@@ -20,15 +20,16 @@ const getInstalmentAmount = (loan, decimals = 18) => {
   const decimalPrincipal = Number(
     fromDecimal(loan.principal.toString(), decimals)
   );
-  const decimalInterestRate = Number(fromDecimal(loan.interestRate.toString()));
+  const decimalInterestRate = Number(fromDecimal(loan.interestRate.toString())); // TODO: do we need to / 100??
   const instalmentAmount =
     decimalPrincipal * (1 / loan.instalments + decimalInterestRate);
 
   return instalmentAmount;
 };
 
-const getPendingInstalmentsAmount = (loan, decimals) => {
-  const instalmentsToPay = loan.instalments - loan.instalmentsPaid;
+const getPendingInstalmentsAmount = (loan, decimals, date) => {
+  const currentInstalment = getCurrentInstalment(loan, date);
+  const instalmentsToPay = currentInstalment - loan.instalmentsPaid;
   const totalInstalmentAmount =
     getInstalmentAmount(loan, decimals) * instalmentsToPay;
 
@@ -80,9 +81,13 @@ const getCurrentPenalty = loan => {
   return totalPenaltyAmount;
 };
 
-const getCurrentDebt = (loan, decimals) => {
+const getCurrentDebt = (loan, decimals, date) => {
   const totalPenaltyAmount = getCurrentPenalty(loan);
-  const totalInstalmentAmount = getPendingInstalmentsAmount(loan, decimals);
+  const totalInstalmentAmount = getPendingInstalmentsAmount(
+    loan,
+    decimals,
+    date
+  );
   const currentDebt = totalPenaltyAmount + totalInstalmentAmount;
 
   return currentDebt;
@@ -91,8 +96,8 @@ const getCurrentDebt = (loan, decimals) => {
 // returns current state of loan. with state of every instalment.
 // what instalments are remaining, expired, paid, penalties, etc
 // total amounts: total debdt, debt + total penalties, etc
-const getProgressiveState = (loan, decimals) => {
-  const currentTotalDebt = getCurrentDebt(loan, decimals);
+const getProgressiveState = (loan, decimals, date) => {
+  const currentTotalDebt = getCurrentDebt(loan, decimals, date);
 
   const instalmentDates = getInstalmentDates(loan);
   const instalments = instalmentDates.map(date => {
