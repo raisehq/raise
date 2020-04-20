@@ -3,20 +3,20 @@ class Observable {
 
   private finish;
 
-  constructor() {
+  public constructor() {
     this.observers = [];
     this.finish = true;
   }
 
-  subscribe(f) {
+  public subscribe(f) {
     this.observers.push(f);
   }
 
-  unsubscribe(f) {
+  public unsubscribe(f) {
     this.observers = this.observers.filter(subscriber => subscriber !== f);
   }
 
-  async oneExec(fn) {
+  public async oneExec(fn) {
     try {
       if (this.finish === false) return;
       this.finish = false;
@@ -29,7 +29,7 @@ class Observable {
     }
   }
 
-  notify(error, data) {
+  public notify(error, data) {
     this.observers.forEach(observer => observer(error, data));
   }
 }

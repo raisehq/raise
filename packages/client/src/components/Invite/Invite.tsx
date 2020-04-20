@@ -1,8 +1,4 @@
 import React, { useState } from 'react';
-import { getHost } from '../../utils/index';
-
-import useImages from '../../hooks/useImages';
-
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -10,6 +6,11 @@ import {
   WhatsappShareButton,
   TelegramShareButton
 } from 'react-share';
+
+import { Input, Responsive, Grid } from 'semantic-ui-react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { getHost } from '../../utils/index';
+import useImages from '../../hooks/useImages';
 import {
   StartEarningNow,
   RafImage,
@@ -28,8 +29,6 @@ import {
   InviteContent,
   SocialButtonForMobile
 } from './Invite.styles';
-import { Input, Responsive, Grid } from 'semantic-ui-react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useRootContext } from '../../contexts/RootContext';
 
 const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
@@ -40,12 +39,12 @@ const Invite = () => {
   const {
     store: {
       user: {
-        details: { referral_code }
+        details: { referral_code: RefCode }
       }
     }
   }: any = useRootContext();
 
-  const shareLink = `${REFERAFRIEND}=${referral_code ? referral_code : ''}`;
+  const shareLink = `${REFERAFRIEND}=${RefCode || ''}`;
   const encodedSharedLink = encodeURIComponent(shareLink);
   const encodedText = encodeURIComponent(quote);
   const [state, setState] = useState({
@@ -145,9 +144,6 @@ const Invite = () => {
           </Grid.Row>
           <Grid.Row>
             <Grid>
-              {' '}
-              // useGoogleTagManager( // id, // 'www.raise.it', // 'RAF', // '/referral', //
-              'ReferafriendPage', // 'dataLayer', // 'Page View', // 'RAFriend View' // );
               <Grid.Column width={9}>
                 <ShareInput>
                   <Input value={shareLink} fluid />

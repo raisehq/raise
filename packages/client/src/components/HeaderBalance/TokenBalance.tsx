@@ -15,7 +15,7 @@ import { useAddressBalance } from '../../contexts/BalancesContext';
 import { useRootContext } from '../../contexts/RootContext';
 import { useAppContext } from '../../contexts/AppContext';
 
-const TokenBalance = ({ imageUrl, name, value, hider, ...props }) => {
+const TokenBalance = ({ imageUrl, name, value, hider, ...props }: any) => {
   const {
     store: {
       blockchain: {
@@ -41,7 +41,8 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }) => {
     e.stopPropagation();
     setHidde(!hidde);
   };
-
+  /* eslint-disable */
+  // TODO : Refactor this ternary condition
   return (
     <Container {...props}>
       <Child>
@@ -69,6 +70,7 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }) => {
       </Child>
     </Container>
   );
+  /* eslint-enable */
 };
 
 export default TokenBalance;

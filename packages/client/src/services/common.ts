@@ -5,9 +5,7 @@ import AxiosMock from '../__mocks__/axiosMocks';
 
 const DEFAULT_RETRY_TIMES = 1;
 
-const getBearer = (token: string) => {
-  return `Bearer ${token}`;
-};
+const getBearer = (token: string) => `Bearer ${token}`;
 
 const instance = axios.create({
   headers: { 'X-Custom-Header': 'dashboard' }
@@ -26,9 +24,7 @@ const useBearer = config => {
   return config;
 };
 
-const useError = error => {
-  return Promise.reject(error);
-};
+const useError = error => Promise.reject(error);
 
 instance.interceptors.request.use(useBearer, useError);
 

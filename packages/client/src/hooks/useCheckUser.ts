@@ -1,5 +1,5 @@
-import LocalData from '../helpers/localData';
 import { useEffect, useState } from 'react';
+import LocalData from '../helpers/localData';
 import { getUser } from '../services/auth';
 
 const useCheckUser = (initUser: any, force?: boolean | undefined) => {

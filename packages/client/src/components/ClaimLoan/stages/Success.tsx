@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { CardCenteredText, CardTitle, CardSubtitle, ButtonGreen } from '../ClaimLoan.styles';
-import { ClaimLoanContext } from '../ClaimLoan';
+import ClaimLoanContext from '../ClaimLoan.context';
 
 const Processing = () => {
   const { closeModal }: any = useContext(ClaimLoanContext);

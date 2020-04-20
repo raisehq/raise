@@ -23,7 +23,7 @@ const TokenInput: React.SFC<TokenInputProps> = ({
   value,
   coinIcon,
   ...props
-}) => {
+}: any) => {
   const onValueChange = ({ floatValue }) => (onChange ? onChange(floatValue) : undefined);
   return (
     <LoanInputBox>

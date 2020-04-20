@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
+import { Element } from 'react-scroll';
+import { Button } from '@raisehq/components';
 import {
   DashboardContainer,
   DashboardWrapper,
@@ -11,8 +13,6 @@ import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import Queryies from '../../helpers/queryies';
-import { Element } from 'react-scroll';
-import { Button } from '@raisehq/components';
 
 const Dashboard = () => {
   const {

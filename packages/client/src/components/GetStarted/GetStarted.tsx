@@ -9,9 +9,9 @@ import {
   SlideImage,
   SliderClose,
   SlideLink,
-  NoSlider
+  NoSlider,
+  Wrapper
 } from './GetStarted.styles';
-import { Wrapper } from './GetStarted.styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { getGetStarted } from '../../helpers/butter';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
@@ -30,7 +30,7 @@ const getSlides = slides =>
     <div key={slide.title} className="slide-wrapper">
       <Slide className="slides">
         <SlideContent className="images">
-          <SlideImage src={slide.image}></SlideImage>
+          <SlideImage src={slide.image} />
         </SlideContent>
         <SlideContent>
           <Header as="h1">{slide.title}</Header>

@@ -21,7 +21,7 @@ const Divider = styled.div`
   margin: 0px 6px;
 `;
 
-const MaxInputs = ({ onClick, ...rest }) => {
+const MaxInputs = ({ onClick, ...rest }: any) => {
   const fundAll = divisor => () => {
     onClick(divisor);
   };

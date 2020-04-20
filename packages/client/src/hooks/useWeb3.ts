@@ -195,7 +195,8 @@ const useWeb3 = () => {
     }
     if (checkBlock) {
       // when we update the new provider, we update the window.interface and the context web3
-      // we can not wait until the context was update so we get the web3 from the instance to try to get the accounts
+      // we can not wait until the context was update so we get the web3
+      // from the instance to try to get the accounts
       const accounts = await Connection.get().eth.getAccounts();
       if (!accounts || accounts.length === 0) {
         throw new Error('[useWeb3] The wallet are not enabled ');

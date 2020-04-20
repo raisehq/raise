@@ -21,24 +21,28 @@ const FooterCmp = () => (
         <FooterMenu>
           <FooterList>
             <FooterItem>
-              <a href="https://raise.it/about" target="_blank">
+              <a href="https://raise.it/about" rel="noopener noreferrer" target="_blank">
                 About us
               </a>
             </FooterItem>
             <FooterItem>
-              <a href="https://raise.it/help" target="_blank">
+              <a href="https://raise.it/help" rel="noopener noreferrer" target="_blank">
                 Help
               </a>
             </FooterItem>
           </FooterList>
           <FooterList>
             <FooterItem>
-              <a href={`${theme.resources}/privacy-policy.pdf`} target="_blank">
+              <a
+                href={`${theme.resources}/privacy-policy.pdf`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 Privacy policy
               </a>
             </FooterItem>
             <FooterItem>
-              <a href={`${theme.resources}/toc.pdf`} target="_blank">
+              <a href={`${theme.resources}/toc.pdf`} rel="noopener noreferrer" target="_blank">
                 Terms and conditions
               </a>
             </FooterItem>
@@ -49,21 +53,21 @@ const FooterCmp = () => (
             <Icon name="mail outline" />
           </a>
           <a href="https://www.facebook.com/raisehq/">
-            <Icon name="facebook"></Icon>
+            <Icon name="facebook" />
           </a>
           <a href="https://github.com/raisehq">
-            <Icon name="github"></Icon>
+            <Icon name="github" />
           </a>
           <a href="https://medium.com/@raiseHQ">
-            <Icon name="medium"></Icon>
+            <Icon name="medium" />
           </a>
           <a href="https://twitter.com/raise_hq">
-            <Icon name="twitter"></Icon>
+            <Icon name="twitter" />
           </a>
         </FooterIcons>
       </FooterFirst>
       <FooterLogo>
-        <img src="https://static.raise.it/images/logo.svg" />
+        <img src="https://static.raise.it/images/logo.svg" alt="Raise.it" />
       </FooterLogo>
       <FooterImage />
     </FooterWrapper>

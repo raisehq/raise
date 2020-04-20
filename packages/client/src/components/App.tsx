@@ -4,6 +4,7 @@ import 'url-search-params-polyfill';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Onboarding from '@raisehq/onboarding';
+import { toast } from 'react-toastify';
 
 // Contexts and hooks
 import { useAppContext } from '../contexts/AppContext';
@@ -13,7 +14,7 @@ import useRouter from '../hooks/useRouter';
 // Pages and components
 import { MainLayout, SimpleLayout, Web3Layout, BorrowerProfileLayout } from './Layout';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
-import CreateLoan from './CreateLoan';
+import { CreateLoan } from './CreateLoan';
 import MyAccount from './MyAccount';
 import Join from './Join';
 import Kyc from '../components/Kyc';
@@ -26,7 +27,7 @@ import { BorrowerProfile } from '../components/BorrowerProfile';
 import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
 import NotFound404 from '../components/BorrowerProfile/Borrower404';
-import { toast } from 'react-toastify';
+
 import Toast, { StyledToastContainer } from './Toast';
 import { Sidebar, InvestSidebar } from './InvestSidebar';
 

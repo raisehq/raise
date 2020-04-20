@@ -1,6 +1,7 @@
 import React from 'react';
-import { SuccessStateProps } from './types';
 import { Link } from 'react-scroll';
+
+import { SuccessStateProps } from './types';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
 import {
   CardTitle,
@@ -11,7 +12,7 @@ import {
 } from './InvestModal.styles';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
-const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }) => {
+const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }: any) => {
   const tagManager = useGoogleTagManager('Card');
   const onOK = () => {
     tagManager.sendEvent(TMEvents.Submit, 'invest_success');

@@ -156,7 +156,7 @@ export function Updater() {
   return null;
 }
 
-export default function Provider({ children }) {
+export default function Provider({ children }: any) {
   const firstLogin = LocalData.get('firstLogin');
   const {
     store: {

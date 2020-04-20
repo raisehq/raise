@@ -1,18 +1,19 @@
 import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
-import connector from '../store/actions';
-import reducers from '../store/reducers';
 import FollowTx from 'followtx';
 import Web3 from 'web3';
+import connector from '../store/actions';
+import reducers from '../store/reducers';
+
 import initialState from '../store/initialState';
 
 export const RootContext = createContext({});
 
-type PropsValueType = {
+interface PropsValueType {
   store: any;
   actions: any;
   isLogged: boolean;
   followTx: any;
-};
+}
 
 export function useRootContext() {
   return useContext(RootContext);
@@ -23,7 +24,7 @@ export function Updater() {
   return null;
 }
 
-export default function Provider({ children }) {
+export default function Provider({ children }: any) {
   const [store, dispatch]: any = useReducer<any, any>(reducers, initialState, () => initialState);
   const [followTx, setFollowTx]: any = useState();
 

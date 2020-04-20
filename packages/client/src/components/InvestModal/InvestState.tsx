@@ -60,7 +60,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const {
     store: {
       user: {
-        details: { kyc_status }
+        details: { kyc_status: kycStatus }
       },
       user: {
         cryptoAddress: { address: account }
@@ -146,7 +146,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
     value > balance ||
     value > maxAmountNum ||
     !termsCond ||
-    kyc_status !== 3;
+    kycStatus !== 3;
 
   const InvestInputProps = {
     loan,
@@ -164,7 +164,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
     const toggleTerms = !termsCond;
     setTermsCond(toggleTerms);
   };
-
+  // prettier-ignore
   return (
     <InvestBody>
       <InvestInput>
@@ -188,8 +188,8 @@ const InvestState: React.SFC<InvestStateProps> = ({
       </InvestInput>
       <ButtonWrapper>
         <CheckContainer>
-          <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
-          to the Terms and Conditions of the Loan Agreement
+          <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />
+          I agree to the Terms and Conditions of the Loan Agreement
         </CheckContainer>
         <ContinueButton id="btn-invest-confirm" onClick={onConfirm} disabled={buttonRules}>
           Continue

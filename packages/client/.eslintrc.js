@@ -36,6 +36,7 @@ module.exports = {
     'operator-linebreak': 'off',
     'no-console': 'off',
     '@typescript-eslint/ban-ts-ignore': 'off',
+    'jsx-a11y/accessible-emoji': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: true, packageDir: [__dirname, path.join(__dirname, '/../../')] }

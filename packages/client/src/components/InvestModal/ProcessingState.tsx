@@ -1,11 +1,9 @@
 import React, { useState, Fragment } from 'react';
 import { List, Grid } from 'semantic-ui-react';
+import { Button } from '@raisehq/components';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useWallet from '../../hooks/useWallet';
 import useWeb3 from '../../hooks/useWeb3';
-import { Button } from '@raisehq/components';
-
-// import ERC20 from '../../commons/erc20';
 import ERC20 from '../../commons/erc20';
 import { MAX_VALUE } from '../../commons/constants';
 import { ProcessingStateProps } from './types';
@@ -43,7 +41,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   inputTokenAmount,
   loanCoin,
   closeModal
-}) => {
+}: any) => {
   const {
     web3Status: { walletAccount }
   }: any = useAppContext();
@@ -179,20 +177,18 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
     setStage(ui.Confirm);
   };
 
-  const printRetry = () => {
-    return (
-      <ButtonContainerProcessing>
-        <Button
-          onClick={onRetry}
-          text="RETRY"
-          type={'primary'}
-          size={'large'}
-          disabled={false}
-          fullWidth={true}
-        />
-      </ButtonContainerProcessing>
-    );
-  };
+  const printRetry = () => (
+    <ButtonContainerProcessing>
+      <Button
+        onClick={onRetry}
+        text="RETRY"
+        type="primary"
+        size="large"
+        disabled={false}
+        fullWidth
+      />
+    </ButtonContainerProcessing>
+  );
 
   const stepNumber = (number, action) => {
     let icon = (
@@ -203,7 +199,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
     if (action === 'aproval') {
       if (approved) {
         icon = (
-          <LabelPaddingLoader circular color={'green'}>
+          <LabelPaddingLoader circular color="green">
             <IconSuccess name="check" />
           </LabelPaddingLoader>
         );

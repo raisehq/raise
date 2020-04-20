@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { CardCenteredText, CardTitle, CardSubtitle, ButtonGreen } from '../ClaimRefund.styles';
-import { ClaimRefundContext } from '../ClaimRefund';
+import ClaimRefundContext from '../ClaimRefund.context';
 
 const Processing = () => {
   const { closeModal }: any = useContext(ClaimRefundContext);

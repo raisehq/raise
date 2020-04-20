@@ -12,7 +12,7 @@ import VerifyKycModal from '../InvestModal/VerifyKycState';
 
 import { useSidebarContext } from '../../contexts/SidebarContext';
 
-const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
+const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }: any) => {
   const {
     actions: { setLoanId }
   } = useSidebarContext();
@@ -26,7 +26,7 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
         login: { logged: isLogged }
       },
       user: {
-        details: { kyc_status }
+        details: { kyc_status: kycStatus }
       }
     },
     actions: {
@@ -51,7 +51,7 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
   };
 
   const openSlide = () => {
-    if (kyc_status !== 3) {
+    if (kycStatus !== 3) {
       setOpen(true);
       return;
     }
@@ -78,9 +78,9 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }) => {
           onClick={openSlide}
           text={buttonText}
           disabled={false}
-          type={'primary'}
-          size={'large'}
-          fullWidth={true}
+          type="primary"
+          size="large"
+          fullWidth
         />
       </ButtonContainer>
 

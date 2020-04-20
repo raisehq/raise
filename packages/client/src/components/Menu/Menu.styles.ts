@@ -2,7 +2,7 @@ import styled from 'styled-components';
 // eslint-disable-next-line
 import { Menu as SemanticMenu, Button, ButtonProps, ImageProps, Image } from 'semantic-ui-react';
 import { AddressStatus as Web3RawAddress } from '../Web3Address';
-import Balance from '../HeaderBalance';
+import { Balance } from '../HeaderBalance';
 import Logout from '../Logout';
 import theme from '../../theme';
 import { maxDevice, device } from '../../commons/breakpoints';

@@ -24,14 +24,13 @@ const RepayLoanCTA: React.SFC<InvestModalProps> = ({ loan }: any) => {
     setOpen(false);
   };
 
-  const getStage = currentStage => {
-    return currentStage.cata({
+  const getStage = currentStage =>
+    currentStage.cata({
       Confirm: () => <ConfirmStage />,
       Processing: () => <ProcessingStage />,
       Success: () => <SuccessStage />,
       Error: () => <ErrorStage />
     });
-  };
 
   return (
     <RepayLoanContext.Provider value={{ loan, setStage, closeModal, approved, ...rest }}>
