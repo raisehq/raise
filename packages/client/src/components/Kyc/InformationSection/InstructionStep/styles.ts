@@ -5,12 +5,15 @@ export const NumberWrapper = styled.div`
   height: 24px;
   background: #fef2d5;
   border-radius: 15px;
+  margin: 10px;
 `;
 
 export const AccordionRow = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  max-width: 831px;
 
   span {
     display: flex;

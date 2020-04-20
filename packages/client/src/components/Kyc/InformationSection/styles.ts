@@ -21,7 +21,6 @@ export const Title = styled(Accordion.Title)<TitleProps>`
 `;
 
 export const Container = styled.div`
-
   padding: 8px 0;
   width: 100%;
 `;

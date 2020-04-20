@@ -2,9 +2,22 @@ import React, { useState } from 'react';
 import { Accordion, Icon } from 'semantic-ui-react';
 import { Title, Container } from './styles';
 import InstructionStep from './InstructionStep/index';
+import { requestPage } from '../../../helpers/butter';
+import useAsyncEffect from '../../../hooks/useAsyncEffect';
 
-const InformationSection = ({ title, steps }) => {
+const InformationSection = ({ title, slug }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [steps, setSteps] = useState([]);
+
+  useAsyncEffect(async () => {
+    try {
+      const response = await requestPage('kyc_instructions', slug);
+      setSteps(response.steps);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const handleClick = (e, titleProps) => {
     const { index } = titleProps;
@@ -21,13 +34,12 @@ const InformationSection = ({ title, steps }) => {
           <span>{title}</span>
         </Title>
 
-        {steps.map((item, index) => (
+        {steps.map((item: any, index) => (
           <InstructionStep
+            key={index}
             activeIndex={activeIndex === 0}
-            number={index + 1}
-            text={
-              'Click to verify with Sum&Sub. You won’t be asked to create an account or to download anything. You will stay inside Raise app'
-            }
+            number={item.step}
+            text={item.step_description}
           />
         ))}
       </Accordion>
