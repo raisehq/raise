@@ -13,7 +13,6 @@ const InformationSection = ({ title, slug }) => {
     try {
       const response = await requestPage('kyc_instructions', slug);
       setSteps(response.steps);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
