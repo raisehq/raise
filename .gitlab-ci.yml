@@ -78,6 +78,7 @@ lint-front-review:
   stage: build
   script:
     - 'yarn --pure-lockfile'
+    - yarn run client:build:integration
     - 'yarn run lint'
   only:
     - merge_requests
@@ -120,6 +121,7 @@ lint-front:
   stage: build
   script:
     - 'yarn --pure-lockfile'
+    - 'yarn run client:build:production'
     - 'yarn run lint'
   only:
     - master
