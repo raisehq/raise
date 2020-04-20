@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import InvestCard from './InvestCardView';
 import BN from 'bn.js';
-import { toWei } from 'web3-utils';
+import { toDecimal } from '../../utils/web3-utils';
 
 const basicProps = {
   link: true,
@@ -23,8 +23,8 @@ const basicProps = {
   currentAPR: '1 %',
   principal: '7',
   investorCount: '3',
-  maxInterestRate: new BN(toWei('0.90', 'ether')),
-  minInterestRate: new BN(toWei('0.40', 'ether')),
+  maxInterestRate: new BN(toDecimal('0.90')),
+  minInterestRate: new BN(toDecimal('0.40')),
   auctionStartTimestamp: new Date().getTime() / 1000,
   auctionEndTimestamp:
     new Date(new Date().setMonth(new Date().getMonth() + 1)).getTime() / 1000,
