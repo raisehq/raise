@@ -2,13 +2,13 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import InvestCard from './InvestCard';
 import { Company } from '../../types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const oneMonth = 2 * 30 * 24 * 60 * 60;
 const daysToEnd = 1;
 const daysFromStart = 2 * 30 - daysToEnd;
 const hoursFromFinish = 23;
-const auctionStartTimestamp = moment()
+const auctionStartTimestamp = dayjs()
   .subtract(daysFromStart, 'days')
   .subtract(hoursFromFinish, 'hours')
   .unix();

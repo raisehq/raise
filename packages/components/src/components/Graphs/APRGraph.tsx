@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import axios from 'axios';
 import BN from 'bn.js';
 import { Line } from 'react-chartjs-2';
@@ -223,10 +223,10 @@ const APRGraph = ({
       {
         params: {
           asset: DAI_ADDRESS,
-          min_block_timestamp: moment()
+          min_block_timestamp: dayjs()
             .subtract(arrayDays.length, 'day')
             .unix(),
-          max_block_timestamp: moment().unix(),
+          max_block_timestamp: dayjs().unix(),
           num_buckets: arrayDays.length,
         },
       }
@@ -300,7 +300,7 @@ const APRGraph = ({
       </Header>
 
       <Card.Grid>
-        <Card.Row notop big content={moment(selectedDate).format('LL')} />
+        <Card.Row notop big content={dayjs(selectedDate).format('LL')} />
         <Card.Vertical />
         <Card.Row
           notop

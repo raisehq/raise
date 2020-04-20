@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const addDays = (datetime: Date, days: number) => {
   const date = new Date(datetime.getTime());
@@ -18,7 +18,7 @@ export const getDates = (startDate: Date, stopDate: Date) => {
 
 export const getClosestIndexByDate = (dateList: Date[], targetDate: Date) => {
   const tempDiff = dateList.map(d =>
-    Math.abs(moment(d).diff(moment(targetDate)))
+    Math.abs(dayjs(d).diff(dayjs(targetDate)))
   );
   const index = tempDiff.indexOf(Math.min(...tempDiff));
   return index;
