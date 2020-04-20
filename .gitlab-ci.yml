@@ -74,6 +74,21 @@ build-front-review:
     paths:
       - packages/client/build_review
 
+lint-front-review:
+  stage: build
+  script:
+    - 'yarn --pure-lockfile'
+    - 'yarn run lint'
+  only:
+    - merge_requests
+    - latest
+  except:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build_review
+
 build-front-integration:
   stage: build
   script:
