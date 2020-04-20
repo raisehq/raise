@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../Card';
 import { CardContent } from './InvestCardView.styles';
-import Amount from '../Amount';
+import { Amount } from '../Amount';
 import CardTopSection from './CardTopSection';
 
 import { Times } from '../../types';
