@@ -2,15 +2,15 @@ import {
   getCurrentInstalment,
   getInstalmentAmount,
   getInstalmentPenalty,
-  // getCurrentDebt,
-  // getCurrentPenalty,
+  getCurrentDebt,
+  getCurrentPenalty,
   // getProgressiveState,
   getStateByDate,
   getPendingInstalmentsAmount,
   getInstalmentDates,
 } from './progressiveCalcs';
 import moment from 'moment';
-import { fromDecimal } from './web3-utils';
+// import { fromDecimal } from './web3-utils';
 
 describe('Test suite for progressive calculations', () => {
   describe('Test getCurrentInstalment', () => {
@@ -132,14 +132,23 @@ describe('Test suite for progressive calculations', () => {
     });
   });
   describe('Test getInstalmentPenalty', () => {
-    it('Expects the penalty to be correct', () => {
+    it('Expects the penalty to be correct with 18 decimals', () => {
       const loan = {
         interestRate: '100000000000000000', // 10%
+        principal: '1000000000000000000000',
       };
-      const penalty = getInstalmentPenalty(loan);
-      const expectedPenalty =
-        Number(fromDecimal(loan.interestRate.toString())) * 2;
-      expect(penalty).toEqual(expectedPenalty);
+      const decimals = 18;
+      const penalty = getInstalmentPenalty(loan, decimals);
+      expect(penalty).toEqual(100);
+    });
+    it('Expects the penalty to be correct with 6 decimals', () => {
+      const loan = {
+        interestRate: '100000000000000000', // 10%
+        principal: '1000000000',
+      };
+      const decimals = 6;
+      const penalty = getInstalmentPenalty(loan, decimals);
+      expect(penalty).toEqual(100);
     });
   });
   describe('Test getInstalmentDates', () => {
@@ -264,9 +273,71 @@ describe('Test suite for progressive calculations', () => {
       expect(state).toEqual('Withdrawed');
     });
   });
-  describe.only('Test getCurrentPenalty', () => {
-    it('Expects correct penalty amount to pay', () => {});
+  describe('Test getCurrentPenalty', () => {
+    it('Expects correct penalty amount to pay', () => {
+      const oneMonth = 1 * 30 * 24 * 60 * 60;
+      const auctionEndTimestamp = moment()
+        .subtract(oneMonth * 7, 'seconds')
+        .unix();
+      const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
+      const termLength = termEndTimestamp - auctionEndTimestamp;
+      const loan = {
+        termEndTimestamp,
+        auctionEndTimestamp,
+        principal: '1000000000000000000000', // 1000
+        interestRate: '100000000000000000', // 10%
+        instalments: 10,
+        instalmentsPaid: 0,
+        termLength,
+      };
+      const date = moment().unix();
+      const decimals = 18;
+      const penalty = getCurrentPenalty(loan, date, decimals);
+      expect(penalty).toEqual(7 * 100);
+    });
   });
-  xdescribe('Test getCurrentDebt', () => {});
-  xdescribe('Test getProgressiveState', () => {});
+  describe('Test getCurrentDebt', () => {
+    it('Expects to calculate correctly the debt with 18 decimals', () => {
+      const oneMonth = 1 * 30 * 24 * 60 * 60;
+      const auctionEndTimestamp = moment()
+        .subtract(oneMonth * 7, 'seconds')
+        .unix();
+      const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
+      const termLength = termEndTimestamp - auctionEndTimestamp;
+      const loan = {
+        termEndTimestamp,
+        auctionEndTimestamp,
+        principal: '1000000000000000000000', // 1000
+        interestRate: '100000000000000000', // 10%
+        instalments: 10,
+        instalmentsPaid: 0,
+        termLength,
+      };
+      const date = moment().unix();
+      const decimals = 18;
+      const penalty = getCurrentDebt(loan, decimals, date);
+      expect(penalty).toEqual(7 * 100 + 8 * 200);
+    });
+    it('Expects to calculate correctly the debt with 6 decimals', () => {
+      const oneMonth = 1 * 30 * 24 * 60 * 60;
+      const auctionEndTimestamp = moment()
+        .subtract(oneMonth * 7, 'seconds')
+        .unix();
+      const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
+      const termLength = termEndTimestamp - auctionEndTimestamp;
+      const loan = {
+        termEndTimestamp,
+        auctionEndTimestamp,
+        principal: '1000000000', // 1000
+        interestRate: '100000000000000000', // 10%
+        instalments: 10,
+        instalmentsPaid: 0,
+        termLength,
+      };
+      const date = moment().unix();
+      const decimals = 6;
+      const penalty = getCurrentDebt(loan, decimals, date);
+      expect(penalty).toEqual(7 * 100 + 8 * 200);
+    });
+  });
 });

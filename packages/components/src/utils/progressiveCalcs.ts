@@ -36,9 +36,12 @@ const getPendingInstalmentsAmount = (loan, decimals, date) => {
   return totalInstalmentAmount;
 };
 
-const getInstalmentPenalty = loan => {
+const getInstalmentPenalty = (loan, decimals = 18) => {
   // interest rate * 2
-  const penalty = Number(fromDecimal(loan.interestRate.toString())) * 2;
+  const interestRate = Number(fromDecimal(loan.interestRate.toString()));
+  const apliedInterest =
+    Number(fromDecimal(loan.principal.toString(), decimals)) * interestRate;
+  const penalty = apliedInterest;
   return penalty;
 };
 
@@ -73,17 +76,18 @@ const getStateByDate = (funding, date) => {
 };
 
 // external
-const getCurrentPenalty = (loan, date) => {
+const getCurrentPenalty = (loan, date, decimals) => {
   const currentInstalment = getCurrentInstalment(loan, date);
   const instalmentsToPay = currentInstalment - loan.instalmentsPaid;
   const penaltiesToPay = instalmentsToPay - 1;
-  const totalPenaltyAmount = getInstalmentPenalty(loan) * penaltiesToPay;
+  const totalPenaltyAmount =
+    getInstalmentPenalty(loan, decimals) * penaltiesToPay;
 
   return totalPenaltyAmount;
 };
 
 const getCurrentDebt = (loan, decimals, date) => {
-  const totalPenaltyAmount = getCurrentPenalty(loan, date);
+  const totalPenaltyAmount = getCurrentPenalty(loan, date, decimals);
   const totalInstalmentAmount = getPendingInstalmentsAmount(
     loan,
     decimals,

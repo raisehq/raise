@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Company } from '../../types';
 const ReactTestRenderer = require('react-test-renderer');
 
 import InvestCard from './InvestCard';
@@ -26,8 +27,9 @@ const auction = {
   termLength: '7776000',
 };
 
-const company = {
+const company: Company = {
   companyName: 'HERO Fintech Solutions Ptd. Ltd.',
+  description: '',
   shortDescription:
     'Speck SL was funded  in 1997 and have 17 millions  of yearly revenue. The company is focused in offering the best gastronomy  experience. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.',
   background: 'https://cdn.buttercms.com/SnV5NXlFQDmHObRHyU2n',
@@ -37,6 +39,6 @@ const company = {
 
 test('InvestCard should render', () => {
   ReactTestRenderer.create(
-    <InvestCard auction={auction} borrowerInfo={company} />
+    <InvestCard auction={auction} borrower={company} coinIcon="" />
   );
 });
