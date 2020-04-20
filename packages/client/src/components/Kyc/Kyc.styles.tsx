@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Header, Message, Icon } from 'semantic-ui-react';
+import { Header, Message, Icon, Divider } from 'semantic-ui-react';
 
 const size = {
   mobileS: '320px',
@@ -112,8 +112,9 @@ export const KycContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
   min-height: 300px;
-  max-width: 520px;
+  width: 100%;
 `;
 
 export const KycTitleWrapper = styled.div`
@@ -121,6 +122,7 @@ export const KycTitleWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 520px;
 `;
 
 export const CardTitle = styled.div`
@@ -137,6 +139,7 @@ export const SelectKycMethodList = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 40px 0;
+  max-width: 520px;
 `;
 
 export const CardSubTitle = styled.div`
@@ -236,6 +239,7 @@ export const KycBloom = styled(KycButton)`
 export const LinkWrap = styled.div`
   text-align: center;
   padding: 5% 0;
+  max-width: 520px;
 `;
 
 export const KycMessage = styled(Message)`
@@ -246,6 +250,7 @@ export const KycMessage = styled(Message)`
     box-shadow: 0 0 0 1px rgba(255, 182, 43, 0.9) inset, 0 0 0 0 transparent;
 
     width: 100%;
+    max-width: 520px;
   }
 `;
 
@@ -289,4 +294,21 @@ export const GetStartedSumDescription = styled.div`
   text-align: center;
   line-height: 21px;
   max-width: 620px;
+`;
+
+export const InformationSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #f9bc2e;
+  border-bottom: 1px solid #f9bc2e;
+  width: 100%;
+`;
+
+export const HorizontalDivider = styled(Divider)`
+  &&&& {
+    border-top: none;
+    border-bottom: 1px solid #f9bc2e;
+    padding: 0;
+    margin: 0;
+  }
 `;

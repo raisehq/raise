@@ -15,13 +15,16 @@ import {
   KycButtonLogo,
   KycButtonText,
   KycButtonLinkIcon,
-  KycButtonLinkIconContainer
+  KycButtonLinkIconContainer,
+  InformationSection,
+  HorizontalDivider
 } from './Kyc.styles';
 import { Link } from '../Link';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import useRouter from '../../hooks/useRouter';
 import { useAppContext } from '../../contexts/AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import InformationContainer from './InformationSection';
 
 const KycSelectMethod = () => {
   const { history }: any = useRouter();
@@ -107,6 +110,11 @@ const KycSelectMethod = () => {
           <Link to="/">Do it later</Link>
         </LinkWrap>
       </KycContainer>
+      <InformationSection>
+        <InformationContainer title={'How to verify with Sum&Sub'} steps={[1, 2]} />
+        <HorizontalDivider />
+        <InformationContainer title={'How to verify with Bloom'} steps={[1, 2]} />
+      </InformationSection>
     </KycWrapper>
   );
 };
