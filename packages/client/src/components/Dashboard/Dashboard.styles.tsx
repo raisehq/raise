@@ -135,3 +135,10 @@ export const Header = styled(SemanticHeader)`
     font-weight: bold;
   }
 `;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 50px;
+`;

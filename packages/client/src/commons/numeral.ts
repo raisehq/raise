@@ -39,6 +39,10 @@ if (!numeral?.locales?.hero) {
 
 numeral.locale('hero');
 numeral.defaultFormat(numeralFormat);
+
+numeral.zeroFormat('<0.01');
+numeral.nullFormat('<0.01');
+
 /** End of numer formatting */
 
 export default numeral;

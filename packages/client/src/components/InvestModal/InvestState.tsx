@@ -12,7 +12,7 @@ import { useAddressBalance } from '../../contexts/BalancesContext';
 import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
 import localeConfig from '../../commons/localeConfig';
 import { generateInfo, CoinValue } from './investUtils';
-import { toDecimal, fromDecimal } from '../../utils/web3-utils';
+import { toDecimal, fromDecimal, fromDecimalFixed } from '../../utils/web3-utils';
 
 import {
   ConfirmButton,
@@ -77,9 +77,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin?.icon}`;
   const tagManager = useGoogleTagManager('Card');
   const balanceBN: BN = useAddressBalance(account, inputCoin?.address || '');
-  const balance = Number(
-    Number(fromDecimal(balanceBN.toString(10), inputCoin?.decimals)).toFixed(2)
-  );
+  const balance = Number(fromDecimalFixed(balanceBN.toString(10), inputCoin?.decimals));
   const [value, setValue] = useState<number>(0);
   const expectedInputRoi = Number(expectedROI * value || 0).toLocaleString(...localeConfig);
 
@@ -117,10 +115,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   };
 
   useAsyncEffect(async () => {
-    if (!value) {
-      setInputTokenAmount(new BN('0'));
-      return;
-    }
+    setInputTokenAmount(new BN('0'));
     if (inputCoin?.text === loanCoin.text) {
       setInputTokenAmount(new BN(toDecimal(value, loanCoin.decimals)));
       return;
@@ -143,7 +138,8 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const buttonRules =
     value === 0 ||
     value === undefined ||
-    value > balance ||
+    inputTokenAmount.gt(balanceBN) ||
+    inputTokenAmount.lte(new BN('0')) ||
     value > maxAmountNum ||
     !termsCond ||
     kycStatus !== 3;
@@ -164,6 +160,10 @@ const InvestState: React.SFC<InvestStateProps> = ({
     const toggleTerms = !termsCond;
     setTermsCond(toggleTerms);
   };
+
+  const getCoinValue = () => (
+    <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
+  );
   // prettier-ignore
   return (
     <InvestBody>
@@ -172,18 +172,18 @@ const InvestState: React.SFC<InvestStateProps> = ({
         <InvestHeader>Loan Information</InvestHeader>
         <CollapsedTable items={loanInfo} />
         <InvestSection {...InvestInputProps} />
-        <TableItem
-          title={`The equivalent in ${selectedCoin}`}
-          content={
-            <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
-          }
-          tooltip="Total invested will always be converted to the currency set by the borrower."
-        />
+        {selectedCoin !== loanCoin.text && (
+          <TableItem
+            title={`The equivalent in ${selectedCoin}`}
+            content={getCoinValue()}
+            tooltip="How much will be charged from your account. This will be converted to the currency set by the borrower."
+          />
+        )}
         <TableItem
           title="Expected ROI after repayment"
           latest
           content={<CoinValue value={expectedInputRoi} name={loanCoin?.text} src={loanCoinImage} />}
-          tooltip="This includes the original amount invested in addition to your return on investment."
+          tooltip="The return on your investment, when the loan is repaid."
         />
       </InvestInput>
       <ButtonWrapper>
