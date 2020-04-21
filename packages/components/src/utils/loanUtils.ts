@@ -1,6 +1,5 @@
 import { match, ANY } from 'pampy';
 import cloneDeep from 'lodash/cloneDeep';
-import { toChecksumAddress } from 'web3-utils';
 import { fromDecimal } from '../utils/web3-utils';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';

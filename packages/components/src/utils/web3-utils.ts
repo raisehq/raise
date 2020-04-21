@@ -1,17 +1,15 @@
 import { Keccak } from 'sha3';
-import ABI_ERC20 from '../commons/erc20';
 import BigNumber from 'bignumber.js';
+import ABI_ERC20 from '../commons/erc20';
 
-const sha3 = value => {
-  return new Keccak(256).update(value).digest('hex');
-};
+const sha3 = value => new Keccak(256).update(value).digest('hex');
 
 export const isChecksumAddress = address => {
   // Check each case
   const notAddress = address.replace('0x', '');
   const addressHash = sha3(notAddress.toLowerCase());
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 40; i += 1) {
     // The nth letter should be uppercase if the nth digit of casemap is 1
     if (
       (parseInt(addressHash[i], 16) > 7 &&

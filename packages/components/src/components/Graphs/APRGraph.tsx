@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import { Icon } from 'semantic-ui-react';
 import BN from 'bn.js';
 import { Line, Chart } from 'react-chartjs-2';
 import { fromDecimal } from '../../utils/web3-utils';
-import { Icon } from 'semantic-ui-react';
 import Card from '../Card';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';

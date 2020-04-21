@@ -16,7 +16,7 @@
     "build": "rm -f tsdx.config.js && env-cmd --no-override .env tsdx build",
     "build:umd": "cp tsdx.umd.config.js tsdx.config.js && env-cmd --no-override .env tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
     "test": "env-cmd --no-override .env tsdx test --env=jsdom",
-    "lint": "env-cmd --no-override .env tsdx lint"
+    "lint": "env-cmd --no-override .env tsdx lint src/"
   },
   "peerDependencies": {
     "react": "^16.12.0",
