@@ -20,7 +20,7 @@ build-components:
   artifacts:
     when: always
     paths:
-      - packages/components/build
+      - packages/components/public
 
 build-onboarding:
   stage: build
@@ -31,7 +31,7 @@ build-onboarding:
   artifacts:
     when: always
     paths:
-      - packages/onboarding/dist
+      - packages/libs/build
 
 deploy-components:
   image: python:3.7-alpine
