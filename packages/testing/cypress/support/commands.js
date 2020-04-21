@@ -133,6 +133,7 @@ Cypress.Commands.add('login', function(type, isCanary = false) {
     const userPassword = Cypress.env('userPassword');
     cy.request({
       method: 'POST',
+      failOnStatusCode: false,
       url: Cypress.env('api') + '/jwt/authenticate',
       body: {
         email: userEmail,
