@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Dropdown } from 'semantic-ui-react';
 import TokenBalanceNotStyled from './TokenBalance';
 import { device } from '../../commons/breakpoints';
+
 export const TokenBalance = styled(TokenBalanceNotStyled)``;
 
 export const BalanceDropdown = styled(Dropdown)`

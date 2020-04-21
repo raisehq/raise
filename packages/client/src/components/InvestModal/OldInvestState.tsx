@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import BN from 'bn.js';
 import styled from 'styled-components';
+import { Card, Button } from '@raisehq/components';
 import { fromDecimal } from '../../utils/web3-utils';
-import { Card } from '@raisehq/components';
 import { TokenInput } from '../TokenInput';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { OldInvestStateProps } from './types';
@@ -13,7 +13,6 @@ import { useAppContext } from '../../contexts/AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useGetCoin from '../../hooks/useGetCoin';
 import { useAddressBalance } from '../../contexts/BalancesContext';
-import { Button } from '@raisehq/components';
 
 import {
   Header,
@@ -21,8 +20,6 @@ import {
   ModalInputBox,
   InputLabel,
   InputContainer,
-  // Amount,
-  // FundAllLabel,
   LoanTermsCheckbox,
   CheckContainer,
   InvestorBalance,
@@ -43,8 +40,13 @@ const ErrorBox = styled.div`
   margin-top: 8px;
 `;
 
-const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvestment, ui }) => {
-  const { principal, investorCount, maxAmount } = loan;
+const InvestState: React.SFC<OldInvestStateProps> = ({
+  loan,
+  setStage,
+  setInvestment,
+  ui
+}: any) => {
+  const { principal, investorCount, maxAmount }: any = loan;
   const coin = useGetCoin(loan);
   const {
     times,
@@ -61,7 +63,7 @@ const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvest
   const {
     store: {
       user: {
-        details: { kyc_status }
+        details: { kyc_status: kycStatus }
       },
       blockchain: {
         contracts: { address: contractAddresses }
@@ -130,7 +132,7 @@ const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvest
     }
     return setValue(v);
   };
-
+  // prettier-ignore
   return (
     <>
       <Header>How much would you like to invest?</Header>
@@ -194,8 +196,8 @@ const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvest
         </Card.Content>
       </Card>
       <CheckContainer>
-        <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
-        to the Terms and Conditions of the Loan Agreement
+        <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />
+        I agree to the Terms and Conditions of the Loan Agreement
       </CheckContainer>
       <ButtonContainer>
         <Button
@@ -204,14 +206,14 @@ const InvestState: React.SFC<OldInvestStateProps> = ({ loan, setStage, setInvest
           text="Confirm"
           type="secondary"
           size="large"
-          fullWidth={true}
+          fullWidth
           disabled={
             value === 0 ||
             value === undefined ||
             !termsCond ||
             value > balance ||
             value > nMaxAmount ||
-            kyc_status !== 3
+            kycStatus !== 3
           }
         />
       </ButtonContainer>

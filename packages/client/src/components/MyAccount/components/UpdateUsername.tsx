@@ -10,13 +10,14 @@ const UpdateUsername = ({
   userMessage,
   saveUsername,
   loading
-}) => {
+}: any) => {
+  // prettier-ignore
   const message = userMessage.includes('body')
     ? `${userMessage
-        .split(': ')[1]
-        .split(' ')[0]
-        .split('-')
-        .join(' ')} not valid`
+      .split(': ')[1]
+      .split(' ')[0]
+      .split('-')
+      .join(' ')} not valid`
     : userMessage;
   const usernameExistsMessage = 'Username already exists';
   const isEqual = storedUsername === username;

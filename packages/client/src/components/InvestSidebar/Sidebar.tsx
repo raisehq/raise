@@ -32,7 +32,7 @@ const Sidebar = props => {
 
   const rightMenuAnimation = useSpring({
     opacity: display ? 1 : 0,
-    transform: display ? `translateX(0)` : `translateX(100%)`
+    transform: display ? 'translateX(0)' : 'translateX(100%)'
   });
 
   return (

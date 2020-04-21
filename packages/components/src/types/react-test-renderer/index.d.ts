@@ -1,1 +1,1 @@
-declare module 'react-test-renderer'
+declare module 'react-test-renderer';

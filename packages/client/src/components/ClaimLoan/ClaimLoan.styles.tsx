@@ -105,7 +105,7 @@ export const ResumeItemBoxBig = styled.div`
     margin-top: 0px;
   }
 `;
-
+/* eslint-disable */
 export const ClaimButton = styled(LenderButton)`
   &&& {
     margin: 20px 0px 0px 0px;
@@ -113,10 +113,13 @@ export const ClaimButton = styled(LenderButton)`
     width: 100%;
     font-size: 16px;
     color: #ffffff;
-    background: ${({ loading }) =>
-      loading ? '#eff4f7' : 'linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%)'};
+    background: ${({ loading }: any) => {
+      const resp = loading ? '#eff4f7' : 'linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%)';
+      return resp;
+    }};
   }
 `;
+/* eslint-enable */
 
 // processing state
 export const RetryButton = styled(LenderButton)`

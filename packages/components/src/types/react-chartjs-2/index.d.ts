@@ -1,5 +1,7 @@
+// @ts-ignore
 import * as Chart from 'react-chartjs-2';
 
 declare module 'react-chartjs-2' {
-  export var Chart: any;
+  // eslint-disable-next-line
+  export const Chart: any;
 }

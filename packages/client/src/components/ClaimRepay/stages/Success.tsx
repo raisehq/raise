@@ -5,7 +5,7 @@ import {
   CardSubtitle,
   ButtonGreen
 } from '../../ClaimLoan/ClaimLoan.styles';
-import { ClaimRepayContext } from '../ClaimRepay';
+import ClaimRepayContext from '../ClaimRepay.context';
 
 const Processing = () => {
   const { closeModal }: any = useContext(ClaimRepayContext);

@@ -110,7 +110,7 @@ const App = ({
       if (initStep === Step.StartMini) setStartMini(true);
       setStep(initStep);
     }
-    if (!!refCode) {
+    if (refCode) {
       setRefCode(refCode);
     }
   }, []);
@@ -175,7 +175,8 @@ const App = ({
 
   useEffect(() => {
     /*
-      This case is special because this step of the signup or dashboard is already showed in the view
+      This case is special because this step of the signup or dashboard
+       is already showed in the view
       because of that we tracking the second step of the process.
     */
     if (step === Step.Start) {
@@ -213,7 +214,7 @@ const App = ({
 
     const signup = await services.signUp({
       ...credentials,
-      ...(!!referralCode ? { referrer_code: referralCode } : {}),
+      ...(referralCode ? { referrer_code: referralCode } : {}),
       accounttype_id: AccountType.Lender
     });
     signup.fold(
@@ -332,7 +333,9 @@ const App = ({
     );
 
     setuserCookie(result, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
-    window.location.href = getHost('APP') + (pathRedirect ? pathRedirect : '');
+    const redirect = pathRedirect || '';
+    window.location.href = getHost('APP') + redirect;
+    return true;
   };
 
   const onLogin = async () => {
@@ -359,7 +362,7 @@ const App = ({
             data: {
               JwtToken,
               user,
-              user: { id, status, accounttype_id }
+              user: { id, status, accounttype_id: accountTypeId }
             }
           }
         } = response;
@@ -379,14 +382,14 @@ const App = ({
             id,
             status,
             token: JwtToken,
-            type: accounttype_id
+            type: accountTypeId
           },
           { domain: process.env.REACT_APP_COOKIE_DOMAIN }
         );
 
         setuserCookie(user, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
         tagManager.sendEventCategory('Login', TMEvents.Click, 'login_success', host);
-        window.location.href = getHost('APP') + (pathRedirect ? pathRedirect : '');
+        window.location.href = getHost('APP') + (pathRedirect || '');
       }
     );
   };
@@ -415,12 +418,12 @@ const App = ({
   const getStep = () =>
     step.cata({
       Start: () => (
-        <PanelWithImage {...props} title={'Get Started'}>
+        <PanelWithImage {...props} title="Get Started">
           <GetStarted />
         </PanelWithImage>
       ),
       SignUpWithEmail: () => (
-        <PanelWithImage {...props} title={'Get Started'}>
+        <PanelWithImage {...props} title="Get Started">
           <GetStartedWithEmail />
         </PanelWithImage>
       ),
@@ -430,22 +433,18 @@ const App = ({
           <GetStartedWithBloom
             onBack={() => setStep(Step.Start)}
             token={token}
-            method={'Get Started'}
+            method="Get Started"
           />
         </Panel>
       ),
       SignInWithBloom: token => (
         <Panel {...props}>
-          <GetStartedWithBloom
-            onBack={() => setStep(Step.SignIn)}
-            token={token}
-            method={'Sign In'}
-          />
+          <GetStartedWithBloom onBack={() => setStep(Step.SignIn)} token={token} method="Sign In" />
         </Panel>
       ),
       StartMini: () => <GetStarted />,
       SignIn: () => (
-        <PanelWithImage {...props} title={'Login'}>
+        <PanelWithImage {...props} title="Login">
           <SignIn />
         </PanelWithImage>
       ),
@@ -457,7 +456,7 @@ const App = ({
       SignInWithEmailMini: () => <SignInWithEmail />,
       ErrorWithBloom: () => (
         <Panel {...props}>
-          <ErrorBloom onBack={() => setStep(Step.Start)} method={'Get Started'} />
+          <ErrorBloom onBack={() => setStep(Step.Start)} method="Get Started" />
         </Panel>
       ),
       Confirm: () => (
@@ -554,7 +553,7 @@ const App = ({
   );
 };
 
-//PROVIDE HISTORY PROP
-export default App;
+// PROVIDE HISTORY PROP
 
 export { Step, App };
+export default App;

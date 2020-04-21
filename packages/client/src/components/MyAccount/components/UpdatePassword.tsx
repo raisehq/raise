@@ -10,13 +10,14 @@ const UpdatePassword = ({
   savePassword,
   passMessage,
   loading
-}) => {
+}: any) => {
+  // prettier-ignore
   const message = passMessage.includes('body')
     ? `${passMessage
-        .split(': ')[1]
-        .split(' ')[0]
-        .split('-')
-        .join(' ')} not valid`
+      .split(': ')[1]
+      .split(' ')[0]
+      .split('-')
+      .join(' ')} not valid`
     : passMessage;
   const passwordNotMatch = newPassword && newPasswordRepeat && newPassword !== newPasswordRepeat;
   const passLength = 6;

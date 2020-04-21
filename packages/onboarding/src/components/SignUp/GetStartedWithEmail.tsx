@@ -4,7 +4,6 @@ import debounce from 'lodash/debounce';
 import { AccountType } from '@raisehq/components';
 import {
   OnboardHeader,
-  OnboardSubHeader,
   OnboardInputSignUp,
   OnboardButton,
   OnboardCountries,
@@ -24,8 +23,8 @@ import theme from '../../theme';
 import { checkEmail } from '../../services';
 
 const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
-  const { onSetStep, credentials, onSetCredentials, referralCode, onSendCredentials } = useContext<
-    IContext
+  const { onSetStep, credentials, onSetCredentials, onSendCredentials } = useContext<
+    IContext // eslint-disable-line
   >(AppContext);
   const [errors, setErrors] = useState<{
     password: boolean;
@@ -127,8 +126,6 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
 
   const onSetTagManagerAndStep = () => onSetStep('SignIn')();
 
-  const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
-
   if (mini) {
     return (
       <MiniBody>
@@ -143,7 +140,7 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
           <Icon size="big" name="mail outline" />
           {error.validation && (
             <div className="errorText">
-              That format doesn't look right. Make sure there aren't any typos.
+              That format doesn&apos;t look right. Make sure there aren&apos;t any typos.
             </div>
           )}
           {error.exist && <div className="errorText">This email already exists.</div>}
@@ -198,7 +195,7 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
         <Icon size="big" name="mail outline" />
         {error.validation && (
           <div className="errorText">
-            That format doesn't look right. Make sure there aren't any typos.
+            That format doesn&apos;t look right. Make sure there aren&apos;t any typos.
           </div>
         )}
         {!error.validation && error.exist && (

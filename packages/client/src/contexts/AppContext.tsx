@@ -60,7 +60,7 @@ export function Updater() {
     firstLogin,
     daiWebSocket
   }: any = useAppContext();
-
+  console.log('RENDER CONTEXT: ');
   // Enabling connectionsStart
   useEffect(() => {
     if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {
@@ -156,7 +156,7 @@ export function Updater() {
   return null;
 }
 
-export default function Provider({ children }) {
+export default function Provider({ children }: any) {
   const firstLogin = LocalData.get('firstLogin');
   const {
     store: {

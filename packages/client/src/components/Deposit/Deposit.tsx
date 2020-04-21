@@ -161,13 +161,13 @@ const Deposit = () => {
     setStatus(UI.GetRaise);
   };
 
-  const onToDeposit = async () => {
-    setStatus(UI.Deposit);
-  };
+  // const onToDeposit = async () => {
+  //   setStatus(UI.Deposit);
+  // };
 
-  const onGetRaiseInfo = async () => {
-    setStatus(UI.GetRaiseInfo);
-  };
+  // const onGetRaiseInfo = async () => {
+  //   setStatus(UI.GetRaiseInfo);
+  // };
 
   return (
     <>
@@ -182,14 +182,12 @@ const Deposit = () => {
             onContinue,
             onRetry,
             onGetRaise,
-            onToDeposit,
-            onGetRaiseInfo,
             pending
           )}
         </CardSized>
         {EXPERIMENT_DEPOSIT_ID && (
           <Experiment id={EXPERIMENT_DEPOSIT_ID}>
-            <Variant id="0">{/* do not show nothing, as the original current version*/}</Variant>
+            <Variant id="0">{/* do not show nothing, as the original current version */}</Variant>
             <Variant id="1">
               <LinkWrap>
                 <Link to="/">Do it later</Link>

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { calculateInterest } from '../utils/raiseUtils';
-import useAsyncEffect from './useAsyncEffect';
 import graphql from 'graphql.js';
 import web3Utils from 'web3-utils';
+import { calculateInterest } from '../utils/raiseUtils';
+import useAsyncEffect from './useAsyncEffect';
+
 import { COMPANY_LOGOS } from '../commons/constants';
 
 const raiseGraph = graphql(
@@ -13,7 +14,7 @@ const raiseGraph = graphql(
 );
 
 const raiseLoansQuery = `query($currentUnix: Int) {
-	loans( where: { state: 0, auctionEndTimestamp_gt: $currentUnix } ) {
+  loans( where: { state: 0, auctionEndTimestamp_gt: $currentUnix } ) {
         state
         operatorFee
         interestRate
@@ -24,7 +25,7 @@ const raiseLoansQuery = `query($currentUnix: Int) {
         auctionStartTimestamp
         auctionEndTimestamp
         id
-	}
+  }
 }`;
 
 const average = (arr: any[]) => arr.reduce((p, c) => p + c, 0) / arr.length;
@@ -64,7 +65,9 @@ const useRaiseData = () => {
     try {
       const data = await getRaiseData();
       setRaiseCompany(data);
-    } catch (error) {}
+    } catch (error) {
+      console.error('[useRaiseData] Error on setRaiseCompany');
+    }
   }, []);
 
   return raiseCompany;

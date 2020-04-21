@@ -16,3 +16,5 @@ export const LabelWeb3: any = styled.div`
     transition: background 0.1s ease;
   }
 `;
+
+export default { LabelWeb3 };

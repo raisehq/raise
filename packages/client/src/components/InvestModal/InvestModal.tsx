@@ -26,7 +26,7 @@ const UI = daggy.taggedSum('UI', {
   Success: []
 });
 
-const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
+const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }: any) => {
   const {
     modalRefs,
     web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
@@ -35,7 +35,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const {
     store: {
       user: {
-        details: { kyc_status }
+        details: { kyc_status: kycStatus }
       },
       auth: {
         login: { logged: isLogged }
@@ -56,7 +56,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
   const invested = !!(loan.lenderAmount && Number(fromWei(loan.lenderAmount)));
   // prettier-ignore
   const connected = (hasProvider && unlocked && accountMatches && networkMatches);
-  const userActivated = connected && kyc_status === 3;
+  const userActivated = connected && kycStatus === 3;
 
   const buttonText = match(
     [connected, invested],
@@ -90,11 +90,11 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
     setOpen(false);
   };
 
-  const getInvestAction = stage => {
-    return stage.cata({
+  const getInvestAction = (current: any) =>
+    current.cata({
       Kyc: () => <VerifyKycModal />,
-      Confirm: () =>
-        FEATURE_FLAG_SWAP ? (
+      Confirm: () => {
+        const Invest = FEATURE_FLAG_SWAP ? (
           <InvestState
             loan={loan}
             loanCoin={coin}
@@ -108,7 +108,9 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
           />
         ) : (
           <OldInvestState loan={loan} setStage={setStage} setInvestment={setInvestment} ui={UI} />
-        ),
+        );
+        return Invest;
+      },
       Processing: () => (
         <ProcessingState
           loan={loan}
@@ -122,7 +124,7 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
       ),
       Success: () => <SuccessState setStage={setStage} ui={UI} closeModal={closeModal} />
     });
-  };
+
   return (
     <>
       <Button
@@ -131,9 +133,9 @@ const InvestModal: React.SFC<InvestModalProps> = ({ loan, className }) => {
         onClick={openModal}
         text={buttonText}
         disabled={false}
-        type={'primary'}
-        size={'large'}
-        fullWidth={true}
+        type="primary"
+        size="large"
+        fullWidth
       />
 
       <Modal open={open} onClose={closeModal} size={stageModalWidth} mountNode={modalRefs.current}>

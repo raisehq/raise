@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Loader } from 'semantic-ui-react';
 import { Header, LenderButton } from '../../InvestModal/InvestModal.styles';
-import { CheckboxDeposit, CheckboxDepositLabel, CheckboxContainer } from '../styles';
-import { ClaimRepayContext } from '../ClaimRepay';
+import { CheckboxDeposit, CheckboxDepositLabel, CheckboxContainer } from '../ClaimRepay.styles';
+import ClaimRepayContext from '../ClaimRepay.context';
 import { getCalculations } from '../../../utils/loanUtils';
 import numeral from '../../../commons/numeral';
 import { fromDecimal } from '../../../utils/web3-utils';
@@ -16,14 +16,14 @@ import {
 import { ResumeItemProps } from '../../InvestModal/types';
 import useGetCoin from '../../../hooks/useGetCoin';
 
-const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
+const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }: any) => (
   <ResumeItemBox>
     <p>{title}</p>
     <p>{value}</p>
   </ResumeItemBox>
 );
 
-const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
+const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }: any) => (
   <ResumeItemBoxBig>
     <p>{title}</p>
     <p>{value}</p>

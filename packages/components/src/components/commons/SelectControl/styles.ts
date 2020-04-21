@@ -57,3 +57,5 @@ export const SelectControlStyled: any = styled(Select)`
     }
   }
 `;
+
+export default SelectControlStyled;

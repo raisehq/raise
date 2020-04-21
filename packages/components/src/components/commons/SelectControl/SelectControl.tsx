@@ -1,6 +1,5 @@
 import React from 'react';
 import { SelectControlStyled } from './styles';
 
-export const SelectControl = (props: any) => {
-  return <SelectControlStyled {...props} />;
-};
+export const SelectControl = (props: any) => <SelectControlStyled {...props} />;
+export default SelectControl;

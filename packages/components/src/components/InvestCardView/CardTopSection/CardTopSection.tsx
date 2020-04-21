@@ -16,7 +16,7 @@ const CardTopSection = (props: CardTopSectionProps) => {
       <TopSection>
         <Logo src={src} href={href} />
         <MenuSpots>
-          <Icon name={'ellipsis vertical'} size="large" onClick={onOpenGraph} />
+          <Icon name="ellipsis vertical" size="large" onClick={onOpenGraph} />
         </MenuSpots>
       </TopSection>
     </Container>

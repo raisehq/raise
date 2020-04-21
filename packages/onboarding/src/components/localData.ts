@@ -5,9 +5,7 @@ const LocalData = {
   setObj: (name: string, data: object) => {
     window.localStorage.setItem(name, JSON.stringify(data));
   },
-  get: (name: string): string | null => {
-    return window.localStorage.getItem(name) || null;
-  },
+  get: (name: string): string | null => window.localStorage.getItem(name) || null,
   getObj: (name: string) => {
     const data = window.localStorage.getItem(name);
     const jsonData = JSON.parse(data || '{}');

@@ -7,19 +7,12 @@ export default (dispatch: any, state: any) => {
   const { id, email } = state.user.details;
 
   const onInitKyc = async () => {
-    const token = await initKyc(id);
-
-    return dispatch({ type: 'SET_KYC_TOKEN', data: token });
+    const data = await initKyc(id);
+    return dispatch({ type: 'SET_KYC_TOKEN', data });
   };
 
   const onConnect = async () => {
-    const { token } = state.kyc;
-
-    await connect(
-      id,
-      email,
-      token
-    );
+    await connect(id, email, token);
   };
 
   const onKYCVerified = async () => {

@@ -42,7 +42,7 @@ function reducer(state, { type, payload }) {
   }
 }
 
-export default function Provider({ children }) {
+export default function Provider({ children }: any) {
   const [state, dispatch] = useReducer(reducer, {
     [BLOCK_NUMBER]: {}
   });
@@ -84,18 +84,19 @@ export function Updater() {
   };
 
   useEffect(() => {
+    let isStale = false;
+    let subscription = null;
     if (library) {
-      let isStale = false;
-
       update(library, isStale);
-      const subscription = library.eth.subscribe('newBlockHeaders', () => update(library, isStale));
-
-      return () => {
-        isStale = true;
-        subscription.unsubscribe();
-      };
+      subscription = library.eth.subscribe('newBlockHeaders', () => update(library, isStale));
     }
-    return;
+    return () => {
+      isStale = true;
+      if (subscription) {
+        // @ts-ignore
+        subscription.unsubscribe();
+      }
+    };
   }, [chainId, library, updateBlockNumber]);
 
   return null;

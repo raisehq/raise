@@ -74,6 +74,22 @@ build-front-review:
     paths:
       - packages/client/build_review
 
+lint-front-review:
+  stage: build
+  script:
+    - 'yarn --pure-lockfile'
+    - yarn run client:build:integration
+    - 'yarn run lint'
+  only:
+    - merge_requests
+    - latest
+  except:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build_review
+
 build-front-integration:
   stage: build
   script:
@@ -94,6 +110,19 @@ build-front-production:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
     - 'yarn run client:build:production'
+  only:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build
+
+lint-front:
+  stage: build
+  script:
+    - 'yarn --pure-lockfile'
+    - 'yarn run client:build:production'
+    - 'yarn run lint'
   only:
     - master
   artifacts:

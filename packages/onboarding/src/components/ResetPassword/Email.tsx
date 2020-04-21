@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { Icon, Input } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
-import { OnboardHeader, OnboardInput, OnboardButton, CallToSignIn, OnboardLogo } from '../styles';
+import { OnboardHeader, OnboardInput, OnboardButton, CallToSignIn } from '../styles';
 import validations from '../validations';
 import AppContext from '../App.context';
 
@@ -43,7 +43,7 @@ const Reset = () => {
         />
         {email.error && (
           <div className="errorText">
-            That format doesn't look right. Make sure there aren't any typos.
+            That format doesn&apos;t look right. Make sure there aren&apos;t any typos.
           </div>
         )}
         <Icon size="big" name="globe" />
@@ -52,7 +52,7 @@ const Reset = () => {
         Reset password
       </OnboardButton>
       <CallToSignIn>
-        You don't have an account?
+        You don&apos;t have an account?
         <button className="callToSignIn" type="button" onClick={onSetStep('Start')}>
           Get Started
         </button>

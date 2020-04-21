@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Message } from 'semantic-ui-react';
 
-//#F8BD2E
+// #F8BD2E
 
 export const OrangeMessage = styled(Message)`
   &&& {

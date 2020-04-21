@@ -125,7 +125,7 @@ const Reset = ({ token }: any) => {
       </OnboardInput>
       <OnboardButton onClick={onReset}>Reset password</OnboardButton>
       <CallToSignIn>
-        You don't have an account?
+        You don&apos;t have an account?
         <button className="callToSignIn" type="button" onClick={onSetStep('Start')}>
           Get Started
         </button>
