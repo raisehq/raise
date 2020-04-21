@@ -51,8 +51,91 @@ deploy-components:
 deploy-onboarding:
   image: python:3.7-alpine
   stage: deploy
+<<<<<<< HEAD
   variables:
     LIB_BUCKET_NAME: lib.raise.it
+=======
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/client/build canary
+      aws s3 sync --delete canary s3://${BUCKET_NAME_PROD}/canary --metadata-directive REPLACE --cache-control max-age=86400000
+      aws s3 cp s3://${BUCKET_NAME_PROD}/canary/ s3://${BUCKET_NAME_PROD}/canary/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
+      done
+  only:
+    - master
+
+cypress-e2e-review:
+  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
+  stage: test
+  variables:
+    CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
+    CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
+    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+    CYPRESS_api: ${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+    CYPRESS_isCanary: 'false'
+  script:
+    - yarn --pure-lockfile
+    - cd packages/testing
+    - yarn run cypress cache path
+    - yarn run cypress cache list
+    - yarn run cypress verify
+    - yarn run ci:run
+  artifacts:
+    expire_in: '1 week'
+    when: always
+    paths:
+      - packages/testing/ganache_db
+      - packages/testing/cypress/screenshots
+      - packages/testing/cypress/videos
+      - packages/testing/cypress/snapshots
+  only:
+    - merge_requests
+  cache:
+    key: ganache-global-cache
+    paths:
+      - packages/testing/ganache_db
+
+cypress-e2e-production:
+  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
+  stage: test
+  variables:
+    CYPRESS_url: 'https://app.raise.it'
+    CYPRESS_baseUrl: 'https://app.raise.it'
+    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+    CYPRESS_api: api.raise.it
+    CYPRESS_isCanary: 'true'
+  script:
+    - yarn --pure-lockfile
+    - cd packages/testing
+    - yarn run cypress cache path
+    - yarn run cypress cache list
+    - yarn run cypress verify
+    - yarn run ci:run
+  artifacts:
+    expire_in: '1 week'
+    when: always
+    paths:
+      - packages/testing/cypress/screenshots
+      - packages/testing/ganache_db
+      - packages/testing/cypress/videos
+      - packages/testing/cypress/snapshots
+  cache:
+    key: ganache-global-cache
+    paths:
+      - packages/testing/ganache_db
+  only:
+    - master
+
+deploy-prod:
+  image: python:3.7-alpine
+  stage: deploy-prod
+>>>>>>> 353d6b9bfd37bc7858b611aa31bd3abebed2ffdd
   before_script:
     - 'pip install awscli'
   script:
