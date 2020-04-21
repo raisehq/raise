@@ -1,3 +1,10 @@
+declare global {
+  interface Window {
+    Chart: any;
+    moment: any;
+  }
+}
+
 export { default as Card } from './components/Card';
 export { default as Coin } from './components/Coin';
 export { default as InvestCardView } from './components/InvestCardView';

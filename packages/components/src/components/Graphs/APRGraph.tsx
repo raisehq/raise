@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import debounce from 'lodash/debounce';
+import styled from 'styled-components';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import { Icon } from 'semantic-ui-react';
 import BN from 'bn.js';
-import { Line, Chart } from 'react-chartjs-2';
 import { fromDecimal } from '../../utils/web3-utils';
 import Card from '../Card';
+import useScript from '../../hooks/useScript';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
 import numeral from '../../commons/numeral';
@@ -17,6 +19,10 @@ import {
   IconContainer,
 } from '../InvestCardView/InvestCardView.styles';
 
+const CHART_CDN = 'https://cdn.jsdelivr.net/npm/chart.js@2.8.0';
+const MOMENT_CDN =
+  'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js';
+
 interface APRGraphProps {
   maxInterestRate: BN;
   minInterestRate: BN;
@@ -25,6 +31,10 @@ interface APRGraphProps {
   currentAPR: string;
   onOpenGraph: any;
 }
+
+const ChartWrapper = styled.div`
+  padding: 10px;
+`;
 
 const datasetToGraph = (
   dataset: number[],
@@ -139,6 +149,10 @@ const APRGraph = ({
   currentAPR,
   onOpenGraph,
 }: APRGraphProps) => {
+  const chartContainer = useRef(null);
+  const [chartLoaded] = useScript(CHART_CDN);
+  const [momentLoaded] = useScript(MOMENT_CDN);
+  const [chartInstance, setChartInstance] = useState(null);
   const [compoundDataset, setCompoundDataset] = useState([0]);
   const [fullCompoundDataset, setFullCompoundDataset] = useState([0]);
   const [[currentLoanInterest, compoundInterest], setInterest] = useState([
@@ -209,8 +223,11 @@ const APRGraph = ({
   };
 
   useAsyncEffect(async () => {
-    Chart.pluginService.register(todayVerticalLine);
-    Chart.pluginService.register(chartBackground);
+    if (!chartLoaded || !momentLoaded) {
+      return;
+    }
+    window?.Chart.pluginService.register(todayVerticalLine);
+    window?.Chart.pluginService.register(chartBackground);
 
     /**
      * Compound DAI rate api call, latest 30 day
@@ -250,9 +267,33 @@ const APRGraph = ({
         numeral(currentDataset[nowIndex] / 100).format('0.00%'),
       ]);
     }
-  }, []);
+  }, [chartLoaded, momentLoaded]);
 
-  options.lineAtIndex = [nowIndex];
+  useEffect(() => {
+    if (
+      !chartInstance &&
+      chartLoaded &&
+      momentLoaded &&
+      chartContainer &&
+      chartContainer.current &&
+      compoundDataset.length > 1
+    ) {
+      options.lineAtIndex = [nowIndex];
+
+      const newChartInstance = new window.Chart(chartContainer.current, {
+        type: 'line',
+        data: graphData,
+        options,
+      });
+      setChartInstance(newChartInstance);
+    }
+  }, [
+    chartInstance,
+    chartLoaded,
+    momentLoaded,
+    chartContainer,
+    compoundDataset,
+  ]);
 
   const updateHover = (_event: any, datapoint: any[]) => {
     // Return current index to be able to show tooltip outside canvas
@@ -284,7 +325,7 @@ const APRGraph = ({
     }
   };
 
-  options.onHover = updateHover;
+  options.onHover = debounce(updateHover);
 
   return (
     <>
@@ -316,7 +357,11 @@ const APRGraph = ({
           contentColor={compoundGraphData.borderColor}
         />
       </Card.Grid>
-      <Line data={graphData} options={options} height={245} />
+      {chartLoaded && momentLoaded && (
+        <ChartWrapper>
+          <canvas ref={chartContainer} height={245} />
+        </ChartWrapper>
+      )}
     </>
   );
 };
