@@ -131,16 +131,42 @@ Cypress.Commands.add('login', function(type, isCanary = false) {
     // Request to the real API
     const userEmail = Cypress.env('userEmail');
     const userPassword = Cypress.env('userPassword');
-    cy.request({
+    const request = {
       method: 'POST',
       failOnStatusCode: false,
-      url: Cypress.env('api') + '/jwt/authenticate',
+      url: 'https://canary.' + Cypress.env('api') + '/jwt/authenticate',
       body: {
         email: userEmail,
         password: userPassword,
         'g-recaptcha-response': 'xxxxxxxxx'
       }
-    }).then(({ body: { data }, status }) => {
+    };
+
+    cy.request(request).then(({ body: { data }, status }) => {
+      if (status == 404) {
+        request.url = 'https://' + Cypress.env('api') + '/jwt/authenticate';
+        cy.request(request).then(({ body: { data }, status }) => {
+          setLocalStorage(data, status);
+        });
+      } else {
+        setLocalStorage(data, status);
+      }
+    });
+
+    function setLocalStorage(data, status) {
+      if (status !== 200) throw new Error('Error login');
+      const auth = {
+        id: data.user.id,
+        status: data.user.status,
+        token: data.JwtToken,
+        type: data.user.accounttype_id
+      };
+
+      window.localStorage.setItem('auth', JSON.stringify(auth));
+      window.localStorage.setItem('user', JSON.stringify(data.user));
+    }
+
+    cy.request(request).then(({ body: { data }, status }) => {
       if (status !== 200) throw new Error('Error login');
 
       const auth = {
@@ -187,10 +213,10 @@ Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
     cy.on('window:before:load', win => {
       const user = Cypress.env('user');
       win.AxiosMockResponses = [
-        ['POST', `${Cypress.env('api')}/jwt/verify`, 200, { mock: true, success: true }], //'https://api.herodev.es
+        ['POST', `https://${Cypress.env('api')}/jwt/verify`, 200, { mock: true, success: true }], //'https://api.herodev.es
         [
           'GET',
-          `${Cypress.env('api')}/cryptoaddress/user/user:12345`,
+          `https://${Cypress.env('api')}/cryptoaddress/user/user:12345`,
           200,
           {
             mock: true,
@@ -210,7 +236,7 @@ Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
         ],
         [
           'GET',
-          `${Cypress.env('api')}/kyc/auth/user:12345`,
+          `https://${Cypress.env('api')}/kyc/auth/user:12345`,
           200,
           {
             mock: true,
@@ -224,7 +250,7 @@ Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
         ],
         [
           'PUT',
-          `${Cypress.env('api')}/users/user:12345`,
+          `https://${Cypress.env('api')}/users/user:12345`,
           200,
           {
             mock: true,

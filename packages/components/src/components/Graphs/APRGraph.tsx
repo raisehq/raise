@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import { Icon } from 'semantic-ui-react';
 import BN from 'bn.js';
 import { Line, Chart } from 'react-chartjs-2';
-import { fromWei } from 'web3-utils';
-import { Icon } from 'semantic-ui-react';
+import { fromDecimal } from '../../utils/web3-utils';
 import Card from '../Card';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
@@ -151,9 +151,9 @@ const APRGraph = ({
     '0.00%'
   );
 
-  const maxInterest = Number(fromWei(maxInterestRate.toString())) * 12;
+  const maxInterest = Number(fromDecimal(maxInterestRate.toString())) * 12;
   const minInterest = minInterestRate
-    ? Number(fromWei(minInterestRate.toString())) * 12
+    ? Number(fromDecimal(minInterestRate.toString())) * 12
     : 0;
   const dateStart = new Date(auctionStartTimestamp * 1000);
   const dateEnd = new Date(auctionEndTimestamp * 1000);

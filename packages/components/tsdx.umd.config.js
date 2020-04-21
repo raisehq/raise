@@ -1,5 +1,6 @@
 // Analyze rollup bundle size
 // const analyzer = require('rollup-plugin-analyzer');
+
 const INJECT_PROCESS_MODULE_ID = '\0inject-process';
 
 const externals = [

@@ -1,6 +1,5 @@
 import { match, ANY } from 'pampy';
 import cloneDeep from 'lodash/cloneDeep';
-import { toChecksumAddress } from 'web3-utils';
 import { fromDecimal } from '../utils/web3-utils';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
@@ -199,8 +198,7 @@ export const getCoin = (coins: CoinsType[]) => (
   }
   return (
     coins.find(
-      coin =>
-        toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)
+      coin => coin.address.toLowerCase() === tokenAddress.toLowerCase()
     ) || defaultCoin
   );
 };
