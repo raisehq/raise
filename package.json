@@ -40,7 +40,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn run lint"
+      "pre-commit": "pretty-quick --staged && lerna run lint --stream"
     }
   },
   "devDependencies": {
