@@ -1,4 +1,4 @@
-declare var process: { env: { [key: string]: string } };
+declare const process: { env: { [key: string]: string } };
 
 const HOSTS: any = {
   AUTH: process.env.REACT_APP_HOST_URL_AUTH,
@@ -23,10 +23,7 @@ export function getMimeType(base64: string) {
   return '';
 }
 export function isBrowser() {
-  return (
-    typeof window !== 'undefined' &&
-    {}.toString.call(window) === '[object Window]'
-  );
+  return typeof window !== 'undefined' && {}.toString.call(window) === '[object Window]';
 }
 
 export const Right = (x: any) => ({
@@ -45,12 +42,4 @@ export const Either = {
   either: (coor: any) => (coor ? Right(true) : Left(false))
 };
 
-export const to = (promise: any) => {
-  return promise
-    .then((data: any) => {
-      return Right(data);
-    })
-    .catch((err: any) => {
-      return Left(err);
-    });
-};
+export const to = (promise: any) => promise.then(Right).catch(Left);

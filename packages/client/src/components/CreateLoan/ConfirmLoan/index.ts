@@ -1,3 +1,3 @@
-import ConfirmLoan from "./ConfirmLoan";
+import ConfirmLoan from './ConfirmLoan';
 
 export default ConfirmLoan;

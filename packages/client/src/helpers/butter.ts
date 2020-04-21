@@ -62,7 +62,7 @@ const findOne = async (collection: string, fields: any) => {
 const getGetStarted = async () => {
   const {
     data: {
-      data: { ['get_started']: arrResponse }
+      data: { ['get_started']: arrResponse } // eslint-disable-line
     }
   } = await butter.content.retrieve(['get_started']);
   if (!arrResponse.length) {

@@ -7,13 +7,14 @@ const InputNumber = (props: any) => {
   const decimalScale = 2;
   const thousandSeparator = '.';
   const decimalSeparator = ',';
-  const numeralSize = numeral(props.value).length;
+  const { value } = props;
+  const numeralSize = numeral(value).length;
 
   return (
     <NumberFormat
       className="input-number"
       allowEmptyFormatting={false}
-      fixedDecimalScale={true}
+      fixedDecimalScale
       decimalScale={decimalScale}
       thousandSeparator={thousandSeparator}
       decimalSeparator={decimalSeparator}

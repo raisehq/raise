@@ -18,41 +18,38 @@ interface BorrowerInfoProps {
 export const Resource: React.SFC<ExtraResource> = ({
   resource,
   link,
-  resource_type,
-  resourceType
-}: ExtraResource) => {
-  return (
-    <ResourceBox>
-      <Icon className={`${resource_type} icon`} />
-      <a href={link} target="_blank" rel="noopener noreferrer">
-        {resource}
-      </a>
-    </ResourceBox>
-  );
-};
+  resource_type: resourceType
+}: ExtraResource) => (
+  <ResourceBox>
+    <Icon className={`${resourceType} icon`} />
+    <a href={link} target="_blank" rel="noopener noreferrer">
+      {resource}
+    </a>
+  </ResourceBox>
+);
 
 export const BorrowerInfo: React.SFC<BorrowerInfoProps> = ({
   extraResources,
   address,
   date
-}: BorrowerInfoProps) => {
-  return (
-    <BorrowerInfoContainer>
-      <BorrowerInfoItem>
-        <Icon className="map marker alternate icon"></Icon>
-        <AddressInfo>{address}</AddressInfo>
-      </BorrowerInfoItem>
-      <BorrowerInfoItem>
-        <Icon className="calendar alternate icon"></Icon>
-        Founded on {date}
-      </BorrowerInfoItem>
-      <ResourcesContainer>
-        {extraResources
-          ? extraResources.map(({ resource, ...rest }) => (
-              <Resource key={resource} resource={resource} {...rest} />
-            ))
-          : null}
-      </ResourcesContainer>
-    </BorrowerInfoContainer>
-  );
-};
+}: BorrowerInfoProps) => (
+  <BorrowerInfoContainer>
+    <BorrowerInfoItem>
+      <Icon className="map marker alternate icon" />
+      <AddressInfo>{address}</AddressInfo>
+    </BorrowerInfoItem>
+    <BorrowerInfoItem>
+      <Icon className="calendar alternate icon" />
+      {`Founded on ${date}`}
+    </BorrowerInfoItem>
+    <ResourcesContainer>
+      {extraResources
+        ? extraResources.map(({ resource, ...rest }) => (
+            // eslint-disable-next-line
+            <Resource key={resource} resource={resource} {...rest} />
+            // eslint-disable-next-line
+          ))
+        : null}
+    </ResourcesContainer>
+  </BorrowerInfoContainer>
+);

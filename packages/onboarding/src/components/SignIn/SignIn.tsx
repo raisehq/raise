@@ -10,10 +10,10 @@ const Signin = () => {
 
   return (
     <ChooseMethodWrapper>
-      <AuthenticationMethods method={'Login'} />
+      <AuthenticationMethods method="Login" />
       <ChooseSignUpSignInWrapper>
         <CallToSignIn>
-          Don't you have an account?
+          Don&apos;t you have an account?
           <button className="callToSignIn" type="button" onClick={() => onSetStep('Start')()}>
             Sign Up
           </button>

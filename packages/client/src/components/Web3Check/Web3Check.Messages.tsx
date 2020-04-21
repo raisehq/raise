@@ -31,12 +31,14 @@ const NeedHelp = ({ href }: any) => (
 );
 
 // @ts-ignore
-const NetworkNotMatch = ({ targetNetwork, currentNetwork }: any) => (
+const NetworkNotMatch = (
+  { targetNetwork }: any // prettier-ignore
+) => (
   <ActionDescription>
     <h3>Change the network</h3>
     <DescriptionText>
       Please switch to one of the following networks in your wallet:
-      <b> {targetNetwork.join(', ')}</b>
+      <b>{targetNetwork.join(', ')}</b>
     </DescriptionText>
     <NeedHelp href="https://www.raise.it/help" />
   </ActionDescription>
@@ -60,7 +62,7 @@ const AccountNotMatchNotice = ({ verifiedAddress, walletId }: any) => (
   <ActionDescription>
     <h3>Address does not match</h3>
     <DescriptionText>
-      Make sure you are using {getWalletName(walletId)} with your registered address:
+      {`Make sure you are using ${getWalletName(walletId)} with your registered address:`}
     </DescriptionText>
     <Web3Address account={verifiedAddress} />
     <NeedHelp href="https://www.raise.it/help" />

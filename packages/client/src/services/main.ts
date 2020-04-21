@@ -95,3 +95,5 @@ export const getMainData = async userId => {
     data => Right(data.data.data.main)
   );
 };
+
+export default getMainData;

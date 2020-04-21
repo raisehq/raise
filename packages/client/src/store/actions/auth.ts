@@ -1,27 +1,26 @@
+import * as Cookies from 'js-cookie';
 import { signIn, getUser, checkUsername, checkEmail, verifyAuth } from '../../services/auth';
 import LocalData from '../../helpers/localData';
 import * as Type from '../store.types';
 import { Either, to, getHost } from '../../utils/index';
 import { Status } from '../../commons/userStatus';
-import * as Cookies from 'js-cookie';
 
 export default (dispatch: any, state: any) => {
   const onSignin = async ({ email, password }: Type.onSignin) => {
     const request = await to(signIn({ email, password }));
 
     request.fold(
-      error => dispatch({ type: 'SIGNIN_ERROR', data: 'Invalid credentials' }),
+      () => dispatch({ type: 'SIGNIN_ERROR', data: 'Invalid credentials' }),
       response => {
         const { user } = response;
         const userStatus = Either.either(user.status >= Status.EMAIL_VERIFIED);
 
         userStatus.fold(
-          error => {
-            return dispatch({
+          () =>
+            dispatch({
               type: 'EMAIL_NOT_VERIFIED',
               data: 'Your email is not verified. Please check your inbox and verify it.'
-            });
-          },
+            }),
           () => {
             LocalData.setObj('auth', {
               token: response.JwtToken,

@@ -353,7 +353,7 @@ export const LabelPadding = styled(Label)<LabelPaddingProps>`
   &&& {
     font-size: 14px !important;
     margin-right: 8px !important;
-    background-color: ${({ color }) => (color ? color : '#ff047f')};
+    background-color: ${({ color }) => color || '#ff047f'};
     color: #ffffff;
   }
 `;
@@ -366,7 +366,7 @@ export const LabelPaddingLoader = styled(LabelPadding)<LabelPaddingProps>`
   &&& {
     position: relative;
     margin-bottom: -7px;
-    background-color: ${({ color }) => (color ? color : '#ff047f')};
+    background-color: ${({ color }) => color || '#ff047f'};
     color: #ffffff;
   }
 `;
@@ -467,7 +467,6 @@ export const InvestHeader = styled.h3`
   line-height: 24px;
   color: #000;
 `;
-
 
 export const ButtonContainerProcessing = styled.div`
   display: flex;

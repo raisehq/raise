@@ -1,10 +1,9 @@
 import React, { useState, Fragment } from 'react';
 import { List, Grid } from 'semantic-ui-react';
+import { Button } from '@raisehq/components';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import useWallet from '../../hooks/useWallet';
 import useWeb3 from '../../hooks/useWeb3';
-import { Button } from '@raisehq/components';
-
 import ERC20 from '../../commons/erc20';
 import { MAX_VALUE } from '../../commons/constants';
 import { ProcessingStateProps } from './types';
@@ -42,7 +41,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   inputTokenAmount,
   loanCoin,
   closeModal
-}) => {
+}: any) => {
   const {
     web3Status: { walletAccount }
   }: any = useAppContext();
@@ -62,20 +61,20 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
   useAsyncEffect(async () => {
     if (metamask) {
       const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
+      let DAIProxy;
       try {
-        const DaiProxyAddress = await loanContract.methods.proxyContractAddress().call();
-        const DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
+        if (loanContract.methods.proxyContractAddress) {
+          const DaiProxyAddress = await loanContract.methods.proxyContractAddress().call();
+          DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
+        } else {
+          DAIProxy = await metamask.addContract('DAIProxy');
+        }
         setContracts({
           loanContract,
           DAIProxy
         });
       } catch (error) {
-        console.error('failed to retrieve daiproxy, using current one');
-        const DAIProxy = await metamask.addContract('DAIProxy');
-        setContracts({
-          loanContract,
-          DAIProxy
-        });
+        console.error('[ProcessingState] Failed to retrieve DAIProxy', error);
       }
     }
   }, [metamask]);
@@ -94,8 +93,10 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
       const amountApproved = await ERC20Contract.methods
         .allowance(walletAccount, DAIProxy.options.address)
         .call({ from: walletAccount });
+
       if (valueBN.gt(new BN(amountApproved))) {
         try {
+          console.log(tokenAddress, DAIProxy.options.address, MAX_VALUE);
           await followTx.watchTx(
             ERC20Contract.methods
               .approve(DAIProxy.options.address, MAX_VALUE)
@@ -176,20 +177,18 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
     setStage(ui.Confirm);
   };
 
-  const printRetry = () => {
-    return (
-      <ButtonContainerProcessing>
-        <Button
-          onClick={onRetry}
-          text="RETRY"
-          type={'primary'}
-          size={'large'}
-          disabled={false}
-          fullWidth={true}
-        />
-      </ButtonContainerProcessing>
-    );
-  };
+  const printRetry = () => (
+    <ButtonContainerProcessing>
+      <Button
+        onClick={onRetry}
+        text="RETRY"
+        type="primary"
+        size="large"
+        disabled={false}
+        fullWidth
+      />
+    </ButtonContainerProcessing>
+  );
 
   const stepNumber = (number, action) => {
     let icon = (
@@ -200,7 +199,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
     if (action === 'aproval') {
       if (approved) {
         icon = (
-          <LabelPaddingLoader circular color={'green'}>
+          <LabelPaddingLoader circular color="green">
             <IconSuccess name="check" />
           </LabelPaddingLoader>
         );

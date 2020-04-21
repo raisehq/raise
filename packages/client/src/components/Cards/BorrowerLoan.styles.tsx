@@ -5,3 +5,5 @@ export const BorrowerLoanCard = styled(Card)`
   height: 310px;
   width: 350px;
 `;
+
+export default BorrowerLoanCard;

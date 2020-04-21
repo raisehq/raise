@@ -4,7 +4,7 @@ import {
   calculateExpectedRoi,
   // calculateInterest,
   calculateInvestmentReturn,
-  calculateROI
+  calculateROI,
 } from './loanUtils';
 
 describe('Test suit for loan utils', () => {
@@ -39,7 +39,7 @@ describe('Test suit for loan utils', () => {
       principal: '10000000000000000000000',
       state: 2,
       termEndTimestamp: '1567695272',
-      termLength: 30 * 24 * 60 * 60
+      termLength: 30 * 24 * 60 * 60,
     };
     it('Expects the apr to be calculated correctly', () => {
       const actualAPR = calculateAPR(auction);
@@ -75,7 +75,7 @@ describe('Test suit for loan utils', () => {
       principal: '10000000000000000000000',
       state: 2,
       termEndTimestamp: '1567695272',
-      termLength: 30 * 24 * 60 * 60
+      termLength: 30 * 24 * 60 * 60,
     };
     it('Expects the expected ROI to be calculated correctly', () => {
       const actualROI = calculateExpectedRoi(auction, 10);
@@ -104,7 +104,7 @@ describe('Test suit for loan utils', () => {
       principal: '10000000000000000000000',
       state: 2,
       termEndTimestamp: '1567695272',
-      termLength: 30 * 24 * 60 * 60
+      termLength: 30 * 24 * 60 * 60,
     };
     it('Expects the roi to be calculated correctly', () => {
       const actualROI = calculateROI(auction);
@@ -133,7 +133,7 @@ describe('Test suit for loan utils', () => {
       principal: '10000000000000000000000',
       state: 2,
       termEndTimestamp: '1567695272',
-      termLength: 30 * 24 * 60 * 60
+      termLength: 30 * 24 * 60 * 60,
     };
     it('Expects the roi to be calculated correctly', () => {
       const actualROI = calculateROI(auction);
@@ -163,7 +163,7 @@ describe('Test suit for loan utils', () => {
       state: 2,
       termEndTimestamp: '1567695272',
       termLength: 30 * 24 * 60 * 60,
-      lenderAmount: '10000000000000000000000'
+      lenderAmount: '10000000000000000000000',
     };
     it('Expects the roi to be calculated correctly', () => {
       const actualAmount = calculateInvestmentReturn(auction);

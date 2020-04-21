@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { ButtonLink } from '@raisehq/components';
 import { isMobile } from 'react-device-detect';
 import {
   CardTitle,
@@ -10,10 +11,8 @@ import {
   SelectWalletOptionItem,
   GoBack
 } from './Web3Check.styles';
-import { ButtonLink } from '@raisehq/components';
 import useWeb3 from '../../hooks/useWeb3';
 import { useRootContext } from '../../contexts/RootContext';
-
 import GoBackButton from '../GoBackButton';
 import CryptoWallets from '../../commons/cryptoWallets';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
@@ -75,7 +74,7 @@ const Wallet = ({ onNext, onBack }: any) => {
         await connectWallet(walletSelected, network, networkId);
         onNext('WalletSelector', true);
       } catch (error) {
-        // console.log(error)
+        // aconsole.log(error)
       }
     }
   };
@@ -96,9 +95,9 @@ const Wallet = ({ onNext, onBack }: any) => {
               type="tertiary"
               size="large"
               disabled={false}
-              icon={`external_link.svg`}
-              logo={`metamask.png`}
-              fullWidth={true}
+              icon="external_link.svg"
+              logo="metamask.png"
+              fullWidth
             />
           </SelectWalletOptionItem>
           <SelectWalletOptionItem key="opera">
@@ -108,9 +107,9 @@ const Wallet = ({ onNext, onBack }: any) => {
               type="tertiary"
               size="large"
               disabled={false}
-              icon={`external_link.svg`}
-              logo={`opera.png`}
-              fullWidth={true}
+              icon="external_link.svg"
+              logo="opera.png"
+              fullWidth
             />
           </SelectWalletOptionItem>
           <SelectWalletOptionItem key="coinbase">
@@ -120,9 +119,9 @@ const Wallet = ({ onNext, onBack }: any) => {
               type="tertiary"
               size="large"
               disabled={false}
-              icon={`external_link.svg`}
-              logo={`coinbase.png`}
-              fullWidth={true}
+              icon="external_link.svg"
+              logo="coinbase.png"
+              fullWidth
             />
           </SelectWalletOptionItem>
           {!isMobile && (

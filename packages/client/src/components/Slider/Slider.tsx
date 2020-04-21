@@ -1,5 +1,5 @@
 import React from 'react';
-import Slider from 'rc-slider';
+import { createSliderWithTooltip, Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import {
   Wrapper,
@@ -13,12 +13,11 @@ import {
 } from './Slider.styles';
 import numeral from '../../commons/numeral';
 
-const createSliderWithTooltip = Slider.createSliderWithTooltip;
-const Range = createSliderWithTooltip(Slider.Range);
+const RangeTooltip = createSliderWithTooltip(Range);
 
-const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }) => (
+const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }: any) => (
   <Wrapper>
-    <Range
+    <RangeTooltip
       {...rest}
       step={0.1}
       handleStyle={handleStyle}
@@ -30,10 +29,10 @@ const HeroSlider = ({ onChange, loan, minAPR, maxAPR, ...rest }) => (
     />
 
     <LabelLess>
-      {numeral(minAPR).format()}% APR ({numeral(loan.minMir).format()}% MIR*)
+      {`${numeral(minAPR).format()}% APR (${numeral(loan.minMir).format()}% MIR*)`}
     </LabelLess>
     <LabelMore>
-      {numeral(maxAPR).format()}% APR ({numeral(loan.maxMir).format()}% MIR*)
+      {`${numeral(maxAPR).format()}% APR (${numeral(loan.maxMir).format()}% MIR*)`}
     </LabelMore>
   </Wrapper>
 );

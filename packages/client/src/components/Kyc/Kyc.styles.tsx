@@ -32,7 +32,7 @@ export const OnGoBackButton = styled.div`
   justify-content: center;
   padding: 5% 0;
 `;
-/**************** Bloom **************/
+/*  Bloom  */
 
 export const KycWrapper = styled.div`
   display: flex;
@@ -151,7 +151,8 @@ export const KycButtonWrapper = styled.div`
   width: 100%;
 `;
 
-/*export const KycButton = styled.button`
+/*
+  export const KycButton = styled.button`
   height: 48px;
   width: 100%;
   padding: 15px 0px;
@@ -166,7 +167,8 @@ export const KycButtonWrapper = styled.div`
   :disabled {
     opacity: 0.4;
   }
-`;*/
+`;
+*/
 
 export const KycButton = styled.div`
   display: flex;
@@ -217,7 +219,8 @@ export const KycButtonLinkIcon = styled(Icon)`
   color: #3c4251;
 `;
 
-/*export const KycSumSub = styled(KycButton)`
+/*
+export const KycSumSub = styled(KycButton)`
   background: ${theme.gradient.sumSub};
 `;
 
@@ -231,7 +234,8 @@ export const KycBloom = styled(KycButton)`
   span {
     padding: 0 10px;
   }
-`;*/
+`;
+*/
 
 export const LinkWrap = styled.div`
   text-align: center;

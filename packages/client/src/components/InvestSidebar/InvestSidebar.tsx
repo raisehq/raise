@@ -29,7 +29,7 @@ const InvestSidebar = () => {
     store: {
       loan: { suggested },
       user: {
-        details: { kyc_status }
+        details: { kyc_status: kycStatus }
       }
     }
   }: any = useRootContext();
@@ -44,7 +44,7 @@ const InvestSidebar = () => {
   const [selectedCoin, setCoin] = useState(coin?.text);
   const connected = hasProvider && unlocked && accountMatches && networkMatches;
 
-  const userActivated = connected && kyc_status === 3;
+  const userActivated = connected && kycStatus === 3;
 
   const closeSidebar = () => {
     setDisplay(false);
@@ -63,8 +63,8 @@ const InvestSidebar = () => {
     }
   }, [loanId]);
 
-  const getInvestAction = stage => {
-    return stage.cata({
+  const getInvestAction = (current: any) =>
+    current.cata({
       Kyc: () => <VerifyKycModal />,
       Confirm: () => (
         <InvestState
@@ -94,7 +94,7 @@ const InvestSidebar = () => {
       ),
       Success: () => <SuccessState setStage={setStage} ui={UI} closeModal={closeSidebar} />
     });
-  };
+
   return <>{getInvestAction(stage)}</>;
 };
 

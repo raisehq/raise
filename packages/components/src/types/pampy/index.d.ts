@@ -1,1 +1,1 @@
-declare module 'pampy'
+declare module 'pampy';

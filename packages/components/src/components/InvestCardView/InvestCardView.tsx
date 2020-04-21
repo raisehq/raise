@@ -5,9 +5,10 @@ import { useTransition, animated } from 'react-spring';
 import { CardBottom, InvestCardBody } from './InvestCardView.styles';
 import Card from '../Card';
 import AuctionAPR from '../Graphs/APRGraph';
-import { times } from '../../types';
+import { Times } from '../../types';
 import InvestInfo from './InvestInfo';
 import CardPlaceholder from '../CardPlaceholder';
+
 interface InvestProps {
   companyName: string;
   shortDescription: string;
@@ -17,7 +18,7 @@ interface InvestProps {
   currentAmount: number;
   totalAmount: number;
   maxAmount: string;
-  times: times;
+  times: Times;
   currentAPR: string;
   principal: string;
   investorCount: string;
@@ -88,8 +89,8 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
           position: 'relative',
         }}
       >
-        {transitions.map(({ item, key, props }) => (
-          <animated.div style={props} key={key}>
+        {transitions.map(({ item, key, props: pro }) => (
+          <animated.div style={pro} key={key}>
             {item.component}
           </animated.div>
         ))}

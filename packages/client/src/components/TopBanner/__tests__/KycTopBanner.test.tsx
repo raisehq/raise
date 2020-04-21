@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
@@ -23,7 +25,7 @@ describe('<KycTopBanner />', () => {
     web3Status: {}
   };
 
-  const Providers = ({ children }) => (
+  const Providers = ({ children }: any) => (
     <RootContext.Provider value={rootContextProps}>
       <AppContext.Provider value={appContextProps}>{children}</AppContext.Provider>
     </RootContext.Provider>
@@ -201,3 +203,5 @@ describe('<KycTopBanner />', () => {
     });
   });
 });
+
+/* eslint-enable */

@@ -33,16 +33,17 @@ export default (dispatch: any, state: any) => {
     }
   };
 
-  /** LENDER **/
+  // * LENDER
 
   const onGetSuggestedAuctionsSubscription = (error, data) => {
-    if (error)
+    if (error) {
       return console.error(
         '[onGetSuggestedAuctionsSubscription] error on get sugg subs :: ',
         error
       );
+    }
 
-    dispatch({ type: 'SET_SUGGESTED_AUCTIONS', data: data.loans });
+    return dispatch({ type: 'SET_SUGGESTED_AUCTIONS', data: data.loans });
   };
 
   const onGetLenderInvestmentSubscription = (error, data) => {
@@ -62,16 +63,16 @@ export default (dispatch: any, state: any) => {
         }))
       });
     }
+    return true;
   };
 
   const onGetLoansByAccountSubscription = (error, data) => {
     if (error) {
       console.error('[onGetLoansByAccountSubscription] error on get loans subs :: ', error);
-    } else {
-      if (data.users[0]) {
-        dispatch({ type: 'SET_BORROWER_LOANS', data: data.users[0].loanRequests });
-      }
+    } else if (data.users[0]) {
+      dispatch({ type: 'SET_BORROWER_LOANS', data: data.users[0].loanRequests });
     }
+    return true;
   };
 
   return {

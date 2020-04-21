@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState, Fragment } from 'react';
-import { Image } from 'semantic-ui-react';
+import React, { useContext } from 'react';
+import { Button, BloomButton } from '@raisehq/components';
 import {
   ChooseMethodWrapper,
   ChooseMethodButtonList,
   ChooseMethodSubtitleWrapper,
   ChooseMethodSubTitle
 } from './styles';
-import { IContext, Steps } from '../types';
+import { IContext } from '../types';
 import AppContext from '../App.context';
-import { Button, BloomButton } from '@raisehq/components';
 
-const AuthenticationMethods = ({ method }) => {
+const AuthenticationMethods = ({ method }: { method: string }) => {
   const { onSetStep, onSetStepWithParam } = useContext<IContext>(AppContext);
 
   return (
@@ -24,16 +23,16 @@ const AuthenticationMethods = ({ method }) => {
           onClick={() => onSetStep(method === 'Sign Up' ? 'SignUpWithEmail' : 'SignInWithEmail')()}
           size="large"
           type="secondary"
-          text={`with Email`}
-          fullWidth={true}
+          text="with Email"
+          fullWidth
         />
         <BloomButton
           onClick={() =>
             onSetStepWithParam(method === 'Sign Up' ? 'SignUpWithBloom' : 'SignInWithBloom')('')()
           }
           size="large"
-          text={`with`}
-          fullWidth={true}
+          text="with"
+          fullWidth
         />
       </ChooseMethodButtonList>
     </ChooseMethodWrapper>

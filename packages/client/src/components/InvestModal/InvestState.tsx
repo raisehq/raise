@@ -60,7 +60,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const {
     store: {
       user: {
-        details: { kyc_status }
+        details: { kyc_status: kycStatus }
       },
       user: {
         cryptoAddress: { address: account }
@@ -142,7 +142,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
     inputTokenAmount.lte(new BN('0')) ||
     value > maxAmountNum ||
     !termsCond ||
-    kyc_status !== 3;
+    kycStatus !== 3;
 
   const InvestInputProps = {
     loan,
@@ -161,6 +161,10 @@ const InvestState: React.SFC<InvestStateProps> = ({
     setTermsCond(toggleTerms);
   };
 
+  const getCoinValue = () => (
+    <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
+  );
+  // prettier-ignore
   return (
     <InvestBody>
       <InvestInput>
@@ -171,13 +175,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
         {selectedCoin !== loanCoin.text && (
           <TableItem
             title={`The equivalent in ${selectedCoin}`}
-            content={
-              <CoinValue
-                value={inputTokenAmountString}
-                name={inputCoin?.text}
-                src={inputCoinImage}
-              />
-            }
+            content={getCoinValue()}
             tooltip="How much will be charged from your account. This will be converted to the currency set by the borrower."
           />
         )}
@@ -190,8 +188,8 @@ const InvestState: React.SFC<InvestStateProps> = ({
       </InvestInput>
       <ButtonWrapper>
         <CheckContainer>
-          <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
-          to the Terms and Conditions of the Loan Agreement
+          <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />
+          I agree to the Terms and Conditions of the Loan Agreement
         </CheckContainer>
         <ContinueButton id="btn-invest-confirm" onClick={onConfirm} disabled={buttonRules}>
           Continue

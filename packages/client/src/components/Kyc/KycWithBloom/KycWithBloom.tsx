@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
+import { isMobile } from 'react-device-detect';
+import { Button, Image } from 'semantic-ui-react';
 import {
   ChooseMethodWrapper,
   GetStartedBloomHeader,
@@ -10,18 +13,15 @@ import {
   GetStartedBloomFooter,
   GetStartedBloomDescription
 } from './styles';
-import { isMobile } from 'react-device-detect';
-import { Button, Image } from 'semantic-ui-react';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
-import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
 import useRouter from '../../../hooks/useRouter';
 import { URL } from '../../../services/kyc';
 import LocalData from '../../../helpers/localData';
 import useInterval from '../../../hooks/useInterval';
 import { getUser } from '../../../services/auth';
 
-const KycWithBloom = ({ onBack, token = '' }) => {
+const KycWithBloom = ({ onBack }: any) => {
   const { history }: any = useRouter();
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
@@ -67,7 +67,7 @@ const KycWithBloom = ({ onBack, token = '' }) => {
     const resetTimeout = () => {
       setIsScreenIdle(false);
     };
-
+    // eslint-disable-next-line
     for (let i in events) {
       window.addEventListener(events[i], resetTimeout);
     }

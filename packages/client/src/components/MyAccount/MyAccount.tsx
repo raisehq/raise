@@ -22,7 +22,7 @@ const MyAccount = () => {
       user: {
         updateUser: { message: userMessage, loading: userLoading },
         updatePassword: { message: passMessage, loading: passLoading },
-        details: { id, email, username: storedUsername, kyc_status }
+        details: { id, email, username: storedUsername, kyc_status: kycStatus }
       }
     }
   }: any = useRootContext();
@@ -34,7 +34,7 @@ const MyAccount = () => {
     const userExists = await checkUsername(value);
 
     userExists.fold(
-      res => {
+      () => {
         setUsernameExists(true);
       },
       () => {
@@ -90,7 +90,7 @@ const MyAccount = () => {
     setNewPasswordRepeat('');
   };
 
-  const profileProps = { email, kyc_status, storedUsername };
+  const profileProps = { email, kyc_status: kycStatus, storedUsername };
   const updateUsernameProps = {
     username,
     storedUsername,

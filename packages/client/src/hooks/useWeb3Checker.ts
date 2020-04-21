@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import _ from 'underscore';
+import _ from 'lodash';
 import { toChecksumAddress } from 'web3-utils';
 import { NULL_ADDRESS } from '../commons/constants';
 import useForceUpdate from './useForceUpdate';
