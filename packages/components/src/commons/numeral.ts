@@ -3,7 +3,7 @@ import numeral from 'numeral';
 /** Start of number formatting */
 export const numeralFormat = '0,0.00';
 
-if (!numeral['locales']['hero']) {
+if (!numeral?.locales?.hero) {
   numeral.register('locale', 'hero', {
     delimiters: {
       thousands: '.',
@@ -15,8 +15,10 @@ if (!numeral['locales']['hero']) {
       billion: 'b',
       trillion: 't',
     },
-    ordinal: function(number) {
-      var b = number % 10;
+    ordinal: number => {
+      const b = number % 10;
+      /* eslint-disable */
+      // TODO : Try to do without ternary condition
       return b === 1 || b === 3
         ? 'er'
         : b === 2
@@ -28,6 +30,7 @@ if (!numeral['locales']['hero']) {
         : b === 9
         ? 'no'
         : 'to';
+      /* eslint-enable */
     },
     currency: {
       symbol: '€',

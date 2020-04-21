@@ -11,7 +11,6 @@ export const TopSection = styled.div`
   align-items: center;
   border-bottom: 1px solid #c5c7cb;
   padding: 10px 0;
-
   margin-top: 8px;
 `;
 
@@ -24,4 +23,3 @@ export const Logo = styled.a<LogoProps>`
   background-repeat: no-repeat;
   width: 40%;
 `;
-

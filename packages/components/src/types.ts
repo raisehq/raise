@@ -3,7 +3,7 @@ export enum AccountType {
   Lender,
 }
 
-export interface times {
+export interface Times {
   loanTerm: string;
   auctionTimeLeft: string;
   loanTermLeft: string;

@@ -15,12 +15,4 @@ export const Either = {
   either: (coor: any) => (coor ? Right(true) : Left(false)),
 };
 
-export const to = (promise: any) => {
-  return promise
-    .then((data: any) => {
-      return Right(data);
-    })
-    .catch((err: any) => {
-      return Left(err);
-    });
-};
+export const to = (promise: any) => promise.then(Right).catch(Left);

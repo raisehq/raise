@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import daggy from 'daggy';
 import { Loader, Image, List } from 'semantic-ui-react';
-import { StyledAddress as Web3Address } from './Deposit.styles';
+
 import {
   ButtonGreen,
   ButtonRetry,
@@ -19,8 +19,8 @@ import {
   DepositInput,
   CenteredText,
   FullDivider,
-  GoBack
-  //Error
+  GoBack,
+  StyledAddress as Web3Address
 } from './Deposit.styles';
 import { CardContent } from '../Layout/Layout.styles';
 import UniswapEmbedded from '../UniswapEmbedded';
@@ -44,11 +44,11 @@ const UISteps = daggy.taggedSum('UISteps', {
   Transaction: []
 });
 
-const StepNumber = props => {
-  switch (props.type) {
+const StepNumber = ({ type, number }: any) => {
+  switch (type) {
     case 'success':
       return (
-        <LabelPaddingLoader circular color={'green'}>
+        <LabelPaddingLoader circular color="green">
           <IconSuccess name="check" />
         </LabelPaddingLoader>
       );
@@ -61,7 +61,7 @@ const StepNumber = props => {
     default:
       return (
         <LabelPadding circular color="black" key="black-02">
-          {props.number}
+          {number}
         </LabelPadding>
       );
   }
@@ -75,8 +75,6 @@ const getViewResponse = (
   onContinue,
   onRetry,
   onGetRaise,
-  onToDeposit,
-  onGetRaiseInfo,
   pending
 ) => {
   const haveRaise = raiseBalance > 0;
@@ -90,7 +88,7 @@ const getViewResponse = (
 
           <Image src={`${IMAGES_PATH}img_awesome.png`} fluid />
         </CardContent>
-        <CardContent bottom_spacing={'true'}>
+        <CardContent bottom_spacing>
           <ButtonGreen onClick={onContinue}>Take me home</ButtonGreen>
         </CardContent>
       </Fragment>
@@ -124,7 +122,7 @@ const getViewResponse = (
           <FullDivider />
           <DepositInput>
             <div>Amount in USD</div>
-            <div>USD {expectedPrice} approx</div>
+            <div>{`USD ${expectedPrice} approx`}</div>
           </DepositInput>
         </CardContent>
         <CardContent centeredText>
@@ -178,7 +176,7 @@ const getViewResponse = (
           <FullDivider />
           <DepositInput>
             <div>Amount in USD</div>
-            <div>USD {expectedPrice} approx</div>
+            <div>{`USD ${expectedPrice} approx`}</div>
           </DepositInput>
         </CardContent>
         <CardContent centeredText>
@@ -234,7 +232,7 @@ const getViewResponse = (
             </SegmentPadded>
           </CardCenteredText>
         </CardContent>
-        <CardContent bottom_spacing={'true'} />
+        <CardContent bottom_spacing />
       </Fragment>
     ),
     Error: () => (
@@ -248,7 +246,7 @@ const getViewResponse = (
             <ImageSized src={`${IMAGES_PATH}img_error.png`} />
           </CardCenteredText>
         </CardContent>
-        <CardContent bottom_spacing={'true'}>
+        <CardContent bottom_spacing>
           <ButtonRetry onClick={onRetry}>Retry</ButtonRetry>
         </CardContent>
       </Fragment>

@@ -120,12 +120,15 @@ export const CardDescription = styled(Card.Description)`
     }
   }
 `;
+
+// prettier-ignore
 export const CardContent = styled(Card.Content)`
   &&& {
     border-top: none !important;
     padding: ${({ box }) => {
-      return box === 'separated' ? '20px 50px 60px 50px !important' : '50px !important';
-    }}
+    const resp = box === 'separated' ? '20px 50px 60px 50px !important' : '50px !important';
+    return resp;
+  }}
     font-size: 14px;
   }
 `;

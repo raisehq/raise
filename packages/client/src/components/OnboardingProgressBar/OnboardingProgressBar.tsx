@@ -1,4 +1,7 @@
 import React from 'react';
+
+import { Icon } from 'semantic-ui-react';
+
 import {
   ProgressBarWrapper,
   ProgressBarStep,
@@ -7,22 +10,23 @@ import {
   MobileProgressSteps,
   MobileProgressBarWrapper
 } from './styles';
-import { Icon } from 'semantic-ui-react';
 
-export const OnboardingProgressBar = ({ step, isMobile }) => {
+export const OnboardingProgressBar = ({ step, isMobile }: any) => {
   const steps = [{ 0: 'Get Started' }, { 1: 'Connect Wallet' }, { 2: 'Verify Account' }];
   return (
     <>
       {isMobile ? (
         steps.map((item, index) => {
-          return index === step ? (
-            <MobileProgressBarWrapper key={index}>
-              <MobileProgressSteps>{`Step ${step + 1} of ${steps.length}`}</MobileProgressSteps>
-              <ProgressBarStep completed current>
-                <ProgressBarText>{item[index]}</ProgressBarText>
-              </ProgressBarStep>
-            </MobileProgressBarWrapper>
-          ) : null;
+          const resp =
+            index === step ? (
+              <MobileProgressBarWrapper key={index}>
+                <MobileProgressSteps>{`Step ${step + 1} of ${steps.length}`}</MobileProgressSteps>
+                <ProgressBarStep completed current>
+                  <ProgressBarText>{item[index]}</ProgressBarText>
+                </ProgressBarStep>
+              </MobileProgressBarWrapper>
+            ) : null;
+          return resp;
         })
       ) : (
         <ProgressBarWrapper>
@@ -31,7 +35,7 @@ export const OnboardingProgressBar = ({ step, isMobile }) => {
               <ProgressBarText>{item[index]}</ProgressBarText>
               {index + 1 < steps.length && (
                 <ProgressBarIcon>
-                  <Icon name="angle right"></Icon>
+                  <Icon name="angle right" />
                 </ProgressBarIcon>
               )}
             </ProgressBarStep>
@@ -41,3 +45,4 @@ export const OnboardingProgressBar = ({ step, isMobile }) => {
     </>
   );
 };
+export default OnboardingProgressBar;

@@ -7,9 +7,11 @@ interface CoinProps {
   pxWidth?: string | null | undefined;
   pxHeight?: string | null | undefined;
 }
-export const Coin: React.SFC<CoinProps> = ({ src, name, ...props }) => (
+export const Coin: React.SFC<CoinProps> = ({ src, name, ...props }: any) => (
   <CoinBox {...props}>
     <CoinImage src={src} />
     {name ? <div>{name}</div> : null}
   </CoinBox>
 );
+
+export default Coin;

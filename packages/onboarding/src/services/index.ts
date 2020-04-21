@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { getHost, to, Left, Right, Either } from '../utils/index';
 import { isMobile } from 'react-device-detect';
+import { getHost, to, Left, Right, Either } from '../utils/index';
 
 const COMMON_HEADERS = {
   headers: {
@@ -34,7 +34,8 @@ export const signUp = async data => {
     data
   };
 
-  return await to(axios(config));
+  const response = await to(axios(config));
+  return response;
 };
 
 export const signIn = async data => {
@@ -45,7 +46,8 @@ export const signIn = async data => {
     data
   };
 
-  return await to(axios(config));
+  const response = await to(axios(config));
+  return response;
 };
 
 export const recovery = async email => {
@@ -55,7 +57,8 @@ export const recovery = async email => {
     ...COMMON_HEADERS
   };
 
-  return await to(axios(config));
+  const response = await to(axios(config));
+  return response;
 };
 
 export const changePassword = async (token, password) => {
@@ -65,7 +68,8 @@ export const changePassword = async (token, password) => {
     }
   };
 
-  return await to(axios.put(`${URL.CHANGE_PASSWORD}`, { token, password: password }, config));
+  const response = await to(axios.put(`${URL.CHANGE_PASSWORD}`, { token, password }, config));
+  return response;
 };
 
 export const validateToken = async ({ token }) => {
@@ -75,7 +79,8 @@ export const validateToken = async ({ token }) => {
     ...COMMON_HEADERS
   };
 
-  return await to(axios(config));
+  const response = await to(axios(config));
+  return response;
 };
 export const updateToken = async token => {
   const config: any = {
@@ -84,7 +89,8 @@ export const updateToken = async token => {
     ...COMMON_HEADERS
   };
 
-  return await to(axios(config));
+  const response = await to(axios(config));
+  return response;
 };
 
 export const checkUsername = async username => {
@@ -100,7 +106,7 @@ export const checkUsername = async username => {
 
   return request.fold(
     () => Left(null),
-    request => Either.either(request.data.exist === 0)
+    resp => Either.either(resp.data.exist === 0)
   );
 };
 
@@ -134,7 +140,7 @@ export const checkBlockedCountry = async countryid => {
 
   return request.fold(
     () => Left(null),
-    request => Either.either(request.data.exist === 0)
+    resp => Either.either(resp.data.exist === 0)
   );
 };
 
@@ -158,10 +164,9 @@ const checkDappBrowserCallback = token => {
 
 export const redirectFromBloomApp = token => {
   if (isMobile) {
-    checkDappBrowserCallback(token);
-  } else {
-    return URL.REDIRECT.replace(':token', token);
+    return checkDappBrowserCallback(token);
   }
+  return URL.REDIRECT.replace(':token', token);
 };
 
 export const verifyBloomLogin = async tokenBloom => {
@@ -172,5 +177,6 @@ export const verifyBloomLogin = async tokenBloom => {
     data: { bloom_id: tokenBloom }
   };
 
-  return await to(axios(config));
+  const resp = await to(axios(config));
+  return resp;
 };

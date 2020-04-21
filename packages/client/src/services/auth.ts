@@ -1,4 +1,4 @@
-import axios from './common';
+import axios from './common'; // eslint-disable-line
 import { getHost, to, Left, Right, Either } from '../utils/index';
 import LocalData from '../helpers/localData';
 import * as Types from '../store/store.types';
@@ -43,7 +43,7 @@ export const signUp = async (data: Types.onSignup) => {
         throw new Error(rawResponse.data.message || 'Error user creation');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 
@@ -65,7 +65,7 @@ export const signIn = async (data: Types.onSignin) => {
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message} `);
   }
 };
 
@@ -86,7 +86,7 @@ export const recovery = async ({ email }: Types.onRecovery) => {
         throw new Error(rawResponse.data.message || 'Recovery');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 
@@ -123,7 +123,7 @@ export const validateToken = async ({ token }: Types.ValidateToken) => {
         throw new Error(rawResponse.data.message || 'Error ValidateToken');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 export const updateToken = async ({ token }: Types.UpdateToken) => {
@@ -142,7 +142,7 @@ export const updateToken = async ({ token }: Types.UpdateToken) => {
         throw new Error(rawResponse.data.message || 'Error UpdateToken');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 
@@ -183,7 +183,7 @@ export const refreshToken = async () => {
         throw new Error(rawResponse.data || 'Error UpdateToken');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 
@@ -210,7 +210,7 @@ export const verifyAuth = async () => {
         throw new Error(rawResponse.data || 'Error verify auth token');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 
@@ -227,7 +227,7 @@ export const checkUsername = async username => {
 
   return request.fold(
     () => Left(null),
-    request => Either.either(request.data.exist === 0)
+    req => Either.either(req.data.exist === 0)
   );
 };
 
@@ -244,6 +244,6 @@ export const checkEmail = async email => {
 
   return request.fold(
     () => Left(null),
-    request => (request.status === 404 ? Right('Not exist') : Left('Exist'))
+    req => (req.status === 404 ? Right('Not exist') : Left('Exist'))
   );
 };

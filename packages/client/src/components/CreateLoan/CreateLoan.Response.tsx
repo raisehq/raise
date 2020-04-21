@@ -2,14 +2,14 @@ import React from 'react';
 import daggy from 'daggy';
 import { Link } from 'react-router-dom';
 import { Loader, Header } from 'semantic-ui-react';
+import { Button } from '@raisehq/components';
+
 import {
   LoanConfirmation,
   NewLoanAnchor,
   WaitingButton,
   ButtonContainer
 } from './CreateLoan.styles';
-import { Button } from '@raisehq/components';
-
 import ConfirmLoan from './ConfirmLoan';
 
 export const UI = daggy.taggedSum('UI', {
@@ -50,10 +50,10 @@ export const getLoanAction = (stage, values, methods) => {
             as={Link}
             to="/"
             text="Check your loans"
-            type={'secondary'}
-            size={'small'}
+            type="secondary"
+            size="small"
             disabled={false}
-            fullWidth={true}
+            fullWidth
           />
         </ButtonContainer>
         <NewLoanAnchor onClick={onRetry}>Create a new loan</NewLoanAnchor>
@@ -68,10 +68,10 @@ export const getLoanAction = (stage, values, methods) => {
             idAttr="btn-retry"
             onClick={onRetry}
             text="Retry"
-            type={'secondary'}
-            size={'large'}
+            type="secondary"
+            size="large"
             disabled={false}
-            fullWidth={true}
+            fullWidth
           />
         </ButtonContainer>
       </LoanConfirmation>

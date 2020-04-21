@@ -6,7 +6,7 @@ interface BurgerProps {
   onClick(): any;
 }
 
-const Burger: React.SFC<BurgerProps> = ({ onClick }) => (
+const Burger: React.SFC<BurgerProps> = ({ onClick }: any) => (
   <BurgerButton icon onClick={onClick}>
     <Icon name="bars" size="large" />
   </BurgerButton>

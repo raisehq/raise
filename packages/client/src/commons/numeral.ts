@@ -3,7 +3,7 @@ import numeral from 'numeral';
 /** Start of number formatting */
 export const numeralFormat = '0,0.00';
 
-if (!numeral['locales']['hero']) {
+if (!numeral?.locales?.hero) {
   numeral.register('locale', 'hero', {
     delimiters: {
       thousands: '.',
@@ -15,6 +15,7 @@ if (!numeral['locales']['hero']) {
       billion: 'b',
       trillion: 't'
     },
+    /* eslint-disable */
     ordinal: function(number) {
       var b = number % 10;
       return b === 1 || b === 3
@@ -33,6 +34,7 @@ if (!numeral['locales']['hero']) {
       symbol: '€'
     }
   });
+  /* eslint-enable */
 }
 
 numeral.locale('hero');

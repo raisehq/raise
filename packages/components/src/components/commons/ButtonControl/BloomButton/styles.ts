@@ -7,7 +7,7 @@ interface ButtonProps {
   disabled: boolean;
   size: string;
 }
-
+/*eslint-disable */
 export const ButtonStyled = styled(Button)<ButtonProps>`
   &&& {
     border-radius: 3px;
@@ -21,8 +21,12 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
 
     padding: ${props => globalTheme.buttonSizes[props.size].padding};
     height: ${props => globalTheme.buttonSizes[props.size].height};
-    width: ${props =>
-      props.fullWidth ? '100%' : globalTheme.buttonSizes[props.size].width};
+    width: ${props => {
+      const resp = props.fullWidth
+        ? '100%'
+        : globalTheme.buttonSizes[props.size].width;
+      return resp;
+    }};
     font-size: ${props => globalTheme.buttonSizes[props.size].fontSize};
     line-height: ${props => globalTheme.buttonSizes[props.size].lineHeight};
 
@@ -40,6 +44,7 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
     }
   }
 `;
+/* eslint-enable */
 
 export const ButtonContent = styled.div`
   display: flex;

@@ -63,7 +63,7 @@ export const getLenderDashboard = async (accountId, offset) => {
 
   return response.fold(
     error => Left(error),
-    response => Right(response.data.data.lender)
+    resp => Right(resp.data.data.lender)
   );
 };
 
@@ -104,6 +104,6 @@ export const getOriginatorDashboard = async (accountId, offset) => {
 
   return response.fold(
     error => Left(error),
-    response => Right(response.data.data.originator)
+    resp => Right(resp.data.data.originator)
   );
 };

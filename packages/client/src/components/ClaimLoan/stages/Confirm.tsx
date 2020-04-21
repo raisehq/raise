@@ -9,20 +9,21 @@ import {
   ResumeItemBox
 } from '../ClaimLoan.styles';
 import useWallet from '../../../hooks/useWallet';
-import { ClaimLoanContext, Stages } from '../ClaimLoan';
+import ClaimLoanContext from '../ClaimLoan.context';
+import Stages from '../ClaimLoan.stages';
 import { ResumeItemProps } from '../../InvestModal/types';
 import { useAppContext } from '../../../contexts/AppContext';
 import { useRootContext } from '../../../contexts/RootContext';
 import useGetCoin from '../../../hooks/useGetCoin';
 
-const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }) => (
+const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }: any) => (
   <ResumeItemBox>
     <p>{title}</p>
     <p>{value}</p>
   </ResumeItemBox>
 );
 
-const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
+const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }: any) => (
   <ResumeItemBoxBig>
     <p>{title}</p>
     <p>{value}</p>

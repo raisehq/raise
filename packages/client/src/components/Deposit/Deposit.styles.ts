@@ -1,5 +1,15 @@
 import styled from 'styled-components';
-import { Grid, Button, Image, Loader, Segment, Label, List, Icon, Divider } from 'semantic-ui-react';
+import {
+  Grid,
+  Button,
+  Image,
+  Loader,
+  Segment,
+  Label,
+  List,
+  Icon,
+  Divider
+} from 'semantic-ui-react';
 import Web3Address from '../Web3Address';
 import { device } from '../../commons/breakpoints';
 
@@ -24,21 +34,21 @@ export const ListItemPadding = styled(List.Item)`
   }
 `;
 export const GoBack = styled(Button)`
-&&&&&&&&& {
-  width: 122px;
-  font-size: 18px;
-  margin: 81px auto 0px;
-}
-`
+  &&&&&&&&& {
+    width: 122px;
+    font-size: 18px;
+    margin: 81px auto 0px;
+  }
+`;
 
 export const DepositInput = styled.div<DepositInputProps>`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: ${({ big }) => big ? '18px' : '14px'};
-  color: ${({ big }) => big ? '#3C4251' : '#5A5A5A'};
-`
+  font-size: ${({ big }) => (big ? '18px' : '14px')};
+  color: ${({ big }) => (big ? '#3C4251' : '#5A5A5A')};
+`;
 
 export const LabelPadding = styled(Label)`
   &&& {
@@ -129,10 +139,10 @@ export const CenteredText = styled.div`
 `;
 
 export const FullDivider = styled(Divider)`
-&&&:not(.vertical):not(.horizontal) {
-  border-top: 1px solid #979797;
-}
-`
+  &&&:not(.vertical):not(.horizontal) {
+    border-top: 1px solid #979797;
+  }
+`;
 export const CardTitle = styled.div`
   color: #3c4251;
   font: 26px bold;
@@ -150,12 +160,12 @@ export const CardSubtitle = styled.div`
   }
 `;
 export const Error = styled.p`
-&&&&&& {
-  margin-top: 20px;
-  color: #99a6b6;
-  text-align: center;
-}
-`
+  &&&&&& {
+    margin-top: 20px;
+    color: #99a6b6;
+    text-align: center;
+  }
+`;
 export const Amount = styled.div`
   &&& {
     color: #5c5d5d;
@@ -187,33 +197,33 @@ export const Amount = styled.div`
 `;
 
 export const BalanceAmount = styled.div`
-&&& {
-  color: #5c5d5d;
-  font-size: 50px;
-  font-weight: 300;
-  height: 50px;
-  text-align: center;
-  line-height: normal;
-  margin: 0px 60px;
-  position: relative;
-}
+  &&& {
+    color: #5c5d5d;
+    font-size: 50px;
+    font-weight: 300;
+    height: 50px;
+    text-align: center;
+    line-height: normal;
+    margin: 0px 60px;
+    position: relative;
+  }
 
-&&&::before {
-  color: #7f8fa4;
-  font-size: 12px;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  content: 'Balance';
-}
-&&&::after {
-  color: #7f8fa4;
-  font-size: 12px;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  content: 'RAISE';
-}
+  &&&::before {
+    color: #7f8fa4;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    content: 'Balance';
+  }
+  &&&::after {
+    color: #7f8fa4;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    content: 'RAISE';
+  }
 `;
 
 export const HowToGetHeroToken = styled.a`
@@ -262,7 +272,7 @@ export const ButtonGreen = styled(Button)`
     font-weight: bold;
   }
   &&&:disabled {
-    background: rgba(0,0,0,0.3)
+    background: rgba(0, 0, 0, 0.3);
   }
 `;
 

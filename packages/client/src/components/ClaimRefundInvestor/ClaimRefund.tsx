@@ -1,5 +1,5 @@
-import React, { useState, createContext } from 'react';
-import daggy from 'daggy';
+import React, { useState } from 'react';
+
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from './types';
 
@@ -7,21 +7,13 @@ import ConfirmStage from './stages/Confirm';
 import ProcessingStage from './stages/Processing';
 import SuccessStage from './stages/Success';
 import ErrorStage from './stages/Error';
-import { RefundButton } from './ClaimRefund.styles';
-import { Modal, ExitButton } from './ClaimRefund.styles';
+import { RefundButton, Modal, ExitButton } from './ClaimRefund.styles';
+import Stages from './ClaimRefund.stages';
+import ClaimRefundContext from './ClaimRefund.context';
 import { getCalculations } from '../../utils/loanUtils';
 import useGetCoin from '../../hooks/useGetCoin';
 
-export const ClaimRefundContext = createContext({});
-
-export const Stages = daggy.taggedSum('UI', {
-  Confirm: [],
-  Processing: [],
-  Success: [],
-  Error: []
-});
-
-const ClaimRefundCTA: React.SFC<InvestModalProps> = ({ loan }) => {
+const ClaimRefundCTA: React.SFC<InvestModalProps> = ({ loan }: any) => {
   const coin = useGetCoin(loan);
   const calculatedLoan = getCalculations(loan, coin.decimals);
   const [open, setOpen] = useState(false);
@@ -35,14 +27,13 @@ const ClaimRefundCTA: React.SFC<InvestModalProps> = ({ loan }) => {
     setOpen(false);
   };
 
-  const getStage = stage => {
-    return stage.cata({
+  const getStage = current =>
+    current.cata({
       Confirm: () => <ConfirmStage />,
       Processing: () => <ProcessingStage />,
       Success: () => <SuccessStage />,
       Error: () => <ErrorStage />
     });
-  };
 
   return (
     <ClaimRefundContext.Provider value={{ loan, setStage, closeModal, calculatedLoan }}>

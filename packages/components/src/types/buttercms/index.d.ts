@@ -1,1 +1,1 @@
-declare module 'buttercms'
+declare module 'buttercms';

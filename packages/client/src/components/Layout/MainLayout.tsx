@@ -12,7 +12,7 @@ interface IDefaultProps {
 const Layout: React.SFC<IDefaultProps> = ({ component: Component, ...rest }: any) => (
   <Route
     {...rest}
-    render={matchProps => (
+    render={() => (
       <HeroLayout>
         <Wrapper>
           <Content>

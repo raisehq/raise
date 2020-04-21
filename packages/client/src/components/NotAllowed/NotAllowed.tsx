@@ -5,7 +5,7 @@ interface NotAllowedProps {
   to: string;
 }
 
-const NotAllowed: React.SFC<NotAllowedProps> = ({ to }) => {
+const NotAllowed: React.SFC<NotAllowedProps> = ({ to }: { to: string }) => {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {

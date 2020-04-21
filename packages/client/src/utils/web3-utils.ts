@@ -1,6 +1,6 @@
 import web3Utils from 'web3-utils';
-import ABI_ERC20 from '../commons/erc20';
 import BigNumber from 'bignumber.js';
+import ABI_ERC20 from '../commons/erc20';
 
 BigNumber.config({ EXPONENTIAL_AT: 1e9 });
 
@@ -30,7 +30,7 @@ export async function getTokenBalance(tokenAddress, address, library) {
   if (!isAddress(tokenAddress) || !isAddress(address)) {
     throw Error(`Invalid 'tokenAddress' or 'address' parameter '${tokenAddress}' or '${address}'.`);
   }
-
+  console.log('GET TOKEN BALANCE ----- ', tokenAddress, ' ---- > ', ABI_ERC20);
   return getContract(tokenAddress, ABI_ERC20, library)
     .methods.balanceOf(address)
     .call();

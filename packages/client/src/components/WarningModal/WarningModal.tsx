@@ -15,7 +15,12 @@ import {
 } from './warning.styles';
 import { WarningModalProps } from './types';
 
-const WarningModal: React.SFC<WarningModalProps> = ({ warning, open, closeModal, setCookie }) => {
+const WarningModal: React.SFC<WarningModalProps> = ({
+  warning,
+  open,
+  closeModal,
+  setCookie
+}: any) => {
   const [checked, setChecked] = useState(false);
 
   const checkboxToggle = (e, data) => {
@@ -46,7 +51,7 @@ const WarningModal: React.SFC<WarningModalProps> = ({ warning, open, closeModal,
             <OnboardingCell>
               <OnboardCheckbox onChange={checkboxToggle} />
             </OnboardingCell>
-            <OnboardingCell>I'm aware. Don't show this again.</OnboardingCell>
+            <OnboardingCell>I&apos;m aware. Don&apos;t show this again.</OnboardingCell>
           </OnboardDisclaimerBorrower>
           <WarningButton onClick={storeCookie} id="btn-warning-close">
             <ButtonText>Close</ButtonText>

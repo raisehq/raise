@@ -151,3 +151,4 @@ const globalTheme: any = {
 };
 
 export { globalTheme };
+export default globalTheme;

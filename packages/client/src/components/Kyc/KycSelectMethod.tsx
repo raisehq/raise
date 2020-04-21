@@ -53,7 +53,7 @@ const KycSelectMethod = () => {
       <OnboardingProgressBar step={3} isMobile={isMobile} />
       <KycContainer>
         <KycTitleWrapper>
-          <CardTitle>It's time to verify your account</CardTitle>
+          <CardTitle>It&apos;s time to verify your account</CardTitle>
 
           <CardSubTitle>
             <p>

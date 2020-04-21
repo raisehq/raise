@@ -3,7 +3,7 @@ import { Grid, Image } from 'semantic-ui-react';
 import { CardSized, CardContent } from '../Layout/Layout.styles';
 import { CardCenteredText, CardTitle, CardBottom } from './SupportedBrowser.styles';
 import { IMAGES_PATH } from '../../commons/constants';
-
+// prettier-ignore
 const SupportedBrowser = () => (
   <Grid.Row>
     <CardSized centered>
@@ -15,9 +15,13 @@ const SupportedBrowser = () => (
         </CardCenteredText>
         <CardBottom>
           <span>
-            <a href="https://www.mozilla.org/firefox"> Firefox</a>|
-            <a href="https://www.google.com/chrome">Chrome</a>|
-            <a href="https://brave.com/">Brave</a>|<a href="https://www.opera.com/">Opera</a>
+            <a href="https://www.mozilla.org/firefox"> Firefox</a>
+            |
+            <a href="https://www.google.com/chrome">Chrome</a>
+            |
+            <a href="https://brave.com/">Brave</a>
+            |
+            <a href="https://www.opera.com/">Opera</a>
           </span>
         </CardBottom>
       </CardContent>

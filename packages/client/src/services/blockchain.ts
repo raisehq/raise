@@ -33,7 +33,7 @@ export const checkDeposit = async () => {
         throw new Error(rawResponse.data.message || 'Error checkStatus');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 
@@ -54,7 +54,7 @@ export const getDepositAddress = async () => {
         throw new Error(rawResponse.data.message || 'Error checkStatus');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 
@@ -92,6 +92,6 @@ export const getReferralStatus = async (address, network) => {
         throw new Error(rawResponse.data.message || 'Error fetch contracts');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };

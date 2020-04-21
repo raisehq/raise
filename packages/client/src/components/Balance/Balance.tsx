@@ -1,12 +1,10 @@
 import React from 'react';
 import { BalanceBox, Value } from './Balance.styles';
 
-const Balance = props => (
+const Balance = ({ balance, coin: { value }, ...props }: any) => (
   <BalanceBox {...props}>
     <div>Your balance: </div>
-    <Value>
-      {props.balance} {props.coin.value}
-    </Value>
+    <Value>{`${balance} ${value}`}</Value>
   </BalanceBox>
 );
 

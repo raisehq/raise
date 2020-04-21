@@ -12,3 +12,4 @@ export const WarningSight = () => (
     </div>
   </WarningSignWrapper>
 );
+export default WarningSight;

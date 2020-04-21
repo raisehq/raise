@@ -2,16 +2,15 @@ import React from 'react';
 import { KYCIcon, EmailBox, ReadTitle } from '../MyAccount.styles';
 import { KycStatus } from '../../../commons/kycStatus';
 
-const ProfileInfo = ({ email, kyc_status, storedUsername }) => {
-  const kycStatus =
-    kyc_status === null || kyc_status === undefined ? KycStatus.Error : KycStatus[kyc_status];
+const ProfileInfo = ({ email, kyc_status: kycStatus, storedUsername }: any) => {
+  const kycStatusEn = kycStatus === null || kycStatus === undefined ? KycStatus.Error : kycStatus;
 
   return (
     <>
       <ReadTitle>KYC status</ReadTitle>
       <p>
-        {kyc_status !== 3 ? 'Account not verified' : 'Account verified'}
-        <KYCIcon name="circle" value={KycStatus[kycStatus]} />
+        {kycStatusEn !== KycStatus.Completed ? 'Account not verified' : 'Account verified'}
+        <KYCIcon name="circle" value={kycStatusEn} />
       </p>
       <EmailBox>
         <ReadTitle>Email</ReadTitle>

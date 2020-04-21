@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useWallet from './useWallet';
-import { Stages } from '../components/ClaimRepay/ClaimRepay';
+import Stages from '../components/ClaimRepay/ClaimRepay.stages';
 import { useAppContext } from '../contexts/AppContext';
 import { useRootContext } from '../contexts/RootContext';
 

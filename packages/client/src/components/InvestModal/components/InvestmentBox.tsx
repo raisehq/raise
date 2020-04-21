@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Card as RaiseCard } from '@raisehq/components';
 import { tradeExactTokensForTokensWithData, getTokenReserves } from '@uniswap/sdk';
 import { TokenReservesNormalized } from '@uniswap/sdk/dist/types';
-import { InvestHeader } from '../InvestModal.styles';
+import { InvestHeader } from './InvestmentBox.styles';
 import LoanInput from '../../CreateLoan/LoanInput';
 import CoinSelectorRaw from '../../CoinSelector';
 import RawCoin from '../../Coin';
@@ -199,7 +199,7 @@ const InvestmentBox = ({
   setCoin,
   maxAmountNum,
   ...props
-}) => {
+}: any) => {
   const [inputReserves, setInputReserves] = useState<TokenReservesNormalized>();
   const [outputReserves, setOutputReserves] = useState<TokenReservesNormalized>();
   const { principal, maxAmount } = loan;
@@ -209,8 +209,8 @@ const InvestmentBox = ({
   }: any = useAppContext();
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin.icon}`;
 
-  const handleChange = (e, { value }) => {
-    setCoin(value);
+  const handleChange = (e, { value: newValue }: any) => {
+    setCoin(newValue);
   };
 
   const fundAll = (loanCurrency: CoinsType, selectedCurrency: CoinsType) => async divisor => {

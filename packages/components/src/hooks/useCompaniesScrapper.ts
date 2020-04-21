@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
+import map from 'lodash/map';
 import { COMPANY_LOGOS } from '../commons/constants';
 import useDefiPulse from './useDefiPulse';
 import useRaiseData from './useRaiseData';
-import map from 'lodash/map';
 
 const defiPulseToCompany = (defiPulseData: any) => {
   if (defiPulseData.length) {
@@ -37,7 +37,7 @@ const useCompaniesScrapper = () => {
       const defiPulseCompanies = defiPulseToCompany(defiPulseData);
       setCompanies([raiseCompany, ...defiPulseCompanies]);
     }
-  }, [defiPulseData, raiseCompany]);
+  }, [defiPulseData, raiseCompany, companies]);
 
   return companies;
 };
