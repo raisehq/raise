@@ -185,7 +185,6 @@ export function Updater() {
       };
     };
   }>({});
-  console.log('library', library);
   // generic balances fetcher abstracting away difference between fetching ETH + token balances
   const fetchBalance = useCallback(
     (address: string, tokenAddress: string) =>
@@ -211,7 +210,6 @@ export function Updater() {
               debouncedState[chainId][address][tokenAddress]?.blockNumber ?? cachedFetchedAsOf;
             if (fetchedAsOf !== blockNumber) {
               // fetch the balance...
-              console.log('BlogNumber ', blockNumber);
               fetchBalance(address, tokenAddress).then(value => {
                 update(chainId, address, tokenAddress, value, blockNumber);
               });

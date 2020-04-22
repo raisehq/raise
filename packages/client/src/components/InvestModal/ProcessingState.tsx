@@ -96,7 +96,6 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
 
       if (valueBN.gt(new BN(amountApproved))) {
         try {
-          console.log(tokenAddress, DAIProxy.options.address, MAX_VALUE);
           await followTx.watchTx(
             ERC20Contract.methods
               .approve(DAIProxy.options.address, MAX_VALUE)

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Card } from '@raisehq/components';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
-import { InvestModal } from '../InvestModal';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import useGetCoin from '../../hooks/useGetCoin';
 import CardTopSection from './CardTopSection';
 import { Content } from './Dashboard.styles';
+
+const InvestSidebar = lazy(() => import('../InvestSidebar/InvestWithSidebar'));
 
 const Auction = ({ auction }: { auction: any }) => {
   const { companyName, logo, route, slug } = useBorrowerInfo(auction.originator);
@@ -52,7 +53,9 @@ const Auction = ({ auction }: { auction: any }) => {
           <Card.Vertical />
           <Card.Row notop title="Expected ROI" content={expectedRoiFormated} />
         </Card.Grid>
-        <InvestModal loan={auction} />
+        <Suspense fallback={<div>...</div>}>
+          <InvestSidebar loan={auction} />
+        </Suspense>
       </Card.Content>
     </Card>
   );
