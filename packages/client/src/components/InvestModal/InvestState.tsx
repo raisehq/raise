@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
+import { tradeTokensForExactTokens } from '@uniswap/sdk';
 import BN from 'bn.js';
 import styled from 'styled-components';
-import { tradeTokensForExactTokens } from '@uniswap/sdk';
 import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import { useRootContext } from '../../contexts/RootContext';

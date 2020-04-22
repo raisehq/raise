@@ -21,7 +21,6 @@ import Kyc from '../components/Kyc';
 import KycSuccess from '../components/Kyc/KycSuccess';
 import KycSelectMethod from '../components/Kyc/KycSelectMethod';
 import KycWithBloom from '../components/Kyc/KycWithBloom/KycWithBloom';
-import Deposit from '../components/Deposit';
 import { Web3Check } from '../components/Web3Check';
 import { BorrowerProfile } from '../components/BorrowerProfile';
 import { TopMobileMenu, Menu } from './Menu';
@@ -29,7 +28,7 @@ import DesktopHeader from './DesktopHeader';
 import NotFound404 from '../components/BorrowerProfile/Borrower404';
 
 import Toast, { StyledToastContainer } from './Toast';
-import { Sidebar, InvestSidebar } from './InvestSidebar';
+import Sidebar from './InvestSidebar/Sidebar';
 
 const App = () => {
   const {
@@ -125,18 +124,18 @@ const App = () => {
       <Dimmer active={isLoading} inverted>
         <Loader>Loading app</Loader>
       </Dimmer>
-      <Onboarding
-        blur={false}
-        open={showOnboarding}
-        history={history}
-        closeButton
-        onClose={hiddeOnboarding}
-        initStep={troggleOnboarding}
-        pathRedirect={window.location.pathname}
-        mountNode={modalRefs.current}
-      />
       {!isLoading && (
         <>
+          <Onboarding
+            blur={false}
+            open={showOnboarding}
+            history={history}
+            closeButton
+            onClose={hiddeOnboarding}
+            initStep={troggleOnboarding}
+            pathRedirect={window.location.pathname}
+            mountNode={modalRefs.current}
+          />
           <StyledToastContainer
             autoClose={5000}
             hideProgressBar={false}
@@ -152,13 +151,6 @@ const App = () => {
           <TransitionGroup component={null}>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
               <Switch>
-                <Web3Layout
-                  layout={SimpleLayout}
-                  exact
-                  path="/deposit"
-                  component={Deposit}
-                  roles={[2]}
-                />
                 <Web3Layout
                   marketplace
                   layout={SimpleLayout}
@@ -245,9 +237,7 @@ const App = () => {
         </>
       )}
       <div ref={modalRefs} />
-      <Sidebar>
-        <InvestSidebar />
-      </Sidebar>
+      <Sidebar></Sidebar>
     </>
   );
 };
