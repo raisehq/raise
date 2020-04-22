@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BN from 'bn.js';
 import useGetCoinByAddress from '../../hooks/useGetCoinByAddress';
-import { fromDecimalFixed, fromDecimal } from '../../utils/web3-utils';
+import { fromDecimalFixed } from '../../utils/web3-utils';
 import {
   TokenImage,
   TokenName,

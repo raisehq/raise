@@ -85,7 +85,7 @@ const SignInWithEmail = () => {
     setRecaptcha(captchaResponse);
   };
 
-  const onCaptchaExpired = captchaResponse => {
+  const onCaptchaExpired = (/* captchaResponse */) => {
     recaptchaRef.current.reset();
   };
 
