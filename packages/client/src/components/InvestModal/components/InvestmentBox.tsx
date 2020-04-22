@@ -69,6 +69,9 @@ const BalanceWrapper = styled.div`
   &&&& ${CoinSelector} {
     max-width: 100%;
   }
+  &&&& .ui.dropdown .menu {
+    width: 100%;
+  }
   &&&& .ui.selection.dropdown > .dropdown.icon {
     top: unset;
     padding: unset;

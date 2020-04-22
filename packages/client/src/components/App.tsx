@@ -30,7 +30,7 @@ import NotFound404 from '../components/BorrowerProfile/Borrower404';
 import Toast, { StyledToastContainer } from './Toast';
 import Sidebar from './InvestSidebar/Sidebar';
 
-const InvestWithSidebar = lazy(() => import('./InvestSidebar/InvestWithSidebar'));
+const InvestSidebar = lazy(() => import('./InvestSidebar/InvestSidebar'));
 
 const App = () => {
   const {
@@ -241,7 +241,7 @@ const App = () => {
       <div ref={modalRefs} />
       <Sidebar>
         <Suspense fallback={<div />}>
-          <InvestWithSidebar />
+          <InvestSidebar />
         </Suspense>
       </Sidebar>
     </>
