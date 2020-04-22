@@ -37,15 +37,7 @@ const CoinSelector = ({ loanCoin, value, ...rest }: any) => {
   const CurrentSelection = (
     <TokenBalance value={value} name={value} key={value} imageUrl={TOKEN_URLS[value]} />
   );
-  return (
-    <BalanceDropdown
-      trigger={CurrentSelection}
-      value={value}
-      selection
-      options={options}
-      {...rest}
-    />
-  );
+  return <BalanceDropdown trigger={CurrentSelection} value={value} options={options} {...rest} />;
 };
 
 export default CoinSelector;

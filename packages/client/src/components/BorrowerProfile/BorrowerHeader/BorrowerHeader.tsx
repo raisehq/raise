@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import InvestButton from './InvestButton';
 import {
   LoanHeader,
   LoanHeaderItem,
@@ -8,7 +9,6 @@ import {
   LoanHeaderList,
   ProgressRow,
   ProgressContainer,
-  InvestButton,
   LoanButtonRow,
   LoanDaysLeft,
   LoanDaysLeftWrapper,
@@ -70,7 +70,9 @@ const BorrowerHeader = ({ auction }: any) => {
       </LoanHeaderList>
       {auction && (
         <LoanButtonRow>
-          <InvestButton loan={auction} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <InvestButton loan={auction} />
+          </Suspense>
         </LoanButtonRow>
       )}
     </LoanHeader>

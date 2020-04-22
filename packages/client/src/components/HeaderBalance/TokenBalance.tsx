@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BN from 'bn.js';
 import useGetCoinByAddress from '../../hooks/useGetCoinByAddress';
-import { fromDecimalFixed, fromDecimal } from '../../utils/web3-utils';
+import { fromDecimalFixed } from '../../utils/web3-utils';
 import {
   TokenImage,
   TokenName,
@@ -33,8 +33,6 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }: any) => {
   const balance: BN = useAddressBalance(account, contractAddresses[chainId]?.[name]);
   const coin = useGetCoinByAddress(contractAddresses[chainId]?.[name]);
   const stringBalance: string = fromDecimalFixed(balance.toString(10), coin.decimals) || '0.00';
-  const stringBalanceDos: string = fromDecimal(balance.toString(10), coin.decimals) || '0.00';
-  console.log(stringBalance, stringBalanceDos);
 
   const handleTroggleHidde = e => {
     e.stopPropagation();

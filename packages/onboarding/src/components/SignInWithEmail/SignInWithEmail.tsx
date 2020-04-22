@@ -85,8 +85,7 @@ const SignInWithEmail = () => {
     setRecaptcha(captchaResponse);
   };
 
-  const onCaptchaExpired = captchaResponse => {
-    console.log('Captcha expired: ', captchaResponse);
+  const onCaptchaExpired = (/* captchaResponse */) => {
     recaptchaRef.current.reset();
   };
 
@@ -134,9 +133,6 @@ const SignInWithEmail = () => {
         onChange={onCaptchaCallback}
         onExpired={onCaptchaExpired}
         onErrored={onCaptchaErrored}
-        onLoadCallback={() => {
-          console.log('- Capcha Loaded -');
-        }}
       />
       <Button
         idAttr="btn-login"

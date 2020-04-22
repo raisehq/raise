@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, lazy, Suspense } from 'react';
 import { match, ANY } from 'pampy';
 import { Link } from 'react-router-dom';
 import { Card } from '@raisehq/components';
@@ -7,10 +7,11 @@ import numeral from '../../commons/numeral';
 import Amount from '../Dashboard/Dashboard.Amount';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
-import { ClaimRepay } from '../ClaimRepay';
-import { ClaimRefund } from '../ClaimRefundInvestor';
 import { GetInTouch } from '../GetInTouch';
 import useGetCoin from '../../hooks/useGetCoin';
+
+const ClaimRepay = lazy(() => import('../ClaimRepay'));
+const ClaimRefund = lazy(() => import('../ClaimRefundInvestor'));
 
 const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, route } = useBorrowerInfo(auction.originator);
@@ -69,7 +70,7 @@ const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
           <Card.Vertical />
           <Card.Row notop title="Investors" content={auction.investorCount} />
         </Card.Grid>
-        {cta}
+        <Suspense fallback={<div>...</div>}>{cta}</Suspense>
       </Card.Content>
     </Card>
   );
