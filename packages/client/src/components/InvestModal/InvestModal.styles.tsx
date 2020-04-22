@@ -13,7 +13,6 @@ import {
 } from 'semantic-ui-react';
 import Balance from '../Balance';
 import { device } from '../../commons/breakpoints';
-import InvestmentBox from './components/InvestmentBox';
 
 interface ModalInputProps {
   roi?: boolean;
@@ -28,10 +27,6 @@ interface LabelPaddingProps {
   color?: string;
 }
 
-export const InvestSection = styled(InvestmentBox)`
-  margin: 29px auto 0px auto;
-  padding: 27px;
-`;
 export const LoanTermsCheckbox: any = styled(Checkbox)`
   &&& {
     position: relative;

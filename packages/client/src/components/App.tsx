@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
 import 'url-search-params-polyfill';
 import { Dimmer, Loader } from 'semantic-ui-react';
@@ -29,6 +29,8 @@ import NotFound404 from '../components/BorrowerProfile/Borrower404';
 
 import Toast, { StyledToastContainer } from './Toast';
 import Sidebar from './InvestSidebar/Sidebar';
+
+const InvestWithSidebar = lazy(() => import('./InvestSidebar/InvestWithSidebar'));
 
 const App = () => {
   const {
@@ -237,7 +239,11 @@ const App = () => {
         </>
       )}
       <div ref={modalRefs} />
-      <Sidebar></Sidebar>
+      <Sidebar>
+        <Suspense fallback={<div />}>
+          <InvestWithSidebar />
+        </Suspense>
+      </Sidebar>
     </>
   );
 };
