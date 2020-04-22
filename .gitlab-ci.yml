@@ -205,7 +205,7 @@ cypress-e2e-production:
     CYPRESS_baseUrl: 'https://app.raise.it'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: api.raise.it
-    CYPRESS_isCanary: 'true'
+    CYPRESS_isCanary: 'false'
   script:
     - yarn --pure-lockfile
     - cd packages/testing
