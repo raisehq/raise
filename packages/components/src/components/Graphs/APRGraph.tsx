@@ -226,8 +226,8 @@ const APRGraph = ({
     if (!chartLoaded || !momentLoaded) {
       return;
     }
-    window?.Chart.pluginService.register(todayVerticalLine);
-    window?.Chart.pluginService.register(chartBackground);
+    window.Chart.pluginService.register(todayVerticalLine);
+    window.Chart.pluginService.register(chartBackground);
 
     /**
      * Compound DAI rate api call, latest 30 day
