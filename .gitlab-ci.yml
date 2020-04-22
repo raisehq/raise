@@ -43,7 +43,8 @@ deploy-components:
   script:
     - |
       #!/bin/sh
-      ls -la .
+      ls -la packages/components
+      ls -la packages/components/public
       packages/components/public components
       aws s3 sync --delete components/cards/raisecomponents.umd.production.min.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
       aws s3 sync --delete components/loan-charts/raisecomponents.umd.development.min.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
