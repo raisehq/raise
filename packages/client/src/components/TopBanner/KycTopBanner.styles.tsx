@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { Button, Icon as SemanticIcon } from 'semantic-ui-react';
 import { maxDevice, device as minDevice } from '../../commons/breakpoints';
+
 interface WarningProps {
   isMobile?: true;
 }

@@ -15,7 +15,7 @@ const Box = styled.div`
   }
 `;
 
-export const CoinValue = ({ value, name, src }) => (
+export const CoinValue = ({ value, name, src }: any) => (
   <Box>
     {value}
     <Coin pxWidth="20px" pxHeight="20px" src={src} name={name} />

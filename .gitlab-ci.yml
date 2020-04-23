@@ -74,6 +74,22 @@ build-front-review:
     paths:
       - packages/client/build_review
 
+lint-front-review:
+  stage: build
+  script:
+    - 'yarn --pure-lockfile'
+    - yarn run client:build:integration
+    - 'yarn run lint'
+  only:
+    - merge_requests
+    - latest
+  except:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build_review
+
 build-front-integration:
   stage: build
   script:
@@ -94,6 +110,19 @@ build-front-production:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
     - 'yarn run client:build:production'
+  only:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/client/build
+
+lint-front:
+  stage: build
+  script:
+    - 'yarn --pure-lockfile'
+    - 'yarn run client:build:production'
+    - 'yarn run lint'
   only:
     - master
   artifacts:
@@ -144,7 +173,7 @@ cypress-e2e-review:
     CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
     CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: https://${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+    CYPRESS_api: ${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
     CYPRESS_isCanary: 'false'
   script:
     - yarn --pure-lockfile
@@ -175,7 +204,7 @@ cypress-e2e-production:
     CYPRESS_url: 'https://app.raise.it'
     CYPRESS_baseUrl: 'https://app.raise.it'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: https://api.raise.it
+    CYPRESS_api: api.raise.it
     CYPRESS_isCanary: 'false'
   script:
     - yarn --pure-lockfile

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Either } from '../utils';
 import { toWei } from 'web3-utils';
+import { Either } from '../utils';
 import useWallet from './useWallet';
 import useAsyncEffect from './useAsyncEffect';
 import { useRootContext } from '../contexts/RootContext';
@@ -28,8 +28,8 @@ const useDepositContract = () => {
                 allowance: (account, spender) =>
                   HeroTokenContract.methods.allowance(account, spender).call(),
                 balance: account => HeroTokenContract.methods.balanceOf(account).call(),
-                approveDeposit: async (account, amount) => {
-                  return followTx.watchTx(
+                approveDeposit: async (account, amount) =>
+                  followTx.watchTx(
                     HeroTokenContract.methods
                       .approve(DepositContract.options.address, toWei(amount.toString(), 'ether'))
                       .send({
@@ -37,8 +37,7 @@ const useDepositContract = () => {
                       }),
                     { id: 'approval' },
                     'approval'
-                  );
-                }
+                  )
               });
             } catch (error) {
               console.error('Contract Hero not found in current network');

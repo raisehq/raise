@@ -9,7 +9,7 @@ import {
   HeaderMenuItem,
   RaiseHeader
 } from './DesktopHeader.styles';
-import HeaderBalance from '../HeaderBalance';
+import { Balance as HeaderBalance } from '../HeaderBalance';
 import Web3Address from '../Web3Address';
 import theme from '../../theme';
 import { useAppContext } from '../../contexts/AppContext';
@@ -61,14 +61,15 @@ const DesktopHeader = () => {
     showOnboarding('join');
   };
 
-  // If there is a parent for TopBanner and HeaderWrapper, it will break the sticky css rule and menu will not get fixed once scroll
+  // If there is a parent for TopBanner and HeaderWrapper,
+  // it will break the sticky css rule and menu will not get fixed once scroll
   return visible ? (
     <>
       <HeaderWrapper>
         <RaiseHeader>
           <HeaderGroup>
             <HeaderLogo onClick={() => history.push('/')}>
-              <img src={`${theme.resources}/images/logo.svg`} />
+              <img src={`${theme.resources}/images/logo.svg`} alt="Raise.it" />
             </HeaderLogo>
             {isLogged && visibleMenu && (
               <HeaderMenu>

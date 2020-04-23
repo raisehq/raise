@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import { ButtonLink } from '@raisehq/components';
 import {
   CardTitle,
   SelectYourWalletTitle,
@@ -9,10 +11,8 @@ import {
   ButtonContainer
 } from './Web3Check.styles';
 
-import { ButtonLink } from '@raisehq/components';
-
 import OnboardingProgressBar from '../OnboardingProgressBar';
-import { isMobile } from 'react-device-detect';
+
 import GoBackButton from '../GoBackButton';
 import { getWalletName } from '../../utils';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
@@ -58,10 +58,10 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     <Web3CheckWalletWrapper>
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletTitle>
-        <CardTitle>Let's create your wallet</CardTitle>
+        <CardTitle>Let&apos;s create your wallet</CardTitle>
         <SetUpSubtitle>
-          We recommend you to install Metamask wallet, it's fast, easy and secure. Just click on
-          "Install Metamask" to download the web extension and follow the steps.
+          We recommend you to install Metamask wallet, it&apos;s fast, easy and secure. Just click
+          on &quot;Install Metamask&quot; to download the web extension and follow the steps.
         </SetUpSubtitle>
         <SetUpSubtitle>
           Once you are all set up to connect your new wallet, refresh your browser.
@@ -72,21 +72,21 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
         <ButtonLink
           onClick={handlerWallet(CryptoWallets.Metamask)}
           size="large"
-          text={`Install Metamask`}
-          fullWidth={true}
-          icon={`external_link.svg`}
+          text="Install Metamask"
+          fullWidth
+          icon="external_link.svg"
           type="secondary"
-          logo={`metamask.png`}
+          logo="metamask.png"
         />
         <OtherWalletsText>You can also use:</OtherWalletsText>
         <ButtonLink
           onClick={handlerWallet(CryptoWallets.Coinbase)}
           size="large"
-          text={`Coinbase Wallet`}
-          fullWidth={true}
-          icon={`external_link.svg`}
+          text="Coinbase Wallet"
+          fullWidth
+          icon="external_link.svg"
           type="tertiary"
-          logo={`coinbase.png`}
+          logo="coinbase.png"
         />
       </ButtonContainer>
 

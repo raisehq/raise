@@ -4,8 +4,9 @@ import { fromDecimal } from './web3-utils';
 /*
  * Formula to calculate in which instalment is the loan in this point in time:
  * First we need to calculate the length of every instalment.
- * then we calculate the amount of thime passed between the start of the term and the current point in time
- * we devide it by the length of the instalment, and we add 1 because the instalment end time is also included in the instalment
+ * then we calculate the amount of thime passed between the start of the term and the
+ * current point in time we devide it by the length of the instalment, and we add 1
+ * because the instalment end time is also included in the instalment
  */
 const getCurrentInstalment = (loan, dateTimestamp) => {
   const instalmentLength =
@@ -16,11 +17,13 @@ const getCurrentInstalment = (loan, dateTimestamp) => {
 };
 
 const getInstalmentAmount = (loan, decimals = 18) => {
-  // For a loan of principal P, monthly interest rate I and term N (months), the monthly payment is P*(1/N + I).
+  // For a loan of principal P, monthly interest rate I and term N (months),
+  // the monthly payment is P*(1/N + I).
   const decimalPrincipal = Number(
     fromDecimal(loan.principal.toString(), decimals)
   );
-  const decimalInterestRate = Number(fromDecimal(loan.interestRate.toString())); // TODO: do we need to / 100??
+  // TODO: do we need to / 100??
+  const decimalInterestRate = Number(fromDecimal(loan.interestRate.toString()));
   const instalmentAmount =
     decimalPrincipal * (1 / loan.instalments + decimalInterestRate);
 
@@ -47,7 +50,7 @@ const getInstalmentPenalty = (loan, decimals = 18) => {
 
 const getInstalmentDates = loan => {
   const instalmentLength = loan.termLength / loan.instalments;
-  const instalmentDates: Array<String> = [];
+  const instalmentDates: Array<string> = [];
   for (let i = 1; i <= 4; i += 1) {
     const instalmentDate = loan.auctionEndTimestamp + instalmentLength * i;
     instalmentDates.push(instalmentDate);
@@ -66,13 +69,15 @@ const getStateByDate = (funding, date) => {
   );
   if (instalment === currentInstalment) {
     return 'Not paid';
-  } else if (instalment > currentInstalment) {
-    return 'Waiting';
-  } else if (instalment > lastInstalmentWithdrawn) {
-    return 'Paid';
-  } else {
-    return 'Withdrawed';
   }
+  if (instalment > currentInstalment) {
+    return 'Waiting';
+  }
+  if (instalment > lastInstalmentWithdrawn) {
+    return 'Paid';
+  }
+
+  return 'Withdrawed';
 };
 
 // external
@@ -105,11 +110,11 @@ const getProgressiveState = (funding, decimals, date) => {
   const currentTotalDebt = getCurrentDebt(funding.loan, decimals, date);
 
   const instalmentDates = getInstalmentDates(funding.loan);
-  const instalments = instalmentDates.map(date => {
-    const state = getStateByDate(funding, date);
+  const instalments = instalmentDates.map(idate => {
+    const state = getStateByDate(funding, idate);
 
     return {
-      date,
+      date: idate,
       state,
     };
   });

@@ -1,17 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, lazy, Suspense } from 'react';
 import { match, ANY } from 'pampy';
 import { Link } from 'react-router-dom';
 import { Card } from '@raisehq/components';
 import Amount from '../Dashboard/Dashboard.Amount';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
-import { ClaimRepay } from '../ClaimRepay';
-import { ClaimRefund } from '../ClaimRefundInvestor';
 import { GetInTouch } from '../GetInTouch';
 import useGetCoin from '../../hooks/useGetCoin';
 
+const ClaimRepay = lazy(() => import('../ClaimRepay'));
+const ClaimRefund = lazy(() => import('../ClaimRefundInvestor'));
+
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
-  const { companyName, slug } = useBorrowerInfo(auction.originator);
+  const { companyName, route } = useBorrowerInfo(auction.originator);
   const { roi, times, maxAmount, lenderRoiAmount, lenderAmount } = calcs;
   const coin = useGetCoin(auction);
 
@@ -41,13 +42,12 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
 
   const contentColor = state === 3 ? 'red' : null;
   const loanTermLeft = state === 5 ? '-' : times.loanTermLeft;
-  const borrowerUrl = `/c/${slug}`;
 
   return (
     <Card width="372px">
       <Card.Content size="100%">
         <Card.Grid>
-          <Link to={borrowerUrl}>
+          <Link to={route}>
             <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
           </Link>
           <Card.Badge color={loanStatusColors[state]}>{loanStatus[state]}</Card.Badge>
@@ -74,7 +74,7 @@ const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
           <Card.Row notop title="Loan Term" content={times.loanTerm} />
           <Card.Row notop title="Investors" content={auction.investorCount} />
         </Card.Grid>
-        {cta}
+        <Suspense fallback={<div>Loading...</div>}>{cta}</Suspense>
       </Card.Content>
     </Card>
   );

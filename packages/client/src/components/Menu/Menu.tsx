@@ -53,7 +53,7 @@ const Menu = () => {
     },
     store: {
       user: {
-        details: { accounttype_id }
+        details: { accounttype_id: accountTypeId }
       },
       auth: {
         login: { logged: isLogged }
@@ -124,12 +124,14 @@ const Menu = () => {
   };
 
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
-
+  // TODO : This function need to be refactored
   const getMenu = useCallback(
+    // eslint-disable-next-line
     links =>
       !links || !links.length
         ? []
         : links.map(item => (
+            // eslint-disable-next-line
             <li key={item.id} className={pathname === item.link ? 'active' : 'non-active'}>
               <Link
                 to={item.link}
@@ -140,9 +142,9 @@ const Menu = () => {
                 {item.title}
               </Link>
             </li>
-          )),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [accounttype_id, pathname]
+          )), // eslint-disable-line
+
+    [accountTypeId, pathname]
   );
 
   const closeMenu = () => {
@@ -174,7 +176,7 @@ const Menu = () => {
       {isLogged && visibleMenu && (
         <>
           <div style={{ flex: 2 }} />
-          <MenuList>{getMenu(Menus[accounttype_id])}</MenuList>
+          <MenuList>{getMenu(Menus[accountTypeId])}</MenuList>
           <div style={{ flex: 2 }} />
           <MenuSubList>{getMenu(commonRoutes)}</MenuSubList>
         </>

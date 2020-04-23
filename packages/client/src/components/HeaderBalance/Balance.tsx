@@ -14,12 +14,12 @@ const SUPPORTED_COINS = ['DAI', 'USDT', 'USDC'];
 const Balance = props => {
   const balanceList = () =>
     SUPPORTED_COINS.map(tokenName => {
-      const props = {
+      const miniprops = {
         imageUrl: TOKEN_URLS[tokenName],
         name: tokenName,
         key: tokenName
       };
-      return <TokenBalance hider {...props} />;
+      return <TokenBalance hider {...miniprops} />;
     });
 
   return (

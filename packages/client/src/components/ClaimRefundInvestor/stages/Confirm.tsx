@@ -8,13 +8,14 @@ import {
   // ResumeItemBox
 } from '../ClaimRefund.styles';
 import useWallet from '../../../hooks/useWallet';
-import { ClaimRefundContext, Stages } from '../ClaimRefund';
+import ClaimRefundContext from '../ClaimRefund.context';
+import Stages from '../ClaimRefund.stages';
 import { ResumeItemProps } from '../../InvestModal/types';
 import { useAppContext } from '../../../contexts/AppContext';
 import { useRootContext } from '../../../contexts/RootContext';
 import useGetCoin from '../../../hooks/useGetCoin';
 
-const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }) => (
+const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }: any) => (
   <ResumeItemBoxBig>
     <p>{title}</p>
     <p>{value}</p>

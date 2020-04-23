@@ -1,22 +1,20 @@
+import dayjs from 'dayjs';
 import {
   getCurrentInstalment,
   getInstalmentAmount,
   getInstalmentPenalty,
   getCurrentDebt,
   getCurrentPenalty,
-  // getProgressiveState,
   getStateByDate,
   getPendingInstalmentsAmount,
   getInstalmentDates,
 } from './progressiveCalcs';
-import moment from 'moment';
-// import { fromDecimal } from './web3-utils';
 
 describe('Test suite for progressive calculations', () => {
   describe('Test getCurrentInstalment', () => {
     it('Expects to return the correct instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 3, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 5;
@@ -26,13 +24,13 @@ describe('Test suite for progressive calculations', () => {
         auctionEndTimestamp,
         instalments: 5,
       };
-      const date = moment().unix();
+      const date = dayjs().unix();
       const instalment = getCurrentInstalment(loan, date);
       expect(instalment).toEqual(4);
     });
     it('Expects to return instalment bigger than last instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 3, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth;
@@ -42,7 +40,7 @@ describe('Test suite for progressive calculations', () => {
         auctionEndTimestamp,
         instalments: 2,
       };
-      const date = moment().unix();
+      const date = dayjs().unix();
       const instalment = getCurrentInstalment(loan, date);
       expect(instalment).toBeGreaterThan(2);
     });
@@ -50,7 +48,7 @@ describe('Test suite for progressive calculations', () => {
   describe('Test getInstalmetnAmount', () => {
     it('Expects to get the correct ammount with 18 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 3, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -67,7 +65,7 @@ describe('Test suite for progressive calculations', () => {
     });
     it('Expects to get the correct ammount with 6 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 3, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -86,7 +84,7 @@ describe('Test suite for progressive calculations', () => {
   describe('Test getPendingInstalmentsAmount', () => {
     it('Expects the correct amount in 18 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -99,7 +97,7 @@ describe('Test suite for progressive calculations', () => {
         instalmentsPaid: 5,
       };
       const decimals = 18;
-      const date = moment().unix();
+      const date = dayjs().unix();
       const instalmentAmount = getPendingInstalmentsAmount(
         loan,
         decimals,
@@ -109,7 +107,7 @@ describe('Test suite for progressive calculations', () => {
     });
     it('Expects the correct amount in 16 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -122,7 +120,7 @@ describe('Test suite for progressive calculations', () => {
         instalmentsPaid: 5,
       };
       const decimals = 6;
-      const date = moment().unix();
+      const date = dayjs().unix();
       const instalmentAmount = getPendingInstalmentsAmount(
         loan,
         decimals,
@@ -154,7 +152,7 @@ describe('Test suite for progressive calculations', () => {
   describe('Test getInstalmentDates', () => {
     it('Expects to get the dates of all the instalments', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 4;
@@ -178,7 +176,7 @@ describe('Test suite for progressive calculations', () => {
   describe('Test getStateByDate', () => {
     it('Expects to get state not paid for instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -196,13 +194,13 @@ describe('Test suite for progressive calculations', () => {
         },
         debtWithdrawnDate,
       };
-      const date = moment().unix();
+      const date = dayjs().unix();
       const state = getStateByDate(funding, date);
       expect(state).toEqual('Not paid');
     });
     it('Expects to get state Waiting for instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -220,13 +218,13 @@ describe('Test suite for progressive calculations', () => {
         },
         debtWithdrawnDate,
       };
-      const date = moment().unix() + oneMonth;
+      const date = dayjs().unix() + oneMonth;
       const state = getStateByDate(funding, date);
       expect(state).toEqual('Waiting');
     });
     it('Expects to get state Paid for instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -244,13 +242,13 @@ describe('Test suite for progressive calculations', () => {
         },
         debtWithdrawnDate,
       };
-      const date = moment().unix() - oneMonth;
+      const date = dayjs().unix() - oneMonth;
       const state = getStateByDate(funding, date);
       expect(state).toEqual('Paid');
     });
     it('Expects to get state Withdrawed for instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -268,7 +266,7 @@ describe('Test suite for progressive calculations', () => {
         },
         debtWithdrawnDate,
       };
-      const date = moment().unix() - oneMonth * 4;
+      const date = dayjs().unix() - oneMonth * 4;
       const state = getStateByDate(funding, date);
       expect(state).toEqual('Withdrawed');
     });
@@ -276,7 +274,7 @@ describe('Test suite for progressive calculations', () => {
   describe('Test getCurrentPenalty', () => {
     it('Expects correct penalty amount to pay', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -290,7 +288,7 @@ describe('Test suite for progressive calculations', () => {
         instalmentsPaid: 0,
         termLength,
       };
-      const date = moment().unix();
+      const date = dayjs().unix();
       const decimals = 18;
       const penalty = getCurrentPenalty(loan, date, decimals);
       expect(penalty).toEqual(7 * 100);
@@ -299,7 +297,7 @@ describe('Test suite for progressive calculations', () => {
   describe('Test getCurrentDebt', () => {
     it('Expects to calculate correctly the debt with 18 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -313,14 +311,14 @@ describe('Test suite for progressive calculations', () => {
         instalmentsPaid: 0,
         termLength,
       };
-      const date = moment().unix();
+      const date = dayjs().unix();
       const decimals = 18;
       const penalty = getCurrentDebt(loan, decimals, date);
       expect(penalty).toEqual(7 * 100 + 8 * 200);
     });
     it('Expects to calculate correctly the debt with 6 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
-      const auctionEndTimestamp = moment()
+      const auctionEndTimestamp = dayjs()
         .subtract(oneMonth * 7, 'seconds')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
@@ -334,7 +332,7 @@ describe('Test suite for progressive calculations', () => {
         instalmentsPaid: 0,
         termLength,
       };
-      const date = moment().unix();
+      const date = dayjs().unix();
       const decimals = 6;
       const penalty = getCurrentDebt(loan, decimals, date);
       expect(penalty).toEqual(7 * 100 + 8 * 200);

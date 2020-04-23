@@ -71,7 +71,7 @@ export default (state: any, action: any) => {
       };
 
     case 'SIGNUP_ERROR':
-      const newState = {
+      return {
         ...state,
         ...{
           login: {
@@ -87,7 +87,6 @@ export default (state: any, action: any) => {
           type: 0
         }
       };
-      return newState;
 
     case 'SIGNUP_SUCCESS':
       return {

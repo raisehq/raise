@@ -33,19 +33,23 @@ export const ContainerWrapper = styled.div`
     padding: 2em 8em;
   }
 `;
-
+/* eslint-disable */
 export const CardContent = styled(Card.Content)`
   &&&& {
     border: none !important;
     border-top: 0 !important;
     margin: 0px;
     @media ${device.tablet} {
-      margin: ${({ bottom_spacing }) =>
-        bottom_spacing ? '0 2.5em 2.5em 2.5em !important;' : '0 2.5em 0em 2.5em !important;'};
+      margin: ${({ bottom_spacing: bottomSpacing }) => {
+        const resp = bottomSpacing
+          ? '0 2.5em 2.5em 2.5em !important;'
+          : '0 2.5em 0em 2.5em !important;';
+        return resp;
+      }};
     }
   }
 `;
-
+/* eslint-enable */
 export const CardSized = styled(Card)`
   &&& {
     height: 100%;

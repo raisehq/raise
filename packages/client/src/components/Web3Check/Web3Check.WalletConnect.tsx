@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
-import GoBackButton from '../GoBackButton';
 import { Loader } from 'semantic-ui-react';
+import { isMobile } from 'react-device-detect';
+import { Button } from '@raisehq/components';
+
+import GoBackButton from '../GoBackButton';
 import CryptoWallets from '../../commons/cryptoWallets';
 import OnboardingProgressBar from '../OnboardingProgressBar';
-import { Button } from '@raisehq/components';
 import {
   CardCenteredText,
   CardTitle,
@@ -19,7 +21,6 @@ import {
   ButtonContainer
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
-import { isMobile } from 'react-device-detect';
 
 const getMessage = (walletId, enableWeb3, hasWallet) => {
   const connectCoinbase = async () => {
@@ -61,8 +62,7 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
             <TextDescription>
               Make sure you have
               <WalletLink href={getCoinbaseLink()} target="_blank">
-                {' '}
-                Coinbase Wallet{' '}
+                Coinbase Wallet
               </WalletLink>
               app in your mobile and have registered. You will be required to scan a QR code with
               the app
@@ -72,8 +72,7 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
               <CoinbaseInstrucctions>
                 1.
                 <WalletLink href="https://onelink.to/dvu97k" target="_blank">
-                  {' '}
-                  Download Coinbase Wallet{' '}
+                  Download Coinbase Wallet
                 </WalletLink>
                 app in your phone and create a wallet. This process takes between 1 or 2 minutes
               </CoinbaseInstrucctions>

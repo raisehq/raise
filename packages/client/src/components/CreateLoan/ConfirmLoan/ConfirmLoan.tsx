@@ -1,7 +1,6 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
-import { Button } from '@raisehq/components';
-import { CheckboxControl } from '@raisehq/components';
+import { Button, CheckboxControl } from '@raisehq/components';
 
 import {
   Divider,
@@ -18,7 +17,7 @@ import {
   ButtonContainer
 } from '../CreateLoan.styles';
 
-const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
+const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }: any) => {
   const {
     formattedAmount,
     systemFees,
@@ -58,8 +57,8 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
           </AmountRow>
           {!isMobile && <DividerConfirmLoan />}
           <AmountRow>
-            <AmountDescription>System fees ({operatorFee}%)</AmountDescription>
-            <AmountNumber>-{systemFees}</AmountNumber>
+            <AmountDescription>{`System fees (${operatorFee}%)`}</AmountDescription>
+            <AmountNumber>{`-${systemFees}`}</AmountNumber>
           </AmountRow>
           {!isMobile && <DividerConfirmLoan />}
           <AmountRow>
@@ -116,7 +115,7 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }) => {
           text="Confirm"
           type="secondary"
           size="large"
-          fullWidth={true}
+          fullWidth
           disabled={
             amountValidation.error ||
             loan.term === 0 ||

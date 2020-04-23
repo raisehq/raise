@@ -16,3 +16,5 @@ export const ChooseMethodWrapper = styled.div`
     min-height: 0;
   }
 `;
+
+export default ChooseMethodWrapper;

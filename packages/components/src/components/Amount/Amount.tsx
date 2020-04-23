@@ -16,7 +16,7 @@ const Amount = ({
   <AmountComponent>
     {principal}
     <Coin src={`${REACT_APP_HOST_IMAGES}/images/coins/${coinIcon}`} />
-    {roi && <span>{roi} ROI</span>}
+    {roi && <span>{`${roi} ROI`}</span>}
   </AmountComponent>
 );
 

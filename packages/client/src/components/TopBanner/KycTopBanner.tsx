@@ -44,14 +44,13 @@ const KycTopBanner = ({
   const stepsForBanner = {
     kycAction,
     isMobile,
-    kycStatus: kycStatus === 3 && kycBCStatus ? 3 : kycStatus === 3 ? 4 : kycStatus,
+    // TODO : Fix this ternary condition
+    kycStatus: kycStatus === 3 && kycBCStatus ? 3 : kycStatus === 3 ? 4 : kycStatus, // eslint-disable-line
     history,
     kycProvider
   };
 
-  const getStepsReminder = () => {
-    return enabled && <NotificationBar {...stepsForBanner} />;
-  };
+  const getStepsReminder = () => enabled && <NotificationBar {...stepsForBanner} />;
 
   const getView = () =>
     view.cata({

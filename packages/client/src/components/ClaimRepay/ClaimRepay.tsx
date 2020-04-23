@@ -1,13 +1,14 @@
-import React, { useState, createContext } from 'react';
-import daggy from 'daggy';
+import React, { useState } from 'react';
 import { Modal as SemanticModal } from 'semantic-ui-react';
-import { InvestModalProps } from './types';
 import { tradeTokensForExactTokens } from '@uniswap/sdk';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { fromWei, toWei } from 'web3-utils';
+
+import Stages from './ClaimRepay.stages';
+import ClaimRepayContext from './ClaimRepay.context';
+import { InvestModalProps } from './types';
+import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { useRootContext } from '../../contexts/RootContext';
 import useGetCoin from '../../hooks/useGetCoin';
-
 import useClaimRepay from '../../hooks/useClaimRepay';
 import ConfirmStage from './stages/Confirm';
 import ErrorStage from './stages/Retry';
@@ -17,15 +18,9 @@ import { Modal } from '../ClaimLoan/ClaimLoan.styles';
 
 import { LenderButton, ExitButton } from '../InvestModal/InvestModal.styles';
 
-export const ClaimRepayContext = createContext({});
+const RAISEADDRESS = '0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c';
 
-export const Stages = daggy.taggedSum('UI', {
-  Confirm: [],
-  Success: [],
-  Error: []
-});
-
-const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
+const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }: any) => {
   const {
     store: {
       blockchain: { contracts }
@@ -42,12 +37,12 @@ const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
   const coin = useGetCoin(loan);
   const getMarketSwap = async () => {
     try {
-      const addresses = contracts.address[netNumbers['mainnet']];
+      const addresses = contracts.address[netNumbers.mainnet];
       const tradeDetails = await tradeTokensForExactTokens(
         coin.address,
-        addresses['RaiseToken'] || '0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c', // RAISE address
+        addresses.RaiseToken || RAISEADDRESS, // RAISE address
         toWei('200'), // output tokens (200 RAISE)
-        netNumbers['mainnet'] // chain id, 1 mainnet
+        netNumbers.mainnet // chain id, 1 mainnet
       );
 
       const totalDaiPrice = fromWei(tradeDetails.inputAmount.amount.toString());
@@ -74,13 +69,12 @@ const ClaimRepayCTA: React.SFC<InvestModalProps> = ({ loan }) => {
     setOpen(false);
   };
 
-  const getStage = stage => {
-    return stage.cata({
+  const getStage = current =>
+    current.cata({
       Confirm: () => <ConfirmStage />,
       Success: () => <SuccessStage />,
       Error: () => <ErrorStage />
     });
-  };
 
   return (
     <ClaimRepayContext.Provider value={{ loan, setStage, closeModal, swap, ...rest }}>

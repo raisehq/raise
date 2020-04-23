@@ -12,8 +12,9 @@
     "dev-all:int": "lerna run dev:int --stream --parallel",
     "clean": "lerna exec -- rm -rf ./node_modules ./dist ./build ./bundle.*.js || true && rm -rf node_modules || true && rm -rf yarn.lock || true",
     "build": "lerna run build --stream",
-    "bootstrap:deps": "yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'",
-    "build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
+    "lint": "lerna run lint --stream",
+    "bootstrap:deps": "NODE_ENV=production yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'",
+    "build:deps": "NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
     "rollup": "lerna run --stream --scope '@raisehq/libs' build:production",
     "dev:rollup": "lerna run --stream --scope '@raisehq/libs' start",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
@@ -22,18 +23,29 @@
     "watch": "lerna run --parallel --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/client}' watch",
     "watch:storybook": "lerna run --parallel --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch"
   },
+  "resolutions": {
+    "bn.js": "4.11.8",
+    "bignumber.js": "9.0.0",
+    "lodash": "4.17.15",
+    "semantic-ui-react": "0.85.0"
+  },
   "dependencies": {
+    "axios": "^0.19.0",
     "lerna": "^3.16.4",
+    "moment": "^2.24.0",
     "react-scripts": "3.4.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.85.0",
+    "styled-components": "^5.0.0",
     "typescript": "3.8.3"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "echo 'Running pre-commit hook' && pretty-quick --staged && lerna run lint --stream"
     }
   },
   "devDependencies": {
-    "husky": "^4.2.3",
+    "husky": "^4.2.5",
     "lint-staged": "^10.0.8",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1"

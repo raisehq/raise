@@ -1,8 +1,7 @@
 import * as Cookies from 'js-cookie';
 import LocalData from '../helpers/localData';
-
 import { isSupportedBrowser, parseNetwork } from '../utils';
-// import { NULL_ADDRESS } from '../commons/constants';
+
 const authCookie = Cookies.get('auth');
 const userCookie = Cookies.get('user');
 

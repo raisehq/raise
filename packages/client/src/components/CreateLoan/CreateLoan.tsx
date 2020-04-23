@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { BrowserView } from 'react-device-detect';
+import get from 'lodash/get';
+import { GroupButton, CheckboxControl, InputNumber, SelectControl } from '@raisehq/components';
+
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import { numeralFormat } from '../../commons/numeral';
 import { UI, getLoanAction } from './CreateLoan.Response';
-import get from 'lodash/get';
+
 import Queryies from '../../helpers/queryies';
 import {
   Header,
@@ -56,18 +59,15 @@ import {
   calculateMIRFromAPR
 } from './calculations';
 import Slider from '../Slider';
-import { getMonths } from '../../commons/months';
-import { getLoanAuctionIntervalArray } from '../../commons/months';
+import { getMonths, getLoanAuctionIntervalArray } from '../../commons/months';
+
 import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS } from '../../commons/constants';
-import { GroupButton } from '@raisehq/components';
-import { CheckboxControl } from '@raisehq/components';
-import { InputNumber } from '@raisehq/components';
-import { SelectControl } from '@raisehq/components';
+
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { CoinsType } from '../../commons/coins';
 
-const CreateLoan = ({ contracts }) => {
+const CreateLoan = ({ contracts }: any) => {
   const {
     web3Status: { network, walletNetworkId },
     webSocket: { webSocket }
@@ -116,7 +116,7 @@ const CreateLoan = ({ contracts }) => {
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<any>(2);
 
   const monthOptions = useMemo(() => getMonths(network), [network]);
-  const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(network), [network]);
+  const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(), [network]);
   const borrowerCompany = useBorrowerInfo(userAddress);
   const getAddress = (netId, name) => get(contracts, `address.${walletNetworkId}.${name}`);
 
@@ -130,9 +130,10 @@ const CreateLoan = ({ contracts }) => {
       icon: coin.icon,
       decimals: coin.decimals
     }));
+
     return mappedCoins.filter(({ address }) =>
       acceptedTokens.find(a => a.toLowerCase() === address.toLowerCase())
-    );
+    ); // eslint-disable-line
   };
 
   const loanDispatcherAddress = getAddress(walletNetworkId, 'LoanDispatcher');
@@ -294,7 +295,7 @@ const CreateLoan = ({ contracts }) => {
     onSetTerm(null, { value: TERM_DEFAULT });
   };
 
-  const onBlur = e => {
+  const onBlur = () => {
     const currentValue = loan.amount;
 
     if (currentValue === undefined) {
@@ -372,7 +373,7 @@ const CreateLoan = ({ contracts }) => {
                 <ControlLabel>Select the cryptocurrency</ControlLabel>
                 <GroupButton
                   options={coins}
-                  withIcon={true}
+                  withIcon
                   onClick={onSetCoinAmount}
                   selectedIndex={selectedCoinIndex}
                 />
@@ -403,7 +404,7 @@ const CreateLoan = ({ contracts }) => {
                 />
               </CreateLoanColumn>
               <MinimumAmountControlLabel>
-                Minimum amount: {formatAmount(loan.minAmount)} {selectedCoinType}
+                {`Minimum amount: ${formatAmount(loan.minAmount)} ${selectedCoinType}`}
               </MinimumAmountControlLabel>
             </CreateLoanRow>
           )}

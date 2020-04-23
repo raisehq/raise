@@ -1,3 +1,10 @@
+declare global {
+  interface Window {
+    Chart: any;
+    moment: any;
+  }
+}
+
 export { default as Card } from './components/Card';
 export { default as Coin } from './components/Coin';
 export { default as InvestCardView } from './components/InvestCardView';
@@ -22,3 +29,4 @@ export { default as CheckboxControl } from './components/commons/CheckboxControl
 export { default as InputNumber } from './components/commons/InputControl/InputNumber';
 export { default as InputText } from './components/commons/InputControl/InputText';
 export { default as SelectControl } from './components/commons/SelectControl';
+export { default as useScript } from './hooks/useScript';

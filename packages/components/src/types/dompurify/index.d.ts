@@ -1,1 +1,1 @@
-declare module 'dompurify'
+declare module 'dompurify';

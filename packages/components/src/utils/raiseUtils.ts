@@ -1,4 +1,5 @@
-import { fromWei } from 'web3-utils';
+import { fromDecimal as fromWei } from './web3-utils';
+
 const stringUnixToDate = (stringUnix: any) =>
   new Date(Number(stringUnix) * 1000);
 

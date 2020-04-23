@@ -1,10 +1,13 @@
 import { useCallback, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
+/* eslint-disable @typescript-eslint/indent */
+
 export type ContentRect = Pick<
-  DOMRectReadOnly,
+  DOMRectReadOnly, // eslint-disable-next-line @typescript-eslint/indent
   'x' | 'y' | 'top' | 'left' | 'right' | 'bottom' | 'height' | 'width'
 >;
+/* eslint-enable */
 
 const useMeasure = <T>(): [(instance: T) => void, ContentRect] => {
   const [rect, set] = useState<ContentRect>({

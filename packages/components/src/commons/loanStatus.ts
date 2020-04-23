@@ -5,7 +5,7 @@ export const loanStatus = {
   3: 'DEFAULTED', // not repaid in time loanRepaymentLength
   4: 'REPAID', // the borrower repaid in full, lenders have yet to reclaim funds
   5: 'CLOSED', // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
-  6: 'FROZEN' // when admin unlocks withdrawals
+  6: 'FROZEN', // when admin unlocks withdrawals
 };
 
 export enum LoanState {
@@ -14,8 +14,9 @@ export enum LoanState {
   ACTIVE, // fully funded, inside timelimit
   DEFAULTED, // not repaid in time loanRepaymentLength
   REPAID, // the borrower repaid in full, lenders have yet to reclaim funds
-  CLOSED, // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
-  FROZEN // when admin unlocks withdrawals
+  CLOSED, // from failed_to_fund => last lender to withdraw triggers change
+  // from repaid => fully witdrawn by lenders
+  FROZEN, // when admin unlocks withdrawals
 }
 
 export const loanStatusColors = {
@@ -25,5 +26,5 @@ export const loanStatusColors = {
   3: '#CC2029', // not repaid in time loanRepaymentLength
   4: 'REPAID', // the borrower repaid in full, lenders have yet to reclaim funds
   5: '#00DA9E', // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
-  6: 'FROZEN' // when admin unlocks withdrawals
+  6: 'FROZEN', // when admin unlocks withdrawals
 };

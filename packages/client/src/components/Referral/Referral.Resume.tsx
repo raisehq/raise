@@ -23,18 +23,22 @@ const getView = friends => {
     return <RewardMessageSubTitle>Invite friends and start earning</RewardMessageSubTitle>;
   }
   return (
+    // TODO : This function need to be refactored
+    // prettier-ignore
     <List>
       {friends.map((friend, i) => (
         <FriendsListItem key={i}>
           <List.Icon name="check" color="green" />
           <List.Content>
-            {friend.name
+            {// eslint-disable-next-line
+            friend.name
               ? friend.name.length > 14
                 ? `${friend.name.substring(0, 11)}...`
                 : friend.name
               : `${friend.address.substring(0, 6)}...${friend.address.substring(
-                  friend.address.length - 4
-                )}`}
+                  friend.address.length - 4 // eslint-disable-line
+                )  // eslint-disable-line 
+              }`}
           </List.Content>
         </FriendsListItem>
       ))}

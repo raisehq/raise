@@ -1,6 +1,6 @@
 import React from 'react';
-import { GettingReady, Soon, DaysToGoLive, Footer } from './InviteBottom.styles';
 import { Grid } from 'semantic-ui-react';
+import { GettingReady, Soon, DaysToGoLive, Footer } from './InviteBottom.styles';
 
 const InviteBottom = () => {
   const SEPTEMBERRELEASEDAY = process.env.SEPTEMBERRELEASEDAY

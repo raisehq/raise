@@ -1,31 +1,35 @@
 class Observable {
   private observers;
+
   private finish;
-  constructor() {
+
+  public constructor() {
     this.observers = [];
     this.finish = true;
   }
 
-  subscribe(f) {
+  public subscribe(f) {
     this.observers.push(f);
   }
 
-  unsubscribe(f) {
+  public unsubscribe(f) {
     this.observers = this.observers.filter(subscriber => subscriber !== f);
   }
-  async oneExec(fn) {
+
+  public async oneExec(fn) {
     try {
       if (this.finish === false) return;
       this.finish = false;
       const response = await fn();
       this.finish = true;
-      return this.notify(null, response);
+      this.notify(null, response);
     } catch (error) {
       this.finish = true;
       this.notify(error, null);
     }
   }
-  notify(error, data) {
+
+  public notify(error, data) {
     this.observers.forEach(observer => observer(error, data));
   }
 }

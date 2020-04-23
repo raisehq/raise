@@ -335,7 +335,7 @@ export const InputError = styled.div`
   color: ${theme.colors.error};
 `;
 
-/*************************** LAST DESIGN  *************************************/
+/* LAST DESIGN  */
 
 export const CreateLoanWrapper = styled.div`
   box-shadow: ${theme.shadow};
@@ -448,7 +448,7 @@ export const CreateLoanHeader = styled.div`
   justify-content: space-between;
 `;
 
-/*********************** ConfirmLoan ****************************/
+/*  ConfirmLoan  */
 
 export const AmountRow = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BN from 'bn.js';
 import useGetCoinByAddress from '../../hooks/useGetCoinByAddress';
-import { fromDecimal } from '../../utils/web3-utils';
+import { fromDecimalFixed } from '../../utils/web3-utils';
 import {
   TokenImage,
   TokenName,
@@ -15,7 +15,7 @@ import { useAddressBalance } from '../../contexts/BalancesContext';
 import { useRootContext } from '../../contexts/RootContext';
 import { useAppContext } from '../../contexts/AppContext';
 
-const TokenBalance = ({ imageUrl, name, value, hider, ...props }) => {
+const TokenBalance = ({ imageUrl, name, value, hider, ...props }: any) => {
   const {
     store: {
       blockchain: {
@@ -32,16 +32,14 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }) => {
   const [hidde, setHidde] = useState(false);
   const balance: BN = useAddressBalance(account, contractAddresses[chainId]?.[name]);
   const coin = useGetCoinByAddress(contractAddresses[chainId]?.[name]);
-  const stringBalance: string =
-    Number(fromDecimal(balance.toString(10), coin.decimals))
-      .toFixed(2)
-      .toString() || '0.00';
+  const stringBalance: string = fromDecimalFixed(balance.toString(10), coin.decimals) || '0.00';
 
   const handleTroggleHidde = e => {
     e.stopPropagation();
     setHidde(!hidde);
   };
-
+  /* eslint-disable */
+  // TODO : Refactor this ternary condition
   return (
     <Container {...props}>
       <Child>
@@ -69,6 +67,7 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }) => {
       </Child>
     </Container>
   );
+  /* eslint-enable */
 };
 
 export default TokenBalance;

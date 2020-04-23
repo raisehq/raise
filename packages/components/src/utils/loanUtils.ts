@@ -1,9 +1,8 @@
 import { match, ANY } from 'pampy';
-import { fromDecimal } from '../utils/web3-utils';
 import cloneDeep from 'lodash/cloneDeep';
+import { fromDecimal } from '../utils/web3-utils';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
-import { toChecksumAddress } from 'web3-utils';
 import { CoinsType } from '../commons/coins';
 
 const secondUnits = {
@@ -66,12 +65,16 @@ export const getDesiredTime = (seconds, type?) =>
 
 const defaultZero = numeral(0).format();
 
-export const calculatefromDecimal = (number, decimals = 18) =>
-  number
+/* eslint-disable */
+export const calculatefromDecimal = (number, decimals = 18) => {
+  const calc = number
     ? numeral(Number(fromDecimal(number.toString(), decimals))).format(
         numeralFormat
       )
     : defaultZero;
+  return calc;
+};
+/* eslint-enable */
 
 export const calculateTimes = auction => {
   try {
@@ -158,7 +161,7 @@ export const calculateInvestmentReturn = (auction, decimals = 18) => {
   const lenderRoiAmount = lenderAmount + lenderAmount * calculateROI(auction);
   return lenderRoiAmount;
 };
-
+/* eslint-disable */
 export const getCoinsFromContract = coinsMap => contract => {
   const coins: CoinsType[] =
     contract &&
@@ -177,6 +180,7 @@ export const getCoinsFromContract = coinsMap => contract => {
 
   return coins;
 };
+/* eslint-enable */
 
 export const getCoin = (coins: CoinsType[]) => (
   tokenAddress: string
@@ -194,8 +198,7 @@ export const getCoin = (coins: CoinsType[]) => (
   }
   return (
     coins.find(
-      coin =>
-        toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)
+      coin => coin.address.toLowerCase() === tokenAddress.toLowerCase()
     ) || defaultCoin
   );
 };
@@ -288,11 +291,12 @@ export const getActiveAuctions = (auctions, states) => {
   const updatedAuctions = auctions
     ? auctions.map(auction => assumeStateMachine(auction))
     : [];
+
+  const getStates = (auction: any) =>
+    states.some(st => st === auction.state) || states.indexOf('all') > -1;
+
   const activeAuctions = updatedAuctions
-    ? updatedAuctions.filter(
-        auction =>
-          states.some(st => st === auction.state) || states.indexOf('all') > -1
-      )
+    ? updatedAuctions.filter(getStates)
     : [];
   return activeAuctions;
 };

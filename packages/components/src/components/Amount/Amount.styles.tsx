@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const AmountComponent = styled.div`
+const AmountComponent = styled.div`
   position: relative;
   display: flex;
   align-items: center;
@@ -15,3 +15,6 @@ export const AmountComponent = styled.div`
     font-weight: bold;
   }
 `;
+
+export { AmountComponent };
+export default AmountComponent;

@@ -22,11 +22,11 @@ const Web3Address = ({ account = null, border = true }: any) => {
   const iconColor = networkMatches ? 'green' : 'red';
   const currentAddress = account || address || NULL_ADDRESS;
 
-  const getShortAddress = useCallback(() => {
-    return `${currentAddress.substring(0, 6)}...${currentAddress.substring(
-      currentAddress.length - 4
-    )}`;
-  }, [currentAddress]);
+  const getShortAddress = useCallback(
+    () =>
+      `${currentAddress.substring(0, 6)}...${currentAddress.substring(currentAddress.length - 4)}`,
+    [currentAddress]
+  );
 
   return (
     <LabelWeb3 border={border}>

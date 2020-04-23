@@ -9,7 +9,7 @@ const GetStarted = () => {
 
   return (
     <ChooseMethodWrapper>
-      <AuthenticationMethods method={'Sign Up'} />
+      <AuthenticationMethods method="Sign Up" />
       <ChooseSignUpSignInWrapper>
         <CallToSignIn>
           Already have an account?

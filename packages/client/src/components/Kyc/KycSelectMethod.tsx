@@ -15,13 +15,16 @@ import {
   KycButtonLogo,
   KycButtonText,
   KycButtonLinkIcon,
-  KycButtonLinkIconContainer
+  KycButtonLinkIconContainer,
+  InformationSection,
+  HorizontalDivider
 } from './Kyc.styles';
 import { Link } from '../Link';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import useRouter from '../../hooks/useRouter';
 import { useAppContext } from '../../contexts/AppContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import InformationContainer from './InformationSection';
 
 const KycSelectMethod = () => {
   const { history }: any = useRouter();
@@ -53,7 +56,7 @@ const KycSelectMethod = () => {
       <OnboardingProgressBar step={3} isMobile={isMobile} />
       <KycContainer>
         <KycTitleWrapper>
-          <CardTitle>It's time to verify your account</CardTitle>
+          <CardTitle>It&apos;s time to verify your account</CardTitle>
 
           <CardSubTitle>
             <p>
@@ -107,6 +110,14 @@ const KycSelectMethod = () => {
           <Link to="/">Do it later</Link>
         </LinkWrap>
       </KycContainer>
+      <InformationSection>
+        <InformationContainer
+          title={'How to verify with Sum&Sub'}
+          slug={'kyc-sumsub-instructions'}
+        />
+        <HorizontalDivider />
+        <InformationContainer title={'How to verify with Bloom'} slug={'kyc-bloom-instructions'} />
+      </InformationSection>
     </KycWrapper>
   );
 };

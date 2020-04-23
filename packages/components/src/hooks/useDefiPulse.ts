@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import useAsyncEffect from './useAsyncEffect';
 import axios from 'axios';
+import useAsyncEffect from './useAsyncEffect';
 
 const request = (apiKey: string | null | undefined) =>
   `https://public.defipulse.com/api/GetRates${
@@ -14,7 +14,9 @@ const useDefiPulse = (apiKey: string | null | undefined) => {
     try {
       const { data } = await axios.get(request(apiKey));
       setLendingRates(data);
-    } catch (error) {}
+    } catch (error) {
+      console.error('[useDefiPulse] Error on set Lending Rates ');
+    }
   }, []);
 
   return lendingRates;

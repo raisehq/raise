@@ -22,6 +22,11 @@ interface ChartProps {
   companies: Company[];
 }
 
+const getPercentage = (company: any) => {
+  const per = company.enabled ? Number(company.supplyRate * 100).toFixed(2) : 0;
+  return per;
+};
+
 const companyRes = (topPercentage: number) => (
   company: Company,
   index: number
@@ -33,9 +38,7 @@ const companyRes = (topPercentage: number) => (
     <CompanyContainer key={index} comingSoon={company.enabled}>
       <CompanyIcon src={ERC20_LOGOS[company.logoUrl] || company.logoUrl} />
       <CompanyInfo>
-        <Percentage>{`${
-          company.enabled ? Number(company.supplyRate * 100).toFixed(2) : 0
-        }%`}</Percentage>
+        <Percentage>{`${getPercentage(company)}%`}</Percentage>
         <PercentageBarBack newWidth={width} />
         <PercentageBar newWidth={company.enabled ? newWidth : 0} />
 
@@ -60,6 +63,8 @@ const printResumes = (companies: Company[]) => {
   return sortedCompanies.map(companyRes(sortedCompanies[0].supplyRate));
 };
 
-export const LoanComparatorChart: React.SFC<ChartProps> = ({ companies }) => {
-  return <ResumeContainer>{printResumes(companies)}</ResumeContainer>;
-};
+export const LoanComparatorChart: React.SFC<ChartProps> = ({
+  companies,
+}: any) => <ResumeContainer>{printResumes(companies)}</ResumeContainer>;
+
+export default LoanComparatorChart;

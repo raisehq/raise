@@ -174,7 +174,7 @@ export const cryptoAddressByAccount = async userId => {
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error);
+    throw new Error(`Error request client to server stack : ${error}`);
   }
 };
 
@@ -208,7 +208,7 @@ export const addCryptoAddress = async body => {
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 
@@ -227,7 +227,7 @@ export const updateCryptoAddress = async (cryptoAddressId, body: any) => {
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack :  ${error.message}`);
   }
 };
 
@@ -250,7 +250,7 @@ export const getReferralAddress = async referrerCode => {
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
 
@@ -276,6 +276,6 @@ export const getUsersReferrerByCryptoAddress = async (address: string[]) => {
         throw new Error(rawResponse.data.message || 'User Unauthorized');
     }
   } catch (error) {
-    throw new Error('Error request client to server stack : ' + error.message);
+    throw new Error(`Error request client to server stack :  ${error.message}`);
   }
 };

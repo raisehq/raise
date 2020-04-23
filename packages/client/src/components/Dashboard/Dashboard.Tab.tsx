@@ -39,7 +39,6 @@ const Auctions = daggy.taggedSum('Auctions', {
 const Tab = ({ auctions, states, type }) => {
   const [tabState, setTabState]: any = useState(Auctions.Loading);
   const filteredAuctions = getActiveAuctions(auctions, states);
-
   useEffect(() => {
     if (!filteredAuctions) {
       setTabState(Auctions.Loading);
