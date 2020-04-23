@@ -9,7 +9,9 @@ const InstructionStep = ({ activeIndex, number, text }) => {
         <NumberWrapper>
           <span>{number}</span>
         </NumberWrapper>
-        <AccordionText>{text}</AccordionText>
+        <AccordionText>
+          {text}
+        </AccordionText>
       </AccordionRow>
     </Accordion.Content>
   );
