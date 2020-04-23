@@ -116,7 +116,6 @@ export const AmountComponent = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  height: 22px;
   &&& > div:first-child {
     margin-left: 5px;
   }
