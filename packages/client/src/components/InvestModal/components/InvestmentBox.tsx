@@ -90,13 +90,16 @@ const BalanceWrapper = styled.div`
 `;
 
 const Offer = styled.div`
-  padding: 2px 6px;
-  border-radius: 8px;
+  padding: 4px 12px;
+  border-radius: 16px;
   background: #f5ac37;
   color: white;
   font-weight: bold;
   font-size: 14px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Eligible = styled.div<EligibleProps>`
@@ -307,7 +310,7 @@ const InvestmentBox = ({
     <Card size="310px" width="100%" {...props}>
       <InvestHeader>How much would you like to invest?</InvestHeader>
       <Offer>
-        PROMO: Invest >= 50 {selectedCoin} get 49 {selectedCoin} back!
+        <span>{`PROMO: Invest 50 ${selectedCoin} or more and get 49 ${selectedCoin}`}</span>
       </Offer>
 
       <InvestBox>
@@ -323,9 +326,7 @@ const InvestmentBox = ({
         />
         <Coin src={loanCoinImage} name={loanCoin?.text} />
       </InvestBox>
-      <Eligible active={value >= 50}>
-        If you invest now, 49 {selectedCoin} will be sent to your address in less than 48 hours.
-      </Eligible>
+      <Eligible active={value >= 50}>Promo activated! Invest and get your tokens in 48h</Eligible>
       <BalanceWrapper>
         <div>Invest with</div>
         <CoinSelector
