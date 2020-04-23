@@ -14,8 +14,6 @@ const InstructionStep = ({ activeIndex, number, text }) => (
     </AccordionRow>
   </Accordion.Content>
 );
-<<<<<<< HEAD
-=======
 
 InstructionStep.propTypes = {
   text: PropTypes.string.isRequired,
@@ -26,6 +24,5 @@ InstructionStep.propTypes = {
 InstructionStep.defaultProps = {
   activeIndex: false
 };
->>>>>>> 52d8b11dc2ce8e0a8d8722913c48ea044a7cab2d
 
 export default InstructionStep;
