@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "env-cmd --no-override .env tsdx watch",
+    "watch": "env-cmd --no-override .env tsdx watch",
     "dev": "env-cmd --no-override .env tsdx watch",
     "dev:int": "yarn run dev",
     "build": "rm -f tsdx.config.js && env-cmd --no-override .env tsdx build",
