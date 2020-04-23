@@ -8,7 +8,6 @@
     "@raisehq/onboarding": "*",
     "@types/jest": "24.0.15",
     "@types/lodash": "^4.14.135",
-    "@types/node": "12.0.8",
     "@types/react": "16.9.0",
     "@types/react-dom": "16.9.0",
     "@types/react-router": "^5.1.4",
@@ -24,11 +23,9 @@
     "daggy": "^1.4.0",
     "dayjs": "^1.8.24",
     "dompurify": "^1.0.11",
-    "env-cmd": "^8.0.2",
     "followtx": "^0.2.0",
     "htmr": "^0.8.7",
     "js-cookie": "^2.2.0",
-    "lint-staged": "^10.0.8",
     "lodash": "4.17.14",
     "logrocket": "^1.0.3",
     "numeral": "^2.0.6",
@@ -63,6 +60,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "eslint": "^6.2.1",
+    "env-cmd": "^8.0.2",
     "eslint-config-airbnb-typescript": "^4.0.1",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
@@ -72,7 +70,6 @@
     "prettier": "^1.19.1",
     "react-use-cookie": "^1.0.2",
     "ts-jest": "^24.0.2",
-    "tsc": "^1.20150623.0",
     "typescript": "3.8.3"
   },
   "scripts": {

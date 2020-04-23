@@ -53,17 +53,6 @@
     "semantic-ui-react": "^0.88.1",
     "env-cmd": "^8.0.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "dependencies": {
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/lodash": "^4.14.149",
