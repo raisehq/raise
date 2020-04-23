@@ -62,4 +62,4 @@ deploy-onboarding:
     - |
       #!/bin/sh
       mv packages/libs/build onboarding
-      aws s3 sync --delete onboarding s3://${LIB_BUCKET_NAME}/onboarding/* --metadata-directive REPLACE --cache-control max-age=86400000
+      aws s3 sync --delete onboarding s3://${LIB_BUCKET_NAME}/onboarding/ --metadata-directive REPLACE --cache-control max-age=86400000
