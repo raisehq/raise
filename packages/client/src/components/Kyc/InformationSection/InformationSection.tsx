@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Accordion, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import { Title, Container } from './styles';
 import InstructionStep from './InstructionStep/index';
 import { requestPage } from '../../../helpers/butter';
@@ -44,6 +45,11 @@ const InformationSection = ({ title, slug }) => {
       </Accordion>
     </Container>
   );
+};
+
+InformationSection.propTypes = {
+  title: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired
 };
 
 export default InformationSection;
