@@ -128,20 +128,8 @@ export const Modal = styled(SemanticModal)`
   }
 `;
 
-export const ModalContent: any = styled(SemanticModal.Content)`
-  &&&.content {
-    padding: 40px 50px;
-  }
-
-  @media (max-width: 500px) {
-    border-radius: 0;
-    margin: 0;
-    height: 100%;
-    overflow: auto;
-    &&&.content {
-      padding: 9px;
-    }
-  }
+export const Content: any = styled.div`
+  padding: 40px 50px;
 `;
 
 export const ModalFlexWrapper = styled.div`

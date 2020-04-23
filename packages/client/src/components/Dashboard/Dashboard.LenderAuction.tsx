@@ -23,18 +23,21 @@ const Auction = ({ auction }: { auction: any }) => {
     lenderAmount
   } = calcs;
 
-  const auctionTimeLeft = `${times.auctionTimeLeft} left`;
+  const auctionTimeLeft = `${times.auctionTimeLeft}`;
 
   return (
     <Card>
       <CardTopSection src={logo} href={slug} />
-      <Card.Content topRight={auctionTimeLeft} to={route}>
+      <Card.Content to={route}>
         <Content>
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
-          <Card.Header
-            title="Amount invested"
-            amount={<Amount principal={lenderAmount} coin={coin} />}
-          />
+          <Card.Grid spaceBetween nobottom>
+            <Card.Header
+              title="Amount invested"
+              amount={<Amount principal={lenderAmount} coin={coin} />}
+            />
+            <Card.Header title="Days left" fontSize="24px" amount={auctionTimeLeft} />
+          </Card.Grid>
         </Content>
         <Card.Separator />
         <Card.Grid spaceBetween nobottom>
