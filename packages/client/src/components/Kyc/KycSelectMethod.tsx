@@ -111,12 +111,9 @@ const KycSelectMethod = () => {
         </LinkWrap>
       </KycContainer>
       <InformationSection>
-        <InformationContainer
-          title={'How to verify with Sum&Sub'}
-          slug={'kyc-sumsub-instructions'}
-        />
+        <InformationContainer title="How to verify with Sum&Sub" slug="kyc-sumsub-instructions" />
         <HorizontalDivider />
-        <InformationContainer title={'How to verify with Bloom'} slug={'kyc-bloom-instructions'} />
+        <InformationContainer title="How to verify with Bloom" slug="kyc-bloom-instructions" />
       </InformationSection>
     </KycWrapper>
   );
