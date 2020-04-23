@@ -8,7 +8,6 @@ import { maxDevice } from '../../commons/breakpoints';
 export const HeaderWrapper: any = styled.div`
   top: 0;
   position: sticky;
-  height: 97px;
   border-radius: 0px;
   width: 100%;
   z-index: 999;
