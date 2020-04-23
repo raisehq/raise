@@ -17,6 +17,9 @@ const errorMessages = {
   inputGreaterThanBalance: 'Not enough balance.',
   inputGreaterThanLoanAmount: 'Invest less than target.'
 };
+interface EligibleProps {
+  active: boolean;
+}
 
 const MaxInputs = styled(MaxInputsRaw)`
   margin-top: 10px;
@@ -49,7 +52,7 @@ const InvestBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: 34px auto 0px auto;
+  margin: 24px auto 0px auto;
 
   &&&&&&&& ${Coin} {
     font-size: 16px;
@@ -60,7 +63,7 @@ const InvestBox = styled.div`
 
 const BalanceWrapper = styled.div`
   width: 100%;
-  margin-top: 40px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,6 +87,29 @@ const BalanceWrapper = styled.div`
     font-weight: bold;
     color: #8a8e97;
   }
+`;
+
+const Offer = styled.div`
+  padding: 4px 12px;
+  border-radius: 16px;
+  background: #f5ac37;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Eligible = styled.div<EligibleProps>`
+  visibility: ${({ active }) => (active ? 'visible' : 'hidden')};
+  color: #00da9e;
+  text-align: center;
+  padding: 6px;
+  max-width: 260px;
+  font-weight: bold;
+  font-size: 14px;
 `;
 
 const BigInput = styled(LoanInput)`
@@ -283,6 +309,10 @@ const InvestmentBox = ({
   return (
     <Card size="310px" width="100%" {...props}>
       <InvestHeader>How much would you like to invest?</InvestHeader>
+      <Offer>
+        <span>{`PROMO: Invest 50 ${selectedCoin} or more and get 49 ${selectedCoin}`}</span>
+      </Offer>
+
       <InvestBox>
         <div>INVEST</div>
         <BigInput
@@ -296,6 +326,7 @@ const InvestmentBox = ({
         />
         <Coin src={loanCoinImage} name={loanCoin?.text} />
       </InvestBox>
+      <Eligible active={value >= 50}>Promo activated! Invest and get your tokens in 48h</Eligible>
       <BalanceWrapper>
         <div>Invest with</div>
         <CoinSelector
