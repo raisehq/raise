@@ -6,7 +6,7 @@ import { requestPage } from '../../../helpers/butter';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
 
 const InformationSection = ({ title, slug }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const [steps, setSteps] = useState([]);
 
   useAsyncEffect(async () => {
