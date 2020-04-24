@@ -13,7 +13,7 @@ export const FooterInformationContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-top: 96px;
+  margin-top: 46px;
   flex-wrap: wrap;
 `;
 
@@ -21,31 +21,43 @@ export const FooterCopyRightContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 80px;
+  margin-top: 40px;
   margin-bottom: 44px;
 `;
 
 export const FooterLogo = styled.div`
-  height: 40px;
-  margin-bottom: 20px;
+  margin: 40px;
 `;
 
 export const FooterMenu = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
+  margin: 40px;
 `;
 
 export const SubMenu = styled.div`
   display: flex;
   flex-direction: column;
+  text-align: center;
+  margin: 0 10px 0 10px;
+  width: 120px;
+  font-size: 16px;
+  line-height: 24px;
+  flex-wrap: wrap;
+  color: #8a8e97;
 `;
 
 export const FooterSocial = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  text-align: center;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 40px;
+  color: #8a8e97;
 `;
 
 export const SocialLink = styled.a`
