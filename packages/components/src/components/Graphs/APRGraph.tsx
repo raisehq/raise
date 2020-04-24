@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import axios from 'axios';
 import { Icon } from 'semantic-ui-react';
 import BN from 'bn.js';
@@ -295,6 +296,11 @@ const APRGraph = ({
     compoundDataset,
   ]);
 
+  const getFormatDate = date => {
+    dayjs.extend(localizedFormat);
+    return dayjs(date).format('LL');
+  };
+
   const updateHover = (_event: any, datapoint: any[]) => {
     // Return current index to be able to show tooltip outside canvas
     if (!datapoint.length) {
@@ -339,7 +345,7 @@ const APRGraph = ({
       </Header>
 
       <Card.Grid>
-        <Card.Row notop big content={dayjs(selectedDate).format('LL')} />
+        <Card.Row notop big content={getFormatDate(selectedDate)} />
         <Card.Vertical />
         <Card.Row
           notop
