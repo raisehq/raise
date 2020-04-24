@@ -29,6 +29,7 @@ import NotFound404 from '../components/BorrowerProfile/Borrower404';
 
 import Toast, { StyledToastContainer } from './Toast';
 import Sidebar from './InvestSidebar/Sidebar';
+import InvestingPage from './InvestingPage';
 
 const InvestSidebar = lazy(() => import('./InvestSidebar/InvestSidebar'));
 
@@ -221,6 +222,15 @@ const App = () => {
                   exact
                   path="/c/:slug"
                   component={BorrowerProfile}
+                  roles={[1, 2]}
+                />
+                <Web3Layout
+                  publicRoute
+                  marketplace
+                  layout={SimpleLayout}
+                  exact
+                  path="/investing"
+                  component={InvestingPage}
                   roles={[1, 2]}
                 />
                 {/* Onboarding */}
