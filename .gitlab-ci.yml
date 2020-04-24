@@ -90,6 +90,32 @@ lint-front-review:
     paths:
       - packages/client/build_review
 
+build-components:
+  stage: build
+  script:
+    - yarn
+    - cd packages/components
+    - npm run build:umd
+  only:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/components/dist
+
+build-onboarding:
+  stage: build
+  script:
+    - yarn install --frozen-lockfile --stream  --scope '{@raisehq/onboarding,@raisehq/libs}'
+    - cd packages/onboarding  & yarn build
+    - yarn rollup
+  only:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/libs/build
+
 build-front-integration:
   stage: build
   script:
@@ -129,6 +155,40 @@ lint-front:
     when: always
     paths:
       - packages/client/build
+
+deploy-components:
+  image: python:3.7-alpine
+  stage: deploy
+  variables:
+    LIB_BUCKET_NAME: lib.raise.it
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/components/dist components
+      ls -la components
+      aws s3 cp components/raisecomponents.umd.development.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp components/raisecomponents.umd.development.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp components/raisecomponents.umd.production.min.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp components/raisecomponents.umd.production.min.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+  only:
+    - master
+
+deploy-onboarding:
+  image: python:3.7-alpine
+  stage: deploy
+  variables:
+    LIB_BUCKET_NAME: lib.raise.it
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/libs/build onboarding
+      aws s3 sync --delete onboarding s3://${LIB_BUCKET_NAME}/onboarding/ --metadata-directive REPLACE --cache-control max-age=86400000
+  only:
+    - master
 
 deploy-int:
   image: python:3.7-alpine
