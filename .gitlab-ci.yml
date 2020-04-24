@@ -45,14 +45,12 @@ deploy-components:
   script:
     - |
       #!/bin/sh
-      ls -la packages
-      ls -la packages/components
-      ls -la packages/components/dist
       mv packages/components/dist components
-      aws s3 sync --delete components/raisecomponents.umd.development.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
-      aws s3 sync --delete components/raisecomponents.umd.development.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
-      aws s3 sync --delete components/raisecomponents.umd.production.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
-      aws s3 sync --delete components/raisecomponents.umd.production.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      ls -la components
+      aws s3 cp components/raisecomponents.umd.development.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp components/raisecomponents.umd.development.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp components/raisecomponents.umd.production.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp components/raisecomponents.umd.production.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
 
 deploy-onboarding:
   image: python:3.7-alpine
