@@ -15,7 +15,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "tsc --watch",
+    "watch": "tsc --watch",
     "dev": "tsc --watch",
     "dev:int": "yarn run dev",
     "compile:onboarding": "tsc",
