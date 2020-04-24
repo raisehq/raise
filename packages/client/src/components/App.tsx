@@ -120,7 +120,7 @@ const App = () => {
       });
     }
   }, [followTx]);
-
+  console.log('RENDERED BY THE BLOCKS');
   return (
     <>
       <Dimmer active={isLoading} inverted>
