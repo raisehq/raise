@@ -46,8 +46,10 @@ function reducer(state: BalancesState, { type, payload }: { type: Action; payloa
   switch (type) {
     case Action.START_LISTENING: {
       const { chainId, address, tokenAddress } = payload;
-      // eslint-disable-next-line
-      const uninitialized = !!!state?.[chainId]?.[address]?.[tokenAddress];
+
+      // prettier-ignore
+      const uninitialized = !(state?.[chainId]?.[address]?.[tokenAddress]);
+
       // prettier-ignore
       return {
         ...state,
