@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Progress } from 'semantic-ui-react';
 import { size } from '../../../commons/breakpoints';
-import { InvestModal } from '../../InvestModal';
 
 export const LoanHeader = styled.div`
   display: flex;
@@ -173,16 +172,4 @@ export const LoanButtonRow = styled.div`
   justify-content: flex-end;
   flex-direction: row;
   width: 100%;
-`;
-
-export const InvestButton = styled(InvestModal)`
-  &&&&&& {
-    margin-top: 15px;
-    width: 30%;
-  }
-  @media (max-width: ${size.mobileL}) {
-    &&&&&& {
-      width: 100%;
-    }
-  }
 `;

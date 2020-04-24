@@ -13,7 +13,6 @@ import {
 } from 'semantic-ui-react';
 import Balance from '../Balance';
 import { device } from '../../commons/breakpoints';
-import InvestmentBox from './components/InvestmentBox';
 
 interface ModalInputProps {
   roi?: boolean;
@@ -28,10 +27,6 @@ interface LabelPaddingProps {
   color?: string;
 }
 
-export const InvestSection = styled(InvestmentBox)`
-  margin: 29px auto 0px auto;
-  padding: 27px;
-`;
 export const LoanTermsCheckbox: any = styled(Checkbox)`
   &&& {
     position: relative;
@@ -133,20 +128,8 @@ export const Modal = styled(SemanticModal)`
   }
 `;
 
-export const ModalContent: any = styled(SemanticModal.Content)`
-  &&&.content {
-    padding: 40px 50px;
-  }
-
-  @media (max-width: 500px) {
-    border-radius: 0;
-    margin: 0;
-    height: 100%;
-    overflow: auto;
-    &&&.content {
-      padding: 9px;
-    }
-  }
+export const Content: any = styled.div`
+  padding: 40px 50px;
 `;
 
 export const ModalFlexWrapper = styled.div`

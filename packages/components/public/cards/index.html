@@ -139,7 +139,6 @@
         if (response.loans.length) {
           const loan = response.loans[0];
           const borrower = await fetchCompany(loan.originator);
-          console.log('borrower', borrower);
           const InvestCard = styled(RaiseComponents.InvestCard)`
             height: fit-content;
           `;

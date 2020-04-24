@@ -3,13 +3,7 @@ import { Link } from 'react-scroll';
 
 import { SuccessStateProps } from './types';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
-import {
-  CardTitle,
-  CardSubtitle,
-  ButtonPink,
-  ButtonWrapper,
-  ModalFlexWrapper
-} from './InvestModal.styles';
+import { CardTitle, CardSubtitle, ButtonPink, ButtonWrapper, Content } from './InvestModal.styles';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
 const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }: any) => {
@@ -22,7 +16,7 @@ const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }
   };
 
   return (
-    <ModalFlexWrapper id="modal-success">
+    <Content id="modal-success">
       <CardTitle>Your funds are safe in escrow until the auction is over</CardTitle>
       <CardSubtitle>
         Your investment will be active when the auction ends. In the meantime you can check other
@@ -34,7 +28,7 @@ const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }
           <ButtonPink onClick={onOK}>OK</ButtonPink>
         </Link>
       </ButtonWrapper>
-    </ModalFlexWrapper>
+    </Content>
   );
 };
 

@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import daggy from 'daggy';
 import BN from 'bn.js';
 import { useRootContext } from '../../contexts/RootContext';
 import { useSidebarContext } from '../../contexts/SidebarContext';
-import InvestState from '../InvestModal/InvestState';
-import ProcessingState from '../InvestModal/ProcessingState';
-import SuccessState from '../InvestModal/SuccessState';
 import VerifyKycModal from '../InvestModal/VerifyKycState';
 import useGetCoin from '../../hooks/useGetCoin';
 import { useAppContext } from '../../contexts/AppContext';
+
+const InvestState = lazy(() => import('../InvestModal/InvestState'));
+const ProcessingState = lazy(() => import('../InvestModal/ProcessingState'));
+const SuccessState = lazy(() => import('../InvestModal/SuccessState'));
 
 const UI = daggy.taggedSum('UI', {
   Kyc: [],
@@ -95,7 +96,11 @@ const InvestSidebar = () => {
       Success: () => <SuccessState setStage={setStage} ui={UI} closeModal={closeSidebar} />
     });
 
-  return <>{getInvestAction(stage)}</>;
+  return (
+    <>
+      <Suspense fallback={<div>...</div>}>{getInvestAction(stage)}</Suspense>
+    </>
+  );
 };
 
 export default InvestSidebar;

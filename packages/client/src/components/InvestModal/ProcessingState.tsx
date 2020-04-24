@@ -63,10 +63,11 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
       const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
       let DAIProxy;
       try {
-        if (loanContract.methods.proxyContractAddress) {
-          const DaiProxyAddress = await loanContract.methods.proxyContractAddress().call();
+        if (loanContract.methods.proxyAddress) {
+          const DaiProxyAddress = await loanContract.methods.proxyAddress().call();
           DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
         } else {
+          console.error('ERROR: using default proxy address');
           DAIProxy = await metamask.addContract('DAIProxy');
         }
         setContracts({
@@ -96,7 +97,6 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
 
       if (valueBN.gt(new BN(amountApproved))) {
         try {
-          console.log(tokenAddress, DAIProxy.options.address, MAX_VALUE);
           await followTx.watchTx(
             ERC20Contract.methods
               .approve(DAIProxy.options.address, MAX_VALUE)
