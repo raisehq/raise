@@ -1,15 +1,8 @@
 import React from 'react';
 import { BalanceDropdown, BalanceMenu, TokenBalance } from './Balance.styles';
+import TOKEN_URLS from '../../commons/tokens';
 
-const { REACT_APP_HOST_IMAGES } = process.env;
-
-const TOKEN_URLS = {
-  DAI: `${REACT_APP_HOST_IMAGES}/images/coins/coin-dai.svg`,
-  USDT: `${REACT_APP_HOST_IMAGES}/images/coins/coin-theter.svg`,
-  USDC: `${REACT_APP_HOST_IMAGES}/images/coins/coin-usdc.svg`
-};
-
-const SUPPORTED_COINS = ['DAI', 'USDT', 'USDC'];
+const SUPPORTED_COINS = ['DAI', 'USDT', 'USDC', 'ETH'];
 
 const Balance = props => {
   const balanceList = () =>
