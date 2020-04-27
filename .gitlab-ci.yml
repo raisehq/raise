@@ -90,18 +90,18 @@ lint-front-review:
     paths:
       - packages/client/build_review
 
-build-components:
-  stage: build
-  script:
-    - yarn
-    - cd packages/components
-    - npm run build:umd
-  only:
-    - master
-  artifacts:
-    when: always
-    paths:
-      - packages/components/dist
+# build-components:
+#   stage: build
+#   script:
+#     - yarn
+#     - cd packages/components
+#     - npm run build:umd
+#   only:
+#     - master
+#   artifacts:
+#     when: always
+#     paths:
+#       - packages/components/dist
 
 build-onboarding:
   stage: build
