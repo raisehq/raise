@@ -257,7 +257,7 @@ cypress-e2e-review:
     paths:
       - packages/testing/ganache_db
 
-cypress-e2e-production:
+cypress-e2e-canary:
   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
   stage: test
   variables:
@@ -303,6 +303,36 @@ deploy-prod:
         echo $dist
         aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
       done
+  only:
+    - master
+
+cypress-e2e-production:
+  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
+  stage: test
+  variables:
+    CYPRESS_url: 'https://app.raise.it'
+    CYPRESS_baseUrl: 'https://app.raise.it'
+    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+    CYPRESS_api: api.raise.it
+  script:
+    - yarn --pure-lockfile
+    - cd packages/testing
+    - yarn run cypress cache path
+    - yarn run cypress cache list
+    - yarn run cypress verify
+    - yarn run ci:run
+  artifacts:
+    expire_in: '1 week'
+    when: always
+    paths:
+      - packages/testing/cypress/screenshots
+      - packages/testing/ganache_db
+      - packages/testing/cypress/videos
+      - packages/testing/cypress/snapshots
+  cache:
+    key: ganache-global-cache
+    paths:
+      - packages/testing/ganache_db
   only:
     - master
 
