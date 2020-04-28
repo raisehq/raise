@@ -15,7 +15,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to return the correct instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 3, 'seconds')
+        .subtract(oneMonth * 3, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 5;
 
@@ -31,7 +31,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to return instalment bigger than last instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 3, 'seconds')
+        .subtract(oneMonth * 3, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth;
 
@@ -49,7 +49,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to get the correct ammount with 18 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 3, 'seconds')
+        .subtract(oneMonth * 3, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const loan = {
@@ -66,7 +66,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to get the correct ammount with 6 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 3, 'seconds')
+        .subtract(oneMonth * 3, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const loan = {
@@ -85,7 +85,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects the correct amount in 18 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const loan = {
@@ -108,7 +108,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects the correct amount in 16 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const loan = {
@@ -153,7 +153,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to get the dates of all the instalments', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 4;
       const termLength = termEndTimestamp - auctionEndTimestamp;
@@ -177,7 +177,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to get state not paid for instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const termLength = termEndTimestamp - auctionEndTimestamp;
@@ -201,7 +201,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to get state Waiting for instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const termLength = termEndTimestamp - auctionEndTimestamp;
@@ -225,7 +225,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to get state Paid for instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const termLength = termEndTimestamp - auctionEndTimestamp;
@@ -249,7 +249,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to get state Withdrawed for instalment', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const termLength = termEndTimestamp - auctionEndTimestamp;
@@ -275,7 +275,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects correct penalty amount to pay', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const termLength = termEndTimestamp - auctionEndTimestamp;
@@ -298,7 +298,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to calculate correctly the debt with 18 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const termLength = termEndTimestamp - auctionEndTimestamp;
@@ -319,7 +319,7 @@ describe('Test suite for progressive calculations', () => {
     it('Expects to calculate correctly the debt with 6 decimals', () => {
       const oneMonth = 1 * 30 * 24 * 60 * 60;
       const auctionEndTimestamp = dayjs()
-        .subtract(oneMonth * 7, 'seconds')
+        .subtract(oneMonth * 7, 'second')
         .unix();
       const termEndTimestamp = auctionEndTimestamp + oneMonth * 10;
       const termLength = termEndTimestamp - auctionEndTimestamp;

@@ -1,7 +1,8 @@
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
-import { InvestCard } from '@raisehq/components';
-import { Company } from '@raisehq/components';
+import React from 'react';
+import { generateImage } from 'jsdom-screenshot';
+import { render } from '@testing-library/react';
+import { IPHONE_SE } from '../../commons/TestViewports';
+import InvestCard from './InvestCard';
 
 const auction = {
   auctionEndTimestamp: '1575021892',
@@ -26,29 +27,35 @@ const auction = {
   termLength: '7776000',
 };
 
-const company: Company = {
+const company = {
   companyName: 'HERO Fintech Solutions Ptd. Ltd.',
   description: '',
   shortDescription:
-    'Speck SL was funded  in 1997 and have 17 millions  of yearly revenue. The company is focused in offering the best gastronomy  experience. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.',
+    'Speck SL was funded  in 1997 and have 17 millions  of yearly revenue. The company is focused in offering the best gastronomy  experience. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.',
   background: 'https://cdn.buttercms.com/SnV5NXlFQDmHObRHyU2n',
   logo: 'https://cdn.buttercms.com/YzIsSDsTvCCpZ7pbbaVW',
   slug: 'hero',
 };
 
-storiesOf('InvestCard', module).add('InvestCard with auction data', () => (
-  <div style={{ padding: 10 }}>
+it('renders correctly', async () => {
+  // @ts-ignore
+  window.innerWidth = 320;
+  // @ts-ignore
+  window.innerHeight = 568;
+  // @ts-ignore
+  window.dispatchEvent(new Event('resize'));
+
+  render(
     <InvestCard
       auction={auction}
       borrower={company}
       coinIcon="coin-dai.svg"
       link
     />
-  </div>
-));
+  );
 
-storiesOf('InvestCard', module).add('InvestCard with NO link', () => (
-  <div style={{ padding: 10 }}>
-    <InvestCard auction={auction} borrower={company} coinIcon="coin-dai.svg" />
-  </div>
-));
+  const screenshot = await generateImage(IPHONE_SE);
+
+  // @ts-ignore
+  expect(screenshot).toMatchImageSnapshot();
+});
