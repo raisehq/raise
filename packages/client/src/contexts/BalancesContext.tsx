@@ -251,13 +251,11 @@ export function useAddressBalance(address: string, tokenAddress: string): BN {
 
   useEffect(() => {
     if (!tokenAddress) return undefined;
-    if (typeof chainId === 'number' && isAddress(address) && isAddress(tokenAddress)) {
+    if (typeof chainId === 'number' && isAddress(address) && tokenAddress) {
       startListening(chainId, address, tokenAddress);
     }
     return () => {
-      if (typeof chainId === 'number' && isAddress(address) && isAddress(tokenAddress)) {
-        stopListening(chainId, address, tokenAddress);
-      }
+      stopListening(chainId, address, tokenAddress);
     };
   }, [chainId, address, tokenAddress, startListening, stopListening]);
 

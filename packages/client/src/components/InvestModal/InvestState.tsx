@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { tradeTokensForExactTokens } from '@uniswap/sdk';
+import { tradeTokensForExactTokens, tradeEthForExactTokens } from '@uniswap/sdk';
 import BN from 'bn.js';
 import styled from 'styled-components';
 import { InvestStateProps } from './types';
@@ -103,6 +103,13 @@ const InvestState: React.SFC<InvestStateProps> = ({
       if (!inputCoin || !loanCoin) {
         return defaultValue;
       }
+      if (inputCoin.text === 'ETH') {
+        const outputAmount = toDecimal(value, loanCoin.decimals);
+        const tradeDetails = await tradeEthForExactTokens(loanCoin.address, outputAmount, chainId);
+
+        const totalOutput = new BN(tradeDetails.inputAmount.amount.toString());
+        return totalOutput;
+      }
       const outputAmount = toDecimal(value, loanCoin.decimals);
       const tradeDetails = await tradeTokensForExactTokens(
         inputCoin.address,
@@ -154,6 +161,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
     value,
     setValue,
     coin: inputCoin,
+    inputToken: Number(fromDecimal(inputTokenAmount.toString(10), inputCoin?.decimals)),
     loanCoin,
     balance,
     selectedCoin,
