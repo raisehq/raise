@@ -1,6 +1,6 @@
 import { match, ANY } from 'pampy';
-import { toChecksumAddress } from 'web3-utils';
 import cloneDeep from 'lodash/cloneDeep';
+import get from 'lodash/get';
 import { fromDecimal } from '../utils/web3-utils';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
@@ -153,18 +153,14 @@ export const calculateInvestmentReturn = (auction, decimals = 18) => {
 export const getCoinsFromContract = coinsMap => contract => {
   const coins: CoinsType[] =
     contract &&
-    coinsMap.map(coin =>
-      contract[coin.name]
-        ? {
-            address: contract[coin.name],
-            text: coin.name,
-            value: coin.name,
-            key: coin.key,
-            icon: coin.icon,
-            decimals: coin.decimals
-          }
-        : null
-    );
+    coinsMap.map(coin => ({
+      address: get(contract, coin.name, coin.name),
+      text: coin.name,
+      value: coin.name,
+      key: coin.key,
+      icon: coin.icon,
+      decimals: coin.decimals
+    }));
 
   return coins;
 };
@@ -183,8 +179,7 @@ export const getCoin = (coins: CoinsType[]) => (tokenAddress: string): CoinsType
     return defaultCoin;
   }
   return (
-    coins.find(coin => toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)) ||
-    defaultCoin
+    coins.find(coin => coin?.address?.toLowerCase() === tokenAddress.toLowerCase()) || defaultCoin
   );
 };
 
