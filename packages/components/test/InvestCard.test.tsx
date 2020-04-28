@@ -43,7 +43,7 @@ const bigAuction = {
   maxAmount: '1000000000000000000000000',
 };
 
-it('renders correctly in mobile', async () => {
+it('mobile: renders correctly', async () => {
   // @ts-ignore
   window.innerWidth = 320;
   // @ts-ignore
@@ -66,7 +66,7 @@ it('renders correctly in mobile', async () => {
   expect(screenshot).toMatchImageSnapshot();
 });
 
-it('renders correctly if amounts are big', async () => {
+it('mobile: renders correctly if amounts are big', async () => {
   // @ts-ignore
   window.innerWidth = 320;
   // @ts-ignore

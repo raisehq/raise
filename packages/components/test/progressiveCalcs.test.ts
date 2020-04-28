@@ -8,7 +8,7 @@ import {
   getStateByDate,
   getPendingInstalmentsAmount,
   getInstalmentDates,
-} from './progressiveCalcs';
+} from '../src/utils/progressiveCalcs';
 
 describe('Test suite for progressive calculations', () => {
   describe('Test getCurrentInstalment', () => {
