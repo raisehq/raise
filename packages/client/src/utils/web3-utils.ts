@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import ABI_ERC20 from '../commons/erc20';
 
 BigNumber.config({ EXPONENTIAL_AT: 1e9 });
+const CONTRACTCACHE = {};
 
 export function isAddress(value) {
   try {
@@ -16,7 +17,12 @@ export function getContract(address, abi, library) {
   if (!isAddress(address)) {
     throw Error(`Invalid 'address' parameter '${address}'.`);
   }
-  return new library.eth.Contract(abi, address);
+  if (CONTRACTCACHE[address]) {
+    return CONTRACTCACHE[address];
+  }
+  const newContract = new library.eth.Contract(abi, address);
+  CONTRACTCACHE[address] = newContract;
+  return newContract;
 }
 
 export async function getEtherBalance(address, library) {
