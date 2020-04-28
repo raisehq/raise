@@ -7,6 +7,7 @@ stages:
   - review
   - test
   - deploy-prod
+  - test-prod
   - tag
   - publish
   - cleanup
@@ -312,7 +313,7 @@ deploy-prod:
 
 cypress-e2e-production:
   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
-  stage: test
+  stage: test-prod
   variables:
     CYPRESS_url: 'https://app.raise.it'
     CYPRESS_baseUrl: 'https://app.raise.it'
