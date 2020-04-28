@@ -299,9 +299,9 @@ components-unit-test:
     when: always
     paths:
       - packages/components/test/__image_snapshots__
-    only:
-      - merge_requests
-      - latest
+  only:
+    - merge_requests
+    - latest
 
 deploy-prod:
   image: python:3.7-alpine
