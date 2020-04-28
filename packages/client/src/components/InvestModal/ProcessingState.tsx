@@ -30,7 +30,7 @@ import { useRootContext } from '../../contexts/RootContext';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useGetCoin from '../../hooks/useGetCoin';
 import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
-import { toDecimal } from '../../utils/web3-utils';
+import { toDecimal, fromDecimal } from '../../utils/web3-utils';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({
   loan,
@@ -57,16 +57,21 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
 
   const tagManager = useGoogleTagManager('Card');
   const inputCoin = useGetCoinMetadata(selectedCoin);
-
+  const inputTokenString = fromDecimal(inputTokenAmount.toString(10), inputCoin?.decimals);
+  const explanation =
+    inputCoin?.text === loanCoin.text
+      ? `${investment} ${selectedCoin} will be transferred from your wallet to fund the loan`
+      : `${inputTokenString} ${selectedCoin} will be converted to ${investment} ${loanCoin.text} and fund the loan`;
   useAsyncEffect(async () => {
     if (metamask) {
       const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
       let DAIProxy;
       try {
-        if (loanContract.methods.proxyContractAddress) {
-          const DaiProxyAddress = await loanContract.methods.proxyContractAddress().call();
+        if (loanContract.methods.proxyAddress) {
+          const DaiProxyAddress = await loanContract.methods.proxyAddress().call();
           DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
         } else {
+          console.error('ERROR: using default proxy address');
           DAIProxy = await metamask.addContract('DAIProxy');
         }
         setContracts({
@@ -86,6 +91,10 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
       const tokenAddress = inputCoin?.address || null;
       if (!tokenAddress) {
         throw Error('Input token not set');
+      }
+      if (tokenAddress === 'ETH') {
+        setAproved(true);
+        return;
       }
       const valueBN = new BN(toDecimal(investment.toString(), inputCoin?.decimals));
       const ERC20Contract = new web3.eth.Contract(ERC20, tokenAddress);
@@ -129,6 +138,21 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
       const isSwap = inputCoin?.address.toLowerCase() !== loanCoin?.address.toLowerCase();
       if (isSwap) {
         try {
+          if (inputCoin.address === 'ETH') {
+            await followTx.watchTx(
+              DAIProxy.methods
+                .swapEthAndFund(loan.id, toDecimal(investment.toString(), loanCoin?.decimals))
+                .send({ value: inputTokenAmount.toString(), from: walletAccount }),
+              'investLoan',
+              {
+                id: 'investLoan',
+                vars: [investment, coin.value]
+              }
+            );
+            tagManager.sendEvent(TMEvents.Submit, 'invest_success');
+            setStage(ui.Success);
+            return;
+          }
           await followTx.watchTx(
             DAIProxy.methods
               .swapTokenAndFund(
@@ -144,7 +168,9 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
               vars: [investment, coin.value]
             }
           );
+          tagManager.sendEvent(TMEvents.Submit, 'invest_success');
           setStage(ui.Success);
+          return;
         } catch (error) {
           console.error('[DAIProxy ERROR][Swap]', 'address:', loan.id, ' stacktrace: ', error);
           setError({ transactionError: error });
@@ -161,6 +187,8 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
               vars: [investment, coin.value]
             }
           );
+          tagManager.sendEvent(TMEvents.Submit, 'invest_success');
+
           setStage(ui.Success);
         } catch (error) {
           console.error('[DAIProxy ERROR][No swap]', 'address:', loan.id, ' stacktrace: ', error);
@@ -263,9 +291,7 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
                   <Grid.Column width={2}>{stepNumber(2, 'fund')}</Grid.Column>
                   <Grid.Column width={14}>
                     <Action>Confirm the transaction</Action>
-                    <Explanation>
-                      {`${investment} ${selectedCoin} will be transferred from your wallet to the loan`}
-                    </Explanation>
+                    <Explanation>{explanation}</Explanation>
                   </Grid.Column>
                 </Grid>
               </ListItemPadding>

@@ -7,30 +7,19 @@
   "module": "dist/components.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
-    "watch": "env-cmd --no-override .env tsdx watch",
+    "prepare": "env-cmd --no-override .env tsdx build",
+    "watch": "env-cmd --no-override .env tsdx watch --noClean --transpileOnly",
     "dev": "env-cmd --no-override .env tsdx watch",
     "dev:int": "yarn run dev",
     "build": "rm -f tsdx.config.js && env-cmd --no-override .env tsdx build",
+    "build:fast": "env-cmd --no-override .env tsdx build  --noClean --transpileOnly",
     "build:umd": "cp tsdx.umd.config.js tsdx.config.js && env-cmd --no-override .env tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
     "test": "env-cmd --no-override .env tsdx test --env=jsdom",
     "lint": "env-cmd --no-override .env tsdx lint src/"
-  },
-  "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
-  },
-  "devDependencies": {
-    "@types/enzyme": "^3.10.3",
-    "@types/jest": "^24.0.23",
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.9.4",
-    "babel-loader": "^8.0.6",
-    "typescript": "3.8.3",
-    "husky": "^3.1.0",
-    "tslib": "^1.10.0"
   },
   "prettier": {
     "printWidth": 80,
@@ -38,11 +27,24 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "eslint-config-react-app": "^5.2.1",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.0.8",
+    "tsdx": "0.11.0",
+    "tslib": "^1.10.0",
+    "typescript": "3.8.3"
+  },
   "dependencies": {
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/lodash": "^4.14.149",
     "@types/numeral": "^0.0.26",
-    "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.19.0",
     "bignumber.js": "^9.0.0",
     "bn.js": "^5.0.0",
@@ -50,22 +52,17 @@
     "dayjs": "^1.8.24",
     "dompurify": "^2.0.7",
     "dotenv": "^8.2.0",
-    "env-cmd": "8.0.2",
     "graphql.js": "0.6.1",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
     "numeral": "^2.0.6",
     "pampy": "^0.0.6",
-    "prettier": "^1.19.1",
     "react-chartjs-2": "^2.9.0",
     "react-content-loader": "^4.3.2",
-    "react-docgen-typescript-loader": "^3.5.0",
     "react-number-format": "^4.4.1",
     "react-spring": "^8.0.27",
     "semantic-ui-react": "^0.88.1",
     "sha3": "^2.1.2",
-    "styled-components": "^5.0.0",
-    "tsdx": "0.11.0",
-    "typescript": "3.8.3"
+    "styled-components": "^5.0.0"
   }
 }

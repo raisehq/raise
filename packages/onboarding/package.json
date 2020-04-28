@@ -9,14 +9,13 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "directories": {
-    "lib": "dist",
-    "test": "__tests__"
+    "lib": "dist"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "start": "tsc --watch",
+    "watch": "tsc --watch",
     "dev": "tsc --watch",
     "dev:int": "yarn run dev",
     "compile:onboarding": "tsc",
@@ -34,10 +33,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.14.3",
-    "lint-staged": "^10.0.8",
-    "babelrc-rollup": "^3.0.0",
-    "typescript": "^3.5.3",
-    "prettier": "^1.19.1"
+    "lint-staged": "^10.0.8"
   },
   "dependencies": {
     "@bloomprotocol/share-kit-react": "^4.5.0",

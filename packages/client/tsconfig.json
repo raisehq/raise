@@ -3,20 +3,12 @@
     "outDir": "build/lib",
     "target": "es5",
     "skipLibCheck": true,
-    "lib": [
-      "es5",
-      "es6",
-      "es7",
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es5", "es6", "es7", "es2017", "dom"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDirs": [
-      "src"
-    ],
+    "rootDirs": ["src"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -36,11 +28,6 @@
     "noEmit": true,
     "downlevelIteration": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+  "include": ["src", "../components/src/utils/progressiveCalcs.test.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

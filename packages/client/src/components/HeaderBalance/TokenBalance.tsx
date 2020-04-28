@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import BN from 'bn.js';
+import get from 'lodash/get';
 import useGetCoinByAddress from '../../hooks/useGetCoinByAddress';
 import { fromDecimalFixed } from '../../utils/web3-utils';
 import {
@@ -30,7 +31,10 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }: any) => {
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
   const [hidde, setHidde] = useState(false);
-  const balance: BN = useAddressBalance(account, contractAddresses[chainId]?.[name]);
+  const balance: BN = useAddressBalance(
+    account,
+    get(contractAddresses, [chainId, name], name) || name
+  );
   const coin = useGetCoinByAddress(contractAddresses[chainId]?.[name]);
   const stringBalance: string = fromDecimalFixed(balance.toString(10), coin.decimals) || '0.00';
 
