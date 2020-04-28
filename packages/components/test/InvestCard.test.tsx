@@ -1,8 +1,8 @@
 import React from 'react';
 import { generateImage } from 'jsdom-screenshot';
 import { render } from '@testing-library/react';
-import { IPHONE_SE } from '../../commons/TestViewports';
-import InvestCard from './InvestCard';
+import { IPHONE_SE } from '../src/commons/TestViewports';
+import InvestCard from '../src/components/InvestCard';
 
 const auction = {
   auctionEndTimestamp: '1575021892',
@@ -37,7 +37,13 @@ const company = {
   slug: 'hero',
 };
 
-it('renders correctly', async () => {
+const bigAuction = {
+  ...auction,
+  principal: '1000000000000000000000000',
+  maxAmount: '1000000000000000000000000',
+};
+
+it('renders correctly in mobile', async () => {
   // @ts-ignore
   window.innerWidth = 320;
   // @ts-ignore
@@ -48,6 +54,29 @@ it('renders correctly', async () => {
   render(
     <InvestCard
       auction={auction}
+      borrower={company}
+      coinIcon="coin-dai.svg"
+      link
+    />
+  );
+
+  const screenshot = await generateImage(IPHONE_SE);
+
+  // @ts-ignore
+  expect(screenshot).toMatchImageSnapshot();
+});
+
+it('renders correctly if amounts are big', async () => {
+  // @ts-ignore
+  window.innerWidth = 320;
+  // @ts-ignore
+  window.innerHeight = 568;
+  // @ts-ignore
+  window.dispatchEvent(new Event('resize'));
+
+  render(
+    <InvestCard
+      auction={bigAuction}
       borrower={company}
       coinIcon="coin-dai.svg"
       link

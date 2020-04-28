@@ -288,6 +288,17 @@ cypress-e2e-production:
   only:
     - master
 
+components-unit-test:
+  stage: test
+  script:
+    - yarn --pure-lockfile
+    - yarn run components:test
+  artifacts:
+    expire_in: '1 week'
+    when: always
+    paths:
+      - packages/components/test/__image_snapshots__
+
 deploy-prod:
   image: python:3.7-alpine
   stage: deploy-prod
