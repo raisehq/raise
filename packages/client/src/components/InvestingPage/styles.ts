@@ -39,7 +39,7 @@ export const SubSectionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   flex-wrap: wrap;
   justify-content: space-around;
 `;
@@ -49,6 +49,7 @@ export const SubSection = styled.div`
   flex-direction: column;
   justify-content: center;
   max-width: 138px;
+  margin-bottom: 35px;
 `;
 
 export const SubSectionIcon = styled.img`
@@ -115,10 +116,14 @@ export const InfoDescription = styled.div`
   line-height: 24px;
   color: #8a8e97;
   text-align: center;
-  max-width: 360px;
   margin-bottom: 57px;
+  margin-left: 10px;
+  margin-right: 10px;
   @media screen and ${device.laptop} {
     text-align: left;
+    max-width: 360px;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 `;
 
@@ -127,7 +132,10 @@ export const LearnMore = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: flex-start;
+  justify-content: center;
+  @media screen and ${device.laptop} {
+    justify-content: flex-start;
+  }
 `;
 
 export const LearnMoreLink = styled.a`
@@ -143,6 +151,7 @@ export const ImportantInfoContainer = styled.div`
   box-sizing: border-box;
   border-radius: 4px;
   max-width: 333px;
+  margin-bottom: 40px;
 `;
 
 export const ImportantInfoText = styled.div`

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Footer from '../Footer';
+import { Footer } from '@raisehq/components';
 import { HeroLayout } from './Layout.styles';
 
 interface IDefaultProps {
