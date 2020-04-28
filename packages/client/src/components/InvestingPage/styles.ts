@@ -33,6 +33,10 @@ export const SectionSubContainer = styled.div<PositionRight>`
   justify-content: space-around;
   flex-wrap: wrap;
   flex-direction: ${({ right }) => (right ? 'row-reverse' : 'row')};
+  @media screen and ${device.laptop} {
+    width: 100%;
+    max-width: 1440px;
+  }
 `;
 
 export const SubSectionContainer = styled.div`
@@ -50,6 +54,7 @@ export const SubSection = styled.div`
   justify-content: center;
   max-width: 138px;
   margin-bottom: 35px;
+  margin-right: 50px;
 `;
 
 export const SubSectionIcon = styled.img`
@@ -66,8 +71,11 @@ export const SubSectionText = styled.div`
 `;
 
 export const SectionImageContainer = styled.div`
-  max-width: 300px;
+  max-width: 335px;
   margin-bottom: 40px;
+  @media screen and ${device.laptop} {
+    max-width: 540px;
+  }
 `;
 
 export const SectionImage = styled.img`
@@ -79,7 +87,6 @@ export const InformationContainer = styled.div<PositionRight>`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-around;
 `;
 
 export const InfoTitle = styled.div`
@@ -119,6 +126,8 @@ export const InfoDescription = styled.div`
   margin-bottom: 57px;
   margin-left: 10px;
   margin-right: 10px;
+
+  max-width: 330px;
   @media screen and ${device.laptop} {
     text-align: left;
     max-width: 360px;
@@ -135,6 +144,7 @@ export const LearnMore = styled.div`
   justify-content: center;
   @media screen and ${device.laptop} {
     justify-content: flex-start;
+    margin-top: 40px;
   }
 `;
 
@@ -170,7 +180,13 @@ export const NextIcon = styled.div`
   transform: rotate(90deg);
 `;
 
-export const TriangleContainer = styled.div`
+export const TriangleRight = styled.div`
+  width: 10px;
+  height: 10px;
+  position: relative;
+`;
+
+export const TriangleDown = styled.div`
   width: 10px;
   height: 10px;
   position: relative;
@@ -202,4 +218,11 @@ export const RightTriangle = styled.div`
   border-bottom: 2px solid #eb3f93;
   margin-top: 8px;
   margin-left: 5px;
+`;
+
+export const WaveSVG = styled.svg`
+  @media screen and ${device.laptop} {
+    margin-top: -150px;
+    margin-bottom: -100px;
+  }
 `;

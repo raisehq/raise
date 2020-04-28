@@ -10,7 +10,8 @@ import {
   LearnMoreLink,
   ImportantInfoText,
   ImportantInfoContainer,
-  TriangleContainer,
+  TriangleRight,
+  TriangleDown,
   Triangle,
   RightTriangle,
   InfoTitleMobile,
@@ -18,7 +19,8 @@ import {
   SubSectionContainer,
   SubSectionIcon,
   SubSectionText,
-  SubSection
+  SubSection,
+  WaveSVG
 } from './styles';
 
 interface ISectionProps {
@@ -58,26 +60,26 @@ const InvestingSection: React.SFC<ISectionProps> = ({ section, length }: any) =>
               <LearnMoreLink href={section.learn_more_url} target="_blank">
                 Learn more
               </LearnMoreLink>
-              <TriangleContainer>
+              <TriangleRight>
                 <RightTriangle />
-              </TriangleContainer>
+              </TriangleRight>
             </LearnMore>
           )}
         </InformationContainer>
       </SectionSubContainer>
       {section.section_order === 0 && (
-        <TriangleContainer>
+        <TriangleDown>
           <Triangle />
-        </TriangleContainer>
+        </TriangleDown>
       )}
       {section.section_order % 2 === 0 && section.section_order + 1 !== length && (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <WaveSVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path
             fill="#F9F9F9"
             fillOpacity="1"
             d="M0,192L40,181.3C80,171,160,149,240,160C320,171,400,213,480,208C560,203,640,149,720,160C800,171,880,245,960,234.7C1040,224,1120,128,1200,101.3C1280,75,1360,117,1400,138.7L1440,160L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
           />
-        </svg>
+        </WaveSVG>
       )}
     </InvestingSectionContainer>
   );
