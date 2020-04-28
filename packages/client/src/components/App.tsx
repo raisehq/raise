@@ -12,7 +12,7 @@ import { useRootContext } from '../contexts/RootContext';
 import useRouter from '../hooks/useRouter';
 
 // Pages and components
-import { MainLayout, SimpleLayout, Web3Layout, BorrowerProfileLayout } from './Layout';
+import { MainLayout, SimpleLayout, Web3Layout, AppLayout, BorrowerProfileLayout } from './Layout';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import { CreateLoan } from './CreateLoan';
 import MyAccount from './MyAccount';
@@ -227,7 +227,7 @@ const App = () => {
                 <Web3Layout
                   publicRoute
                   marketplace
-                  layout={SimpleLayout}
+                  layout={AppLayout}
                   exact
                   path="/investing"
                   component={InvestingPage}
