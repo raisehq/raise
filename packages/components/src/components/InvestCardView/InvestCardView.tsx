@@ -13,6 +13,8 @@ const BottomInfo = styled(Card.Grid)`
   z-index: 10;
   position: relative;
   background: white;
+  padding: 20px 0px;
+  margin: 0;
 `;
 
 interface InvestProps {
