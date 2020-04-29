@@ -33,9 +33,12 @@ export const SectionSubContainer = styled.div<PositionRight>`
   justify-content: space-around;
   flex-wrap: wrap;
   flex-direction: ${({ right }) => (right ? 'row-reverse' : 'row')};
+  align-items: center;
   @media screen and ${device.laptop} {
     width: 100%;
-    max-width: 1275px;
+    max-width: 1172px;
+    padding: 20px;
+    justify-content: space-between;
   }
 `;
 
@@ -43,9 +46,12 @@ export const SubSectionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin-bottom: 40px;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin-top: 65px;
+  @media screen and ${device.laptop} {
+    justify-content: flex-start;
+  }
 `;
 
 export const SubSection = styled.div`
@@ -54,7 +60,9 @@ export const SubSection = styled.div`
   justify-content: center;
   max-width: 138px;
   margin-bottom: 35px;
-  margin-right: 50px;
+  @media screen and ${device.laptop} {
+    margin-right: 50px;
+  }
 `;
 
 export const SubSectionIcon = styled.img`
@@ -72,7 +80,6 @@ export const SubSectionText = styled.div`
 
 export const SectionImageContainer = styled.div`
   max-width: 335px;
-  margin-bottom: 40px;
   @media screen and ${device.laptop} {
     max-width: 540px;
   }
@@ -81,6 +88,8 @@ export const SectionImageContainer = styled.div`
 export const SectionImage = styled.img`
   width: 100%;
   justify-content: center;
+  -webkit-filter: drop-shadow(5px 5px 5px #c9c9c9);
+  filter: drop-shadow(5px 5px 5px #c9c9c9);
 `;
 
 export const InformationContainer = styled.div<PositionRight>`
@@ -99,7 +108,6 @@ export const InfoTitle = styled.div`
     color: #eb3f93;
     margin-bottom: 32px;
     font-weight: bold;
-    margin-top: 50px;
     max-width: 456px;
   }
 `;
@@ -123,16 +131,15 @@ export const InfoDescription = styled.div`
   line-height: 24px;
   color: #8a8e97;
   text-align: center;
-  margin-bottom: 57px;
   margin-left: 10px;
   margin-right: 10px;
-
   max-width: 330px;
   @media screen and ${device.laptop} {
     text-align: left;
-    max-width: 360px;
+    max-width: 450px;
     margin-left: 0px;
     margin-right: 0px;
+    align-self: left;
   }
 `;
 
@@ -144,7 +151,6 @@ export const LearnMore = styled.div`
   justify-content: center;
   @media screen and ${device.laptop} {
     justify-content: flex-start;
-    margin-top: 40px;
   }
 `;
 
@@ -161,7 +167,7 @@ export const ImportantInfoContainer = styled.div`
   box-sizing: border-box;
   border-radius: 4px;
   max-width: 333px;
-  margin-bottom: 40px;
+  margin-top: 36px;
 `;
 
 export const ImportantInfoText = styled.div`
@@ -189,7 +195,8 @@ export const TriangleRight = styled.div`
 export const TriangleDown = styled.div`
   width: 10px;
   height: 10px;
-  position: relative;
+  margin-bottom: 41px;
+  margin-top: 10px;
 `;
 
 export const Triangle = styled.div`
@@ -220,9 +227,10 @@ export const RightTriangle = styled.div`
   margin-left: 5px;
 `;
 
-export const WaveSVG = styled.svg`
+export const WaveSVG = styled.img`
+  width: 100%;
+  margin-bottom: -2px;
   @media screen and ${device.laptop} {
-    margin-top: -150px;
-    margin-bottom: -100px;
+    margin-bottom: -50px;
   }
 `;
