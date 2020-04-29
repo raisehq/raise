@@ -7,6 +7,7 @@ stages:
   - review
   - test
   - deploy-prod
+  - test-prod
   - tag
   - publish
   - cleanup
@@ -142,6 +143,7 @@ build-front-production:
     when: always
     paths:
       - packages/client/build
+  resource_group: production
 
 lint-front:
   stage: build
@@ -225,6 +227,7 @@ deploy-canary:
       done
   only:
     - master
+  resource_group: production
 
 cypress-e2e-review:
   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
@@ -287,6 +290,7 @@ cypress-e2e-canary:
       - packages/testing/ganache_db
   only:
     - master
+  resource_group: production
 
 deploy-prod:
   image: python:3.7-alpine
@@ -305,10 +309,11 @@ deploy-prod:
       done
   only:
     - master
+  resource_group: production
 
 cypress-e2e-production:
   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
-  stage: test
+  stage: test-prod
   variables:
     CYPRESS_url: 'https://app.raise.it'
     CYPRESS_baseUrl: 'https://app.raise.it'
@@ -335,6 +340,7 @@ cypress-e2e-production:
       - packages/testing/ganache_db
   only:
     - master
+  resource_group: production
 
 tag to latest:
   image: alpine:latest
@@ -355,6 +361,7 @@ tag to latest:
     - git push --force origin --tags
   only:
     - master
+  resource_group: production
 
 publish-components:
   stage: publish
