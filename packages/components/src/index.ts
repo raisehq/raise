@@ -15,6 +15,7 @@ export { default as Panel } from './components/Modals/Panel';
 export { default as PanelWithImage } from './components/Modals/PanelWithImage';
 export { default as Simple } from './components/Modals/Simple';
 export { default as LoanComparatorChart } from './components/LoanComparatorChart';
+export { default as Footer } from './components/Footer';
 
 export { AccountType } from './types';
 

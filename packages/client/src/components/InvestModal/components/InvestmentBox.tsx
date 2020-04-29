@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Card as RaiseCard } from '@raisehq/components';
-import { tradeExactTokensForTokensWithData, getTokenReserves } from '@uniswap/sdk';
+import {
+  tradeExactTokensForTokensWithData,
+  getTokenReserves,
+  tradeExactEthForTokensWithData
+} from '@uniswap/sdk';
 import { TokenReservesNormalized } from '@uniswap/sdk/dist/types';
 import { InvestHeader } from './InvestmentBox.styles';
 import LoanInput from '../../CreateLoan/LoanInput';
@@ -178,6 +182,13 @@ const setTokenReserves = async (
   chainId: number
 ) => {
   if (inputAddress !== outputAddress) {
+    if (inputAddress === 'ETH') {
+      const inputReserves = null;
+      const outputReserves = await getTokenReserves(outputAddress, chainId);
+      setInputReserves(inputReserves);
+      setOutputReserves(outputReserves);
+      return;
+    }
     const inputReserves = await getTokenReserves(inputAddress, chainId);
     const outputReserves = await getTokenReserves(outputAddress, chainId);
     setInputReserves(inputReserves);
@@ -198,6 +209,17 @@ const getSwapOutput = async (
 
   const inputAmountWei = toDecimal(inputAmount.toString(), inputCoin.decimals);
   try {
+    if (inputCoin.text === 'ETH') {
+      const tradeDetails = await tradeExactEthForTokensWithData(outputReserves, inputAmountWei);
+
+      const totalOutput = Number(
+        fromDecimal(
+          tradeDetails.outputAmount.amount.toString(10),
+          tradeDetails.outputAmount.token.decimals
+        )
+      );
+      return totalOutput + totalOutput / 100;
+    }
     const tradeDetails = await tradeExactTokensForTokensWithData(
       inputReserves,
       outputReserves,
@@ -227,6 +249,7 @@ const InvestmentBox = ({
   selectedCoin,
   setCoin,
   maxAmountNum,
+  inputToken,
   ...props
 }: any) => {
   const [inputReserves, setInputReserves] = useState<TokenReservesNormalized>();
@@ -243,15 +266,16 @@ const InvestmentBox = ({
   };
 
   const fundAll = (loanCurrency: CoinsType, selectedCurrency: CoinsType) => async divisor => {
+    const availableBalance = selectedCurrency.text === 'ETH' ? balance - 0.005 : balance;
     const nMaxAmount = Number(fromDecimal(maxAmount, loanCurrency.decimals));
     const nPrincipal = nMaxAmount - Number(fromDecimal(principal, loanCurrency.decimals));
 
     if (loanCurrency?.text === selectedCurrency?.text) {
-      const minValue = Math.min(...[balance / divisor, nPrincipal]);
+      const minValue = Math.min(...[availableBalance / divisor, nPrincipal]);
       return setValue(minValue);
     }
     const output = await getSwapOutput(
-      balance / divisor,
+      availableBalance / divisor,
       selectedCurrency,
       inputReserves,
       outputReserves
@@ -273,7 +297,7 @@ const InvestmentBox = ({
   const readValue = value > 0 ? value : null;
 
   const errorMessage = () => {
-    if (value && value > balance) {
+    if (inputToken && inputToken > balance) {
       return errorMessages.inputGreaterThanBalance;
     }
     if (value && value > maxAmountNum) {

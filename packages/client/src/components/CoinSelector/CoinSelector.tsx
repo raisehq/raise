@@ -1,15 +1,8 @@
 import React, { useMemo } from 'react';
 import { BalanceDropdown, TokenBalance } from './CoinSelector.styles';
+import TOKEN_URLS from '../../commons/tokens';
 
-const { REACT_APP_HOST_IMAGES } = process.env;
-
-const TOKEN_URLS = {
-  DAI: `${REACT_APP_HOST_IMAGES}/images/coins/coin-dai.svg`,
-  USDT: `${REACT_APP_HOST_IMAGES}/images/coins/coin-theter.svg`,
-  USDC: `${REACT_APP_HOST_IMAGES}/images/coins/coin-usdc.svg`
-};
-
-const SUPPORTED_SWAP_COINS = ['DAI', 'USDC'];
+const SUPPORTED_SWAP_COINS = ['DAI', 'USDC', 'ETH'];
 
 const CoinSelector = ({ loanCoin, value, ...rest }: any) => {
   const options = useMemo(() => {
