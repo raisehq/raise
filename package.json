@@ -52,7 +52,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo 'Running pre-commit hook' && pretty-quick --staged && lerna run lint --stream && yarn run components:test"
+      "pre-commit": "echo 'Running pre-commit hook' && pretty-quick --staged && lerna run lint --stream && lerna run test --stream --scope @raisehq/components"
     }
   },
   "devDependencies": {
