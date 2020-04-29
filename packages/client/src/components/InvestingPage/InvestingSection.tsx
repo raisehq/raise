@@ -29,7 +29,6 @@ interface ISectionProps {
 }
 
 const InvestingSection: React.SFC<ISectionProps> = ({ section, length }: any) => {
-  console.log('section:::: ', section.subSection);
   return (
     <InvestingSectionContainer position={section.section_order}>
       <InfoTitleMobile>{section.section_title}</InfoTitleMobile>

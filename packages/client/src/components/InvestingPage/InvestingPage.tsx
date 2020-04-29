@@ -9,7 +9,6 @@ const InvestingPage = () => {
 
   useAsyncEffect(async () => {
     const butterSections = await requestPage('page_sections', 'investing');
-    console.log('butter sections:: ', butterSections);
 
     const orderedSections = butterSections.investingSection.sort(
       // eslint-disable-next-line
