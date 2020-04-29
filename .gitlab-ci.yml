@@ -292,6 +292,21 @@ cypress-e2e-canary:
     - master
   resource_group: production
 
+components-unit-test:
+  image: buildkite/puppeteer
+  stage: test
+  script:
+    - yarn --pure-lockfile
+    - yarn run components:test
+  artifacts:
+    expire_in: '1 week'
+    when: always
+    paths:
+      - packages/components/test/__image_snapshots__
+  only:
+    - merge_requests
+    - latest
+
 deploy-prod:
   image: python:3.7-alpine
   stage: deploy-prod
