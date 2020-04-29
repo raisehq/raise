@@ -34,7 +34,6 @@ const InvestingPage = () => {
         );
       }
     });
-    console.log('sections:: ', orderedSections);
     setSections(orderedSections);
   }, []);
 
