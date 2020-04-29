@@ -81,15 +81,13 @@ export const SubSectionText = styled.div`
 export const SectionImageContainer = styled.div`
   max-width: 335px;
   @media screen and ${device.laptop} {
-    max-width: 540px;
+    max-width: 552px;
   }
 `;
 
 export const SectionImage = styled.img`
   width: 100%;
   justify-content: center;
-  -webkit-filter: drop-shadow(5px 5px 5px #c9c9c9);
-  filter: drop-shadow(5px 5px 5px #c9c9c9);
 `;
 
 export const InformationContainer = styled.div<PositionRight>`
@@ -144,7 +142,7 @@ export const InfoDescription = styled.div`
 `;
 
 export const LearnMore = styled.div`
-  margin-top: 20px;
+  margin-top: 32px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -168,6 +166,9 @@ export const ImportantInfoContainer = styled.div`
   border-radius: 4px;
   max-width: 333px;
   margin-top: 36px;
+  @media screen and ${device.laptop} {
+    max-width: 396px;
+  }
 `;
 
 export const ImportantInfoText = styled.div`
