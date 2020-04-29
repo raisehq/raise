@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import theme from '../../theme';
-import { maxDevice } from '../../commons/breakpoints';
+import { maxDevice } from '../../utils/breakpoints';
 
-export const Footer = styled.div`
+export const FooterContainer = styled.div`
   width: 100%;
   height: 355px;
   background: linear-gradient(180deg, #f9f9f9 0%, #ffffff 100%);
@@ -56,13 +55,6 @@ export const FooterLogo = styled.div`
   height: 40px;
   display: flex;
   justify-content: center;
-`;
-
-export const FooterImage = styled.div`
-  flex: 0 1 33%;
-  display: flex;
-  justify-content: flex-end;
-  background: url(${theme.resources}/images/img_city.svg) center center no-repeat;
 `;
 
 export const FooterDisclaimer = styled.div`

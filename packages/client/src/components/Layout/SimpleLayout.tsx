@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-
+import { Footer } from '@raisehq/components';
 import { Grid } from 'semantic-ui-react';
 // import Logout from '../Logout';
 import { useRootContext } from '../../contexts/RootContext';
@@ -11,8 +11,6 @@ import {
   OnboardingContent,
   Wrapper
 } from './Layout.styles';
-
-import Footer from '../Footer';
 
 interface IDefaultProps {
   component: any;

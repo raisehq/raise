@@ -218,7 +218,7 @@ const getSwapOutput = async (
           tradeDetails.outputAmount.token.decimals
         )
       );
-      return totalOutput;
+      return totalOutput + totalOutput / 100;
     }
     const tradeDetails = await tradeExactTokensForTokensWithData(
       inputReserves,

@@ -108,7 +108,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
         const tradeDetails = await tradeEthForExactTokens(loanCoin.address, outputAmount, chainId);
 
         const totalOutput = new BN(tradeDetails.inputAmount.amount.toString());
-        return totalOutput;
+        return totalOutput.add(totalOutput.div(new BN('100')));
       }
       const outputAmount = toDecimal(value, loanCoin.decimals);
       const tradeDetails = await tradeTokensForExactTokens(
