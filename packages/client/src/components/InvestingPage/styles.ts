@@ -35,7 +35,7 @@ export const SectionSubContainer = styled.div<PositionRight>`
   flex-direction: ${({ right }) => (right ? 'row-reverse' : 'row')};
   @media screen and ${device.laptop} {
     width: 100%;
-    max-width: 1440px;
+    max-width: 1275px;
   }
 `;
 
