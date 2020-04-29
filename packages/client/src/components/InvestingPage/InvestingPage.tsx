@@ -7,12 +7,14 @@ import InvestingSection from './InvestingSection';
 const InvestingPage = () => {
   const [sections, setSections] = useState([]);
 
-  // TODO: get buttercms information
   useAsyncEffect(async () => {
     const butterSections = await requestPage('page_sections', 'investing');
     console.log('butter sections:: ', butterSections);
-    const orderedSections = butterSections.investingSection.sort((a, b) =>
-      a.section_order > b.section_order ? 1 : -1
+
+    const orderedSections = butterSections.investingSection.sort(
+      // eslint-disable-next-line
+      (a: { section_order: number }, b: { section_order: number }) =>
+        a.section_order > b.section_order ? 1 : -1
     );
     butterSections.subInvestingSection.forEach(sub => {
       const index = sub.section_number;
@@ -26,8 +28,10 @@ const InvestingPage = () => {
     orderedSections.forEach(section => {
       const index = section.section_order;
       if (orderedSections[index].subSection) {
-        orderedSections[index].subSection = orderedSections[index].subSection.sort((a, b) =>
-          a.sub_sub_order > b.sub_sub_order ? 1 : -1
+        orderedSections[index].subSection = orderedSections[index].subSection.sort(
+          // eslint-disable-next-line
+          (a: { sub_sub_order: number }, b: { sub_sub_order: number }) =>
+            a.sub_sub_order > b.sub_sub_order ? 1 : -1
         );
       }
     });
