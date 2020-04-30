@@ -1,4 +1,4 @@
-import { configureToMatchImageSnapshot } from 'jest-image-snapshot';
+import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import { setDefaultOptions } from 'jsdom-screenshot';
 
 // TravisCI and Linux OS require --no-sandbox to be able to run the tests
@@ -12,14 +12,5 @@ setDefaultOptions({
 });
 
 jest.setTimeout(10000);
-
-const customConfig = {
-  failureThreshold: 0.07,
-  failureThresholdType: 'percent',
-};
-
-const toMatchImageSnapshot = configureToMatchImageSnapshot({
-  customDiffConfig: customConfig,
-});
 
 expect.extend({ toMatchImageSnapshot });
