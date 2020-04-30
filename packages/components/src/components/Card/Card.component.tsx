@@ -13,8 +13,6 @@ import {
   CardLogo,
   Graph,
   Badge,
-  // InfoIconCmp,
-  // InfoIcon,
   Separator,
   GraphContainer,
   GraphTitle,
@@ -159,20 +157,7 @@ const ProgressComponent: FunctionComponent<{
     </GraphContainer>
   );
 };
-/*
-DEPRECATED ??
-const TooltipComponent = () => (
-  <Popup
-    content="blablabablalbabalabl"
-    key={2434324}
-    trigger={
-      <InfoIcon>
-        <InfoIconCmp name="info" />
-      </InfoIcon>
-    }
-  />
-);
-*/
+
 const ContentWithLogo = ({
   children,
   logo,
@@ -230,7 +215,6 @@ Card.Graph = GraphComponent;
 Card.Progress = ProgressComponent;
 Card.Separator = Separator;
 Card.Vertical = Vertical;
-// Card.Tooltip = TooltipComponent;
 Card.RoiHeader = RoiHeaderComponent;
 Card.TimeLeft = TimeLeft;
 

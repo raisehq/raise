@@ -5,7 +5,7 @@ import {
   // calculateInterest,
   calculateInvestmentReturn,
   calculateROI,
-} from './loanUtils';
+} from '../src/utils/loanUtils';
 
 describe('Test suit for loan utils', () => {
   const auctionStart = Date.now();

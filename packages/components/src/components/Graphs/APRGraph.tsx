@@ -14,15 +14,25 @@ import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
 import numeral from '../../commons/numeral';
 import { chartBackground, todayVerticalLine } from './plugins';
 import { DAI_ADDRESS } from '../../commons/constants';
-import {
-  Title,
-  Header,
-  IconContainer,
-} from '../InvestCardView/InvestCardView.styles';
 
 const CHART_CDN = 'https://cdn.jsdelivr.net/npm/chart.js@2.8.0';
 const MOMENT_CDN =
   'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js';
+
+const Header = styled.div`
+  padding-top: 22px;
+  text-align: center;
+`;
+
+const Subheader = styled(Card.Grid)`
+  margin: 20px 0px;
+`;
+
+const CloseContainer = styled.div`
+  position: absolute;
+  top: 16px;
+  right: 8px;
+`;
 
 interface APRGraphProps {
   maxInterestRate: BN;
@@ -34,7 +44,8 @@ interface APRGraphProps {
 }
 
 const ChartWrapper = styled.div`
-  padding: 10px;
+  padding: 0px 10px;
+  height: 250px;
 `;
 
 const datasetToGraph = (
@@ -74,6 +85,8 @@ const datasetToGraph = (
 });
 
 const options: any = {
+  responsive: true,
+  maintainAspectRatio: false,
   fullCompoundDataset: [0],
   legend: {
     display: false,
@@ -336,15 +349,12 @@ const APRGraph = ({
   return (
     <>
       <Header>
-        <Title>
-          <span>Compare APRs</span>
-        </Title>
-        <IconContainer>
-          <Icon name="close" size="large" onClick={onOpenGraph} />
-        </IconContainer>
+        <span>Compare APRs</span>
       </Header>
-
-      <Card.Grid>
+      <CloseContainer>
+        <Icon name="close" size="large" onClick={onOpenGraph} />
+      </CloseContainer>
+      <Subheader>
         <Card.Row notop big content={getFormatDate(selectedDate)} />
         <Card.Vertical />
         <Card.Row
@@ -362,12 +372,10 @@ const APRGraph = ({
           content={compoundInterest}
           contentColor={compoundGraphData.borderColor}
         />
-      </Card.Grid>
-      {chartLoaded && momentLoaded && (
-        <ChartWrapper>
-          <canvas ref={chartContainer} height={245} />
-        </ChartWrapper>
-      )}
+      </Subheader>
+      <ChartWrapper>
+        {chartLoaded && momentLoaded && <canvas ref={chartContainer} />}
+      </ChartWrapper>
     </>
   );
 };
