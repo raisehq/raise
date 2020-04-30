@@ -12,7 +12,7 @@ import { useRootContext } from '../contexts/RootContext';
 import useRouter from '../hooks/useRouter';
 
 // Pages and components
-import { MainLayout, SimpleLayout, Web3Layout, BorrowerProfileLayout } from './Layout';
+import { MainLayout, SimpleLayout, Web3Layout, BorrowerProfileLayout, KycLayout } from './Layout';
 import { DashboardLender, DashboardBorrower } from './Dashboard';
 import { CreateLoan } from './CreateLoan';
 import MyAccount from './MyAccount';
@@ -155,7 +155,7 @@ const App = () => {
               <Switch>
                 <Web3Layout
                   marketplace
-                  layout={SimpleLayout}
+                  layout={KycLayout}
                   exact
                   path="/kyc"
                   component={KycSelectMethod}

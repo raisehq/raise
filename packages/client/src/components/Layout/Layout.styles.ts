@@ -190,6 +190,16 @@ export const ContentBorrower = styled.div`
   }
 `;
 
+export const ContentKyc = styled.div`
+  background-color: white;
+
+  @media ${maxDevice.laptop} {
+    width: 100%;
+    padding: 30px 25px 50px 25px;
+    margin: 0 auto;
+  }
+`;
+
 export const OnboardingContent = styled(Content)`
   @media ${maxDevice.laptop} {
     padding: 30px 25px 50px 25px;

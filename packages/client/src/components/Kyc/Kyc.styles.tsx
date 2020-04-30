@@ -127,10 +127,14 @@ export const KycTitleWrapper = styled.div`
 
 export const CardTitle = styled.div`
   color: #3c4251;
-  font: 26px bold;
-  line-height: 36px;
   text-align: center;
   margin: 10px;
+
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
 `;
 
 export const SelectKycMethodList = styled.div`
