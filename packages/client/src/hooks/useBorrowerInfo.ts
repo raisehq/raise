@@ -11,6 +11,7 @@ interface Company {
   background: string;
   logo: string;
   slug: string;
+  route: string;
 }
 
 const defaultCompany = {
@@ -19,7 +20,8 @@ const defaultCompany = {
   shortDescription: '',
   background: 'https://source.unsplash.com/372x120/?business',
   logo: `${APP_STATIC}/images/logo.svg`,
-  slug: ''
+  slug: '',
+  route: ''
 };
 
 const useBorrowerInfo = borrowerAddress => {
@@ -30,8 +32,10 @@ const useBorrowerInfo = borrowerAddress => {
       const response = await findOne('companies', {
         'fields.ethereum_address': borrowerAddress
       });
-      response.slug = `${APP_URL}/c/${response.slug}`;
-      setCompany(response);
+      const slug = `${APP_URL}/c/${response.slug}`;
+      const route = `/c/${response.slug}`;
+
+      setCompany({ ...company, ...response, slug, route });
     } catch (error) {
       // Reminder: Missing companies in Kovan testnet network shows 404 errors
       // console.error(error);

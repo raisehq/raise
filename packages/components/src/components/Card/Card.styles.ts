@@ -103,13 +103,23 @@ export const CardBorrowerTitle = styled.div`
 `;
 
 export const CardDescription = styled.div`
-  max-height: 76px;
-  height: 76px;
+  height: 130px;
   color: #5a5a5a;
   font-size: 14px;
   display: block;
   text-align: left;
   line-height: 21px;
+  position: relative;
+  overflow: hidden;
+  &:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: linear-gradient(transparent 100px, white);
+  }
 `;
 
 export const CardContent = styled.div<{
@@ -139,8 +149,10 @@ export const CardContent = styled.div<{
 export const Grid: any = styled.div<GridProps>`
   display: flex;
   margin: 20px 0px;
-  justify-content: ${({ spaceBetween }) =>
-    spaceBetween ? 'space-between' : 'unset'};
+  justify-content: ${({ spaceBetween }) => {
+    const resp = spaceBetween ? 'space-between' : 'unset';
+    return resp;
+  }};
   ${({ nobottom }) => nobottom && 'margin-bottom: 0;'}
   ${({ notop }) => notop && 'margin-top: 0;'}
   ${({ alignCenter }) => alignCenter && 'align-items: center;'}
@@ -162,7 +174,7 @@ export const Row = styled.div<RowWrapperProps>`
 `;
 
 export const RowContent = styled.div<RowContentProps>`
-  color: ${({ contentColor }) => (contentColor ? contentColor : '#5a5a5a')};
+  color: ${({ contentColor }) => contentColor || '#5a5a5a'};
   font-size: 14px;
   font-weight: bold;
   text-align: center;
@@ -181,8 +193,7 @@ export const GraphTitle = styled.div`
 `;
 
 export const Header = styled.div`
-  margin-top: 20px;
-  margin-bottom: 12px;
+  margin: 12px 0px;
 `;
 
 export const HeaderTitle = styled.div`
@@ -192,7 +203,6 @@ export const HeaderTitle = styled.div`
   font-weight: lighter;
   line-height: 14px;
   margin-bottom: 12px;
-  margin-top: 20px;
 `;
 
 export const HeaderContent = styled.div<{ fontSize?: any }>`

@@ -30,7 +30,7 @@ const company: Company = {
   companyName: 'HERO Fintech Solutions Ptd. Ltd.',
   description: '',
   shortDescription:
-    'Speck SL was funded  in 1997 and have 17 millions  of yearly revenue. The company is focused in offering the best gastronomy  experience. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.',
+    'Speck SL was funded  in 1997 and have 17 millions  of yearly revenue. The company is focused in offering the best gastronomy  experience. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue. Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.Vestibulum quam tempus non tortor vel, ullamcorper ullamcorper augue.',
   background: 'https://cdn.buttercms.com/SnV5NXlFQDmHObRHyU2n',
   logo: 'https://cdn.buttercms.com/YzIsSDsTvCCpZ7pbbaVW',
   slug: 'hero',
@@ -38,12 +38,17 @@ const company: Company = {
 
 storiesOf('InvestCard', module).add('InvestCard with auction data', () => (
   <div style={{ padding: 10 }}>
-    <InvestCard auction={auction} borrower={company} link />
+    <InvestCard
+      auction={auction}
+      borrower={company}
+      coinIcon="coin-dai.svg"
+      link
+    />
   </div>
 ));
 
 storiesOf('InvestCard', module).add('InvestCard with NO link', () => (
   <div style={{ padding: 10 }}>
-    <InvestCard auction={auction} borrower={company} />
+    <InvestCard auction={auction} borrower={company} coinIcon="coin-dai.svg" />
   </div>
 ));

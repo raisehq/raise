@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Footer from '../Footer';
+import { Footer } from '@raisehq/components';
 import { HeroLayout, ContentBorrower, Wrapper } from './Layout.styles';
 
 interface IDefaultProps {
@@ -12,7 +12,7 @@ interface IDefaultProps {
 const Layout: React.SFC<IDefaultProps> = ({ component: Component, ...rest }: any) => (
   <Route
     {...rest}
-    render={matchProps => (
+    render={() => (
       <HeroLayout>
         <Wrapper>
           <ContentBorrower>

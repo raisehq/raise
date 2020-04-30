@@ -8,11 +8,14 @@ const LoanInput = ({
   thousandSeparator = '.',
   decimalSeparator = ',',
   ...props
-}) => {
-  const numeralSize = numeral(props.value).length;
+}: any) => {
+  const { value } = props;
+  const numeralSize = numeral(value).length;
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    inputRef?.current?.focus();
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus();
+    }
   }, []);
   return (
     <NumberFormat

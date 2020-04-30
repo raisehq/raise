@@ -133,22 +133,23 @@ Cypress.Commands.add('login', function(type, isCanary = false) {
     const userPassword = Cypress.env('userPassword');
     const request = {
       method: 'POST',
+      failOnStatusCode: false,
       url: 'https://canary.' + Cypress.env('api') + '/jwt/authenticate',
       body: {
         email: userEmail,
         password: userPassword,
         'g-recaptcha-response': 'xxxxxxxxx'
       }
-    }
+    };
 
     cy.request(request).then(({ body: { data }, status }) => {
       if (status == 404) {
         request.url = 'https://' + Cypress.env('api') + '/jwt/authenticate';
         cy.request(request).then(({ body: { data }, status }) => {
-          setLocalStorage(data, status)
+          setLocalStorage(data, status);
         });
       } else {
-        setLocalStorage(data, status)
+        setLocalStorage(data, status);
       }
     });
 

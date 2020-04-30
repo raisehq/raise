@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
 import LogRocket from 'logrocket';
-import useAsyncEffect from '../hooks/useAsyncEffect';
 import UseWebSockets from '../hooks/useWebSockets';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 
@@ -61,6 +60,15 @@ export function Updater() {
     daiWebSocket
   }: any = useAppContext();
 
+  useEffect(() => {
+    onVerifyAuth();
+  }, []);
+
+  // const { response: contracts } = useFetch(getContractsDefinition);
+  useEffect(() => {
+    if (contracts === null) fetchContracts();
+  }, [contracts]);
+
   // Enabling connectionsStart
   useEffect(() => {
     if (networkMatches && network !== walletNetwork && walletNetwork !== 'NO_NETWORK') {
@@ -103,21 +111,19 @@ export function Updater() {
     }
   }, [webSocket, address]);
 
-  useAsyncEffect(async () => {
+  useEffect(() => {
     if (isLogged) {
       onGetCryptoAddressByUser();
       onGetUser();
-
-      // CHECK IF NOT KCYED
-      if (!token) {
-        await onInitKyc();
-      }
-    } else {
-      await onVerifyAuth();
     }
+  }, [isLogged]);
 
-    if (contracts === null) fetchContracts();
-  }, [isLogged, token, address, network]);
+  useEffect(() => {
+    // CHECK IF NOT KCYED
+    if (isLogged && !token) {
+      onInitKyc();
+    }
+  }, [isLogged, token]);
 
   useEffect(() => {
     const { Cypress }: any = window;
@@ -156,7 +162,7 @@ export function Updater() {
   return null;
 }
 
-export default function Provider({ children }) {
+export default function Provider({ children }: any) {
   const firstLogin = LocalData.get('firstLogin');
   const {
     store: {

@@ -3,7 +3,7 @@ export enum AccountType {
   Lender,
 }
 
-export interface times {
+export interface Times {
   loanTerm: string;
   auctionTimeLeft: string;
   loanTermLeft: string;
@@ -16,4 +16,13 @@ export interface Company {
   background: string;
   logo: string;
   slug: string;
+}
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace,no-redeclare
+  namespace jest {
+    interface Matchers<R> {
+      toMatchImageSnapshot(): R;
+    }
+  }
 }

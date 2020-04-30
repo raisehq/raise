@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'semantic-ui-react';
 import {
   HelpWithBloomWrapper,
   FollowingStepsTitle,
@@ -7,15 +8,14 @@ import {
   LinkToSumSub,
   BloomHelpRaise
 } from './styles';
-import { Icon } from 'semantic-ui-react';
 
-const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful, history }) => {
+const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful, history }: any) => {
   const kycUnsuccessfulMessage = (
     <HelpMessage>
       <p>It looks like there is some problem with your Id document attestation.</p>
       <p>Please, contact support@bloom.co to review your documentation.</p>
       <p>
-        If this persists, you can also try our other verification provider{' '}
+        If this persists, you can also try our other verification provider
         <div>
           <LinkToSumSub onClick={() => history.push('/kyc-sumsub')}>Sum & Substance</LinkToSumSub>
         </div>
@@ -27,7 +27,8 @@ const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful, histor
     <HelpMessage>
       <p>Please make sure you registered your ID in your Bloom profile.</p>
       <p>
-        If you need help send email to <BloomHelpRaise>help@raise.it</BloomHelpRaise>
+        If you need help send email to
+        <BloomHelpRaise>help@raise.it</BloomHelpRaise>
       </p>
     </HelpMessage>
   );

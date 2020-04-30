@@ -25,7 +25,7 @@ const BigSimpleModal = ({
       <OnboardingModalContent>
         <OnboardingHeader>
           <OnboardingHeaderItemWrapper>
-            <img src={`${IMAGES_PATH}logo.svg`} />
+            <img src={`${IMAGES_PATH}logo.svg`} alt="Raise.it" />
           </OnboardingHeaderItemWrapper>
           <OnboardingHeaderItemWrapper>
             {closeButton && (

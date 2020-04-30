@@ -14,7 +14,8 @@ export enum LoanState {
   ACTIVE, // fully funded, inside timelimit
   DEFAULTED, // not repaid in time loanRepaymentLength
   REPAID, // the borrower repaid in full, lenders have yet to reclaim funds
-  CLOSED, // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
+  CLOSED, // from failed_to_fund => last lender to withdraw triggers change
+  // from repaid => fully witdrawn by lenders
   FROZEN // when admin unlocks withdrawals
 }
 

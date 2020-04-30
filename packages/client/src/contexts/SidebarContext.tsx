@@ -46,7 +46,7 @@ function reducer(state, { type, payload }) {
   }
 }
 
-export default function Provider({ children }) {
+export default function Provider({ children }: any) {
   const [state, dispatch] = useReducer(reducer, initialState());
 
   const setDisplay = useCallback((boolean: boolean) => {

@@ -5,7 +5,7 @@ import { Checkbox } from 'semantic-ui-react';
 interface CheckBoxProps {
   size?: string;
 }
-
+/* eslint-disable */
 export const CheckboxStyled = styled(Checkbox)<CheckBoxProps>`
   &&& {
     &&&.ui.checkbox label {
@@ -21,8 +21,10 @@ export const CheckboxStyled = styled(Checkbox)<CheckBoxProps>`
     .box:before,
     label:after,
     label:before {
-      transform: ${({ size }) =>
-        size === 'small' ? 'inherit' : `scale(1.28571429)`};
+      transform: ${({ size }) => {
+        const resp = size === 'small' ? 'inherit' : 'scale(1.28571429)';
+        return resp;
+      }};
       transform-origin: left;
       top: ${({ size }) => (size === 'small' ? '-1px' : '3px')};
     }
@@ -41,6 +43,7 @@ export const CheckboxStyled = styled(Checkbox)<CheckBoxProps>`
     }
   }
 `;
+/* eslint-enable */
 
 export const CheckboxLabel = styled.label`
   font-family: Lato;

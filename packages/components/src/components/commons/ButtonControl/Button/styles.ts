@@ -10,6 +10,7 @@ interface ButtonProps {
   fullWidth?: boolean;
 }
 
+/* eslint-disable */
 export const ButtonStyled = styled(Button)<ButtonProps>`
   &&& {
     background: ${({ disabled, type }) =>
@@ -61,3 +62,5 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
     }
   }
 `;
+/* eslint-enable */
+export default ButtonStyled;

@@ -1,16 +1,10 @@
 import React, { useMemo } from 'react';
 import { BalanceDropdown, TokenBalance } from './CoinSelector.styles';
-const { REACT_APP_HOST_IMAGES } = process.env;
+import TOKEN_URLS from '../../commons/tokens';
 
-const TOKEN_URLS = {
-  DAI: `${REACT_APP_HOST_IMAGES}/images/coins/coin-dai.svg`,
-  USDT: `${REACT_APP_HOST_IMAGES}/images/coins/coin-theter.svg`,
-  USDC: `${REACT_APP_HOST_IMAGES}/images/coins/coin-usdc.svg`
-};
+const SUPPORTED_SWAP_COINS = ['DAI', 'USDC', 'ETH'];
 
-const SUPPORTED_SWAP_COINS = ['DAI', 'USDC'];
-
-const CoinSelector = ({ loanCoin, value, ...rest }) => {
+const CoinSelector = ({ loanCoin, value, ...rest }: any) => {
   const options = useMemo(() => {
     if (loanCoin?.text === 'USDT') {
       const props = {
@@ -36,15 +30,7 @@ const CoinSelector = ({ loanCoin, value, ...rest }) => {
   const CurrentSelection = (
     <TokenBalance value={value} name={value} key={value} imageUrl={TOKEN_URLS[value]} />
   );
-  return (
-    <BalanceDropdown
-      trigger={CurrentSelection}
-      value={value}
-      selection
-      options={options}
-      {...rest}
-    />
-  );
+  return <BalanceDropdown trigger={CurrentSelection} value={value} options={options} {...rest} />;
 };
 
 export default CoinSelector;

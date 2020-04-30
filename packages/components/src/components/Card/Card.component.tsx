@@ -1,5 +1,5 @@
 import React, { ReactChild, FunctionComponent } from 'react';
-import { Popup } from 'semantic-ui-react';
+// import { Popup } from 'semantic-ui-react';
 import {
   HeroCard,
   Grid,
@@ -13,8 +13,6 @@ import {
   CardLogo,
   Graph,
   Badge,
-  InfoIconCmp,
-  InfoIcon,
   Separator,
   GraphContainer,
   GraphTitle,
@@ -61,7 +59,7 @@ const RowComponent: React.SFC<RowComponentProps> = ({
   small,
   big,
   notop,
-}) => (
+}: any) => (
   <Row small={small} big={big} notop={notop}>
     <RowContent contentColor={contentColor}>{content}</RowContent>
     {title && <RowTitle big={big}>{title}</RowTitle>}
@@ -87,14 +85,16 @@ const HeaderComponent = ({
 const SubHeaderComponent: FunctionComponent<{
   title: string;
   amount: string;
-}> = ({ title, amount, ...rest }) => (
+}> = ({ title, amount, ...rest }: any) => (
   <SubHeader {...rest}>
     <SubHeaderTitle>{title}</SubHeaderTitle>
     <SubHeaderContent>{amount}</SubHeaderContent>
   </SubHeader>
 );
 
-const RoiHeaderComponent: FunctionComponent<{ roi: string }> = ({ roi }) => (
+const RoiHeaderComponent: FunctionComponent<{ roi: string }> = ({
+  roi,
+}: any) => (
   <RoiHeader>
     <RoiContent>{`${roi}ROI`}</RoiContent>
   </RoiHeader>
@@ -110,7 +110,10 @@ const CardWrapper = ({ children, size, width, ...props }: any) => {
     <Context.Provider value={values}>
       <HeroCard
         className="heroCard"
-        ref={(ref: any) => (graph.current = ref)}
+        ref={(ref: any) => {
+          graph.current = ref;
+          return true;
+        }}
         {...props}
         size={size}
         width={width}
@@ -127,14 +130,14 @@ const GraphComponent: FunctionComponent<{
   color: string;
   currentAmount: number;
   totalAmount: number;
-}> = ({ color, currentAmount, totalAmount }) => {
+}> = ({ color, currentAmount, totalAmount }: any) => {
   const { ref }: any = React.useContext(Context);
   const config = useGraphWidth(ref, currentAmount, totalAmount);
 
   return (
     <GraphContainer>
       <Graph color={color} width={config.width} />
-      <GraphTitle>{Math.floor(config.width)}%</GraphTitle>
+      <GraphTitle>{`${Math.floor(config.width)}%`}</GraphTitle>
     </GraphContainer>
   );
 };
@@ -143,29 +146,17 @@ const ProgressComponent: FunctionComponent<{
   color: string;
   currentAmount: number;
   totalAmount: number;
-}> = ({ color, currentAmount, totalAmount }) => {
+}> = ({ color, currentAmount, totalAmount }: any) => {
   const { ref }: any = React.useContext(Context);
   const config = useGraphWidth(ref, currentAmount, totalAmount);
 
   return (
     <GraphContainer>
       <ProgressBar color={color} width={config.width} />
-      <ProgressPercent>{Math.floor(config.width)}%</ProgressPercent>
+      <ProgressPercent>{`${Math.floor(config.width)}%`}</ProgressPercent>
     </GraphContainer>
   );
 };
-
-const TooltipComponent = () => (
-  <Popup
-    content="blablabablalbabalabl"
-    key={2434324}
-    trigger={
-      <InfoIcon>
-        <InfoIconCmp name="info" />
-      </InfoIcon>
-    }
-  />
-);
 
 const ContentWithLogo = ({
   children,
@@ -224,7 +215,6 @@ Card.Graph = GraphComponent;
 Card.Progress = ProgressComponent;
 Card.Separator = Separator;
 Card.Vertical = Vertical;
-Card.Tooltip = TooltipComponent;
 Card.RoiHeader = RoiHeaderComponent;
 Card.TimeLeft = TimeLeft;
 

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Card } from '@raisehq/components';
 import { getCalculations } from '../../utils/loanUtils';
 import Amount from './Dashboard.Amount';
-import { InvestModal } from '../InvestModal';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import useGetCoin from '../../hooks/useGetCoin';
+import CardTopSection from './CardTopSection';
+import { Content } from './Dashboard.styles';
+
+const InvestSidebar = lazy(() => import('../InvestSidebar/InvestWithSidebar'));
 
 const Auction = ({ auction }: { auction: any }) => {
-  const { companyName, background, logo, slug } = useBorrowerInfo(auction.originator);
+  const { companyName, logo, route, slug } = useBorrowerInfo(auction.originator);
   const coin = useGetCoin(auction);
   const calcs = getCalculations(auction, coin.decimals);
   const {
@@ -20,18 +23,22 @@ const Auction = ({ auction }: { auction: any }) => {
     lenderAmount
   } = calcs;
 
-  const auctionTimeLeft = `${times.auctionTimeLeft} left`;
-  const borrowerUrl = `/c/${slug}`;
+  const auctionTimeLeft = `${times.auctionTimeLeft}`;
 
   return (
     <Card>
-      <Card.Image src={background} to={borrowerUrl} />
-      <Card.Content topRight={auctionTimeLeft} logo={logo} to={borrowerUrl}>
-        <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
-        <Card.Header
-          title="Amount invested"
-          amount={<Amount principal={lenderAmount} coin={coin} />}
-        />
+      <CardTopSection src={logo} href={slug} />
+      <Card.Content to={route}>
+        <Content>
+          <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
+          <Card.Grid spaceBetween nobottom>
+            <Card.Header
+              title="Amount invested"
+              amount={<Amount principal={lenderAmount} coin={coin} />}
+            />
+            <Card.Header title="Days left" fontSize="24px" amount={auctionTimeLeft} />
+          </Card.Grid>
+        </Content>
         <Card.Separator />
         <Card.Grid spaceBetween nobottom>
           <Card.SubHeader
@@ -49,7 +56,9 @@ const Auction = ({ auction }: { auction: any }) => {
           <Card.Vertical />
           <Card.Row notop title="Expected ROI" content={expectedRoiFormated} />
         </Card.Grid>
-        <InvestModal loan={auction} />
+        <Suspense fallback={<div>...</div>}>
+          <InvestSidebar loan={auction} />
+        </Suspense>
       </Card.Content>
     </Card>
   );

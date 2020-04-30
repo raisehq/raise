@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
-import moment from 'moment';
+import React, { useState, useRef, useEffect } from 'react';
+import debounce from 'lodash/debounce';
+import styled from 'styled-components';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import axios from 'axios';
+import { Icon } from 'semantic-ui-react';
 import BN from 'bn.js';
-import { Line } from 'react-chartjs-2';
+import { fromDecimal } from '../../utils/web3-utils';
 import Card from '../Card';
-import { fromWei } from 'web3-utils';
+import useScript from '../../hooks/useScript';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getDates, getClosestIndexByDate, getAverage } from './graphUtils';
 import numeral from '../../commons/numeral';
 import { chartBackground, todayVerticalLine } from './plugins';
 import { DAI_ADDRESS } from '../../commons/constants';
-import {
-  Title,
-  Header,
-  IconContainer,
-} from '../InvestCardView/InvestCardView.styles';
-import { Icon } from 'semantic-ui-react';
 
-import { Chart } from 'react-chartjs-2';
+const CHART_CDN = 'https://cdn.jsdelivr.net/npm/chart.js@2.8.0';
+const MOMENT_CDN =
+  'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js';
+
+const Header = styled.div`
+  padding-top: 22px;
+  text-align: center;
+`;
+
+const Subheader = styled(Card.Grid)`
+  margin: 20px 0px;
+`;
+
+const CloseContainer = styled.div`
+  position: absolute;
+  top: 16px;
+  right: 8px;
+`;
 
 interface APRGraphProps {
   maxInterestRate: BN;
@@ -27,6 +42,11 @@ interface APRGraphProps {
   currentAPR: string;
   onOpenGraph: any;
 }
+
+const ChartWrapper = styled.div`
+  padding: 0px 10px;
+  height: 250px;
+`;
 
 const datasetToGraph = (
   dataset: number[],
@@ -65,6 +85,8 @@ const datasetToGraph = (
 });
 
 const options: any = {
+  responsive: true,
+  maintainAspectRatio: false,
   fullCompoundDataset: [0],
   legend: {
     display: false,
@@ -79,7 +101,7 @@ const options: any = {
     backgroundColor: 'rgba(248,248,248,1)',
   },
   lineAtIndex: [0],
-  onHover: () => {},
+  onHover: () => null,
   layout: {
     padding: {
       left: 5,
@@ -124,15 +146,14 @@ const getRaiseDataset = (
   auctionEnd: Date,
   maxInterest: number,
   minInterest: number
-) => {
-  return dates.map(
+) =>
+  dates.map(
     (d: Date) =>
       ((maxInterest - minInterest) *
         Math.abs(d.valueOf() - auctionStart.valueOf())) /
         Math.abs(auctionEnd.valueOf() - auctionStart.valueOf()) +
       minInterest
   );
-};
 
 const APRGraph = ({
   maxInterestRate,
@@ -142,6 +163,10 @@ const APRGraph = ({
   currentAPR,
   onOpenGraph,
 }: APRGraphProps) => {
+  const chartContainer = useRef(null);
+  const [chartLoaded] = useScript(CHART_CDN);
+  const [momentLoaded] = useScript(MOMENT_CDN);
+  const [chartInstance, setChartInstance] = useState(null);
   const [compoundDataset, setCompoundDataset] = useState([0]);
   const [fullCompoundDataset, setFullCompoundDataset] = useState([0]);
   const [[currentLoanInterest, compoundInterest], setInterest] = useState([
@@ -154,9 +179,9 @@ const APRGraph = ({
     '0.00%'
   );
 
-  const maxInterest = Number(fromWei(maxInterestRate.toString())) * 12;
+  const maxInterest = Number(fromDecimal(maxInterestRate.toString())) * 12;
   const minInterest = minInterestRate
-    ? Number(fromWei(minInterestRate.toString())) * 12
+    ? Number(fromDecimal(minInterestRate.toString())) * 12
     : 0;
   const dateStart = new Date(auctionStartTimestamp * 1000);
   const dateEnd = new Date(auctionEndTimestamp * 1000);
@@ -212,8 +237,11 @@ const APRGraph = ({
   };
 
   useAsyncEffect(async () => {
-    Chart.pluginService.register(todayVerticalLine);
-    Chart.pluginService.register(chartBackground);
+    if (!chartLoaded || !momentLoaded) {
+      return;
+    }
+    window.Chart.pluginService.register(todayVerticalLine);
+    window.Chart.pluginService.register(chartBackground);
 
     /**
      * Compound DAI rate api call, latest 30 day
@@ -223,10 +251,10 @@ const APRGraph = ({
       {
         params: {
           asset: DAI_ADDRESS,
-          min_block_timestamp: moment()
+          min_block_timestamp: dayjs()
             .subtract(arrayDays.length, 'day')
             .unix(),
-          max_block_timestamp: moment().unix(),
+          max_block_timestamp: dayjs().unix(),
           num_buckets: arrayDays.length,
         },
       }
@@ -253,9 +281,38 @@ const APRGraph = ({
         numeral(currentDataset[nowIndex] / 100).format('0.00%'),
       ]);
     }
-  }, []);
+  }, [chartLoaded, momentLoaded]);
 
-  options.lineAtIndex = [nowIndex];
+  useEffect(() => {
+    if (
+      !chartInstance &&
+      chartLoaded &&
+      momentLoaded &&
+      chartContainer &&
+      chartContainer.current &&
+      compoundDataset.length > 1
+    ) {
+      options.lineAtIndex = [nowIndex];
+
+      const newChartInstance = new window.Chart(chartContainer.current, {
+        type: 'line',
+        data: graphData,
+        options,
+      });
+      setChartInstance(newChartInstance);
+    }
+  }, [
+    chartInstance,
+    chartLoaded,
+    momentLoaded,
+    chartContainer,
+    compoundDataset,
+  ]);
+
+  const getFormatDate = date => {
+    dayjs.extend(localizedFormat);
+    return dayjs(date).format('LL');
+  };
 
   const updateHover = (_event: any, datapoint: any[]) => {
     // Return current index to be able to show tooltip outside canvas
@@ -269,6 +326,7 @@ const APRGraph = ({
     }
     // Return current index to be able to show tooltip outside canvas
     if (datapoint.length) {
+      // eslint-disable-next-line
       const index = datapoint[0]._index;
       setSelectedDate(arrayDays[index]);
 
@@ -286,21 +344,18 @@ const APRGraph = ({
     }
   };
 
-  options.onHover = updateHover;
+  options.onHover = debounce(updateHover);
 
   return (
     <>
       <Header>
-        <Title>
-          <span>Compare APRs</span>
-        </Title>
-        <IconContainer>
-          <Icon name={'close'} size="large" onClick={onOpenGraph} />
-        </IconContainer>
+        <span>Compare APRs</span>
       </Header>
-
-      <Card.Grid>
-        <Card.Row notop big content={moment(selectedDate).format('LL')} />
+      <CloseContainer>
+        <Icon name="close" size="large" onClick={onOpenGraph} />
+      </CloseContainer>
+      <Subheader>
+        <Card.Row notop big content={getFormatDate(selectedDate)} />
         <Card.Vertical />
         <Card.Row
           notop
@@ -317,8 +372,10 @@ const APRGraph = ({
           content={compoundInterest}
           contentColor={compoundGraphData.borderColor}
         />
-      </Card.Grid>
-      <Line data={graphData} options={options} height={245} />
+      </Subheader>
+      <ChartWrapper>
+        {chartLoaded && momentLoaded && <canvas ref={chartContainer} />}
+      </ChartWrapper>
     </>
   );
 };

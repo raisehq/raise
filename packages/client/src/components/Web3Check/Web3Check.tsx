@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// URLSearchParams polyfill for IE 11
+import { isMobile } from 'react-device-detect';
 import URLSearchParams from '@ungap/url-search-params';
 import Wallet from './Web3Check.Wallet';
 import List from './Web3Check.List';
@@ -13,7 +13,6 @@ import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
-import { isMobile } from 'react-device-detect';
 
 const tagLabelMapping = {
   coinbase: 'coinbase_success',
@@ -29,15 +28,14 @@ const getStage = (
   backToConnectForm,
   onExists,
   onNotExists
-) => {
-  return stage.cata({
+) =>
+  stage.cata({
     WalletConnectForm: () => <WalletConnectForm onExists={onExists} onNotExists={onNotExists} />,
     WalletSetUp: () => <WalletSetUp onNext={handleNext} onBack={backToConnectForm} />,
     WalletSelector: () => <Wallet onNext={handleNext} onBack={backToConnectForm} />,
     WalletConnect: hasWallet => <WalletConnect onBack={handleBack} hasWallet={hasWallet} />,
     Checks: () => <List onSuccess={handleSuccess} onBack={handleBack} />
   });
-};
 
 const Web3Check = () => {
   const {
@@ -56,6 +54,10 @@ const Web3Check = () => {
   const tagManager = useGoogleTagManager('Wallet');
   const [ui, setUI] = useState(isMobile ? Stages.WalletSelector : Stages.WalletConnectForm);
   const [prevStage, setPrevStage] = useState(isMobile ? 'WalletSelector' : 'WalletConnectForm');
+
+  const handleSuccess = () => {
+    history.push(redirect);
+  };
 
   useEffect(() => {
     if (web3 && unlocked) {
@@ -109,10 +111,6 @@ const Web3Check = () => {
         setUI(Stages.WalletConnectForm);
         break;
     }
-  };
-
-  const handleSuccess = () => {
-    history.push(redirect);
   };
 
   const handleNext = (step, hasWallet) => {

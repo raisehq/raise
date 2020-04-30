@@ -116,7 +116,6 @@ export const AmountComponent = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  height: 22px;
   &&& > div:first-child {
     margin-left: 5px;
   }
@@ -134,4 +133,11 @@ export const Header = styled(SemanticHeader)`
     font-size: 26px;
     font-weight: bold;
   }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 50px;
 `;

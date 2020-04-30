@@ -1,8 +1,9 @@
-import React, { useState, createContext } from 'react';
-import daggy from 'daggy';
+import React, { useState } from 'react';
+
 import { Modal as SemanticModal } from 'semantic-ui-react';
 import { InvestModalProps } from '../InvestModal/types';
-
+import ClaimLoanContext from './ClaimLoan.context';
+import Stages from './ClaimLoan.stages';
 import { getCalculations } from '../../utils/loanUtils';
 import ConfirmStage from './stages/Confirm';
 import SuccessStage from './stages/Success';
@@ -12,15 +13,7 @@ import { Modal } from './ClaimLoan.styles';
 import { BorrowerButton, ExitButton } from '../InvestModal/InvestModal.styles';
 import useGetCoin from '../../hooks/useGetCoin';
 
-export const ClaimLoanContext = createContext({});
-
-export const Stages = daggy.taggedSum('UI', {
-  Confirm: [],
-  Success: [],
-  Error: []
-});
-
-const ClaimLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
+const ClaimLoanCTA: React.SFC<InvestModalProps> = ({ loan }: any) => {
   const coin = useGetCoin(loan);
   const calculatedLoan = getCalculations(loan, coin.decimals);
   const [open, setOpen] = useState(false);
@@ -34,13 +27,12 @@ const ClaimLoanCTA: React.SFC<InvestModalProps> = ({ loan }) => {
     setOpen(false);
   };
 
-  const getStage = stage => {
-    return stage.cata({
+  const getStage = (current: any) =>
+    current.cata({
       Confirm: () => <ConfirmStage />,
       Success: () => <SuccessStage />,
       Error: () => <Error />
     });
-  };
 
   return (
     <ClaimLoanContext.Provider value={{ loan, calculatedLoan, setStage, closeModal }}>

@@ -9,13 +9,13 @@ import onboarding from './onboarding';
 import loanDispatcher from './loanDispatcher';
 
 export default (dispatch, state) => ({
-  config: config(dispatch, state),
+  config: config(dispatch),
   auth: auth(dispatch, state),
   user: user(dispatch, state),
   kyc: kyc(dispatch, state),
   blockchain: blockchain(dispatch, state),
   loan: loan(dispatch, state),
-  dai: dai(dispatch, state),
-  onboarding: onboarding(dispatch, state),
-  loanDispatcher: loanDispatcher(dispatch, state)
+  dai: dai(dispatch),
+  onboarding: onboarding(dispatch),
+  loanDispatcher: loanDispatcher(dispatch)
 });

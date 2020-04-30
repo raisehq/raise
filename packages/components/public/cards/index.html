@@ -33,11 +33,14 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
-    <!-- Raise Components UI library -->
-    <script crossorigin src="./raisecomponents.umd.production.min.js"></script>
 
     <!-- GraphQL client to query from TheGraph -->
     <script src="//cdn.jsdelivr.net/npm/graphql.js@0.6.6/graphql.min.js"></script>
+    <!-- Raise Components UI library -->
+    <script
+      crossorigin
+      src="../../dist/raisecomponents.umd.development.js"
+    ></script>
   </head>
   <body>
     <h2>Hello Test</h2>
@@ -136,7 +139,6 @@
         if (response.loans.length) {
           const loan = response.loans[0];
           const borrower = await fetchCompany(loan.originator);
-          console.log('borrower', borrower);
           const InvestCard = styled(RaiseComponents.InvestCard)`
             height: fit-content;
           `;
@@ -144,6 +146,7 @@
             borrower,
             link,
             auction: loan,
+            coinIcon: 'coin-dai.svg',
           });
           ReactDOM.render(card, document.getElementById('card'));
           return;
@@ -152,7 +155,7 @@
       };
 
       // Edit here the parameters: first loan address, second href link
-      queryAndPaint('0x8264d70db4c7decf3d6bb24c6a354e4546574aa1', null);
+      queryAndPaint('0xf9213670b75Ce7d36b54fe1b516B44A1a55Be17B', null);
     </script>
   </body>
 </html>

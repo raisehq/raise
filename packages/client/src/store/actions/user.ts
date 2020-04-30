@@ -48,6 +48,7 @@ export default (dispatch: any, state: Store) => {
     if (data && data.users && data.users.length > 0 && data.users[0].kyced) {
       dispatch({ type: 'SET_USER_DETAILS', data: { kyc_status: 3 } });
     }
+    return true;
   };
 
   const onGetUser = async () => {

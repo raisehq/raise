@@ -1,36 +1,25 @@
 {
   "name": "@raisehq/components",
-  "version": "0.1.44",
+  "version": "0.1.49",
   "license": "MIT",
   "author": "Raise HQ",
   "main": "dist/index.js",
   "module": "dist/components.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
-    "start": "env-cmd --no-override .env tsdx watch",
+    "prepare": "env-cmd --no-override .env tsdx build",
+    "watch": "env-cmd --no-override .env tsdx watch --noClean --transpileOnly",
     "dev": "env-cmd --no-override .env tsdx watch",
     "dev:int": "yarn run dev",
     "build": "rm -f tsdx.config.js && env-cmd --no-override .env tsdx build",
+    "build:fast": "env-cmd --no-override .env tsdx build  --noClean --transpileOnly",
     "build:umd": "cp tsdx.umd.config.js tsdx.config.js && env-cmd --no-override .env tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
     "test": "env-cmd --no-override .env tsdx test --env=jsdom",
-    "lint": "env-cmd --no-override .env tsdx lint"
-  },
-  "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
-  },
-  "devDependencies": {
-    "@truffle-types/web3-utils": "^0.1.1",
-    "@types/enzyme": "^3.10.3",
-    "@types/jest": "^24.0.23",
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.9.4",
-    "babel-loader": "^8.0.6",
-    "husky": "^3.1.0",
-    "tslib": "^1.10.0"
+    "lint": "env-cmd --no-override .env tsdx lint src/"
   },
   "prettier": {
     "printWidth": 80,
@@ -38,34 +27,48 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^10.0.3",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "eslint-config-react-app": "^5.2.1",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.0.8",
+    "react-test-renderer": "^16.13.1",
+    "tsdx": "0.11.0",
+    "tslib": "^1.10.0",
+    "typescript": "3.8.3"
+  },
   "dependencies": {
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/lodash": "^4.14.149",
     "@types/numeral": "^0.0.26",
-    "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.19.0",
+    "bignumber.js": "^9.0.0",
     "bn.js": "^5.0.0",
     "buttercms": "^1.2.1",
-    "chart.js": "^2.8.0",
+    "dayjs": "^1.8.24",
     "dompurify": "^2.0.7",
     "dotenv": "^8.2.0",
-    "env-cmd": "8.0.2",
     "graphql.js": "0.6.1",
+    "jest-image-snapshot": "^3.1.0",
+    "jest-transform-css": "^2.0.0",
+    "jest-transform-file": "^1.1.1",
+    "jsdom-screenshot": "^3.2.0",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
-    "moment": "^2.24.0",
     "numeral": "^2.0.6",
     "pampy": "^0.0.6",
-    "prettier": "^1.19.1",
     "react-chartjs-2": "^2.9.0",
     "react-content-loader": "^4.3.2",
-    "react-docgen-typescript-loader": "^3.5.0",
+    "react-number-format": "^4.4.1",
     "react-spring": "^8.0.27",
     "semantic-ui-react": "^0.88.1",
-    "styled-components": "^5.0.0",
-    "tsc": "^1.20150623.0",
-    "tsdx": "^0.13.0",
-    "typescript": "3.8.3",
-    "web3-utils": "^1.2.4"
+    "sha3": "^2.1.2",
+    "styled-components": "^5.0.0"
   }
 }

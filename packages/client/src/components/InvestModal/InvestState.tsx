@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
+import { tradeTokensForExactTokens, tradeEthForExactTokens } from '@uniswap/sdk';
 import BN from 'bn.js';
 import styled from 'styled-components';
-import { tradeTokensForExactTokens } from '@uniswap/sdk';
 import { InvestStateProps } from './types';
 import { getCalculations } from '../../utils/loanUtils';
 import { useRootContext } from '../../contexts/RootContext';
@@ -12,17 +12,22 @@ import { useAddressBalance } from '../../contexts/BalancesContext';
 import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
 import localeConfig from '../../commons/localeConfig';
 import { generateInfo, CoinValue } from './investUtils';
-import { toDecimal, fromDecimal } from '../../utils/web3-utils';
+import { toDecimal, fromDecimal, fromDecimalFixed } from '../../utils/web3-utils';
+import InvestmentBox from './components/InvestmentBox';
 
 import {
   ConfirmButton,
   InvestHeader,
-  InvestSection,
   LoanTermsCheckbox,
   CheckContainer,
   ExitButton
 } from './InvestModal.styles';
 import CollapsedTable, { TableItem } from './components/CollapsedTable';
+
+export const InvestSection = styled(InvestmentBox)`
+  margin: 29px auto 0px auto;
+  padding: 27px;
+`;
 
 const InvestBody = styled.div`
   height: 100%;
@@ -60,7 +65,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const {
     store: {
       user: {
-        details: { kyc_status }
+        details: { kyc_status: kycStatus }
       },
       user: {
         cryptoAddress: { address: account }
@@ -77,9 +82,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin?.icon}`;
   const tagManager = useGoogleTagManager('Card');
   const balanceBN: BN = useAddressBalance(account, inputCoin?.address || '');
-  const balance = Number(
-    Number(fromDecimal(balanceBN.toString(10), inputCoin?.decimals)).toFixed(2)
-  );
+  const balance = Number(fromDecimalFixed(balanceBN.toString(10), inputCoin?.decimals));
   const [value, setValue] = useState<number>(0);
   const expectedInputRoi = Number(expectedROI * value || 0).toLocaleString(...localeConfig);
 
@@ -100,6 +103,13 @@ const InvestState: React.SFC<InvestStateProps> = ({
       if (!inputCoin || !loanCoin) {
         return defaultValue;
       }
+      if (inputCoin.text === 'ETH') {
+        const outputAmount = toDecimal(value, loanCoin.decimals);
+        const tradeDetails = await tradeEthForExactTokens(loanCoin.address, outputAmount, chainId);
+
+        const totalOutput = new BN(tradeDetails.inputAmount.amount.toString());
+        return totalOutput.add(totalOutput.div(new BN('100')));
+      }
       const outputAmount = toDecimal(value, loanCoin.decimals);
       const tradeDetails = await tradeTokensForExactTokens(
         inputCoin.address,
@@ -117,10 +127,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   };
 
   useAsyncEffect(async () => {
-    if (!value) {
-      setInputTokenAmount(new BN('0'));
-      return;
-    }
+    setInputTokenAmount(new BN('0'));
     if (inputCoin?.text === loanCoin.text) {
       setInputTokenAmount(new BN(toDecimal(value, loanCoin.decimals)));
       return;
@@ -143,16 +150,18 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const buttonRules =
     value === 0 ||
     value === undefined ||
-    value > balance ||
+    inputTokenAmount.gt(balanceBN) ||
+    inputTokenAmount.lte(new BN('0')) ||
     value > maxAmountNum ||
     !termsCond ||
-    kyc_status !== 3;
+    kycStatus !== 3;
 
   const InvestInputProps = {
     loan,
     value,
     setValue,
     coin: inputCoin,
+    inputToken: Number(fromDecimal(inputTokenAmount.toString(10), inputCoin?.decimals)),
     loanCoin,
     balance,
     selectedCoin,
@@ -165,6 +174,10 @@ const InvestState: React.SFC<InvestStateProps> = ({
     setTermsCond(toggleTerms);
   };
 
+  const getCoinValue = () => (
+    <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
+  );
+  // prettier-ignore
   return (
     <InvestBody>
       <InvestInput>
@@ -172,24 +185,24 @@ const InvestState: React.SFC<InvestStateProps> = ({
         <InvestHeader>Loan Information</InvestHeader>
         <CollapsedTable items={loanInfo} />
         <InvestSection {...InvestInputProps} />
-        <TableItem
-          title={`The equivalent in ${selectedCoin}`}
-          content={
-            <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
-          }
-          tooltip="Total invested will always be converted to the currency set by the borrower."
-        />
+        {selectedCoin !== loanCoin.text && (
+          <TableItem
+            title={`The equivalent in ${selectedCoin}`}
+            content={getCoinValue()}
+            tooltip="How much will be charged from your account. This will be converted to the currency set by the borrower."
+          />
+        )}
         <TableItem
           title="Expected ROI after repayment"
           latest
           content={<CoinValue value={expectedInputRoi} name={loanCoin?.text} src={loanCoinImage} />}
-          tooltip="This includes the original amount invested in addition to your return on investment."
+          tooltip="The return on your investment, when the loan is repaid."
         />
       </InvestInput>
       <ButtonWrapper>
         <CheckContainer>
-          <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />I agree
-          to the Terms and Conditions of the Loan Agreement
+          <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />
+          I agree to the Terms and Conditions of the Loan Agreement
         </CheckContainer>
         <ContinueButton id="btn-invest-confirm" onClick={onConfirm} disabled={buttonRules}>
           Continue

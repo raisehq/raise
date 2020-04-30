@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import graphql from 'graphql.js';
+import { fromDecimal as fromWei } from '../utils/web3-utils';
 import { calculateInterest } from '../utils/raiseUtils';
 import useAsyncEffect from './useAsyncEffect';
-import graphql from 'graphql.js';
-import web3Utils from 'web3-utils';
+
 import { COMPANY_LOGOS } from '../commons/constants';
 
 const raiseGraph = graphql(
@@ -13,7 +14,7 @@ const raiseGraph = graphql(
 );
 
 const raiseLoansQuery = `query($currentUnix: Int) {
-	loans( where: { state: 0, auctionEndTimestamp_gt: $currentUnix } ) {
+  loans( where: { state: 0, auctionEndTimestamp_gt: $currentUnix } ) {
         state
         operatorFee
         interestRate
@@ -24,7 +25,7 @@ const raiseLoansQuery = `query($currentUnix: Int) {
         auctionStartTimestamp
         auctionEndTimestamp
         id
-	}
+  }
 }`;
 
 const average = (arr: any[]) => arr.reduce((p, c) => p + c, 0) / arr.length;
@@ -42,8 +43,7 @@ const getRaiseData = async () => {
     logoUrl: COMPANY_LOGOS.Raise,
     tvl: raise.loans.reduce(
       (total: any, { principal }: any) =>
-        total +
-        Number(web3Utils.fromWei(principal.toString().replace('.', ''))),
+        total + Number(fromWei(principal.toString().replace('.', ''))),
       0
     ),
     term: 'short-term',
@@ -53,7 +53,6 @@ const getRaiseData = async () => {
     description:
       'Raise is a loan marketplace that connects individuals with investment opportunities primarily in emerging countries.',
   };
-  console.log(raiseResponse, raise.loans);
   return raiseResponse;
 };
 
@@ -64,7 +63,9 @@ const useRaiseData = () => {
     try {
       const data = await getRaiseData();
       setRaiseCompany(data);
-    } catch (error) {}
+    } catch (error) {
+      console.error('[useRaiseData] Error on setRaiseCompany');
+    }
   }, []);
 
   return raiseCompany;

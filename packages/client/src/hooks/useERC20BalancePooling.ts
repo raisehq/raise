@@ -1,4 +1,4 @@
-import useAPIPolling, { APIPollingOptions } from 'use-api-polling'
+import useAPIPolling, { APIPollingOptions } from 'use-api-polling';
 import ABI_ERC20 from '../commons/erc20';
 
 const RetrieveERC20Balance = (web3, erc20Address, userAddress) => {
@@ -11,19 +11,18 @@ const RetrieveERC20Balance = (web3, erc20Address, userAddress) => {
       } catch (error) {
         console.error(error);
       }
-
     }
     return 0;
-  }
+  };
 
-  const options: APIPollingOptions<Number> = {
+  const options: APIPollingOptions<number> = {
     fetchFunc,
     initialState: 0,
     delay: 3000
-  }
-  const balance = useAPIPolling(options)
+  };
+  const balance = useAPIPolling(options);
 
   return balance;
-}
+};
 
 export default RetrieveERC20Balance;

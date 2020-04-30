@@ -13,7 +13,6 @@ import {
 } from 'semantic-ui-react';
 import Balance from '../Balance';
 import { device } from '../../commons/breakpoints';
-import InvestmentBox from './components/InvestmentBox';
 
 interface ModalInputProps {
   roi?: boolean;
@@ -28,10 +27,6 @@ interface LabelPaddingProps {
   color?: string;
 }
 
-export const InvestSection = styled(InvestmentBox)`
-  margin: 29px auto 0px auto;
-  padding: 27px;
-`;
 export const LoanTermsCheckbox: any = styled(Checkbox)`
   &&& {
     position: relative;
@@ -133,20 +128,8 @@ export const Modal = styled(SemanticModal)`
   }
 `;
 
-export const ModalContent: any = styled(SemanticModal.Content)`
-  &&&.content {
-    padding: 40px 50px;
-  }
-
-  @media (max-width: 500px) {
-    border-radius: 0;
-    margin: 0;
-    height: 100%;
-    overflow: auto;
-    &&&.content {
-      padding: 9px;
-    }
-  }
+export const Content: any = styled.div`
+  padding: 40px 50px;
 `;
 
 export const ModalFlexWrapper = styled.div`
@@ -353,7 +336,7 @@ export const LabelPadding = styled(Label)<LabelPaddingProps>`
   &&& {
     font-size: 14px !important;
     margin-right: 8px !important;
-    background-color: ${({ color }) => (color ? color : '#ff047f')};
+    background-color: ${({ color }) => color || '#ff047f'};
     color: #ffffff;
   }
 `;
@@ -366,7 +349,7 @@ export const LabelPaddingLoader = styled(LabelPadding)<LabelPaddingProps>`
   &&& {
     position: relative;
     margin-bottom: -7px;
-    background-color: ${({ color }) => (color ? color : '#ff047f')};
+    background-color: ${({ color }) => color || '#ff047f'};
     color: #ffffff;
   }
 `;
@@ -396,6 +379,7 @@ export const SegmentPadded = styled(Segment)`
 export const CardCenteredText = styled.div`
   &&& {
     text-align: center;
+    padding: 0 10px;
   }
 `;
 
@@ -465,4 +449,13 @@ export const InvestHeader = styled.h3`
   font-size: 20px;
   line-height: 24px;
   color: #000;
+`;
+
+export const ButtonContainerProcessing = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
 `;

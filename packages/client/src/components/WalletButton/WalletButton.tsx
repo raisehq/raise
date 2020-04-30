@@ -10,8 +10,8 @@ import {
   WalletGreenText
 } from './style';
 
-const WalletConnectButton = ({ walletName, walletIcon, onClickAction, green }: any) =>
-  !green ? (
+const WalletConnectButton = ({ walletName, walletIcon, onClickAction, green }: any) => {
+  const comp = !green ? (
     <WalletButton onClick={onClickAction}>
       <WalletName>
         <WalletLogo src={walletIcon} />
@@ -28,4 +28,6 @@ const WalletConnectButton = ({ walletName, walletIcon, onClickAction, green }: a
     </WalletGreenButton>
   );
 
+  return comp;
+};
 export default WalletConnectButton;

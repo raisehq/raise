@@ -12,7 +12,7 @@ const TopMobileMenu = () => {
     store: {
       config: { menu },
       user: {
-        details: { accounttype_id, kyc_status, kyc_provider }
+        details: { accounttype_id: accountTypeId, kyc_status: kycStatus, kyc_provider: kycProvider }
       },
       auth: {
         login: { logged: isLogged }
@@ -26,31 +26,32 @@ const TopMobileMenu = () => {
   const [kycBCStatus, setKycBCStatus] = useState(false);
 
   useEffect(() => {
-    if (kyc_status === 3) {
+    if (kycStatus === 3) {
       setKycBCStatus(true);
     }
-  }, [kyc_status]);
+  }, [kycStatus]);
 
   const { visible, visibleMenu } = useMenuVisibility();
   const onKYC = () => history.push('/kyc');
   const logoPath = `${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`;
-  const enableKyc = visibleMenu && accounttype_id === 2;
+  const enableKyc = visibleMenu && accountTypeId === 2;
 
   const onClick = () => {
     showMenu(!menu);
   };
 
   return visible ? (
-    // If there is a parent here it will break the sticky css rule and menu will not get fixed once scroll
+    // If there is a parent here it will break the
+    // sticky css rule and menu will not get fixed once scroll
     <>
       {isLogged && (
         <KycTopBanner
-          kycStatus={kyc_status}
+          kycStatus={kycStatus}
           enabled={enableKyc}
           kycAction={onKYC}
           isMobile={isMobile}
           kycBCStatus={kycBCStatus}
-          kycProvider={kyc_provider}
+          kycProvider={kycProvider}
         />
       )}
       <MobileMenu>

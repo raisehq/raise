@@ -46,7 +46,11 @@ function reducer(state: BalancesState, { type, payload }: { type: Action; payloa
   switch (type) {
     case Action.START_LISTENING: {
       const { chainId, address, tokenAddress } = payload;
-      const uninitialized = !!!state?.[chainId]?.[address]?.[tokenAddress];
+
+      // prettier-ignore
+      const uninitialized = !(state?.[chainId]?.[address]?.[tokenAddress]);
+
+      // prettier-ignore
       return {
         ...state,
         [chainId]: {
@@ -55,12 +59,12 @@ function reducer(state: BalancesState, { type, payload }: { type: Action; payloa
             ...(state?.[chainId]?.[address] || null),
             [tokenAddress]: uninitialized
               ? {
-                  listenerCount: 1
-                }
+                listenerCount: 1
+              }
               : {
-                  ...state[chainId][address][tokenAddress],
-                  listenerCount: state[chainId][address][tokenAddress].listenerCount + 1
-                }
+                ...state[chainId][address][tokenAddress],
+                listenerCount: state[chainId][address][tokenAddress].listenerCount + 1
+              }
           }
         }
       };
@@ -103,11 +107,13 @@ function reducer(state: BalancesState, { type, payload }: { type: Action; payloa
     }
   }
 }
-
-const BalancesContext = createContext<[BalancesState, { [k: string]: (...args: any) => void }]>([
-  {},
-  {}
-]);
+// prettier-ignore
+const BalancesContext = createContext<[BalancesState,
+  // eslint-disable-next-line @typescript-eslint/type-annotation-spacing
+  { [k: string]:(...args: any) => void }]>([
+    {},
+    {}
+  ]);
 
 export function useBalancesContext() {
   return useContext(BalancesContext);
@@ -181,7 +187,6 @@ export function Updater() {
       };
     };
   }>({});
-
   // generic balances fetcher abstracting away difference between fetching ETH + token balances
   const fetchBalance = useCallback(
     (address: string, tokenAddress: string) =>
@@ -189,12 +194,8 @@ export function Updater() {
         ? getEtherBalance(address, library)
         : getTokenBalance(tokenAddress, address, library)
       )
-        .then(value => {
-          return value.toString();
-        })
-        .catch(() => {
-          return null;
-        }),
+        .then(value => value.toString())
+        .catch(() => null),
     [library]
   );
 
@@ -250,13 +251,12 @@ export function useAddressBalance(address: string, tokenAddress: string): BN {
 
   useEffect(() => {
     if (!tokenAddress) return undefined;
-    if (typeof chainId === 'number' && isAddress(address) && isAddress(tokenAddress)) {
+    if (typeof chainId === 'number' && isAddress(address) && tokenAddress) {
       startListening(chainId, address, tokenAddress);
-      return () => {
-        stopListening(chainId, address, tokenAddress);
-      };
     }
-    return;
+    return () => {
+      stopListening(chainId, address, tokenAddress);
+    };
   }, [chainId, address, tokenAddress, startListening, stopListening]);
 
   const value =

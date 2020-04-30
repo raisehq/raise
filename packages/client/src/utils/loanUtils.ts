@@ -1,9 +1,10 @@
 import { match, ANY } from 'pampy';
-import { fromDecimal } from '../utils/web3-utils';
 import cloneDeep from 'lodash/cloneDeep';
+import get from 'lodash/get';
+import { fromDecimal } from '../utils/web3-utils';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
-import { toChecksumAddress } from 'web3-utils';
+
 import { CoinsType } from '../commons/coins';
 
 const secondUnits = {
@@ -65,10 +66,12 @@ export const getDesiredTime = (seconds, type?) =>
 
 const defaultZero = numeral(0).format();
 
-export const calculatefromDecimal = (number, decimals = 18) =>
-  number
+export const calculatefromDecimal = (number, decimals = 18) => {
+  const num = number
     ? numeral(Number(fromDecimal(number.toString(), decimals))).format(numeralFormat)
     : defaultZero;
+  return num;
+};
 
 export const calculateTimes = auction => {
   try {
@@ -146,25 +149,22 @@ export const calculateInvestmentReturn = (auction, decimals = 18) => {
   const lenderRoiAmount = lenderAmount + lenderAmount * calculateROI(auction);
   return lenderRoiAmount;
 };
-
+/* eslint-disable */
 export const getCoinsFromContract = coinsMap => contract => {
   const coins: CoinsType[] =
     contract &&
-    coinsMap.map(coin =>
-      contract[coin.name]
-        ? {
-            address: contract[coin.name],
-            text: coin.name,
-            value: coin.name,
-            key: coin.key,
-            icon: coin.icon,
-            decimals: coin.decimals
-          }
-        : null
-    );
+    coinsMap.map(coin => ({
+      address: get(contract, coin.name, coin.name),
+      text: coin.name,
+      value: coin.name,
+      key: coin.key,
+      icon: coin.icon,
+      decimals: coin.decimals
+    }));
 
   return coins;
 };
+/* eslint-enable */
 
 export const getCoin = (coins: CoinsType[]) => (tokenAddress: string): CoinsType => {
   const defaultCoin = {
@@ -179,8 +179,7 @@ export const getCoin = (coins: CoinsType[]) => (tokenAddress: string): CoinsType
     return defaultCoin;
   }
   return (
-    coins.find(coin => toChecksumAddress(coin.address) === toChecksumAddress(tokenAddress)) ||
-    defaultCoin
+    coins.find(coin => coin?.address?.toLowerCase() === tokenAddress.toLowerCase()) || defaultCoin
   );
 };
 
@@ -260,12 +259,14 @@ export const getCalculations = (auction, decimals = 18) => {
   return newCalcs;
 };
 
+/* eslint-disable */
 export const getActiveAuctions = (auctions, states) => {
   const updatedAuctions = auctions ? auctions.map(auction => assumeStateMachine(auction)) : [];
   const activeAuctions = updatedAuctions
     ? updatedAuctions.filter(
-        auction => states.some(st => st === auction.state) || states.indexOf('all') > -1
+        (auction: any) => states.some(st => st === auction.state) || states.indexOf('all') > -1 // eslint-disable-next-line
       )
     : [];
   return activeAuctions;
 };
+/* eslint-enable */

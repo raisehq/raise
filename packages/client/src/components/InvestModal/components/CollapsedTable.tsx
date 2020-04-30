@@ -65,7 +65,7 @@ const InvestmentTooltip = styled(Popup)`
   text-align: center;
 `;
 
-export const TableItem: SFC<TableItemProps> = ({ title, content, latest, tooltip }) => (
+export const TableItem: SFC<TableItemProps> = ({ title, content, latest, tooltip }: any) => (
   <TableItemContainer latest={latest}>
     <TitleWithTooltip>
       {title}
@@ -86,7 +86,7 @@ const mapTable = latest => (props, index) => (
   <TableItem key={props.title} latest={latest === index} {...props} />
 );
 
-const CollapsedTable: SFC<CollapsedTableProps> = ({ items = [] }) => {
+const CollapsedTable: SFC<CollapsedTableProps> = ({ items = [] }: any) => {
   const [ref, { height }] = useMeasure();
   const defaultHeight = '0px';
   const [active, setActive] = useState<boolean>(false);

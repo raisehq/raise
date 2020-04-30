@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { CardCenteredText, CardTitle, RetryButton } from '../ClaimLoan.styles';
-import { Stages, ClaimLoanContext } from '../ClaimLoan';
+import ClaimLoanContext from '../ClaimLoan.context';
+import Stages from '../ClaimLoan.stages';
 
 const Processing = () => {
   const { setStage }: any = useContext(ClaimLoanContext);

@@ -58,7 +58,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
   match: {
     params: { slug }
   }
-}) => {
+}: any) => {
   const [borrower, setPayload]: [BorrowerProfileType, any] = useState(defaultBorrower);
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(true);

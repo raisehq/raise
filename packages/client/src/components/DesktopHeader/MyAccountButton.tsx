@@ -1,6 +1,6 @@
 import React from 'react';
-import { LinkContent, ButtonMyAccount } from './DesktopHeader.styles';
 import { Icon } from 'semantic-ui-react';
+import { LinkContent, ButtonMyAccount } from './DesktopHeader.styles';
 
 const MyAccountButton = () => (
   <LinkContent to="/account">

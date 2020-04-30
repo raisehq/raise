@@ -1,13 +1,22 @@
 import React, { useState, ReactChild } from 'react';
 import BN from 'bn.js';
-
+import styled from 'styled-components';
 import { useTransition, animated } from 'react-spring';
 import { CardBottom, InvestCardBody } from './InvestCardView.styles';
 import Card from '../Card';
 import AuctionAPR from '../Graphs/APRGraph';
-import { times } from '../../types';
+import { Times } from '../../types';
 import InvestInfo from './InvestInfo';
 import CardPlaceholder from '../CardPlaceholder';
+
+const BottomInfo = styled(Card.Grid)`
+  z-index: 10;
+  position: relative;
+  background: white;
+  padding: 20px 0px;
+  margin: 0;
+`;
+
 interface InvestProps {
   companyName: string;
   shortDescription: string;
@@ -17,7 +26,7 @@ interface InvestProps {
   currentAmount: number;
   totalAmount: number;
   maxAmount: string;
-  times: times;
+  times: Times;
   currentAPR: string;
   principal: string;
   investorCount: string;
@@ -61,14 +70,19 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
     from: () => ({
       transform: `translate3d(0,${(viewGraph - previousTab) * 100}%, 0)`,
       position: 'static',
+      zIndex: 3,
     }),
     enter: {
       transform: 'translate3d(0%,0,0)',
       position: 'static',
+      zIndex: 3,
     },
     leave: () => ({
       transform: `translate3d(0,${(previousTab - viewGraph) * 100}%,0)`,
       position: 'absolute',
+      right: 3,
+      top: 0,
+      zIndex: 3,
     }),
   });
 
@@ -88,12 +102,12 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
           position: 'relative',
         }}
       >
-        {transitions.map(({ item, key, props }) => (
-          <animated.div style={props} key={key}>
+        {transitions.map(({ item, key, props: pro }) => (
+          <animated.div style={pro} key={key}>
             {item.component}
           </animated.div>
         ))}
-        <Card.Grid alignCenter>
+        <BottomInfo alignCenter>
           <Card.Row notop small title="Current APR" content={currentAPR} />
           <Card.Vertical />
           <Card.Row notop small title="Investors" content={investorCount} />
@@ -104,9 +118,8 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
             title="Days Left"
             content={times.auctionTimeLeft}
           />
-
           <Card.Row small title="Loan Term" content={times.loanTerm} />
-        </Card.Grid>
+        </BottomInfo>
       </div>
       <CardBottom>{children}</CardBottom>
     </InvestCardBody>

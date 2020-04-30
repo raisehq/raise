@@ -21,7 +21,7 @@ import { checkUsername } from '../../services';
 
 const Register = () => {
   const { credentials, onSetStep, onSetCredentials, onSendCredentials, referralCode } = useContext<
-    IContext
+    IContext // eslint-disable-line
   >(AppContext);
   const [errors, setErrors] = useState<{
     password: boolean;
@@ -74,7 +74,7 @@ const Register = () => {
     );
   }, 800);
 
-  const header = !!referralCode ? 'True friends invited you to Raise' : 'Get started';
+  const header = referralCode ? 'True friends invited you to Raise' : 'Get started';
 
   const onSubmitSignUp = () => {
     recaptchaRef.current.reset();
@@ -151,9 +151,6 @@ const Register = () => {
         sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
         render="explicit"
         onChange={onCaptchaCallback}
-        onLoadCallback={() => {
-          console.log('- Capcha Loaded -');
-        }}
       />
       <OnboardButton
         disabled={
