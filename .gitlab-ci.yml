@@ -51,7 +51,18 @@ lint-front-review:
     when: always
     paths:
       - packages/client/build_review
-  resource_group: review
+
+build-components:
+  stage: build
+  script:
+    - yarn
+    - yarn run components:build:umd
+  only:
+    - master
+  artifacts:
+    when: always
+    paths:
+      - packages/components/dist
 
 build-onboarding:
   stage: build
@@ -100,6 +111,76 @@ lint-front:
     when: always
     paths:
       - packages/client/build
+
+deploy-components:
+  image: python:3.7-alpine
+  stage: deploy
+  variables:
+    LIB_BUCKET_NAME: lib.raise.it
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/components/dist components
+      ls -la components
+      aws s3 cp components/raisecomponents.umd.development.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp components/raisecomponents.umd.development.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp components/raisecomponents.umd.production.min.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp components/raisecomponents.umd.production.min.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+  only:
+    - master
+
+deploy-onboarding:
+  image: python:3.7-alpine
+  stage: deploy
+  variables:
+    LIB_BUCKET_NAME: lib.raise.it
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/libs/build onboarding
+      aws s3 sync --delete onboarding s3://${LIB_BUCKET_NAME}/onboarding/ --metadata-directive REPLACE --cache-control max-age=86400000
+  only:
+    - master
+
+deploy-int:
+  image: python:3.7-alpine
+  stage: deploy
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/client/build_int build_int
+      aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 cp s3://${BUCKET_NAME_INT}/ s3://${BUCKET_NAME_INT}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_INT" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
+      done
+  only:
+    - master
+
+deploy-canary:
+  image: python:3.7-alpine
+  stage: deploy
+  before_script:
+    - 'pip install awscli'
+  script:
+    - |
+      #!/bin/sh
+      mv packages/client/build canary
+      aws s3 sync --delete canary s3://${BUCKET_NAME_PROD}/canary --metadata-directive REPLACE --cache-control max-age=86400000
+      aws s3 cp s3://${BUCKET_NAME_PROD}/canary/ s3://${BUCKET_NAME_PROD}/canary/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
+        echo $dist
+        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
+      done
+  only:
+    - master
   resource_group: production
 
 cypress-e2e-review:
