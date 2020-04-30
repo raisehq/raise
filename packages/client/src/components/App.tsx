@@ -73,6 +73,7 @@ const App = () => {
         });
       });
       followTx.on('tx_finish', ({ id: tx, data: params }) => {
+        console.log('----> ', tx, params);
         if (!toast.isActive(tx)) {
           toast(<Toast data={params} tx={tx} state="success" />, {
             type: toast.TYPE.SUCCESS,
