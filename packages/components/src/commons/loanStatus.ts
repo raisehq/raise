@@ -1,4 +1,8 @@
-export const loanStatus = {
+type NumberMapString = {
+  [key: number]: string;
+};
+
+export const loanStatus: NumberMapString = {
   0: 'CREATED', // accepts bids until timelimit initial state
   1: 'EXPIRED', // not fully funded in timelimit
   2: 'ACTIVE', // fully funded, inside timelimit
@@ -19,7 +23,7 @@ export enum LoanState {
   FROZEN, // when admin unlocks withdrawals
 }
 
-export const loanStatusColors = {
+export const loanStatusColors: NumberMapString = {
   0: '#CC2029', // accepts bids until timelimit initial state
   1: '#5A5A5A', // not fully funded in timelimit
   2: '#3DC9FF', // fully funded, inside timelimit
