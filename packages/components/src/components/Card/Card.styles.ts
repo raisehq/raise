@@ -103,13 +103,23 @@ export const CardBorrowerTitle = styled.div`
 `;
 
 export const CardDescription = styled.div`
-  max-height: 76px;
-  height: 76px;
+  height: 130px;
   color: #5a5a5a;
   font-size: 14px;
   display: block;
   text-align: left;
   line-height: 21px;
+  position: relative;
+  overflow: hidden;
+  &:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: linear-gradient(transparent 100px, white);
+  }
 `;
 
 export const CardContent = styled.div<{
@@ -183,8 +193,7 @@ export const GraphTitle = styled.div`
 `;
 
 export const Header = styled.div`
-  margin-top: 20px;
-  margin-bottom: 12px;
+  margin: 12px 0px;
 `;
 
 export const HeaderTitle = styled.div`
@@ -194,7 +203,6 @@ export const HeaderTitle = styled.div`
   font-weight: lighter;
   line-height: 14px;
   margin-bottom: 12px;
-  margin-top: 20px;
 `;
 
 export const HeaderContent = styled.div<{ fontSize?: any }>`

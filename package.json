@@ -1,9 +1,15 @@
 {
   "name": "root",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/tsdx",
+      "**/tsdx/**"
+    ]
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap --use-workspaces",
     "dev": "yarn run build:deps && lerna run dev --stream --scope client",
@@ -19,6 +25,8 @@
     "dev:rollup": "lerna run --stream --scope '@raisehq/libs' start",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client",
+    "components:build:umd": "lerna run build:umd --stream --scope @raisehq/components",
+    "components:test": "lerna run test --stream --scope @raisehq/components",
     "prettier": "prettier --write **/*.jsx",
     "build:deps:fast": "lerna run --stream --scope @raisehq/components build:fast && lerna run --stream --scope @raisehq/onboarding build",
     "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
@@ -33,18 +41,18 @@
   "dependencies": {
     "@types/node": "^13.11.1",
     "axios": "^0.19.0",
+    "env-cmd": "^8.0.2",
     "lerna": "^3.16.4",
     "moment": "^2.24.0",
     "react-scripts": "3.4.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.85.0",
     "styled-components": "^5.0.0",
-    "typescript": "3.8.3",
-    "env-cmd": "^8.0.2"
+    "typescript": "3.8.3"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo 'Running pre-commit hook' && pretty-quick --staged && lerna run lint --stream"
+      "pre-commit": "echo 'Running pre-commit hook' && pretty-quick --staged && lerna run lint --stream && lerna run test --stream --scope @raisehq/components"
     }
   },
   "devDependencies": {
