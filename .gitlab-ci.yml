@@ -396,9 +396,9 @@ publish-components:
     - |
       #!/bin/sh
       if [ "${LOCAL_VERSION_COMPONENTS}" != "${PUBLISH_VERSION_COMPONENTS}" ]; then
-        yarn run bootstrap:deps
-        yarn run build:deps
+        yarn --lockfile
         cd ./packages/components/
+        yarn run build
         npm publish
       else
         echo "Package not updated, the latest version published is ${PUBLISH_VERSION_COMPONENTS} and the local verison is ${LOCAL_VERSION_COMPONENTS}."
@@ -422,7 +422,7 @@ publish-onboarding:
     - |
       #!/bin/sh
       if [ "${LOCAL_VERSION_ONBOARDING}" != "${PUBLISH_VERSION_ONBOARDING}" ]; then
-        yarn run bootstrap:deps
+        yarn --lockfile
         yarn run build:deps
         cd ./packages/onboarding/
         npm publish
