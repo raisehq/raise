@@ -299,7 +299,7 @@ components-unit-test:
     - apt-get update
     - apt-get install -y git python build-essential
     - yarn --pure-lockfile
-    - yarn run components:test
+    - yarn run components:test:ci
   artifacts:
     expire_in: '1 week'
     when: always
