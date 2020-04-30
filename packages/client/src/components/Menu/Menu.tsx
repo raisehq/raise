@@ -92,8 +92,22 @@ const Menu = () => {
     showMenu(false);
   };
 
+  const toInvesting = () => {
+    if (history.location.pathname !== '/investing') {
+      history.push('/investing');
+      scroll.scrollToTop();
+    }
+    showMenu(false);
+  };
+
   const Menus = {
     1: [
+      {
+        id: 'investing',
+        title: 'Invest with Raise',
+        link: 'investing',
+        onClick: toInvesting
+      },
       {
         id: 'borrower-my-activity',
         title: 'My activity',
@@ -108,6 +122,12 @@ const Menu = () => {
       }
     ],
     2: [
+      {
+        id: 'investing',
+        title: 'Invest with Raise',
+        link: 'investing',
+        onClick: toInvesting
+      },
       {
         id: 'lender-get-started',
         title: 'Get started',

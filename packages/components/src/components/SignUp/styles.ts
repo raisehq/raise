@@ -1,0 +1,191 @@
+import ReCAPTCHA from 'react-google-recaptcha';
+import styled from 'styled-components';
+import { Checkbox, Form, Icon, Input } from 'semantic-ui-react';
+import Button from '../commons/ButtonControl/Button';
+import { device } from '../../utils/breakpoints';
+
+interface IBackground {
+  background: string;
+}
+
+export const MyRecapcha = styled(ReCAPTCHA)`
+  .grecaptcha-badge {
+    visibility: hidden;
+    right: auto
+    left: 0
+    pointer-events: none
+  }
+`;
+
+export const SignUpContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  box-shadow: 0px 8px 25px rgba(60, 66, 81, 0.25);
+  border-radius: 4px;
+  background: #eb3f93;
+  width: 100%;
+  @media screen and ${device.laptop} {
+    width: 1128px;
+
+    height: 570px;
+  }
+`;
+export const SignUpInfo = styled.div<IBackground>`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-width: 552px;
+  ${({ background }) =>
+    background
+      ? `background-image: url(${background})`
+      : 'background: #EB3F93'};
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+export const SignUpForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 65px;
+  padding-bottom: 55px;
+  height: 100%;
+  background: #ffffff;
+  padding-left: 20px;
+  padding-right: 20px;
+  @media screen and ${device.laptop} {
+    padding-left: 91px;
+    padding-right: 85px;
+    max-width: 576px;
+  }
+`;
+
+export const SignUpInputContainer = styled.div`
+  position: relative;
+  margin-bottom: 32px;
+  width: 100%;
+
+  .ui.input {
+    width: 100%;
+  }
+
+  input {
+    height: 48px;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #dfe3e9;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #5a5a5a;
+    padding: 20px;
+    padding-left: 54px;
+    text-indent: 42px;
+  }
+
+  .icon {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    color: #cacbcd !important;
+  }
+  i.big.icon {
+    font-size: 20px;
+  }
+
+  .errorText {
+    color: #ed1c24;
+    position: absolute;
+    top: 55px;
+    left: 0;
+  }
+
+  .errorTextSelect {
+    color: #ed1c24;
+    position: absolute;
+    top: 60px;
+    left: 0;
+  }
+`;
+export const SignUpInput = styled(Input)``;
+
+export const InputCountries = styled(Form.Field)`
+  .icon {
+    display: none !important;
+  }
+
+  .search {
+    width: 100% !important;
+    padding: 16px !important;
+    border: 1px solid #dfe3e9;
+    box-sizing: border-box !important;
+    color: #5a5a5a !important;
+    text-indent: 0 !important;
+    padding-left: 47px !important;
+  }
+`;
+export const SignUpIcon = styled(Icon)``;
+
+export const CheckBoxText = styled.div`
+  font-size: 14px;
+  line-height: 21px;
+  color: #5a5a5a;
+  .disclaimerBTN {
+    border: none;
+    background: none;
+    padding: 0px 2px 0px 2px;
+    margin: 0;
+    color: #00a76f;
+    cursor: pointer;
+  }
+`;
+
+export const RaiseTerms = styled.div`
+  margin-bottom: 42px;
+
+  font-size: 14px;
+  line-height: 21px;
+  display: flex;
+`;
+
+export const RaiseUpdates = styled.div`
+  font-size: 14px;
+  line-height: 21px;
+  margin-bottom: 14px;
+  color: #5a5a5a;
+`;
+
+export const SignUpCheckbox = styled(Checkbox)`
+  &&& {
+    position: relative;
+    margin-right: 4px;
+    top: 3px;
+  }
+`;
+
+export const SignUpButton = styled(Button)``;
+
+export const SignUpText = styled.div`
+  color: #ffffff;
+  max-width: 307px;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 56px;
+  margin-top: 86px;
+  margin-bottom: 113px;
+
+  margin-left: 20px;
+  @media screen and ${device.laptop} {
+    margin-left: 97px;
+  }
+`;
+export const RaiseLogo = styled.img`
+  width: 132px;
+  height: 41px;
+  margin-top: 112px;
+  margin-left: 20px;
+  @media screen and ${device.laptop} {
+    margin-left: 97px;
+  }
+`;
