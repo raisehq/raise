@@ -52,9 +52,23 @@ const daiCoin = {
   decimals: 18,
 };
 
+const bulletMap = [
+  { state: 2, label: 'Active' },
+  { state: 3, label: 'Closed' },
+  { state: 1, label: 'Expired' },
+];
+
+const monthlyMap = [
+  { state: 2, label: 'Active' },
+  { state: 2, label: 'Claim' },
+  { state: 4, label: 'Closed' },
+  { state: 1, label: 'Expired' },
+];
+
 storiesOf('LoanActivity', module).add('InvestCard with auction data', () => {
-  const activity = [1, 2, 3, 4, 5].map(state => (
+  const activityMapper = ({ state, label }) => (
     <div style={{ padding: 10 }}>
+      <h4>{label}</h4>
       <LoanActivity
         auction={auctionFactory(state)}
         borrower={company}
@@ -62,6 +76,13 @@ storiesOf('LoanActivity', module).add('InvestCard with auction data', () => {
         key={state}
       />
     </div>
-  ));
-  return <FlexDiv>{activity}</FlexDiv>;
+  );
+  const activityBullet = bulletMap.map(activityMapper);
+  const activityMonthly = monthlyMap.map(activityMapper);
+  return (
+    <>
+      <FlexDiv>{activityBullet}</FlexDiv>);
+      <FlexDiv>{activityMonthly}</FlexDiv>);
+    </>
+  );
 });
