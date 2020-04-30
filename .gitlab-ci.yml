@@ -296,6 +296,7 @@ components-unit-test:
   image: buildkite/puppeteer
   stage: test
   script:
+    - apt-get install -y git
     - yarn --pure-lockfile
     - yarn run components:test
   artifacts:
