@@ -60,8 +60,8 @@ const App = () => {
 
   useEffect(() => {
     if (followTx) {
-      followTx.on('tx_start', (tx, params) => {
-        toast(<Toast params={params} tx={tx} state="pending" />, {
+      followTx.on('tx_start', ({ id: tx, data: params }) => {
+        toast(<Toast data={params} tx={tx} state="pending" />, {
           position: 'top-right',
           autoClose: false,
           hideProgressBar: false,
@@ -72,9 +72,9 @@ const App = () => {
           toastId: tx
         });
       });
-      followTx.on('tx_finish', (tx, params) => {
+      followTx.on('tx_finish', ({ id: tx, data: params }) => {
         if (!toast.isActive(tx)) {
-          toast(<Toast params={params} tx={tx} state="success" />, {
+          toast(<Toast data={params} tx={tx} state="success" />, {
             type: toast.TYPE.SUCCESS,
             autoClose: 5000,
             hideProgressBar: true,
@@ -85,7 +85,7 @@ const App = () => {
           });
         } else {
           toast.update(tx, {
-            render: <Toast params={params} tx={tx} state="success" />,
+            render: <Toast data={params} tx={tx} state="success" />,
             type: toast.TYPE.SUCCESS,
             autoClose: 5000,
             hideProgressBar: true,
@@ -95,9 +95,9 @@ const App = () => {
           });
         }
       });
-      followTx.on('tx_error', (tx, params) => {
+      followTx.on('tx_error', ({ id: tx, data: params }) => {
         if (!toast.isActive(tx)) {
-          toast(<Toast params={params} tx={tx} state="error" />, {
+          toast(<Toast data={params} tx={tx} state="error" />, {
             type: toast.TYPE.ERROR,
             autoClose: 5000,
             hideProgressBar: true,
@@ -108,7 +108,7 @@ const App = () => {
           });
         } else {
           toast.update(tx, {
-            render: <Toast params={params} tx={tx} state="error" />,
+            render: <Toast data={params} tx={tx} state="error" />,
             type: toast.TYPE.ERROR,
             autoClose: 5000,
             hideProgressBar: true,
