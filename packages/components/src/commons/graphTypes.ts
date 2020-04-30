@@ -78,7 +78,10 @@ export interface GraphLoan {
   createdTimestamp: string;
   tokenAddress: string;
 }
-
+export interface Auction extends GraphLoan {
+  withdrawn?: boolean;
+  lenderAmount?: string;
+}
 export interface LoanDispatcher {
   id: string;
   address: string;
