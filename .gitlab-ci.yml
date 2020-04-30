@@ -296,6 +296,7 @@ components-unit-test:
   image: buildkite/puppeteer
   stage: test
   script:
+    - apt-get update
     - apt-get install -y git
     - yarn --pure-lockfile
     - yarn run components:test
@@ -306,7 +307,6 @@ components-unit-test:
       - packages/components/test/__image_snapshots__
   only:
     - merge_requests
-    - latest
 
 deploy-prod:
   image: python:3.7-alpine
