@@ -30,9 +30,11 @@ export const GetStartedBloomHeader = styled.div`
 
 export const GetStartedBloomTitle = styled.div`
   text-align: center;
-  font-size: 26px;
-  line-height: 36px;
+  font-family: Lato;
+  font-style: normal;
   font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
   color: #3c4251;
   @media (max-width: ${size.mobileL}) {
     font-size: 25px;
@@ -48,10 +50,7 @@ export const GetStartedBloomSubtitle = styled.div`
   color: #6067f1;
   font-size: 18px;
   line-height: 22px;
-
-  span {
-    padding: 10px;
-  }
+  padding-top: 8px;
 
   @media (max-width: ${size.mobileL}) {
     padding-top: 0;
@@ -70,13 +69,10 @@ export const GetStartedBloomDescription = styled.div`
 
 export const GetStartedBloomWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  flex: 0 1 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-height: 400px;
-  padding-top: 5%;
 
   @media (max-width: ${size.mobileL}) {
     flex-wrap: wrap;
@@ -184,4 +180,40 @@ export const LinkToSumSub = styled.button`
   &:hover {
     color: #fff;
   }
+`;
+
+export const SumsubWrapper = styled.a`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+export const VerifyWithSumsub = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 21px;
+  /* identical to box height, or 150% */
+
+  color: #5c6bf2;
+
+  span {
+    color: #213093;
+    padding-right: 10px;
+  }
+`;
+
+export const SubTitle = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #8a8e97;
 `;

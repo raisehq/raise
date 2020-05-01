@@ -8,10 +8,8 @@ import {
   HorizontalDivider
 } from './Kyc.styles';
 import OnboardingProgressBar from '../OnboardingProgressBar';
-
 import { useAppContext } from '../../contexts/AppContext';
 import InformationContainer from './InformationSection';
-
 import KycExtraInformation from './KycExtraInformation';
 
 const KycSelectMethod = () => {
@@ -20,7 +18,6 @@ const KycSelectMethod = () => {
   return (
     <KycWrapper>
       <OnboardingProgressBar step={3} isMobile={isMobile} />
-
       <KycContainer>
         <KycTitleWrapper>
           <CardTitle>It&apos;s time to verify your account</CardTitle>

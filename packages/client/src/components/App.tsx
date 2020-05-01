@@ -163,7 +163,7 @@ const App = () => {
                 />
                 <Web3Layout
                   marketplace
-                  layout={SimpleLayout}
+                  layout={KycLayout}
                   exact
                   path="/kyc-sumsub"
                   component={Kyc}
@@ -171,7 +171,7 @@ const App = () => {
                 />
                 <Web3Layout
                   marketplace
-                  layout={SimpleLayout}
+                  layout={KycLayout}
                   exact
                   path="/kyc-bloom"
                   component={KycWithBloom}

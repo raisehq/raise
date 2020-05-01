@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Box, IconBox, TextBox, BoxContainer } from './styles';
+import VerifyAccount from '../VerifyAccount';
 
 const KycExtraInformation = () => (
   <Container>
@@ -21,6 +22,7 @@ const KycExtraInformation = () => (
         <TextBox>This is a measure to prevent criminal activity, such as money laundry. </TextBox>
       </Box>
     </BoxContainer>
+    <VerifyAccount />
   </Container>
 );
 

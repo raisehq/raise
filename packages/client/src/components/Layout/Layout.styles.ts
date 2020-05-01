@@ -192,6 +192,7 @@ export const ContentBorrower = styled.div`
 
 export const ContentKyc = styled.div`
   background-color: white;
+  padding-top: 50px;
 
   @media ${maxDevice.laptop} {
     width: 100%;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Accordion, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { Title, Container } from './styles';
+import { Title, Container, Wrapper } from './styles';
 import InstructionStep from './InstructionStep/index';
 import { requestPage } from '../../../helpers/butter';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
@@ -28,21 +28,23 @@ const InformationSection = ({ title, slug }) => {
 
   return (
     <Container>
-      <Accordion>
-        <Title active={activeIndex === 0} index={0} onClick={handleClick}>
-          <Icon name={activeIndex ? 'plus' : 'minus'} />
-          <span>{title}</span>
-        </Title>
+      <Wrapper>
+        <Accordion>
+          <Title active={activeIndex === 0} index={0} onClick={handleClick}>
+            <Icon name={activeIndex ? 'plus' : 'minus'} />
+            <span>{title}</span>
+          </Title>
 
-        {steps.map((item: any, index) => (
-          <InstructionStep
-            key={index}
-            activeIndex={activeIndex === 0}
-            number={item.step}
-            text={item.step_description}
-          />
-        ))}
-      </Accordion>
+          {steps.map((item: any, index) => (
+            <InstructionStep
+              key={index}
+              activeIndex={activeIndex === 0}
+              number={item.step}
+              text={item.step_description}
+            />
+          ))}
+        </Accordion>
+      </Wrapper>
     </Container>
   );
 };

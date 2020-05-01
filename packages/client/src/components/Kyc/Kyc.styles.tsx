@@ -13,6 +13,10 @@ export const KYCWrapper = styled.div`
   width: 100%;
   padding: 0 20px 25px 20px;
   box-sizing: border-box;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const KYCHolder = styled.div`
@@ -114,7 +118,7 @@ export const KycContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   min-height: 300px;
-  width: 100%;
+  padding: 80px 0;
 `;
 
 export const KycTitleWrapper = styled.div`
@@ -123,6 +127,7 @@ export const KycTitleWrapper = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 520px;
+  padding: 10px 0;
 `;
 
 export const CardTitle = styled.div`
@@ -294,16 +299,6 @@ export const GetStartedSumSubtitle = styled.div`
   }
 `;
 
-export const GetStartedSumDescription = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  line-height: 21px;
-  max-width: 620px;
-`;
-
 export const InformationSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -318,5 +313,40 @@ export const HorizontalDivider = styled(Divider)`
     border-bottom: 1px solid #f9bc2e;
     padding: 0;
     margin: 0;
+  }
+`;
+
+export const BloomWrapper = styled.a`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+export const SubTitle = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #8a8e97;
+`;
+
+export const VerifyWithBloom = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 21px;
+  /* identical to box height, or 150% */
+
+  color: #5c6bf2;
+
+  span {
+    padding-right: 10px;
   }
 `;
