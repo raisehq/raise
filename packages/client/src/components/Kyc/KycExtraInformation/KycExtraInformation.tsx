@@ -7,19 +7,22 @@ const KycExtraInformation = () => (
     <BoxContainer>
       <Box>
         <IconBox name="fast forward" size="big" />
-        <TextBox>Your information is secured, Raise don’t store any personal data. </TextBox>
+        <TextBox>
+          Your personal information will be safe and validated by a KYC provider. Raise doesn’t
+          store your data.
+        </TextBox>
       </Box>
       <Box>
         <IconBox name="address card" size="big" />
-        <TextBox>Be prepared, we will need a photo of your ID and a selfie with it. </TextBox>
+        <TextBox>You will only be required to upload an ID document and selfie.</TextBox>
       </Box>
       <Box>
         <IconBox name="fast forward" size="big" />
-        <TextBox>Super fast and easy. You will only need 5 minutes to complete. </TextBox>
+        <TextBox>This process is fast and easy, it only takes less than five minute. </TextBox>
       </Box>
       <Box>
         <IconBox name="shield alternate" size="big" />
-        <TextBox>This is a measure to prevent criminal activity, such as money laundry. </TextBox>
+        <TextBox>Verifying your identity prevents criminal activity such as money laundry.</TextBox>
       </Box>
     </BoxContainer>
     <VerifyAccount />

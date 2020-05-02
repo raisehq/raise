@@ -322,6 +322,7 @@ export const BloomWrapper = styled.a`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding-bottom: 50px;
 `;
 
 export const SubTitle = styled.div`
@@ -348,5 +349,21 @@ export const VerifyWithBloom = styled.div`
 
   span {
     padding-right: 10px;
+  }
+`;
+
+export const ContactUs = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #8a8e97;
+
+  padding: 28px 0 50px 0;
+
+  span {
+    color: #00da9e;
   }
 `;

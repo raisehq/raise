@@ -5,7 +5,8 @@ import {
   KycContainer,
   KycTitleWrapper,
   InformationSection,
-  HorizontalDivider
+  HorizontalDivider,
+  ContactUs
 } from './Kyc.styles';
 import OnboardingProgressBar from '../OnboardingProgressBar';
 import { useAppContext } from '../../contexts/AppContext';
@@ -29,6 +30,11 @@ const KycSelectMethod = () => {
         <HorizontalDivider />
         <InformationContainer title="How to verify with Bloom" slug="kyc-bloom-instructions" />
       </InformationSection>
+
+      <ContactUs>
+        If you are having problems to verify your ID, please contact us through our chat or send an
+        email to <span>help@raise.it</span>
+      </ContactUs>
     </KycWrapper>
   );
 };

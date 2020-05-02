@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Image } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import {
   KYCWrapper,
-  OnGoBackButton,
   GetStartedSumTitle,
   GetStartedSumSubtitle,
   InformationSection,
   HorizontalDivider,
   BloomWrapper,
   SubTitle,
-  VerifyWithBloom
+  VerifyWithBloom,
+  ContactUs
 } from './Kyc.styles';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
@@ -138,16 +138,19 @@ const KYC = () => {
       </BloomWrapper>
 
       <InformationSection>
-        <InformationContainer title="How to verify with Sum&Sub" slug="kyc-sumsub-instructions" />
+        <InformationContainer
+          title="How to verify with Sum&Sub"
+          slug="kyc-sumsub-instructions"
+          insideMethod={true}
+        />
         <HorizontalDivider />
         <InformationContainer title="How to verify with Bloom" slug="kyc-bloom-instructions" />
       </InformationSection>
 
-      <OnGoBackButton>
-        <Button basic color="black" onClick={() => history.push('/kyc')}>
-          Go back
-        </Button>
-      </OnGoBackButton>
+      <ContactUs>
+        If you are having problems to verify your ID, please contact us through our chat or send an
+        email to <span>help@raise.it</span>
+      </ContactUs>
     </KYCWrapper>
   );
 };

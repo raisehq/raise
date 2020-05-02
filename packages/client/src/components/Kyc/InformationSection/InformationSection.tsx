@@ -6,8 +6,8 @@ import InstructionStep from './InstructionStep/index';
 import { requestPage } from '../../../helpers/butter';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
 
-const InformationSection = ({ title, slug }) => {
-  const [activeIndex, setActiveIndex] = useState(-1);
+const InformationSection = ({ title, slug, insideMethod = false }) => {
+  const [activeIndex, setActiveIndex] = useState(insideMethod ? 0 : -1);
   const [steps, setSteps] = useState([]);
 
   useAsyncEffect(async () => {

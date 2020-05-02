@@ -188,6 +188,7 @@ export const SumsubWrapper = styled.a`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding-bottom: 50px;
 `;
 
 export const VerifyWithSumsub = styled.div`
