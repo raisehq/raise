@@ -32,7 +32,9 @@ const InformationSection = ({ title, slug, insideMethod = false }) => {
         <Accordion>
           <Title active={activeIndex === 0} index={0} onClick={handleClick}>
             <Icon name={activeIndex ? 'plus' : 'minus'} />
-            <span>{title}</span>
+            <div>
+              <span>{title}</span>
+            </div>
           </Title>
 
           {steps.map((item: any, index) => (

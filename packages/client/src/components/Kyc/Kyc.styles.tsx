@@ -11,7 +11,7 @@ const size = {
 
 export const KYCWrapper = styled.div`
   width: 100%;
-  padding: 0 20px 25px 20px;
+  padding: 0 0 25px 0;
   box-sizing: border-box;
   margin: auto;
   display: flex;

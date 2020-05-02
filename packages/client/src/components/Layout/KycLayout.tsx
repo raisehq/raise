@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Footer from '../Footer';
 import { HeroLayout, ContentKyc, Wrapper } from './Layout.styles';
 
 interface IDefaultProps {
@@ -20,7 +19,6 @@ const KycLayout: React.SFC<IDefaultProps> = ({ component: Component, ...rest }: 
             <Component {...rest} />
           </ContentKyc>
         </Wrapper>
-        <Footer />
       </HeroLayout>
     )}
   />
