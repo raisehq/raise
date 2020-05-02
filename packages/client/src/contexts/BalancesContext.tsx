@@ -46,8 +46,10 @@ function reducer(state: BalancesState, { type, payload }: { type: Action; payloa
   switch (type) {
     case Action.START_LISTENING: {
       const { chainId, address, tokenAddress } = payload;
-      // eslint-disable-next-line
-      const uninitialized = !!!state?.[chainId]?.[address]?.[tokenAddress];
+
+      // prettier-ignore
+      const uninitialized = !(state?.[chainId]?.[address]?.[tokenAddress]);
+
       // prettier-ignore
       return {
         ...state,
@@ -249,13 +251,11 @@ export function useAddressBalance(address: string, tokenAddress: string): BN {
 
   useEffect(() => {
     if (!tokenAddress) return undefined;
-    if (typeof chainId === 'number' && isAddress(address) && isAddress(tokenAddress)) {
+    if (typeof chainId === 'number' && isAddress(address) && tokenAddress) {
       startListening(chainId, address, tokenAddress);
     }
     return () => {
-      if (typeof chainId === 'number' && isAddress(address) && isAddress(tokenAddress)) {
-        stopListening(chainId, address, tokenAddress);
-      }
+      stopListening(chainId, address, tokenAddress);
     };
   }, [chainId, address, tokenAddress, startListening, stopListening]);
 

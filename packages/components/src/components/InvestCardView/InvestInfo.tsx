@@ -61,7 +61,7 @@ const InvestInfo = (props: InvestInfoProps) => {
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
           <Card.Description>{shortDescription}</Card.Description>
         </a>
-        <Card.Grid spaceBetween alignBottom nobottom>
+        <Card.Grid notop spaceBetween alignBottom nobottom>
           <Card.Header
             title="Raised so far"
             amount={<Amount principal={principal} coinIcon={coinIcon} />}
