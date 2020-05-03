@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Accordion } from 'semantic-ui-react';
 import { size } from '../../../commons/breakpoints';
+
 interface TitleProps {
   active: boolean;
 }

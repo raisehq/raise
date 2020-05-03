@@ -1,9 +1,9 @@
 import React from 'react';
-import { BloomWrapper, Container, Title, SubTitle, VerifyWithBloom } from './styles';
 import { Image } from 'semantic-ui-react';
 import { ButtonLink } from '@raisehq/components';
 import useGoogleTagManager, { TMEvents } from '../../../hooks/useGoogleTagManager';
 import useRouter from '../../../hooks/useRouter';
+import { BloomWrapper, Container, Title, SubTitle, VerifyWithBloom } from './styles';
 
 const VerifyAccount = () => {
   const { history }: any = useRouter();

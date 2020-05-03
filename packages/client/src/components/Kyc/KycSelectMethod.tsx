@@ -33,7 +33,8 @@ const KycSelectMethod = () => {
 
       <ContactUs>
         If you are having problems to verify your ID, please contact us through our chat or send an
-        email to <span>help@raise.it</span>
+        email to
+        <span>&nbsp;help@raise.it</span>
       </ContactUs>
     </KycWrapper>
   );

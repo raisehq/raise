@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
-//import { isMobile } from 'react-device-detect';
 import { Image } from 'semantic-ui-react';
 import {
   ChooseMethodWrapper,
@@ -16,7 +15,6 @@ import {
 } from './styles';
 import { InformationSection, HorizontalDivider, ContactUs } from '../Kyc.styles';
 import InformationContainer from '../InformationSection';
-//import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import useRouter from '../../../hooks/useRouter';
 import { URL } from '../../../services/kyc';
@@ -153,9 +151,9 @@ const KycWithBloom = ({ onBack }: any) => {
         </GetStartedBloomInstructionsSection>
 
         <SumsubWrapper onClick={() => providerKYC('sumsub')}>
-          <SubTitle>Don't have a Bloom account?</SubTitle>
+          <SubTitle>Don&apos;t have a Bloom account?</SubTitle>
           <VerifyWithSumsub>
-            <span>Verify with </span>
+            <span>Verify with&nbsp;</span>
             <Image
               src={`${process.env.REACT_APP_HOST_IMAGES}/images/sumsub_logo_417x76.png`}
               size="small"
@@ -167,14 +165,15 @@ const KycWithBloom = ({ onBack }: any) => {
         <InformationContainer
           title="How to verify with Bloom"
           slug="kyc-bloom-instructions"
-          insideMethod={true}
+          insideMethod
         />
         <HorizontalDivider />
         <InformationContainer title="How to verify with Sum&Sub" slug="kyc-sumsub-instructions" />
       </InformationSection>
       <ContactUs>
         If you are having problems to verify your ID, please contact us through our chat or send an
-        email to <span>help@raise.it</span>
+        email to
+        <span>&nbsp;help@raise.it</span>
       </ContactUs>
     </ChooseMethodWrapper>
   );

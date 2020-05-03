@@ -8,12 +8,12 @@ import {
   BloomHelpRaise
 } from './styles';
 
-const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful, history }: any) => {
+const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful }: any) => {
   const helpWithBloomMessage = (
     <HelpMessage>
       <FollowingStepsTitle>We detected some inactivity, is everything OK?</FollowingStepsTitle>
       <span className="bloomInstructions">
-        Make sure you have uploaded your ID and your address in Bloom.{' '}
+        Make sure you have uploaded your ID and your address in Bloom.
       </span>
       <span className="bloomInstructions">
         If you need help use our chat or send an email to
@@ -27,7 +27,6 @@ const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, kycUnsuccessful, histor
         <Icon
           name="close"
           onClick={() => {
-
             setIsOpenHelp(false);
             setIsScreenIdle(true);
           }}

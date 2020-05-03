@@ -53,7 +53,12 @@ const InformationSection = ({ title, slug, insideMethod = false }) => {
 
 InformationSection.propTypes = {
   title: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired
+  slug: PropTypes.string.isRequired,
+  insideMethod: PropTypes.bool
+};
+
+InformationSection.defaultProps = {
+  insideMethod: false
 };
 
 export default InformationSection;
