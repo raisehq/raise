@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
-import { isMobile } from 'react-device-detect';
+//import { isMobile } from 'react-device-detect';
 import { Image } from 'semantic-ui-react';
 import {
   ChooseMethodWrapper,
@@ -16,7 +16,7 @@ import {
 } from './styles';
 import { InformationSection, HorizontalDivider, ContactUs } from '../Kyc.styles';
 import InformationContainer from '../InformationSection';
-import FollowSteps from './FollowSteps';
+//import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import useRouter from '../../../hooks/useRouter';
 import { URL } from '../../../services/kyc';
@@ -140,20 +140,18 @@ const KycWithBloom = ({ onBack }: any) => {
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>
-        {false && (
-          <GetStartedBloomInstructionsSection>
-            {isOpenHelp || kycUnsuccessful ? (
-              <HelpWithBloom
-                setIsOpenHelp={setIsOpenHelp}
-                kycUnsuccessful={kycUnsuccessful}
-                setIsScreenIdle={setIsScreenIdle}
-                history={history}
-              />
-            ) : (
-              <FollowSteps isMobile={isMobile} />
-            )}
-          </GetStartedBloomInstructionsSection>
-        )}
+
+        <GetStartedBloomInstructionsSection>
+          {isOpenHelp && (
+            <HelpWithBloom
+              setIsOpenHelp={setIsOpenHelp}
+              kycUnsuccessful={kycUnsuccessful}
+              setIsScreenIdle={setIsScreenIdle}
+              history={history}
+            />
+          )}
+        </GetStartedBloomInstructionsSection>
+
         <SumsubWrapper onClick={() => providerKYC('sumsub')}>
           <SubTitle>Don't have a Bloom account?</SubTitle>
           <VerifyWithSumsub>

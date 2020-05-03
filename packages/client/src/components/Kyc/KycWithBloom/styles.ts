@@ -127,31 +127,40 @@ export const FollowingStepsTitle = styled.div`
 `;
 
 export const HelpWithBloomWrapper = styled.div<KycStatus>`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 7%;
-  justify-content: center;
-  align-items: center;
-  max-width: 250px;
-  min-height: 250px;
-  text-align: center;
-  box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
-  line-height: 21px;
-  background-color: ${props => (props.kycUnsuccessful ? '#6067f1' : 'white')};
-  color: ${props => (props.kycUnsuccessful ? 'white' : 'inherit')};
+  position: absolute;
+  top: 500px;
+  right: 37%;
+  min-height: 107px;
+
+  background: #ffffff;
+
+  box-shadow: 0px 8px 25px rgba(60, 66, 81, 0.25);
+  border-radius: 4px;
+  padding: 10px;
+
+  .bloomInstructions {
+    display: block;
+  }
+
   @media (max-width: ${size.mobileL}) {
     width: 100%;
     max-width: none;
     align-items: stretch;
+    right: 0;
+    top: 315px;
+    z-index: 1000;
   }
 `;
 
 export const IconWrapper = styled.div`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 13px;
+  right: 2px;
   align-self: flex-end;
+  z-index: 100;
+  cursor: pointer;
+  color: #C5C7CB;
+  font-size: 16px;
 `;
 
 export const BloomParagraph = styled.p`
@@ -167,7 +176,7 @@ export const BloomHelpRaise = styled.span`
 `;
 
 export const HelpMessage = styled.div`
-  margin-top: 5%;
+  margin-top: 0;
 `;
 
 export const LinkToSumSub = styled.button`
