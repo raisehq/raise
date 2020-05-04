@@ -143,11 +143,11 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
               DAIProxy.methods
                 .swapEthAndFund(loan.id, toDecimal(investment.toString(), loanCoin?.decimals))
                 .send({ value: inputTokenAmount.toString(), from: walletAccount }),
-              'investLoan',
               {
                 id: 'investLoan',
                 vars: [investment, coin.value]
-              }
+              },
+              'investLoan'
             );
             tagManager.sendEvent(TMEvents.Submit, 'invest_success');
             setStage(ui.Success);
@@ -162,11 +162,11 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
                 toDecimal(investment.toString(), loanCoin?.decimals)
               )
               .send({ from: walletAccount }),
-            'investLoan',
             {
               id: 'investLoan',
               vars: [investment, coin.value]
-            }
+            },
+            'investLoan'
           );
           tagManager.sendEvent(TMEvents.Submit, 'invest_success');
           setStage(ui.Success);
@@ -181,11 +181,11 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
             DAIProxy.methods
               .fund(loan.id, toDecimal(investment.toString(), inputCoin.decimals))
               .send({ from: walletAccount }),
-            'investLoan',
             {
               id: 'investLoan',
               vars: [investment, coin.value]
-            }
+            },
+            'investLoan'
           );
           tagManager.sendEvent(TMEvents.Submit, 'invest_success');
 

@@ -58,7 +58,7 @@ const Processing = () => {
   const { approved, error, loan }: any = useContext(RepayLoanContext);
   const coin = useGetCoin(loan);
 
-  const { borrowerDebt }: any = getCalculations(loan, coin.decimals);
+  const { borrowerDebt }: any = useMemo(() => getCalculations(loan, coin.decimals), []);
   const ApprovalIcon = useMemo(() => stepNumber(1, approved, error), [approved, error]);
   const RepayIcon = useMemo(() => stepNumber(2, approved, error), [approved, error]);
   return (
