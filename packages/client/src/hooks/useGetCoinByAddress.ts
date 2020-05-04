@@ -19,6 +19,17 @@ const useGetCoinByAddress = (tokenAddress): CoinsType => {
   const desiredNetwork = currentNetworkId > 0 ? currentNetworkId : networkId;
   const contract = get(contracts, `address.${desiredNetwork}`);
   const coins: CoinsType[] = getCoinsFromContract(COINS)(contract);
+  // return default object on case tokenAddress is undefined
+  if (!tokenAddress) {
+    return {
+      address: '',
+      text: '',
+      value: '0.00',
+      key: '',
+      icon: '',
+      decimals: 16
+    };
+  }
   const coin = getCoin(coins)(tokenAddress);
   return coin;
 };

@@ -250,10 +250,10 @@ export function useAddressBalance(address: string, tokenAddress: string): BN {
   const [state, { startListening, stopListening }] = useBalancesContext();
 
   useEffect(() => {
-    if (!tokenAddress) return undefined;
     if (typeof chainId === 'number' && isAddress(address) && tokenAddress) {
       startListening(chainId, address, tokenAddress);
     }
+
     return () => {
       stopListening(chainId, address, tokenAddress);
     };
