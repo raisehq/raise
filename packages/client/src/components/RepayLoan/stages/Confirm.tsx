@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Header, BorrowerButton } from '../../InvestModal/InvestModal.styles';
 import { RepayLoanContext, Stages } from '../RepayLoan.context';
 import { getCalculations } from '../../../utils/loanUtils';
@@ -31,9 +31,9 @@ const Confirm = () => {
     setStage(Stages.Processing);
   };
   const coin = useGetCoin(loan);
-  const { principal, borrowerDebt, totalInterest, totalInterestAmount }: any = getCalculations(
-    loan,
-    coin.decimals
+  const { principal, borrowerDebt, totalInterest, totalInterestAmount }: any = useMemo(
+    () => getCalculations(loan, coin.decimals),
+    []
   );
 
   return (
