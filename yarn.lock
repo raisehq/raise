@@ -9712,10 +9712,10 @@ follow-redirects@^1.0.0:
   dependencies:
     debug "^3.0.0"
 
-followtx@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/followtx/-/followtx-0.2.0.tgz#a2dce48fb0a766b96b9c9a5d6a66afc5e46638cd"
-  integrity sha512-r8uJUWrHKbn6Ob/T/roHUDgM3rwSSOcpwlLLb/Gozp0GNNGgYR4DbjVs7xNgVAWezWiPfVXAg9aFxFm4RrJj/g==
+followtx@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/followtx/-/followtx-0.4.1.tgz#0378f7cd36ad5864ad86618b2dc0b9bdef4e9c40"
+  integrity sha512-lwUZwDSHKYpBfT9nWmFgss9f5Upxd0LdN3+E6cKHWl8JejCzFg6DgkN3IEYcxQuqVIOdokWVl7NhK6/v0Z8OZA==
 
 for-each@~0.3.3:
   version "0.3.3"

@@ -8,39 +8,36 @@ const format = (text: string, params: any) => {
     return text;
   }
   let result = text;
-  for (let i = 0; i < params.length; i + 1) {
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < params.length; i++) {
     result = result.replace(new RegExp(`\\{${i}\\}`, 'g'), params[i]);
   }
-
   return result;
 };
 
-const Toast = ({ params, tx, state }: any) => {
+const getText = (params, state) => {
+  if (!params) {
+    return 'Processing transaction';
+  }
+  const { id, vars }: any = params;
+  const unparsedText = toastMessages[state][id];
+  const parsedText = format(unparsedText, vars);
+  return parsedText;
+};
+const createLink = (transaction, network) =>
+  `https://${network && network !== 'mainnet' ? `${network}.` : ''}etherscan.io/tx/${transaction}`;
+
+const Toast = ({ data, tx, state }: any) => {
   const {
     store: {
       config: { network }
     }
   }: any = useRootContext();
 
-  const getText = () => {
-    if (!params) {
-      return 'Processing transaction';
-    }
-    const { id, vars }: any = params;
-    const unparsedText = toastMessages[state][id];
-    const parsedText = format(unparsedText, vars);
-    return parsedText;
-  };
-
-  const createLink = transaction =>
-    `https://${
-      network && network !== 'mainnet' ? `${network}.` : ''
-    }etherscan.io/tx/${transaction}`;
-
   return (
     <ToastCustomContainer>
-      <ToastText>{getText()}</ToastText>
-      <TxLink href={createLink(tx)} target="_blank">
+      <ToastText>{getText(data, state)}</ToastText>
+      <TxLink href={createLink(tx, network)} target="_blank">
         View on Etherscan
       </TxLink>
     </ToastCustomContainer>
