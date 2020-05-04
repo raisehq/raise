@@ -95,7 +95,6 @@ export const GetStartedBloomInstructionsSection = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 1 100%;
-  padding: 5% 0;
 
   @media (max-width: ${size.mobileL}) {
     align-items: center;
@@ -111,9 +110,10 @@ export const InstructionsWrapper = styled.div`
   padding-top: 10%;
   max-width: 200px;
   line-height: 21px;
+
   @media (max-width: ${size.mobileL}) {
     padding: 0 10% 10% 10%;
-    width: 100%;
+
     max-width: none;
   }
 `;
@@ -144,9 +144,10 @@ export const HelpWithBloomWrapper = styled.div<KycStatus>`
 
   @media (max-width: ${size.mobileL}) {
     width: 100%;
-    max-width: none;
+
     align-items: stretch;
-    right: 0;
+    max-width: 350px;
+    right: 3%;
     top: 315px;
     z-index: 1000;
   }
@@ -159,7 +160,7 @@ export const IconWrapper = styled.div`
   align-self: flex-end;
   z-index: 100;
   cursor: pointer;
-  color: #C5C7CB;
+  color: #c5c7cb;
   font-size: 16px;
 `;
 
