@@ -37,7 +37,6 @@ export const IconBox = styled(Icon)`
 export const ImageBox = styled(Image)`
   width: 24px;
   height: 24px;
-
   color: #f38cbe;
 `;
 
@@ -49,4 +48,5 @@ export const TextBox = styled.div`
   line-height: 24px;
   color: #8a8e97;
   width: 192px;
+  padding-top: 10px;
 `;

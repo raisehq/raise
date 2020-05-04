@@ -118,7 +118,7 @@ export const KycContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   min-height: 300px;
-  padding: 80px 0;
+  padding: 20px 0 80px 0;
 `;
 
 export const KycTitleWrapper = styled.div`
