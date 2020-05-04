@@ -1,28 +1,34 @@
 import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
+import { device } from '../../utils/breakpoints';
 
 export const FooterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
   background: #ecedee;
+  width: 100%;
 `;
 
 export const FooterInformationContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  margin-top: 46px;
+  margin-top: 96px;
   flex-wrap: wrap;
+  justify-content: space-around;
+  margin: auto;
+  @media screen and ${device.laptop} {
+    width: 100%;
+    max-width: 1172px;
+    justify-content: space-between;
+  }
 `;
 
 export const FooterCopyRightContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 40px;
-  margin-bottom: 44px;
+  margin: 40px;
 `;
 
 export const FooterLogo = styled.div`
@@ -40,13 +46,15 @@ export const FooterMenu = styled.div`
 export const SubMenu = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: center;
   margin: 0 10px 0 10px;
   width: 120px;
   font-size: 16px;
   line-height: 24px;
   flex-wrap: wrap;
   color: #8a8e97;
+  @media screen and ${device.laptop} {
+    text-align: left;
+  }
 `;
 
 export const FooterSocial = styled.div`

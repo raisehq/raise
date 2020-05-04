@@ -71,35 +71,52 @@ const DesktopHeader = () => {
             <HeaderLogo onClick={() => history.push('/')}>
               <img src={`${theme.resources}/images/logo.svg`} alt="Raise.it" />
             </HeaderLogo>
-            {isLogged && visibleMenu && (
+            {visibleMenu && (
               <HeaderMenu>
-                {user.details.accounttype_id === 1 ? (
-                  <HeaderMenuItem onClick={() => history.push('/create-loan')}>
-                    Create loan
-                  </HeaderMenuItem>
-                ) : (
-                  <Link
-                    to="toGetStarted"
-                    spy
-                    smooth
-                    duration={500}
-                    offset={HEADER_MENU_SIZE.toGetStarted}
-                  >
-                    <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
-                  </Link>
-                )}
                 <HeaderMenuItem>
                   <Link
-                    onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
-                    to="myActivity"
+                    onClick={() =>
+                      history.location.pathname !== '/investing' && history.push('investing')
+                    }
+                    to="investing"
                     spy
                     smooth
                     duration={500}
-                    offset={HEADER_MENU_SIZE.myActivity}
                   >
-                    My activity
+                    Invest with Raise
                   </Link>
                 </HeaderMenuItem>
+                {isLogged && (
+                  <>
+                    {user.details.accounttype_id === 1 ? (
+                      <HeaderMenuItem onClick={() => history.push('/create-loan')}>
+                        Create loan
+                      </HeaderMenuItem>
+                    ) : (
+                      <Link
+                        to="toGetStarted"
+                        spy
+                        smooth
+                        duration={500}
+                        offset={HEADER_MENU_SIZE.toGetStarted}
+                      >
+                        <HeaderMenuItem onClick={onSetGetStarted}>Get Started</HeaderMenuItem>
+                      </Link>
+                    )}
+                    <HeaderMenuItem>
+                      <Link
+                        onClick={() => history.location.pathname !== '/' && navigateAndScroll()}
+                        to="myActivity"
+                        spy
+                        smooth
+                        duration={500}
+                        offset={HEADER_MENU_SIZE.myActivity}
+                      >
+                        My activity
+                      </Link>
+                    </HeaderMenuItem>
+                  </>
+                )}
               </HeaderMenu>
             )}
           </HeaderGroup>

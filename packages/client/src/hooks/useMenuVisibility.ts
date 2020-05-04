@@ -18,7 +18,8 @@ const useMenuVisibility = () => {
       history.location.pathname === '/kyc-bloom' ||
       history.location.pathname === '/kyc-success' ||
       history.location.pathname.includes('/verify-web3') ||
-      history.location.pathname === '/deposit'
+      history.location.pathname === '/deposit' ||
+      history.location.pathname === '/investing'
     ) {
       setVisible(true);
     } else {
