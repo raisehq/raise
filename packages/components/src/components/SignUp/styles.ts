@@ -2,10 +2,15 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import styled from 'styled-components';
 import { Checkbox, Form, Icon, Input } from 'semantic-ui-react';
 import Button from '../commons/ButtonControl/Button';
-import { device } from '../../utils/breakpoints';
+import BloomButton from '../commons/ButtonControl/BloomButton';
+import { device, size } from '../../utils/breakpoints';
 
 interface IBackground {
   background: string;
+}
+
+interface IContainer {
+  type: string;
 }
 
 export const MyRecapcha = styled(ReCAPTCHA)`
@@ -17,14 +22,14 @@ export const MyRecapcha = styled(ReCAPTCHA)`
   }
 `;
 
-export const SignUpContainer = styled.div`
+export const SignUpContainer = styled.div<IContainer>`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   box-shadow: 0px 8px 25px rgba(60, 66, 81, 0.25);
   border-radius: 4px;
-  background: #eb3f93;
+  background: ${({ type }) => (type === 'email' ? '#eb3f93' : 'white')};
   width: 100%;
   @media screen and ${device.laptop} {
     width: 1128px;
@@ -48,6 +53,7 @@ export const SignUpInfo = styled.div<IBackground>`
 export const SignUpForm = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 100%;
   padding-top: 65px;
   padding-bottom: 55px;
@@ -188,4 +194,203 @@ export const RaiseLogo = styled.img`
   @media screen and ${device.laptop} {
     margin-left: 97px;
   }
+`;
+
+export const SignUpResponseContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SingUpResponseImage = styled.img`
+  width: 76px;
+  height: 68px;
+`;
+
+export const SignUpResponseTitle = styled.div`
+  max-width: 400px;
+  margin-top: 40px;
+
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 36px;
+
+  text-align: center;
+`;
+
+export const SignUpResponseSubText = styled.div`
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+  /* or 150% */
+
+  text-align: center;
+
+  color: #5a5a5a;
+  margin-top: 1px;
+
+  max-width: 221px;
+  @media screen and ${device.laptop} {
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 400px;
+  }
+`;
+
+export const BackButton = styled(Button)`
+  margin-top: 40px;
+`;
+
+export const BButton = styled(BloomButton)``;
+
+/** Bloom */
+export const GetStartedBloomHeader = styled.div`
+  margin-top: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+`;
+
+export const GetStartedBloomTitle = styled.div`
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  color: #3c4251;
+  @media (max-width: ${size.mobileL}) {
+    font-size: 25px;
+  }
+`;
+export const GetStartedBloomTitleError = styled.div`
+  text-align: center;
+  font-size: 25px;
+  margin-top: 15px;
+  @media (max-width: ${size.mobileL}) {
+    font-size: 25px;
+  }
+`;
+export const GetStartedBloomSubtitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #6067f1;
+  font-size: 18px;
+
+  span {
+    padding: 10px;
+  }
+`;
+
+export const GetStartedBloomWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex: 0 1 100%;
+  min-height: 250px;
+
+  @media (max-width: ${size.mobileL}) {
+    flex-wrap: wrap;
+    min-height: 0;
+  }
+`;
+
+export const GetStartedBloomQRSection = styled.div`
+  flex: 1 1 100%;
+  padding: 38px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  @media (max-width: ${size.mobileL}) {
+    justify-content: center;
+  }
+`;
+
+export const GetStartedBloomErrorSection = styled.div`
+  flex: 1 1 100%;
+  padding: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  @media (max-width: ${size.mobileL}) {
+    justify-content: center;
+    padding: 0%;
+  }
+`;
+
+export const GetStartedBloomInstructionsSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  padding: 5% 0;
+
+  @media (max-width: ${size.mobileL}) {
+    align-items: center;
+  }
+`;
+
+export const GetStartedBloomInfoErrorSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  text-align: center;
+  font-size: 15px;
+  height: 300px;
+  margin: 0px 10%;
+  padding-top: 20%;
+  @media (max-width: ${size.mobileL}) {
+    align-items: center;
+    margin: 0px;
+  }
+`;
+
+export const GetStartedBloomFooter = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const InstructionsWrapper = styled.div`
+  padding: 0;
+  max-width: 200px;
+  @media (max-width: ${size.mobileL}) {
+    padding: 0 10% 10% 10%;
+    width: 100%;
+    max-width: none;
+  }
+`;
+
+export const FollowingStepsTitle = styled.div`
+  font-weight: bold;
+  font-size: 18px;
+  padding: 5% 0;
+  line-height: 24px;
+`;
+
+export const HelpWithBloomWrapper = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 5%;
+  max-width: 250px;
+  min-height: 250px;
+  text-align: center;
+  box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
+  line-height: 21px;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+    max-width: none;
+    align-items: stretch;
+  }
+`;
+
+export const IconWrapper = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  align-self: flex-end;
 `;
