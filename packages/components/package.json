@@ -19,6 +19,7 @@
     "build:fast": "env-cmd --no-override .env tsdx build  --noClean --transpileOnly",
     "build:umd": "cp tsdx.umd.config.js tsdx.config.js && env-cmd --no-override .env tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
     "test": "env-cmd --no-override .env tsdx test --env=jsdom",
+    "test:ci": "CI=true env-cmd --no-override .env tsdx test --env=jsdom",
     "lint": "env-cmd --no-override .env tsdx lint src/"
   },
   "prettier": {
