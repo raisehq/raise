@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Image } from 'semantic-ui-react';
 
 export const Container = styled.div`
   display: flex;
@@ -28,6 +28,13 @@ export const Box = styled.div`
 `;
 
 export const IconBox = styled(Icon)`
+  width: 24px;
+  height: 24px;
+
+  color: #f38cbe;
+`;
+
+export const ImageBox = styled(Image)`
   width: 24px;
   height: 24px;
 

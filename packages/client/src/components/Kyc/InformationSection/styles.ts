@@ -19,7 +19,7 @@ export const Title = styled(Accordion.Title)<TitleProps>`
 
     color: ${({ active }) => (active ? '#f9bc2e' : '#8A8E97')};
   }
-  span {
+  i {
     color: #f9bc2e;
   }
 `;

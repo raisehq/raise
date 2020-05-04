@@ -1,12 +1,15 @@
 import React from 'react';
-import { Container, Box, IconBox, TextBox, BoxContainer } from './styles';
+import { Container, Box, IconBox, TextBox, BoxContainer, ImageBox } from './styles';
 import VerifyAccount from '../VerifyAccount';
 
 const KycExtraInformation = () => (
   <Container>
     <BoxContainer>
       <Box>
-        <IconBox name="fast forward" size="big" />
+        <ImageBox
+          size="tiny"
+          src={`${process.env.REACT_APP_HOST_IMAGES}/images/person-secure.png`}
+        />
         <TextBox>
           Your personal information will be safe and validated by a KYC provider. Raise doesn’t
           store your data.
