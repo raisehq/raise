@@ -334,7 +334,7 @@ const InvestmentBox = ({
     <Card size="310px" width="100%" {...props}>
       <InvestHeader>How much would you like to invest?</InvestHeader>
       <Offer>
-        <span>{`PROMO: Invest 50 ${selectedCoin} or more and get 49 ${selectedCoin}`}</span>
+        <span>{`PROMO: Invest 50 ${loanCoin.text} or more and get 49 ${loanCoin.text}`}</span>
       </Offer>
 
       <InvestBox>

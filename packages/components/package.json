@@ -19,6 +19,7 @@
     "build:fast": "env-cmd --no-override .env tsdx build  --noClean --transpileOnly",
     "build:umd": "cp tsdx.umd.config.js tsdx.config.js && env-cmd --no-override .env tsdx build --format umd --name RaiseComponents --input src/index.cards.tsx",
     "test": "env-cmd --no-override .env tsdx test --env=jsdom",
+    "test:ci": "CI=true env-cmd --no-override .env tsdx test --env=jsdom",
     "lint": "env-cmd --no-override .env tsdx lint src/"
   },
   "prettier": {
@@ -32,11 +33,13 @@
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@testing-library/react": "^10.0.3",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "eslint-config-react-app": "^5.2.1",
     "husky": "^4.2.5",
     "lint-staged": "^10.0.8",
+    "react-test-renderer": "^16.13.1",
     "tsdx": "0.11.0",
     "tslib": "^1.10.0",
     "typescript": "3.8.3"
@@ -53,6 +56,10 @@
     "dompurify": "^2.0.7",
     "dotenv": "^8.2.0",
     "graphql.js": "0.6.1",
+    "jest-image-snapshot": "^3.1.0",
+    "jest-transform-css": "^2.0.0",
+    "jest-transform-file": "^1.1.1",
+    "jsdom-screenshot": "^3.2.0",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.15",
     "numeral": "^2.0.6",

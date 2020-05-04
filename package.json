@@ -26,6 +26,8 @@
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client",
     "components:build:umd": "lerna run build:umd --stream --scope @raisehq/components",
+    "components:test": "lerna run test --stream --scope @raisehq/components",
+    "components:test:ci": "lerna run test:ci --stream --scope @raisehq/components",
     "prettier": "prettier --write **/*.jsx",
     "build:deps:fast": "lerna run --stream --scope @raisehq/components build:fast && lerna run --stream --scope @raisehq/onboarding build",
     "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
@@ -51,7 +53,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo 'Running pre-commit hook' && pretty-quick --staged && lerna run lint --stream"
+      "pre-commit": "echo 'Running pre-commit hook' && pretty-quick --staged && lerna run lint --stream && lerna run test --stream --scope @raisehq/components"
     }
   },
   "devDependencies": {
