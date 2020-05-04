@@ -1,10 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+import dayjs from 'dayjs';
 import Card from '../Card';
+import { Separator as RawSeparator } from '../Card/Card.styles';
 import { Amount } from '../Amount';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
-import { GraphLoan } from '../../commons/graphTypes';
+import { LoanLenderView, RepaymentType } from '../../commons/graphTypes';
 import { getCalculations } from '../../utils/loanUtils';
 import { CoinsType } from '../../commons/coins';
+import { FlexBetween } from '../FlexBetween';
+import { calculateInstalments } from '../../utils/progressiveCalcs';
+
+const Separator = styled(RawSeparator)`
+  margin-bottom: 12px;
+`;
 
 const LoanActivity = ({
   borrower,
@@ -13,7 +22,7 @@ const LoanActivity = ({
   children,
 }: {
   borrower: any;
-  auction: Partial<GraphLoan>;
+  auction: Partial<LoanLenderView>;
   coin: CoinsType;
   children?: any;
 }) => {
@@ -21,8 +30,12 @@ const LoanActivity = ({
   const { companyName, route } = borrower;
   const { roi, times, maxAmount, lenderRoiAmount, lenderAmount } = calcs;
   const state = auction.state || 0;
-  const loanTermLeft = state === 5 ? '-' : times.loanTermLeft;
-
+  const repayment = auction?.repayment || 0;
+  const {
+    nextInstalment,
+    lenderBalance,
+    lenderInstalment,
+  } = calculateInstalments(auction, coin?.decimals, dayjs().unix());
   return (
     <Card width="372px">
       <Card.Content size="100%">
@@ -34,25 +47,33 @@ const LoanActivity = ({
             {loanStatus[state]}
           </Card.Badge>
         </Card.Grid>
-        <Card.Grid spaceBetween notop>
+        <Card.Grid spaceBetween notop nobottom>
           <Card.Header
-            title="Investment return"
+            title="Available for withdraw"
+            amount={<Amount principal={lenderBalance} coinIcon={coin?.icon} />}
+          />
+          <Card.Header
+            right
+            title={`Next repayment: ${nextInstalment}`}
             amount={
-              <Amount principal={lenderRoiAmount} coinIcon={coin?.icon} />
+              <Amount principal={lenderInstalment} coinIcon={coin?.icon} />
             }
           />
-          <Card.RoiHeader roi={roi} />
         </Card.Grid>
-        <Card.Separator />
-        <Card.Grid>
-          <Card.Row notop title="Amount invested" content={lenderAmount} />
-          <Card.Row notop title="Loan amount" content={maxAmount} />
-        </Card.Grid>
-        <Card.Grid>
-          <Card.Row notop title="Time left" content={loanTermLeft || '-'} />
-          <Card.Row notop title="Loan Term" content={times.loanTerm} />
-          <Card.Row notop title="Investors" content={auction.investorCount} />
-        </Card.Grid>
+        <Separator />
+        <FlexBetween
+          label="Investment return"
+          value={`${lenderRoiAmount} ${coin?.text}`}
+        />
+        <FlexBetween label="ROI" value={roi} />
+        <FlexBetween
+          label="Amount invested"
+          value={`${lenderAmount} ${coin?.text}`}
+        />
+        <FlexBetween label="Loan amount" value={`${maxAmount} ${coin?.text}`} />
+        <FlexBetween label="Investors" value={auction.investorCount || ''} />
+        <FlexBetween label="Loan Term" value={times.loanTerm} />
+        <FlexBetween label="Repayment" value={RepaymentType[repayment]} />
         <>{children}</>
       </Card.Content>
     </Card>

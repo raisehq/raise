@@ -32,3 +32,36 @@ export { default as InputText } from './components/commons/InputControl/InputTex
 export { default as SelectControl } from './components/commons/SelectControl';
 export { default as useScript } from './hooks/useScript';
 export { default as LoanActivity } from './components/LoanActivity';
+
+export {
+  getCurrentInstalment,
+  getInstalmentAmount,
+  getInstalmentPenalty,
+  getCurrentDebt,
+  getCurrentPenalty,
+  getProgressiveState,
+  getPendingInstalmentsAmount,
+  getInstalmentDates,
+  getStateByDate,
+} from './utils/progressiveCalcs';
+
+export {
+  isAuctionExpired,
+  isDefaulted,
+  assumeStateMachine,
+  roundedTime,
+  calculateTimes,
+  calculateInterest,
+  calculateROI,
+  calculateExpectedRoi,
+  calculateTotalInterest,
+  calculateTotalInterestAmount,
+  calculateAPR,
+  calculateInvestmentReturn,
+  getCoinsFromContract,
+  getCoin,
+  getCalculations,
+  getActiveAuctions,
+} from './utils/loanUtils';
+
+export { fromDecimal, toDecimal } from './utils/web3-utils';

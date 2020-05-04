@@ -79,6 +79,11 @@ export interface GraphLoan {
   tokenAddress: string;
 }
 
+export interface LoanLenderView extends GraphLoan {
+  withdrawn: boolean;
+  lenderAmount: string;
+}
+
 export interface LoanDispatcher {
   id: string;
   address: string;

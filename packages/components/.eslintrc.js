@@ -26,6 +26,8 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'function-paren-newline': 'off',
+    'no-confusing-arrow': 'off',
     semi: 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/semi': 'off',

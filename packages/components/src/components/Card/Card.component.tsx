@@ -75,11 +75,14 @@ const HeaderComponent = ({
   title: any;
   amount: any;
   fontSize?: any;
+  right;
   rest?: any;
 }) => (
   <Header {...rest}>
-    <HeaderTitle>{title}</HeaderTitle>
-    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
+    <HeaderTitle {...rest}>{title}</HeaderTitle>
+    <HeaderContent fontSize={fontSize} {...rest}>
+      {amount}
+    </HeaderContent>
   </Header>
 );
 const SubHeaderComponent: FunctionComponent<{

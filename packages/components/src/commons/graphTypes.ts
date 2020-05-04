@@ -1,8 +1,14 @@
+export enum RepaymentType {
+  Bullet,
+  Monthly,
+}
+
 export interface GraphReferral {
   id: string;
   referrer: GraphUser;
   referred: GraphUser;
 }
+
 export interface GraphFunding {
   id: string;
   loan: GraphLoan;
@@ -77,11 +83,18 @@ export interface GraphLoan {
   createdBlockNumber: string;
   createdTimestamp: string;
   tokenAddress: string;
+  repayment: RepaymentType;
+  instalments: number;
+  instalmentsPaid: number;
 }
-export interface Auction extends GraphLoan {
+
+export interface LoanLenderView extends GraphLoan {
   withdrawn?: boolean;
   lenderAmount?: string;
+  lenderBalance?: string;
+  lenderInstalment?: string;
 }
+
 export interface LoanDispatcher {
   id: string;
   address: string;

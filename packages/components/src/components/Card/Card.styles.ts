@@ -205,11 +205,20 @@ export const HeaderTitle = styled.div`
   margin-bottom: 12px;
 `;
 
-export const HeaderContent = styled.div<{ fontSize?: any }>`
+export const HeaderContent = styled.div<{ fontSize?: any; right?: boolean }>`
   color: #3c4251;
   font-size: ${({ fontSize }) => fontSize || '26px'};
   font-weight: bold;
   line-height: 32px;
+  ${({ right }) => {
+    if (!right) {
+      return '';
+    }
+    return `
+      display: flex;
+      justify-content: flex-end;
+    `;
+  }}
 `;
 
 export const RoiHeader = styled.div`

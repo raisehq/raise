@@ -307,6 +307,8 @@ const APRGraph = ({
     momentLoaded,
     chartContainer,
     compoundDataset,
+    nowIndex,
+    graphData,
   ]);
 
   const getFormatDate = date => {
