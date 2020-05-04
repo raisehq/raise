@@ -68,7 +68,6 @@ const SignUp: React.SFC<ISignUp> = ({
 
   useEffect(() => {
     if (recaptcha) {
-      console.log('recaptcha:::::::::::: ', recaptcha);
       onSignUp(credentials);
     }
   }, [recaptcha]);
@@ -137,7 +136,6 @@ const SignUp: React.SFC<ISignUp> = ({
   };
 
   const onCaptchaCallback = async captchaResponse => {
-    console.log('capthca response:::: ', captchaResponse);
     setCredentials({ ...credentials, 'g-recaptcha-response': captchaResponse });
     setRecaptcha(captchaResponse);
   };
