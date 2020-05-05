@@ -296,8 +296,10 @@ components-unit-test:
   image: buildkite/puppeteer
   stage: test
   script:
+    - apt-get update
+    - apt-get install -y git python build-essential
     - yarn --pure-lockfile
-    - yarn run components:test
+    - yarn run components:test:ci
   artifacts:
     expire_in: '1 week'
     when: always
@@ -305,7 +307,6 @@ components-unit-test:
       - packages/components/test/__image_snapshots__
   only:
     - merge_requests
-    - latest
 
 deploy-prod:
   image: python:3.7-alpine
@@ -396,9 +397,9 @@ publish-components:
     - |
       #!/bin/sh
       if [ "${LOCAL_VERSION_COMPONENTS}" != "${PUBLISH_VERSION_COMPONENTS}" ]; then
-        yarn run bootstrap:deps
-        yarn run build:deps
+        yarn --lockfile
         cd ./packages/components/
+        yarn run build
         npm publish
       else
         echo "Package not updated, the latest version published is ${PUBLISH_VERSION_COMPONENTS} and the local verison is ${LOCAL_VERSION_COMPONENTS}."
@@ -422,7 +423,7 @@ publish-onboarding:
     - |
       #!/bin/sh
       if [ "${LOCAL_VERSION_ONBOARDING}" != "${PUBLISH_VERSION_ONBOARDING}" ]; then
-        yarn run bootstrap:deps
+        yarn --lockfile
         yarn run build:deps
         cd ./packages/onboarding/
         npm publish

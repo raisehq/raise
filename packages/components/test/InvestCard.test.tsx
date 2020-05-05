@@ -4,6 +4,11 @@ import { render } from '@testing-library/react';
 import { IPHONE_SE } from '../src/commons/TestViewports';
 import InvestCard from '../src/components/InvestCard';
 
+const customConfig = {
+  failureThreshold: 0.1,
+  failureThresholdType: 'percent',
+};
+
 const auction = {
   auctionEndTimestamp: '1575021892',
   auctionEnded: false,
@@ -63,7 +68,7 @@ it('mobile: renders correctly', async () => {
   const screenshot = await generateImage(IPHONE_SE);
 
   // @ts-ignore
-  expect(screenshot).toMatchImageSnapshot();
+  expect(screenshot).toMatchImageSnapshot(customConfig);
 });
 
 it('mobile: renders correctly if amounts are big', async () => {
@@ -86,5 +91,5 @@ it('mobile: renders correctly if amounts are big', async () => {
   const screenshot = await generateImage(IPHONE_SE);
 
   // @ts-ignore
-  expect(screenshot).toMatchImageSnapshot();
+  expect(screenshot).toMatchImageSnapshot(customConfig);
 });

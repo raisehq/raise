@@ -129,15 +129,14 @@ Cypress.Commands.add('login', function(type, isCanary = false) {
   if (isCanary) {
     console.log('- Mock Login disabled by Canary');
     // Request to the real API
-    const userEmail = Cypress.env('userEmail');
-    const userPassword = Cypress.env('userPassword');
+    const User = Cypress.env('user');
     const request = {
       method: 'POST',
       failOnStatusCode: false,
       url: 'https://canary.' + Cypress.env('api') + '/jwt/authenticate',
       body: {
-        email: userEmail,
-        password: userPassword,
+        email: User[type].email,
+        password: User[type].password,
         'g-recaptcha-response': 'xxxxxxxxx'
       }
     };

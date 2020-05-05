@@ -96,7 +96,7 @@ export const SuggestedContainer = styled.div`
 
   @media ${device.mobileL} {
     grid-template-columns: repeat(auto-fill, 370px);
-    grid-template-rows: 585px;
+    grid-template-rows: 595px;
   }
 `;
 

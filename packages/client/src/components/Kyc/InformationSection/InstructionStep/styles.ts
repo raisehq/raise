@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const NumberWrapper = styled.div`
-  width: 24px;
   height: 24px;
   background: #fef2d5;
   border-radius: 15px;
@@ -15,6 +14,7 @@ export const AccordionRow = styled.div`
   max-width: 831px;
 
   span {
+    width: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,8 +26,8 @@ export const AccordionRow = styled.div`
 export const AccordionText = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
+  justify-content: flex-start;
+  align-items: flex-start;
 
   margin-left: 15px;
   font-family: Lato;

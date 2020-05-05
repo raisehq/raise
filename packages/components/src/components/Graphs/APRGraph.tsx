@@ -85,6 +85,8 @@ const datasetToGraph = (
 });
 
 const options: any = {
+  responsive: true,
+  maintainAspectRatio: false,
   fullCompoundDataset: [0],
   legend: {
     display: false,
@@ -372,9 +374,7 @@ const APRGraph = ({
         />
       </Subheader>
       <ChartWrapper>
-        {chartLoaded && momentLoaded && (
-          <canvas ref={chartContainer} height={250} />
-        )}
+        {chartLoaded && momentLoaded && <canvas ref={chartContainer} />}
       </ChartWrapper>
     </>
   );
