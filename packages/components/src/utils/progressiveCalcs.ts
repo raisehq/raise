@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import { fromDecimal } from './web3-utils';
 import { calculatefromDecimal } from './loanUtils';
+import { RepaymentState, LoanLenderView } from '../commons/graphTypes';
+
 // internal
 /*
  * Formula to calculate in which instalment is the loan in this point in time:
@@ -49,7 +51,7 @@ const getInstalmentPenalty = (loan, decimals = 18) => {
   return penalty;
 };
 
-const getInstalmentDates = loan => {
+const getInstalmentDates = (loan): number[] => {
   const instalmentLength = Number(loan.termLength) / Number(loan.instalments);
   const instalmentDates: number[] = [];
   for (let i = 1; i <= loan.instalments; i += 1) {
@@ -141,7 +143,23 @@ const getNextInstalment = (loan, currentDate): number => {
   );
 };
 
-const calculateInstalments = (loan, decimals, currentDate) => {
+export interface RepayInfo {
+  schedules: RepaySchedule[];
+  lenderBalance: string;
+  lenderInstalment: string;
+  nextInstalment: string;
+}
+
+export interface RepaySchedule {
+  date: string;
+  state: RepaymentState;
+}
+
+const calculateInstalments = (
+  loan: Partial<LoanLenderView>,
+  decimals = 18,
+  currentDate: number // unix
+): RepayInfo => {
   const nextInstalmentNumber = getNextInstalment(loan, currentDate);
   const nextInstalment = dayjs.unix(nextInstalmentNumber).format('D MMM YYYY');
   const lenderBalance = calculatefromDecimal(loan.lenderBalance, decimals);
@@ -149,7 +167,11 @@ const calculateInstalments = (loan, decimals, currentDate) => {
     loan.lenderInstalment,
     decimals
   );
-  return { nextInstalment, lenderBalance, lenderInstalment };
+  const schedules = getInstalmentDates(loan).map(value => ({
+    date: dayjs.unix(value).format('D MMM YYYY'),
+    state: 0,
+  }));
+  return { nextInstalment, lenderBalance, lenderInstalment, schedules };
 };
 
 export {

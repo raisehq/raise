@@ -3,6 +3,13 @@ export enum RepaymentType {
   Monthly,
 }
 
+export enum RepaymentState {
+  Waiting,
+  Unpaid,
+  Paid,
+  Withdrawed,
+}
+
 export interface GraphReferral {
   id: string;
   referrer: GraphUser;

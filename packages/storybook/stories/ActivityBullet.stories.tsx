@@ -11,37 +11,35 @@ import { LoanLenderView, Company } from '@raisehq/components/dist/types';
 
 const FlexDiv = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(372px, 1fr));
   grid-template-rows: 1fr 1fr 1fr;
   gap: 10px 10px;
   grid-template-areas: '. . .' '. . .' '. . .';
-  max-width: 700px;
+  max-width: 900px;
 `;
-
 const oneMonth = 1 * 30 * 24 * 60 * 60;
 
 const loanFactory = (state, repayment): Partial<LoanLenderView> => {
-  const instalments = 12;
+  const instalments = 1;
   const interestRate = '857276234567901300';
   const lenderAmount = '1000000000000000000000';
-  const termLength = (instalments * oneMonth).toString();
+  const termLength = '7884000';
+  //const instalmentLength = Number(termLength) / Number(instalments);
   const lenderInstalment = toDecimal(
     calculateInvestmentReturn({ lenderAmount, interestRate, termLength }, 18) /
       instalments,
     18
   );
-  const lenderBalance = lenderInstalment;
-  const instalmentsPaid = 4;
+  const lenderBalance = '0';
+  const instalmentsPaid = 0;
   const auctionEndTimestampN = dayjs()
-    .subtract(oneMonth * 3, 'second')
+    .subtract(oneMonth * 1, 'second')
     .unix();
   const auctionStartTimestampN = dayjs()
-    .subtract(oneMonth * 4, 'second')
+    .subtract(oneMonth * 2, 'second')
     .unix();
   const termEndTimestamp = auctionEndTimestampN + oneMonth * instalments;
-  console.log(termEndTimestamp);
   const auctionEndTimestamp = auctionEndTimestampN.toString();
-  console.log('end', auctionEndTimestamp);
   const auctionStartTimestamp = auctionStartTimestampN.toString();
   return {
     auctionEndTimestamp,
@@ -104,15 +102,6 @@ const bulletMap = [
   { state: 6, label: 'Frozen', repayment: 0 },
 ];
 
-const monthlyMap = [
-  { state: 2, label: 'Active', repayment: 1 },
-  { state: 4, label: 'Repaid', repayment: 1 },
-  { state: 5, label: 'Closed', repayment: 1 },
-  { state: 3, label: 'Defaulted', repayment: 1 },
-  { state: 1, label: 'Expired', repayment: 1 },
-  { state: 6, label: 'Frozen', repayment: 1 },
-];
-
 const activityMapper = ({ state, label, repayment }) => (
   <div style={{ padding: 10 }}>
     <h4>{label}</h4>
@@ -125,21 +114,12 @@ const activityMapper = ({ state, label, repayment }) => (
   </div>
 );
 
-storiesOf('LoanActivity', module).add('Bullet', () => {
+storiesOf('Activity -  Bullet', module).add('Bullet', () => {
   const activityBullet = bulletMap.map(activityMapper);
 
   return (
     <>
       <FlexDiv>{activityBullet}</FlexDiv>);
-    </>
-  );
-});
-
-storiesOf('LoanActivity', module).add('Monthly', () => {
-  const activityMonthly = monthlyMap.map(activityMapper);
-  return (
-    <>
-      <FlexDiv>{activityMonthly}</FlexDiv>);
     </>
   );
 });

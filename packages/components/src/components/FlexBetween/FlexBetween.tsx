@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface FlexBetweenProps {
-  label: React.ReactText;
-  value: React.ReactText;
+  label: React.ReactText | React.ReactNode;
+  value: React.ReactText | React.ReactNode;
 }
 
 const Label = styled.div`

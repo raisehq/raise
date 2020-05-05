@@ -48,8 +48,10 @@ interface BadgeProps {
 
 const Context = React.createContext({});
 
-const BadgeComponent = ({ children, color }: BadgeProps) => (
-  <Badge color={color}>{children}</Badge>
+const BadgeComponent = ({ children, color, ...rest }: BadgeProps) => (
+  <Badge color={color} {...rest}>
+    {children}
+  </Badge>
 );
 
 const RowComponent: React.SFC<RowComponentProps> = ({

@@ -11,7 +11,9 @@ interface RowWrapperProps {
   small?: boolean | null | undefined;
   big?: boolean | null | undefined;
 }
-
+interface BadgeProps {
+  noAbsolute?: boolean;
+}
 interface GridProps {
   noGraph?: boolean;
   nobottom?: boolean;
@@ -304,13 +306,18 @@ export const ProgressBar: any = styled.div`
   }
 `;
 
-export const Badge = styled.div`
+export const Badge = styled.div<BadgeProps>`
   width: 80px;
   height: 20px;
   color: #fff;
-  position: absolute;
-  top: 15px;
-  right: 15px;
+  ${({ noAbsolute }) => {
+    if (noAbsolute) {
+      return '';
+    }
+    return `position: absolute;
+      top: 15px;
+      right: 15px;`;
+  }}
   text-align: center;
   padding: 3px 0 3px 0;
   font-weight: bold;
