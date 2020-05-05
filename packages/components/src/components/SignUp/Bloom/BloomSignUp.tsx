@@ -51,7 +51,7 @@ const BloomSignUp = ({
         } = resp;
         console.log('result:::: ', result);
         if (result.id) {
-          onBloomSignUp(bloomToken);
+          onBloomSignUp(tokenBloom);
         } else {
           // @ts-ignore
           checkerTimeout.current = setTimeout(watchBloom, 3000);
