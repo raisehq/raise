@@ -35,9 +35,7 @@ const BloomSignUp = ({
   const checkerTimeout = useRef(null);
 
   const watchBloom = async () => {
-    console.log('watch bloom');
     const response = await isUserSignedUp(tokenBloom);
-    console.log('response:::::: ', response);
     response.fold(
       error => {
         console.error('Error Watch Bloom : ', error);
@@ -49,7 +47,7 @@ const BloomSignUp = ({
             data: { result },
           },
         } = resp;
-        console.log('result:::: ', result);
+
         if (result.id) {
           onBloomSignUp(tokenBloom);
         } else {

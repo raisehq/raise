@@ -19,7 +19,6 @@ const SignUp = ({
   onBloomSignUp,
   isUserSignedUp,
 }: any) => {
-  console.log('------------------ ', bloomSignIn);
   const [registerType, setRegisterType] = useState('email');
   useEffect(() => {
     setRegisterType('email');
