@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 import ReCAPTCHA from 'react-google-recaptcha';
 import styled from 'styled-components';
 import { Checkbox, Form, Icon, Input } from 'semantic-ui-react';

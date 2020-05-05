@@ -11,8 +11,8 @@ const getStage = (
   checkEmail,
   setStage,
   bloomAction
-) => {
-  return stage.cata({
+) =>
+  stage.cata({
     Register: () => (
       <Register
         SignUpId={SignUpId}
@@ -25,7 +25,6 @@ const getStage = (
     Success: () => <Success />,
     Error: () => <Error setStage={setStage} />,
   });
-};
 
 const EmailSignUp = ({ SignUpId, onSignUp, checkEmail, bloomAction }: any) => {
   const [stage, setStage] = useState(Stages.Register);

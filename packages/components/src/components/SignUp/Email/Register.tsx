@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import { Select } from 'semantic-ui-react';
