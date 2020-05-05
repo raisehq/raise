@@ -33,6 +33,7 @@ storiesOf('SignUp', module)
         onBloomSignUp={() => {}}
         bloomSignIn={() => 'https://api.herodev.es/kyc/scan'}
         redirectFromBloomApp={() => {}}
+        isUserSignedUp={() => {}}
       />
     </Wrapper>
   ))
@@ -45,6 +46,7 @@ storiesOf('SignUp', module)
         onBloomSignUp={() => {}}
         bloomSignIn={() => 'https://api.herodev.es/kyc/scan'}
         redirectFromBloomApp={() => {}}
+        isUserSignedUp={() => {}}
       />
     </Wrapper>
   ))
@@ -57,6 +59,7 @@ storiesOf('SignUp', module)
         onBloomSignUp={() => {}}
         bloomSignIn={() => 'https://api.herodev.es/kyc/scan'}
         redirectFromBloomApp={() => {}}
+        isUserSignedUp={() => Left('error')}
       />
     </Wrapper>
   ));

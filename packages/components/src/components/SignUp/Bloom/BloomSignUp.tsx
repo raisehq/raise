@@ -20,6 +20,7 @@ import {
 } from '../styles';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
+import ErrorBloom from './ErrorBloom';
 
 const BloomSignUp = ({
   SignUpId,
@@ -32,6 +33,7 @@ const BloomSignUp = ({
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
+  const [errorStage, setErrorStage] = useState(false);
   const checkerTimeout = useRef(null);
 
   const watchBloom = async () => {
@@ -39,7 +41,7 @@ const BloomSignUp = ({
     response.fold(
       error => {
         console.error('Error Watch Bloom : ', error);
-        // TODO: step error
+        setErrorStage(true);
       },
       resp => {
         const {
@@ -120,48 +122,51 @@ const BloomSignUp = ({
     size: 250,
   };
 
-  return (
-    <>
-      <GetStartedBloomHeader>
-        <GetStartedBloomTitle>Get Started</GetStartedBloomTitle>
-        <GetStartedBloomSubtitle>
-          <span>with</span>
-          <BloomLogo
-            src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
-          />
-        </GetStartedBloomSubtitle>
-      </GetStartedBloomHeader>
-      <GetStartedBloomWrapper>
-        <GetStartedBloomQRSection>
-          <RequestElement
-            requestData={requestData}
-            buttonOptions={{ callbackUrl: redirectFromBloomApp(bloomToken) }}
-            qrOptions={qrOptions}
-          />
-        </GetStartedBloomQRSection>
-        <GetStartedBloomInstructionsSection>
-          {isOpenHelp ? (
-            <HelpWithBloom
-              setIsOpenHelp={setIsOpenHelp}
-              setIsScreenIdle={setIsScreenIdle}
-              method="Sign Up"
+  if (!errorStage) {
+    return (
+      <>
+        <GetStartedBloomHeader>
+          <GetStartedBloomTitle>Get Started</GetStartedBloomTitle>
+          <GetStartedBloomSubtitle>
+            <span>with</span>
+            <BloomLogo
+              src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
             />
-          ) : (
-            <FollowSteps isMobile={isMobile} />
-          )}
-        </GetStartedBloomInstructionsSection>
-      </GetStartedBloomWrapper>
-      <BackButtonWrapper>
-        <BackButton
-          onClick={onBack}
-          idAttr={SignUpId}
-          size="small"
-          text="Back"
-          type="tertiary"
-        />
-      </BackButtonWrapper>
-    </>
-  );
+          </GetStartedBloomSubtitle>
+        </GetStartedBloomHeader>
+        <GetStartedBloomWrapper>
+          <GetStartedBloomQRSection>
+            <RequestElement
+              requestData={requestData}
+              buttonOptions={{ callbackUrl: redirectFromBloomApp(bloomToken) }}
+              qrOptions={qrOptions}
+            />
+          </GetStartedBloomQRSection>
+          <GetStartedBloomInstructionsSection>
+            {isOpenHelp ? (
+              <HelpWithBloom
+                setIsOpenHelp={setIsOpenHelp}
+                setIsScreenIdle={setIsScreenIdle}
+                method="Sign Up"
+              />
+            ) : (
+              <FollowSteps isMobile={isMobile} />
+            )}
+          </GetStartedBloomInstructionsSection>
+        </GetStartedBloomWrapper>
+        <BackButtonWrapper>
+          <BackButton
+            onClick={onBack}
+            idAttr={SignUpId}
+            size="small"
+            text="Back"
+            type="tertiary"
+          />
+        </BackButtonWrapper>
+      </>
+    );
+  }
+  return <ErrorBloom onBack={() => setErrorStage(false)} />;
 };
 
 export default BloomSignUp;

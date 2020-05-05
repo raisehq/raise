@@ -403,6 +403,7 @@ export const SignUpWithBloomWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  cursor: pointer;
 `;
 
 export const SignUpWithBloomLogo = styled.img`
