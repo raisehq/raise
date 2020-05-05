@@ -29,7 +29,7 @@ const BloomSignUp = ({
   bloomSignIn,
   onBloomSignUp,
 }: any) => {
-  console.log('bloom sign in::: ', bloomSignIn);
+  console.log('bloom sign in::: ', bloomSignIn());
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
@@ -48,7 +48,7 @@ const BloomSignUp = ({
             data: { result },
           },
         } = resp;
-
+        console.log('result:::: ', result);
         if (result.id) {
           onBloomSignUp(bloomToken);
         } else {

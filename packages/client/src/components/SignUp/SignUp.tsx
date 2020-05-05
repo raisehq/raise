@@ -35,6 +35,7 @@ const SignUpWrapper = ({ id }: any) => {
   };
 
   const onBloomSignUp = token => {
+    console.log(`${process.env.REACT_APP_HOST_URL}/login/bloom/${token}`);
     window.location.href = `${process.env.REACT_APP_HOST_URL}/login/bloom/${token}`;
   };
 
