@@ -29,6 +29,7 @@ const BloomSignUp = ({
   redirectFromBloomApp,
   bloomSignIn,
   onBloomSignUp,
+  onBloomError,
 }: any) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
@@ -41,6 +42,7 @@ const BloomSignUp = ({
     response.fold(
       error => {
         console.error('Error Watch Bloom : ', error);
+        onBloomError();
         setErrorStage(true);
       },
       resp => {

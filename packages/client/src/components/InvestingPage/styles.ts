@@ -10,6 +10,10 @@ interface PositionRight {
   right: boolean;
 }
 
+interface IStatic {
+  last: boolean;
+}
+
 export const InvestingContainer = styled.div``;
 
 export const InvestingSignUpContainer = styled.div``;
@@ -42,6 +46,10 @@ export const SectionSubContainer = styled.div<PositionRight>`
     padding: 20px;
     justify-content: space-between;
   }
+`;
+
+export const StaticWrapper = styled.div<IStatic>`
+  margin-bottom: ${({ last }) => (last ? '150px' : '0px')};
 `;
 
 export const SubSectionContainer = styled.div`

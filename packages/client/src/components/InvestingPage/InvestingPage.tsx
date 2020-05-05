@@ -4,8 +4,16 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { InvestingContainer } from './styles';
 import InvestingSection from './InvestingSection';
 import SignUp from '../SignUp';
+import { useRootContext } from '../../contexts/RootContext';
 
 const InvestingPage = () => {
+  const {
+    store: {
+      auth: {
+        login: { logged: isLogged }
+      }
+    }
+  }: any = useRootContext();
   const [sections, setSections] = useState([]);
 
   useAsyncEffect(async () => {
@@ -35,11 +43,18 @@ const InvestingPage = () => {
         );
       }
     });
-    // TODO: add static sections to the page
-    orderedSections.splice(3, 0, {
-      component: <SignUp id="Investing_signup" />,
-      section_order: 3
-    });
+
+    if (!isLogged) {
+      orderedSections.splice(3, 0, {
+        component: <SignUp id="Investing_signup" />,
+        section_order: 3
+      });
+      orderedSections.push({
+        component: <SignUp id="Investing_signup" />,
+        section_order: orderedSections.length
+      });
+    }
+
     console.log('sections with statics ::: ', orderedSections);
     setSections(orderedSections);
   }, []);
@@ -47,7 +62,12 @@ const InvestingPage = () => {
   return (
     <InvestingContainer>
       {sections.map((section, index) => (
-        <InvestingSection key={index} section={section} length={sections.length} />
+        <InvestingSection
+          key={index}
+          section={section}
+          sectionIndex={index}
+          length={sections.length}
+        />
       ))}
     </InvestingContainer>
   );

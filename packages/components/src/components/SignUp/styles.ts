@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-confusing-arrow */
 import ReCAPTCHA from 'react-google-recaptcha';
 import styled from 'styled-components';
@@ -60,10 +61,14 @@ export const SignUpForm = styled.div`
   background: #ffffff;
   padding-left: 20px;
   padding-right: 20px;
+  padding-top: 20px;
+  padding-top: 20px;
   @media screen and ${device.laptop} {
     padding-left: 91px;
     padding-right: 85px;
     max-width: 576px;
+    padding-top: 0px;
+    padding-top: 0px;
   }
 `;
 
@@ -404,6 +409,10 @@ export const SignUpWithBloomWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   cursor: pointer;
+  margin-bottom: 40px;
+  @media screen and ${device.laptop} {
+    margin-bottom: 0px;
+  }
 `;
 
 export const SignUpWithBloomLogo = styled.img`

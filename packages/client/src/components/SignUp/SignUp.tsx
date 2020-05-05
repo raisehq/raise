@@ -39,9 +39,17 @@ const SignUpWrapper = ({ id }: any) => {
     }
   };
 
+  const onBloomError = () => {
+    tagManager.sendEventCategory('Signup', TMEvents.Submit, `${id}_bloom_error`, history.location);
+  };
+
   const onBloomSignUp = result => {
-    // console.log(`${process.env.REACT_APP_HOST_URL}/login/bloom/${token}`);
-    // window.location.href = `${process.env.REACT_APP_HOST_URL}/login/bloom/${token}`;
+    tagManager.sendEventCategory(
+      'Signup',
+      TMEvents.Submit,
+      `${id}_bloom_success`,
+      history.location
+    );
 
     const login = LocalData.get('firstLogin');
 
@@ -73,8 +81,6 @@ const SignUpWrapper = ({ id }: any) => {
 
     setuserCookie(result, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
     const redirect = window.location.pathname || '';
-    console.log('redirect:: ', redirect);
-    console.log('path redirect: ', `${process.env.REACT_APP_HOST_URL}${redirect}`);
     window.location.href = `${process.env.REACT_APP_HOST_URL}${redirect}`;
     return true;
   };
@@ -89,6 +95,7 @@ const SignUpWrapper = ({ id }: any) => {
         bloomSignIn={bloomSignIn}
         redirectFromBloomApp={redirectFromBloomApp}
         isUserSignedUp={verifyBloomLogin}
+        onBloomError={onBloomError}
       />
     </InvestingSignUpContainer>
   );

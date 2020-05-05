@@ -20,18 +20,20 @@ import {
   SubSectionIcon,
   SubSectionText,
   SubSection,
-  WaveSVG
+  WaveSVG,
+  StaticWrapper
 } from './styles';
 
 interface ISectionProps {
   section: any;
   length: number;
+  sectionIndex: number;
 }
 
-const InvestingSection: React.SFC<ISectionProps> = ({ section, length }: any) => (
+const InvestingSection: React.SFC<ISectionProps> = ({ section, length, sectionIndex }: any) => (
   <InvestingSectionContainer position={section.section_order}>
     {section.component ? (
-      section.component
+      <StaticWrapper last={sectionIndex + 1 === length}>{section.component}</StaticWrapper>
     ) : (
       <>
         <InfoTitleMobile>{section.section_title}</InfoTitleMobile>
@@ -76,7 +78,7 @@ const InvestingSection: React.SFC<ISectionProps> = ({ section, length }: any) =>
         <Triangle />
       </TriangleDown>
     )}
-    {section.section_order % 2 === 0 && section.section_order + 2 !== length && (
+    {section.section_order % 2 === 0 && sectionIndex + 1 !== length && (
       <WaveSVG src={`${process.env.REACT_APP_HOST_IMAGES}/images/waves.svg`} alt="wave" />
     )}
   </InvestingSectionContainer>
