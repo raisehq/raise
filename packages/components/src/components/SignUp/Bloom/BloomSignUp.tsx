@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import bloomToken from 'uuid';
-import { Image } from 'semantic-ui-react';
+import { v4 as bloomToken } from 'uuid';
 import {
   RequestElement,
   QROptions,
@@ -16,7 +15,8 @@ import {
   GetStartedBloomWrapper,
   GetStartedBloomQRSection,
   GetStartedBloomInstructionsSection,
-  GetStartedBloomFooter,
+  BackButtonWrapper,
+  BloomLogo,
 } from '../styles';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
@@ -127,9 +127,8 @@ const BloomSignUp = ({
         <GetStartedBloomTitle>Get Started</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
           <span>with</span>
-          <Image
+          <BloomLogo
             src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
-            size="tiny"
           />
         </GetStartedBloomSubtitle>
       </GetStartedBloomHeader>
@@ -153,7 +152,7 @@ const BloomSignUp = ({
           )}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
-      <GetStartedBloomFooter>
+      <BackButtonWrapper>
         <BackButton
           onClick={onBack}
           idAttr={SignUpId}
@@ -161,7 +160,7 @@ const BloomSignUp = ({
           text="Back"
           type="tertiary"
         />
-      </GetStartedBloomFooter>
+      </BackButtonWrapper>
     </>
   );
 };

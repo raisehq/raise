@@ -55,8 +55,6 @@ export const SignUpForm = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  padding-top: 65px;
-  padding-bottom: 55px;
   height: 100%;
   background: #ffffff;
   padding-left: 20px;
@@ -238,28 +236,48 @@ export const SignUpResponseSubText = styled.div`
   }
 `;
 
-export const BackButton = styled(Button)`
+export const BackButtonWrapper = styled.div`
   margin-top: 40px;
+  margin-bottom: 40px;
+  align-self: center;
 `;
+
+export const BackButton = styled(Button)``;
 
 export const BButton = styled(BloomButton)``;
 
 /** Bloom */
+export const BloomContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0px 8px 25px rgba(60, 66, 81, 0.25);
+  border-radius: 4px;
+  background: white;
+  width: 100%;
+  @media screen and ${device.laptop} {
+    width: 1128px;
+
+    height: 570px;
+  }
+`;
+
 export const GetStartedBloomHeader = styled.div`
-  margin-top: 38px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
 `;
-
+export const BloomLogo = styled.img`
+  width: 96px;
+  height: 25.52px;
+`;
 export const GetStartedBloomTitle = styled.div`
   text-align: center;
-  font-size: 50px;
   font-weight: bold;
+  font-size: 50px;
+  line-height: 60px;
   color: #3c4251;
-  @media (max-width: ${size.mobileL}) {
-    font-size: 25px;
-  }
+  margin-top: 41px;
 `;
 export const GetStartedBloomTitleError = styled.div`
   text-align: center;
@@ -273,11 +291,11 @@ export const GetStartedBloomSubtitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
   text-align: center;
   color: #6067f1;
   font-size: 18px;
-
+  line-height: 22px;
+  align-items: center;
   span {
     padding: 10px;
   }
@@ -286,46 +304,23 @@ export const GetStartedBloomSubtitle = styled.div`
 export const GetStartedBloomWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  flex: 0 1 100%;
+  flex-wrap: wrap;
+  justify-content: center;
   min-height: 250px;
-
-  @media (max-width: ${size.mobileL}) {
-    flex-wrap: wrap;
-    min-height: 0;
-  }
+  margin-top: 40px;
 `;
 
 export const GetStartedBloomQRSection = styled.div`
-  flex: 1 1 100%;
-  padding: 38px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  @media (max-width: ${size.mobileL}) {
-    justify-content: center;
-  }
-`;
-
-export const GetStartedBloomErrorSection = styled.div`
-  flex: 1 1 100%;
-  padding: 5%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  @media (max-width: ${size.mobileL}) {
-    justify-content: center;
-    padding: 0%;
+  justify-content: center;
+  @media screen and ${device.laptop} {
+    justify-content: flex-end;
+    margin-right: 40px;
   }
 `;
 
 export const GetStartedBloomInstructionsSection = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1 1 100%;
-  padding: 5% 0;
 
   @media (max-width: ${size.mobileL}) {
     align-items: center;
@@ -335,7 +330,6 @@ export const GetStartedBloomInstructionsSection = styled.div`
 export const GetStartedBloomInfoErrorSection = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1 1 100%;
   text-align: center;
   font-size: 15px;
   height: 300px;
@@ -393,4 +387,25 @@ export const IconWrapper = styled.div`
   top: 10px;
   right: 10px;
   align-self: flex-end;
+`;
+
+export const SignUpWithBloomText = styled.div`
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 21px;
+
+  color: #5c6bf2;
+`;
+
+export const SignUpWithBloomWrapper = styled.div`
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+export const SignUpWithBloomLogo = styled.img`
+  width: 78.95px;
+  height: 20px;
+  margin-left: 10px;
 `;

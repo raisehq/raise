@@ -16,7 +16,9 @@ import {
   MyRecapcha,
   InputCountries,
   CheckBoxText,
-  BButton,
+  SignUpWithBloomText,
+  SignUpWithBloomLogo,
+  SignUpWithBloomWrapper,
 } from '../styles';
 import { countryOptions } from '../../../commons/countries';
 
@@ -239,7 +241,12 @@ const Register: React.SFC<IRegister> = ({
         size="large"
         fullWidth
       />
-      <BButton onClick={bloomAction} idAttr="signup_bloom" size="small" />
+      <SignUpWithBloomWrapper onClick={bloomAction}>
+        <SignUpWithBloomText>Sign Up with Bloom</SignUpWithBloomText>
+        <SignUpWithBloomLogo
+          src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
+        />
+      </SignUpWithBloomWrapper>
       <MyRecapcha
         ref={recaptchaRef}
         size="invisible"

@@ -5,6 +5,7 @@ import {
   SignUpForm,
   SignUpText,
   RaiseLogo,
+  BloomContainer,
 } from './styles';
 import EmailSignUp from './Email';
 import BloomSignUp from './Bloom';
@@ -23,37 +24,38 @@ const SignUp = ({
     setRegisterType('email');
   }, []);
 
+  if (registerType === 'email') {
+    return (
+      <SignUpContainer type={registerType}>
+        <SignUpInfo
+          background={`${process.env.REACT_APP_HOST_IMAGES}/images/redbackground.svg`}
+        >
+          <RaiseLogo
+            src={`${process.env.REACT_APP_HOST_IMAGES}/images/logo_white.svg`}
+          />
+          <SignUpText>Create an account and start investing now</SignUpText>
+        </SignUpInfo>
+        <SignUpForm>
+          <EmailSignUp
+            SignUpId={SignUpId}
+            onSignUp={onSignUp}
+            checkEmail={checkEmail}
+            bloomAction={() => setRegisterType('bloom')}
+          />
+        </SignUpForm>
+      </SignUpContainer>
+    );
+  }
   return (
-    <SignUpContainer type={registerType}>
-      {registerType === 'email' ? (
-        <>
-          <SignUpInfo
-            background={`${process.env.REACT_APP_HOST_IMAGES}/images/redbackground.svg`}
-          >
-            <RaiseLogo
-              src={`${process.env.REACT_APP_HOST_IMAGES}/images/logo_white.svg`}
-            />
-            <SignUpText>Create an account and start investing now</SignUpText>
-          </SignUpInfo>
-          <SignUpForm>
-            <EmailSignUp
-              SignUpId={SignUpId}
-              onSignUp={onSignUp}
-              checkEmail={checkEmail}
-              bloomAction={() => setRegisterType('bloom')}
-            />
-          </SignUpForm>
-        </>
-      ) : (
-        <BloomSignUp
-          SignUpId={SignUpId}
-          onBack={() => setRegisterType('email')}
-          onBloomSignUp={onBloomSignUp}
-          bloomSignIn={bloomSignIn}
-          redirectFromBloomApp={redirectFromBloomApp}
-        />
-      )}
-    </SignUpContainer>
+    <BloomContainer>
+      <BloomSignUp
+        SignUpId={SignUpId}
+        onBack={() => setRegisterType('email')}
+        onBloomSignUp={onBloomSignUp}
+        bloomSignIn={bloomSignIn}
+        redirectFromBloomApp={redirectFromBloomApp}
+      />
+    </BloomContainer>
   );
 };
 

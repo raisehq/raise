@@ -31,7 +31,7 @@ storiesOf('SignUp', module)
         checkEmail={() => Right('Not exist')}
         SignUpId="test"
         onBloomSignUp={() => {}}
-        bloomSignIn={() => {}}
+        bloomSignIn={() => 'https://api.herodev.es/kyc/scan'}
         redirectFromBloomApp={() => {}}
       />
     </Wrapper>
@@ -43,7 +43,7 @@ storiesOf('SignUp', module)
         checkEmail={() => Right('Not exist')}
         SignUpId="test"
         onBloomSignUp={() => {}}
-        bloomSignIn={() => {}}
+        bloomSignIn={() => 'https://api.herodev.es/kyc/scan'}
         redirectFromBloomApp={() => {}}
       />
     </Wrapper>
@@ -55,7 +55,7 @@ storiesOf('SignUp', module)
         checkEmail={() => Right('Not exist')}
         SignUpId="test"
         onBloomSignUp={() => {}}
-        bloomSignIn={() => ''}
+        bloomSignIn={() => 'https://api.herodev.es/kyc/scan'}
         redirectFromBloomApp={() => {}}
       />
     </Wrapper>
