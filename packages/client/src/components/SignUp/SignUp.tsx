@@ -6,8 +6,15 @@ import { signUp } from '../../services/user';
 import { bloomSignIn, redirectFromBloomApp } from '../../services/kyc';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useRouter from '../../hooks/useRouter';
+import useCookie from '../../hooks/useCookie';
+import LocalData from '../../helpers/localData';
 
 const SignUpWrapper = ({ id }: any) => {
+  // @ts-ignore
+  const [, setAuthCookie] = useCookie('auth', {});
+  // @ts-ignore
+  const [, setuserCookie] = useCookie('user', {});
+
   const tagManager = useGoogleTagManager(id);
   const { history } = useRouter();
 
@@ -32,9 +39,44 @@ const SignUpWrapper = ({ id }: any) => {
     }
   };
 
-  const onBloomSignUp = token => {
-    console.log(`${process.env.REACT_APP_HOST_URL}/login/bloom/${token}`);
-    window.location.href = `${process.env.REACT_APP_HOST_URL}/login/bloom/${token}`;
+  const onBloomSignUp = result => {
+    // console.log(`${process.env.REACT_APP_HOST_URL}/login/bloom/${token}`);
+    // window.location.href = `${process.env.REACT_APP_HOST_URL}/login/bloom/${token}`;
+
+    const login = LocalData.get('firstLogin');
+
+    if (login) {
+      if (login === 'first') {
+        LocalData.set('firstLogin', 'passed');
+      }
+    } else {
+      LocalData.set('firstLogin', 'first');
+    }
+    LocalData.setObj('auth', {
+      token: result.public_key,
+      id: result.id,
+      status: result.userstatus_id,
+      type: result.accounttype_id
+    });
+
+    LocalData.setObj('user', result);
+
+    setAuthCookie(
+      {
+        token: result.public_key,
+        id: result.id,
+        status: result.userstatus_id,
+        type: result.accounttype_id
+      },
+      { domain: process.env.REACT_APP_COOKIE_DOMAIN }
+    );
+
+    setuserCookie(result, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
+    const redirect = window.location.pathname || '';
+    console.log('redirect:: ', redirect);
+    console.log('path redirect: ', `${process.env.REACT_APP_HOST_URL}${redirect}`);
+    window.location.href = `${process.env.REACT_APP_HOST_URL}${redirect}`;
+    return true;
   };
 
   return (
