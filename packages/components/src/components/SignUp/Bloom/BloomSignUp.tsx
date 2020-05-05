@@ -29,14 +29,15 @@ const BloomSignUp = ({
   bloomSignIn,
   onBloomSignUp,
 }: any) => {
-  console.log('bloom sign in::: ', bloomSignIn());
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
   const checkerTimeout = useRef(null);
 
   const watchBloom = async () => {
+    console.log('watch bloom');
     const response = await isUserSignedUp(tokenBloom);
+    console.log('response:::::: ', response);
     response.fold(
       error => {
         console.error('Error Watch Bloom : ', error);

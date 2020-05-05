@@ -1,7 +1,7 @@
 import React from 'react';
 import { SignUp } from '@raisehq/components';
 import { InvestingSignUpContainer } from './styles';
-import { checkEmail } from '../../services/auth';
+import { checkEmail, verifyBloomLogin } from '../../services/auth';
 import { signUp } from '../../services/user';
 import { bloomSignIn, redirectFromBloomApp } from '../../services/kyc';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
@@ -14,7 +14,6 @@ const SignUpWrapper = ({ id }: any) => {
   const onSignUp = async credentials => {
     try {
       tagManager.sendEventCategory('Signup', TMEvents.Click, `${id}_attempt`, history.location);
-      console.log('credentials:::: ', credentials);
       const signup = await signUp({
         ...credentials,
         accounttype_id: 2
@@ -22,7 +21,6 @@ const SignUpWrapper = ({ id }: any) => {
 
       if (signup) {
         tagManager.sendEventCategory('Signup', TMEvents.Submit, `${id}_success`, history.location);
-        // TODO: set to confirm??? what to do?
         return true;
       }
 
@@ -48,6 +46,7 @@ const SignUpWrapper = ({ id }: any) => {
         onBloomSignUp={onBloomSignUp}
         bloomSignIn={bloomSignIn}
         redirectFromBloomApp={redirectFromBloomApp}
+        isUserSignedUp={verifyBloomLogin}
       />
     </InvestingSignUpContainer>
   );

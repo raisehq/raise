@@ -17,6 +17,7 @@ const SignUp = ({
   redirectFromBloomApp,
   bloomSignIn,
   onBloomSignUp,
+  isUserSignedUp,
 }: any) => {
   console.log('------------------ ', bloomSignIn);
   const [registerType, setRegisterType] = useState('email');
@@ -54,6 +55,7 @@ const SignUp = ({
         onBloomSignUp={onBloomSignUp}
         bloomSignIn={bloomSignIn}
         redirectFromBloomApp={redirectFromBloomApp}
+        isUserSignedUp={isUserSignedUp}
       />
     </BloomContainer>
   );
