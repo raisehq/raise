@@ -1,7 +1,6 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 import useGetAllBalances from '../../hooks/useGetAllBalances';
-// import WatchCoin from './WatchCoin';
 import { BalanceDropdown, BalanceMenu, TokenLayout } from './Balance.styles';
 
 import TOKEN_URLS from '../../commons/tokens';
