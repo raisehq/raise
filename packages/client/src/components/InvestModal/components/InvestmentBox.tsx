@@ -14,7 +14,7 @@ import RawCoin from '../../Coin';
 import MaxInputsRaw from './MaxInputs';
 import { useAppContext } from '../../../contexts/AppContext';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
-import { CoinsType } from '../../../commons/coins';
+import { CoinsType } from '../../../interfaces/Coins';
 import { fromDecimal, toDecimal } from '../../../utils/web3-utils';
 
 const errorMessages = {

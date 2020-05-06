@@ -19,7 +19,7 @@ import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useWeb3 from '../../hooks/useWeb3';
 import { useRootContext } from '../../contexts/RootContext';
 import CryptoWallets from '../../commons/cryptoWallets';
-import { IWallet } from '../../commons/IWallet';
+import { IWallet } from '../../interfaces/IWallet';
 
 const WalletSetUp = ({ onNext, onBack }: any) => {
   const {
