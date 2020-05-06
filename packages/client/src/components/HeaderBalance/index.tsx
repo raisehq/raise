@@ -1,4 +1,5 @@
 import Balance from './Balance';
 import TokenBalance from './TokenBalance';
+import TokenLayout from './TokenLayout';
 
-export { Balance, TokenBalance };
+export { Balance, TokenBalance, TokenLayout };

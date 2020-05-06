@@ -28,23 +28,15 @@ const useGetAllBalances = (suportedCoins: string[]): CoinsType[] => {
 
   useEffect(() => {
     if (typeof chainId === 'number' && account && contractAddresses) {
-      suportedCoins.map(name => {
-        return startListening(
-          chainId,
-          account,
-          get(contractAddresses, [chainId, name], name) || name
-        );
-      });
+      // prettier-ignore
+      suportedCoins.map(name =>
+        startListening(chainId, account, get(contractAddresses, [chainId, name], name) || name));
     }
 
     return () => {
-      suportedCoins.map(name => {
-        return stopListening(
-          chainId,
-          account,
-          get(contractAddresses, [chainId, name], name) || name
-        );
-      });
+      // prettier-ignore
+      suportedCoins.map(name =>
+        stopListening(chainId, account, get(contractAddresses, [chainId, name], name) || name));
     };
   }, [chainId, account, contractAddresses, startListening, stopListening]);
 

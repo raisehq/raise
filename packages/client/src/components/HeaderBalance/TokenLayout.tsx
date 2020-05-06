@@ -8,6 +8,7 @@ import {
   SpanValues,
   Balance
 } from './TokenBalance.styles';
+
 const TokenLayout = ({ imageUrl, name, value, hider, ...props }: any) => {
   const [hidde, setHidde] = useState(false);
 
