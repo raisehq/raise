@@ -12,6 +12,8 @@ const externals = [
   'chart.js',
   'moment',
   'graphql.js',
+  '@bloomprotocol/share-kit-react/dist/index',
+  '@bloomprotocol/share-kit-react',
 ];
 
 module.exports = {
