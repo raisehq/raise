@@ -21,9 +21,9 @@ const oneMonth = 1 * 30 * 24 * 60 * 60;
 
 const loanFactory = (state, repayment): Partial<LoanLenderView> => {
   const instalments = 1;
-  const interestRate = '857276234567901300';
+  const interestRate = '1000000000000000000';
   const lenderAmount = '1000000000000000000000';
-  const termLength = '7884000';
+  const termLength = '31104000';
   //const instalmentLength = Number(termLength) / Number(instalments);
   const instalmentAmount = toDecimal(
     calculateInvestmentReturn({ lenderAmount, interestRate, termLength }, 18) /
@@ -38,7 +38,8 @@ const loanFactory = (state, repayment): Partial<LoanLenderView> => {
   const auctionStartTimestampN = dayjs()
     .subtract(oneMonth * 2, 'second')
     .unix();
-  const termEndTimestamp = auctionEndTimestampN + oneMonth * instalments;
+  const termEndTimestamp =
+    auctionEndTimestampN + Number(termLength) * instalments;
   const auctionEndTimestamp = auctionEndTimestampN.toString();
   const auctionStartTimestamp = auctionStartTimestampN.toString();
   return {

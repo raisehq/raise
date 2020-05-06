@@ -22,7 +22,7 @@ const oneMonth = 1 * 30 * 24 * 60 * 60;
 
 const loanFactory = (state, repayment): Partial<LoanLenderView> => {
   const instalments = 12;
-  const interestRate = '857276234567901300';
+  const interestRate = '1000000000000000000';
   const lenderAmount = '1000000000000000000000';
   const termLength = (instalments * oneMonth).toString();
   const instalmentAmount = toDecimal(

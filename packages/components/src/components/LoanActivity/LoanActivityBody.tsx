@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Popup, Icon as SemanticIcon } from 'semantic-ui-react';
 import Card from '../Card';
 import { Separator as RawSeparator } from '../Card/Card.styles';
 import { Amount } from '../Amount';
@@ -10,18 +9,7 @@ import { RepayInfo } from '../../utils/progressiveCalcs';
 import { getCalculations } from '../../utils/loanUtils';
 import { CoinsType } from '../../commons/coins';
 import { FlexBetween } from '../FlexBetween';
-
-const Icon = styled(SemanticIcon)`
-  &&& {
-    display: block;
-    height: 20px;
-    width: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-`;
+import CalendarButton from './CalendarButton';
 
 const Separator = styled(RawSeparator)`
   margin-bottom: 12px;
@@ -59,9 +47,8 @@ const LoanActivityBody = ({
     lenderBalance,
     nextInstalment,
     currentDebtView,
-    notPaidInTime,
+    paidInTime,
   } = repayInfo;
-  const inTime = notPaidInTime ? 'delete' : 'success';
 
   return (
     <>
@@ -70,12 +57,7 @@ const LoanActivityBody = ({
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
         </a>
         <FlexDiv>
-          <Popup
-            content="Open repayment calendar"
-            trigger={
-              <Icon color="red" name={`${inTime} calendar`} onClick={onOpen} />
-            }
-          />
+          <CalendarButton onClick={onOpen} paidInTime={paidInTime} />
           <Card.Badge noAbsolute color={loanStatusColors[state]}>
             {loanStatus[state]}
           </Card.Badge>

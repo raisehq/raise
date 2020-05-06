@@ -28,16 +28,36 @@ const getCurrentInstalment = (loan, dateTimestamp) => {
   );
 };
 
+const getInstalment = (loan, dateTimestamp) => {
+  const instalmentLength =
+    (Number(loan.termEndTimestamp) - Number(loan.auctionEndTimestamp)) /
+    Number(loan.instalments);
+  const currentInstalmentNumber =
+    (dateTimestamp - Number(loan.auctionEndTimestamp)) / instalmentLength + 1;
+  return Math.min(
+    Number(loan.instalments),
+    Math.floor(currentInstalmentNumber)
+  );
+};
+
 const getInstalmentAmount = (loan, decimals = 18) => {
   // For a loan of principal P, monthly interest rate I and term N (months),
   // the monthly payment is P*(1/N + I).
+  const instalmentLengthProportion =
+    (Number(loan.termEndTimestamp) - Number(loan.auctionEndTimestamp)) /
+    Number(loan.instalments) /
+    2592000;
+
+  console.log(instalmentLengthProportion);
   const decimalPrincipal = Number(
     fromDecimal(loan.principal.toString(), decimals)
   );
   const decimalInterestRate =
     Number(fromDecimal(loan.interestRate.toString())) / 100;
   const instalmentAmount =
-    decimalPrincipal * (1 / Number(loan.instalments) + decimalInterestRate);
+    decimalPrincipal *
+    (1 / Number(loan.instalments) +
+      decimalInterestRate * instalmentLengthProportion);
 
   return instalmentAmount;
 };
@@ -96,11 +116,13 @@ const getStateByDate = (funding, date) => {
 const getRepayStateByDate = (
   loan: Partial<GraphLoan>,
   lenderInstalment: number,
-  instalmentDate: number
+  instalmentDate
 ): RepaymentState => {
-  const instalment = getCurrentInstalment(loan, instalmentDate);
+  const instalment = getInstalment(loan, instalmentDate);
+  console.log('instalment', instalment);
   const currentDate = Date.now() / 1000;
   const currentInstalment = getCurrentInstalment(loan, currentDate);
+  console.log('cur', currentInstalment);
   const lastInstalmentWithdrawn = lenderInstalment;
   if (instalment === currentInstalment) {
     return RepaymentState.Unpaid;
@@ -118,7 +140,7 @@ const getRepayStateByDate = (
 const scheduleMapper = (loan: Partial<GraphLoan>, lenderInstalment: number) => (
   instalmentDate: number
 ): RepaySchedule => ({
-  date: dayjs.unix(instalmentDate).format('DDD MMM YYYY'),
+  date: dayjs.unix(instalmentDate).format('DD MMM YYYY'),
   state: getRepayStateByDate(loan, lenderInstalment, instalmentDate),
 });
 
@@ -178,7 +200,7 @@ export interface RepayInfo {
   nextInstalment: string;
   currentDebtView: string;
   currentDebt: number;
-  notPaidInTime: boolean;
+  paidInTime: boolean;
 }
 
 export interface RepaySchedule {
@@ -200,6 +222,7 @@ const calculateInstalments = (
   currentDate: number // unix
 ): RepayInfo => {
   const nextInstalmentNumber = getCurrentInstalment(loan, currentDate);
+  console.log(nextInstalmentNumber);
   const instalmentDates = getInstalmentDates(loan);
   const nextRawInstalmentUnix = instalmentDates[nextInstalmentNumber - 1];
   const nextInstalment = dayjs
@@ -214,16 +237,11 @@ const calculateInstalments = (
     scheduleMapper(loan, nextInstalmentNumber)
   );
   const currentDebt = getCurrentDebt(loan, decimals, currentDate);
-  const notPaidInTime =
+  const paidInTime =
     Math.floor(currentDebt) <=
     Math.floor(Number(fromDecimal(loan?.instalmentAmount || '0', decimals)));
   const currentDebtView = numeral(currentDebt).format(numeralFormat);
 
-  console.log(
-    currentDebt,
-    Number(fromDecimal(loan?.instalmentAmount || '0', decimals)),
-    notPaidInTime
-  );
   return {
     nextInstalment,
     lenderBalance,
@@ -231,7 +249,7 @@ const calculateInstalments = (
     schedules,
     currentDebtView,
     currentDebt,
-    notPaidInTime,
+    paidInTime,
   };
 };
 
