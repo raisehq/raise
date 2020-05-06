@@ -49,7 +49,7 @@ export const SectionSubContainer = styled.div<PositionRight>`
 `;
 
 export const StaticWrapper = styled.div<IStatic>`
-  margin-bottom: ${({ last }) => (last ? '150px' : '0px')};
+  margin-bottom: ${({ last }) => (last ? '150px' : '20px')};
 `;
 
 export const SubSectionContainer = styled.div`
