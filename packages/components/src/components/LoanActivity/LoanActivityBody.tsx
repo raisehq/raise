@@ -6,6 +6,7 @@ import { Separator as RawSeparator } from '../Card/Card.styles';
 import { Amount } from '../Amount';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
 import { LoanLenderView, RepaymentType } from '../../commons/graphTypes';
+import { RepayInfo } from '../../utils/progressiveCalcs';
 import { getCalculations } from '../../utils/loanUtils';
 import { CoinsType } from '../../commons/coins';
 import { FlexBetween } from '../FlexBetween';
@@ -39,7 +40,7 @@ export interface LoanActivityProps {
   coin: CoinsType;
   children?: any;
   style?: React.CSSProperties;
-  repayInfo: any;
+  repayInfo: RepayInfo;
 }
 
 const LoanActivityBody = ({
@@ -54,7 +55,14 @@ const LoanActivityBody = ({
   const { roi, times, maxAmount, lenderRoiAmount, lenderAmount } = calcs;
   const state = auction.state || 0;
   const repayment = auction?.repayment || 0;
-  const { lenderBalance, nextInstalment, lenderInstalment } = repayInfo;
+  const {
+    lenderBalance,
+    nextInstalment,
+    currentDebtView,
+    notPaidInTime,
+  } = repayInfo;
+  const inTime = notPaidInTime ? 'delete' : 'success';
+
   return (
     <>
       <Card.Grid notop spaceBetween>
@@ -65,7 +73,7 @@ const LoanActivityBody = ({
           <Popup
             content="Open repayment calendar"
             trigger={
-              <Icon color="red" name="delete calendar" onClick={onOpen} />
+              <Icon color="red" name={`${inTime} calendar`} onClick={onOpen} />
             }
           />
           <Card.Badge noAbsolute color={loanStatusColors[state]}>
@@ -81,7 +89,7 @@ const LoanActivityBody = ({
         <Card.Header
           right
           title={`Next repayment: ${nextInstalment}`}
-          amount={<Amount principal={lenderInstalment} coinIcon={coin?.icon} />}
+          amount={<Amount principal={currentDebtView} coinIcon={coin?.icon} />}
         />
       </Card.Grid>
       <Separator />

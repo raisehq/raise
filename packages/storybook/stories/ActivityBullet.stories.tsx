@@ -25,7 +25,7 @@ const loanFactory = (state, repayment): Partial<LoanLenderView> => {
   const lenderAmount = '1000000000000000000000';
   const termLength = '7884000';
   //const instalmentLength = Number(termLength) / Number(instalments);
-  const lenderInstalment = toDecimal(
+  const instalmentAmount = toDecimal(
     calculateInvestmentReturn({ lenderAmount, interestRate, termLength }, 18) /
       instalments,
     18
@@ -59,7 +59,7 @@ const loanFactory = (state, repayment): Partial<LoanLenderView> => {
     operatorBalance: '200000000',
     operatorFee: '2000000000000000000',
     originator: '0xed9b65514409014aa06ebf4199aaba71af8faea3',
-    principal: '10000000000',
+    principal: '1000000000000000000000',
     termEndTimestamp,
     termLength,
     tokenAddress: '0x330b8eafab0c140432be7737f37c14a9cf8fe00a',
@@ -68,7 +68,7 @@ const loanFactory = (state, repayment): Partial<LoanLenderView> => {
     instalments,
     instalmentsPaid,
     lenderBalance,
-    lenderInstalment,
+    instalmentAmount,
     lenderAmount,
     interestRate,
   };

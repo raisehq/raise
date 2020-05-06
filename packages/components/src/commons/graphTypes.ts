@@ -99,7 +99,8 @@ export interface LoanLenderView extends GraphLoan {
   withdrawn?: boolean;
   lenderAmount?: string;
   lenderBalance?: string;
-  lenderInstalment?: string;
+  instalmentAmount?: string;
+  lenderInstalment?: number;
 }
 
 export interface LoanDispatcher {

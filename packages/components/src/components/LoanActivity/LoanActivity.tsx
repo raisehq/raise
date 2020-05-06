@@ -25,11 +25,13 @@ const LoanActivity = ({
 }: LoanActivityProps) => {
   const [flipped, setFlip] = useState(false);
   const onOpen = () => setFlip(!flipped);
+
   const repayInfo = calculateInstalments(
     auction,
     coin?.decimals,
     dayjs().unix()
   );
+
   const { schedules } = repayInfo;
 
   const activityProps = { onOpen, repayInfo, auction, coin, ...rest };

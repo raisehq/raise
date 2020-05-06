@@ -1,7 +1,12 @@
 import dayjs from 'dayjs';
+import numeral, { numeralFormat } from '../commons/numeral';
 import { fromDecimal } from './web3-utils';
 import { calculatefromDecimal } from './loanUtils';
-import { RepaymentState, LoanLenderView } from '../commons/graphTypes';
+import {
+  RepaymentState,
+  LoanLenderView,
+  GraphLoan,
+} from '../commons/graphTypes';
 
 // internal
 /*
@@ -13,10 +18,14 @@ import { RepaymentState, LoanLenderView } from '../commons/graphTypes';
  */
 const getCurrentInstalment = (loan, dateTimestamp) => {
   const instalmentLength =
-    (loan.termEndTimestamp - loan.auctionEndTimestamp) / loan.instalments;
+    (Number(loan.termEndTimestamp) - Number(loan.auctionEndTimestamp)) /
+    Number(loan.instalments);
   const currentInstalmentNumber =
-    (dateTimestamp - loan.auctionEndTimestamp) / instalmentLength + 1;
-  return Math.floor(currentInstalmentNumber);
+    (dateTimestamp - Number(loan.auctionEndTimestamp)) / instalmentLength + 1;
+  return Math.min(
+    Number(loan.instalments),
+    Math.floor(currentInstalmentNumber)
+  );
 };
 
 const getInstalmentAmount = (loan, decimals = 18) => {
@@ -25,17 +34,17 @@ const getInstalmentAmount = (loan, decimals = 18) => {
   const decimalPrincipal = Number(
     fromDecimal(loan.principal.toString(), decimals)
   );
-  // TODO: do we need to / 100??
-  const decimalInterestRate = Number(fromDecimal(loan.interestRate.toString()));
+  const decimalInterestRate =
+    Number(fromDecimal(loan.interestRate.toString())) / 100;
   const instalmentAmount =
-    decimalPrincipal * (1 / loan.instalments + decimalInterestRate);
+    decimalPrincipal * (1 / Number(loan.instalments) + decimalInterestRate);
 
   return instalmentAmount;
 };
 
 const getPendingInstalmentsAmount = (loan, decimals, date) => {
   const currentInstalment = getCurrentInstalment(loan, date);
-  const instalmentsToPay = currentInstalment - loan.instalmentsPaid;
+  const instalmentsToPay = currentInstalment - Number(loan.instalmentsPaid);
   const totalInstalmentAmount =
     getInstalmentAmount(loan, decimals) * instalmentsToPay;
 
@@ -84,11 +93,39 @@ const getStateByDate = (funding, date) => {
   return 'Withdrawed';
 };
 
-// external
+const getRepayStateByDate = (
+  loan: Partial<GraphLoan>,
+  lenderInstalment: number,
+  instalmentDate: number
+): RepaymentState => {
+  const instalment = getCurrentInstalment(loan, instalmentDate);
+  const currentDate = Date.now() / 1000;
+  const currentInstalment = getCurrentInstalment(loan, currentDate);
+  const lastInstalmentWithdrawn = lenderInstalment;
+  if (instalment === currentInstalment) {
+    return RepaymentState.Unpaid;
+  }
+  if (instalment > currentInstalment) {
+    return RepaymentState.Waiting;
+  }
+  if (instalment > lastInstalmentWithdrawn) {
+    return RepaymentState.Paid;
+  }
+
+  return RepaymentState.Withdrawed;
+};
+
+const scheduleMapper = (loan: Partial<GraphLoan>, lenderInstalment: number) => (
+  instalmentDate: number
+): RepaySchedule => ({
+  date: dayjs.unix(instalmentDate).format('DDD MMM YYYY'),
+  state: getRepayStateByDate(loan, lenderInstalment, instalmentDate),
+});
+
 const getCurrentPenalty = (loan, date, decimals) => {
   const currentInstalment = getCurrentInstalment(loan, date);
-  const instalmentsToPay = currentInstalment - loan.instalmentsPaid;
-  const penaltiesToPay = instalmentsToPay - 1;
+  const instalmentsToPay = currentInstalment - Number(loan.instalmentsPaid);
+  const penaltiesToPay = Math.max(0, instalmentsToPay - 1);
   const totalPenaltyAmount =
     getInstalmentPenalty(loan, decimals) * penaltiesToPay;
 
@@ -125,7 +162,6 @@ const getProgressiveState = (funding, decimals, date) => {
 
   const currentDate = Date.now();
   const currentInstalment = getCurrentInstalment(funding.loan, currentDate);
-
   const nextInstalment = instalmentDates[currentInstalment];
 
   return {
@@ -135,19 +171,14 @@ const getProgressiveState = (funding, decimals, date) => {
   };
 };
 
-const getNextInstalment = (loan, currentDate): number => {
-  const dates = getInstalmentDates(loan);
-  const target = currentDate;
-  return dates.reduce((prev: number, curr: number) =>
-    Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev
-  );
-};
-
 export interface RepayInfo {
   schedules: RepaySchedule[];
   lenderBalance: string;
-  lenderInstalment: string;
+  instalmentAmount: string;
   nextInstalment: string;
+  currentDebtView: string;
+  currentDebt: number;
+  notPaidInTime: boolean;
 }
 
 export interface RepaySchedule {
@@ -155,23 +186,53 @@ export interface RepaySchedule {
   state: RepaymentState;
 }
 
+export const getNextInstalment = (loan, currentDate): number => {
+  const dates = getInstalmentDates(loan);
+  const target = currentDate;
+  return dates.reduce((prev: number, curr: number) =>
+    Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev
+  );
+};
+
 const calculateInstalments = (
   loan: Partial<LoanLenderView>,
   decimals = 18,
   currentDate: number // unix
 ): RepayInfo => {
-  const nextInstalmentNumber = getNextInstalment(loan, currentDate);
-  const nextInstalment = dayjs.unix(nextInstalmentNumber).format('D MMM YYYY');
+  const nextInstalmentNumber = getCurrentInstalment(loan, currentDate);
+  const instalmentDates = getInstalmentDates(loan);
+  const nextRawInstalmentUnix = instalmentDates[nextInstalmentNumber - 1];
+  const nextInstalment = dayjs
+    .unix(nextRawInstalmentUnix)
+    .format('DD MMM YYYY');
   const lenderBalance = calculatefromDecimal(loan.lenderBalance, decimals);
-  const lenderInstalment = calculatefromDecimal(
-    loan.lenderInstalment,
+  const instalmentAmount = calculatefromDecimal(
+    loan.instalmentAmount,
     decimals
   );
-  const schedules = getInstalmentDates(loan).map(value => ({
-    date: dayjs.unix(value).format('D MMM YYYY'),
-    state: 0,
-  }));
-  return { nextInstalment, lenderBalance, lenderInstalment, schedules };
+  const schedules = instalmentDates.map(
+    scheduleMapper(loan, nextInstalmentNumber)
+  );
+  const currentDebt = getCurrentDebt(loan, decimals, currentDate);
+  const notPaidInTime =
+    Math.floor(currentDebt) <=
+    Math.floor(Number(fromDecimal(loan?.instalmentAmount || '0', decimals)));
+  const currentDebtView = numeral(currentDebt).format(numeralFormat);
+
+  console.log(
+    currentDebt,
+    Number(fromDecimal(loan?.instalmentAmount || '0', decimals)),
+    notPaidInTime
+  );
+  return {
+    nextInstalment,
+    lenderBalance,
+    instalmentAmount,
+    schedules,
+    currentDebtView,
+    currentDebt,
+    notPaidInTime,
+  };
 };
 
 export {
@@ -184,6 +245,6 @@ export {
   getPendingInstalmentsAmount,
   getInstalmentDates,
   getStateByDate,
-  getNextInstalment,
+  getRepayStateByDate,
   calculateInstalments,
 };
