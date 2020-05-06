@@ -7,7 +7,23 @@ const URL = {
   ADDRESS: `${getHost('CORE')}/address`,
   ADDRESS_TYPES: `${getHost('CORE')}/address/types`,
   USER: `${getHost('CORE')}/users`,
-  CRYPTOADDRESS: `${getHost('CORE')}/cryptoaddress`
+  CRYPTOADDRESS: `${getHost('CORE')}/cryptoaddress`,
+  REGISTER: `${getHost('CORE')}/users/register`
+};
+
+export const signUp = async data => {
+  const config: any = {
+    url: URL.REGISTER,
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    data
+  };
+
+  const response = await to(axios(config));
+  return response;
 };
 
 export const getAddressTypes = async (): Promise<AddressTypes> => {
