@@ -19,7 +19,7 @@ interface RepayCalendarProps {
 const scheduleMapper = ({ date, state }: RepaySchedule, index: number) => (
   <FlexBetween
     key={date}
-    label={`${index + 1} ${date}`}
+    label={`${index + 1}. ${date}`}
     value={RepaymentState[state]}
   />
 );

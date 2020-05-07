@@ -20,20 +20,29 @@ const FlexDiv = styled.div`
 
 const oneMonth = 1 * 30 * 24 * 60 * 60;
 
-const loanFactory = (state, repayment): Partial<LoanLenderView> => {
-  const instalments = 12;
+const loanFactory = ({
+  state,
+  repayment,
+  principal,
+  instalments,
+  instalmentsPaid,
+  lenderInstalment,
+  monthOffset,
+}): Partial<LoanLenderView> => {
   const interestRate = '1000000000000000000';
-  const lenderAmount = '1000000000000000000000';
+  const lenderAmount = principal;
   const termLength = (instalments * oneMonth).toString();
   const instalmentAmount = toDecimal(
     calculateInvestmentReturn({ lenderAmount, interestRate, termLength }, 18) /
       instalments,
     18
   );
-  const lenderBalance = instalmentAmount;
-  const instalmentsPaid = 3;
+  const lenderBalance =
+    Number(instalmentAmount) * instalmentsPaid -
+    Number(instalmentAmount) * lenderInstalment;
   const auctionEndTimestampN = dayjs()
-    .subtract(oneMonth * 3, 'second')
+    .subtract(oneMonth * monthOffset, 'second')
+    .subtract(1, 'second')
     .unix();
   const auctionStartTimestampN = dayjs()
     .subtract(oneMonth * 4, 'second')
@@ -51,7 +60,7 @@ const loanFactory = (state, repayment): Partial<LoanLenderView> => {
     investorCount: 1,
     loanRepaid: false,
     loanWithdrawn: true,
-    maxAmount: '1000000000000000000000',
+    maxAmount: principal,
     maxInterestRate: '1666666666666666700',
     minInterestRate: '833333333333333400',
     minimumReached: true,
@@ -59,7 +68,7 @@ const loanFactory = (state, repayment): Partial<LoanLenderView> => {
     operatorBalance: '200000000',
     operatorFee: '2000000000000000000',
     originator: '0xed9b65514409014aa06ebf4199aaba71af8faea3',
-    principal: '1000000000000000000000',
+    principal,
     termEndTimestamp,
     termLength,
     tokenAddress: '0x330b8eafab0c140432be7737f37c14a9cf8fe00a',
@@ -71,6 +80,7 @@ const loanFactory = (state, repayment): Partial<LoanLenderView> => {
     instalmentAmount,
     lenderAmount,
     interestRate,
+    lenderInstalment,
   };
 };
 
@@ -94,22 +104,86 @@ const daiCoin = {
 };
 
 const monthlyMap = [
-  { state: 2, label: 'Active', repayment: 1 },
-  { state: 4, label: 'Repaid', repayment: 1 },
-  { state: 5, label: 'Closed', repayment: 1 },
-  { state: 3, label: 'Defaulted', repayment: 1 },
-  { state: 1, label: 'Expired', repayment: 1 },
-  { state: 6, label: 'Frozen', repayment: 1 },
+  {
+    state: 2,
+    label: 'Active',
+    repayment: 1,
+    instalments: 12,
+    instalmentsPaid: 3,
+    monthOffset: 3,
+    lenderInstalment: 1,
+    principal: '1000000000000000000000',
+  },
+  {
+    state: 2,
+    label: 'Active but missing payments',
+    repayment: 1,
+    instalments: 12,
+    instalmentsPaid: 3,
+    monthOffset: 6,
+    lenderInstalment: 3,
+    principal: '1000000000000000000000',
+  },
+  {
+    state: 4,
+    label: 'Repaid',
+    repayment: 1,
+    instalments: 12,
+    instalmentsPaid: 12,
+    monthOffset: 13,
+    lenderInstalment: 8,
+    principal: '1000000000000000000000',
+  },
+  {
+    state: 5,
+    label: 'Closed',
+    repayment: 1,
+    instalments: 12,
+    instalmentsPaid: 12,
+    monthOffset: 13,
+    lenderInstalment: 12,
+    principal: '1000000000000000000000',
+  },
+  {
+    state: 3,
+    label: 'Defaulted',
+    repayment: 1,
+    instalments: 12,
+    instalmentsPaid: 4,
+    monthOffset: 13,
+    lenderInstalment: 4,
+    principal: '1000000000000000000000',
+  },
+  {
+    state: 1,
+    label: 'Expired',
+    repayment: 1,
+    instalments: 12,
+    instalmentsPaid: 0,
+    monthOffset: 0,
+    lenderInstalment: 0,
+    principal: '1000000000000000000000',
+  },
+  {
+    state: 6,
+    label: 'Frozen',
+    repayment: 1,
+    instalments: 12,
+    instalmentsPaid: 0,
+    monthOffset: 0,
+    lenderInstalment: 0,
+    principal: '1000000000000000000000',
+  },
 ];
 
-const activityMapper = ({ state, label, repayment }) => (
+const activityMapper = loanMock => (
   <div style={{ padding: 10 }}>
-    <h4>{label}</h4>
+    <h4>{loanMock.label}</h4>
     <LoanActivity
-      auction={loanFactory(state, repayment)}
+      auction={loanFactory(loanMock)}
       borrower={company}
       coin={daiCoin}
-      key={state}
+      key={loanMock.state}
     />
   </div>
 );

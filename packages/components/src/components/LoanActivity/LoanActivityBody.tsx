@@ -57,7 +57,9 @@ const LoanActivityBody = ({
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
         </a>
         <FlexDiv>
-          <CalendarButton onClick={onOpen} paidInTime={paidInTime} />
+          {state !== 1 && (
+            <CalendarButton onClick={onOpen} paidInTime={paidInTime} />
+          )}
           <Card.Badge noAbsolute color={loanStatusColors[state]}>
             {loanStatus[state]}
           </Card.Badge>
@@ -68,11 +70,17 @@ const LoanActivityBody = ({
           title="Available for withdraw"
           amount={<Amount principal={lenderBalance} coinIcon={coin?.icon} />}
         />
-        <Card.Header
-          right
-          title={`Next repayment: ${nextInstalment}`}
-          amount={<Amount principal={currentDebtView} coinIcon={coin?.icon} />}
-        />
+        {state === 2 ? (
+          <Card.Header
+            right
+            title={`Next repayment: ${nextInstalment}`}
+            amount={
+              <Amount principal={currentDebtView} coinIcon={coin?.icon} />
+            }
+          />
+        ) : (
+          <div />
+        )}
       </Card.Grid>
       <Separator />
       <FlexBetween
