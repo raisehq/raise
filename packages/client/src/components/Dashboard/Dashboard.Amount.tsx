@@ -1,7 +1,7 @@
 import React from 'react';
 import { AmountComponent } from './Dashboard.styles';
 import Coin from '../Coin';
-import { CoinsType } from '../../commons/coins';
+import { CoinsType } from '../../interfaces/Coins';
 
 const Amount = ({ principal, roi, coin }: { principal: any; roi?: string; coin: CoinsType }) => (
   <AmountComponent>
