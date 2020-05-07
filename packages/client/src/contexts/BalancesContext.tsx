@@ -43,6 +43,7 @@ enum Action {
 }
 
 function reducer(state: BalancesState, { type, payload }: { type: Action; payload: any }) {
+  if (!payload.address) return { ...state };
   switch (type) {
     case Action.START_LISTENING: {
       const { chainId, address, tokenAddress } = payload;
@@ -261,6 +262,6 @@ export function useAddressBalance(address: string, tokenAddress: string): BN {
 
   const value =
     typeof chainId === 'number' ? state?.[chainId]?.[address]?.[tokenAddress]?.value || '0' : '0';
-
+  // TODO : NO make sense transform this string to BN to later transform again in string and parse.
   return useMemo(() => (typeof value === 'string' ? new BN(value) : value), [value]);
 }

@@ -122,9 +122,8 @@ const InvestState: React.SFC<InvestStateProps> = ({
       setInputTokenAmount(new BN(toDecimal(value, loanCoin.decimals)));
       return;
     }
-    console.log('before swap output--------------');
+
     const outputAmount = await getSwapOutput();
-    console.log('------------------------------, outputÇ:::: ', outputAmount);
     setInputTokenAmount(outputAmount);
   }, [value, selectedCoin]);
 

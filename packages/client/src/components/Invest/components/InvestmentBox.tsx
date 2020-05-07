@@ -6,8 +6,9 @@ import {
 } from '@uniswap/sdk';
 import { TokenReservesNormalized } from '@uniswap/sdk/dist/types';
 import { useAppContext } from '../../../contexts/AppContext';
+import { useRootContext } from '../../../contexts/RootContext';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
-import { CoinsType } from '../../../commons/coins';
+import { CoinsType } from '../../../interfaces/Coins';
 import { fromDecimal, toDecimal } from '../../../utils/web3-utils';
 import MaxInputsRaw from './MaxInputs';
 import {
@@ -21,7 +22,8 @@ import {
   Eligible,
   BigInput,
   ErrorBox,
-  InvestHeader
+  InvestHeader,
+  NoLoggedCoinSelector
 } from './styles';
 
 const errorMessages = {
@@ -79,6 +81,7 @@ const getSwapOutput = async (
       );
       return totalOutput + totalOutput / 100;
     }
+
     const tradeDetails = await tradeExactTokensForTokensWithData(
       inputReserves,
       outputReserves,
@@ -118,6 +121,13 @@ const InvestmentBox = ({
   const {
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
+  const {
+    store: {
+      auth: {
+        login: { logged: isLogged }
+      }
+    }
+  }: any = useRootContext();
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin.icon}`;
 
   const handleChange = (e, { value: newValue }: any) => {
@@ -156,7 +166,7 @@ const InvestmentBox = ({
   const readValue = value > 0 ? value : null;
 
   const errorMessage = () => {
-    if (inputToken && inputToken > balance) {
+    if (inputToken && inputToken > balance && isLogged) {
       return errorMessages.inputGreaterThanBalance;
     }
     if (value && value > maxAmountNum) {
@@ -176,6 +186,7 @@ const InvestmentBox = ({
 
   useAsyncEffect(async () => {
     try {
+      // TODO: this fails => condicional if kovan?
       await setTokenReserves(
         coin?.address,
         loanCoin?.address,
@@ -212,12 +223,21 @@ const InvestmentBox = ({
       <Eligible active={value >= 50}>Promo activated! Invest and get your tokens in 48h</Eligible>
       <BalanceWrapper>
         <div>Invest with</div>
-        <CoinSelector
-          loanCoin={loanCoin}
-          disabled={!!swapBlacklist[selectedCoin]}
-          value={selectedCoin}
-          onChange={handleChange}
-        />
+        {isLogged ? (
+          <CoinSelector
+            loanCoin={loanCoin}
+            disabled={swapBlacklist[selectedCoin]}
+            value={selectedCoin}
+            onChange={handleChange}
+          />
+        ) : (
+          <NoLoggedCoinSelector
+            loanCoin={loanCoin}
+            disabled={swapBlacklist[selectedCoin]}
+            value={selectedCoin}
+            onChange={handleChange}
+          />
+        )}
         <ErrorBox>
           {errorMessage()}
           &nbsp;

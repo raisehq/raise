@@ -44,6 +44,7 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }: any) => {
   };
   /* eslint-disable */
   // TODO : Refactor this ternary condition
+
   return (
     <Container {...props}>
       <Child>

@@ -18,7 +18,7 @@ import CryptoWallets from '../../commons/cryptoWallets';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 import OnboardingProgressBar from '../OnboardingProgressBar';
-import { IWallet } from '../../commons/IWallet';
+import { IWallet } from '../../interfaces/IWallet';
 
 const tagLabelMapping = {
   coinbase: 'coinbase_attempt',

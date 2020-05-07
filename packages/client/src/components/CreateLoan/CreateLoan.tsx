@@ -65,7 +65,7 @@ import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS } from '../../commons/constants';
 
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
-import { CoinsType } from '../../commons/coins';
+import { CoinsType } from '../../interfaces/Coins';
 
 const CreateLoan = ({ contracts }: any) => {
   const {

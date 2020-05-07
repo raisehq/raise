@@ -1,34 +1,62 @@
 import React, { useMemo } from 'react';
-import { BalanceDropdown, TokenBalance } from './CoinSelector.styles';
+
+import BigNumber from 'bignumber.js';
+import { useRootContext } from '../../contexts/RootContext';
+
+import useGetAllBalances from '../../hooks/useGetAllBalances';
+import { BalanceDropdown, TokenLayout } from './CoinSelector.styles';
+
 import TOKEN_URLS from '../../commons/tokens';
 
 const SUPPORTED_SWAP_COINS = ['DAI', 'USDC', 'ETH'];
+const SUPPORTER_SWAP_COINS_USDT = ['USDT'];
 
 const CoinSelector = ({ loanCoin, value, ...rest }: any) => {
-  const options = useMemo(() => {
-    if (loanCoin?.text === 'USDT') {
-      const props = {
-        imageUrl: TOKEN_URLS[loanCoin.text],
-        name: loanCoin.text,
-        key: loanCoin.text,
-        value: loanCoin.text
-      };
-      const usdtOption = { ...props, content: <TokenBalance {...props} /> };
-      return [usdtOption];
+  const {
+    store: {
+      auth: {
+        login: { logged: isLogged }
+      }
     }
-    return SUPPORTED_SWAP_COINS.map(tokenName => {
-      const props = {
-        imageUrl: TOKEN_URLS[tokenName],
-        name: tokenName,
-        key: tokenName,
-        value: tokenName
-      };
-      return { ...props, content: <TokenBalance {...props} /> };
-    });
-  }, [loanCoin]);
+  }: any = useRootContext();
+  const balances = useGetAllBalances(
+    loanCoin.text === 'USDT' ? SUPPORTER_SWAP_COINS_USDT : SUPPORTED_SWAP_COINS
+  );
+  const options = useMemo(
+    () =>
+      balances
+        .sort((a, b) => {
+          const aBN = new BigNumber(a.value);
+          const bBN = new BigNumber(b.value);
+          return aBN.isGreaterThan(bBN) ? -1 : 1;
+        })
+        .map(coin => {
+          const newCoin = {
+            ...{ value: coin.text },
+            content: (
+              <TokenLayout
+                value={coin.value}
+                name={coin.text}
+                key={coin.text}
+                imageUrl={TOKEN_URLS[coin.text]}
+                isLogged={isLogged}
+              />
+            )
+          };
+          return newCoin;
+        }),
+    [balances]
+  );
 
+  const selectedCoin = balances.filter(coin => coin.text === value)[0];
   const CurrentSelection = (
-    <TokenBalance value={value} name={value} key={value} imageUrl={TOKEN_URLS[value]} />
+    <TokenLayout
+      value={selectedCoin ? selectedCoin.value : value}
+      name={selectedCoin ? selectedCoin.text : value}
+      key={selectedCoin ? selectedCoin.text : value}
+      imageUrl={TOKEN_URLS[selectedCoin ? selectedCoin.text : value]}
+      isLogged={isLogged}
+    />
   );
   return <BalanceDropdown trigger={CurrentSelection} value={value} options={options} {...rest} />;
 };

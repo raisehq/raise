@@ -3,7 +3,9 @@ import { Icon, Popup } from 'semantic-ui-react';
 import { animated } from 'react-spring';
 import { Card as RaiseCard } from '@raisehq/components';
 import LoanInput from '../../CreateLoan/LoanInput';
-import CoinSelectorRaw from '../../CoinSelector';
+import CoinSelectorRaw, {
+  NoLoggedCoinSelector as NoLoggedCoinSelectorRaw
+} from '../../CoinSelector';
 import RawCoin from '../../Coin';
 
 interface TableItemContainerProps {
@@ -85,6 +87,18 @@ export const MaxInputs = styled.div`
 
 export const CoinSelector = styled(CoinSelectorRaw)`
   max-width: 100%;
+  width: 100%;
+  height: 48px;
+  &&&&.disabled {
+    opacity: 1;
+    & .dropdown.icon {
+      display: none;
+    }
+  }
+`;
+
+export const NoLoggedCoinSelector = styled(NoLoggedCoinSelectorRaw)`
+  min-width: 100%;
   width: 100%;
   height: 48px;
   &&&&.disabled {

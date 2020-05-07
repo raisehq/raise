@@ -11,11 +11,11 @@ import {
   Grid,
   Checkbox
 } from 'semantic-ui-react';
+import { Button as RaiseButton } from '@raisehq/components';
 import RawCoin from '../Coin';
 import Balance from '../Balance';
 import { device } from '../../commons/breakpoints';
 import InvestmentBox from './components/InvestmentBox';
-import { Button as RaiseButton } from '@raisehq/components';
 
 interface ModalInputProps {
   roi?: boolean;

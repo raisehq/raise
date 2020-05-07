@@ -25,7 +25,6 @@ const Invest = ({ loan, userActivated, onClose, fullInfo, isLogged }: any) => {
   const [stage, setStage] = useState(UI.Confirm);
   const [investment, setInvestment] = useState(0);
   const [inputTokenAmount, setInputTokenAmount] = useState<BN>(new BN('0'));
-
   const [selectedCoin, setCoin] = useState(coin?.text);
 
   useEffect(() => {
