@@ -95,3 +95,53 @@ export const getReferralStatus = async (address, network) => {
     throw new Error(`Error request client to server stack : ${error.message}`);
   }
 };
+
+export const getLoanByAddress = async (address, network) => {
+  console.log('network:: ', network);
+  const config: any = {
+    url: getGraphEndpoint(network),
+    method: 'POST',
+    headers: {},
+    data: {
+      query: `
+        {
+          loans(where: {address:"${address}"}) {
+            state
+            principal
+            maxAmount
+            operatorFee
+            termEndTimestamp
+            netBalance
+            auctionEnded
+            interestRate
+            borrowerDebt
+            investorCount
+            id
+            minimumReached
+            auctionLength
+            auctionStartTimestamp
+            auctionEndTimestamp
+            termLength
+            minInterestRate
+            maxInterestRate
+            operatorBalance
+            originator
+            tokenAddress
+          }
+        }`
+    }
+  };
+
+  try {
+    const rawResponse = await axiosRaw(config);
+
+    switch (rawResponse.status) {
+      case 200:
+        return rawResponse.data.data.loans.pop();
+      default:
+        throw new Error(rawResponse.data.message || 'Error fetch contracts');
+    }
+  } catch (error) {
+    throw new Error(`Error request client to server stack : ${error.message}`);
+  }
+};
