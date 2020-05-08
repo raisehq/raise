@@ -33,7 +33,6 @@ const LoanPage = ({
       config: { network }
     }
   }: any = useRootContext();
-  console.log('................. netwirj................ ', network);
   const [loan, setLoan] = useState(null);
   const [borrowerInfo, setBorrowerInfo] = useState({});
 

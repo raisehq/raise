@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import React, { ReactNode, SFC, useState, useEffect } from 'react';
 import { useSpring } from 'react-spring';
 import useMeasure from '../../../hooks/useMeasure';
@@ -8,7 +9,8 @@ import {
   TableItemContainer,
   TitleWithTooltip,
   InvestmentTooltip,
-  InvestIcon
+  InvestIcon,
+  TooltipIconWrapper
 } from './styles';
 
 interface TableItemObj {
@@ -33,8 +35,12 @@ export const TableItem: SFC<TableItemProps> = ({ title, content, latest, tooltip
         <InvestmentTooltip
           content={tooltip}
           inverted
-          position="center top"
-          trigger={<InvestIcon color="teal" name="info circle" />}
+          position="top center"
+          trigger={
+            <TooltipIconWrapper>
+              <InvestIcon color="teal" name="info circle" />
+            </TooltipIconWrapper>
+          }
         />
       )}
     </TitleWithTooltip>

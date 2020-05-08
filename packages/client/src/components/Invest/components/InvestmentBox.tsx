@@ -138,7 +138,6 @@ const InvestmentBox = ({
     const availableBalance = selectedCurrency.text === 'ETH' ? balance - 0.005 : balance;
     const nMaxAmount = Number(fromDecimal(maxAmount, loanCurrency.decimals));
     const nPrincipal = nMaxAmount - Number(fromDecimal(principal, loanCurrency.decimals));
-
     if (loanCurrency?.text === selectedCurrency?.text) {
       const minValue = Math.min(...[availableBalance / divisor, nPrincipal]);
       return setValue(minValue);
@@ -149,6 +148,7 @@ const InvestmentBox = ({
       inputReserves,
       outputReserves
     );
+
     const minValue = Math.min(...[output, nPrincipal]);
     return setValue(minValue);
   };

@@ -245,3 +245,7 @@ export const InvestHeader = styled.h3`
   line-height: 24px;
   color: #000;
 `;
+
+export const TooltipIconWrapper = styled.div`
+  margin-left: 5px;
+`;

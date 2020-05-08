@@ -13,14 +13,15 @@ const UI = daggy.taggedSum('UI', {
   Success: []
 });
 
-// interface IInvest {
-//   laon: any;
-//   userActivated: boolean;
-//   onClose?: any;
-//   fullInfo: boolean;
-// }
+interface IInvest {
+  loan: any;
+  userActivated: boolean;
+  onClose?: any;
+  fullInfo: boolean;
+  isLogged: boolean;
+}
 
-const Invest = ({ loan, userActivated, onClose, fullInfo, isLogged }: any) => {
+const Invest: React.SFC<IInvest> = ({ loan, userActivated, onClose, fullInfo, isLogged }: any) => {
   const coin = useGetCoin(loan);
   const [stage, setStage] = useState(UI.Confirm);
   const [investment, setInvestment] = useState(0);

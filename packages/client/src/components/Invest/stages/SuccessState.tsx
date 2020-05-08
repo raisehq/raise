@@ -11,7 +11,9 @@ const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }
   const onOK = () => {
     tagManager.sendEvent(TMEvents.Submit, 'invest_success');
 
-    closeModal();
+    if (closeModal) {
+      closeModal();
+    }
     setStage(ui.Confirm);
   };
 

@@ -5,6 +5,7 @@ import { InvestStateProps } from '../types';
 import { getCalculations } from '../../../utils/loanUtils';
 import { useRootContext } from '../../../contexts/RootContext';
 import { useAppContext } from '../../../contexts/AppContext';
+import useRouter from '../../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../../hooks/useGoogleTagManager';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
 import { useAddressBalance } from '../../../contexts/BalancesContext';
@@ -45,9 +46,6 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const {
     store: {
       user: {
-        details: { kyc_status: kycStatus }
-      },
-      user: {
         cryptoAddress: { address: account }
       }
     }
@@ -57,10 +55,10 @@ const InvestState: React.SFC<InvestStateProps> = ({
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
 
+  const { history }: any = useRouter();
   const [value, setValue] = useState<number>(0);
 
   const inputCoin = useGetCoinMetadata(selectedCoin);
-  console.log('coin metadata::::: ', inputCoin);
   const calcs = getCalculations(loan, loanCoin.decimals);
   const { maxAmountNum, expectedROI } = calcs;
 
@@ -70,15 +68,21 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const tagManager = useGoogleTagManager('Card');
   const balanceBN: BN = useAddressBalance(account, inputCoin?.address || '');
   const balance = Number(fromDecimalFixed(balanceBN.toString(10), inputCoin?.decimals));
-
   const expectedInputRoi = Number(expectedROI * value || 0).toLocaleString(...localeConfig);
 
   const onConfirm = async () => {
-    tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
+    if (userActivated) {
+      tagManager.sendEvent(TMEvents.Submit, 'invest_attempt');
 
-    setInvestment(value);
-    // Change to state confirmation
-    setStage(ui.Processing);
+      setInvestment(value);
+      // Change to state confirmation
+      setStage(ui.Processing);
+    } else {
+      history.push('/kyc');
+      if (closeModal) {
+        closeModal();
+      }
+    }
   };
 
   const getSwapOutput = async (): Promise<BN> => {
@@ -98,8 +102,6 @@ const InvestState: React.SFC<InvestStateProps> = ({
         return totalOutput.add(totalOutput.div(new BN('100')));
       }
       const outputAmount = toDecimal(value, loanCoin.decimals);
-      console.log('loan coin::: ', loanCoin);
-      console.log('Input coin:::: ', inputCoin);
       const tradeDetails = await tradeTokensForExactTokens(
         inputCoin.address,
         loanCoin.address,
@@ -107,7 +109,6 @@ const InvestState: React.SFC<InvestStateProps> = ({
         chainId
       );
 
-      console.log('input coin in get swap output after trade::: ', tradeDetails);
       const totalOutput = new BN(tradeDetails.inputAmount.amount.toString());
       return totalOutput;
     } catch (error) {
@@ -144,8 +145,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
     inputTokenAmount.gt(balanceBN) ||
     inputTokenAmount.lte(new BN('0')) ||
     value > maxAmountNum ||
-    !termsCond ||
-    kycStatus !== 3;
+    !termsCond;
 
   const InvestInputProps = {
     loan,
@@ -168,8 +168,6 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const getCoinValue = () => (
     <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
   );
-
-  console.log('fullinfo: ', fullInfo, ' activated: ', userActivated);
 
   // prettier-ignore
   return (
@@ -204,15 +202,27 @@ const InvestState: React.SFC<InvestStateProps> = ({
             I agree to the Terms and Conditions of the Loan Agreement
           </CheckContainer>
         )}
-        <ContinueButton
-          idAttr="btn-invest-confirm"
-          onClick={onConfirm}
-          disabled={buttonRules}
-          text="Continue"
-          type="primary"
-          size="large"
-          fullWidth
-        />
+        {userActivated ? (
+          <ContinueButton
+            idAttr="btn-invest-confirm"
+            onClick={onConfirm}
+            disabled={buttonRules}
+            text="CONFIRM"
+            type="primary"
+            size="large"
+            fullWidth
+          />
+        ) : (
+          <ContinueButton
+            idAttr="btn-invest-confirm"
+            onClick={onConfirm}
+            disabled={!isLogged}
+            text={isLogged ? 'Verify your Accoun' : 'CONFIRM'}
+            type="primary"
+            size="large"
+            fullWidth
+          />
+        )}
       </InvestButtonWrapper>
     </InvestBody>
   );
