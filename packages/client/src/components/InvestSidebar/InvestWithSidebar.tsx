@@ -7,7 +7,7 @@ import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-import ButtonContainer from './styles';
+import { ButtonContainer } from './styles';
 
 import { useSidebarContext } from '../../contexts/SidebarContext';
 

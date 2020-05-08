@@ -23,7 +23,8 @@ import {
   BigInput,
   ErrorBox,
   InvestHeader,
-  NoLoggedCoinSelector
+  NoLoggedCoinSelector,
+  InvestText
 } from './styles';
 
 const errorMessages = {
@@ -186,7 +187,6 @@ const InvestmentBox = ({
 
   useAsyncEffect(async () => {
     try {
-      // TODO: this fails => condicional if kovan?
       await setTokenReserves(
         coin?.address,
         loanCoin?.address,
@@ -208,7 +208,7 @@ const InvestmentBox = ({
       </Offer>
 
       <InvestBox>
-        <div>INVEST</div>
+        <InvestText>INVEST</InvestText>
         <BigInput
           autoComplete="off"
           id="input-invest-value"

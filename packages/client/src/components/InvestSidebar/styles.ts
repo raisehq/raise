@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -8,4 +8,7 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-export default ButtonContainer;
+export const InvestWrapper = styled.div`
+  padding: 30px 15px 0px;
+  height: 100%;
+`;

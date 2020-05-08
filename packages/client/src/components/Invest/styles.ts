@@ -476,14 +476,16 @@ export const InvestBody = styled.div`
 `;
 
 export const InvestInput = styled.div<IInput>`
-  padding: 30px 40px 0px;
   overflow-y: auto;
   ${({ fullInfo }) => (fullInfo ? 'height: height: 84%' : '')};
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const InvestButtonWrapper = styled.div<IInput>`
   flex: 1;
-  padding: 0px 40px 30px;
   ${({ fullInfo }) => (fullInfo ? 'border-top: 1px solid #cfd0d4' : '')};
 `;
 

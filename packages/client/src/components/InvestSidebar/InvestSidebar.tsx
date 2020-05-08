@@ -3,6 +3,7 @@ import { useRootContext } from '../../contexts/RootContext';
 import { useSidebarContext } from '../../contexts/SidebarContext';
 import { useAppContext } from '../../contexts/AppContext';
 import Invest from '../Invest';
+import { InvestWrapper } from './styles';
 
 const InvestSidebar = () => {
   const {
@@ -36,13 +37,15 @@ const InvestSidebar = () => {
   return (
     <>
       <Suspense fallback={<div>...</div>}>
-        <Invest
-          loan={loan}
-          userActivated={userActivated}
-          fullInfo
-          isLogged={isLogged}
-          onClose={closeSidebar}
-        />
+        <InvestWrapper>
+          <Invest
+            loan={loan}
+            userActivated={userActivated}
+            fullInfo
+            isLogged={isLogged}
+            onClose={closeSidebar}
+          />
+        </InvestWrapper>
       </Suspense>
     </>
   );

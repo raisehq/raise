@@ -30,8 +30,9 @@ export const Chevron = styled(animated(Icon))`
 `;
 
 export const TableItemContainer = styled.div<TableItemContainerProps>`
-  height: 49px;
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   font-style: normal;
@@ -109,17 +110,21 @@ export const NoLoggedCoinSelector = styled(NoLoggedCoinSelectorRaw)`
   }
 `;
 
-export const Coin = styled(RawCoin)``;
+export const Coin = styled(RawCoin)`
+  margin: 0px 1ch;
+`;
 
 export const Card = styled(RaiseCard)`
   display: flex;
   align-items: center;
+  flex-direction: column;
 `;
 
 export const InvestBox = styled.div`
   font-size: 16px;
   color: #8a8e97;
-  height: 60px;
+  flex-direction: row;
+  flex-wrap: wrap;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -182,6 +187,7 @@ export const Eligible = styled.div<EligibleProps>`
   max-width: 260px;
   font-weight: bold;
   font-size: 14px;
+  margin-top: 10px;
 `;
 
 export const BigInput = styled(LoanInput)`
@@ -248,4 +254,12 @@ export const InvestHeader = styled.h3`
 
 export const TooltipIconWrapper = styled.div`
   margin-left: 5px;
+`;
+
+export const InvestText = styled.div`
+  color: #8a8e97;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px 1ch;
 `;

@@ -5,7 +5,10 @@ import {
   LoanPageContainer,
   LoanPageInfoSection,
   LoanInformationContainer,
-  LoanInvestContainer
+  LoanInvestContainer,
+  LoanSubResumeWrapper,
+  LoanResumeWrapper,
+  BorrowerResume
 } from './styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
@@ -34,14 +37,22 @@ const LoanPage = ({
     }
   }: any = useRootContext();
   const [loan, setLoan] = useState(null);
-  const [borrowerInfo, setBorrowerInfo] = useState({});
+  const [borrowerInfo, setBorrowerInfo] = useState({
+    companyName: '',
+    description: '',
+    shortDescription: '',
+    background: '',
+    logo: '',
+    slug: '',
+    route: ''
+  });
 
   useAsyncEffect(async () => {
     try {
       const currentLoan = await getLoanByAddress(address, network);
       setLoan(currentLoan);
       const borrowerAddress = currentLoan.originator;
-      const borrowerInformation = await findOne('companies', {
+      const borrowerInformation: any = await findOne('companies', {
         'fields.ethereum_address': borrowerAddress
       });
       setBorrowerInfo(borrowerInformation);
@@ -49,7 +60,7 @@ const LoanPage = ({
       console.error('Error querying loan info ', error);
     }
   }, []);
-
+  console.log('borrower info:: ', borrowerInfo);
   const connected = hasProvider && unlocked && accountMatches && networkMatches;
   const userActivated = connected && kycStatus === 3;
 
@@ -57,7 +68,13 @@ const LoanPage = ({
     <LoanPageContainer>
       <LoanPageInfoSection>
         <LoanInformationContainer>
-          {Object.keys(borrowerInfo).length > 0 && <>hola</>}
+          {Object.keys(borrowerInfo).length > 0 && (
+            <>
+              <LoanResumeWrapper />
+              <LoanSubResumeWrapper />
+              <BorrowerResume>{borrowerInfo.description}</BorrowerResume>
+            </>
+          )}
         </LoanInformationContainer>
         <LoanInvestContainer>
           {loan && (
