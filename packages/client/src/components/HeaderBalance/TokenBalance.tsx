@@ -35,7 +35,7 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }: any) => {
     account,
     get(contractAddresses, [chainId, name], name) || name
   );
-  const coin = useGetCoinByAddress(contractAddresses[chainId]?.[name]);
+  const coin = useGetCoinByAddress(contractAddresses && contractAddresses[chainId]?.[name]);
   const stringBalance: string = fromDecimalFixed(balance.toString(10), coin.decimals) || '0.00';
 
   const handleTroggleHidde = e => {
@@ -44,6 +44,7 @@ const TokenBalance = ({ imageUrl, name, value, hider, ...props }: any) => {
   };
   /* eslint-disable */
   // TODO : Refactor this ternary condition
+
   return (
     <Container {...props}>
       <Child>

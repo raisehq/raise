@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RequestElement, QROptions, Action, RequestData } from '@bloomprotocol/share-kit-react';
-import { isMobile } from 'react-device-detect';
-import { Button, Image } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
 import {
   ChooseMethodWrapper,
   GetStartedBloomHeader,
@@ -10,16 +9,19 @@ import {
   GetStartedBloomWrapper,
   GetStartedBloomQRSection,
   GetStartedBloomInstructionsSection,
-  GetStartedBloomFooter,
-  GetStartedBloomDescription
+  SumsubWrapper,
+  VerifyWithSumsub,
+  SubTitle
 } from './styles';
-import FollowSteps from './FollowSteps';
+import { InformationSection, HorizontalDivider, ContactUs } from '../Kyc.styles';
+import InformationContainer from '../InformationSection';
 import HelpWithBloom from './HelpWithBloom';
 import useRouter from '../../../hooks/useRouter';
 import { URL } from '../../../services/kyc';
 import LocalData from '../../../helpers/localData';
 import useInterval from '../../../hooks/useInterval';
 import { getUser } from '../../../services/auth';
+import useGoogleTagManager, { TMEvents } from '../../../hooks/useGoogleTagManager';
 
 const KycWithBloom = ({ onBack }: any) => {
   const { history }: any = useRouter();
@@ -28,6 +30,27 @@ const KycWithBloom = ({ onBack }: any) => {
   const [tokenBloom, setTokenBloom] = useState('');
   const [attestations, setAttestations] = useState<any>([]);
   const [kycUnsuccessful, setKycUnsuccessful] = useState(false);
+
+  const tagManager = useGoogleTagManager('Kyc');
+  const kycLabelMapps = {
+    sumsub: 'sumsub',
+    bloom: 'bloom'
+  };
+
+  const providerKYC = provider => {
+    tagManager.sendEvent(TMEvents.Click, kycLabelMapps[provider]);
+
+    switch (provider) {
+      case 'sumsub':
+        history.push('/kyc-sumsub');
+        break;
+      case 'bloom':
+        history.push('/kyc-bloom');
+        break;
+      default:
+        break;
+    }
+  };
 
   useInterval(async () => {
     if (tokenBloom !== '') {
@@ -102,19 +125,10 @@ const KycWithBloom = ({ onBack }: any) => {
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
-        <GetStartedBloomTitle>Verify your account</GetStartedBloomTitle>
+        <GetStartedBloomTitle>Verify your account with Bloom</GetStartedBloomTitle>
         <GetStartedBloomSubtitle>
-          <span>with</span>
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
         </GetStartedBloomSubtitle>
-        <GetStartedBloomDescription>
-          <span>
-            This process will take approximately 3 minutes to complete and it will be verified by a
-            third-party organization. After submission, you will receive an email confirming your
-            approval or to verify further information. The time-frame for approval can vary on a
-            user to user basis.
-          </span>
-        </GetStartedBloomDescription>
       </GetStartedBloomHeader>
       <GetStartedBloomWrapper>
         <GetStartedBloomQRSection>
@@ -124,24 +138,43 @@ const KycWithBloom = ({ onBack }: any) => {
             qrOptions={qrOptions}
           />
         </GetStartedBloomQRSection>
+
         <GetStartedBloomInstructionsSection>
-          {isOpenHelp || kycUnsuccessful ? (
+          {isOpenHelp && (
             <HelpWithBloom
               setIsOpenHelp={setIsOpenHelp}
               kycUnsuccessful={kycUnsuccessful}
               setIsScreenIdle={setIsScreenIdle}
               history={history}
             />
-          ) : (
-            <FollowSteps isMobile={isMobile} />
           )}
         </GetStartedBloomInstructionsSection>
+
+        <SumsubWrapper onClick={() => providerKYC('sumsub')}>
+          <SubTitle>Don&apos;t have a Bloom account?</SubTitle>
+          <VerifyWithSumsub>
+            <span>Verify with&nbsp;</span>
+            <Image
+              src={`${process.env.REACT_APP_HOST_IMAGES}/images/sumsub_logo_417x76.png`}
+              size="small"
+            />
+          </VerifyWithSumsub>
+        </SumsubWrapper>
       </GetStartedBloomWrapper>
-      <GetStartedBloomFooter>
-        <Button basic color="black" onClick={() => history.push('/kyc')}>
-          Go back
-        </Button>
-      </GetStartedBloomFooter>
+      <InformationSection>
+        <InformationContainer
+          title="How to verify with Bloom"
+          slug="kyc-bloom-instructions"
+          insideMethod
+        />
+        <HorizontalDivider />
+        <InformationContainer title="How to verify with Sum&Sub" slug="kyc-sumsub-instructions" />
+      </InformationSection>
+      <ContactUs>
+        If you are having problems to verify your ID, please contact us through our chat or send an
+        email to
+        <span>&nbsp;help@raise.it</span>
+      </ContactUs>
     </ChooseMethodWrapper>
   );
 };

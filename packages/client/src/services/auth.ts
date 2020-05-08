@@ -21,7 +21,8 @@ const URL = {
   USER: `${getHost('CORE')}/users`,
   REFRESH: `${getHost('AUTH')}/jwt/refresh`,
   CHECK_USERNAME: `${getHost('AUTH')}/users/username/exists?username=`,
-  CHECK_EMAIL: `${getHost('AUTH')}/users/email/exists`
+  CHECK_EMAIL: `${getHost('AUTH')}/users/email/exists`,
+  BLOOM_LOGIN: `${getHost('AUTH')}/oauth/bloom/authenticate`
 };
 
 export const signUp = async (data: Types.onSignup) => {
@@ -246,4 +247,16 @@ export const checkEmail = async email => {
     () => Left(null),
     req => (req.status === 404 ? Right('Not exist') : Left('Exist'))
   );
+};
+
+export const verifyBloomLogin = async tokenBloom => {
+  const config: any = {
+    url: `${URL.BLOOM_LOGIN}`,
+    method: 'POST',
+    ...COMMON_HEADERS,
+    data: { bloom_id: tokenBloom }
+  };
+
+  const resp = await to(axios(config));
+  return resp;
 };

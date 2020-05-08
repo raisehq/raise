@@ -3,19 +3,9 @@ import { maxDevice } from '../../utils/breakpoints';
 
 export const FooterContainer = styled.div`
   width: 100%;
-  height: 355px;
-  background: linear-gradient(180deg, #f9f9f9 0%, #ffffff 100%);
-
-  a {
-    color: rgba(0, 0, 0, 0.6) !important;
-    border: none;
-    background: none;
-    text-decoration: none;
-  }
 `;
 
 export const FooterWrapper = styled.div`
-  width: 1172px;
   height: 269px;
   display: flex;
   margin: 0 auto;
@@ -24,6 +14,7 @@ export const FooterWrapper = styled.div`
 
   @media ${maxDevice.laptop} {
     width: 100%;
+    max-width: 1172px;
   }
 `;
 

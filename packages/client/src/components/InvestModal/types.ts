@@ -1,6 +1,6 @@
 import BN from 'bn.js';
 import { Loan } from '../../interfaces/Loan';
-import { CoinsType } from '../../commons/coins';
+import { CoinsType } from '../../interfaces/Coins';
 
 export interface InvestModalProps {
   loan: Loan;

@@ -30,9 +30,11 @@ export const GetStartedBloomHeader = styled.div`
 
 export const GetStartedBloomTitle = styled.div`
   text-align: center;
-  font-size: 26px;
-  line-height: 36px;
+  font-family: Lato;
+  font-style: normal;
   font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
   color: #3c4251;
   @media (max-width: ${size.mobileL}) {
     font-size: 25px;
@@ -48,10 +50,7 @@ export const GetStartedBloomSubtitle = styled.div`
   color: #6067f1;
   font-size: 18px;
   line-height: 22px;
-
-  span {
-    padding: 10px;
-  }
+  padding-top: 8px;
 
   @media (max-width: ${size.mobileL}) {
     padding-top: 0;
@@ -70,13 +69,10 @@ export const GetStartedBloomDescription = styled.div`
 
 export const GetStartedBloomWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  flex: 0 1 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-height: 400px;
-  padding-top: 5%;
 
   @media (max-width: ${size.mobileL}) {
     flex-wrap: wrap;
@@ -99,7 +95,6 @@ export const GetStartedBloomInstructionsSection = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 1 100%;
-  padding: 5% 0;
 
   @media (max-width: ${size.mobileL}) {
     align-items: center;
@@ -115,9 +110,10 @@ export const InstructionsWrapper = styled.div`
   padding-top: 10%;
   max-width: 200px;
   line-height: 21px;
+
   @media (max-width: ${size.mobileL}) {
     padding: 0 10% 10% 10%;
-    width: 100%;
+
     max-width: none;
   }
 `;
@@ -131,31 +127,41 @@ export const FollowingStepsTitle = styled.div`
 `;
 
 export const HelpWithBloomWrapper = styled.div<KycStatus>`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 7%;
-  justify-content: center;
-  align-items: center;
-  max-width: 250px;
-  min-height: 250px;
-  text-align: center;
-  box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
-  line-height: 21px;
-  background-color: ${props => (props.kycUnsuccessful ? '#6067f1' : 'white')};
-  color: ${props => (props.kycUnsuccessful ? 'white' : 'inherit')};
+  position: absolute;
+  top: 500px;
+  right: 37%;
+  min-height: 107px;
+
+  background: #ffffff;
+
+  box-shadow: 0px 8px 25px rgba(60, 66, 81, 0.25);
+  border-radius: 4px;
+  padding: 10px;
+
+  .bloomInstructions {
+    display: block;
+  }
+
   @media (max-width: ${size.mobileL}) {
     width: 100%;
-    max-width: none;
+
     align-items: stretch;
+    max-width: 350px;
+    right: 3%;
+    top: 315px;
+    z-index: 1000;
   }
 `;
 
 export const IconWrapper = styled.div`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 13px;
+  right: 2px;
   align-self: flex-end;
+  z-index: 100;
+  cursor: pointer;
+  color: #c5c7cb;
+  font-size: 16px;
 `;
 
 export const BloomParagraph = styled.p`
@@ -171,7 +177,7 @@ export const BloomHelpRaise = styled.span`
 `;
 
 export const HelpMessage = styled.div`
-  margin-top: 5%;
+  margin-top: 0;
 `;
 
 export const LinkToSumSub = styled.button`
@@ -184,4 +190,41 @@ export const LinkToSumSub = styled.button`
   &:hover {
     color: #fff;
   }
+`;
+
+export const SumsubWrapper = styled.a`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding-bottom: 50px;
+`;
+
+export const VerifyWithSumsub = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 21px;
+  /* identical to box height, or 150% */
+
+  color: #5c6bf2;
+
+  span {
+    color: #213093;
+    padding-right: 10px;
+  }
+`;
+
+export const SubTitle = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #8a8e97;
 `;

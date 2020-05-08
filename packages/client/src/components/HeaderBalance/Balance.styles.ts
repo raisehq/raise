@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { Dropdown } from 'semantic-ui-react';
 import TokenBalanceNotStyled from './TokenBalance';
+import TokenLayoutNotStyled from './TokenLayout';
 import { device } from '../../commons/breakpoints';
 
 export const TokenBalance = styled(TokenBalanceNotStyled)``;
+export const TokenLayout = styled(TokenLayoutNotStyled)``;
 
 export const BalanceDropdown = styled(Dropdown)`
   &&& {
@@ -58,6 +60,9 @@ export const BalanceMenu = styled(Dropdown.Menu)`
     }
   }
   & ${TokenBalance}:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  & ${TokenLayout}:not(:last-child) {
     margin-bottom: 10px;
   }
 `;
