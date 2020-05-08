@@ -195,16 +195,16 @@ export const BigInput = styled(LoanInput)`
     if (value?.toString()?.length > 8) {
       return 28;
     }
-    if (value?.toString()?.length > 6) {
+    if (value?.toString()?.length >= 4) {
       return 36;
     }
+
     return 48;
   }}px;
   line-height: 56px;
   width: ${({ value }) => (value?.toString()?.length > 1 ? value?.toString()?.length + 1 : 1)}ch;
   text-align: ${({ value }) => (value ? 'center' : 'left')};
   min-width: ${({ value }) => (value ? '0px' : '1ch')};
-  margin: ${({ value }) => (value ? '0px 1ch' : '0px 1ch')};
   color: #00da9e;
   background-color: transparent;
   display: flex;

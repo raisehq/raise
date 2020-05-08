@@ -39,8 +39,13 @@ export const LoanInvestContainer = styled.div`
   max-width: 400px;
 `;
 
-export const LoanResumeWrapper = styled.div``;
+export const LoanResumeWrapper = styled.div`
+  height: 206px;
+`;
 
-export const LoanSubResumeWrapper = styled.div``;
+export const LoanSubResumeWrapper = styled.div`
+  height: 96px;
+  margin-top: 24px;
+`;
 
 export const BorrowerResume = styled.div``;
