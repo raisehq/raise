@@ -2,12 +2,12 @@ import React from 'react';
 import { match, ANY } from 'pampy';
 import { Button } from '@raisehq/components';
 import { fromWei } from 'web3-utils';
-import { InvestModalProps } from '../InvestModal/types';
+import { InvestModalProps } from '../../interfaces/Invest';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-import { ButtonContainer } from '../InvestModal/InvestModal.styles';
+import ButtonContainer from './styles';
 
 import { useSidebarContext } from '../../contexts/SidebarContext';
 

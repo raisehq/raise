@@ -10,7 +10,7 @@ import SuccessStage from './stages/Success';
 
 import { Modal } from '../ClaimLoan/ClaimLoan.styles';
 
-import { BorrowerButton, ExitButton } from '../InvestModal/InvestModal.styles';
+import { BorrowerButton, ExitButton } from './styles';
 
 const RepayLoanCTA: React.SFC<InvestModalProps> = ({ loan }: any) => {
   const [open, setOpen] = useState(false);

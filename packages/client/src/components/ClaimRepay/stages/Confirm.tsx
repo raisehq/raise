@@ -1,7 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Loader } from 'semantic-ui-react';
-import { Header, LenderButton } from '../../InvestModal/InvestModal.styles';
-import { CheckboxDeposit, CheckboxDepositLabel, CheckboxContainer } from '../ClaimRepay.styles';
+import {
+  CheckboxDeposit,
+  CheckboxDepositLabel,
+  CheckboxContainer,
+  Header,
+  LenderButton
+} from '../ClaimRepay.styles';
 import ClaimRepayContext from '../ClaimRepay.context';
 import { getCalculations } from '../../../utils/loanUtils';
 import numeral from '../../../commons/numeral';
@@ -13,7 +18,7 @@ import {
   ResumeItemBoxBig,
   ResumeItemBox
 } from '../../ClaimLoan/ClaimLoan.styles';
-import { ResumeItemProps } from '../../InvestModal/types';
+import { ResumeItemProps } from '../../../interfaces/Invest';
 import useGetCoin from '../../../hooks/useGetCoin';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }: any) => (

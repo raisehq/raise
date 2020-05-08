@@ -16,7 +16,7 @@ import SuccessStage from './stages/Success';
 
 import { Modal } from '../ClaimLoan/ClaimLoan.styles';
 
-import { LenderButton, ExitButton } from '../InvestModal/InvestModal.styles';
+import { LenderButton, ExitButton } from './ClaimRepay.styles';
 
 const RAISEADDRESS = '0x10bA8C420e912bF07BEdaC03Aa6908720db04e0c';
 
