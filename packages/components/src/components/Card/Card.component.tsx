@@ -48,8 +48,10 @@ interface BadgeProps {
 
 const Context = React.createContext({});
 
-const BadgeComponent = ({ children, color }: BadgeProps) => (
-  <Badge color={color}>{children}</Badge>
+const BadgeComponent = ({ children, color, ...rest }: BadgeProps) => (
+  <Badge color={color} {...rest}>
+    {children}
+  </Badge>
 );
 
 const RowComponent: React.SFC<RowComponentProps> = ({
@@ -75,11 +77,14 @@ const HeaderComponent = ({
   title: any;
   amount: any;
   fontSize?: any;
+  right;
   rest?: any;
 }) => (
   <Header {...rest}>
-    <HeaderTitle>{title}</HeaderTitle>
-    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
+    <HeaderTitle {...rest}>{title}</HeaderTitle>
+    <HeaderContent fontSize={fontSize} {...rest}>
+      {amount}
+    </HeaderContent>
   </Header>
 );
 const SubHeaderComponent: FunctionComponent<{
