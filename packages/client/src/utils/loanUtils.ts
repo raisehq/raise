@@ -5,7 +5,7 @@ import { fromDecimal } from '../utils/web3-utils';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
 
-import { CoinsType } from '../commons/coins';
+import { CoinsType } from '../interfaces/Coins';
 
 const secondUnits = {
   month: 2592000,
