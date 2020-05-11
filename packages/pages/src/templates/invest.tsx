@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Layout from '../components/Layout';
 import InvestingPage from '../components/InvestingPage';
 import SEO from '../components/seo';
 import 'semantic-ui-css/semantic.min.css';
+
 const IndexPage = ({ pageContext: { data } }: any) => {
   const investSections = data.allButterPage.nodes[0];
   return (

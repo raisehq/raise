@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { graphql } from 'gatsby';
 import Layout from '../components/Layout';
 import InvestingPage from '../components/InvestingPage';
 import SEO from '../components/seo';
 import 'semantic-ui-css/semantic.min.css';
-import { graphql } from 'gatsby';
-// https://buttercms.com/docs/api-client/gatsbyjs
+
 const IndexPage = ({ data }: any) => {
-  console.log('DATA:', data);
   const investSections = data.allButterPage.nodes[0];
   return (
     <Layout>

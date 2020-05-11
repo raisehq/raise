@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
+import React from 'react';
 import { InvestingContainer } from './styles';
 import InvestingSection from './InvestingSection';
 import SignUp from '../SignUp';

@@ -11,7 +11,7 @@ const URL = {
   REGISTER: `${getHost('CORE')}/users/register`
 };
 
-export const signUp = async data => {
+export const signUp = async (data: any) => {
   const config: any = {
     url: URL.REGISTER,
     method: 'POST',
@@ -39,8 +39,8 @@ export const getAddressTypes = async (): Promise<AddressTypes> => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
-    ({ data: { data } }) => data
+    (error: any) => Left(error),
+    ({ data: { data } }: any) => data
   );
 };
 
@@ -55,8 +55,8 @@ export const getUser = async (userId: string | undefined) => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
-    ({ data: { data } }) => data
+    (error: any) => Left(error),
+    ({ data: { data } }: any) => data
   );
 };
 
@@ -72,12 +72,12 @@ export const getUserDetails = async (userId: string | undefined) => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
-    ({ data: { data } }) => data
+    (error: any) => Left(error),
+    ({ data: { data } }: any) => data
   );
 };
 
-export const allAddressesByUser = async userId => {
+export const allAddressesByUser = async (userId: string) => {
   const config: any = {
     url: `${URL.ADDRESS}/user/${userId}`,
     method: 'GET',
@@ -90,12 +90,12 @@ export const allAddressesByUser = async userId => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
-    ({ data: { data } }) => data
+    (error: any) => Left(error),
+    ({ data: { data } }: any) => data
   );
 };
 
-export const addAddress = async address => {
+export const addAddress = async (address: string) => {
   const config: any = {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -105,12 +105,12 @@ export const addAddress = async address => {
   const response = await to(axios.post(`${URL.ADDRESS}/addinfo`, address, config));
 
   return response.fold(
-    error => Left(error),
-    ({ data: { data } }) => data
+    (error: any) => Left(error),
+    ({ data: { data } }: any) => data
   );
 };
 
-export const removeAddress = async addressId => {
+export const removeAddress = async (addressId: string) => {
   const config: any = {
     url: `${URL.ADDRESS}/${addressId}`,
     method: 'DELETE',
@@ -123,12 +123,12 @@ export const removeAddress = async addressId => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
-    ({ data: { data } }) => data
+    (error: any) => Left(error),
+    ({ data: { data } }: any) => data
   );
 };
 
-export const updateUser = async (userId, body: any) => {
+export const updateUser = async (userId: string, body: any) => {
   const config: any = {
     url: `${URL.USER}/${userId}`,
     method: 'PUT',
@@ -140,7 +140,7 @@ export const updateUser = async (userId, body: any) => {
   return axios(config);
 };
 
-export const updatePassword = async (userId, data: any) => {
+export const updatePassword = async (userId: string, data: any) => {
   const config: any = {
     headers: {
       'Content-Type': 'application/json'
@@ -150,7 +150,7 @@ export const updatePassword = async (userId, data: any) => {
   return axios.put(`${URL.USER}/password/change/${userId}`, data, config);
 };
 
-export const cryptoAddressByAccount = async userId => {
+export const cryptoAddressByAccount = async (userId: string) => {
   const config: any = {
     url: `${URL.CRYPTOADDRESS}/user/${userId}`,
     method: 'GET',
@@ -194,7 +194,7 @@ export const cryptoAddressByAccount = async userId => {
   }
 };
 
-export const addCryptoAddress = async body => {
+export const addCryptoAddress = async (body: any) => {
   const config: any = {
     headers: {
       'Content-Type': 'application/json'
@@ -228,7 +228,7 @@ export const addCryptoAddress = async body => {
   }
 };
 
-export const updateCryptoAddress = async (cryptoAddressId, body: any) => {
+export const updateCryptoAddress = async (cryptoAddressId: string, body: any) => {
   const config: any = {
     headers: {
       'Content-Type': 'application/json'
@@ -248,7 +248,7 @@ export const updateCryptoAddress = async (cryptoAddressId, body: any) => {
 };
 
 // TODO : Deprecated
-export const getReferralAddress = async referrerCode => {
+export const getReferralAddress = async (referrerCode: string) => {
   const config: any = {
     params: {
       referrerCode

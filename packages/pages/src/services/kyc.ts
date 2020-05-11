@@ -14,7 +14,7 @@ export const URL = {
 
 const COMMON_HEADERS = { Accept: 'application/json', 'Content-Type': 'application/json' };
 
-export const initKyc = async id => {
+export const initKyc = async (id: string) => {
   const config: any = {
     url: `${URL.AUTH}/${id}`,
     method: 'GET',
@@ -24,12 +24,12 @@ export const initKyc = async id => {
   const request = await to(axios(config));
 
   return request.fold(
-    error => console.error(error),
-    success => success.data.data.token
+    (error: any) => console.error(error),
+    (success: any) => success.data.data.token
   );
 };
 
-export const connect = async (userId, email, token) => {
+export const connect = async (userId: string, email: string, token: string) => {
   const config: any = {
     url: `${URL.CONNECT}/${userId}/${email}/${token}`,
     method: 'POST',
@@ -39,12 +39,12 @@ export const connect = async (userId, email, token) => {
   const request = await to(axios(config));
 
   return request.fold(
-    error => console.error(error),
-    success => console.log(success)
+    (error: any) => console.error(error),
+    (success: any) => console.log(success)
   );
 };
 
-export const isKYCVerified = async (userId, token) => {
+export const isKYCVerified = async (userId: string, token: string) => {
   const config: any = {
     url: `${URL.VERIFY}/${userId}/${token}`,
     method: 'GET',
@@ -54,14 +54,14 @@ export const isKYCVerified = async (userId, token) => {
   const request = await to(axios(config));
 
   return request.fold(
-    error => console.error(error),
-    success => console.log(success)
+    (error: any) => console.error(error),
+    (success: any) => console.log(success)
   );
 };
 
 export const bloomSignIn = () => URL.BLOOM_SIGN_IN;
 
-const checkDappBrowserCallback = token => {
+const checkDappBrowserCallback = (token: string) => {
   // @ts-ignore
   if (window.web3 && window.web3.currentProvider.isMetaMask) {
     return `https://metamask.app.link/dapp/raise.it/login/bloom/${token}`;
@@ -77,7 +77,7 @@ const checkDappBrowserCallback = token => {
   return URL.REDIRECT.replace(':token', token);
 };
 
-export const redirectFromBloomApp = token => {
+export const redirectFromBloomApp = (token: string) => {
   if (isMobile) {
     return checkDappBrowserCallback(token);
   }

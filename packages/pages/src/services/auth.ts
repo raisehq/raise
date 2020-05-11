@@ -91,23 +91,6 @@ export const recovery = async ({ email }: Types.onRecovery) => {
   }
 };
 
-export const changePassword = async (token, password) => {
-  const config: any = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-
-  const response = await to(
-    axios.put(`${URL.CHANGE_PASSWORD}`, { token, password: password.password }, config)
-  );
-
-  return response.fold(
-    error => Left(error),
-    () => Right(true)
-  );
-};
-
 export const validateToken = async ({ token }: Types.ValidateToken) => {
   const config: any = {
     url: URL.EMAIL.replace(':id', token),
@@ -159,8 +142,8 @@ export const getUser = async (userId: string | undefined) => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
-    ({ data: { data } }) => data
+    (error: any) => Left(error),
+    ({ data: { data } }: any) => data
   );
 };
 
@@ -215,7 +198,7 @@ export const verifyAuth = async () => {
   }
 };
 
-export const checkUsername = async username => {
+export const checkUsername = async (username: string) => {
   const config: any = {
     url: `${URL.CHECK_USERNAME}${username}`,
     method: 'GET',
@@ -228,11 +211,11 @@ export const checkUsername = async username => {
 
   return request.fold(
     () => Left(null),
-    req => Either.either(req.data.exist === 0)
+    (req: any) => Either.either(req.data.exist === 0)
   );
 };
 
-export const checkEmail = async email => {
+export const checkEmail = async (email: string) => {
   const config: any = {
     url: `${URL.CHECK_EMAIL}/${email}`,
     method: 'GET',
@@ -245,11 +228,11 @@ export const checkEmail = async email => {
 
   return request.fold(
     () => Left(null),
-    req => (req.status === 404 ? Right('Not exist') : Left('Exist'))
+    (req: any) => (req.status === 404 ? Right('Not exist') : Left('Exist'))
   );
 };
 
-export const verifyBloomLogin = async tokenBloom => {
+export const verifyBloomLogin = async (tokenBloom: string) => {
   const config: any = {
     url: `${URL.BLOOM_LOGIN}`,
     method: 'POST',
