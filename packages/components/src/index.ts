@@ -32,3 +32,4 @@ export { default as InputNumber } from './components/commons/InputControl/InputN
 export { default as InputText } from './components/commons/InputControl/InputText';
 export { default as SelectControl } from './components/commons/SelectControl';
 export { default as useScript } from './hooks/useScript';
+export { default as Header } from './components/Headers';

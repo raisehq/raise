@@ -3,5 +3,5 @@
 const storybook = require('..');
 
 describe('storybook', () => {
-    it('needs tests');
+  it('needs tests');
 });

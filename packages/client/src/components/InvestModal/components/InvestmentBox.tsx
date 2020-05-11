@@ -265,7 +265,7 @@ const InvestmentBox = ({
     setCoin(newValue);
   };
 
-  const fundAll = (loanCurrency: CoinsType, selectedCurrency: CoinsType) => async divisor => {
+  const fundAll = (loanCurrency: CoinsType, selectedCurrency: CoinsType) => async (divisor) => {
     const availableBalance = selectedCurrency.text === 'ETH' ? balance - 0.005 : balance;
     const nMaxAmount = Number(fromDecimal(maxAmount, loanCurrency.decimals));
     const nPrincipal = nMaxAmount - Number(fromDecimal(principal, loanCurrency.decimals));
@@ -284,7 +284,7 @@ const InvestmentBox = ({
     return setValue(minValue);
   };
 
-  const onSetValue = v => {
+  const onSetValue = (v) => {
     if (!v?.floatValue) {
       return setValue(0);
     }
@@ -306,7 +306,7 @@ const InvestmentBox = ({
     return null;
   };
 
-  const preventOverflow = e => {
+  const preventOverflow = (e) => {
     const char = String.fromCharCode(e.which);
     const finalValue = `${value}${char}`;
     const max = 9;

@@ -12,7 +12,7 @@ const secondUnits = {
   minute: 60,
 };
 
-const stringUnixToDate = stringUnix => new Date(Number(stringUnix) * 1000);
+const stringUnixToDate = (stringUnix) => new Date(Number(stringUnix) * 1000);
 
 export const isAuctionExpired = ({ auctionEndTimestamp }) =>
   new Date() > stringUnixToDate(auctionEndTimestamp);
@@ -28,7 +28,7 @@ export const isDefaulted = ({ auctionEndTimestamp, termEndTimestamp }) => {
 };
 
 // this function mimics "updateStateMachine" method from LoanContract.sol:391
-export const assumeStateMachine = auction => {
+export const assumeStateMachine = (auction) => {
   const { state: currentState, minimumReached } = auction;
   const clonedAuction = cloneDeep(auction);
   if (isAuctionExpired(auction) && currentState === LoanState.CREATED) {
@@ -51,13 +51,13 @@ export const roundedTime = (seconds, secondUnit) =>
 export const getDesiredTime = (seconds, type?) =>
   match(
     seconds,
-    s => s >= secondUnits.day,
-    s => `${roundedTime(s, secondUnits.day)} days`,
-    s => s >= secondUnits.hour,
-    s => `${roundedTime(s, secondUnits.hour)} hours`,
-    s => s >= secondUnits.minute,
-    s => `${roundedTime(s, secondUnits.minute)} minutes`,
-    s => s > 0 && s < secondUnits.minute,
+    (s) => s >= secondUnits.day,
+    (s) => `${roundedTime(s, secondUnits.day)} days`,
+    (s) => s >= secondUnits.hour,
+    (s) => `${roundedTime(s, secondUnits.hour)} hours`,
+    (s) => s >= secondUnits.minute,
+    (s) => `${roundedTime(s, secondUnits.minute)} minutes`,
+    (s) => s > 0 && s < secondUnits.minute,
     () => '<1 minute',
     ANY,
     () => (type === 'loan' ? 'Expired' : 'Auction ended')
@@ -76,7 +76,7 @@ export const calculatefromDecimal = (number, decimals = 18) => {
 };
 /* eslint-enable */
 
-export const calculateTimes = auction => {
+export const calculateTimes = (auction) => {
   try {
     const loanTerm = getDesiredTime(Number(auction.termLength));
 
@@ -95,7 +95,7 @@ export const calculateTimes = auction => {
   }
 };
 
-export const calculateInterest = auction => {
+export const calculateInterest = (auction) => {
   const nowTimestamp = Date.now() / 1000;
   const maxInterestRate =
     Number(fromDecimal(auction.maxInterestRate.toString())) / 100;
@@ -122,7 +122,7 @@ export const calculateInterest = auction => {
   return interest;
 };
 
-export const calculateROI = auction => {
+export const calculateROI = (auction) => {
   const roi =
     (Number(fromDecimal(auction.interestRate.toString())) *
       (auction.termLength / 30 / 24 / 60 / 60)) /
@@ -135,14 +135,14 @@ export const calculateExpectedRoi = (auction, interest) => {
   return roi;
 };
 
-export const calculateTotalInterest = auction => {
+export const calculateTotalInterest = (auction) => {
   const interest =
     Number(fromDecimal(auction.interestRate.toString())) *
     (auction.termLength / 30 / 24 / 60 / 60 / 100);
   return interest;
 };
 
-export const calculateTotalInterestAmount = auction => {
+export const calculateTotalInterestAmount = (auction) => {
   const interest =
     Number(fromDecimal(auction.interestRate.toString())) *
     (auction.termLength / 30 / 24 / 60 / 60 / 100);
@@ -150,7 +150,7 @@ export const calculateTotalInterestAmount = auction => {
   return principal * interest;
 };
 
-export const calculateAPR = auction => {
+export const calculateAPR = (auction) => {
   const interest = Number(fromDecimal(auction.interestRate.toString())) / 100;
   const apr = interest * 12;
   return apr;
@@ -162,10 +162,10 @@ export const calculateInvestmentReturn = (auction, decimals = 18) => {
   return lenderRoiAmount;
 };
 /* eslint-disable */
-export const getCoinsFromContract = coinsMap => contract => {
+export const getCoinsFromContract = (coinsMap) => (contract) => {
   const coins: CoinsType[] =
     contract &&
-    coinsMap.map(coin =>
+    coinsMap.map((coin) =>
       contract[coin.name]
         ? {
             address: contract[coin.name],
@@ -198,7 +198,7 @@ export const getCoin = (coins: CoinsType[]) => (
   }
   return (
     coins.find(
-      coin => coin.address.toLowerCase() === tokenAddress.toLowerCase()
+      (coin) => coin.address.toLowerCase() === tokenAddress.toLowerCase()
     ) || defaultCoin
   );
 };
@@ -289,11 +289,11 @@ export const getCalculations = (auction, decimals = 18) => {
 
 export const getActiveAuctions = (auctions, states) => {
   const updatedAuctions = auctions
-    ? auctions.map(auction => assumeStateMachine(auction))
+    ? auctions.map((auction) => assumeStateMachine(auction))
     : [];
 
   const getStates = (auction: any) =>
-    states.some(st => st === auction.state) || states.indexOf('all') > -1;
+    states.some((st) => st === auction.state) || states.indexOf('all') > -1;
 
   const activeAuctions = updatedAuctions
     ? updatedAuctions.filter(getStates)

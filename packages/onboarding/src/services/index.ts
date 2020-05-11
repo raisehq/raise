@@ -26,7 +26,7 @@ const URL = {
   REDIRECT: `${getHost('APP')}/login/bloom/:token`
 };
 
-export const signUp = async data => {
+export const signUp = async (data) => {
   const config: any = {
     url: URL.REGISTER,
     method: 'POST',
@@ -38,7 +38,7 @@ export const signUp = async data => {
   return response;
 };
 
-export const signIn = async data => {
+export const signIn = async (data) => {
   const config: any = {
     url: URL.AUTHENTICATE,
     method: 'POST',
@@ -50,7 +50,7 @@ export const signIn = async data => {
   return response;
 };
 
-export const recovery = async email => {
+export const recovery = async (email) => {
   const config: any = {
     url: `${URL.RECOVERY}/${email}`,
     method: 'GET',
@@ -82,7 +82,7 @@ export const validateToken = async ({ token }) => {
   const response = await to(axios(config));
   return response;
 };
-export const updateToken = async token => {
+export const updateToken = async (token) => {
   const config: any = {
     url: URL.CREATE_EMAIL.replace(':id', token),
     method: 'GET',
@@ -93,7 +93,7 @@ export const updateToken = async token => {
   return response;
 };
 
-export const checkUsername = async username => {
+export const checkUsername = async (username) => {
   const config: any = {
     url: `${URL.CHECK_USERNAME}${username}`,
     method: 'GET',
@@ -106,11 +106,11 @@ export const checkUsername = async username => {
 
   return request.fold(
     () => Left(null),
-    resp => Either.either(resp.data.exist === 0)
+    (resp) => Either.either(resp.data.exist === 0)
   );
 };
 
-export const checkEmail = async email => {
+export const checkEmail = async (email) => {
   const config: any = {
     url: `${URL.CHECK_EMAIL}/${email}`,
     method: 'GET',
@@ -127,7 +127,7 @@ export const checkEmail = async email => {
   );
 };
 
-export const checkBlockedCountry = async countryid => {
+export const checkBlockedCountry = async (countryid) => {
   const config: any = {
     url: `${URL.CHECK_COUNTRYBLOCKED}${countryid}`,
     method: 'GET',
@@ -140,13 +140,13 @@ export const checkBlockedCountry = async countryid => {
 
   return request.fold(
     () => Left(null),
-    resp => Either.either(resp.data.exist === 0)
+    (resp) => Either.either(resp.data.exist === 0)
   );
 };
 
 export const bloomSignIn = () => URL.BLOOM_SIGN_IN;
 
-const checkDappBrowserCallback = token => {
+const checkDappBrowserCallback = (token) => {
   // @ts-ignore
   if (window.web3 && window.web3.currentProvider.isMetaMask) {
     return `https://metamask.app.link/dapp/raise.it/login/bloom/${token}`;
@@ -162,14 +162,14 @@ const checkDappBrowserCallback = token => {
   return URL.REDIRECT.replace(':token', token);
 };
 
-export const redirectFromBloomApp = token => {
+export const redirectFromBloomApp = (token) => {
   if (isMobile) {
     return checkDappBrowserCallback(token);
   }
   return URL.REDIRECT.replace(':token', token);
 };
 
-export const verifyBloomLogin = async tokenBloom => {
+export const verifyBloomLogin = async (tokenBloom) => {
   const config: any = {
     url: `${URL.BLOOM_LOGIN}`,
     method: 'POST',

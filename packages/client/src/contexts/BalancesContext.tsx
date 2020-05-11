@@ -194,7 +194,7 @@ export function Updater() {
         ? getEtherBalance(address, library)
         : getTokenBalance(tokenAddress, address, library)
       )
-        .then(value => value.toString())
+        .then((value) => value.toString())
         .catch(() => null),
     [library]
   );
@@ -202,8 +202,8 @@ export function Updater() {
   // ensure that all balances with >=1 listeners are updated every block
   useEffect(() => {
     if (typeof chainId === 'number' && typeof blockNumber === 'number') {
-      Object.keys(debouncedState?.[chainId] ?? {}).forEach(address => {
-        Object.keys(debouncedState?.[chainId][address]).forEach(tokenAddress => {
+      Object.keys(debouncedState?.[chainId] ?? {}).forEach((address) => {
+        Object.keys(debouncedState?.[chainId][address]).forEach((tokenAddress) => {
           const active = debouncedState[chainId][address][tokenAddress].listenerCount > 0;
           if (active) {
             const cachedFetchedAsOf =
@@ -212,7 +212,7 @@ export function Updater() {
               debouncedState[chainId][address][tokenAddress]?.blockNumber ?? cachedFetchedAsOf;
             if (fetchedAsOf !== blockNumber) {
               // fetch the balance...
-              fetchBalance(address, tokenAddress).then(value => {
+              fetchBalance(address, tokenAddress).then((value) => {
                 update(chainId, address, tokenAddress, value, blockNumber);
               });
               // ...and cache the fetch

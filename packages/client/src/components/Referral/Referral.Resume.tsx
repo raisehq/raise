@@ -18,7 +18,7 @@ import {
   RewardMessageFriends
 } from './Referral.styles';
 
-const getView = friends => {
+const getView = (friends) => {
   if (friends.length === 0) {
     return <RewardMessageSubTitle>Invite friends and start earning</RewardMessageSubTitle>;
   }

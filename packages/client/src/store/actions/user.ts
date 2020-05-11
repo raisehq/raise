@@ -23,7 +23,7 @@ export default (dispatch: any, state: Store) => {
 
     return response.fold(
       () => null,
-      data => dispatch({ type: 'GET_ADDRESS_TYPES', data })
+      (data) => dispatch({ type: 'GET_ADDRESS_TYPES', data })
     );
   };
 
@@ -77,7 +77,7 @@ export default (dispatch: any, state: Store) => {
     }
   };
 
-  const onRemoveAddress = async userId => {
+  const onRemoveAddress = async (userId) => {
     const response = await removeAddress(userId);
 
     response.fold(
@@ -86,7 +86,7 @@ export default (dispatch: any, state: Store) => {
     );
   };
 
-  const onSetInitialUserData = data => {
+  const onSetInitialUserData = (data) => {
     dispatch({ type: 'SET_INITIAL_USER_DATA', data });
   };
 

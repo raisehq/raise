@@ -28,7 +28,7 @@
     "components:build:umd": "lerna run build:umd --stream --scope @raisehq/components",
     "components:test": "lerna run test --stream --scope @raisehq/components",
     "components:test:ci": "lerna run test:ci --stream --scope @raisehq/components",
-    "prettier": "prettier --write **/*.jsx",
+    "prettier": "prettier --write packages/**/src/*.tsx",
     "build:deps:fast": "lerna run --stream --scope @raisehq/components build:fast && lerna run --stream --scope @raisehq/onboarding build",
     "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
     "watch:storybook": "yarn run build:deps:fast && lerna run --parallel --concurrency 4 --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch "
@@ -59,7 +59,7 @@
   "devDependencies": {
     "husky": "^4.2.5",
     "lint-staged": "^10.0.8",
-    "prettier": "^1.19.1",
+    "prettier": "2.0.5",
     "pretty-quick": "^2.0.1"
   }
 }

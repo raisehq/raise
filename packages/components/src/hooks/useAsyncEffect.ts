@@ -14,7 +14,7 @@ export default function useEffectAsync(
 
       const maybePromise = effect(() => mounted);
 
-      Promise.resolve(maybePromise).then(value => {
+      Promise.resolve(maybePromise).then((value) => {
         result = value;
       });
 

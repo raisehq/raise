@@ -15,23 +15,25 @@ const slackUpload = new ClientSlack(TOKEN);
 const options = {
   reportDir: 'cypress/results'
 };
-cleanDir(options.reportDir).then(cypress.run()).then(
-  () => {
-    generateReport();
-  },
-  error => {
-    generateReport();
-    console.error(error);
-    process.exit(1);
-  }
-);
+cleanDir(options.reportDir)
+  .then(cypress.run())
+  .then(
+    () => {
+      generateReport();
+    },
+    (error) => {
+      generateReport();
+      console.error(error);
+      process.exit(1);
+    }
+  );
 
 function generateReport() {
-  return merge(options).then(report => {
+  return merge(options).then((report) => {
     fs.writeFileSync(`${options.reportDir}/merge.report.json`, JSON.stringify(report));
     slack.bug(getResume(report) + getErrors(report));
     const files = getFilesFromErrors();
-    Object.keys(files).map(key => files[key].forEach(path => uploadDocuments(key, path)));
+    Object.keys(files).map((key) => files[key].forEach((path) => uploadDocuments(key, path)));
 
     marge.create(report, options);
   });
@@ -46,7 +48,7 @@ function uploadDocuments(comment, file) {
       initialComment: comment,
       channels: '#ci'
     },
-    function(err, data) {
+    function (err, data) {
       if (err) {
         console.error('[uploadfile] ERROR: ', err);
       } else {

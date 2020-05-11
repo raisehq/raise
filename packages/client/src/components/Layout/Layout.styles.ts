@@ -9,7 +9,7 @@ interface PropsPathname {
   pathname: string;
 }
 
-const depositWidth = pathname => match(pathname, ANY, () => '1200px');
+const depositWidth = (pathname) => match(pathname, ANY, () => '1200px');
 
 const backgroundImage = getImages('pattern-fdesk-dark.svg');
 

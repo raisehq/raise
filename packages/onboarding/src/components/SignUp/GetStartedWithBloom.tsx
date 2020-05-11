@@ -34,11 +34,11 @@ const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
   const watchBloom = async () => {
     const response = await verifyBloomLogin(tokenBloom);
     response.fold(
-      error => {
+      (error) => {
         console.error('Error Watch Bloom : ', error);
         onLoginWithBloom(error, method);
       },
-      resp => {
+      (resp) => {
         const {
           data: {
             data: { result }

@@ -48,7 +48,7 @@ const getInstalmentPenalty = (loan, decimals = 18) => {
   return penalty;
 };
 
-const getInstalmentDates = loan => {
+const getInstalmentDates = (loan) => {
   const instalmentLength = loan.termLength / loan.instalments;
   const instalmentDates: Array<string> = [];
   for (let i = 1; i <= 4; i += 1) {
@@ -110,7 +110,7 @@ const getProgressiveState = (funding, decimals, date) => {
   const currentTotalDebt = getCurrentDebt(funding.loan, decimals, date);
 
   const instalmentDates = getInstalmentDates(funding.loan);
-  const instalments = instalmentDates.map(idate => {
+  const instalments = instalmentDates.map((idate) => {
     const state = getStateByDate(funding, idate);
 
     return {
