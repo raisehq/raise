@@ -2,8 +2,8 @@ const BUTTERCMSKEY = process.env.REACT_APP_BUTTER;
 
 module.exports = {
   siteMetadata: {
-    title: 'Raise.it',
-    description: 'Raise',
+    title: 'Invest, Grow and Do Good!',
+    description: 'Check out the available investment opportunities in our marketplace',
     author: '@raiseit'
   },
   plugins: [
@@ -38,14 +38,19 @@ module.exports = {
           {
             family: 'Lato'
           }
-        ],
-      },
+        ]
+      }
     },
     {
       resolve: 'gatsby-plugin-env-variables',
       options: {
-        whitelist: ['REACT_APP_HOST_IMAGES', 'REACT_APP_HOST_URL_AUTH', 'REACT_APP_HOST_URL_CORE', 'REACT_APP_HOST_URL_FILE']
-      },
+        whitelist: [
+          'REACT_APP_HOST_IMAGES',
+          'REACT_APP_HOST_URL_AUTH',
+          'REACT_APP_HOST_URL_CORE',
+          'REACT_APP_HOST_URL_FILE'
+        ]
+      }
     },
     {
       resolve: 'gatsby-source-buttercms',
