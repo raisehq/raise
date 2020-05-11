@@ -49,10 +49,11 @@
     "ts-jest": "^24.0.2"
   },
   "scripts": {
-    "build": "env-cmd --no-override .env.local gatsby build",
+    "build:site": "env-cmd --no-override .env.local gatsby build",
+    "build:integration": "env-cmd --no-override .env.integration gatsby build",
+    "build:production": "env-cmd --no-override .env.production gatsby build",
     "develop": "env-cmd --no-override .env.local gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "lint": "eslint --ignore-path .gitignore . --ext ts --ext tsx --ext js --ext jsx"
