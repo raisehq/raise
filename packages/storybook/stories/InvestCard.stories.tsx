@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { InvestCard } from '@raisehq/components';
-import { Company } from '@raisehq/components';
 
 const auction = {
   auctionEndTimestamp: '1575021892',
@@ -26,7 +25,7 @@ const auction = {
   termLength: '7776000',
 };
 
-const company: Company = {
+const company = {
   companyName: 'HERO Fintech Solutions Ptd. Ltd.',
   description: '',
   shortDescription:
