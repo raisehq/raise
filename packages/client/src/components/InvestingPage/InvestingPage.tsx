@@ -61,9 +61,9 @@ const InvestingPage = () => {
   console.log('sections length:::: ', sections.length);
   return (
     <InvestingContainer>
-      {sections.map((section, index) => (
+      {sections.map((section: any, index) => (
         <InvestingSection
-          key={index}
+          key={section.section_title}
           section={section}
           sectionIndex={index}
           length={sections.length}

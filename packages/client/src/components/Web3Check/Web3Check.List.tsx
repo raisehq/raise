@@ -70,7 +70,7 @@ const CheckList = ({ onBack, onSuccess }: any) => {
   ];
 
   const StepsDOM = steps.map((value, i) => (
-    <Check key={`check-${i}`} value={value} message={stepsMessage[i]} />
+    <Check key={value} value={value} message={stepsMessage[i]} />
   ));
   if (matchConditions.every((el: any) => el)) {
     onSuccess();

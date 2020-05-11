@@ -36,8 +36,8 @@ const SubItem = styled.div`
 `;
 
 const SubHeader = ({ routes, ...props }: SubheaderProps) => {
-  const routeMapper = routes.map(({ title, path, component }: Route, i) => {
-    const body = React.createElement(component, { key: i, to: path, title });
+  const routeMapper = routes.map(({ title, path, component }: Route) => {
+    const body = React.createElement(component, { key: path, to: path, title });
     return <SubItem key={title}>{body}</SubItem>;
   });
 

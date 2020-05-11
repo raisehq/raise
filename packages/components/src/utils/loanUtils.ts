@@ -1,6 +1,6 @@
 import { match, ANY } from 'pampy';
 import cloneDeep from 'lodash/cloneDeep';
-import { fromDecimal } from '../utils/web3-utils';
+import { fromDecimal } from './web3-utils';
 import { LoanState } from '../commons/loanStatus';
 import numeral, { numeralFormat } from '../commons/numeral';
 import { CoinsType } from '../commons/coins';

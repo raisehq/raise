@@ -7,7 +7,7 @@ import { MAX_VALUE } from '../commons/constants';
 import { Stages } from '../components/RepayLoan/RepayLoan.context';
 import { useAppContext } from '../contexts/AppContext';
 import { useRootContext } from '../contexts/RootContext';
-import useGetCoin from '../hooks/useGetCoin';
+import useGetCoin from './useGetCoin';
 
 const useRepayment = (loan, open) => {
   const { borrowerDebt, id }: any = loan;

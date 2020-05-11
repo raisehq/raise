@@ -68,7 +68,7 @@ const Register: React.SFC<IRegister> = ({
 
   useEffect(() => {
     setCredentials({ ...credentials, mailingChecked: false });
-  }, []);
+  }, [credentials]);
 
   useAsyncEffect(async () => {
     if (recaptcha) {

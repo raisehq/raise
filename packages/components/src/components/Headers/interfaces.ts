@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface LinkComponent {
-  key?: number;
+  key?: string;
   to?: string;
   href?: string;
   title: string;

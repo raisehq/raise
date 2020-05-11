@@ -50,7 +50,7 @@ const InvestingPage = ({ data }: any) => {
     <InvestingContainer>
       {sections.map((section: any, index: any) => (
         <InvestingSection
-          key={index}
+          key={section.section_title}
           section={section}
           sectionIndex={index}
           length={sections.length}

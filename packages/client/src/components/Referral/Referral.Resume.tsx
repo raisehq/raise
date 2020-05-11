@@ -18,7 +18,7 @@ import {
   RewardMessageFriends
 } from './Referral.styles';
 
-const getView = (friends) => {
+const getView = (friends: any[]) => {
   if (friends.length === 0) {
     return <RewardMessageSubTitle>Invite friends and start earning</RewardMessageSubTitle>;
   }
@@ -26,8 +26,8 @@ const getView = (friends) => {
     // TODO : This function need to be refactored
     // prettier-ignore
     <List>
-      {friends.map((friend, i) => (
-        <FriendsListItem key={i}>
+      {friends.map((friend) => (
+        <FriendsListItem key={friend.name}>
           <List.Icon name="check" color="green" />
           <List.Content>
             {// eslint-disable-next-line
