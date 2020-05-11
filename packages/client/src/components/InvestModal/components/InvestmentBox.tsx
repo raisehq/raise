@@ -266,7 +266,8 @@ const InvestmentBox = ({
   };
 
   const fundAll = (loanCurrency: CoinsType, selectedCurrency: CoinsType) => async divisor => {
-    const availableBalance = selectedCurrency.text === 'ETH' ? balance - 0.005 : balance;
+    const availableBalance =
+      selectedCurrency.text === 'ETH' ? balance - 0.005 - balance * 0.04 : balance;
     const nMaxAmount = Number(fromDecimal(maxAmount, loanCurrency.decimals));
     const nPrincipal = nMaxAmount - Number(fromDecimal(principal, loanCurrency.decimals));
 
