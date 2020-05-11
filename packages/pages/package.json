@@ -49,9 +49,9 @@
     "ts-jest": "^24.0.2"
   },
   "scripts": {
-    "build:site": "env-cmd --no-override .env.local gatsby build",
-    "build:integration": "env-cmd --no-override .env.integration gatsby build",
-    "build:production": "env-cmd --no-override .env.production gatsby build",
+    "build:site": "gatsby build",
+    "build:integration": "env-cmd --no-override .env.integration yarn build:site",
+    "build:production": "env-cmd --no-override .env.production yarn build:site",
     "develop": "env-cmd --no-override .env.local gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "serve": "gatsby serve",
