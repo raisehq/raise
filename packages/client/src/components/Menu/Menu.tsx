@@ -18,7 +18,7 @@ import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
 
-const navigateToOutsideNewTab = route => () => {
+const navigateToOutsideNewTab = (route) => () => {
   window.open(route, '_blank');
 };
 
@@ -79,7 +79,7 @@ const Menu = () => {
     showMenu(false);
   };
 
-  const toCreateLoan = route => () => {
+  const toCreateLoan = (route) => () => {
     history.push(route);
     showMenu(false);
   };
@@ -167,10 +167,10 @@ const Menu = () => {
   // TODO : This function need to be refactored
   const getMenu = useCallback(
     // eslint-disable-next-line
-    links =>
+    (links) =>
       !links || !links.length
         ? []
-        : links.map(item => (
+        : links.map((item) => (
             // eslint-disable-next-line
             <li key={item.id} className={pathname === item.link ? 'active' : 'non-active'}>
               <Link

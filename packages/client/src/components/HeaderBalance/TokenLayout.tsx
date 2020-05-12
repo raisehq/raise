@@ -12,7 +12,7 @@ import {
 const TokenLayout = ({ imageUrl, name, value, hider, isLogged, ...props }: any) => {
   const [hidde, setHidde] = useState(false);
 
-  const handleTroggleHidde = e => {
+  const handleTroggleHidde = (e) => {
     e.stopPropagation();
     setHidde(!hidde);
   };

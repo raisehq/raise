@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useRouter from '../hooks/useRouter';
+import useRouter from './useRouter';
 
 const useMenuVisibility = () => {
   const { history }: any = useRouter();

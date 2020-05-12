@@ -36,9 +36,7 @@ export async function getTokenBalance(tokenAddress, address, library) {
   if (!isAddress(tokenAddress) || !isAddress(address)) {
     throw Error(`Invalid 'tokenAddress' or 'address' parameter '${tokenAddress}' or '${address}'.`);
   }
-  return getContract(tokenAddress, ABI_ERC20, library)
-    .methods.balanceOf(address)
-    .call();
+  return getContract(tokenAddress, ABI_ERC20, library).methods.balanceOf(address).call();
 }
 
 export const toDecimal = (etherAmount: string | number | BigNumber, factor = 18): string =>

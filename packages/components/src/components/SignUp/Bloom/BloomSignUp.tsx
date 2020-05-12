@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { v4 as bloomToken } from 'uuid';
 import {
   RequestElement,
@@ -37,15 +37,15 @@ const BloomSignUp = ({
   const [errorStage, setErrorStage] = useState(false);
   const checkerTimeout = useRef(null);
 
-  const watchBloom = async () => {
+  const watchBloom = useCallback(async () => {
     const response = await isUserSignedUp(tokenBloom);
     response.fold(
-      error => {
+      (error) => {
         console.error('Error Watch Bloom : ', error);
         onBloomError();
         setErrorStage(true);
       },
-      resp => {
+      (resp) => {
         const {
           data: {
             data: { result },
@@ -60,14 +60,14 @@ const BloomSignUp = ({
         }
       }
     );
-  };
+  }, [isUserSignedUp, onBloomError, onBloomSignUp, tokenBloom]);
 
   useEffect(() => {
     if (tokenBloom === null || tokenBloom.length === 0) {
       setTokenBloom(bloomToken());
     }
     setIsScreenIdle(true);
-  }, []);
+  }, [tokenBloom]);
 
   useEffect(() => {
     if (tokenBloom !== null) {
@@ -77,7 +77,7 @@ const BloomSignUp = ({
     }
     // @ts-ignore
     return () => checkerTimeout && clearTimeout(checkerTimeout.current);
-  }, [tokenBloom]);
+  }, [tokenBloom, watchBloom]);
 
   useEffect(() => {
     const events = [

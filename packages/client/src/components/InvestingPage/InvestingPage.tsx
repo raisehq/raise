@@ -24,7 +24,7 @@ const InvestingPage = () => {
       (a: { section_order: number }, b: { section_order: number }) =>
         a.section_order > b.section_order ? 1 : -1
     );
-    butterSections.subInvestingSection.forEach(sub => {
+    butterSections.subInvestingSection.forEach((sub) => {
       const index = sub.section_number;
       if (orderedSections[index].subSection) {
         orderedSections[index].subSection.push(sub);
@@ -33,7 +33,7 @@ const InvestingPage = () => {
         orderedSections[index].subSection.push(sub);
       }
     });
-    orderedSections.forEach(section => {
+    orderedSections.forEach((section) => {
       const index = section.section_order;
       if (orderedSections[index].subSection) {
         orderedSections[index].subSection = orderedSections[index].subSection.sort(
@@ -61,9 +61,9 @@ const InvestingPage = () => {
   console.log('sections length:::: ', sections.length);
   return (
     <InvestingContainer>
-      {sections.map((section, index) => (
+      {sections.map((section: any, index) => (
         <InvestingSection
-          key={index}
+          key={section.section_title}
           section={section}
           sectionIndex={index}
           length={sections.length}

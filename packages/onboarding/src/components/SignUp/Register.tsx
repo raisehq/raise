@@ -81,7 +81,7 @@ const Register = () => {
     recaptchaRef.current.execute();
   };
 
-  const onKeyPress = event => {
+  const onKeyPress = (event) => {
     if (
       event.key === 'Enter' &&
       credentials.username !== '' &&
@@ -92,7 +92,7 @@ const Register = () => {
     }
   };
 
-  const onCaptchaCallback = async captchaResponse => {
+  const onCaptchaCallback = async (captchaResponse) => {
     onSetCredentials('g-recaptcha-response', captchaResponse);
     setRecaptcha(captchaResponse);
   };

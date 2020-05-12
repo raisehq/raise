@@ -68,7 +68,7 @@ const Register: React.SFC<IRegister> = ({
 
   useEffect(() => {
     setCredentials({ ...credentials, mailingChecked: false });
-  }, []);
+  }, [credentials]);
 
   useAsyncEffect(async () => {
     if (recaptcha) {
@@ -137,7 +137,7 @@ const Register: React.SFC<IRegister> = ({
     recaptchaRef.current.execute();
   };
 
-  const onKeyPress = event => {
+  const onKeyPress = (event) => {
     if (
       event.key === 'Enter' &&
       credentials.email !== '' &&
@@ -148,7 +148,7 @@ const Register: React.SFC<IRegister> = ({
     }
   };
 
-  const onCaptchaCallback = async captchaResponse => {
+  const onCaptchaCallback = async (captchaResponse) => {
     setCredentials({ ...credentials, 'g-recaptcha-response': captchaResponse });
     setRecaptcha(captchaResponse);
   };

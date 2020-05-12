@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, MaxButton, Divider } from './styles';
 
 const MaxInputs = ({ onClick, ...rest }: any) => {
-  const fundAll = divisor => () => {
+  const fundAll = (divisor) => () => {
     onClick(divisor);
   };
 

@@ -13,5 +13,5 @@ export default {
     green: 'linear-gradient(134.72deg, #00A76F 0%, #00DA9E 100%);',
     blue: 'linear-gradient(134.72deg, #EFF7F8 0%, #DAEFEF 100%);',
     sumSub: 'linear-gradient(134.72deg, #59C7D4 0%, #4A8EC3 100%);'
-  },
+  }
 };

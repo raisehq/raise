@@ -15,7 +15,7 @@ if (!numeral?.locales?.hero) {
       billion: 'b',
       trillion: 't',
     },
-    ordinal: number => {
+    ordinal: (number) => {
       const b = number % 10;
       /* eslint-disable */
       // TODO : Try to do without ternary condition
