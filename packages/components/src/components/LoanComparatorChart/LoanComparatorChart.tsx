@@ -50,7 +50,7 @@ const printResumes = (companies: Company[]) => {
     return null;
   }
   const sortedCompanies = companies
-    .filter(x => !!x && x.supplyRate >= 0)
+    .filter((x) => !!x && x.supplyRate >= 0)
     .sort((companyA, companyB) => {
       if (!companyA.enabled) {
         return 1;

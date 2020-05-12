@@ -19,7 +19,7 @@ export const getCurrencyTypes = async (): Promise<any> => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
+    (error) => Left(error),
     ({ data: { data } }) => Right(data)
   );
 };
@@ -37,7 +37,7 @@ export const getEthereumPrice = async () => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
-    data => Right(data.data.data)
+    (error) => Left(error),
+    (data) => Right(data.data.data)
   );
 };

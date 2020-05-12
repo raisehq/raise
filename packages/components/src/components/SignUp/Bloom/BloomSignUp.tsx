@@ -40,12 +40,12 @@ const BloomSignUp = ({
   const watchBloom = useCallback(async () => {
     const response = await isUserSignedUp(tokenBloom);
     response.fold(
-      error => {
+      (error) => {
         console.error('Error Watch Bloom : ', error);
         onBloomError();
         setErrorStage(true);
       },
-      resp => {
+      (resp) => {
         const {
           data: {
             data: { result }

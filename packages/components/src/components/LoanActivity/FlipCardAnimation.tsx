@@ -33,7 +33,7 @@ const LoanActivity = ({ heads, tails, flipped }: FlipCardAnimationProps) => {
   });
 
   const mainCard = {
-    opacity: opacity.interpolate(o => 1 - Number(o)),
+    opacity: opacity.interpolate((o) => 1 - Number(o)),
     transform,
     zIndex: !flipped ? 1 : 0
     // display: !flipped ? 'block' : 'none',
@@ -41,7 +41,7 @@ const LoanActivity = ({ heads, tails, flipped }: FlipCardAnimationProps) => {
 
   const backCard = {
     opacity,
-    transform: transform.interpolate(t => `${t} rotateX(180deg)`),
+    transform: transform.interpolate((t) => `${t} rotateX(180deg)`),
     zIndex: flipped ? 1 : 0
     // display: flipped ? 'block' : 'none',
   };

@@ -41,7 +41,7 @@ export function getHost(name: string) {
   }
   return HOSTS[name];
 }
-export const getImages = name => `${process.env.REACT_APP_HOST_IMAGES}/images/${name}`;
+export const getImages = (name) => `${process.env.REACT_APP_HOST_IMAGES}/images/${name}`;
 
 export function getMimeType(base64: string) {
   const mime = base64.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
@@ -87,7 +87,7 @@ export const to = (promise: any) => promise.then(Right).catch(Left);
 
 export const checkAuth = () => LocalData.getObj('auth') !== null;
 
-export const parseNetwork = id => {
+export const parseNetwork = (id) => {
   switch (id) {
     case 1:
       return 'mainnet';
@@ -108,7 +108,7 @@ export const parseNetwork = id => {
 
 const LIST_BROWSERS = ['brave', 'chrome', 'chromium', 'firefox', 'opera'];
 export const isSupportedBrowser = () =>
-  LIST_BROWSERS.some(supportedBrowser => browserName.toLowerCase().includes(supportedBrowser));
+  LIST_BROWSERS.some((supportedBrowser) => browserName.toLowerCase().includes(supportedBrowser));
 
 const HERO_CONTRACTS: any = process.env.REACT_APP_METADATA_URL;
 
@@ -119,7 +119,7 @@ export const getContractsDefinition = async () => {
   return contractsDef;
 };
 
-export const getWalletName = walletId => {
+export const getWalletName = (walletId) => {
   switch (walletId) {
     case CryptoWallets.Metamask:
       return 'Metamask';

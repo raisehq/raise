@@ -41,7 +41,7 @@ export const getLiveAuctionsByAccount = async (address, network) => {
 
   return request.fold(
     () => Left(null),
-    response => {
+    (response) => {
       if (response.data.errors) {
         return Left(response.data.errors);
       }
@@ -50,7 +50,7 @@ export const getLiveAuctionsByAccount = async (address, network) => {
   );
 };
 
-export const getSuggestedAuctions = async network => {
+export const getSuggestedAuctions = async (network) => {
   const config: any = {
     url: getGraphEndpoint(network),
     method: 'POST',
@@ -88,7 +88,7 @@ export const getSuggestedAuctions = async network => {
 
   return request.fold(
     () => Left(null),
-    response => {
+    (response) => {
       if (response.data.errors) {
         return Left(response.data.errors);
       }

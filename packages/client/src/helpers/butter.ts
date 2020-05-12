@@ -14,7 +14,7 @@ const WYSIWYGFields = ['description', 'businessPlan', 'operations', 'competitive
 
 const toCamelCase = (v, k: string) => camelCase(k);
 
-const sanitizeValue = fields => (v, k) => {
+const sanitizeValue = (fields) => (v, k) => {
   if (fields.includes(k)) {
     return staticHtmlToReact(DOMPurify.sanitize(v));
   }

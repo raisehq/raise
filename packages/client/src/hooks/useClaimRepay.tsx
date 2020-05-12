@@ -20,7 +20,7 @@ const useRepayment = (loan, open) => {
     setPending(false);
   }, [open]);
 
-  const claimRepayment = async depositChecked => {
+  const claimRepayment = async (depositChecked) => {
     setPending(true);
     const LoanContract = await metamask.addContractByAddress('LoanContract', id);
     try {

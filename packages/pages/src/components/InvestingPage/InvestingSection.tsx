@@ -51,7 +51,7 @@ const InvestingSection: React.SFC<ISectionProps> = ({ section, length, sectionIn
             )}
             {section.subSection && (
               <SubSectionContainer>
-                {section.subSection.map(subSection => (
+                {section.subSection.map((subSection) => (
                   <SubSection key={subSection.sub_sub_text.substring(0, 8)}>
                     <SubSectionIcon src={subSection.sub_sub_icon} />
                     <SubSectionText>{subSection.sub_sub_text}</SubSectionText>

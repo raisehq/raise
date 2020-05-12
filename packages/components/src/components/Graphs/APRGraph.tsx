@@ -73,10 +73,10 @@ const datasetToGraph = (
   pointHoverRadius: pointRadius,
   borderWidth: !borderWidth ? 1 : borderWidth,
   pointHoverBackgroundColor: pointHover.length
-    ? pointHover.map(x => (x > 0 ? `rgba(${rgb},1)` : `rgba(${rgb},0)`))
+    ? pointHover.map((x) => (x > 0 ? `rgba(${rgb},1)` : `rgba(${rgb},0)`))
     : `rgba(${rgb},1)`,
   pointHoverBorderColor: pointHover.length
-    ? pointHover.map(x => (x > 0 ? `rgba(${rgb},1)` : `rgba(${rgb},0)`))
+    ? pointHover.map((x) => (x > 0 ? `rgba(${rgb},1)` : `rgba(${rgb},0)`))
     : `rgba(${rgb},1)`,
   pointHoverBorderWidth: pointHover.length ? pointHover : 2,
   pointHitRadius: 10,
@@ -286,7 +286,7 @@ const APRGraph = ({
     graphData
   ]);
 
-  const getFormatDate = date => {
+  const getFormatDate = (date) => {
     dayjs.extend(localizedFormat);
     return dayjs(date).format('LL');
   };

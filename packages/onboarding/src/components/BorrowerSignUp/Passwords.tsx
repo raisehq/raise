@@ -88,7 +88,7 @@ const BorrowerSignUp = ({ token }: any) => {
     await onSetPasswordBorrower(token, password.main);
   };
 
-  const onKeyPress = event => {
+  const onKeyPress = (event) => {
     if (
       event.key === 'Enter' &&
       !errors.retyped.notPassword &&

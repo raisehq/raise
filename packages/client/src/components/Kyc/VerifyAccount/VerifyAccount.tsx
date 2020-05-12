@@ -13,7 +13,7 @@ const VerifyAccount = () => {
     bloom: 'bloom'
   };
 
-  const providerKYC = provider => {
+  const providerKYC = (provider) => {
     tagManager.sendEvent(TMEvents.Click, kycLabelMapps[provider]);
 
     switch (provider) {

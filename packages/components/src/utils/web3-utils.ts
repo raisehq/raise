@@ -2,9 +2,9 @@ import { Keccak } from 'sha3';
 import BigNumber from 'bignumber.js';
 import ABI_ERC20 from '../commons/erc20';
 
-const sha3 = value => new Keccak(256).update(value).digest('hex');
+const sha3 = (value) => new Keccak(256).update(value).digest('hex');
 
-export const isChecksumAddress = address => {
+export const isChecksumAddress = (address) => {
   // Check each case
   const notAddress = address.replace('0x', '');
   const addressHash = sha3(notAddress.toLowerCase());
@@ -21,7 +21,7 @@ export const isChecksumAddress = address => {
   return true;
 };
 
-export const isAddress = address => {
+export const isAddress = (address) => {
   if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
     // Check if it has the basic requirements of an address
     return false;

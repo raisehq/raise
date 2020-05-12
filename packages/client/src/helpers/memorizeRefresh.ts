@@ -8,7 +8,7 @@ const memoRequest = {
   response: undefined
 };
 /* eslint-disable */
-const MemorizeRefresh = token =>
+const MemorizeRefresh = (token) =>
   new Promise((resolve, reject) => {
     if (token === memoRequest.token) return resolve(memoRequest.response);
 
