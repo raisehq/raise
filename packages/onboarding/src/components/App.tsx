@@ -196,7 +196,7 @@ const App = ({
 
   const onSetStep = (newStep: Steps) => () => setStep(Step[newStep]);
 
-  const onSetStepWithParam = (newStep: Steps) => param => () => {
+  const onSetStepWithParam = (newStep: Steps) => (param) => () => {
     if (newStep === 'SignUpWithBloom') {
       tagManager.sendEventCategory('Signup', TMEvents.Click, 'signup_attempt_bloom', host);
     } else if (newStep === 'SignInWithBloom') {
@@ -206,7 +206,7 @@ const App = ({
   };
 
   const onSetCredentials = (input, value) => {
-    setCredentials(creds => ({ ...creds, [input]: value }));
+    setCredentials((creds) => ({ ...creds, [input]: value }));
   };
 
   const onSendCredentials = async () => {
@@ -254,7 +254,7 @@ const App = ({
     );
   };
 
-  const onActivateAccount = async token => {
+  const onActivateAccount = async (token) => {
     tagManager.sendEventCategory('ActivateBorrower', TMEvents.Click, 'activate_attempt', host);
     const activateAccount = await services.validateToken({
       token
@@ -272,7 +272,7 @@ const App = ({
     );
   };
 
-  const onRecover = async email => {
+  const onRecover = async (email) => {
     tagManager.sendEventCategory('Recover', TMEvents.Click, 'recover_attempt', host);
     const request = await services.recovery(email);
 
@@ -348,7 +348,7 @@ const App = ({
     });
 
     request.fold(
-      error => {
+      (error) => {
         tagManager.sendEventCategory('Login', TMEvents.Click, 'login_error', host);
         if (error.response.status === 423) {
           const { token } = error.response.data ? error.response.data.data : { token: null };
@@ -356,7 +356,7 @@ const App = ({
         }
         setLoginError(true);
       },
-      response => {
+      (response) => {
         const {
           data: {
             data: {
@@ -428,7 +428,7 @@ const App = ({
         </PanelWithImage>
       ),
       SignUpWithEmailMini: () => <GetStartedWithEmail />,
-      SignUpWithBloom: token => (
+      SignUpWithBloom: (token) => (
         <Panel {...props}>
           <GetStartedWithBloom
             onBack={() => setStep(Step.Start)}
@@ -437,7 +437,7 @@ const App = ({
           />
         </Panel>
       ),
-      SignInWithBloom: token => (
+      SignInWithBloom: (token) => (
         <Panel {...props}>
           <GetStartedWithBloom onBack={() => setStep(Step.SignIn)} token={token} method="Sign In" />
         </Panel>
@@ -474,7 +474,7 @@ const App = ({
           <Verifying />
         </Simple>
       ),
-      VerifiedError: token => (
+      VerifiedError: (token) => (
         <Simple {...props}>
           <VerifiedError token={token} />
         </Simple>
@@ -499,12 +499,12 @@ const App = ({
           <ResetConfirm />
         </Simple>
       ),
-      ResetPasswordInput: token => (
+      ResetPasswordInput: (token) => (
         <Simple {...props}>
           <ResetPasswordInput token={token} />
         </Simple>
       ),
-      BorrowerSignUp: token => (
+      BorrowerSignUp: (token) => (
         <Simple {...props}>
           <BorrowerSignUp token={token} />
         </Simple>
@@ -519,7 +519,7 @@ const App = ({
           <BorrowerSignUpOK />
         </Simple>
       ),
-      ResendValidationEmail: token => (
+      ResendValidationEmail: (token) => (
         <Simple {...props}>
           <ResendValidationEmail token={token} />
         </Simple>

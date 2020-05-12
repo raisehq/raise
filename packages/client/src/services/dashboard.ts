@@ -18,7 +18,7 @@ export const getEthereumPrice = async () => {
 
   const response = await to(axios(config));
 
-  return response.fold(error => Left(error), console.log);
+  return response.fold((error) => Left(error), console.log);
 };
 
 export const getLenderDashboard = async (accountId, offset) => {
@@ -62,8 +62,8 @@ export const getLenderDashboard = async (accountId, offset) => {
   const response = await to(axios.post(`${URL.DASHBOARD}`, query, config));
 
   return response.fold(
-    error => Left(error),
-    resp => Right(resp.data.data.lender)
+    (error) => Left(error),
+    (resp) => Right(resp.data.data.lender)
   );
 };
 
@@ -103,7 +103,7 @@ export const getOriginatorDashboard = async (accountId, offset) => {
   const response = await to(axios.post(`${URL.DASHBOARD}`, query, config));
 
   return response.fold(
-    error => Left(error),
-    resp => Right(resp.data.data.originator)
+    (error) => Left(error),
+    (resp) => Right(resp.data.data.originator)
   );
 };

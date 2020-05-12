@@ -1,3 +1,10 @@
+export {
+  GraphFunding,
+  GraphReferral,
+  GraphLoan,
+  GraphUser,
+} from './commons/graphTypes';
+
 export enum AccountType {
   Borrower = 1,
   Lender,

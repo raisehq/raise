@@ -41,7 +41,7 @@ class UseWebsocket {
       );
     };
 
-    this.client.onclose = event => {
+    this.client.onclose = (event) => {
       // The code 1000 (Normal Closure) is special, and results in no error or payload.
       const error = event.code === 1000 ? null : new Error(event);
       // Notify the subscriber.
@@ -49,7 +49,7 @@ class UseWebsocket {
       const callbacks = Array.from(this.subscriptions.values());
       this.subscriptions.clear();
 
-      callbacks.map(callback => callback(error, null));
+      callbacks.map((callback) => callback(error, null));
     };
 
     this.client.onmessage = this.onMessage.bind(this);

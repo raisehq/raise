@@ -33,11 +33,13 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.14.3",
-    "lint-staged": "^10.0.8"
+    "lint-staged": "^10.0.8",
+    "prettier": "2.0.5"
   },
   "dependencies": {
     "@bloomprotocol/share-kit-react": "^4.5.0",
     "@raisehq/components": "*",
+    "axios": "^0.19.2",
     "daggy": "^1.4.0",
     "js-cookie": "^2.2.0",
     "lodash": "4.17.14",
@@ -48,7 +50,9 @@
     "react-router-hash-link": "^1.2.2",
     "react-slick": "^0.25.2",
     "react-transition-group": "^4.3.0",
+    "semantic-ui-react": "^0.88.2",
     "slick-carousel": "^1.8.1",
+    "styled-components": "^5.1.0",
     "url-search-params-polyfill": "^7.0.0",
     "uuid": "^3.3.3",
     "validator": "^12.2.0"

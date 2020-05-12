@@ -24,7 +24,7 @@ const matchAccount = (walledAccount, storedAccount) => {
   }
 };
 const matchNetwork = (targetNetwork, network) => targetNetwork.indexOf(network) !== -1;
-const matchProvider = web3 => {
+const matchProvider = (web3) => {
   if (web3 && web3.currentProvider) return true;
   return false;
 };
@@ -66,7 +66,7 @@ const web3CheckList = (
   hasDeposit
 });
 
-const useWeb3Checker = storedAccount => {
+const useWeb3Checker = (storedAccount) => {
   const { web3, getPrimaryAccount } = useWeb3();
   const forceUpdate = useForceUpdate();
   const wallet = useWallet();

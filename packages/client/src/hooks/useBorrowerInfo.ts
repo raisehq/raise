@@ -24,7 +24,7 @@ const defaultCompany = {
   route: ''
 };
 
-const useBorrowerInfo = borrowerAddress => {
+const useBorrowerInfo = (borrowerAddress) => {
   const [company, setCompany]: [Company, any] = useState(defaultCompany);
 
   useAsyncEffect(async () => {

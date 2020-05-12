@@ -7,25 +7,22 @@ export default function useEffectAsync(
 ) {
   const hasDestroy = typeof destroy === 'function';
 
-  useEffect(
-    () => {
-      let result: any;
-      let mounted = true;
+  useEffect(() => {
+    let result: any;
+    let mounted = true;
 
-      const maybePromise = effect(() => mounted);
+    const maybePromise = effect(() => mounted);
 
-      Promise.resolve(maybePromise).then(value => {
-        result = value;
-      });
+    Promise.resolve(maybePromise).then((value) => {
+      result = value;
+    });
 
-      return () => {
-        mounted = false;
+    return () => {
+      mounted = false;
 
-        if (hasDestroy) {
-          destroy(result);
-        }
-      };
-    },
-    hasDestroy ? inputs : destroy
-  );
+      if (hasDestroy) {
+        destroy(result);
+      }
+    };
+  }, [destroy, effect, hasDestroy, ...inputs]);
 }

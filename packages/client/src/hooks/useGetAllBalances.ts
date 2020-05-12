@@ -42,7 +42,7 @@ const useGetAllBalances = (suportedCoins: string[]): CoinsType[] => {
 
   useEffect(() => {
     if (state) {
-      const updatedBalance: CoinsType[] = suportedCoins.map(name => {
+      const updatedBalance: CoinsType[] = suportedCoins.map((name) => {
         const value =
           typeof chainId === 'number'
             ? state?.[chainId]?.[account]?.[get(contractAddresses, [chainId, name], name)]?.value ||

@@ -20,7 +20,7 @@ export const CompanyContainer = styled.div<CompanyContainerProps>`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  opacity: ${props => (!props.comingSoon ? '30%;' : '')};
+  opacity: ${(props) => (!props.comingSoon ? '30%;' : '')};
   align-items: center;
   margin: 16px 0 16px 0px;
   position: relative;
@@ -53,7 +53,7 @@ export const Percentage = styled.div`
 `;
 export const PercentageBar = styled.div<PercentageProps>`
   margin-bottom: 6px;
-  width: ${props => (props.newWidth ? `${props.newWidth}%` : '0%')};
+  width: ${(props) => (props.newWidth ? `${props.newWidth}%` : '0%')};
   height: 8px;
 
   background: rgb(235, 63, 147);

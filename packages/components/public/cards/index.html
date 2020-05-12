@@ -50,13 +50,13 @@
       // Utilities
 
       var scriptUtils = {
-        camelCase: str => str.replace(/_([a-z])/g, g => g[1].toUpperCase()),
+        camelCase: (str) => str.replace(/_([a-z])/g, (g) => g[1].toUpperCase()),
         mapObject: (object, mapKey, mapValue) =>
           Object.keys(object).reduce((result, key) => {
             result[mapKey(key)] = mapValue(object[key]);
             return result;
           }, {}),
-        sanitizeHtmlToReact: fields => (v, k) => {
+        sanitizeHtmlToReact: (fields) => (v, k) => {
           if (fields.includes(k)) {
             return staticHtmlToReact(DOMPurify.sanitize(v));
           }
@@ -80,7 +80,7 @@
         'competitiveAnalysis',
       ];
 
-      const fetchCompany = async originator => {
+      const fetchCompany = async (originator) => {
         try {
           const butterCmsRequest = await fetch(
             `https://api.buttercms.com/v2/content/?keys=companies&page=1&page_size=1&fields.ethereum_address=${originator}&auth_token=${butterCmsKey}`
