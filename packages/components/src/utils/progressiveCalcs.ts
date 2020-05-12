@@ -162,7 +162,7 @@ const getProgressiveState = (funding, decimals, date) => {
   const currentTotalDebt = getCurrentDebt(funding.loan, decimals, date);
 
   const instalmentDates = getInstalmentDates(funding.loan);
-  const instalments = instalmentDates.map(idate => {
+  const instalments = instalmentDates.map((idate) => {
     const state = getStateByDate(funding, idate);
 
     return {

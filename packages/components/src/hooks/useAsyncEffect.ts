@@ -13,7 +13,7 @@ export default function useEffectAsync(
 
     const maybePromise = effect(() => mounted);
 
-    Promise.resolve(maybePromise).then(value => {
+    Promise.resolve(maybePromise).then((value) => {
       result = value;
     });
 
@@ -24,6 +24,5 @@ export default function useEffectAsync(
         destroy(result);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [destroy, effect, hasDestroy, ...inputs]);
 }

@@ -11,7 +11,7 @@ const text = getResume(report) + getErrors(report);
 
 sendNotification(text);
 const files = getFilesFromErrors();
-Object.keys(files).map(key => files[key].forEach(path => uploadDocuments(key, path)));
+Object.keys(files).map((key) => files[key].forEach((path) => uploadDocuments(key, path)));
 
 function uploadDocuments(comment, file) {
   console.log(' --- ', comment, file);
@@ -28,7 +28,7 @@ function uploadDocuments(comment, file) {
         file: fs.createReadStream(file)
       }
     },
-    function(err, response) {
+    function (err, response) {
       if (err) console.error(err);
       console.log(JSON.parse(response.body));
     }

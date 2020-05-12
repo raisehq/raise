@@ -45,7 +45,7 @@ const Connection = {
     const { currentProvider }: any = Connection.get() || {};
     return currentProvider;
   },
-  set: conn => {
+  set: (conn) => {
     // @ts-ignore
     window.instance = conn;
   },
@@ -116,7 +116,7 @@ const useWeb3 = () => {
     return CryptoWallets.WebWallet;
   };
 
-  const setNewProvider = async provider => {
+  const setNewProvider = async (provider) => {
     try {
       if (
         (getCurrentProviderName() !== CryptoWallets.Opera ||

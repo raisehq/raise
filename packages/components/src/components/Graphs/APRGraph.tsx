@@ -74,10 +74,10 @@ const datasetToGraph = (
   pointHoverRadius: pointRadius,
   borderWidth: !borderWidth ? 1 : borderWidth,
   pointHoverBackgroundColor: pointHover.length
-    ? pointHover.map(x => (x > 0 ? `rgba(${rgb},1)` : `rgba(${rgb},0)`))
+    ? pointHover.map((x) => (x > 0 ? `rgba(${rgb},1)` : `rgba(${rgb},0)`))
     : `rgba(${rgb},1)`,
   pointHoverBorderColor: pointHover.length
-    ? pointHover.map(x => (x > 0 ? `rgba(${rgb},1)` : `rgba(${rgb},0)`))
+    ? pointHover.map((x) => (x > 0 ? `rgba(${rgb},1)` : `rgba(${rgb},0)`))
     : `rgba(${rgb},1)`,
   pointHoverBorderWidth: pointHover.length ? pointHover : 2,
   pointHitRadius: 10,
@@ -251,9 +251,7 @@ const APRGraph = ({
       {
         params: {
           asset: DAI_ADDRESS,
-          min_block_timestamp: dayjs()
-            .subtract(arrayDays.length, 'day')
-            .unix(),
+          min_block_timestamp: dayjs().subtract(arrayDays.length, 'day').unix(),
           max_block_timestamp: dayjs().unix(),
           num_buckets: arrayDays.length,
         },
@@ -311,7 +309,7 @@ const APRGraph = ({
     graphData,
   ]);
 
-  const getFormatDate = date => {
+  const getFormatDate = (date) => {
     dayjs.extend(localizedFormat);
     return dayjs(date).format('LL');
   };

@@ -14,7 +14,7 @@ const WYSIWYGFields = ['description', 'businessPlan', 'operations', 'competitive
 
 const toCamelCase = (v, k: string) => camelCase(k);
 
-const sanitizeValue = fields => (v, k) => {
+const sanitizeValue = (fields) => (v, k) => {
   if (fields.includes(k)) {
     return staticHtmlToReact(DOMPurify.sanitize(v));
   }
@@ -53,10 +53,7 @@ const findOne = async (collection: string, fields: any) => {
     throw Error('[Butter][findOne] 404 Not found');
   }
 
-  return _(arrResponse[0])
-    .mapKeys(toCamelCase)
-    .mapValues(sanitizeValue(WYSIWYGFields))
-    .value();
+  return _(arrResponse[0]).mapKeys(toCamelCase).mapValues(sanitizeValue(WYSIWYGFields)).value();
 };
 
 const getGetStarted = async () => {

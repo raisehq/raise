@@ -26,7 +26,7 @@ module.exports = {
     };
     config.output.format = 'umd';
     config.output.name = 'RaiseComponents';
-    config.external = id => externals.includes(id);
+    config.external = (id) => externals.includes(id);
     // config.plugins.push(analyzer());
     config.plugins.push({
       name: 'inject-process-plugin',

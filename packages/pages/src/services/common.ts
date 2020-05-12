@@ -14,7 +14,7 @@ const instance = axios.create({
 // eslint-disable-next-line
 // window.Cypress && AxiosMock(instance);
 
-const useBearer = config => {
+const useBearer = (config) => {
   const { token } = LocalData.getObj('auth') || '{}';
   if (token) {
     // eslint-disable-next-line
@@ -23,14 +23,14 @@ const useBearer = config => {
   return config;
 };
 
-const useError = error => Promise.reject(error);
+const useError = (error) => Promise.reject(error);
 
 instance.interceptors.request.use(useBearer, useError);
 
 /* eslint-disable */
 instance.interceptors.response.use(
-  response => response,
-  async error => {
+  (response) => response,
+  async (error) => {
     if (
       error.response.status === 500 ||
       error.response.status === 418 ||

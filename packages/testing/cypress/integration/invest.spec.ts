@@ -1,5 +1,5 @@
-describe('LENDER', function() {
-  beforeEach(function() {
+describe('LENDER', function () {
+  beforeEach(function () {
     const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
     cy.CookieXCanary();
     cy.butterCMS();
@@ -7,7 +7,7 @@ describe('LENDER', function() {
     cy.mockAPI('lender', isCanary);
     cy.web3('lender');
   });
-  it('Invest', function() {
+  it('Invest', function () {
     cy.visit(Cypress.env('url'));
     cy.get('#btn-warning-close', { timeout: 120000 }).should('have.length', 1);
     cy.get('#btn-warning-close').click();

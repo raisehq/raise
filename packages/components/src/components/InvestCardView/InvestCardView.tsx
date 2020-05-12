@@ -65,7 +65,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
 
   const [previousTab, setPreviousTab] = useState(viewGraph);
 
-  const transitions = useTransition(domList[viewGraph], i => i.key, {
+  const transitions = useTransition(domList[viewGraph], (i) => i.key, {
     unique: true,
     from: () => ({
       transform: `translate3d(0,${(viewGraph - previousTab) * 100}%, 0)`,

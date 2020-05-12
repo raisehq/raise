@@ -13,7 +13,7 @@ class Observable {
   }
 
   public unsubscribe(f) {
-    this.observers = this.observers.filter(subscriber => subscriber !== f);
+    this.observers = this.observers.filter((subscriber) => subscriber !== f);
   }
 
   public async oneExec(fn) {
@@ -30,7 +30,7 @@ class Observable {
   }
 
   public notify(error, data) {
-    this.observers.forEach(observer => observer(error, data));
+    this.observers.forEach((observer) => observer(error, data));
   }
 }
 

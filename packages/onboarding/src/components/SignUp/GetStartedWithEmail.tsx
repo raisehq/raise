@@ -108,7 +108,7 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
     recaptchaRef.current.execute();
   };
 
-  const onKeyPress = event => {
+  const onKeyPress = (event) => {
     if (
       event.key === 'Enter' &&
       credentials.email !== '' &&
@@ -119,7 +119,7 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
     }
   };
 
-  const onCaptchaCallback = async captchaResponse => {
+  const onCaptchaCallback = async (captchaResponse) => {
     onSetCredentials('g-recaptcha-response', captchaResponse);
     setRecaptcha(captchaResponse);
   };

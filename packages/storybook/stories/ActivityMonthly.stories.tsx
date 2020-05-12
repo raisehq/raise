@@ -176,7 +176,7 @@ const monthlyMap = [
   },
 ];
 
-const activityMapper = loanMock => (
+const activityMapper = (loanMock) => (
   <div style={{ padding: 10 }}>
     <h4>{loanMock.label}</h4>
     <LoanActivity

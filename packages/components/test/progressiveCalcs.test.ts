@@ -42,9 +42,7 @@ describe('Test suite for progressive calculations', () => {
         termLength: termEndTimestamp - auctionEndTimestamp,
         instalments: 4,
       };
-      const date = dayjs()
-        .add(1, 'second')
-        .unix(); // 1
+      const date = dayjs().add(1, 'second').unix(); // 1
 
       // const instalment = getCurrentInstalment(loan, date);
       const instalment = getCurrentInstalment(loan, date);

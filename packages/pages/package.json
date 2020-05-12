@@ -7,6 +7,7 @@
     "@raisehq/onboarding": "*",
     "@types/react": "16.9.0",
     "@types/react-dom": "16.9.0",
+    "axios": "^0.19.2",
     "buttercms": "^1.1.5",
     "dompurify": "^1.0.11",
     "env-cmd": "^8.0.2",
@@ -35,6 +36,9 @@
     "react-gtm-module": "^2.0.8",
     "react-helmet": "^6.0.0",
     "react-scripts": "3.4.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "styled-components": "^5.1.0",
     "typescript": "^3.8.3"
   },
   "devDependencies": {
@@ -45,6 +49,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.14.3",
     "jest": "^24.9.0",
+    "prettier": "2.0.5",
     "react-use-cookie": "^1.0.2",
     "ts-jest": "^24.0.2"
   },

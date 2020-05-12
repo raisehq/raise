@@ -16,11 +16,11 @@ const useDepositContract = () => {
 
         setActiveContract({
           address: contract.options.address,
-          hasDeposited: async address => {
+          hasDeposited: async (address) => {
             const resp = await contract.methods.hasDeposited(address).call();
             return resp;
           },
-          deposit: address =>
+          deposit: (address) =>
             followTx.watchTx(
               contract.methods.depositFor(address).send({ from: address }),
               { id: 'deposit' },
@@ -34,7 +34,7 @@ const useDepositContract = () => {
               { id: 'depositReferal' },
               'depositReferal'
             ),
-          withdraw: address =>
+          withdraw: (address) =>
             followTx.watchTx(
               contract.methods.withdraw(address).send({ from: address }),
               { id: 'withdrawDeposit' },

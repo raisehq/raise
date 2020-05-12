@@ -10,7 +10,7 @@ const MockAxios = (axios: any) => {
     // @ts-ignore
     const AxiosMock = new MockAdapter(axios);
     AxiosMock.onAny().reply((config: any) => {
-      const match = responses.filter(req => {
+      const match = responses.filter((req) => {
         const [method, url] = req;
         if (config.url === url && config.method.toUpperCase() === method) return true;
         return false;
