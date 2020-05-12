@@ -8,9 +8,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const getURL = (path: string) => {
-  return `${process.env.REACT_APP_HOST_URL}/${path}`;
-};
+const getURL = (path: string) => `${process.env.REACT_APP_HOST_URL}/${path}`;
 
 const SEO = ({
   url = 'join',
