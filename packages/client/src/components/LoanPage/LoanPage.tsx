@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import {
+  AboutBorrower
+  // LoanComparatorChart,
+  // useCompaniesScrapper
+} from '@raisehq/components';
 import Invest from '../Invest';
 import {
   LoanPageContainer,
@@ -7,16 +12,22 @@ import {
   LoanInvestContainer,
   LoanSubResumeWrapper,
   LoanResumeWrapper,
-  BorrowerResume
+  BorrowerResume,
+  BorrowerInfoContainer,
+  BorrowerDescription,
+  BorrowerInfoTitle,
+  BorrowerAboutContainer,
+  SectionContainer
 } from './styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { findOne, requestPage } from '../../helpers/butter';
 import { getLoanByAddress } from '../../services/blockchain';
-import AboutBorrower from '@raisehq/components';
+import SignUp from '../SignUp';
 
 const LoanPage = () => {
+  const loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
   const {
     web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
   }: any = useAppContext();
@@ -52,10 +63,10 @@ const LoanPage = () => {
     extraResources: [],
     kpis: []
   });
+  // const companies = useCompaniesScrapper();
 
   useAsyncEffect(async () => {
     try {
-      const loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
       const currentLoan = await getLoanByAddress(loanAddress, network);
       setLoan(currentLoan);
       const borrowerAddress = currentLoan.originator;
@@ -67,7 +78,7 @@ const LoanPage = () => {
     } catch (error) {
       console.error('Error querying loan info ', error);
     }
-  }, []);
+  }, [loanAddress]);
   console.log('borrower info:: ', borrowerInfo);
   const connected = hasProvider && unlocked && accountMatches && networkMatches;
   const userActivated = connected && kycStatus === 3;
@@ -95,7 +106,25 @@ const LoanPage = () => {
           )}
         </LoanInvestContainer>
       </LoanPageInfoSection>
-      <AboutBorrower borrowerInfo={borrowerInfo} />
+      {!isLogged && (
+        <SectionContainer>
+          <SignUp id="Loanofmonth_signup" />
+        </SectionContainer>
+      )}
+      {/* {companies.length > 1 && (
+        <SectionContainer>
+          <LoanComparatorChart companies={companies} />
+        </SectionContainer>
+      )} */}
+      {borrowerInfo.companyDetails.companyName !== '' && (
+        <BorrowerAboutContainer>
+          <BorrowerInfoTitle>About {borrowerInfo.companyDetails.companyName}</BorrowerInfoTitle>
+          <BorrowerInfoContainer>
+            <BorrowerDescription>{borrowerInfo.companyDetails.description}</BorrowerDescription>
+            <AboutBorrower borrowerInfo={borrowerInfo} />
+          </BorrowerInfoContainer>
+        </BorrowerAboutContainer>
+      )}
     </LoanPageContainer>
   );
 };

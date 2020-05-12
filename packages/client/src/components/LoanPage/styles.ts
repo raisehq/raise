@@ -49,3 +49,43 @@ export const LoanSubResumeWrapper = styled.div`
 `;
 
 export const BorrowerResume = styled.div``;
+
+export const BorrowerAboutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+  height: 100%;
+  width: 100%;
+`;
+
+export const BorrowerInfoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 54px;
+`;
+
+export const BorrowerInfoTitle = styled.div`
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 56px;
+  color: #eb3f93;
+  text-align: center;
+`;
+
+export const BorrowerDescription = styled.div`
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8a8e97;
+  text-align: left;
+  @media screen and ${device.laptop} {
+    max-width: 648px;
+  }
+`;
+
+export const SectionContainer = styled.div`
+  margin-top: 50px;
+`;

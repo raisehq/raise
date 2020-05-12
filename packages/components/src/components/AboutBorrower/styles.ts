@@ -61,7 +61,7 @@ export const AddressInfo = styled.span`
   line-height: 21px;
 `;
 
-export const SideInfo = styled(Card)`
+export const SideInfo: any = styled(Card)`
   &&& {
     padding: 0px 10px 32px 10px;
     height: fit-content;
@@ -175,7 +175,7 @@ export const KPIItemValue = styled.div`
   font-weight: bold;
 `;
 
-export const KPITooltip = styled(Popup)`
+export const KPITooltip: any = styled(Popup)`
   margin-left: 5px !important;
 `;
 
