@@ -80,7 +80,7 @@ const SignInWithEmail = () => {
     }
   }, [recaptcha]);
 
-  const onCaptchaCallback = async (captchaResponse) => {
+  const onCaptchaCallback = async captchaResponse => {
     onSetCredentials('g-recaptcha-response', captchaResponse);
     setRecaptcha(captchaResponse);
   };
@@ -89,7 +89,7 @@ const SignInWithEmail = () => {
     recaptchaRef.current.reset();
   };
 
-  const onCaptchaErrored = (captchaError) => {
+  const onCaptchaErrored = captchaError => {
     console.error('Captcha error. You should check the network and retry: ', captchaError);
   };
 

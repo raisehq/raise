@@ -4,7 +4,7 @@ import {
   RequestElement,
   QROptions,
   Action,
-  RequestData,
+  RequestData
 } from '@bloomprotocol/share-kit-react/dist/index';
 import { isMobile } from 'react-device-detect';
 import {
@@ -16,7 +16,7 @@ import {
   GetStartedBloomQRSection,
   GetStartedBloomInstructionsSection,
   BackButtonWrapper,
-  BloomLogo,
+  BloomLogo
 } from '../styles';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
@@ -29,7 +29,7 @@ const BloomSignUp = ({
   redirectFromBloomApp,
   bloomSignIn,
   onBloomSignUp,
-  onBloomError,
+  onBloomError
 }: any) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
@@ -40,16 +40,16 @@ const BloomSignUp = ({
   const watchBloom = useCallback(async () => {
     const response = await isUserSignedUp(tokenBloom);
     response.fold(
-      (error) => {
+      error => {
         console.error('Error Watch Bloom : ', error);
         onBloomError();
         setErrorStage(true);
       },
-      (resp) => {
+      resp => {
         const {
           data: {
-            data: { result },
-          },
+            data: { result }
+          }
         } = resp;
 
         if (result.id) {
@@ -80,14 +80,7 @@ const BloomSignUp = ({
   }, [tokenBloom, watchBloom]);
 
   useEffect(() => {
-    const events = [
-      'load',
-      'mousemove',
-      'mousedown',
-      'click',
-      'scroll',
-      'keypress',
-    ];
+    const events = ['load', 'mousemove', 'mousedown', 'click', 'scroll', 'keypress'];
 
     const resetTimeout = () => {
       setIsScreenIdle(false);
@@ -117,11 +110,11 @@ const BloomSignUp = ({
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
     org_usage_policy_url: 'https://bloom.co/legal/terms',
     org_privacy_policy_url: 'https://bloom.co/legal/privacy',
-    types: ['email'],
+    types: ['email']
   };
 
   const qrOptions: Partial<QROptions> = {
-    size: 250,
+    size: 250
   };
 
   if (!errorStage) {
@@ -131,9 +124,7 @@ const BloomSignUp = ({
           <GetStartedBloomTitle>Get Started</GetStartedBloomTitle>
           <GetStartedBloomSubtitle>
             <span>with</span>
-            <BloomLogo
-              src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
-            />
+            <BloomLogo src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} />
           </GetStartedBloomSubtitle>
         </GetStartedBloomHeader>
         <GetStartedBloomWrapper>
@@ -157,13 +148,7 @@ const BloomSignUp = ({
           </GetStartedBloomInstructionsSection>
         </GetStartedBloomWrapper>
         <BackButtonWrapper>
-          <BackButton
-            onClick={onBack}
-            idAttr={SignUpId}
-            size="small"
-            text="Back"
-            type="tertiary"
-          />
+          <BackButton onClick={onBack} idAttr={SignUpId} size="small" text="Back" type="tertiary" />
         </BackButtonWrapper>
       </>
     );

@@ -44,7 +44,7 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
   return (
     <Route
       {...rest}
-      render={(matchProps) => (
+      render={matchProps => (
         <HeroLayout>
           <Wrapper>
             <OnboardingContent>

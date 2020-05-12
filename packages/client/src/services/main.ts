@@ -5,7 +5,7 @@ const URL = {
   MAIN: `${getHost('CORE')}/search/graphql`
 };
 
-export const getMainData = async (userId) => {
+export const getMainData = async userId => {
   const config: any = {
     headers: {
       'Content-Type': 'application/json'
@@ -91,8 +91,8 @@ export const getMainData = async (userId) => {
   const response = await to(axios.post(`${URL.MAIN}`, query, config));
 
   return response.fold(
-    (error) => Left(error),
-    (data) => Right(data.data.data.main)
+    error => Left(error),
+    data => Right(data.data.data.main)
   );
 };
 

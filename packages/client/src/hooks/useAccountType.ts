@@ -5,7 +5,7 @@ const accountType = {
   2: 'lender'
 };
 
-const useAccountType = (type) => {
+const useAccountType = type => {
   const account = useRef(null);
 
   account.current = accountType[type];

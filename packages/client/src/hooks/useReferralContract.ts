@@ -14,9 +14,9 @@ const useRefferalContract = () => {
         const contract = await wallet.addContract('ReferralTracker');
         setActiveContract({
           address: contract.options.address,
-          withdraw: (account) =>
+          withdraw: account =>
             followTx.watchTx(contract.methods.withdraw(account).send({ from: account })),
-          balance: (account) => contract.methods.unclaimedReferrals(account).call()
+          balance: account => contract.methods.unclaimedReferrals(account).call()
         });
       } catch (error) {
         console.error('Contract ReferralTracker not found in current network.');

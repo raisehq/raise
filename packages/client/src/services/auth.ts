@@ -103,7 +103,7 @@ export const changePassword = async (token, password) => {
   );
 
   return response.fold(
-    (error) => Left(error),
+    error => Left(error),
     () => Right(true)
   );
 };
@@ -159,7 +159,7 @@ export const getUser = async (userId: string | undefined) => {
   const response = await to(axios(config));
 
   return response.fold(
-    (error) => Left(error),
+    error => Left(error),
     ({ data: { data } }) => data
   );
 };
@@ -215,7 +215,7 @@ export const verifyAuth = async () => {
   }
 };
 
-export const checkUsername = async (username) => {
+export const checkUsername = async username => {
   const config: any = {
     url: `${URL.CHECK_USERNAME}${username}`,
     method: 'GET',
@@ -228,11 +228,11 @@ export const checkUsername = async (username) => {
 
   return request.fold(
     () => Left(null),
-    (req) => Either.either(req.data.exist === 0)
+    req => Either.either(req.data.exist === 0)
   );
 };
 
-export const checkEmail = async (email) => {
+export const checkEmail = async email => {
   const config: any = {
     url: `${URL.CHECK_EMAIL}/${email}`,
     method: 'GET',
@@ -245,11 +245,11 @@ export const checkEmail = async (email) => {
 
   return request.fold(
     () => Left(null),
-    (req) => (req.status === 404 ? Right('Not exist') : Left('Exist'))
+    req => (req.status === 404 ? Right('Not exist') : Left('Exist'))
   );
 };
 
-export const verifyBloomLogin = async (tokenBloom) => {
+export const verifyBloomLogin = async tokenBloom => {
   const config: any = {
     url: `${URL.BLOOM_LOGIN}`,
     method: 'POST',

@@ -10,7 +10,7 @@ export const ERC20_LOGOS: erc20Logos = {
   PAX: `${IMAGES_PATH}coins/coin-pax.svg`,
   USDT: `${IMAGES_PATH}coins/coin-theter.svg`,
   TUSD: `${IMAGES_PATH}coins/coin-trueusd.svg`,
-  USDC: `${IMAGES_PATH}coins/coin-usdc.svg`,
+  USDC: `${IMAGES_PATH}coins/coin-usdc.svg`
 };
 
 export const COMPANY_LOGOS: erc20Logos = {
@@ -18,5 +18,5 @@ export const COMPANY_LOGOS: erc20Logos = {
   Maker: `${IMAGES_PATH}companies/maker.svg`,
   Raise: `${IMAGES_PATH}isotype.png`,
   dYdX: `${IMAGES_PATH}companies/dydx-vector-logo.png`,
-  Fulcrum: `${IMAGES_PATH}companies/bZx-Logo.jpg`,
+  Fulcrum: `${IMAGES_PATH}companies/bZx-Logo.jpg`
 };

@@ -7,15 +7,15 @@ if (!numeral?.locales?.hero) {
   numeral.register('locale', 'hero', {
     delimiters: {
       thousands: '.',
-      decimal: ',',
+      decimal: ','
     },
     abbreviations: {
       thousand: 'k',
       million: 'mm',
       billion: 'b',
-      trillion: 't',
+      trillion: 't'
     },
-    ordinal: (number) => {
+    ordinal: number => {
       const b = number % 10;
       /* eslint-disable */
       // TODO : Try to do without ternary condition
@@ -33,8 +33,8 @@ if (!numeral?.locales?.hero) {
       /* eslint-enable */
     },
     currency: {
-      symbol: '€',
-    },
+      symbol: '€'
+    }
   });
 }
 

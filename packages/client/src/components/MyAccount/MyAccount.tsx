@@ -27,7 +27,7 @@ const MyAccount = () => {
     }
   }: any = useRootContext();
 
-  const changeUsername = async (value) => {
+  const changeUsername = async value => {
     clearUser();
     setUsernameExists(false);
     setUsername(value);

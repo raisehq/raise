@@ -5,7 +5,7 @@ import {
   SignUpForm,
   SignUpText,
   RaiseLogo,
-  BloomContainer,
+  BloomContainer
 } from './styles';
 import EmailSignUp from './Email';
 import BloomSignUp from './Bloom';
@@ -18,7 +18,7 @@ const SignUp = ({
   bloomSignIn,
   onBloomSignUp,
   isUserSignedUp,
-  onBloomError,
+  onBloomError
 }: any) => {
   const [registerType, setRegisterType] = useState('email');
   useEffect(() => {
@@ -28,12 +28,8 @@ const SignUp = ({
   if (registerType === 'email') {
     return (
       <SignUpContainer type={registerType}>
-        <SignUpInfo
-          background={`${process.env.REACT_APP_HOST_IMAGES}/images/redbackground.svg`}
-        >
-          <RaiseLogo
-            src={`${process.env.REACT_APP_HOST_IMAGES}/images/logo_white.svg`}
-          />
+        <SignUpInfo background={`${process.env.REACT_APP_HOST_IMAGES}/images/redbackground.svg`}>
+          <RaiseLogo src={`${process.env.REACT_APP_HOST_IMAGES}/images/logo_white.svg`} />
           <SignUpText>Create an account and start investing now</SignUpText>
         </SignUpInfo>
         <SignUpForm>

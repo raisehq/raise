@@ -42,7 +42,7 @@ const InvestInfo = (props: InvestInfoProps) => {
     principal,
     link,
     coinIcon,
-    onOpenGraph,
+    onOpenGraph
   } = props;
   const auctionTimeLeft = `${times.auctionTimeLeft} left`;
   const aProps: APropsInterface = { href: undefined };
@@ -71,11 +71,7 @@ const InvestInfo = (props: InvestInfoProps) => {
             amount={<Amount principal={maxAmount} coinIcon={coinIcon} />}
           />
         </Card.Grid>
-        <Card.Progress
-          color="#eb3f93"
-          currentAmount={currentAmount}
-          totalAmount={totalAmount}
-        />
+        <Card.Progress color="#eb3f93" currentAmount={currentAmount} totalAmount={totalAmount} />
       </CardContent>
     </>
   );

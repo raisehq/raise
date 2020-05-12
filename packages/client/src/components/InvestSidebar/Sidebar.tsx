@@ -24,7 +24,7 @@ const FixedDimmer = styled(Dimmer)`
   }
 `;
 
-const Sidebar = (props) => {
+const Sidebar = props => {
   const {
     state: { display },
     actions: { setDisplay }

@@ -31,7 +31,7 @@ const PendingDOM = (
     <MicroLoader active inverted />
   </LabelPaddingLoader>
 );
-const AnyDOM = (number) => (
+const AnyDOM = number => (
   <LabelPadding circular color="#00DA9E">
     {number}
   </LabelPadding>

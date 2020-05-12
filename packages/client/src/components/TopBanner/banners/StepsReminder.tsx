@@ -2,7 +2,7 @@ import React from 'react';
 import { WarningBanner, WarningLink } from '../KycTopBanner.styles';
 import { WarningSight, RightArrow, StepButton } from '../misc';
 
-export const getMessages = (kcyStatus) => {
+export const getMessages = kcyStatus => {
   const messages = {
     2: 'to start investing. If you already did, soon you will be able to invest 👍',
     4: 'Your account is being verified, this process won’t take long 🤓'

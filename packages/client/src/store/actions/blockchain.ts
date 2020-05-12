@@ -10,14 +10,13 @@ export default (dispatch: any, state: any) => {
     }
   } = state;
 
-  const setWeb3 = (newWeb3) => dispatch({ type: 'SET_WEB3', data: newWeb3 });
-  const setNewInstance = (instances) => dispatch({ type: 'SET_INSTANCE', data: instances });
-  const setCheckBlockchain = (response) => dispatch({ type: 'SET_BLOCKCHAIN_CHECK', response });
-  const setDeposit = (response) => dispatch({ type: 'SET_BLOCKCHAIN_DEPOSIT', response });
-  const setErrorDeposit = (response) =>
-    dispatch({ type: 'SET_ERROR_BLOCKCHAIN_DEPOSIT', response });
-  const setKyc = (response) => dispatch({ type: 'SET_BLOCKCHAIN_KYC', response });
-  const setErrorKyc = (response) => dispatch({ type: 'SET_ERROR_BLOCKCHAIN_KYC', response });
+  const setWeb3 = newWeb3 => dispatch({ type: 'SET_WEB3', data: newWeb3 });
+  const setNewInstance = instances => dispatch({ type: 'SET_INSTANCE', data: instances });
+  const setCheckBlockchain = response => dispatch({ type: 'SET_BLOCKCHAIN_CHECK', response });
+  const setDeposit = response => dispatch({ type: 'SET_BLOCKCHAIN_DEPOSIT', response });
+  const setErrorDeposit = response => dispatch({ type: 'SET_ERROR_BLOCKCHAIN_DEPOSIT', response });
+  const setKyc = response => dispatch({ type: 'SET_BLOCKCHAIN_KYC', response });
+  const setErrorKyc = response => dispatch({ type: 'SET_ERROR_BLOCKCHAIN_KYC', response });
 
   const uploadSignature = async (walletAddress, walletId, signature) => {
     try {
@@ -37,19 +36,17 @@ export default (dispatch: any, state: any) => {
     }
   };
 
-  const fetchReferrals = async (network) => {
+  const fetchReferrals = async network => {
     try {
       const data = await getReferralStatus(address, network);
       if (data) {
-        const addressReferrals = data.referrals.map((referral) =>
-          referral.referred.id.toLowerCase()
-        );
+        const addressReferrals = data.referrals.map(referral => referral.referred.id.toLowerCase());
         const refUsers = await getUsersReferrerByCryptoAddress(addressReferrals);
 
         let addrNotFound = refUsers.filter(
-          (refUser) => addressReferrals.indexOf(refUser.address) === -1
+          refUser => addressReferrals.indexOf(refUser.address) === -1
         );
-        addrNotFound = addrNotFound.map((addr) => ({
+        addrNotFound = addrNotFound.map(addr => ({
           name: undefined,
           address: addr
         }));

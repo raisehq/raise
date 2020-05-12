@@ -11,7 +11,7 @@ export default (dispatch: any, state: any) => {
 
     request.fold(
       () => dispatch({ type: 'SIGNIN_ERROR', data: 'Invalid credentials' }),
-      (response) => {
+      response => {
         const { user } = response;
         const userStatus = Either.either(user.status >= Status.EMAIL_VERIFIED);
 

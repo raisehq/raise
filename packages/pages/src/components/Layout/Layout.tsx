@@ -1,6 +1,7 @@
 import React from 'react';
 import { Footer } from '@raisehq/components';
 import { HeroLayout } from './Layout.styles';
+import GatsbyHeader from '../header';
 
 interface IDefaultProps {
   children: any;
@@ -10,6 +11,7 @@ interface IDefaultProps {
 
 const Layout: React.SFC<IDefaultProps> = ({ children }: any) => (
   <HeroLayout>
+    <GatsbyHeader />
     {children}
     <Footer />
   </HeroLayout>

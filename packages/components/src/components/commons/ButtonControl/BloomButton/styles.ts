@@ -19,16 +19,14 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
     color: #6067f1;
     border: 1px solid #6067f1;
 
-    padding: ${(props) => globalTheme.buttonSizes[props.size].padding};
-    height: ${(props) => globalTheme.buttonSizes[props.size].height};
-    width: ${(props) => {
-      const resp = props.fullWidth
-        ? '100%'
-        : globalTheme.buttonSizes[props.size].width;
+    padding: ${props => globalTheme.buttonSizes[props.size].padding};
+    height: ${props => globalTheme.buttonSizes[props.size].height};
+    width: ${props => {
+      const resp = props.fullWidth ? '100%' : globalTheme.buttonSizes[props.size].width;
       return resp;
     }};
-    font-size: ${(props) => globalTheme.buttonSizes[props.size].fontSize};
-    line-height: ${(props) => globalTheme.buttonSizes[props.size].lineHeight};
+    font-size: ${props => globalTheme.buttonSizes[props.size].fontSize};
+    line-height: ${props => globalTheme.buttonSizes[props.size].lineHeight};
 
     &&&:hover {
       background: #ffffff;

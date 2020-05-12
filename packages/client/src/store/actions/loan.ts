@@ -6,7 +6,7 @@ export default (dispatch: any, state: any) => {
 
     request.fold(
       () => null,
-      (auctions) => dispatch({ type: 'SET_LIVE_AUCTIONS', data: auctions })
+      auctions => dispatch({ type: 'SET_LIVE_AUCTIONS', data: auctions })
     );
   };
 
@@ -15,7 +15,7 @@ export default (dispatch: any, state: any) => {
 
     request.fold(
       () => null,
-      (auctions) => dispatch({ type: 'SET_SUGGESTED_AUCTIONS', data: auctions })
+      auctions => dispatch({ type: 'SET_SUGGESTED_AUCTIONS', data: auctions })
     );
   };
 

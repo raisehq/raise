@@ -33,6 +33,7 @@ export { default as InputText } from './components/commons/InputControl/InputTex
 export { default as SelectControl } from './components/commons/SelectControl';
 export { default as useScript } from './hooks/useScript';
 export { default as Header } from './components/Headers';
+export { LinkComponent } from './components/Headers/interfaces';
 export { default as LoanActivity } from './components/LoanActivity';
 
 export {
@@ -44,7 +45,7 @@ export {
   getProgressiveState,
   getPendingInstalmentsAmount,
   getInstalmentDates,
-  getStateByDate,
+  getStateByDate
 } from './utils/progressiveCalcs';
 
 export {
@@ -63,7 +64,7 @@ export {
   getCoinsFromContract,
   getCoin,
   getCalculations,
-  getActiveAuctions,
+  getActiveAuctions
 } from './utils/loanUtils';
 
 export { fromDecimal, toDecimal } from './utils/web3-utils';

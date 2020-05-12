@@ -1,6 +1,6 @@
-const monthsToSeconds = (months) => months * 30 * 24 * 60 * 60;
+const monthsToSeconds = months => months * 30 * 24 * 60 * 60;
 
-const daysToSecond = (days) => days * 24 * 60 * 60;
+const daysToSecond = days => days * 24 * 60 * 60;
 
 export const getMonths = (network: string) => [
   ...(['kovan'].includes(network) ? [{ key: '0', value: 300, text: '5 minutes' }] : []),

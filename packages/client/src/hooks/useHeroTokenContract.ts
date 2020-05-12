@@ -27,7 +27,7 @@ const useDepositContract = () => {
                 address: () => HeroTokenContract.options.address,
                 allowance: (account, spender) =>
                   HeroTokenContract.methods.allowance(account, spender).call(),
-                balance: (account) => HeroTokenContract.methods.balanceOf(account).call(),
+                balance: account => HeroTokenContract.methods.balanceOf(account).call(),
                 approveDeposit: async (account, amount) =>
                   followTx.watchTx(
                     HeroTokenContract.methods

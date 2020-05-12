@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 
-export default function useEffectAsync(
-  effect: any,
-  destroy?: any,
-  inputs?: any
-) {
+export default function useEffectAsync(effect: any, destroy?: any, inputs?: any) {
   const hasDestroy = typeof destroy === 'function';
 
   useEffect(() => {
@@ -13,7 +9,7 @@ export default function useEffectAsync(
 
     const maybePromise = effect(() => mounted);
 
-    Promise.resolve(maybePromise).then((value) => {
+    Promise.resolve(maybePromise).then(value => {
       result = value;
     });
 

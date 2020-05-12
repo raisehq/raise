@@ -6,7 +6,7 @@ function useScript(src: string) {
   // Keeping track of script loaded and error state
   const [state, setState] = useState({
     loaded: false,
-    error: false,
+    error: false
   });
 
   useEffect(
@@ -16,7 +16,7 @@ function useScript(src: string) {
       if (cachedScripts.includes(src)) {
         setState({
           loaded: true,
-          error: false,
+          error: false
         });
         return;
       }
@@ -31,7 +31,7 @@ function useScript(src: string) {
       const onScriptLoad = () => {
         setState({
           loaded: true,
-          error: false,
+          error: false
         });
       };
 
@@ -43,7 +43,7 @@ function useScript(src: string) {
 
         setState({
           loaded: true,
-          error: true,
+          error: true
         });
       };
 

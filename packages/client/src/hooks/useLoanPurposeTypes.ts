@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-const useLoanPurposesTypes = (purposes) => {
+const useLoanPurposesTypes = purposes => {
   const types = useRef([]);
 
   types.current = purposes.reduce(

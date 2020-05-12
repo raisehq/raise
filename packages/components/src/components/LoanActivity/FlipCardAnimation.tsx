@@ -29,20 +29,20 @@ const LoanActivity = ({ heads, tails, flipped }: FlipCardAnimationProps) => {
   const { transform, opacity } = useSpring({
     opacity: flipped ? 1 : 0,
     transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
-    config: { mass: 5, tension: 500, friction: 80 },
+    config: { mass: 5, tension: 500, friction: 80 }
   });
 
   const mainCard = {
-    opacity: opacity.interpolate((o) => 1 - Number(o)),
+    opacity: opacity.interpolate(o => 1 - Number(o)),
     transform,
-    zIndex: !flipped ? 1 : 0,
+    zIndex: !flipped ? 1 : 0
     // display: !flipped ? 'block' : 'none',
   };
 
   const backCard = {
     opacity,
-    transform: transform.interpolate((t) => `${t} rotateX(180deg)`),
-    zIndex: flipped ? 1 : 0,
+    transform: transform.interpolate(t => `${t} rotateX(180deg)`),
+    zIndex: flipped ? 1 : 0
     // display: flipped ? 'block' : 'none',
   };
 

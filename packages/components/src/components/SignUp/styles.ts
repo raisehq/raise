@@ -46,9 +46,7 @@ export const SignUpInfo = styled.div<IBackground>`
   height: 100%;
   max-width: 552px;
   ${({ background }) =>
-    background
-      ? `background-image: url(${background})`
-      : 'background: #EB3F93'};
+    background ? `background-image: url(${background})` : 'background: #EB3F93'};
   background-repeat: no-repeat;
   background-size: cover;
 `;

@@ -14,11 +14,11 @@ const useKYCContract = () => {
 
         setActiveContract({
           add: followTx.watchTx(
-            (account) => contract.methods.add(account).send({ from: account }),
+            account => contract.methods.add(account).send({ from: account }),
             { id: 'KYC' },
             'KYC'
           ),
-          isConfirmed: (account) => contract.methods.isConfirmed(account).call()
+          isConfirmed: account => contract.methods.isConfirmed(account).call()
         });
       } catch (error) {
         console.error('Ćontract KYC not found in current network.');

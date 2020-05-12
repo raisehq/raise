@@ -48,8 +48,8 @@ const useWallet = () => {
         },
         getContractsNetwork: () =>
           Object.keys(heroContracts.address)
-            .map((x) => parseNetwork(Number(x)))
-            .filter((availableId) => ['mainnet', 'kovan', 'test'].find((id) => id === availableId)),
+            .map(x => parseNetwork(Number(x)))
+            .filter(availableId => ['mainnet', 'kovan', 'test'].find(id => id === availableId)),
         addContract: async (name: string) => {
           const netId = await web3.eth.net.getId();
           if (!hasIn(heroContracts, `address.${netId}.${name}`)) {

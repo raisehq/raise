@@ -7,17 +7,10 @@ import {
   OnboardingContentWrapper,
   OnboardingHeaderItemWrapper,
   OnboardingModalContent,
-  OnboardingCloseIcon,
+  OnboardingCloseIcon
 } from './styles';
 
-const BigSimpleModal = ({
-  children,
-  blur,
-  mountNode,
-  open,
-  onClose,
-  closeButton,
-}: any) => {
+const BigSimpleModal = ({ children, blur, mountNode, open, onClose, closeButton }: any) => {
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
@@ -29,12 +22,7 @@ const BigSimpleModal = ({
           </OnboardingHeaderItemWrapper>
           <OnboardingHeaderItemWrapper>
             {closeButton && (
-              <OnboardingCloseIcon
-                link
-                onClick={onClose}
-                name="close"
-                size="large"
-              />
+              <OnboardingCloseIcon link onClick={onClose} name="close" size="large" />
             )}
           </OnboardingHeaderItemWrapper>
         </OnboardingHeader>

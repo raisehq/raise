@@ -3,7 +3,7 @@ import mapKeys from 'lodash/mapKeys';
 
 const chainableFunctions = {
   mapKeys,
-  mapValues,
+  mapValues
 };
 
 const chain = (input: any) => {
@@ -14,7 +14,7 @@ const chain = (input: any) => {
       value = f(value, ...args);
       return wrapper;
     }),
-    value: () => value,
+    value: () => value
   };
   return wrapper;
 };

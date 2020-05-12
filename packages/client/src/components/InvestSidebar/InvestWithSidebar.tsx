@@ -47,7 +47,7 @@ const InvestWithSlider: React.SFC<InvestModalProps> = ({ loan, className }: any)
       tagManager.sendEvent(TMEvents.Click, 'loan');
       setLoanId(loan?.id);
     } else {
-      const isBorrowerProfile = history.location.pathname.split('/').filter((pt) => pt === 'c');
+      const isBorrowerProfile = history.location.pathname.split('/').filter(pt => pt === 'c');
       tagManager.sendEventCategory(
         'Card',
         TMEvents.Click,

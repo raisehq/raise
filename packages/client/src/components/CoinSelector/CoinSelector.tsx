@@ -22,7 +22,7 @@ const CoinSelector = ({ loanCoin, value, ...rest }: any) => {
           const bBN = new BigNumber(b.value);
           return aBN.isGreaterThan(bBN) ? -1 : 1;
         })
-        .map((coin) => {
+        .map(coin => {
           const newCoin = {
             ...{ value: coin.text },
             content: (

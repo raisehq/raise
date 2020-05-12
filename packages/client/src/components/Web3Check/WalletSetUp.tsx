@@ -35,7 +35,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
 
-  const handlerWallet = (walletSelected) => async () => {
+  const handlerWallet = walletSelected => async () => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
 

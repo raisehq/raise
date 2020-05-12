@@ -8,7 +8,7 @@ import dai from './dai';
 import onboarding from './onboarding';
 import loanDispatcher from './loanDispatcher';
 
-const combineReducers = (reducers) => (state = {}, action) =>
+const combineReducers = reducers => (state = {}, action) =>
   Object.keys(reducers).reduce((nextState, key) => {
     // eslint-disable-next-line
     nextState[key] = reducers[key](state[key], action);

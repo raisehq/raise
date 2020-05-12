@@ -10,7 +10,7 @@ import LenderLoan from './Dashboard.LenderLoan';
 import SuggestedAuction from '../Cards/Suggested';
 
 const renderedLoans = (auctions, type) =>
-  auctions.map((auction) => {
+  auctions.map(auction => {
     const conditions = [type, auction.state];
     const CardComponent = match(
       conditions,

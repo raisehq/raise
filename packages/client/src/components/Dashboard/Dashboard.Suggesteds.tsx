@@ -35,7 +35,7 @@ const Suggesteds = ({ auctions, states }) => {
     ),
     Success: () => (
       <SuggestedContainer>
-        {suggested.map((auction) => (
+        {suggested.map(auction => (
           <Suggested key={auction.id} auction={auction} />
         ))}
       </SuggestedContainer>

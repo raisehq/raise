@@ -7,7 +7,7 @@ import TOKEN_URLS from '../../commons/tokens';
 
 const SUPPORTED_COINS = ['DAI', 'USDT', 'USDC', 'ETH'];
 
-const Balance = (props) => {
+const Balance = props => {
   const balances = useGetAllBalances(SUPPORTED_COINS);
   balances.sort((a, b) => {
     const aBN = new BigNumber(a.value);
@@ -18,7 +18,7 @@ const Balance = (props) => {
     <>
       <BalanceDropdown text="Balance" {...props}>
         <BalanceMenu>
-          {balances.map((coin) => (
+          {balances.map(coin => (
             <TokenLayout
               hider
               imageUrl={TOKEN_URLS[coin.text]}

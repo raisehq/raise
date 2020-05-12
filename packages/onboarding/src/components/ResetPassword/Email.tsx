@@ -22,7 +22,7 @@ const Reset = () => {
 
   const onSendRecover = () => onRecover(email.value);
 
-  const onKeyPress = (event) => {
+  const onKeyPress = event => {
     if (event.key === 'Enter' && email.value !== '' && !email.error) {
       onSendRecover();
     }

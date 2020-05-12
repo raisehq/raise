@@ -82,7 +82,7 @@ export const TableItem: SFC<TableItemProps> = ({ title, content, latest, tooltip
   </TableItemContainer>
 );
 
-const mapTable = (latest) => (props, index) => (
+const mapTable = latest => (props, index) => (
   <TableItem key={props.title} latest={latest === index} {...props} />
 );
 

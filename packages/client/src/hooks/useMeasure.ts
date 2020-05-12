@@ -23,7 +23,7 @@ const useMeasure = <T>(): [(instance: T) => void, ContentRect] => {
 
   const [observer] = useState(
     () =>
-      new ResizeObserver((entries) => {
+      new ResizeObserver(entries => {
         const entry = entries[0];
         if (entry) {
           set(entry.contentRect);
@@ -32,7 +32,7 @@ const useMeasure = <T>(): [(instance: T) => void, ContentRect] => {
   );
 
   const ref = useCallback(
-    (node) => {
+    node => {
       observer.disconnect();
       if (node) {
         observer.observe(node);

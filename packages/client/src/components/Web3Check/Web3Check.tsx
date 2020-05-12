@@ -33,7 +33,7 @@ const getStage = (
     WalletConnectForm: () => <WalletConnectForm onExists={onExists} onNotExists={onNotExists} />,
     WalletSetUp: () => <WalletSetUp onNext={handleNext} onBack={backToConnectForm} />,
     WalletSelector: () => <Wallet onNext={handleNext} onBack={backToConnectForm} />,
-    WalletConnect: (hasWallet) => <WalletConnect onBack={handleBack} hasWallet={hasWallet} />,
+    WalletConnect: hasWallet => <WalletConnect onBack={handleBack} hasWallet={hasWallet} />,
     Checks: () => <List onSuccess={handleSuccess} onBack={handleBack} />
   });
 

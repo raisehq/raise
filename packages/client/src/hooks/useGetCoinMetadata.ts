@@ -19,7 +19,7 @@ const useGetCoinMetadata = (name): CoinsType | null | undefined => {
   const desiredNetwork = currentNetworkId > 0 ? currentNetworkId : networkId;
   const contract = get(contracts, `address.${desiredNetwork}`);
   const coins: CoinsType[] = getCoinsFromContract(COINS)(contract);
-  return coins.find((c) => c.text === name);
+  return coins.find(c => c.text === name);
 };
 
 export default useGetCoinMetadata;

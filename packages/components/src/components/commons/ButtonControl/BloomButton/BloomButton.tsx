@@ -24,10 +24,7 @@ const BloomButton: React.SFC<BloomButtonProps> = ({
   >
     <ButtonContent>
       <span>{text}</span>
-      <Image
-        src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
-        size="tiny"
-      />
+      <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
     </ButtonContent>
   </ButtonStyled>
 );

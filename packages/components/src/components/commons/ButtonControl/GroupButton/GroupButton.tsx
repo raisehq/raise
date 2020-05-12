@@ -13,7 +13,7 @@ const GroupButton: React.SFC<GroupButtonProps> = ({
   options,
   withIcon = false,
   onClick,
-  selectedIndex,
+  selectedIndex
 }: any) => (
   <ButtonStyledGroup>
     {options.map((item: any) => (
@@ -25,9 +25,7 @@ const GroupButton: React.SFC<GroupButtonProps> = ({
       >
         <ButtonContent>
           {withIcon && (
-            <Image
-              src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${item.icon}`}
-            />
+            <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${item.icon}`} />
           )}
           {item.text}
         </ButtonContent>
