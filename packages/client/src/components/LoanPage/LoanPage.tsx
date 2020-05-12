@@ -12,8 +12,9 @@ import {
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { findOne } from '../../helpers/butter';
+import { findOne, requestPage } from '../../helpers/butter';
 import { getLoanByAddress } from '../../services/blockchain';
+import AboutBorrower from '@raisehq/components';
 
 const LoanPage = () => {
   const {
@@ -33,25 +34,36 @@ const LoanPage = () => {
   }: any = useRootContext();
   const [loan, setLoan] = useState(null);
   const [borrowerInfo, setBorrowerInfo] = useState({
-    companyName: '',
-    description: '',
-    shortDescription: '',
-    background: '',
-    logo: '',
-    slug: '',
-    route: ''
+    companyDetails: {
+      companyName: '',
+      description: '',
+      shortDescription: '',
+      logo: '',
+      url: '',
+      urlText: '',
+      updated: '',
+      address: '',
+      userId: '',
+      ethereumAddress: '',
+      foundationDate: '',
+      background: ''
+    },
+    socialNetworks: [],
+    extraResources: [],
+    kpis: []
   });
 
   useAsyncEffect(async () => {
     try {
-      const address = process.env.REACT_APP_LOAN_OF_THE_MONTH;
-      const currentLoan = await getLoanByAddress(address, network);
+      const loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
+      const currentLoan = await getLoanByAddress(loanAddress, network);
       setLoan(currentLoan);
       const borrowerAddress = currentLoan.originator;
       const borrowerInformation: any = await findOne('companies', {
         'fields.ethereum_address': borrowerAddress
       });
-      setBorrowerInfo(borrowerInformation);
+      const borrowerPage = await requestPage('borrower_profile', borrowerInformation.slug);
+      setBorrowerInfo(borrowerPage);
     } catch (error) {
       console.error('Error querying loan info ', error);
     }
@@ -68,7 +80,7 @@ const LoanPage = () => {
             <>
               <LoanResumeWrapper />
               <LoanSubResumeWrapper />
-              <BorrowerResume>{borrowerInfo.description}</BorrowerResume>
+              <BorrowerResume>{borrowerInfo.companyDetails.shortDescription}</BorrowerResume>
             </>
           )}
         </LoanInformationContainer>
@@ -83,6 +95,7 @@ const LoanPage = () => {
           )}
         </LoanInvestContainer>
       </LoanPageInfoSection>
+      <AboutBorrower borrowerInfo={borrowerInfo} />
     </LoanPageContainer>
   );
 };
