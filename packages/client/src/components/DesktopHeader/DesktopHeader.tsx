@@ -86,6 +86,20 @@ const DesktopHeader = () => {
                     Invest with Raise
                   </Link>
                 </HeaderMenuItem>
+                <HeaderMenuItem>
+                  <Link
+                    onClick={() =>
+                      history.location.pathname !== '/loan-of-the-month' &&
+                      history.push('loan-of-the-month')
+                    }
+                    to="loan-of-the-month"
+                    spy
+                    smooth
+                    duration={500}
+                  >
+                    Loan of the month
+                  </Link>
+                </HeaderMenuItem>
                 {isLogged && (
                   <>
                     {user.details.accounttype_id === 1 ? (

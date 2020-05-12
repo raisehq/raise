@@ -20,7 +20,7 @@ const useMenuVisibility = () => {
       history.location.pathname.includes('/verify-web3') ||
       history.location.pathname === '/deposit' ||
       history.location.pathname === '/investing' ||
-      history.location.pathname.includes('/loan')
+      history.location.pathname === '/loan-of-the-month'
     ) {
       setVisible(true);
     } else {

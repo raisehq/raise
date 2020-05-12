@@ -100,6 +100,14 @@ const Menu = () => {
     showMenu(false);
   };
 
+  const toLoanOfTheMonth = () => {
+    if (history.location.pathname !== '/loan-of-the-month') {
+      history.push('/loan-of-the-month');
+      scroll.scrollToTop();
+    }
+    showMenu(false);
+  };
+
   const Menus = {
     1: [
       {
@@ -107,6 +115,12 @@ const Menu = () => {
         title: 'Invest with Raise',
         link: 'investing',
         onClick: toInvesting
+      },
+      {
+        id: 'loan-of-the-month',
+        title: 'Loan of the month',
+        link: 'loan-of-the-month',
+        onClick: toLoanOfTheMonth
       },
       {
         id: 'borrower-my-activity',
@@ -127,6 +141,12 @@ const Menu = () => {
         title: 'Invest with Raise',
         link: 'investing',
         onClick: toInvesting
+      },
+      {
+        id: 'loan-of-the-month',
+        title: 'Loan of the month',
+        link: 'loan-of-the-month',
+        onClick: toLoanOfTheMonth
       },
       {
         id: 'lender-get-started',

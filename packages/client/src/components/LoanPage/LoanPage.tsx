@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import Invest from '../Invest';
 import {
   LoanPageContainer,
@@ -16,11 +15,7 @@ import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { findOne } from '../../helpers/butter';
 import { getLoanByAddress } from '../../services/blockchain';
 
-const LoanPage = ({
-  match: {
-    params: { address }
-  }
-}: any) => {
+const LoanPage = () => {
   const {
     web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
   }: any = useAppContext();
@@ -49,6 +44,7 @@ const LoanPage = ({
 
   useAsyncEffect(async () => {
     try {
+      const address = process.env.REACT_APP_LOAN_OF_THE_MONTH;
       const currentLoan = await getLoanByAddress(address, network);
       setLoan(currentLoan);
       const borrowerAddress = currentLoan.originator;
@@ -91,4 +87,4 @@ const LoanPage = ({
   );
 };
 
-export default withRouter(LoanPage);
+export default LoanPage;
