@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
-  AboutBorrower
+  AboutBorrower,
+  NeedHelp
   // LoanComparatorChart,
   // useCompaniesScrapper
 } from '@raisehq/components';
@@ -125,6 +126,9 @@ const LoanPage = () => {
           </BorrowerInfoContainer>
         </BorrowerAboutContainer>
       )}
+      <SectionContainer>
+        <NeedHelp />
+      </SectionContainer>
     </LoanPageContainer>
   );
 };
