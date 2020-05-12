@@ -1,5 +1,4 @@
 const BUTTERCMSKEY = process.env.REACT_APP_BUTTER;
-
 module.exports = {
   siteMetadata: {
     title: 'Invest, Grow and Do Good!',
@@ -45,10 +44,24 @@ module.exports = {
       resolve: 'gatsby-plugin-env-variables',
       options: {
         whitelist: [
+          'REACT_APP_DEFAULT_NETWORK_ID',
+          'REACT_APP_HOST_THEGRAPH',
+          'REACT_APP_HOST_THEGRAPH_WS',
+          'REACT_APP_METADATA_URL',
           'REACT_APP_HOST_IMAGES',
           'REACT_APP_HOST_URL_AUTH',
           'REACT_APP_HOST_URL_CORE',
-          'REACT_APP_HOST_URL_FILE'
+          'REACT_APP_HOST_URL_FILE',
+          'REACT_APP_GTM_ID',
+          'REACT_APP_GTM_AUTH',
+          'REACT_APP_GTM_ENV',
+          'REACT_APP_COOKIE_DOMAIN',
+          'REACT_APP_LOGROCKET',
+          'REACT_APP_BUTTER',
+          'REACT_APP_INFURA',
+          'REACT_APP_DAI_ADDRESS',
+          'REACT_APP_SWAP_ON',
+          'REACT_APP_BLOOM_ATTESTATIONS'
         ]
       }
     },
