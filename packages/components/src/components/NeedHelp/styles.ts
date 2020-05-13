@@ -6,7 +6,8 @@ export const NeedHelpContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   background: #3c4251;
-  margin: auto;
+  align-items: center;
+  width: 100%;
 `;
 export const NeedHelpTitle = styled.div`
   font-weight: bold;
@@ -14,6 +15,7 @@ export const NeedHelpTitle = styled.div`
   line-height: 40px;
   color: #ffffff;
   margin-top: 57px;
+  text-align: center;
 `;
 
 export const NeedHelpParagraph = styled.div`
@@ -26,5 +28,9 @@ export const NeedHelpParagraph = styled.div`
   max-width: 440px;
 `;
 export const NeedHelpButton = styled(Button)``;
+
+export const ButtonContainer = styled.div`
+  margin-bottom: 50px;
+`;
 
 export const Link = styled.a``;

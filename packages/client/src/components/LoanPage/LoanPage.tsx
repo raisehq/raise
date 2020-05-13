@@ -1,31 +1,21 @@
-import React, { useState } from 'react';
+/* eslint-disable react/no-array-index-key */
+import React, { useState, useEffect } from 'react';
 import {
-  AboutBorrower,
   NeedHelp
-  // LoanComparatorChart,
   // useCompaniesScrapper
 } from '@raisehq/components';
-import Invest from '../Invest';
-import {
-  LoanPageContainer,
-  LoanPageInfoSection,
-  LoanInformationContainer,
-  LoanInvestContainer,
-  LoanSubResumeWrapper,
-  LoanResumeWrapper,
-  BorrowerResume,
-  BorrowerInfoContainer,
-  BorrowerDescription,
-  BorrowerInfoTitle,
-  BorrowerAboutContainer,
-  SectionContainer
-} from './styles';
+import { LoanPageContainer, SignUpWrapper, Loading } from './styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { findOne, requestPage } from '../../helpers/butter';
+import { findOne, findOneCollection, requestPage } from '../../helpers/butter';
 import { getLoanByAddress } from '../../services/blockchain';
-// import SignUp from '../SignUp';
+import SignUp from '../SignUp';
+import PageSection from '../PageSection';
+import LoanInfoSection from './LoanInfoSection';
+import BorrowerAboutSection from './BorrowerAboutSection';
+import useRouter from '../../hooks/useRouter';
+// import APRComparatorSection from './APRComparatorSection';
 
 const LoanPage = () => {
   const loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
@@ -44,7 +34,9 @@ const LoanPage = () => {
       config: { network }
     }
   }: any = useRootContext();
+  const { history } = useRouter();
   const [loan, setLoan] = useState(null);
+  const [butterSection, setButterSection] = useState(null);
   const [borrowerInfo, setBorrowerInfo] = useState({
     companyDetails: {
       companyName: '',
@@ -64,7 +56,25 @@ const LoanPage = () => {
     extraResources: [],
     kpis: []
   });
+  const [sections, setSections] = useState([]);
+  // const [companyList, setCompanyList] = useState();
+
   // const companies = useCompaniesScrapper();
+
+  const connected = hasProvider && unlocked && accountMatches && networkMatches;
+  const userActivated = connected && kycStatus === 3;
+
+  // useEffect(() => {
+  //   if (companies) {
+  //     console.log('companies::::::::::::::::::::: ', companies);
+  //     setCompanyList(companies);
+  //   }
+  // }, [companies]);
+
+  useAsyncEffect(async () => {
+    const section: any = await findOneCollection('sections', { 'fields.id': 'skin_in_the_game' });
+    setButterSection(section[0]);
+  }, []);
 
   useAsyncEffect(async () => {
     try {
@@ -80,57 +90,95 @@ const LoanPage = () => {
       console.error('Error querying loan info ', error);
     }
   }, [loanAddress]);
-  console.log('borrower info:: ', borrowerInfo);
-  const connected = hasProvider && unlocked && accountMatches && networkMatches;
-  const userActivated = connected && kycStatus === 3;
 
-  return (
-    <LoanPageContainer>
-      <LoanPageInfoSection>
-        <LoanInformationContainer>
-          {Object.keys(borrowerInfo).length > 0 && (
-            <>
-              <LoanResumeWrapper />
-              <LoanSubResumeWrapper />
-              <BorrowerResume>{borrowerInfo.companyDetails.shortDescription}</BorrowerResume>
-            </>
-          )}
-        </LoanInformationContainer>
-        <LoanInvestContainer>
-          {loan && (
-            <Invest
-              loan={loan}
-              userActivated={userActivated}
-              fullInfo={false}
-              isLogged={isLogged}
-            />
-          )}
-        </LoanInvestContainer>
-      </LoanPageInfoSection>
-      {/* {!isLogged && (
-        <SectionContainer>
-          <SignUp id="Loanofmonth_signup" />
-        </SectionContainer>
-      )} */}
-      {/* {companies.length > 1 && (
-        <SectionContainer>
-          <LoanComparatorChart companies={companies} />
-        </SectionContainer>
-      )} */}
-      {borrowerInfo.companyDetails.companyName !== '' && (
-        <BorrowerAboutContainer>
-          <BorrowerInfoTitle>About {borrowerInfo.companyDetails.companyName}</BorrowerInfoTitle>
-          <BorrowerInfoContainer>
-            <BorrowerDescription>{borrowerInfo.companyDetails.description}</BorrowerDescription>
-            <AboutBorrower borrowerInfo={borrowerInfo} />
-          </BorrowerInfoContainer>
-        </BorrowerAboutContainer>
-      )}
-      <SectionContainer>
-        <NeedHelp />
-      </SectionContainer>
-    </LoanPageContainer>
-  );
+  useEffect(() => {
+    const sectionArray: any = [];
+    sectionArray.push({
+      component: (
+        <LoanInfoSection
+          borrowerInfo={borrowerInfo}
+          loan={loan}
+          userActivated={userActivated}
+          isLogged={isLogged}
+        />
+      ),
+      section_title: 'loanInfo'
+    });
+
+    if (!isLogged) {
+      sectionArray.push({
+        component: (
+          <SignUpWrapper>
+            <SignUp id="Loanofmonth_signup" />
+          </SignUpWrapper>
+        ),
+        section_title: 'signup'
+      });
+    }
+
+    // if (companyList.length > 1) {
+    //   sectionArray.push({
+    //     component: (
+    //       <APRComparatorSection
+    //         companies={companyList}
+    //         isLogged={isLogged}
+    //         userActivated={userActivated}
+    //         history={history}
+    //       />
+    //     ),
+    //     section_title: 'apr_comparision'
+    //   });
+    // }
+
+    if (borrowerInfo.companyDetails.companyName !== '') {
+      sectionArray.push({
+        component: (
+          <BorrowerAboutSection
+            borrowerInfo={borrowerInfo}
+            history={history}
+            isLogged={isLogged}
+            userActivated={userActivated}
+          />
+        ),
+        section_title: 'borrowerInfo'
+      });
+    }
+
+    if (butterSection) {
+      sectionArray.push(butterSection);
+    }
+
+    sectionArray.push({
+      component: <NeedHelp />,
+      section_title: 'needhelp'
+    });
+
+    // put ordering number for waves functionality
+    const sectionsWithOrder = sectionArray.map((section, index) => {
+      const newSection = { ...section, section_order: index };
+      return newSection;
+    });
+    console.log('ordered section:: ', sectionsWithOrder);
+    setSections(sectionsWithOrder);
+  }, [loan, borrowerInfo, butterSection]);
+
+  // console.log('-- ||| ----- ', companyList);
+
+  if (loan && borrowerInfo && butterSection) {
+    return (
+      <LoanPageContainer>
+        {sections.map((section: any, index) => (
+          <PageSection
+            key={`${index}-section`}
+            section={section}
+            sectionIndex={index}
+            length={sections.length}
+          />
+        ))}
+      </LoanPageContainer>
+    );
+  }
+  return <Loading inverted>Loading</Loading>;
 };
 
 export default LoanPage;

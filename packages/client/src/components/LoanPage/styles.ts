@@ -1,5 +1,9 @@
 import styled from 'styled-components';
+import { Button } from '@raisehq/components';
+import { Loader } from 'semantic-ui-react';
 import { device } from '../../commons/breakpoints';
+
+export const Loading = styled(Loader)``;
 
 export const LoanPageContainer = styled.div`
   display: flex;
@@ -9,8 +13,7 @@ export const LoanPageContainer = styled.div`
   flex-wrap: wrap;
   @media screen and ${device.laptop} {
     width: 100%;
-    max-width: 1172px;
-    padding: 20px;
+    padding-bottom: 0px;
     margin: auto;
   }
 `;
@@ -23,6 +26,10 @@ export const LoanPageInfoSection = styled.div`
   width: 100%;
   @media screen and ${device.laptop} {
     justify-content: space-between;
+    width: 100%;
+    max-width: 1172px;
+    margin: auto;
+    padding: 20px;
   }
 `;
 
@@ -57,6 +64,13 @@ export const BorrowerAboutContainer = styled.div`
   margin-top: 50px;
   height: 100%;
   width: 100%;
+  @media screen and ${device.laptop} {
+    max-width: 1172px;
+    margin: auto;
+    margin-top: 150px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
 
 export const BorrowerInfoContainer = styled.div`
@@ -88,4 +102,43 @@ export const BorrowerDescription = styled.div`
 
 export const SectionContainer = styled.div`
   margin-top: 50px;
+`;
+
+export const ButterSectionContainer = styled.div`
+  margin-top: 50px;
+  @media screen and ${device.laptop} {
+    max-width: 1172px;
+  }
+`;
+
+export const ComparatorInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+export const APRSectionContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: 'row';
+  align-items: center;
+  @media screen and ${device.laptop} {
+    width: 100%;
+    max-width: 1172px;
+    padding: 20px;
+    justify-content: space-between;
+  }
+`;
+
+export const InvestButton = styled(Button)``;
+
+export const ButtonWrapper = styled.div`
+  align-self: center;
+  margin-top: 59px;
+`;
+
+export const SignUpWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;

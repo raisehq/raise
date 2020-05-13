@@ -246,7 +246,7 @@ const App = () => {
                   marketplace
                   layout={AppLayout}
                   exact
-                  path="/loan-of-the-month"
+                  path="/investmentopportunity"
                   component={LoanPage}
                   roles={[1, 2]}
                 />

@@ -8,10 +8,7 @@ interface SocialProps {
   url: string;
 }
 
-const Socials: React.SFC<SocialProps> = ({
-  socialNetworks,
-  url,
-}: SocialProps) => {
+const Socials: React.SFC<SocialProps> = ({ socialNetworks, url }: SocialProps) => {
   const SocialDOM = useMemo(
     () =>
       socialNetworks.map(({ network, link }) => (

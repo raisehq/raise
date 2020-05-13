@@ -101,8 +101,8 @@ const Menu = () => {
   };
 
   const toLoanOfTheMonth = () => {
-    if (history.location.pathname !== '/loan-of-the-month') {
-      history.push('/loan-of-the-month');
+    if (!history.location.pathname.includes('investmentopportunity')) {
+      history.push('/investmentopportunity');
       scroll.scrollToTop();
     }
     showMenu(false);
@@ -117,9 +117,9 @@ const Menu = () => {
         onClick: toInvesting
       },
       {
-        id: 'loan-of-the-month',
+        id: 'investmentopportunity',
         title: 'Loan of the month',
-        link: 'loan-of-the-month',
+        link: 'investmentopportunity',
         onClick: toLoanOfTheMonth
       },
       {
@@ -143,9 +143,9 @@ const Menu = () => {
         onClick: toInvesting
       },
       {
-        id: 'loan-of-the-month',
+        id: 'investmentopportunity',
         title: 'Loan of the month',
-        link: 'loan-of-the-month',
+        link: 'investmentopportunity',
         onClick: toLoanOfTheMonth
       },
       {

@@ -11,7 +11,7 @@ import {
   KPIItemValue,
   KPITooltip,
   KPILabel,
-  KPIIcon,
+  KPIIcon
 } from './styles';
 
 interface KPIListProps {
@@ -28,7 +28,7 @@ export const KPI: React.SFC<KPIProps> = ({ kpi, label, tooltip }: KPIProps) => (
             <KPITooltip
               content={tooltip}
               inverted
-              position="center top"
+              position="top center"
               trigger={<Icon color="teal" name="info circle" />}
             />
           </KPIIcon>

@@ -5,7 +5,7 @@ import {
   BorrowerInfoContainer,
   AddressInfo,
   BorrowerInfoItem,
-  Icon,
+  Icon
 } from './styles';
 import { ExtraResource } from './interfaces';
 
@@ -18,7 +18,7 @@ interface BorrowerInfoProps {
 export const Resource: React.SFC<ExtraResource> = ({
   resource,
   link,
-  resource_type: resourceType,
+  resource_type: resourceType
 }: ExtraResource) => (
   <ResourceBox>
     <Icon className={`${resourceType} icon`} />
@@ -31,7 +31,7 @@ export const Resource: React.SFC<ExtraResource> = ({
 export const BorrowerInfo: React.SFC<BorrowerInfoProps> = ({
   extraResources,
   address,
-  date,
+  date
 }: BorrowerInfoProps) => (
   <BorrowerInfoContainer>
     <BorrowerInfoItem>

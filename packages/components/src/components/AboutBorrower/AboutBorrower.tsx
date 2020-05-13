@@ -10,17 +10,13 @@ const AboutBorrower = ({ borrowerInfo }: any) => {
     companyDetails: { address, foundationDate, url },
     extraResources,
     socialNetworks,
-    kpis,
+    kpis
   } = borrowerInfo;
   return (
     <SideInfo>
       <SideTitle>Overview</SideTitle>
       <KPIList kpis={kpis} />
-      <BorrowerInfo
-        address={address}
-        date={foundationDate}
-        extraResources={extraResources}
-      />
+      <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
       <Socials socialNetworks={socialNetworks} url={url} />
     </SideInfo>
   );

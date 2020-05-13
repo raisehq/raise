@@ -89,10 +89,10 @@ const DesktopHeader = () => {
                 <HeaderMenuItem>
                   <Link
                     onClick={() =>
-                      history.location.pathname !== '/loan-of-the-month' &&
-                      history.push('loan-of-the-month')
+                      !history.location.pathname.includes('investmentopportunity') &&
+                      history.push('investmentopportunity')
                     }
-                    to="loan-of-the-month"
+                    to="linvestmentopportunity"
                     spy
                     smooth
                     duration={500}
