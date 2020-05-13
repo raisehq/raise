@@ -174,6 +174,16 @@ const swapBlacklist = {
   USDT: true
 };
 
+const HIGH_GAS_FEES = 0.005;
+const UNISWAP_SLIPPAGE = 0.03;
+
+// Function to calculate remaining eth counting with gas costs and uniswap slippage
+const getRemainingEth = (etherBalance, gasCosts) => {
+  const balanceMinusFees = etherBalance - gasCosts;
+  // Prevent uniswap slippage and fees substracting 3% of remaining balance
+  return balanceMinusFees - balanceMinusFees * UNISWAP_SLIPPAGE;
+};
+
 const setTokenReserves = async (
   inputAddress: string,
   outputAddress: string,
@@ -266,7 +276,8 @@ const InvestmentBox = ({
   };
 
   const fundAll = (loanCurrency: CoinsType, selectedCurrency: CoinsType) => async (divisor) => {
-    const availableBalance = selectedCurrency.text === 'ETH' ? balance - 0.005 : balance;
+    const availableBalance =
+      selectedCurrency.text === 'ETH' ? getRemainingEth(balance, HIGH_GAS_FEES) : balance;
     const nMaxAmount = Number(fromDecimal(maxAmount, loanCurrency.decimals));
     const nPrincipal = nMaxAmount - Number(fromDecimal(principal, loanCurrency.decimals));
 
