@@ -64,7 +64,8 @@ module.exports = {
           'REACT_APP_BLOOM_ATTESTATIONS',
           'REACT_APP_STATIC',
           'REACT_APP_HOST_URL',
-          'REACT_APP_HOST_STATIC'
+          'REACT_APP_HOST_STATIC',
+          'REACT_APP_WEB_URL'
         ]
       }
     },
