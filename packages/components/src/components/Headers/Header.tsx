@@ -5,21 +5,20 @@ import SubHeader from './SubHeader';
 import SubPageHeader from './SubPageHeader';
 import { HeaderProps } from './interfaces';
 
+const NavBar = styled.div`
+  width: 100%;
+`;
+
 const Bar = styled.div`
   height: 72px;
   display: flex;
-  padding: 0px 1em;
   box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.25);
   justify-content: space-between;
   align-items: center;
-
-  @media screen and ${device.tablet} {
-    padding: 0 8em;
-  }
 `;
 
-const Header: React.SFC<HeaderProps> = ({ children, logo, routes, pageRoutes }) => (
-  <div>
+const Header: React.SFC<HeaderProps> = ({ children, logo, routes, pageRoutes, ...rest }) => (
+  <NavBar {...rest}>
     <Bar>
       <div>
         <a href="/">
@@ -30,7 +29,7 @@ const Header: React.SFC<HeaderProps> = ({ children, logo, routes, pageRoutes }) 
     </Bar>
     <SubHeader routes={routes} />
     {!!pageRoutes.length && <SubPageHeader routes={pageRoutes} />}
-  </div>
+  </NavBar>
 );
 
 export default Header;

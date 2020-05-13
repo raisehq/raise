@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const LabelWeb3: any = styled.div`
   &&&& {
     padding: 0.8em !important;
-    min-width: 2em;
+    min-width: 140px;
     min-height: 2em;
     line-height: 1em;
     text-align: center;

@@ -6,12 +6,7 @@ import { SubheaderProps, Route } from './interfaces';
 const SubBar = styled.div`
   height: 44px;
   display: flex;
-  padding: 0px 1em;
   background: #eb3f93;
-
-  @media screen and ${device.tablet} {
-    padding: 0 8em;
-  }
 `;
 
 const SubItem = styled.div`
