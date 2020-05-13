@@ -61,7 +61,9 @@ module.exports = {
           'REACT_APP_INFURA',
           'REACT_APP_DAI_ADDRESS',
           'REACT_APP_SWAP_ON',
-          'REACT_APP_BLOOM_ATTESTATIONS'
+          'REACT_APP_BLOOM_ATTESTATIONS',
+          'REACT_APP_STATIC',
+          'REACT_APP_HOST_URL'
         ]
       }
     },

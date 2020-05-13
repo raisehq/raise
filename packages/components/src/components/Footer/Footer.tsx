@@ -12,17 +12,14 @@ import {
   FooterOffices,
   FooterCopyRight,
   MenuLink,
-  SubMenu,
+  SubMenu
 } from './styles';
 
 const Footer = () => (
   <FooterWrapper>
     <FooterInformationContainer>
       <FooterLogo>
-        <img
-          src={`${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`}
-          alt="Raise.it"
-        />
+        <img src={`${process.env.REACT_APP_HOST_IMAGES}/images/logo.svg`} alt="Raise.it" />
       </FooterLogo>
       <FooterMenu>
         <SubMenu>
@@ -33,34 +30,18 @@ const Footer = () => (
           >
             Loan of the month
           </MenuLink>
-          <MenuLink
-            href="https://app.raise.it/investing"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <MenuLink href="https://app.raise.it/investing" rel="noopener noreferrer" target="_blank">
             Invest
           </MenuLink>
-          <MenuLink
-            href="https://raise.it/help"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <MenuLink href="https://raise.it/help" rel="noopener noreferrer" target="_blank">
             Help
           </MenuLink>
-          <MenuLink
-            href="https://raise.it/blog"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <MenuLink href="https://raise.it/blog" rel="noopener noreferrer" target="_blank">
             Blog
           </MenuLink>
         </SubMenu>
         <SubMenu>
-          <MenuLink
-            href="https://raise.it/about"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <MenuLink href="https://raise.it/about" rel="noopener noreferrer" target="_blank">
             About
           </MenuLink>
           <MenuLink
@@ -99,9 +80,8 @@ const Footer = () => (
     </FooterInformationContainer>
     <FooterCopyRightContainer>
       <FooterOffices>
-        Raise was born and is being developed with passion from the Barcelona
-        headquarters of Raise Labs OÜ. Registered office address: Maakri 19-1,
-        10145 Tallinn, Estonia. Reg. code: 14802358
+        Raise was born and is being developed with passion from the Barcelona headquarters of Raise
+        Labs OÜ. Registered office address: Maakri 19-1, 10145 Tallinn, Estonia. Reg. code: 14802358
       </FooterOffices>
       <FooterCopyRight>Copyright ©2020 · All rights reserved</FooterCopyRight>
     </FooterCopyRightContainer>

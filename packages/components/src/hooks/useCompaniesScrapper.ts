@@ -7,20 +7,15 @@ import useRaiseData from './useRaiseData';
 const defiPulseToCompany = (defiPulseData: any) => {
   if (defiPulseData.length) {
     // DAI is hardcoded to get DAI profits from other companies
-    const daiData = defiPulseData.find(
-      ({ token: { name } }: any) => name === 'DAI'
-    );
+    const daiData = defiPulseData.find(({ token: { name } }: any) => name === 'DAI');
 
     if (daiData) {
-      const convertToCompanies: any = map(
-        daiData.rates,
-        ({ name, lend: { rate } }: any) => ({
-          name,
-          supplyRate: Number(Number(rate).toFixed(2)) / 100,
-          enabled: true,
-          logoUrl: COMPANY_LOGOS[name] || null,
-        })
-      );
+      const convertToCompanies: any = map(daiData.rates, ({ name, lend: { rate } }: any) => ({
+        name,
+        supplyRate: Number(Number(rate).toFixed(2)) / 100,
+        enabled: true,
+        logoUrl: COMPANY_LOGOS[name] || null
+      }));
       return [...convertToCompanies];
     }
   }

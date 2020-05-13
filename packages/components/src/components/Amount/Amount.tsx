@@ -7,7 +7,7 @@ const REACT_APP_HOST_IMAGES = 'https://static.raise.it';
 const Amount = ({
   principal,
   roi,
-  coinIcon,
+  coinIcon
 }: {
   principal: any;
   roi?: string;

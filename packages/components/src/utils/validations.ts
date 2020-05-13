@@ -4,5 +4,5 @@ import { Either } from '.';
 
 export default {
   isEmail: (value) => Either.either(isEmail(value)),
-  password: (value) => Either.either(isLength(value, { min: 8 })),
+  password: (value) => Either.either(isLength(value, { min: 8 }))
 };

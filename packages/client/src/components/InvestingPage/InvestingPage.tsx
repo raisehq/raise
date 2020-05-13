@@ -55,10 +55,8 @@ const InvestingPage = () => {
       });
     }
 
-    console.log('sections with statics ::: ', orderedSections);
     setSections(orderedSections);
   }, []);
-  console.log('sections length:::: ', sections.length);
   return (
     <InvestingContainer>
       {sections.map((section: any, index) => (

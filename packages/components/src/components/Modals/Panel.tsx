@@ -6,17 +6,10 @@ import {
   OnboardingCloseButton,
   OnboardingHeaderItemWrapper,
   OnboardingModalContent,
-  OnboardingBloomContent,
+  OnboardingBloomContent
 } from './styles';
 
-const PanelWithImage = ({
-  children,
-  blur,
-  mountNode,
-  open,
-  onClose,
-  closeButton,
-}: any) => {
+const PanelWithImage = ({ children, blur, mountNode, open, onClose, closeButton }: any) => {
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
@@ -27,9 +20,7 @@ const PanelWithImage = ({
             <img src={`${IMAGES_PATH}logo.svg`} alt="Raise.it" />
           </OnboardingHeaderItemWrapper>
           <OnboardingHeaderItemWrapper>
-            {closeButton && (
-              <OnboardingCloseButton onClick={onClose} icon="cancel" />
-            )}
+            {closeButton && <OnboardingCloseButton onClick={onClose} icon="cancel" />}
           </OnboardingHeaderItemWrapper>
         </OnboardingHeader>
         <OnboardingBloomContent>{children}</OnboardingBloomContent>

@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 
-export default function useEffectAsync(
-  effect: any,
-  destroy?: any,
-  inputs?: any
-) {
+export default function useEffectAsync(effect: any, destroy?: any, inputs?: any) {
   const hasDestroy = typeof destroy === 'function';
 
   useEffect(() => {

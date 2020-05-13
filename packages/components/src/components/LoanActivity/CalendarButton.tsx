@@ -29,13 +29,7 @@ const CalendarButton = ({ onClick, paidInTime }: CalendarButtonProps) => {
     </div>
   );
 
-  return (
-    <Popup
-      position="top center"
-      content="Open payments calendar"
-      trigger={CalendarIcon}
-    />
-  );
+  return <Popup position="top center" content="Open payments calendar" trigger={CalendarIcon} />;
 };
 
 export default CalendarButton;

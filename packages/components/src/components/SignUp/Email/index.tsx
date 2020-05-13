@@ -4,14 +4,7 @@ import Register from './Register';
 import Error from './Error';
 import Success from './Success';
 
-const getStage = (
-  stage,
-  SignUpId,
-  onSignUp,
-  checkEmail,
-  setStage,
-  bloomAction
-) =>
+const getStage = (stage, SignUpId, onSignUp, checkEmail, setStage, bloomAction) =>
   stage.cata({
     Register: () => (
       <Register
@@ -23,7 +16,7 @@ const getStage = (
       />
     ),
     Success: () => <Success />,
-    Error: () => <Error setStage={setStage} />,
+    Error: () => <Error setStage={setStage} />
   });
 
 const EmailSignUp = ({ SignUpId, onSignUp, checkEmail, bloomAction }: any) => {

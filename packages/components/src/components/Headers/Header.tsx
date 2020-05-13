@@ -18,7 +18,7 @@ const Bar = styled.div`
   }
 `;
 
-const Header = ({ children, logo, routes, pageRoutes }: HeaderProps) => (
+const Header: React.SFC<HeaderProps> = ({ children, logo, routes, pageRoutes }) => (
   <div>
     <Bar>
       <div>

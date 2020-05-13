@@ -28,7 +28,7 @@ import {
   Vertical,
   RoiHeader,
   RoiContent,
-  CardHref,
+  CardHref
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -60,7 +60,7 @@ const RowComponent: React.SFC<RowComponentProps> = ({
   contentColor,
   small,
   big,
-  notop,
+  notop
 }: any) => (
   <Row small={small} big={big} notop={notop}>
     <RowContent contentColor={contentColor}>{content}</RowContent>
@@ -97,9 +97,7 @@ const SubHeaderComponent: FunctionComponent<{
   </SubHeader>
 );
 
-const RoiHeaderComponent: FunctionComponent<{ roi: string }> = ({
-  roi,
-}: any) => (
+const RoiHeaderComponent: FunctionComponent<{ roi: string }> = ({ roi }: any) => (
   <RoiHeader>
     <RoiContent>{`${roi}ROI`}</RoiContent>
   </RoiHeader>
@@ -169,7 +167,7 @@ const ContentWithLogo = ({
   size,
   to,
   className,
-  style,
+  style
 }: {
   children?: any;
   logo?: any;

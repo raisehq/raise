@@ -19,7 +19,7 @@ import {
   CheckBoxText,
   SignUpWithBloomText,
   SignUpWithBloomLogo,
-  SignUpWithBloomWrapper,
+  SignUpWithBloomWrapper
 } from '../styles';
 import { countryOptions } from '../../../commons/countries';
 
@@ -36,7 +36,7 @@ const Register: React.SFC<IRegister> = ({
   onSignUp,
   checkEmail,
   setStage,
-  bloomAction,
+  bloomAction
 }: any) => {
   const [errors, setErrors] = useState<{
     password: boolean;
@@ -47,12 +47,12 @@ const Register: React.SFC<IRegister> = ({
     password: false,
     country: false,
     username: false,
-    accounttype_id: AccountType.Lender,
+    accounttype_id: AccountType.Lender
   });
   const [error, setError] = useState<any>({
     validation: false,
     exist: false,
-    terms: true,
+    terms: true
   });
 
   const [recaptcha, setRecaptcha] = useState(null);
@@ -62,13 +62,13 @@ const Register: React.SFC<IRegister> = ({
     country_id: '',
     username: '',
     mailingChecked: false,
-    'g-recaptcha-response': '',
+    'g-recaptcha-response': ''
   });
   const recaptchaRef: any = React.createRef();
 
   useEffect(() => {
-    setCredentials({ ...credentials, mailingChecked: false });
-  }, [credentials]);
+    setCredentials((creds) => ({ ...creds, mailingChecked: false }));
+  }, []);
 
   useAsyncEffect(async () => {
     if (recaptcha) {
@@ -125,8 +125,7 @@ const Register: React.SFC<IRegister> = ({
     );
   }, 800);
 
-  const onAcceptTerms = (_e, { checked }) =>
-    setError({ ...error, terms: !checked });
+  const onAcceptTerms = (_e, { checked }) => setError({ ...error, terms: !checked });
 
   const onAcceptMailingList = (_e, { checked }) => {
     setCredentials({ ...credentials, mailingChecked: checked });
@@ -165,8 +164,7 @@ const Register: React.SFC<IRegister> = ({
         <SignUpIcon size="big" name="mail outline" />
         {error.validation && (
           <div className="errorText">
-            That format doesn&apos;t look right. Make sure there aren&apos;t any
-            typos.
+            That format doesn&apos;t look right. Make sure there aren&apos;t any typos.
           </div>
         )}
         {!error.validation && error.exist && (
@@ -200,8 +198,7 @@ const Register: React.SFC<IRegister> = ({
         <SignUpIcon size="big" name="key" />
       </SignUpInputContainer>
       <RaiseUpdates>
-        <SignUpCheckbox onChange={onAcceptMailingList} />I agree to receive
-        Raise latest updates
+        <SignUpCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
       </RaiseUpdates>
       <RaiseTerms>
         <SignUpCheckbox onChange={onAcceptTerms} />
@@ -244,9 +241,7 @@ const Register: React.SFC<IRegister> = ({
       />
       <SignUpWithBloomWrapper onClick={bloomAction}>
         <SignUpWithBloomText>Sign Up with Bloom</SignUpWithBloomText>
-        <SignUpWithBloomLogo
-          src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`}
-        />
+        <SignUpWithBloomLogo src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} />
       </SignUpWithBloomWrapper>
       <MyRecapcha
         ref={recaptchaRef}
