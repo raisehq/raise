@@ -4,7 +4,6 @@ import staticHtmlToReact from 'htmr';
 import DOMPurify from 'dompurify';
 
 const apiKey = process.env.REACT_APP_BUTTER;
-console.log('PROCESS: ', process.env);
 // @ts-ignore
 const butter = Butter(apiKey);
 

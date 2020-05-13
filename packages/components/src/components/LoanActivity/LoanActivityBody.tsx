@@ -31,24 +31,13 @@ export interface LoanActivityProps {
   repayInfo: RepayInfo;
 }
 
-const LoanActivityBody = ({
-  borrower,
-  auction,
-  coin,
-  onOpen,
-  repayInfo,
-}: LoanActivityProps) => {
+const LoanActivityBody = ({ borrower, auction, coin, onOpen, repayInfo }: LoanActivityProps) => {
   const calcs = getCalculations(auction, coin?.decimals);
   const { companyName, route } = borrower;
   const { roi, times, maxAmount, lenderRoiAmount, lenderAmount } = calcs;
   const state = auction.state || 0;
   const repayment = auction?.repayment || 0;
-  const {
-    lenderBalance,
-    nextInstalment,
-    currentDebtView,
-    paidInTime,
-  } = repayInfo;
+  const { lenderBalance, nextInstalment, currentDebtView, paidInTime } = repayInfo;
 
   return (
     <>
@@ -57,9 +46,7 @@ const LoanActivityBody = ({
           <Card.BorrowerTitle>{companyName}</Card.BorrowerTitle>
         </a>
         <FlexDiv>
-          {state !== 1 && (
-            <CalendarButton onClick={onOpen} paidInTime={paidInTime} />
-          )}
+          {state !== 1 && <CalendarButton onClick={onOpen} paidInTime={paidInTime} />}
           <Card.Badge noAbsolute color={loanStatusColors[state]}>
             {loanStatus[state]}
           </Card.Badge>
@@ -74,24 +61,16 @@ const LoanActivityBody = ({
           <Card.Header
             right
             title={`Next repayment: ${nextInstalment}`}
-            amount={
-              <Amount principal={currentDebtView} coinIcon={coin?.icon} />
-            }
+            amount={<Amount principal={currentDebtView} coinIcon={coin?.icon} />}
           />
         ) : (
           <div />
         )}
       </Card.Grid>
       <Separator />
-      <FlexBetween
-        label="Investment return"
-        value={`${lenderRoiAmount} ${coin?.text}`}
-      />
+      <FlexBetween label="Investment return" value={`${lenderRoiAmount} ${coin?.text}`} />
       <FlexBetween label="ROI" value={roi} />
-      <FlexBetween
-        label="Amount invested"
-        value={`${lenderAmount} ${coin?.text}`}
-      />
+      <FlexBetween label="Amount invested" value={`${lenderAmount} ${coin?.text}`} />
       <FlexBetween label="Loan amount" value={`${maxAmount} ${coin?.text}`} />
       <FlexBetween label="Investors" value={auction.investorCount || ''} />
       <FlexBetween label="Loan Term" value={times.loanTerm} />

@@ -3,1447 +3,1447 @@ export const countryOptions = [
     key: 'af',
     value: 'af',
     flag: 'af',
-    text: 'Afghanistan',
+    text: 'Afghanistan'
   },
   {
     key: 'ax',
     value: 'ax',
     flag: 'ax',
-    text: 'Aland Islands',
+    text: 'Aland Islands'
   },
   {
     key: 'al',
     value: 'al',
     flag: 'al',
-    text: 'Albania',
+    text: 'Albania'
   },
   {
     key: 'dz',
     value: 'dz',
     flag: 'dz',
-    text: 'Algeria',
+    text: 'Algeria'
   },
   {
     key: 'as',
     value: 'as',
     flag: 'as',
-    text: 'American Samoa',
+    text: 'American Samoa'
   },
   {
     key: 'ad',
     value: 'ad',
     flag: 'ad',
-    text: 'Andorra',
+    text: 'Andorra'
   },
   {
     key: 'ao',
     value: 'ao',
     flag: 'ao',
-    text: 'Angola',
+    text: 'Angola'
   },
   {
     key: 'ai',
     value: 'ai',
     flag: 'ai',
-    text: 'Anguilla',
+    text: 'Anguilla'
   },
   {
     key: 'ag',
     value: 'ag',
     flag: 'ag',
-    text: 'Antigua',
+    text: 'Antigua'
   },
   {
     key: 'ar',
     value: 'ar',
     flag: 'ar',
-    text: 'Argentina',
+    text: 'Argentina'
   },
   {
     key: 'am',
     value: 'am',
     flag: 'am',
-    text: 'Armenia',
+    text: 'Armenia'
   },
   {
     key: 'aw',
     value: 'aw',
     flag: 'aw',
-    text: 'Aruba',
+    text: 'Aruba'
   },
   {
     key: 'au',
     value: 'au',
     flag: 'au',
-    text: 'Australia',
+    text: 'Australia'
   },
   {
     key: 'at',
     value: 'at',
     flag: 'at',
-    text: 'Austria',
+    text: 'Austria'
   },
   {
     key: 'az',
     value: 'az',
     flag: 'az',
-    text: 'Azerbaijan',
+    text: 'Azerbaijan'
   },
   {
     key: 'bs',
     value: 'bs',
     flag: 'bs',
-    text: 'Bahamas',
+    text: 'Bahamas'
   },
   {
     key: 'bh',
     value: 'bh',
     flag: 'bh',
-    text: 'Bahrain',
+    text: 'Bahrain'
   },
   {
     key: 'bd',
     value: 'bd',
     flag: 'bd',
-    text: 'Bangladesh',
+    text: 'Bangladesh'
   },
   {
     key: 'bb',
     value: 'bb',
     flag: 'bb',
-    text: 'Barbados',
+    text: 'Barbados'
   },
   {
     key: 'by',
     value: 'by',
     flag: 'by',
-    text: 'Belarus',
+    text: 'Belarus'
   },
   {
     key: 'be',
     value: 'be',
     flag: 'be',
-    text: 'Belgium',
+    text: 'Belgium'
   },
   {
     key: 'bz',
     value: 'bz',
     flag: 'bz',
-    text: 'Belize',
+    text: 'Belize'
   },
   {
     key: 'bj',
     value: 'bj',
     flag: 'bj',
-    text: 'Benin',
+    text: 'Benin'
   },
   {
     key: 'bm',
     value: 'bm',
     flag: 'bm',
-    text: 'Bermuda',
+    text: 'Bermuda'
   },
   {
     key: 'bt',
     value: 'bt',
     flag: 'bt',
-    text: 'Bhutan',
+    text: 'Bhutan'
   },
   {
     key: 'bo',
     value: 'bo',
     flag: 'bo',
-    text: 'Bolivia',
+    text: 'Bolivia'
   },
   {
     key: 'ba',
     value: 'ba',
     flag: 'ba',
-    text: 'Bosnia',
+    text: 'Bosnia'
   },
   {
     key: 'bw',
     value: 'bw',
     flag: 'bw',
-    text: 'Botswana',
+    text: 'Botswana'
   },
   {
     key: 'bv',
     value: 'bv',
     flag: 'bv',
-    text: 'Bouvet Island',
+    text: 'Bouvet Island'
   },
   {
     key: 'br',
     value: 'br',
     flag: 'br',
-    text: 'Brazil',
+    text: 'Brazil'
   },
   {
     key: 'vg',
     value: 'vg',
     flag: 'vg',
-    text: 'British Virgin Islands',
+    text: 'British Virgin Islands'
   },
   {
     key: 'bn',
     value: 'bn',
     flag: 'bn',
-    text: 'Brunei',
+    text: 'Brunei'
   },
   {
     key: 'bg',
     value: 'bg',
     flag: 'bg',
-    text: 'Bulgaria',
+    text: 'Bulgaria'
   },
   {
     key: 'bf',
     value: 'bf',
     flag: 'bf',
-    text: 'Burkina Faso',
+    text: 'Burkina Faso'
   },
   {
     key: 'bi',
     value: 'bi',
     flag: 'bi',
-    text: 'Burundi',
+    text: 'Burundi'
   },
   {
     key: 'tc',
     value: 'tc',
     flag: 'tc',
-    text: 'Caicos Islands',
+    text: 'Caicos Islands'
   },
   {
     key: 'kh',
     value: 'kh',
     flag: 'kh',
-    text: 'Cambodia',
+    text: 'Cambodia'
   },
   {
     key: 'cm',
     value: 'cm',
     flag: 'cm',
-    text: 'Cameroon',
+    text: 'Cameroon'
   },
   {
     key: 'ca',
     value: 'ca',
     flag: 'ca',
-    text: 'Canada',
+    text: 'Canada'
   },
   {
     key: 'cv',
     value: 'cv',
     flag: 'cv',
-    text: 'Cape Verde',
+    text: 'Cape Verde'
   },
   {
     key: 'ky',
     value: 'ky',
     flag: 'ky',
-    text: 'Cayman Islands',
+    text: 'Cayman Islands'
   },
   {
     key: 'cf',
     value: 'cf',
     flag: 'cf',
-    text: 'Central African Republic',
+    text: 'Central African Republic'
   },
   {
     key: 'td',
     value: 'td',
     flag: 'td',
-    text: 'Chad',
+    text: 'Chad'
   },
   {
     key: 'cl',
     value: 'cl',
     flag: 'cl',
-    text: 'Chile',
+    text: 'Chile'
   },
   {
     key: 'cn',
     value: 'cn',
     flag: 'cn',
-    text: 'China',
+    text: 'China'
   },
   {
     key: 'cx',
     value: 'cx',
     flag: 'cx',
-    text: 'Christmas Island',
+    text: 'Christmas Island'
   },
   {
     key: 'cc',
     value: 'cc',
     flag: 'cc',
-    text: 'Cocos Islands',
+    text: 'Cocos Islands'
   },
   {
     key: 'co',
     value: 'co',
     flag: 'co',
-    text: 'Colombia',
+    text: 'Colombia'
   },
   {
     key: 'km',
     value: 'km',
     flag: 'km',
-    text: 'Comoros',
+    text: 'Comoros'
   },
   {
     key: 'cg',
     value: 'cg',
     flag: 'cg',
-    text: 'Congo Brazzaville',
+    text: 'Congo Brazzaville'
   },
   {
     key: 'cd',
     value: 'cd',
     flag: 'cd',
-    text: 'Congo',
+    text: 'Congo'
   },
   {
     key: 'ck',
     value: 'ck',
     flag: 'ck',
-    text: 'Cook Islands',
+    text: 'Cook Islands'
   },
   {
     key: 'cr',
     value: 'cr',
     flag: 'cr',
-    text: 'Costa Rica',
+    text: 'Costa Rica'
   },
   {
     key: 'ci',
     value: 'ci',
     flag: 'ci',
-    text: 'Cote Divoire',
+    text: 'Cote Divoire'
   },
   {
     key: 'hr',
     value: 'hr',
     flag: 'hr',
-    text: 'Croatia',
+    text: 'Croatia'
   },
   {
     key: 'cu',
     value: 'cu',
     flag: 'cu',
-    text: 'Cuba',
+    text: 'Cuba'
   },
   {
     key: 'cy',
     value: 'cy',
     flag: 'cy',
-    text: 'Cyprus',
+    text: 'Cyprus'
   },
   {
     key: 'cz',
     value: 'cz',
     flag: 'cz',
-    text: 'Czech Republic',
+    text: 'Czech Republic'
   },
   {
     key: 'dk',
     value: 'dk',
     flag: 'dk',
-    text: 'Denmark',
+    text: 'Denmark'
   },
   {
     key: 'dj',
     value: 'dj',
     flag: 'dj',
-    text: 'Djibouti',
+    text: 'Djibouti'
   },
   {
     key: 'dm',
     value: 'dm',
     flag: 'dm',
-    text: 'Dominica',
+    text: 'Dominica'
   },
   {
     key: 'do',
     value: 'do',
     flag: 'do',
-    text: 'Dominican Republic',
+    text: 'Dominican Republic'
   },
   {
     key: 'ec',
     value: 'ec',
     flag: 'ec',
-    text: 'Ecuador',
+    text: 'Ecuador'
   },
   {
     key: 'eg',
     value: 'eg',
     flag: 'eg',
-    text: 'Egypt',
+    text: 'Egypt'
   },
   {
     key: 'sv',
     value: 'sv',
     flag: 'sv',
-    text: 'El Salvador',
+    text: 'El Salvador'
   },
   {
     key: 'gb',
     value: 'gb',
     flag: 'gb',
-    text: 'England',
+    text: 'England'
   },
   {
     key: 'gq',
     value: 'gq',
     flag: 'gq',
-    text: 'Equatorial Guinea',
+    text: 'Equatorial Guinea'
   },
   {
     key: 'er',
     value: 'er',
     flag: 'er',
-    text: 'Eritrea',
+    text: 'Eritrea'
   },
   {
     key: 'ee',
     value: 'ee',
     flag: 'ee',
-    text: 'Estonia',
+    text: 'Estonia'
   },
   {
     key: 'et',
     value: 'et',
     flag: 'et',
-    text: 'Ethiopia',
+    text: 'Ethiopia'
   },
   {
     key: 'eu',
     value: 'eu',
     flag: 'eu',
-    text: 'European Union',
+    text: 'European Union'
   },
   {
     key: 'fk',
     value: 'fk',
     flag: 'fk',
-    text: 'Falkland Islands',
+    text: 'Falkland Islands'
   },
   {
     key: 'fo',
     value: 'fo',
     flag: 'fo',
-    text: 'Faroe Islands',
+    text: 'Faroe Islands'
   },
   {
     key: 'fj',
     value: 'fj',
     flag: 'fj',
-    text: 'Fiji',
+    text: 'Fiji'
   },
   {
     key: 'fi',
     value: 'fi',
     flag: 'fi',
-    text: 'Finland',
+    text: 'Finland'
   },
   {
     key: 'fr',
     value: 'fr',
     flag: 'fr',
-    text: 'France',
+    text: 'France'
   },
   {
     key: 'gf',
     value: 'gf',
     flag: 'gf',
-    text: 'French Guiana',
+    text: 'French Guiana'
   },
   {
     key: 'pf',
     value: 'pf',
     flag: 'pf',
-    text: 'French Polynesia',
+    text: 'French Polynesia'
   },
   {
     key: 'tf',
     value: 'tf',
     flag: 'tf',
-    text: 'French Territories',
+    text: 'French Territories'
   },
   {
     key: 'ga',
     value: 'ga',
     flag: 'ga',
-    text: 'Gabon',
+    text: 'Gabon'
   },
   {
     key: 'gm',
     value: 'gm',
     flag: 'gm',
-    text: 'Gambia',
+    text: 'Gambia'
   },
   {
     key: 'ge',
     value: 'ge',
     flag: 'ge',
-    text: 'Georgia',
+    text: 'Georgia'
   },
   {
     key: 'de',
     value: 'de',
     flag: 'de',
-    text: 'Germany',
+    text: 'Germany'
   },
   {
     key: 'gh',
     value: 'gh',
     flag: 'gh',
-    text: 'Ghana',
+    text: 'Ghana'
   },
   {
     key: 'gi',
     value: 'gi',
     flag: 'gi',
-    text: 'Gibraltar',
+    text: 'Gibraltar'
   },
   {
     key: 'gr',
     value: 'gr',
     flag: 'gr',
-    text: 'Greece',
+    text: 'Greece'
   },
   {
     key: 'gl',
     value: 'gl',
     flag: 'gl',
-    text: 'Greenland',
+    text: 'Greenland'
   },
   {
     key: 'gd',
     value: 'gd',
     flag: 'gd',
-    text: 'Grenada',
+    text: 'Grenada'
   },
   {
     key: 'gp',
     value: 'gp',
     flag: 'gp',
-    text: 'Guadeloupe',
+    text: 'Guadeloupe'
   },
   {
     key: 'gu',
     value: 'gu',
     flag: 'gu',
-    text: 'Guam',
+    text: 'Guam'
   },
   {
     key: 'gt',
     value: 'gt',
     flag: 'gt',
-    text: 'Guatemala',
+    text: 'Guatemala'
   },
   {
     key: 'gw',
     value: 'gw',
     flag: 'gw',
-    text: 'Guinea-Bissau',
+    text: 'Guinea-Bissau'
   },
   {
     key: 'gn',
     value: 'gn',
     flag: 'gn',
-    text: 'Guinea',
+    text: 'Guinea'
   },
   {
     key: 'gy',
     value: 'gy',
     flag: 'gy',
-    text: 'Guyana',
+    text: 'Guyana'
   },
   {
     key: 'ht',
     value: 'ht',
     flag: 'ht',
-    text: 'Haiti',
+    text: 'Haiti'
   },
   {
     key: 'hm',
     value: 'hm',
     flag: 'hm',
-    text: 'Heard Island',
+    text: 'Heard Island'
   },
   {
     key: 'hn',
     value: 'hn',
     flag: 'hn',
-    text: 'Honduras',
+    text: 'Honduras'
   },
   {
     key: 'hk',
     value: 'hk',
     flag: 'hk',
-    text: 'Hong Kong',
+    text: 'Hong Kong'
   },
   {
     key: 'hu',
     value: 'hu',
     flag: 'hu',
-    text: 'Hungary',
+    text: 'Hungary'
   },
   {
     key: 'is',
     value: 'is',
     flag: 'is',
-    text: 'Iceland',
+    text: 'Iceland'
   },
   {
     key: 'in',
     value: 'in',
     flag: 'in',
-    text: 'India',
+    text: 'India'
   },
   {
     key: 'io',
     value: 'io',
     flag: 'io',
-    text: 'Indian Ocean Territory',
+    text: 'Indian Ocean Territory'
   },
   {
     key: 'id',
     value: 'id',
     flag: 'id',
-    text: 'Indonesia',
+    text: 'Indonesia'
   },
   {
     key: 'ir',
     value: 'ir',
     flag: 'ir',
-    text: 'Iran',
+    text: 'Iran'
   },
   {
     key: 'iq',
     value: 'iq',
     flag: 'iq',
-    text: 'Iraq',
+    text: 'Iraq'
   },
   {
     key: 'ie',
     value: 'ie',
     flag: 'ie',
-    text: 'Ireland',
+    text: 'Ireland'
   },
   {
     key: 'il',
     value: 'il',
     flag: 'il',
-    text: 'Israel',
+    text: 'Israel'
   },
   {
     key: 'it',
     value: 'it',
     flag: 'it',
-    text: 'Italy',
+    text: 'Italy'
   },
   {
     key: 'jm',
     value: 'jm',
     flag: 'jm',
-    text: 'Jamaica',
+    text: 'Jamaica'
   },
   {
     key: 'jp',
     value: 'jp',
     flag: 'jp',
-    text: 'Japan',
+    text: 'Japan'
   },
   {
     key: 'jo',
     value: 'jo',
     flag: 'jo',
-    text: 'Jordan',
+    text: 'Jordan'
   },
   {
     key: 'kz',
     value: 'kz',
     flag: 'kz',
-    text: 'Kazakhstan',
+    text: 'Kazakhstan'
   },
   {
     key: 'ke',
     value: 'ke',
     flag: 'ke',
-    text: 'Kenya',
+    text: 'Kenya'
   },
   {
     key: 'ki',
     value: 'ki',
     flag: 'ki',
-    text: 'Kiribati',
+    text: 'Kiribati'
   },
   {
     key: 'kw',
     value: 'kw',
     flag: 'kw',
-    text: 'Kuwait',
+    text: 'Kuwait'
   },
   {
     key: 'kg',
     value: 'kg',
     flag: 'kg',
-    text: 'Kyrgyzstan',
+    text: 'Kyrgyzstan'
   },
   {
     key: 'la',
     value: 'la',
     flag: 'la',
-    text: 'Laos',
+    text: 'Laos'
   },
   {
     key: 'lv',
     value: 'lv',
     flag: 'lv',
-    text: 'Latvia',
+    text: 'Latvia'
   },
   {
     key: 'lb',
     value: 'lb',
     flag: 'lb',
-    text: 'Lebanon',
+    text: 'Lebanon'
   },
   {
     key: 'ls',
     value: 'ls',
     flag: 'ls',
-    text: 'Lesotho',
+    text: 'Lesotho'
   },
   {
     key: 'lr',
     value: 'lr',
     flag: 'lr',
-    text: 'Liberia',
+    text: 'Liberia'
   },
   {
     key: 'ly',
     value: 'ly',
     flag: 'ly',
-    text: 'Libya',
+    text: 'Libya'
   },
   {
     key: 'li',
     value: 'li',
     flag: 'li',
-    text: 'Liechtenstein',
+    text: 'Liechtenstein'
   },
   {
     key: 'lt',
     value: 'lt',
     flag: 'lt',
-    text: 'Lithuania',
+    text: 'Lithuania'
   },
   {
     key: 'lu',
     value: 'lu',
     flag: 'lu',
-    text: 'Luxembourg',
+    text: 'Luxembourg'
   },
   {
     key: 'mo',
     value: 'mo',
     flag: 'mo',
-    text: 'Macau',
+    text: 'Macau'
   },
   {
     key: 'mk',
     value: 'mk',
     flag: 'mk',
-    text: 'Macedonia',
+    text: 'Macedonia'
   },
   {
     key: 'mg',
     value: 'mg',
     flag: 'mg',
-    text: 'Madagascar',
+    text: 'Madagascar'
   },
   {
     key: 'mw',
     value: 'mw',
     flag: 'mw',
-    text: 'Malawi',
+    text: 'Malawi'
   },
   {
     key: 'my',
     value: 'my',
     flag: 'my',
-    text: 'Malaysia',
+    text: 'Malaysia'
   },
   {
     key: 'mv',
     value: 'mv',
     flag: 'mv',
-    text: 'Maldives',
+    text: 'Maldives'
   },
   {
     key: 'ml',
     value: 'ml',
     flag: 'ml',
-    text: 'Mali',
+    text: 'Mali'
   },
   {
     key: 'mt',
     value: 'mt',
     flag: 'mt',
-    text: 'Malta',
+    text: 'Malta'
   },
   {
     key: 'mh',
     value: 'mh',
     flag: 'mh',
-    text: 'Marshall Islands',
+    text: 'Marshall Islands'
   },
   {
     key: 'mq',
     value: 'mq',
     flag: 'mq',
-    text: 'Martinique',
+    text: 'Martinique'
   },
   {
     key: 'mr',
     value: 'mr',
     flag: 'mr',
-    text: 'Mauritania',
+    text: 'Mauritania'
   },
   {
     key: 'mu',
     value: 'mu',
     flag: 'mu',
-    text: 'Mauritius',
+    text: 'Mauritius'
   },
   {
     key: 'yt',
     value: 'yt',
     flag: 'yt',
-    text: 'Mayotte',
+    text: 'Mayotte'
   },
   {
     key: 'mx',
     value: 'mx',
     flag: 'mx',
-    text: 'Mexico',
+    text: 'Mexico'
   },
   {
     key: 'fm',
     value: 'fm',
     flag: 'fm',
-    text: 'Micronesia',
+    text: 'Micronesia'
   },
   {
     key: 'md',
     value: 'md',
     flag: 'md',
-    text: 'Moldova',
+    text: 'Moldova'
   },
   {
     key: 'mc',
     value: 'mc',
     flag: 'mc',
-    text: 'Monaco',
+    text: 'Monaco'
   },
   {
     key: 'mn',
     value: 'mn',
     flag: 'mn',
-    text: 'Mongolia',
+    text: 'Mongolia'
   },
   {
     key: 'me',
     value: 'me',
     flag: 'me',
-    text: 'Montenegro',
+    text: 'Montenegro'
   },
   {
     key: 'ms',
     value: 'ms',
     flag: 'ms',
-    text: 'Montserrat',
+    text: 'Montserrat'
   },
   {
     key: 'ma',
     value: 'ma',
     flag: 'ma',
-    text: 'Morocco',
+    text: 'Morocco'
   },
   {
     key: 'mz',
     value: 'mz',
     flag: 'mz',
-    text: 'Mozambique',
+    text: 'Mozambique'
   },
   {
     key: 'na',
     value: 'na',
     flag: 'na',
-    text: 'Namibia',
+    text: 'Namibia'
   },
   {
     key: 'nr',
     value: 'nr',
     flag: 'nr',
-    text: 'Nauru',
+    text: 'Nauru'
   },
   {
     key: 'np',
     value: 'np',
     flag: 'np',
-    text: 'Nepal',
+    text: 'Nepal'
   },
   {
     key: 'an',
     value: 'an',
     flag: 'an',
-    text: 'Netherlands Antilles',
+    text: 'Netherlands Antilles'
   },
   {
     key: 'nl',
     value: 'nl',
     flag: 'nl',
-    text: 'Netherlands',
+    text: 'Netherlands'
   },
   {
     key: 'nc',
     value: 'nc',
     flag: 'nc',
-    text: 'New Caledonia',
+    text: 'New Caledonia'
   },
   {
     key: 'pg',
     value: 'pg',
     flag: 'pg',
-    text: 'New Guinea',
+    text: 'New Guinea'
   },
   {
     key: 'nz',
     value: 'nz',
     flag: 'nz',
-    text: 'New Zealand',
+    text: 'New Zealand'
   },
   {
     key: 'ni',
     value: 'ni',
     flag: 'ni',
-    text: 'Nicaragua',
+    text: 'Nicaragua'
   },
   {
     key: 'ne',
     value: 'ne',
     flag: 'ne',
-    text: 'Niger',
+    text: 'Niger'
   },
   {
     key: 'ng',
     value: 'ng',
     flag: 'ng',
-    text: 'Nigeria',
+    text: 'Nigeria'
   },
   {
     key: 'nu',
     value: 'nu',
     flag: 'nu',
-    text: 'Niue',
+    text: 'Niue'
   },
   {
     key: 'nf',
     value: 'nf',
     flag: 'nf',
-    text: 'Norfolk Island',
+    text: 'Norfolk Island'
   },
   {
     key: 'kp',
     value: 'kp',
     flag: 'kp',
-    text: 'North Korea',
+    text: 'North Korea'
   },
   {
     key: 'mp',
     value: 'mp',
     flag: 'mp',
-    text: 'Northern Mariana Islands',
+    text: 'Northern Mariana Islands'
   },
   {
     key: 'no',
     value: 'no',
     flag: 'no',
-    text: 'Norway',
+    text: 'Norway'
   },
   {
     key: 'om',
     value: 'om',
     flag: 'om',
-    text: 'Oman',
+    text: 'Oman'
   },
   {
     key: 'pk',
     value: 'pk',
     flag: 'pk',
-    text: 'Pakistan',
+    text: 'Pakistan'
   },
   {
     key: 'pw',
     value: 'pw',
     flag: 'pw',
-    text: 'Palau',
+    text: 'Palau'
   },
   {
     key: 'ps',
     value: 'ps',
     flag: 'ps',
-    text: 'Palestine',
+    text: 'Palestine'
   },
   {
     key: 'pa',
     value: 'pa',
     flag: 'pa',
-    text: 'Panama',
+    text: 'Panama'
   },
   {
     key: 'py',
     value: 'py',
     flag: 'py',
-    text: 'Paraguay',
+    text: 'Paraguay'
   },
   {
     key: 'pe',
     value: 'pe',
     flag: 'pe',
-    text: 'Peru',
+    text: 'Peru'
   },
   {
     key: 'ph',
     value: 'ph',
     flag: 'ph',
-    text: 'Philippines',
+    text: 'Philippines'
   },
   {
     key: 'pn',
     value: 'pn',
     flag: 'pn',
-    text: 'Pitcairn Islands',
+    text: 'Pitcairn Islands'
   },
   {
     key: 'pl',
     value: 'pl',
     flag: 'pl',
-    text: 'Poland',
+    text: 'Poland'
   },
   {
     key: 'pt',
     value: 'pt',
     flag: 'pt',
-    text: 'Portugal',
+    text: 'Portugal'
   },
   {
     key: 'pr',
     value: 'pr',
     flag: 'pr',
-    text: 'Puerto Rico',
+    text: 'Puerto Rico'
   },
   {
     key: 'qa',
     value: 'qa',
     flag: 'qa',
-    text: 'Qatar',
+    text: 'Qatar'
   },
   {
     key: 're',
     value: 're',
     flag: 're',
-    text: 'Reunion',
+    text: 'Reunion'
   },
   {
     key: 'ro',
     value: 'ro',
     flag: 'ro',
-    text: 'Romania',
+    text: 'Romania'
   },
   {
     key: 'ru',
     value: 'ru',
     flag: 'ru',
-    text: 'Russia',
+    text: 'Russia'
   },
   {
     key: 'rw',
     value: 'rw',
     flag: 'rw',
-    text: 'Rwanda',
+    text: 'Rwanda'
   },
   {
     key: 'sh',
     value: 'sh',
     flag: 'sh',
-    text: 'Saint Helena',
+    text: 'Saint Helena'
   },
   {
     key: 'kn',
     value: 'kn',
     flag: 'kn',
-    text: 'Saint Kitts and Nevis',
+    text: 'Saint Kitts and Nevis'
   },
   {
     key: 'lc',
     value: 'lc',
     flag: 'lc',
-    text: 'Saint Lucia',
+    text: 'Saint Lucia'
   },
   {
     key: 'pm',
     value: 'pm',
     flag: 'pm',
-    text: 'Saint Pierre',
+    text: 'Saint Pierre'
   },
   {
     key: 'vc',
     value: 'vc',
     flag: 'vc',
-    text: 'Saint Vincent',
+    text: 'Saint Vincent'
   },
   {
     key: 'ws',
     value: 'ws',
     flag: 'ws',
-    text: 'Samoa',
+    text: 'Samoa'
   },
   {
     key: 'sm',
     value: 'sm',
     flag: 'sm',
-    text: 'San Marino',
+    text: 'San Marino'
   },
   {
     key: 'gs',
     value: 'gs',
     flag: 'gs',
-    text: 'Sandwich Islands',
+    text: 'Sandwich Islands'
   },
   {
     key: 'st',
     value: 'st',
     flag: 'st',
-    text: 'Sao Tome',
+    text: 'Sao Tome'
   },
   {
     key: 'sa',
     value: 'sa',
     flag: 'sa',
-    text: 'Saudi Arabia',
+    text: 'Saudi Arabia'
   },
   {
     key: 'sn',
     value: 'sn',
     flag: 'sn',
-    text: 'Senegal',
+    text: 'Senegal'
   },
   {
     key: 'cs',
     value: 'cs',
     flag: 'cs',
-    text: 'Serbia',
+    text: 'Serbia'
   },
   {
     key: 'rs',
     value: 'rs',
     flag: 'rs',
-    text: 'Serbia',
+    text: 'Serbia'
   },
   {
     key: 'sc',
     value: 'sc',
     flag: 'sc',
-    text: 'Seychelles',
+    text: 'Seychelles'
   },
   {
     key: 'sl',
     value: 'sl',
     flag: 'sl',
-    text: 'Sierra Leone',
+    text: 'Sierra Leone'
   },
   {
     key: 'sg',
     value: 'sg',
     flag: 'sg',
-    text: 'Singapore',
+    text: 'Singapore'
   },
   {
     key: 'sk',
     value: 'sk',
     flag: 'sk',
-    text: 'Slovakia',
+    text: 'Slovakia'
   },
   {
     key: 'si',
     value: 'si',
     flag: 'si',
-    text: 'Slovenia',
+    text: 'Slovenia'
   },
   {
     key: 'sb',
     value: 'sb',
     flag: 'sb',
-    text: 'Solomon Islands',
+    text: 'Solomon Islands'
   },
   {
     key: 'so',
     value: 'so',
     flag: 'so',
-    text: 'Somalia',
+    text: 'Somalia'
   },
   {
     key: 'za',
     value: 'za',
     flag: 'za',
-    text: 'South Africa',
+    text: 'South Africa'
   },
   {
     key: 'kr',
     value: 'kr',
     flag: 'kr',
-    text: 'South Korea',
+    text: 'South Korea'
   },
   {
     key: 'es',
     value: 'es',
     flag: 'es',
-    text: 'Spain',
+    text: 'Spain'
   },
   {
     key: 'lk',
     value: 'lk',
     flag: 'lk',
-    text: 'Sri Lanka',
+    text: 'Sri Lanka'
   },
   {
     key: 'sd',
     value: 'sd',
     flag: 'sd',
-    text: 'Sudan',
+    text: 'Sudan'
   },
   {
     key: 'sr',
     value: 'sr',
     flag: 'sr',
-    text: 'Suriname',
+    text: 'Suriname'
   },
   {
     key: 'sj',
     value: 'sj',
     flag: 'sj',
-    text: 'Svalbard',
+    text: 'Svalbard'
   },
   {
     key: 'sz',
     value: 'sz',
     flag: 'sz',
-    text: 'Swaziland',
+    text: 'Swaziland'
   },
   {
     key: 'se',
     value: 'se',
     flag: 'se',
-    text: 'Sweden',
+    text: 'Sweden'
   },
   {
     key: 'ch',
     value: 'ch',
     flag: 'ch',
-    text: 'Switzerland',
+    text: 'Switzerland'
   },
   {
     key: 'sy',
     value: 'sy',
     flag: 'sy',
-    text: 'Syria',
+    text: 'Syria'
   },
   {
     key: 'tw',
     value: 'tw',
     flag: 'tw',
-    text: 'Taiwan',
+    text: 'Taiwan'
   },
   {
     key: 'tj',
     value: 'tj',
     flag: 'tj',
-    text: 'Tajikistan',
+    text: 'Tajikistan'
   },
   {
     key: 'tz',
     value: 'tz',
     flag: 'tz',
-    text: 'Tanzania',
+    text: 'Tanzania'
   },
   {
     key: 'th',
     value: 'th',
     flag: 'th',
-    text: 'Thailand',
+    text: 'Thailand'
   },
   {
     key: 'tl',
     value: 'tl',
     flag: 'tl',
-    text: 'Timorleste',
+    text: 'Timorleste'
   },
   {
     key: 'tg',
     value: 'tg',
     flag: 'tg',
-    text: 'Togo',
+    text: 'Togo'
   },
   {
     key: 'tk',
     value: 'tk',
     flag: 'tk',
-    text: 'Tokelau',
+    text: 'Tokelau'
   },
   {
     key: 'to',
     value: 'to',
     flag: 'to',
-    text: 'Tonga',
+    text: 'Tonga'
   },
   {
     key: 'tt',
     value: 'tt',
     flag: 'tt',
-    text: 'Trinidad',
+    text: 'Trinidad'
   },
   {
     key: 'tn',
     value: 'tn',
     flag: 'tn',
-    text: 'Tunisia',
+    text: 'Tunisia'
   },
   {
     key: 'tr',
     value: 'tr',
     flag: 'tr',
-    text: 'Turkey',
+    text: 'Turkey'
   },
   {
     key: 'tm',
     value: 'tm',
     flag: 'tm',
-    text: 'Turkmenistan',
+    text: 'Turkmenistan'
   },
   {
     key: 'tv',
     value: 'tv',
     flag: 'tv',
-    text: 'Tuvalu',
+    text: 'Tuvalu'
   },
   {
     key: 'ug',
     value: 'ug',
     flag: 'ug',
-    text: 'Uganda',
+    text: 'Uganda'
   },
   {
     key: 'ua',
     value: 'ua',
     flag: 'ua',
-    text: 'Ukraine',
+    text: 'Ukraine'
   },
   {
     key: 'ae',
     value: 'ae',
     flag: 'ae',
-    text: 'United Arab Emirates',
+    text: 'United Arab Emirates'
   },
   {
     key: 'us',
     value: 'us',
     flag: 'us',
-    text: 'United States',
+    text: 'United States'
   },
   {
     key: 'uy',
     value: 'uy',
     flag: 'uy',
-    text: 'Uruguay',
+    text: 'Uruguay'
   },
   {
     key: 'um',
     value: 'um',
     flag: 'um',
-    text: 'Us Minor Islands',
+    text: 'Us Minor Islands'
   },
   {
     key: 'vi',
     value: 'vi',
     flag: 'vi',
-    text: 'Us Virgin Islands',
+    text: 'Us Virgin Islands'
   },
   {
     key: 'uz',
     value: 'uz',
     flag: 'uz',
-    text: 'Uzbekistan',
+    text: 'Uzbekistan'
   },
   {
     key: 'vu',
     value: 'vu',
     flag: 'vu',
-    text: 'Vanuatu',
+    text: 'Vanuatu'
   },
   {
     key: 'va',
     value: 'va',
     flag: 'va',
-    text: 'Vatican City',
+    text: 'Vatican City'
   },
   {
     key: 've',
     value: 've',
     flag: 've',
-    text: 'Venezuela',
+    text: 'Venezuela'
   },
   {
     key: 'vn',
     value: 'vn',
     flag: 'vn',
-    text: 'Vietnam',
+    text: 'Vietnam'
   },
   {
     key: 'wf',
     value: 'wf',
     flag: 'wf',
-    text: 'Wallis and Futuna',
+    text: 'Wallis and Futuna'
   },
   {
     key: 'eh',
     value: 'eh',
     flag: 'eh',
-    text: 'Western Sahara',
+    text: 'Western Sahara'
   },
   {
     key: 'ye',
     value: 'ye',
     flag: 'ye',
-    text: 'Yemen',
+    text: 'Yemen'
   },
   {
     key: 'zm',
     value: 'zm',
     flag: 'zm',
-    text: 'Zambia',
+    text: 'Zambia'
   },
   {
     key: 'zw',
     value: 'zw',
     flag: 'zw',
-    text: 'Zimbabwe',
-  },
+    text: 'Zimbabwe'
+  }
 ];
 export default countryOptions;

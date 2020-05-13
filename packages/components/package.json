@@ -22,12 +22,6 @@
     "test:ci": "CI=true env-cmd --no-override .env tsdx test --env=jsdom",
     "lint": "env-cmd --no-override .env tsdx lint src/"
   },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "peerDependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0"

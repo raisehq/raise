@@ -1,13 +1,13 @@
 export enum RepaymentType {
   Bullet,
-  Monthly,
+  Monthly
 }
 
 export enum RepaymentState {
   Waiting,
   Unpaid,
   Paid,
-  Withdrawed,
+  Withdrawed
 }
 
 export interface GraphReferral {

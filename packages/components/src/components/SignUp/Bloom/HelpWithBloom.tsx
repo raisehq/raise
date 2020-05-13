@@ -1,10 +1,6 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
-import {
-  HelpWithBloomWrapper,
-  FollowingStepsTitle,
-  IconWrapper,
-} from '../styles';
+import { HelpWithBloomWrapper, FollowingStepsTitle, IconWrapper } from '../styles';
 
 const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, method }: any) => (
   <HelpWithBloomWrapper>

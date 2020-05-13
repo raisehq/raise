@@ -18,7 +18,6 @@ const SubItem = styled.div`
   height: 44px;
   background: #eb3f93;
   color: white;
-  padding: 10px 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,6 +31,12 @@ const SubItem = styled.div`
   & > *:hover,
   & > *:focus {
     color: white;
+    font-size: 16px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
   }
 `;
 

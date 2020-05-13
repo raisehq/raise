@@ -9,7 +9,7 @@ export const loanStatus: NumberMapString = {
   3: 'DEFAULTED', // not repaid in time loanRepaymentLength
   4: 'REPAID', // the borrower repaid in full, lenders have yet to reclaim funds
   5: 'CLOSED', // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
-  6: 'FROZEN', // when admin unlocks withdrawals
+  6: 'FROZEN' // when admin unlocks withdrawals
 };
 
 export enum LoanState {
@@ -20,7 +20,7 @@ export enum LoanState {
   REPAID, // the borrower repaid in full, lenders have yet to reclaim funds
   CLOSED, // from failed_to_fund => last lender to withdraw triggers change
   // from repaid => fully witdrawn by lenders
-  FROZEN, // when admin unlocks withdrawals
+  FROZEN // when admin unlocks withdrawals
 }
 
 export const loanStatusColors: NumberMapString = {
@@ -30,5 +30,5 @@ export const loanStatusColors: NumberMapString = {
   3: '#CC2029', // not repaid in time loanRepaymentLength
   4: '#3DC9FF', // the borrower repaid in full, lenders have yet to reclaim funds
   5: '#00DA9E', // from failed_to_fund => last lender to withdraw triggers change / from repaid => fully witdrawn by lenders
-  6: '#CC2029', // when admin unlocks withdrawals
+  6: '#CC2029' // when admin unlocks withdrawals
 };

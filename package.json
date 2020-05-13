@@ -30,7 +30,7 @@
     "components:build:umd": "lerna run build:umd --stream --scope @raisehq/components",
     "components:test": "lerna run test --stream --scope @raisehq/components",
     "components:test:ci": "lerna run test:ci --stream --scope @raisehq/components",
-    "prettier": "prettier --write packages/**/src/*.tsx",
+    "prettier": "prettier --write \"packages/**/src/**/*.{tsx,ts}\"",
     "build:deps:fast": "lerna run --stream --scope @raisehq/components build:fast && lerna run --stream --scope @raisehq/onboarding build",
     "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
     "watch:storybook": "yarn run build:deps:fast && lerna run --parallel --concurrency 4 --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch "

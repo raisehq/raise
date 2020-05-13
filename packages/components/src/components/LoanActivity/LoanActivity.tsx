@@ -17,20 +17,11 @@ interface LoanActivityProps {
   className?: string;
 }
 
-const LoanActivity = ({
-  children,
-  auction,
-  coin,
-  ...rest
-}: LoanActivityProps) => {
+const LoanActivity = ({ children, auction, coin, ...rest }: LoanActivityProps) => {
   const [flipped, setFlip] = useState(false);
   const onOpen = () => setFlip(!flipped);
 
-  const repayInfo = calculateInstalments(
-    auction,
-    coin?.decimals,
-    dayjs().unix()
-  );
+  const repayInfo = calculateInstalments(auction, coin?.decimals, dayjs().unix());
 
   const { schedules } = repayInfo;
 

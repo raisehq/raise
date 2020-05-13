@@ -33,7 +33,7 @@ const SignUpWrapper = ({ id }: any) => {
       return false;
     } catch (error) {
       tagManager.sendEventCategory('Signup', TMEvents.Submit, `${id}_error`);
-      console.log('something went wrong');
+      console.error('[Signup][Error]', error);
       return false;
     }
   };
