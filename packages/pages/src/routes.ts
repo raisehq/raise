@@ -1,4 +1,4 @@
-import { GatsbyLink, BasicLink } from './components/links';
+import { BasicLink } from './components/links';
 
 const { REACT_APP_HOST_STATIC } = process.env;
 
@@ -11,17 +11,17 @@ const routeSkeleton = {
     {
       title: 'About us',
       path: '/about',
-      component: GatsbyLink
+      component: BasicLink
     },
     {
       title: 'Help',
       path: '/help',
-      component: GatsbyLink
+      component: BasicLink
     },
     {
       title: 'Blog',
       path: '/blog',
-      component: GatsbyLink
+      component: BasicLink
     },
     {
       title: 'Privacy Policy',
