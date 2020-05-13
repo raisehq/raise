@@ -18,6 +18,7 @@ export { default as LoanComparatorChart } from './components/LoanComparatorChart
 export { default as Footer } from './components/Footer';
 export { default as SignUp } from './components/SignUp';
 export { default as LoanInformation } from './components/LoanInformation';
+export { default as LoanHeader } from './components/LoanHeader';
 
 export { AccountType } from './types';
 
