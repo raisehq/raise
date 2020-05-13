@@ -25,7 +25,7 @@ import { useRootContext } from '../../contexts/RootContext';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { findOne, requestPage } from '../../helpers/butter';
 import { getLoanByAddress } from '../../services/blockchain';
-import SignUp from '../SignUp';
+// import SignUp from '../SignUp';
 
 const LoanPage = () => {
   const loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
@@ -107,11 +107,11 @@ const LoanPage = () => {
           )}
         </LoanInvestContainer>
       </LoanPageInfoSection>
-      {!isLogged && (
+      {/* {!isLogged && (
         <SectionContainer>
           <SignUp id="Loanofmonth_signup" />
         </SectionContainer>
-      )}
+      )} */}
       {/* {companies.length > 1 && (
         <SectionContainer>
           <LoanComparatorChart companies={companies} />
