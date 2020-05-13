@@ -32,6 +32,7 @@ import { Web3Check } from './Web3Check';
 import { BorrowerProfile } from './BorrowerProfile';
 import { TopMobileMenu, Menu } from './Menu';
 import DesktopHeader from './DesktopHeader';
+import Header from './Header';
 import NotFound404 from './BorrowerProfile/Borrower404';
 
 import Toast, { StyledToastContainer } from './Toast';
@@ -159,6 +160,7 @@ const App = () => {
           <TopMobileMenu />
           <DesktopHeader />
           <Menu />
+          <Header />
           <TransitionGroup component={null}>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
               <Switch>
