@@ -6,21 +6,19 @@ import {
   GetStartedBloomWrapper,
   GetStartedBloomInfoErrorSection,
   GetStartedBloomFooter,
-  BackButton,
+  BackButton
 } from '../styles';
 
 const ErrorBloom = ({ onBack }: any) => (
   <>
     <GetStartedBloomHeader>
-      <GetStartedBloomTitleError>
-        Oops! Something went wrong
-      </GetStartedBloomTitleError>
+      <GetStartedBloomTitleError>Oops! Something went wrong</GetStartedBloomTitleError>
     </GetStartedBloomHeader>
     <GetStartedBloomWrapper>
       <GetStartedBloomInfoErrorSection>
         <p>
-          Please check that you don&apos;t have an existing account with the
-          email address used in Bloom.
+          Please check that you don&apos;t have an existing account with the email address used in
+          Bloom.
         </p>
       </GetStartedBloomInfoErrorSection>
     </GetStartedBloomWrapper>

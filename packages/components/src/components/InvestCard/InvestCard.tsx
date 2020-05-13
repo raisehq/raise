@@ -20,7 +20,7 @@ const InvestCard: React.SFC<LoanProps> = ({
   borrower,
   coinIcon,
   decimals = 18,
-  link,
+  link
 }: LoanProps) => {
   const calculations = getCalculations(auction, decimals);
 
@@ -29,7 +29,7 @@ const InvestCard: React.SFC<LoanProps> = ({
     ...borrower,
     ...calculations,
     link,
-    coinIcon,
+    coinIcon
   };
   return (
     <InvestCardView {...investProps} className={className}>

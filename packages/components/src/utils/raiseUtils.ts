@@ -1,15 +1,13 @@
 import { fromDecimal as fromWei } from './web3-utils';
 
-const stringUnixToDate = (stringUnix: any) =>
-  new Date(Number(stringUnix) * 1000);
+const stringUnixToDate = (stringUnix: any) => new Date(Number(stringUnix) * 1000);
 
 export const isAuctionExpired = ({ auctionEndTimestamp }: any) =>
   new Date() > stringUnixToDate(auctionEndTimestamp);
 
 export const calculateInterest = (auction: any) => {
   const nowTimestamp = Date.now() / 1000;
-  const maxInterestRate =
-    Number(fromWei(auction.maxInterestRate.toString())) / 100;
+  const maxInterestRate = Number(fromWei(auction.maxInterestRate.toString())) / 100;
   const minInterestRate = auction.minInterestRate
     ? Number(fromWei(auction.minInterestRate.toString())) / 100
     : 0;

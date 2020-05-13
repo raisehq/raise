@@ -15,7 +15,7 @@ const InformationSection = ({ title, slug, insideMethod = false }) => {
       const response = await requestPage('kyc_instructions', slug);
       setSteps(response.steps);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }, []);
 

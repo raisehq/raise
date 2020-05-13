@@ -5,7 +5,7 @@ import {
   commonModal,
   ConfirmHeaderWrapper, // X
   ConfirmLogo, // X
-  ConfirmCros,
+  ConfirmCros
 } from './styles';
 import { IMAGES_PATH } from '../../commons/constants';
 
@@ -16,17 +16,12 @@ const SimpleModal = ({
   mountNode,
   open,
   onClose,
-  closeButton,
+  closeButton
 }: any) => {
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
-    <OnboardingSimpleModal
-      {...dimmer}
-      style={commonModal}
-      open={open}
-      mountNode={mountNode}
-    >
+    <OnboardingSimpleModal {...dimmer} style={commonModal} open={open} mountNode={mountNode}>
       <OnboardingWrapper>
         <div className="process">
           <ConfirmHeaderWrapper>

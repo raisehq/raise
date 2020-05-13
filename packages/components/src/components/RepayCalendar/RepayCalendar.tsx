@@ -17,17 +17,10 @@ interface RepayCalendarProps {
 }
 
 const scheduleMapper = ({ date, state }: RepaySchedule, index: number) => (
-  <FlexBetween
-    key={date}
-    label={`${index + 1}. ${date}`}
-    value={RepaymentState[state]}
-  />
+  <FlexBetween key={date} label={`${index + 1}. ${date}`} value={RepaymentState[state]} />
 );
 
-const RepayCalendar: React.FC<RepayCalendarProps> = ({
-  schedules,
-  onOpen,
-}: RepayCalendarProps) => (
+const RepayCalendar: React.FC<RepayCalendarProps> = ({ schedules, onOpen }: RepayCalendarProps) => (
   <>
     <FlexBetween
       label={<b>Repayment Schedule</b>}

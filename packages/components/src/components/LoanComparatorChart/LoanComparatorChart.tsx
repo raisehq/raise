@@ -8,7 +8,7 @@ import {
   Percentage,
   PercentageBar,
   PercentageBarBack,
-  CompanyName,
+  CompanyName
 } from './LoanComparatorChart.styles';
 
 interface Company {
@@ -27,10 +27,7 @@ const getPercentage = (company: any) => {
   return per;
 };
 
-const companyRes = (topPercentage: number) => (
-  company: Company,
-  index: number
-) => {
+const companyRes = (topPercentage: number) => (company: Company, index: number) => {
   const width = 100;
   const newWidth = (width * company.supplyRate) / topPercentage;
 
@@ -63,8 +60,8 @@ const printResumes = (companies: Company[]) => {
   return sortedCompanies.map(companyRes(sortedCompanies[0].supplyRate));
 };
 
-export const LoanComparatorChart: React.SFC<ChartProps> = ({
-  companies,
-}: any) => <ResumeContainer>{printResumes(companies)}</ResumeContainer>;
+export const LoanComparatorChart: React.SFC<ChartProps> = ({ companies }: any) => (
+  <ResumeContainer>{printResumes(companies)}</ResumeContainer>
+);
 
 export default LoanComparatorChart;

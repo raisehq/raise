@@ -41,11 +41,8 @@ const InvestingPage = ({ data }: any) => {
       section_order: orderedSections.length
     });
   }
-
-  console.log('sections with statics ::: ', orderedSections);
   const sections: any = orderedSections;
 
-  console.log('sections length:::: ', sections.length);
   return (
     <InvestingContainer>
       {sections.map((section: any, index: any) => (

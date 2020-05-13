@@ -17,13 +17,18 @@ const SubBar = styled.div`
 
 const SubItem = styled.div`
   height: 24px;
-  padding: 10px 14px;
   color: #8a8e97;
   background: white;
   & > *,
   & > *:hover,
   & > *:focus {
     color: #8a8e97;
+    font-size: 16px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
   }
 `;
 

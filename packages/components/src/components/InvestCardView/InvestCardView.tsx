@@ -41,14 +41,7 @@ interface InvestProps {
 }
 
 const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
-  const {
-    companyName,
-    children,
-    className,
-    currentAPR,
-    times,
-    investorCount,
-  } = props;
+  const { companyName, children, className, currentAPR, times, investorCount } = props;
 
   const [viewGraph, setGraphView] = useState(0);
 
@@ -60,7 +53,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
 
   const domList = [
     { key: 0, component: <InvestInfo onOpenGraph={onOpenGraph} {...props} /> },
-    { key: 1, component: AuctionGraph },
+    { key: 1, component: AuctionGraph }
   ];
 
   const [previousTab, setPreviousTab] = useState(viewGraph);
@@ -70,20 +63,20 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
     from: () => ({
       transform: `translate3d(0,${(viewGraph - previousTab) * 100}%, 0)`,
       position: 'static',
-      zIndex: 3,
+      zIndex: 3
     }),
     enter: {
       transform: 'translate3d(0%,0,0)',
       position: 'static',
-      zIndex: 3,
+      zIndex: 3
     },
     leave: () => ({
       transform: `translate3d(0,${(previousTab - viewGraph) * 100}%,0)`,
       position: 'absolute',
       right: 3,
       top: 0,
-      zIndex: 3,
-    }),
+      zIndex: 3
+    })
   });
 
   if (!companyName) {
@@ -99,7 +92,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
           overflow: 'hidden',
           height: '100%',
           zIndex: 3,
-          position: 'relative',
+          position: 'relative'
         }}
       >
         {transitions.map(({ item, key, props: pro }) => (
@@ -112,12 +105,7 @@ const InvestCardView: React.SFC<InvestProps> = (props: InvestProps) => {
           <Card.Vertical />
           <Card.Row notop small title="Investors" content={investorCount} />
           <Card.Vertical />
-          <Card.Row
-            notop
-            small
-            title="Days Left"
-            content={times.auctionTimeLeft}
-          />
+          <Card.Row notop small title="Days Left" content={times.auctionTimeLeft} />
           <Card.Row small title="Loan Term" content={times.loanTerm} />
         </BottomInfo>
       </div>
