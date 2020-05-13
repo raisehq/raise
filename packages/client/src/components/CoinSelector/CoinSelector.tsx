@@ -48,7 +48,7 @@ const CoinSelector = ({ loanCoin, value, ...rest }: any) => {
     [balances]
   );
 
-  const selectedCoin = balances.filter(coin => coin.text === value)[0];
+  const selectedCoin = balances.filter((coin) => coin.text === value)[0];
   const CurrentSelection = (
     <TokenLayout
       value={selectedCoin ? selectedCoin.value : value}

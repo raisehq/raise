@@ -10,7 +10,7 @@ const NoLoggedCoinSelector = ({ loanCoin, value, ...rest }: any) => {
   const coins = loanCoin.text === 'USDT' ? SUPPORTER_SWAP_COINS_USDT : SUPPORTED_SWAP_COINS;
   const options = useMemo(
     () =>
-      coins.map(coin => {
+      coins.map((coin) => {
         const newCoin = {
           ...{ value: coin },
           content: (
