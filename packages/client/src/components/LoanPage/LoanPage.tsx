@@ -12,6 +12,7 @@ import PageSection from '../PageSection';
 import LoanInfoSection from './LoanInfoSection';
 import BorrowerAboutSection from './BorrowerAboutSection';
 import useRouter from '../../hooks/useRouter';
+import useGetCoin from '../../hooks/useGetCoin';
 
 const LoanPage = () => {
   const loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
@@ -53,9 +54,18 @@ const LoanPage = () => {
     kpis: []
   });
   const [sections, setSections] = useState([]);
+  const [coinInfo, setCoinInfo]: any = useState(null);
 
   const connected = hasProvider && unlocked && accountMatches && networkMatches;
   const userActivated = connected && kycStatus === 3;
+
+  const coin = useGetCoin(loan);
+  useEffect(() => {
+    console.log('coin::: ', coin);
+    if (coin) {
+      setCoinInfo(coin.decimals);
+    }
+  }, [coin]);
 
   useAsyncEffect(async () => {
     const page = await requestPage('page_with_sections', 'loan-of-the-month');
@@ -89,17 +99,21 @@ const LoanPage = () => {
 
   useEffect(() => {
     const sectionArray: any = [];
-    sectionArray.push({
-      component: (
-        <LoanInfoSection
-          borrowerInfo={borrowerInfo}
-          loan={loan}
-          userActivated={userActivated}
-          isLogged={isLogged}
-        />
-      ),
-      section_title: 'loanInfo'
-    });
+    console.log('coin:::: ', loan);
+    if (coinInfo) {
+      sectionArray.push({
+        component: (
+          <LoanInfoSection
+            borrowerInfo={borrowerInfo}
+            loan={loan}
+            userActivated={userActivated}
+            isLogged={isLogged}
+            coinInfo={coinInfo}
+          />
+        ),
+        section_title: 'loanInfo'
+      });
+    }
 
     if (!isLogged) {
       sectionArray.push({
@@ -141,7 +155,7 @@ const LoanPage = () => {
     });
 
     setSections(sectionsWithOrder);
-  }, [loan, borrowerInfo, butterSection]);
+  }, [coinInfo, loan, borrowerInfo, butterSection]);
 
   if (loan && borrowerInfo.companyDetails.companyName !== '' && butterSection) {
     return (
