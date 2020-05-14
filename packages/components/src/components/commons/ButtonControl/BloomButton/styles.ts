@@ -55,6 +55,9 @@ export const ButtonContent = styled.div`
 `;
 
 export const BloomImageWrapper = styled.div`
-  max-width: 25px;
-  max-height: 25px;
+  img {
+    max-width: 25px;
+    max-height: 25px;
+    padding-top: 3px;
+  }
 `;
