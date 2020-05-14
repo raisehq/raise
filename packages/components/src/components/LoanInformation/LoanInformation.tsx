@@ -1,49 +1,39 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Wrapper, Item, Label, Value, ItemWithIcon, ImageLogo } from './styles';
+import { getCalculations } from '../../utils/loanUtils';
+import { ERC20_LOGOS } from '../../commons/constants';
 
-const LoanInformation = ({
-  erc20Logo,
-  currency,
-  currentAPR,
-  investorsCount,
-  loanTerm,
-  repaymentMethod
-}) => (
-  <Wrapper>
-    <Item>
-      <Label>Currency</Label>
-      <ItemWithIcon>
-        <ImageLogo src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${erc20Logo}`} />
-        <Value>{currency}</Value>
-      </ItemWithIcon>
-    </Item>
-    <Item>
-      <Label>Current APR</Label>
-      <Value>{currentAPR}</Value>
-    </Item>
-    <Item>
-      <Label>Investors</Label>
-      <Value>{investorsCount}</Value>
-    </Item>
-    <Item>
-      <Label>Loan Term</Label>
-      <Value>{loanTerm}</Value>
-    </Item>
-    <Item>
-      <Label>Repayment</Label>
-      <Value>{repaymentMethod}</Value>
-    </Item>
-  </Wrapper>
-);
+const LoanInformation = ({ currency, auction, decimals, repaymentMethod = 'Bullet' }) => {
+  const calcs = getCalculations(auction, decimals);
+  const erc20Logo = ERC20_LOGOS[currency];
 
-LoanInformation.propTypes = {
-  erc20Logo: PropTypes.string.isRequired,
-  currency: PropTypes.string.isRequired,
-  currentAPR: PropTypes.string.isRequired,
-  investorsCount: PropTypes.number.isRequired,
-  loanTerm: PropTypes.string.isRequired,
-  repaymentMethod: PropTypes.string.isRequired
+  return (
+    <Wrapper>
+      <Item>
+        <Label>Currency</Label>
+        <ItemWithIcon>
+          <ImageLogo src={erc20Logo} />
+          <Value>{currency}</Value>
+        </ItemWithIcon>
+      </Item>
+      <Item>
+        <Label>Current APR</Label>
+        <Value>{calcs.currentAPR}</Value>
+      </Item>
+      <Item>
+        <Label>Investors</Label>
+        <Value>{auction.investorCount}</Value>
+      </Item>
+      <Item>
+        <Label>Loan Term</Label>
+        <Value>{calcs.times.loanTerm}</Value>
+      </Item>
+      <Item>
+        <Label>Repayment</Label>
+        <Value>{repaymentMethod}</Value>
+      </Item>
+    </Wrapper>
+  );
 };
 
 export default LoanInformation;
