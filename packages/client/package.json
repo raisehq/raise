@@ -80,6 +80,7 @@
     "start": "NODE_ENV=production node index.js",
     "react-start": "react-scripts start ",
     "watch": "npm run dev:int",
+    "watch:bili": "yarn run dev:int",
     "dev": "env-cmd --no-override .env npm run react-start",
     "dev:int": "env-cmd --no-override .env.local npm run react-start",
     "int": "env-cmd --no-override .env.integration npm run react-start",

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button } from '@raisehq/components';
 import { ReactLink } from '../Links';
 import { useRootContext } from '../../contexts/RootContext';
 import Web3Address from '../Web3Address/Web3Address';
@@ -25,6 +26,9 @@ const UsersMenu = () => {
       user: {
         details: { accounttype_id }
       }
+    },
+    actions: {
+      auth: { onSignout }
     }
   }: any = useRootContext();
 
@@ -39,6 +43,7 @@ const UsersMenu = () => {
       </div>
       <HeaderBalance />
       <MyAccountButton />
+      <Button size="standard" type="tertiary" onClick={onSignout} text="Log out" />
     </>
   );
 };

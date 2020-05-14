@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { device } from '../../utils/breakpoints';
 import { SubheaderProps, Route } from './interfaces';
+import { Navigation } from './styles';
 
 const SubBar = styled.div`
   height: 44px;
@@ -27,13 +27,19 @@ const SubItem = styled.div`
   }
 `;
 
-const SubPageHeader = ({ routes, ...props }: SubheaderProps) => {
+const SubPageHeaderRaw: React.FC<SubheaderProps> = ({ routes, ...props }: SubheaderProps) => {
   const routeMapper = routes.map(({ title, path, component }: Route) => {
     const body = React.createElement(component, { key: path, to: path, title });
     return <SubItem key={title}>{body}</SubItem>;
   });
 
-  return <SubBar {...props}>{routeMapper}</SubBar>;
+  return (
+    <SubBar {...props}>
+      <Navigation>{routeMapper}</Navigation>
+    </SubBar>
+  );
 };
+
+const SubPageHeader = styled(SubPageHeaderRaw)<SubheaderProps>``;
 
 export default SubPageHeader;

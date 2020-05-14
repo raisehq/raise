@@ -21,6 +21,7 @@
     "lint": "lerna run lint --stream",
     "bootstrap:deps": "NODE_ENV=production yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'",
     "build:deps": "NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
+    "build:deps:bili": "NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili",
     "rollup": "lerna run --stream --scope '@raisehq/libs' build:production",
     "dev:rollup": "lerna run --stream --scope '@raisehq/libs' start",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
@@ -33,6 +34,7 @@
     "prettier": "prettier --write \"packages/**/src/**/*.{tsx,ts}\"",
     "build:deps:fast": "lerna run --stream --scope @raisehq/components build:fast && lerna run --stream --scope @raisehq/onboarding build",
     "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
+    "watch:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch:bili",
     "watch:storybook": "yarn run build:deps:fast && lerna run --parallel --concurrency 4 --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch "
   },
   "resolutions": {

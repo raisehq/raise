@@ -27,16 +27,6 @@ const routeSkeleton = {
       title: 'Blog',
       path: `${REACT_APP_WEB_URL}/blog`,
       component: BasicLink
-    },
-    {
-      title: 'Privacy Policy',
-      path: `${REACT_APP_HOST_IMAGES}/privacy-policy.pdf`,
-      component: BasicLink
-    },
-    {
-      title: 'Terms of service',
-      path: `${REACT_APP_HOST_IMAGES}/toc.pdf`,
-      component: BasicLink
     }
   ],
   pageRoutes: []
