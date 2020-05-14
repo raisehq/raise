@@ -1,15 +1,4 @@
-export const calculateTimeLeft = () => {
-  const difference = +new Date('2020-01-01') - +new Date();
-  let timeLeft = {};
+export const padNumber = number => (number < 10 ? '0' : '') + number;
 
-  if (difference > 0) {
-    timeLeft = {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
-      seconds: Math.floor((difference / 1000) % 60),
-    };
-  }
-
-  return timeLeft;
-};
+export const getTotal = amount => target =>
+  (parseInt(amount, 10) / parseInt(target, 10)) * 100;

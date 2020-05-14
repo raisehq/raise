@@ -38,6 +38,45 @@ export const Timer = styled.div`
   color: #f9bc2e;
 `;
 
+export const TimerWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+`;
+
+export const TimerBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TimerUnity = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 40px;
+
+  text-align: center;
+
+  color: #f9bc2e;
+`;
+
+export const TimerLabel = styled.div`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+
+  text-align: center;
+
+  color: #b1b3b9;
+`;
+
 export const Label = styled.div`
   display: flex;
 

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
 import {
   Wrapper,
   Row,
   Logo,
-  Timer,
   Value,
   Label,
   ProgressBar,
@@ -15,7 +15,13 @@ import {
   WrapperFiller,
   TextRaiseFiller,
   TextRaisedSofarFiller,
+  Timer,
+  TimerWrapper,
+  TimerBox,
+  TimerUnity,
+  TimerLabel,
 } from './styles';
+import { getTotal, padNumber } from './utils';
 
 const LoanHeader = ({
   logo,
@@ -24,8 +30,100 @@ const LoanHeader = ({
   targetAmount,
   raiseInvestmentAmount,
 }) => {
-  const getTotal = amount => target =>
-    (parseInt(amount, 10) / parseInt(target, 10)) * 100;
+  const [currentTime, setCurrentTime] = useState(dayjs().unix());
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setCurrentTime(dayjs().unix()), 1000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [currentTime]);
+
+  const timeLeft = (lastDate, now) => {
+    const difference = lastDate - now;
+
+    if (difference > 0) {
+      const daysDifference = Math.floor(difference / 86400);
+      const hoursDifference = Math.floor(difference / 3600) % 24;
+      const minutesDifference = Math.floor(difference / 60) % 60;
+      const secondsDifference = difference % 60;
+
+      if (daysDifference === 0) {
+        if (hoursDifference === 0) {
+          if (minutesDifference === 0) {
+            return (
+              <TimerWrapper>
+                <TimerBox>
+                  <TimerUnity>00</TimerUnity>
+                  <TimerLabel>min</TimerLabel>
+                </TimerBox>
+
+                <div>:</div>
+
+                <TimerBox>
+                  <TimerUnity>{padNumber(secondsDifference)}</TimerUnity>
+                  <TimerLabel>sec</TimerLabel>
+                </TimerBox>
+              </TimerWrapper>
+            );
+          }
+          return (
+            <TimerWrapper>
+              <TimerBox>
+                <TimerUnity>{padNumber(minutesDifference)}</TimerUnity>
+                <TimerLabel>min</TimerLabel>
+              </TimerBox>
+              <div>:</div>
+              <TimerBox>
+                <TimerUnity>{padNumber(secondsDifference)}</TimerUnity>
+                <TimerLabel>sec</TimerLabel>
+              </TimerBox>
+            </TimerWrapper>
+          );
+        }
+        return (
+          <TimerWrapper>
+            <TimerBox>
+              <TimerUnity>{padNumber(hoursDifference)}</TimerUnity>
+              <TimerLabel>hours</TimerLabel>
+            </TimerBox>
+            <div>:</div>
+            <TimerBox>
+              <TimerUnity>{padNumber(minutesDifference)}</TimerUnity>
+              <TimerLabel>min</TimerLabel>
+            </TimerBox>
+          </TimerWrapper>
+        );
+      }
+      return (
+        <TimerWrapper>
+          <TimerBox>
+            <TimerUnity>{padNumber(daysDifference)}</TimerUnity>
+            <TimerLabel>days</TimerLabel>
+          </TimerBox>
+          <div>:</div>
+          <TimerBox>
+            <TimerUnity>{padNumber(hoursDifference)}</TimerUnity>
+            <TimerLabel>hours</TimerLabel>
+          </TimerBox>
+        </TimerWrapper>
+      );
+    }
+    return (
+      <TimerWrapper>
+        <TimerBox>
+          <TimerUnity>00</TimerUnity>
+          <TimerLabel>min</TimerLabel>
+        </TimerBox>
+        <div>:</div>
+        <TimerBox>
+          <TimerUnity>00</TimerUnity>
+          <TimerLabel>sec</TimerLabel>
+        </TimerBox>
+      </TimerWrapper>
+    );
+  };
 
   return (
     <Wrapper>
@@ -35,7 +133,7 @@ const LoanHeader = ({
             src={`${process.env.REACT_APP_HOST_IMAGES}/images/${logo}`}
           />
         </Logo>
-        <Timer>{endAuctionDate}</Timer>
+        <Timer>{timeLeft(endAuctionDate, currentTime)}</Timer>
       </Row>
       <Row>
         <div>

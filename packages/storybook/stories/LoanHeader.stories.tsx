@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 
 const props = {
   logo: 'logo',
-  endAuctionDate: '15:23:14:53',
+  endAuctionDate: '1590325664',
   raisedAmount: '70,000.00',
   targetAmount: '100,000.00',
   raiseInvestmentAmount: '10',
