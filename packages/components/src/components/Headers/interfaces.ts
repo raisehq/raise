@@ -24,6 +24,9 @@ export interface HeaderProps {
   pageRoutes: Route[];
 }
 
+export interface TopHeaderProps {
+  logo: Logo;
+}
 export interface SubheaderProps {
   routes: Route[];
 }

@@ -15,7 +15,6 @@ Cypress.Cookies.defaults({
 
 Cypress.Commands.add('CookieXCanary', function () {
   cy.setCookie('X-Canary', Date.now().toString(), { domain: Cypress.env('cookie') });
-
 });
 
 /*
