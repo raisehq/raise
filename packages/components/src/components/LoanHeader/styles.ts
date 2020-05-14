@@ -129,7 +129,7 @@ export const RaisedSofarFiller = styled.div<RaisedSofarFillerProps>`
   background: #00da9e;
   height: 7px;
   border-radius: 4px;
-  width: ${props => props.width}%;
+  width: ${(props) => props.width}%;
 `;
 
 export const RaiseFiller = styled.div`
@@ -160,7 +160,7 @@ export const TextRaiseFiller = styled.div`
 `;
 
 export const TextRaisedSofarFiller = styled.div<RaisedSofarFillerProps>`
-  width: ${props => props.width}%;
+  width: ${(props) => props.width}%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

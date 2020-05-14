@@ -19,7 +19,7 @@ import {
   TimerWrapper,
   TimerBox,
   TimerUnity,
-  TimerLabel,
+  TimerLabel
 } from './styles';
 import { getTotal, padNumber, isRaiseInvested } from './utils';
 import { getCalculations } from '../../utils/loanUtils';
@@ -143,9 +143,7 @@ const LoanHeader = ({ logo, decimals, auction }) => {
       <Row>
         <ProgressBar>
           <WrapperFiller>
-            <RaisedSofarFiller
-              width={parseInt(getTotal(calcs.principal)(calcs.maxAmount), 10)}
-            >
+            <RaisedSofarFiller width={parseInt(getTotal(calcs.principal)(calcs.maxAmount), 10)}>
               <WrapperFiller>
                 {false && isRaiseInvested(calcs.principal, calcs.maxAmount) && (
                   <>
@@ -157,12 +155,8 @@ const LoanHeader = ({ logo, decimals, auction }) => {
                 )}
               </WrapperFiller>
             </RaisedSofarFiller>
-            <TextRaisedSofarFiller
-              width={parseInt(getTotal(calcs.principal)(calcs.maxAmount), 10)}
-            >
-              <span>
-                {`${getTotal(calcs.principal)(calcs.maxAmount)}% Total`}
-              </span>
+            <TextRaisedSofarFiller width={parseInt(getTotal(calcs.principal)(calcs.maxAmount), 10)}>
+              <span>{`${getTotal(calcs.principal)(calcs.maxAmount)}% Total`}</span>
             </TextRaisedSofarFiller>
           </WrapperFiller>
         </ProgressBar>
@@ -195,8 +189,8 @@ LoanHeader.propTypes = {
     state: PropTypes.number,
     termEndTimestamp: PropTypes.string,
     termLength: PropTypes.string,
-    tokenAddress: PropTypes.string,
-  }).isRequired,
+    tokenAddress: PropTypes.string
+  }).isRequired
 };
 
 export default LoanHeader;

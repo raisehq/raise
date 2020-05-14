@@ -8,15 +8,13 @@ const LoanInformation = ({
   currentAPR,
   investorsCount,
   loanTerm,
-  repaymentMethod,
+  repaymentMethod
 }) => (
   <Wrapper>
     <Item>
       <Label>Currency</Label>
       <ItemWithIcon>
-        <ImageLogo
-          src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${erc20Logo}`}
-        />
+        <ImageLogo src={`${process.env.REACT_APP_HOST_IMAGES}/images/coins/${erc20Logo}`} />
         <Value>{currency}</Value>
       </ItemWithIcon>
     </Item>
@@ -45,7 +43,7 @@ LoanInformation.propTypes = {
   currentAPR: PropTypes.string.isRequired,
   investorsCount: PropTypes.number.isRequired,
   loanTerm: PropTypes.string.isRequired,
-  repaymentMethod: PropTypes.string.isRequired,
+  repaymentMethod: PropTypes.string.isRequired
 };
 
 export default LoanInformation;
