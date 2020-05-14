@@ -53,3 +53,8 @@ export const ButtonContent = styled.div`
     margin-right: 5px;
   }
 `;
+
+export const BloomImageWrapper = styled.div`
+  max-width: 25px;
+  max-height: 25px;
+`;
