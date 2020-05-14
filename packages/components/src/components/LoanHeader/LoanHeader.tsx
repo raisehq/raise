@@ -24,10 +24,10 @@ import {
 import { getTotal, padNumber, isRaiseInvested } from './utils';
 import { getCalculations } from '../../utils/loanUtils';
 
-const LoanHeader = ({ logo, auction }) => {
+const LoanHeader = ({ logo, decimals, auction }) => {
   const [currentTime, setCurrentTime] = useState(dayjs().unix());
 
-  const calcs = getCalculations(auction);
+  const calcs = getCalculations(auction, decimals);
 
   useEffect(() => {
     const timeout = setTimeout(() => setCurrentTime(dayjs().unix()), 1000);
@@ -128,7 +128,7 @@ const LoanHeader = ({ logo, auction }) => {
         <Logo>
           <ImageLogo src={logo} />
         </Logo>
-        <Timer>{timeLeft(calcs.times.auctionTimeLeft, currentTime)}</Timer>
+        <Timer>{timeLeft(auction.auctionEndTimestamp, currentTime)}</Timer>
       </Row>
       <Row>
         <div>
@@ -147,7 +147,7 @@ const LoanHeader = ({ logo, auction }) => {
               width={parseInt(getTotal(calcs.principal)(calcs.maxAmount), 10)}
             >
               <WrapperFiller>
-                {isRaiseInvested(calcs.principal, calcs.maxAmount) && (
+                {false && isRaiseInvested(calcs.principal, calcs.maxAmount) && (
                   <>
                     <RaiseFiller />
                     <TextRaiseFiller>
@@ -157,7 +157,9 @@ const LoanHeader = ({ logo, auction }) => {
                 )}
               </WrapperFiller>
             </RaisedSofarFiller>
-            <TextRaisedSofarFiller>
+            <TextRaisedSofarFiller
+              width={parseInt(getTotal(calcs.principal)(calcs.maxAmount), 10)}
+            >
               <span>
                 {`${getTotal(calcs.principal)(calcs.maxAmount)}% Total`}
               </span>
@@ -171,6 +173,7 @@ const LoanHeader = ({ logo, auction }) => {
 
 LoanHeader.propTypes = {
   logo: PropTypes.string.isRequired,
+  decimals: PropTypes.number.isRequired,
   auction: PropTypes.shape({
     auctionEndTimestamp: PropTypes.string,
     auctionEnded: PropTypes.bool,

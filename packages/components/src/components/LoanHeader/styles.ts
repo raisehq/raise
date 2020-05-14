@@ -159,8 +159,8 @@ export const TextRaiseFiller = styled.div`
   text-align: right;
 `;
 
-export const TextRaisedSofarFiller = styled.div`
-  width: 70%;
+export const TextRaisedSofarFiller = styled.div<RaisedSofarFillerProps>`
+  width: ${props => props.width}%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
