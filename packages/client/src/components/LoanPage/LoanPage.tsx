@@ -99,7 +99,6 @@ const LoanPage = () => {
 
   useEffect(() => {
     const sectionArray: any = [];
-    console.log('coin:::: ', loan);
     if (coinInfo) {
       sectionArray.push({
         component: (
@@ -129,11 +128,13 @@ const LoanPage = () => {
     if (borrowerInfo.companyDetails.companyName !== '') {
       sectionArray.push({
         component: (
-          <BorrowerAboutSection
-            borrowerInfo={borrowerInfo}
-            isLogged={isLogged}
-            userActivated={userActivated}
-          />
+          <div id="borrowerinfo">
+            <BorrowerAboutSection
+              borrowerInfo={borrowerInfo}
+              isLogged={isLogged}
+              userActivated={userActivated}
+            />
+          </div>
         ),
         section_title: 'borrowerInfo'
       });
