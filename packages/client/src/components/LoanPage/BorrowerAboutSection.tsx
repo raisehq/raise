@@ -9,16 +9,15 @@ import {
   ButtonWrapper
 } from './styles';
 
-const BorrowerAbout = ({ borrowerInfo, history, isLogged, userActivated }) => {
-  console.log('history::: ', history);
+const BorrowerAbout = ({ borrowerInfo, isLogged, userActivated }) => {
   const onInvestClick = () => {
     if (!isLogged) {
-      history.push(`${history.location.pathname}#Loanofmonth_signup`);
-    } else if (!userActivated) {
-      history.push(`/kyc`);
-    } else {
-      history.push(`${history.location.pathname}#invest`);
+      return '#loanofmonth_signup';
     }
+    if (!userActivated) {
+      return '/kyc';
+    }
+    return '#invest';
   };
 
   const getButtonName = () => {
@@ -39,15 +38,17 @@ const BorrowerAbout = ({ borrowerInfo, history, isLogged, userActivated }) => {
         <AboutBorrower borrowerInfo={borrowerInfo} />
       </BorrowerInfoContainer>
       <ButtonWrapper>
-        <InvestButton
-          text={getButtonName()}
-          disabled={false}
-          onClick={onInvestClick}
-          idAttr="btn-loanmonth-invest"
-          type="primary"
-          size="large"
-          fullWidth
-        />
+        <a href={onInvestClick()}>
+          <InvestButton
+            text={getButtonName()}
+            disabled={false}
+            onClick={() => {}}
+            idAttr="btn-loanmonth-invest"
+            type="primary"
+            size="large"
+            fullWidth
+          />
+        </a>
       </ButtonWrapper>
     </BorrowerAboutContainer>
   );

@@ -1,21 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
-import {
-  NeedHelp
-  // useCompaniesScrapper
-} from '@raisehq/components';
+import { NeedHelp } from '@raisehq/components';
 import { LoanPageContainer, SignUpWrapper, Loading } from './styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { findOne, findOneCollection, requestPage } from '../../helpers/butter';
+import { findOne, requestPage } from '../../helpers/butter';
 import { getLoanByAddress } from '../../services/blockchain';
 import SignUp from '../SignUp';
 import PageSection from '../PageSection';
 import LoanInfoSection from './LoanInfoSection';
 import BorrowerAboutSection from './BorrowerAboutSection';
 import useRouter from '../../hooks/useRouter';
-// import APRComparatorSection from './APRComparatorSection';
 
 const LoanPage = () => {
   const loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
@@ -57,23 +53,19 @@ const LoanPage = () => {
     kpis: []
   });
   const [sections, setSections] = useState([]);
-  // const [companyList, setCompanyList] = useState();
-
-  // const companies = useCompaniesScrapper();
 
   const connected = hasProvider && unlocked && accountMatches && networkMatches;
   const userActivated = connected && kycStatus === 3;
 
-  // useEffect(() => {
-  //   if (companies) {
-  //     console.log('companies::::::::::::::::::::: ', companies);
-  //     setCompanyList(companies);
-  //   }
-  // }, [companies]);
-
   useAsyncEffect(async () => {
-    const section: any = await findOneCollection('sections', { 'fields.id': 'skin_in_the_game' });
-    setButterSection(section[0]);
+    const page = await requestPage('page_with_sections', 'loan-of-the-month');
+    const pageSections = page.pageSection.map((pageSection) => {
+      const newSection = { ...pageSection.section_reference, ...pageSection };
+      delete newSection.section_reference;
+      return newSection;
+    });
+
+    setButterSection(pageSections[0]);
   }, []);
 
   useAsyncEffect(async () => {
@@ -90,6 +82,10 @@ const LoanPage = () => {
       console.error('Error querying loan info ', error);
     }
   }, [loanAddress]);
+
+  const onClickHelp = () => {
+    history.push('/investing');
+  };
 
   useEffect(() => {
     const sectionArray: any = [];
@@ -109,33 +105,18 @@ const LoanPage = () => {
       sectionArray.push({
         component: (
           <SignUpWrapper>
-            <SignUp id="Loanofmonth_signup" />
+            <SignUp id="loanofmonth_signup" />
           </SignUpWrapper>
         ),
         section_title: 'signup'
       });
     }
 
-    // if (companyList.length > 1) {
-    //   sectionArray.push({
-    //     component: (
-    //       <APRComparatorSection
-    //         companies={companyList}
-    //         isLogged={isLogged}
-    //         userActivated={userActivated}
-    //         history={history}
-    //       />
-    //     ),
-    //     section_title: 'apr_comparision'
-    //   });
-    // }
-
     if (borrowerInfo.companyDetails.companyName !== '') {
       sectionArray.push({
         component: (
           <BorrowerAboutSection
             borrowerInfo={borrowerInfo}
-            history={history}
             isLogged={isLogged}
             userActivated={userActivated}
           />
@@ -149,7 +130,7 @@ const LoanPage = () => {
     }
 
     sectionArray.push({
-      component: <NeedHelp />,
+      component: <NeedHelp onClickHelp={onClickHelp} />,
       section_title: 'needhelp'
     });
 
@@ -158,13 +139,11 @@ const LoanPage = () => {
       const newSection = { ...section, section_order: index };
       return newSection;
     });
-    console.log('ordered section:: ', sectionsWithOrder);
+
     setSections(sectionsWithOrder);
   }, [loan, borrowerInfo, butterSection]);
 
-  // console.log('-- ||| ----- ', companyList);
-
-  if (loan && borrowerInfo && butterSection) {
+  if (loan && borrowerInfo.companyDetails.companyName !== '' && butterSection) {
     return (
       <LoanPageContainer>
         {sections.map((section: any, index) => (

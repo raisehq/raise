@@ -9,7 +9,6 @@ import {
 } from './styles';
 
 const APRComparatorSection = ({ companies, isLogged, userActivated, history }: any) => {
-  console.log('history:::: ', history);
   const onInvestClick = () => {
     if (!isLogged) {
       history.push(`/#Loanofmonth_signup`);

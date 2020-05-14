@@ -5,7 +5,6 @@ import { BorrowerInfo } from './BorrowerInfo';
 import Socials from './Socials';
 
 const AboutBorrower = ({ borrowerInfo }: any) => {
-  console.log('borrower ifno;:: ', borrowerInfo);
   const {
     companyDetails: { address, foundationDate, url },
     extraResources,

@@ -8,7 +8,7 @@ import {
   ButtonContainer
 } from './styles';
 
-const NeedHelp = () => {
+const NeedHelp = ({ onClickHelp }) => {
   return (
     <NeedHelpContainer>
       <NeedHelpTitle>Need help to invest?</NeedHelpTitle>
@@ -24,7 +24,7 @@ const NeedHelp = () => {
       <ButtonContainer>
         <NeedHelpButton
           disabled={false}
-          onClick={() => null}
+          onClick={onClickHelp}
           idAttr="help-learn-more"
           type="ghost"
           size="small"

@@ -97,7 +97,6 @@ export const getReferralStatus = async (address, network) => {
 };
 
 export const getLoanByAddress = async (address, network) => {
-  console.log('network:: ', network);
   const config: any = {
     url: getGraphEndpoint(network),
     method: 'POST',
