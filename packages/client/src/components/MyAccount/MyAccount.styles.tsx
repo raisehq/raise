@@ -40,7 +40,7 @@ export const Content = styled.div`
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-
+  width: 100%;
   @media screen and ${device.tablet} {
     justify-content: space-between;
     align-items: flex-start;

@@ -19,7 +19,7 @@ import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useWeb3 from '../../hooks/useWeb3';
 import { useRootContext } from '../../contexts/RootContext';
 import CryptoWallets from '../../commons/cryptoWallets';
-import { IWallet } from '../../commons/IWallet';
+import { IWallet } from '../../interfaces/IWallet';
 
 const WalletSetUp = ({ onNext, onBack }: any) => {
   const {
@@ -35,7 +35,7 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
 
-  const handlerWallet = walletSelected => async () => {
+  const handlerWallet = (walletSelected) => async () => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
 

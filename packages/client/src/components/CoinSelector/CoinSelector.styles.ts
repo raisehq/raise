@@ -1,12 +1,18 @@
 import styled from 'styled-components';
 import { Dropdown } from 'semantic-ui-react';
-import { TokenBalance as TokenBalanceNotStyled } from '../HeaderBalance';
+import {
+  TokenBalance as TokenBalanceNotStyled,
+  TokenLayout as TokenLayoutNotStyled
+} from '../HeaderBalance';
+
 import { device } from '../../commons/breakpoints';
 
 export const TokenBalance = styled(TokenBalanceNotStyled)`
   width: 100%;
 `;
-
+export const TokenLayout = styled(TokenLayoutNotStyled)`
+  width: 100%;
+`;
 export const BalanceDropdown = styled(Dropdown)`
   &&& {
     padding: 12px 18px;
@@ -50,6 +56,9 @@ export const BalanceMenu = styled(Dropdown.Menu)`
     }
   }
   & ${TokenBalance}:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  & ${TokenLayout}:not(:last-child) {
     margin-bottom: 10px;
   }
 `;

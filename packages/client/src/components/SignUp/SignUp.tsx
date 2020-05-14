@@ -18,7 +18,7 @@ const SignUpWrapper = ({ id }: any) => {
   const tagManager = useGoogleTagManager(id);
   const { history } = useRouter();
 
-  const onSignUp = async credentials => {
+  const onSignUp = async (credentials) => {
     try {
       tagManager.sendEventCategory('Signup', TMEvents.Click, `${id}_attempt`, history.location);
       const signup = await signUp({
@@ -43,7 +43,7 @@ const SignUpWrapper = ({ id }: any) => {
     tagManager.sendEventCategory('Signup', TMEvents.Submit, `${id}_bloom_error`, history.location);
   };
 
-  const onBloomSignUp = result => {
+  const onBloomSignUp = (result) => {
     tagManager.sendEventCategory(
       'Signup',
       TMEvents.Submit,

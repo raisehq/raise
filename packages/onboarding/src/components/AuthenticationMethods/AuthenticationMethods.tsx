@@ -15,7 +15,10 @@ const AuthenticationMethods = ({ method }: { method: string }) => {
   return (
     <ChooseMethodWrapper>
       <ChooseMethodSubtitleWrapper>
-        <ChooseMethodSubTitle>Select how to {method.toLowerCase()}</ChooseMethodSubTitle>
+        <ChooseMethodSubTitle>
+          Select how to
+          {method.toLowerCase()}
+        </ChooseMethodSubTitle>
       </ChooseMethodSubtitleWrapper>
       <ChooseMethodButtonList>
         <Button

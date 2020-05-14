@@ -28,7 +28,7 @@ import {
   Vertical,
   RoiHeader,
   RoiContent,
-  CardHref,
+  CardHref
 } from './Card.styles';
 import useGraphWidth from '../../hooks/useGraphWidth';
 
@@ -48,8 +48,10 @@ interface BadgeProps {
 
 const Context = React.createContext({});
 
-const BadgeComponent = ({ children, color }: BadgeProps) => (
-  <Badge color={color}>{children}</Badge>
+const BadgeComponent = ({ children, color, ...rest }: BadgeProps) => (
+  <Badge color={color} {...rest}>
+    {children}
+  </Badge>
 );
 
 const RowComponent: React.SFC<RowComponentProps> = ({
@@ -58,7 +60,7 @@ const RowComponent: React.SFC<RowComponentProps> = ({
   contentColor,
   small,
   big,
-  notop,
+  notop
 }: any) => (
   <Row small={small} big={big} notop={notop}>
     <RowContent contentColor={contentColor}>{content}</RowContent>
@@ -75,11 +77,14 @@ const HeaderComponent = ({
   title: any;
   amount: any;
   fontSize?: any;
+  right;
   rest?: any;
 }) => (
   <Header {...rest}>
-    <HeaderTitle>{title}</HeaderTitle>
-    <HeaderContent fontSize={fontSize}>{amount}</HeaderContent>
+    <HeaderTitle {...rest}>{title}</HeaderTitle>
+    <HeaderContent fontSize={fontSize} {...rest}>
+      {amount}
+    </HeaderContent>
   </Header>
 );
 const SubHeaderComponent: FunctionComponent<{
@@ -92,9 +97,7 @@ const SubHeaderComponent: FunctionComponent<{
   </SubHeader>
 );
 
-const RoiHeaderComponent: FunctionComponent<{ roi: string }> = ({
-  roi,
-}: any) => (
+const RoiHeaderComponent: FunctionComponent<{ roi: string }> = ({ roi }: any) => (
   <RoiHeader>
     <RoiContent>{`${roi}ROI`}</RoiContent>
   </RoiHeader>
@@ -164,7 +167,7 @@ const ContentWithLogo = ({
   size,
   to,
   className,
-  style,
+  style
 }: {
   children?: any;
   logo?: any;

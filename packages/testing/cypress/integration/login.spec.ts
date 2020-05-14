@@ -1,8 +1,8 @@
-describe('Login', function() {
-  beforeEach(function() {
+describe('Login', function () {
+  beforeEach(function () {
     cy.CookieXCanary();
   });
-  it('Make Login', function() {
+  it('Make Login', function () {
     cy.web3('lender');
     cy.visit(`${Cypress.env('url')}/login`, { failOnStatusCode: false }); // int server returns 404 instead of 200 when a http request is done to the server if not /index
     cy.wait(2000);

@@ -19,18 +19,15 @@ export const verticalLinePlugin = {
       ctx.stroke();
       ctx.restore();
     }
-  },
+  }
 };
 
 export const chartBackground = {
   beforeDraw: (chart: any) => {
-    if (
-      chart.config.options.chartArea &&
-      chart.config.options.chartArea.backgroundColor
-    ) {
+    if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
       const {
         chartArea,
-        chart: { ctx },
+        chart: { ctx }
       } = chart;
 
       ctx.save();
@@ -43,7 +40,7 @@ export const chartBackground = {
       );
       ctx.restore();
     }
-  },
+  }
 };
 
 export const todayVerticalLine = {
@@ -54,10 +51,7 @@ export const todayVerticalLine = {
 
     let todayX;
     const todayOverX = 25;
-    if (
-      chart.options.lineAtIndex[0] + 1 <=
-      chart.data.datasets[0].data.length / 2
-    ) {
+    if (chart.options.lineAtIndex[0] + 1 <= chart.data.datasets[0].data.length / 2) {
       todayX = x + todayOverX;
     } else {
       todayX = x - todayOverX;
@@ -84,5 +78,5 @@ export const todayVerticalLine = {
     chart.ctx.fillText('Today', todayX, topY + 20);
     chart.ctx.stroke();
     chart.ctx.restore();
-  },
+  }
 };

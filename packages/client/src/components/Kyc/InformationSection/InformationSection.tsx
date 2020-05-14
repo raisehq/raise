@@ -15,7 +15,7 @@ const InformationSection = ({ title, slug, insideMethod = false }) => {
       const response = await requestPage('kyc_instructions', slug);
       setSteps(response.steps);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }, []);
 
@@ -37,9 +37,9 @@ const InformationSection = ({ title, slug, insideMethod = false }) => {
             </div>
           </Title>
 
-          {steps.map((item: any, index) => (
+          {steps.map((item: any) => (
             <InstructionStep
-              key={index}
+              key={item.step}
               activeIndex={activeIndex === 0}
               number={item.step}
               text={item.step_description}

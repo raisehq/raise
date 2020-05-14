@@ -6,7 +6,7 @@ const URL = {
   OFFER: `${getHost('CORE')}/offer`
 };
 
-export const getAllOffersByLoanId = async loanId => {
+export const getAllOffersByLoanId = async (loanId) => {
   const config: any = {
     url: `${URL.OFFER}/loan/${loanId}`,
     method: 'get',
@@ -19,12 +19,12 @@ export const getAllOffersByLoanId = async loanId => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
-    resp => Right(resp.data.data)
+    (error) => Left(error),
+    (resp) => Right(resp.data.data)
   );
 };
 
-export const getOfferById = async loanId => {
+export const getOfferById = async (loanId) => {
   const config: any = {
     url: `${URL.OFFER}/${loanId}`,
     method: 'get',
@@ -37,12 +37,12 @@ export const getOfferById = async loanId => {
   const response = await to(axios(config));
 
   return response.fold(
-    error => Left(error),
-    resp => Right(resp.data.data)
+    (error) => Left(error),
+    (resp) => Right(resp.data.data)
   );
 };
 
-export const addOffer = async offer => {
+export const addOffer = async (offer) => {
   const config: any = {
     headers: {
       'Content-Type': 'application/json'
@@ -52,12 +52,12 @@ export const addOffer = async offer => {
   const response = await to(axios.post(`${URL.OFFER}`, offer, config));
 
   return response.fold(
-    error => Left(error),
-    resp => Right(resp.data.result)
+    (error) => Left(error),
+    (resp) => Right(resp.data.result)
   );
 };
 
-export const removeOffer = async offerId => {
+export const removeOffer = async (offerId) => {
   const config: any = {
     url: `${URL.OFFER}/${offerId}`,
     method: 'DELETE',

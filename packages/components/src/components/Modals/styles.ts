@@ -6,14 +6,14 @@ const size = {
   mobileM: '375px',
   mobileL: '425px',
   signUp: '860px',
-  desktop: '950px',
+  desktop: '950px'
 };
 
 export const commonModal = {
   borderRadius: '4px',
   boxShadow: '0 10px 26px 0 rgba(6, 52, 40, 0.1)',
   margin: '0 !important',
-  padding: '0 !important',
+  padding: '0 !important'
 };
 
 export const OnboardingCloseIcon = styled(Icon)``;

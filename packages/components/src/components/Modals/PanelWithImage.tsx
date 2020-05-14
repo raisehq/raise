@@ -13,18 +13,10 @@ import {
   OnboardingFormContent,
   OnboardingHeaderItemWrapper,
   OnboardingModalContent,
-  OnboardingCloseIcon,
+  OnboardingCloseIcon
 } from './styles';
 
-const PanelWithImage = ({
-  children,
-  title,
-  blur,
-  mountNode,
-  open,
-  onClose,
-  closeButton,
-}: any) => {
+const PanelWithImage = ({ children, title, blur, mountNode, open, onClose, closeButton }: any) => {
   const dimmer = blur ? { dimmer: 'blurring' } : null;
 
   return (
@@ -36,12 +28,7 @@ const PanelWithImage = ({
           </OnboardingHeaderItemWrapper>
           <OnboardingHeaderItemWrapper>
             {closeButton && (
-              <OnboardingCloseIcon
-                link
-                onClick={onClose}
-                name="close"
-                size="large"
-              />
+              <OnboardingCloseIcon link onClick={onClose} name="close" size="large" />
             )}
           </OnboardingHeaderItemWrapper>
         </OnboardingHeader>
@@ -53,10 +40,7 @@ const PanelWithImage = ({
                 The only marketplace that makes your money grow
               </OnboardingSubTitle>
             </OnboardingTitleWrapper>
-            <OnboardingImage
-              className="visual"
-              src={`${IMAGES_PATH}img_signin_raise.png`}
-            />
+            <OnboardingImage className="visual" src={`${IMAGES_PATH}img_signin_raise.png`} />
           </OnboardingImageWrapper>
           <OnboardingFormContent>{children}</OnboardingFormContent>
         </OnboardingContentWrapper>

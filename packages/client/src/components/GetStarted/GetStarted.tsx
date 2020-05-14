@@ -25,8 +25,8 @@ const settings = {
   arrows: false
 };
 
-const getSlides = slides =>
-  slides.map(slide => (
+const getSlides = (slides) =>
+  slides.map((slide) => (
     <div key={slide.title} className="slide-wrapper">
       <Slide className="slides">
         <SlideContent className="images">

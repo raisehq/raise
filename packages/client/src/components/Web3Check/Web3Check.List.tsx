@@ -38,7 +38,7 @@ const Check = ({ value, message }: any) => {
   );
 };
 
-const capitalize = s => {
+const capitalize = (s) => {
   if (typeof s !== 'string') return '';
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
@@ -70,7 +70,7 @@ const CheckList = ({ onBack, onSuccess }: any) => {
   ];
 
   const StepsDOM = steps.map((value, i) => (
-    <Check key={`check-${i}`} value={value} message={stepsMessage[i]} />
+    <Check key={value} value={value} message={stepsMessage[i]} />
   ));
   if (matchConditions.every((el: any) => el)) {
     onSuccess();

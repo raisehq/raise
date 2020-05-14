@@ -13,7 +13,7 @@ const HelpWithBloom = ({ setIsOpenHelp, setIsScreenIdle, method }: any) => (
         }}
       />
     </IconWrapper>
-    <FollowingStepsTitle>Are you having problems to {method} with Bloom?</FollowingStepsTitle>
+    <FollowingStepsTitle>Are you having problems to{method} with Bloom?</FollowingStepsTitle>
     <p>If you need help send email to help@raise.it</p>
   </HelpWithBloomWrapper>
 );

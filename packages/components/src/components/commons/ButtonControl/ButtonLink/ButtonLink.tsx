@@ -28,16 +28,10 @@ const ButtonLink: React.SFC<ButtonLinkProps> = ({
   >
     <ButtonContent>
       <LeftSide>
-        <Image
-          src={`${process.env.REACT_APP_HOST_IMAGES}/images/${logo}`}
-          size="tiny"
-        />
+        <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/${logo}`} size="tiny" />
         <span>{text}</span>
       </LeftSide>
-      <Image
-        src={`${process.env.REACT_APP_HOST_IMAGES}/images/${icon}`}
-        size="tiny"
-      />
+      <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/${icon}`} size="tiny" />
     </ButtonContent>
   </ButtonStyled>
 );

@@ -13,8 +13,9 @@ Cypress.Cookies.defaults({
   whitelist: 'canary_release'
 });
 
-Cypress.Commands.add('CookieXCanary', function() {
-  cy.setCookie('X-Canary', Date.now().toString(), { domain: Cypress.env('api') });
+Cypress.Commands.add('CookieXCanary', function () {
+  cy.setCookie('X-Canary', Date.now().toString(), { domain: Cypress.env('cookie') });
+
 });
 
 /*
@@ -30,8 +31,8 @@ addMatchImageSnapshotCommand({
 /*
   Mock Web3 connection with GANACHE
 */
-Cypress.Commands.add('web3', function(type) {
-  cy.on('window:before:load', win => {
+Cypress.Commands.add('web3', function (type) {
+  cy.on('window:before:load', (win) => {
     const user = Cypress.env('user');
     const provider = new PrivateKeyProvider(
       user[type].private_key,
@@ -48,8 +49,8 @@ Cypress.Commands.add('web3', function(type) {
 /*
   Mock the graph and the card creation
 */
-Cypress.Commands.add('addCards', function(type) {
-  cy.window().then(async win => {
+Cypress.Commands.add('addCards', function (type) {
+  cy.window().then(async (win) => {
     const user = Cypress.env('user');
     const provider = new PrivateKeyProvider(
       user['borrower'].private_key,
@@ -69,10 +70,10 @@ Cypress.Commands.add('addCards', function(type) {
 /*
   Mock the graph and the card creation
 */
-Cypress.Commands.add('checkFakeDai', function(type) {
-  cy.window().then(win => {
+Cypress.Commands.add('checkFakeDai', function (type) {
+  cy.window().then((win) => {
     const daiBalances = {
-      balances: users.map(address => ({ wad: '10000000000000000000', address }))
+      balances: users.map((address) => ({ wad: '10000000000000000000', address }))
     };
     win.UseWebsocket.trigger('daiBalance', daiBalances);
   });
@@ -81,8 +82,8 @@ Cypress.Commands.add('checkFakeDai', function(type) {
 /*
   Mock the graph and the card creation
 */
-Cypress.Commands.add('addLoanAndCard', function(type) {
-  cy.window().then(async win => {
+Cypress.Commands.add('addLoanAndCard', function (type) {
+  cy.window().then(async (win) => {
     const user = Cypress.env('user');
     const provider = new PrivateKeyProvider(
       user['borrower'].private_key,
@@ -125,7 +126,7 @@ Cypress.Commands.add('addLoanAndCard', function(type) {
 /*
   Mock Login process
 */
-Cypress.Commands.add('login', function(type, isCanary = false) {
+Cypress.Commands.add('login', function (type, isCanary = false) {
   if (isCanary) {
     console.log('- Mock Login disabled by Canary');
     // Request to the real API
@@ -197,7 +198,7 @@ Cypress.Commands.add('login', function(type, isCanary = false) {
       delete: 0,
       referral_code: 'TEST01'
     };
-    cy.window().then(win => {
+    cy.window().then((win) => {
       win.localStorage.setItem('auth', JSON.stringify(auth));
       win.localStorage.setItem('user', JSON.stringify(user));
     });
@@ -207,9 +208,9 @@ Cypress.Commands.add('login', function(type, isCanary = false) {
 /*
   Mock API requests
 */
-Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
+Cypress.Commands.add('mockAPI', function (type, isCanary = false) {
   if (!isCanary) {
-    cy.on('window:before:load', win => {
+    cy.on('window:before:load', (win) => {
       const user = Cypress.env('user');
       win.AxiosMockResponses = [
         ['POST', `https://${Cypress.env('api')}/jwt/verify`, 200, { mock: true, success: true }], //'https://api.herodev.es
@@ -281,8 +282,8 @@ Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
 /*
   Mock The graph response
 */
-Cypress.Commands.add('acceptedTokens', function() {
-  cy.window().then(async win => {
+Cypress.Commands.add('acceptedTokens', function () {
+  cy.window().then(async (win) => {
     const user = Cypress.env('user');
     const provider = new PrivateKeyProvider(
       user['borrower'].private_key,
@@ -312,8 +313,8 @@ Cypress.Commands.add('acceptedTokens', function() {
 /* 
   Mock Butter cms responses
 */
-Cypress.Commands.add('butterCMS', function() {
-  cy.on('window:before:load', win => {
+Cypress.Commands.add('butterCMS', function () {
+  cy.on('window:before:load', (win) => {
     win.ButterCMSMockResponses = {
       warnings: {
         warnings: [

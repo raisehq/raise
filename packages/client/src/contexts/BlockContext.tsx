@@ -7,7 +7,7 @@ import React, {
   useEffect
 } from 'react';
 
-import { useAppContext } from '../contexts/AppContext';
+import { useAppContext } from './AppContext';
 
 import useWeb3 from '../hooks/useWeb3';
 
@@ -71,7 +71,7 @@ export function Updater() {
   const update = (web3Library, stale) => {
     web3Library.eth
       .getBlockNumber()
-      .then(blockNumber => {
+      .then((blockNumber) => {
         if (!stale) {
           updateBlockNumber(chainId, blockNumber);
         }

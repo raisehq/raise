@@ -65,7 +65,7 @@ import useLoanDispatcher from '../../hooks/useLoanDispatcher';
 import { COINS } from '../../commons/constants';
 
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
-import { CoinsType } from '../../commons/coins';
+import { CoinsType } from '../../interfaces/Coins';
 
 const CreateLoan = ({ contracts }: any) => {
   const {
@@ -122,7 +122,7 @@ const CreateLoan = ({ contracts }: any) => {
 
   const getCoinsFromContract = () => {
     const contract = get(contracts, `address.${walletNetworkId}`);
-    const mappedCoins: CoinsType[] = COINS.map(coin => ({
+    const mappedCoins: CoinsType[] = COINS.map((coin) => ({
       address: contract[coin.name],
       text: coin.name,
       value: coin.name,
@@ -133,7 +133,7 @@ const CreateLoan = ({ contracts }: any) => {
 
     return mappedCoins.filter(
       ({ address }) =>
-        address && acceptedTokens.find(a => a.toLowerCase() === address.toLowerCase())
+        address && acceptedTokens.find((a) => a.toLowerCase() === address.toLowerCase())
     ); // eslint-disable-line
   };
 
@@ -200,14 +200,14 @@ const CreateLoan = ({ contracts }: any) => {
     setLoan({ ...loan, term: data.value });
   };
 
-  const onSetTermAuction = option => () => {
-    const auctionTerm = loanAuctionIntervalArray.find(item => item.value === option);
+  const onSetTermAuction = (option) => () => {
+    const auctionTerm = loanAuctionIntervalArray.find((item) => item.value === option);
     setSelectedMonthIndex(auctionTerm && auctionTerm.key);
     setLoan({ ...loan, auctionTerm: option });
   };
 
-  const onSetCoinAmount = option => () => {
-    const coin = coins.find(item => item.text === option);
+  const onSetCoinAmount = (option) => () => {
+    const coin = coins.find((item) => item.text === option);
 
     if (coin) {
       setSelectedCoin(coin);
@@ -219,19 +219,19 @@ const CreateLoan = ({ contracts }: any) => {
     }
   };
 
-  const onSetMIR = minMir => maxMir => setLoan({ ...loan, minMir, maxMir });
+  const onSetMIR = (minMir) => (maxMir) => setLoan({ ...loan, minMir, maxMir });
 
   const onToggleAccept = () => setLoan({ ...loan, accept: !loan.accept });
 
   const onMinAmount = (e, data) => {
     setMinPercent(data.value);
-    setLoan(l => {
+    setLoan((l) => {
       const minAmount = calculateMinAmount(l.amount, data.value);
       return { ...l, minAmount };
     });
   };
 
-  const onInterestChange = valuesArray => {
+  const onInterestChange = (valuesArray) => {
     const minApr = parseFloat(valuesArray[0]);
     const maxApr = parseFloat(valuesArray[1]);
     const minMir = calculateMIRFromAPR(minApr);
@@ -473,7 +473,7 @@ const CreateLoan = ({ contracts }: any) => {
           <SliderWrapper>
             <Slider
               defaultValue={[MIN_APR_DEFAULT, MAX_APR_DEFAULT]}
-              onChange={value => onInterestChange(value)}
+              onChange={(value) => onInterestChange(value)}
               min={SLIDER_MIN_APR}
               marks={MARKS}
               max={SLIDER_MAX_APR}

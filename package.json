@@ -25,10 +25,12 @@
     "dev:rollup": "lerna run --stream --scope '@raisehq/libs' start",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client",
+    "pages:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope pages",
+    "pages:build:production": "yarn run build:deps && lerna run build:production --stream --scope pages",
     "components:build:umd": "lerna run build:umd --stream --scope @raisehq/components",
     "components:test": "lerna run test --stream --scope @raisehq/components",
     "components:test:ci": "lerna run test:ci --stream --scope @raisehq/components",
-    "prettier": "prettier --write **/*.jsx",
+    "prettier": "prettier --write \"packages/**/src/**/*.{tsx,ts}\"",
     "build:deps:fast": "lerna run --stream --scope @raisehq/components build:fast && lerna run --stream --scope @raisehq/onboarding build",
     "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
     "watch:storybook": "yarn run build:deps:fast && lerna run --parallel --concurrency 4 --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch "
@@ -59,7 +61,17 @@
   "devDependencies": {
     "husky": "^4.2.5",
     "lint-staged": "^10.0.8",
-    "prettier": "^1.19.1",
-    "pretty-quick": "^2.0.1"
+    "prettier": "2.0.5",
+    "pretty-quick": "^2.0.1",
+    "@typescript-eslint/parser": "^2.31.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-plugin-prettier": "^3.1.3",
+    "react-test-renderer": "^16.13.1",
+    "eslint": "^6.2.1",
+    "eslint-config-airbnb-typescript": "^4.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.14.3"
   }
 }

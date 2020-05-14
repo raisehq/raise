@@ -1,7 +1,7 @@
 const fsExtra = require('fs-extra');
 const fs = require('fs');
 const path = require('path');
-const cleanDir = fileDir => {
+const cleanDir = (fileDir) => {
   return fsExtra.emptyDir(fileDir).catch(console.error);
 };
 
@@ -14,7 +14,7 @@ const getFilesFromErrors = (showScreenshots = true, showVideos = true, showDiffe
       showScreenshots &&
         prev[next].push(
           screenshots
-            .map(screen => path.resolve(`${__dirname}/../screenshots/${next}/${screen}`))
+            .map((screen) => path.resolve(`${__dirname}/../screenshots/${next}/${screen}`))
             .pop()
         );
       showVideos && prev[next].push(path.resolve(`${__dirname}/../videos/${next}.mp4`));
@@ -24,7 +24,7 @@ const getFilesFromErrors = (showScreenshots = true, showVideos = true, showDiffe
 
         prev[next] = [
           ...prev[next],
-          ...differences.map(diff =>
+          ...differences.map((diff) =>
             path.resolve(`${__dirname}/../snapshots/${next}/__diff_output__/${diff}`)
           )
         ];
@@ -34,7 +34,7 @@ const getFilesFromErrors = (showScreenshots = true, showVideos = true, showDiffe
   }, {});
 };
 
-const getResume = data => {
+const getResume = (data) => {
   const text = `
           - suites: ${data.stats.suites} tests: ${data.stats.tests}
           - passes : ${data.stats.passes} 
@@ -43,13 +43,12 @@ const getResume = data => {
   return text;
 };
 
-const getErrors = data => {
+const getErrors = (data) => {
   const errors = data.results.reduce((prev, next, i) => {
     const errors = next.suites
-      .filter(element => element.failures.length > 0)
-      .map(element => {
-
-        const parsedErrors = element.tests.map(tests => {
+      .filter((element) => element.failures.length > 0)
+      .map((element) => {
+        const parsedErrors = element.tests.map((tests) => {
           return `
                   title: ${tests.fullTitle}
                   error: ${tests.err.message}

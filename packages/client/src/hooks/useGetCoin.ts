@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 import { COINS } from '../commons/constants';
-import { CoinsType } from '../commons/coins';
+import { CoinsType } from '../interfaces/Coins';
 import { getCoin, getCoinsFromContract } from '../utils/loanUtils';
 import { useRootContext } from '../contexts/RootContext';
 import { useAppContext } from '../contexts/AppContext';

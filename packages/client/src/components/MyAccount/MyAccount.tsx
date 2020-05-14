@@ -6,6 +6,7 @@ import ProfileInfo from './components/ProfileInfo';
 import UpdateUsername from './components/UpdateUsername';
 import UpdatePassword from './components/UpdatePassword';
 import { useRootContext } from '../../contexts/RootContext';
+import { MyActivity } from '../Dashboard';
 
 const MyAccount = () => {
   const [usernameExists, setUsernameExists] = useState(false);
@@ -27,7 +28,7 @@ const MyAccount = () => {
     }
   }: any = useRootContext();
 
-  const changeUsername = async value => {
+  const changeUsername = async (value) => {
     clearUser();
     setUsernameExists(false);
     setUsername(value);
@@ -124,6 +125,7 @@ const MyAccount = () => {
         <Side>
           <UpdatePassword {...updatePasswordProps} />
         </Side>
+        <MyActivity />
       </Content>
     </Main>
   );

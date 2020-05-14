@@ -11,13 +11,6 @@ describe('Test suit for loan utils', () => {
   const auctionStart = Date.now();
   const auctionEnd = auctionStart + 300; // 5 min
 
-  // describe('Calculate Interest', () => {
-  //   it('Expects the interest to be calculated correctly', () => {
-  //     const actualAPR = calculateInterest(auction);
-  //     const expectedAPR = 1;
-  //     expect(expectedAPR).toEqual(actualAPR);
-  //   });
-  // });
   describe('Calculate APR', () => {
     const auction = {
       auctionEndTimestamp: auctionEnd,

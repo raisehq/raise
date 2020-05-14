@@ -18,7 +18,7 @@ import CryptoWallets from '../../commons/cryptoWallets';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import { getWalletName } from '../../utils';
 import OnboardingProgressBar from '../OnboardingProgressBar';
-import { IWallet } from '../../commons/IWallet';
+import { IWallet } from '../../interfaces/IWallet';
 
 const tagLabelMapping = {
   coinbase: 'coinbase_attempt',
@@ -40,7 +40,7 @@ const Wallet = ({ onNext, onBack }: any) => {
     setDefaultWallet(getDefaultWeb3());
   }, [web3]);
 
-  const handlerWallet = walletSelected => async () => {
+  const handlerWallet = (walletSelected) => async () => {
     const walletName = getWalletName(walletSelected).toLowerCase();
     tagManager.sendEvent(TMEvents.Click, 'wallet_attempt', walletName);
     tagManager.sendEvent(TMEvents.Click, tagLabelMapping[walletName], walletName);
