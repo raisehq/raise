@@ -21,16 +21,13 @@ import {
   TimerUnity,
   TimerLabel,
 } from './styles';
-import { getTotal, padNumber } from './utils';
+import { getTotal, padNumber, isRaiseInvested } from './utils';
+import { getCalculations } from '../../utils/loanUtils';
 
-const LoanHeader = ({
-  logo,
-  endAuctionDate,
-  raisedAmount,
-  targetAmount,
-  raiseInvestmentAmount,
-}) => {
+const LoanHeader = ({ logo, auction }) => {
   const [currentTime, setCurrentTime] = useState(dayjs().unix());
+
+  const calcs = getCalculations(auction);
 
   useEffect(() => {
     const timeout = setTimeout(() => setCurrentTime(dayjs().unix()), 1000);
@@ -129,35 +126,41 @@ const LoanHeader = ({
     <Wrapper>
       <Row>
         <Logo>
-          <ImageLogo
-            src={`${process.env.REACT_APP_HOST_IMAGES}/images/${logo}`}
-          />
+          <ImageLogo src={logo} />
         </Logo>
-        <Timer>{timeLeft(endAuctionDate, currentTime)}</Timer>
+        <Timer>{timeLeft(calcs.times.auctionTimeLeft, currentTime)}</Timer>
       </Row>
       <Row>
         <div>
           <Label>Raised so far</Label>
-          <Value>{raisedAmount}</Value>
+          <Value>{calcs.principal}</Value>
         </div>
         <div>
           <RightLabel>Target</RightLabel>
-          <Value>{targetAmount}</Value>
+          <Value>{calcs.maxAmount}</Value>
         </div>
       </Row>
       <Row>
         <ProgressBar>
           <WrapperFiller>
-            <RaisedSofarFiller>
+            <RaisedSofarFiller
+              width={parseInt(getTotal(calcs.principal)(calcs.maxAmount), 10)}
+            >
               <WrapperFiller>
-                <RaiseFiller />
-                <TextRaiseFiller>
-                  <span>{`${raiseInvestmentAmount}% Raise`}</span>
-                </TextRaiseFiller>
+                {isRaiseInvested(calcs.principal, calcs.maxAmount) && (
+                  <>
+                    <RaiseFiller />
+                    <TextRaiseFiller>
+                      <span>10% Raise </span>
+                    </TextRaiseFiller>
+                  </>
+                )}
               </WrapperFiller>
             </RaisedSofarFiller>
             <TextRaisedSofarFiller>
-              <span>{`${getTotal(raisedAmount)(targetAmount)}% Total`}</span>
+              <span>
+                {`${getTotal(calcs.principal)(calcs.maxAmount)}% Total`}
+              </span>
             </TextRaisedSofarFiller>
           </WrapperFiller>
         </ProgressBar>
@@ -168,10 +171,29 @@ const LoanHeader = ({
 
 LoanHeader.propTypes = {
   logo: PropTypes.string.isRequired,
-  endAuctionDate: PropTypes.string.isRequired,
-  raisedAmount: PropTypes.string.isRequired,
-  targetAmount: PropTypes.string.isRequired,
-  raiseInvestmentAmount: PropTypes.string.isRequired,
+  auction: PropTypes.shape({
+    auctionEndTimestamp: PropTypes.string,
+    auctionEnded: PropTypes.bool,
+    auctionLength: PropTypes.string,
+    auctionStartTimestamp: PropTypes.string,
+    borrowerDebt: PropTypes.string,
+    id: PropTypes.string,
+    interestRate: PropTypes.string,
+    investorCount: PropTypes.number,
+    maxAmount: PropTypes.string,
+    maxInterestRate: PropTypes.string,
+    minInterestRate: PropTypes.string,
+    minimumReached: PropTypes.bool,
+    netBalance: PropTypes.string,
+    operatorBalance: PropTypes.string,
+    operatorFee: PropTypes.string,
+    originator: PropTypes.string,
+    principal: PropTypes.string,
+    state: PropTypes.number,
+    termEndTimestamp: PropTypes.string,
+    termLength: PropTypes.string,
+    tokenAddress: PropTypes.string,
+  }).isRequired,
 };
 
 export default LoanHeader;

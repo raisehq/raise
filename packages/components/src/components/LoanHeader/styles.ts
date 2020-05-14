@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface RaisedSofarFillerProps {
+  width: number;
+}
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -121,11 +125,11 @@ export const ProgressBar = styled.div`
   margin: 10px 5px;
 `;
 
-export const RaisedSofarFiller = styled.div`
+export const RaisedSofarFiller = styled.div<RaisedSofarFillerProps>`
   background: #00da9e;
-  width: 70%;
   height: 7px;
   border-radius: 4px;
+  width: ${props => props.width}%;
 `;
 
 export const RaiseFiller = styled.div`
