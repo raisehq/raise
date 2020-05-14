@@ -11,7 +11,7 @@ const routeSkeleton = {
   },
   routes: [
     {
-      title: 'Investment Oportunity',
+      title: 'Investment Opportunity',
       path: `${REACT_APP_HOST_URL}`,
       component: BasicLink
     },

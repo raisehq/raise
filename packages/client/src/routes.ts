@@ -9,7 +9,7 @@ const routeSkeleton = {
   },
   routes: [
     {
-      title: 'Investment Oportunity',
+      title: 'Investment Opportunity',
       path: '/',
       component: ReactLink
     },
