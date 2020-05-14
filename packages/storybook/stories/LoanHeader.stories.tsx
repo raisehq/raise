@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   padding: 50px;
 `;
 
-const props = {
+const propsFirst = {
   logo: 'logo',
   endAuctionDate: '1590325664',
   raisedAmount: '70,000.00',
@@ -16,8 +16,22 @@ const props = {
   raiseInvestmentAmount: '10',
 };
 
-storiesOf('LoanHeader', module).add('Loan Header', () => (
+const propsSecond = {
+  logo: 'logo',
+  endAuctionDate: '1590325664',
+  raisedAmount: '51,320.00',
+  targetAmount: '80,000.00',
+  raiseInvestmentAmount: '10',
+};
+
+storiesOf('LoanHeader', module).add('Loan Header first example', () => (
   <Wrapper>
-    <LoanHeader {...props} />
+    <LoanHeader {...propsFirst} />
+  </Wrapper>
+));
+
+storiesOf('LoanHeader', module).add('Loan Header second example', () => (
+  <Wrapper>
+    <LoanHeader {...propsSecond} />
   </Wrapper>
 ));
