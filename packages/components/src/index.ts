@@ -17,11 +17,12 @@ export { default as Simple } from './components/Modals/Simple';
 export { default as LoanComparatorChart } from './components/LoanComparatorChart';
 export { default as Footer } from './components/Footer';
 export { default as SignUp } from './components/SignUp';
+export { default as LoanInformation } from './components/LoanInformation';
+export { default as LoanHeader } from './components/LoanHeader';
 
 export { AccountType } from './types';
 
 export { default as useDefiPulse } from './hooks/useDefiPulse';
-export { default as useCompaniesScrapper } from './hooks/useCompaniesScrapper';
 
 export { default as Button } from './components/commons/ButtonControl/Button';
 export { default as BloomButton } from './components/commons/ButtonControl/BloomButton';
