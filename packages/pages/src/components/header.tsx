@@ -4,7 +4,7 @@ import { Header } from '@raisehq/components';
 import { BasicLink } from './links';
 import routes from '../routes';
 
-const { REACT_APP_HOST_URL } = process.env;
+const REACT_APP_HOST_URL = process.env.REACT_APP_HOST_URL; // eslint-disable-line
 
 const FlexDiv = styled.div`
   width: 300px;

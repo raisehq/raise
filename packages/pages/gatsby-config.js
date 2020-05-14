@@ -21,13 +21,13 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
-        name: 'gatsby-starter-default',
-        short_name: 'starter',
+        name: 'Raise.it',
+        short_name: 'Raise.it',
         start_url: '/',
         background_color: '#663399',
         theme_color: '#663399',
         display: 'minimal-ui',
-        icon: 'src/images/gatsby-icon.png' // This path is relative to the root of the site.
+        icon: 'src/images/favicon.ico' // This path is relative to the root of the site.
       }
     },
     {
@@ -63,7 +63,9 @@ module.exports = {
           'REACT_APP_SWAP_ON',
           'REACT_APP_BLOOM_ATTESTATIONS',
           'REACT_APP_STATIC',
-          'REACT_APP_HOST_URL'
+          'REACT_APP_HOST_URL',
+          'REACT_APP_HOST_STATIC',
+          'REACT_APP_WEB_URL'
         ]
       }
     },

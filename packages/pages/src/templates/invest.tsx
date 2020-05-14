@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import InvestingPage from '../components/InvestingPage';
-import SEO from '../components/seo';
+import SEO from '../components/SEO';
 import 'semantic-ui-css/semantic.min.css';
 
 const IndexPage = ({ pageContext: { data } }: any) => {
@@ -9,7 +9,7 @@ const IndexPage = ({ pageContext: { data } }: any) => {
   return (
     <Layout>
       <div>
-        <SEO title="Raise.it" />
+        <SEO />
         <InvestingPage data={investSections} />
       </div>
     </Layout>
