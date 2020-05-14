@@ -9,23 +9,23 @@ const routeSkeleton = {
   },
   routes: [
     {
-      title: 'Dashboard',
+      title: 'Investment Oportunity',
       path: '/',
       component: ReactLink
     },
     {
-      title: 'Invest with Raise',
-      path: '/invest',
+      title: 'Investing with Raise',
+      path: '/investing',
       component: ReactLink
-    },
-    {
-      title: 'Help',
-      path: `${REACT_APP_WEB_URL}/help`,
-      component: BasicLink
     },
     {
       title: 'Blog',
       path: `${REACT_APP_WEB_URL}/blog`,
+      component: BasicLink
+    },
+    {
+      title: 'About us',
+      path: `${REACT_APP_WEB_URL}/about`,
       component: BasicLink
     }
   ],
