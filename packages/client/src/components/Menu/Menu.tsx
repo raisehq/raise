@@ -13,7 +13,6 @@ import {
 } from './Menu.styles';
 import theme from '../../theme';
 import { HEADER_MENU_SIZE } from '../../commons/constants';
-import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
 import useMenuVisibility from '../../hooks/useMenuVisibility';
@@ -61,7 +60,6 @@ const Menu = () => {
       config: { menu }
     }
   }: any = useRootContext();
-  const { onSetGetStarted }: any = useAppContext();
   const {
     history: {
       location: { pathname }
@@ -74,21 +72,8 @@ const Menu = () => {
     showMenu(false);
   };
 
-  const toGetStarted = () => {
-    onSetGetStarted();
-    showMenu(false);
-  };
-
   const toCreateLoan = (route) => () => {
     history.push(route);
-    showMenu(false);
-  };
-
-  const toMyActivity = () => {
-    if (history.location.pathname !== '/') {
-      history.push('/');
-      scroll.scrollToTop();
-    }
     showMenu(false);
   };
 
@@ -123,12 +108,6 @@ const Menu = () => {
         onClick: toLoanOfTheMonth
       },
       {
-        id: 'borrower-my-activity',
-        title: 'My activity',
-        link: 'myActivity',
-        onClick: toMyActivity
-      },
-      {
         id: 'borrower-create-loan',
         title: 'Create a loan',
         link: '/create-loan',
@@ -147,18 +126,6 @@ const Menu = () => {
         title: 'Loan of the month',
         link: 'investmentopportunity',
         onClick: toLoanOfTheMonth
-      },
-      {
-        id: 'lender-get-started',
-        title: 'Get started',
-        link: 'toGetStarted',
-        onClick: toGetStarted
-      },
-      {
-        id: 'lender-my-activity',
-        title: 'My activity',
-        link: 'myActivity',
-        onClick: toMyActivity
       }
     ]
   };

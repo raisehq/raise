@@ -29,7 +29,7 @@ import {
 
 const errorMessages = {
   inputGreaterThanBalance: 'Not enough balance.',
-  inputGreaterThanLoanAmount: 'Invest less than target.'
+  inputGreaterThanLoanAmount: 'You are exceeding the loan target amount'
 };
 
 const swapBlacklist = {

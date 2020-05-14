@@ -20,7 +20,7 @@ import {
   KycLayout,
   AppLayout
 } from './Layout';
-import { DashboardLender, DashboardBorrower } from './Dashboard';
+import { DashboardBorrower } from './Dashboard';
 import { CreateLoan } from './CreateLoan';
 import MyAccount from './MyAccount';
 import Join from './Join';
@@ -63,7 +63,7 @@ const App = () => {
       dashboard: DashboardBorrower
     },
     2: {
-      dashboard: DashboardLender
+      dashboard: LoanPage
     }
   };
 
@@ -206,12 +206,10 @@ const App = () => {
                 <Web3Layout
                   publicRoute
                   marketplace
-                  layout={MainLayout}
+                  layout={accounttypeId && accounttypeId === 2 ? AppLayout : MainLayout}
                   exact
                   path="/"
-                  component={
-                    accounttypeId ? componentsByRole[accounttypeId].dashboard : DashboardLender
-                  }
+                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : LoanPage}
                   roles={[1, 2]}
                 />
                 <Web3Layout
