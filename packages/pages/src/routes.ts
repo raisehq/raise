@@ -1,6 +1,8 @@
+/* eslint-disable prefer-destructuring */
 import { BasicLink } from './components/links';
 
-const { REACT_APP_HOST_STATIC } = process.env;
+const REACT_APP_WEB_URL = process.env.REACT_APP_WEB_URL;
+const REACT_APP_HOST_STATIC = process.env.REACT_APP_HOST_STATIC;
 
 const routeSkeleton = {
   logo: {
@@ -10,17 +12,17 @@ const routeSkeleton = {
   routes: [
     {
       title: 'About us',
-      path: '/about',
+      path: `${REACT_APP_WEB_URL}/about`,
       component: BasicLink
     },
     {
       title: 'Help',
-      path: '/help',
+      path: `${REACT_APP_WEB_URL}/help`,
       component: BasicLink
     },
     {
       title: 'Blog',
-      path: '/blog',
+      path: `${REACT_APP_WEB_URL}/blog`,
       component: BasicLink
     },
     {
