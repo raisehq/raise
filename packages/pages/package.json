@@ -66,7 +66,8 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "lint": "eslint ./src --ext .js,.ts,.tsx"
+    "lint": "eslint ./src --ext .js,.ts,.tsx",
+    "watch:bili": "yarn run develop"
   },
   "browserslist": {
     "production": [
