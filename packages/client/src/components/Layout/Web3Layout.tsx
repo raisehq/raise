@@ -5,6 +5,7 @@ import { SpecialDimmer } from './Layout.styles';
 import useWeb3 from '../../hooks/useWeb3';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
+import CryptoWallets from '../../commons/cryptoWallets';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 const Web3Layout = ({
@@ -17,7 +18,7 @@ const Web3Layout = ({
   ...rest
 }: any) => {
   const {
-    web3Status: { hasProvider, accountMatches, networkMatches }
+    web3Status: { hasProvider, accountMatches, networkMatches, unlocked }
   }: any = useAppContext();
   const {
     store: {
@@ -75,7 +76,7 @@ const Web3Layout = ({
     // on case the connection with web3 are not ok or we
     // have the correct conection but are different wallets
     // eslint-disable-next-line
-    if (pathname !== '/verify-web3') {
+    if (pathname !== '/verify-web3' && (cryptotypeId === CryptoWallets.NotConnected || unlocked)) {
       history.push(`/verify-web3?redirect=${history.location.pathname}`);
       return null;
     }
