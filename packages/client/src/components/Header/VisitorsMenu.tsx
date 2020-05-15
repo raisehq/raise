@@ -1,15 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Button } from '@raisehq/components';
 import { useRootContext } from '../../contexts/RootContext';
+import { SignupButton } from './VisitorsMenu.styles';
 import useRouter from '../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-
-const SignupButton = styled(Button)`
-  &&& {
-    margin-left: 16px;
-  }
-`;
 
 const VisitorsMenu = () => {
   const { history } = useRouter();
