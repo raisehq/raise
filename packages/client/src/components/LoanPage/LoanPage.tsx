@@ -86,6 +86,19 @@ const LoanPage = () => {
 
   useAsyncEffect(async () => {
     try {
+      if (!warningCK || warningCK === '') {
+        const warning = await findOne('warnings', { 'fields.active': true });
+        setOpen(true);
+        setWarning(warning);
+      }
+    } catch (error) {
+      // Reminder: Missing companies in Kovan testnet network shows 404 errors
+      // console.error('[DASBOARD.LENDER] ', error);
+    }
+  }, []);
+
+  useAsyncEffect(async () => {
+    try {
       const currentLoan = await getLoanByAddress(loanAddress, network);
       setLoan(currentLoan);
       const borrowerAddress = currentLoan.originator;
