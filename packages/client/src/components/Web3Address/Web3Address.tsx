@@ -4,9 +4,13 @@ import { LabelWeb3 } from './Web3Address.styles';
 import { useRootContext } from '../../contexts/RootContext';
 import { useAppContext } from '../../contexts/AppContext';
 import { NULL_ADDRESS } from '../../commons/constants';
-// import useWeb3Checker from '../../hooks/useWeb3Checker';
 
-const Web3Address = ({ account = null, border = true }: any) => {
+interface Web3AddressProps {
+  account?: string;
+  border?: boolean;
+}
+
+const Web3Address: React.FC<Web3AddressProps> = ({ account = null, border = true, ...rest }) => {
   const {
     store: {
       config: { network },
@@ -29,7 +33,7 @@ const Web3Address = ({ account = null, border = true }: any) => {
   );
 
   return (
-    <LabelWeb3 border={border}>
+    <LabelWeb3 border={border} {...rest}>
       <Icon name="circle" color={iconColor} alt={network} />
       {getShortAddress()}
     </LabelWeb3>
