@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { SubItem as RawSubItem } from '../styles';
 
 export const SubBar = styled.div`
   height: 44px;
@@ -7,19 +8,18 @@ export const SubBar = styled.div`
   border: 1px solid #d8d9dc;
 `;
 
-export const SubItem = styled.div`
-  height: 24px;
-  color: #8a8e97;
+export const SubItem = styled(RawSubItem)`
   background: white;
+  color: #8a8e97;
+  &:hover,
+  &:focus {
+    background: white;
+  }
   & > *,
   & > *:hover,
   & > *:focus {
     color: #8a8e97;
-    font-size: 16px;
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
+    background: white;
+    border: unset;
   }
 `;

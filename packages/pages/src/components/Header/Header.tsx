@@ -11,7 +11,6 @@ const GatsbyHeader = () => {
     <Header {...routes}>
       <FlexDiv>
         <Button
-          text="Log in"
           title="Log in"
           as={BasicLink}
           to={`${REACT_APP_HOST_URL}/login`}
@@ -19,7 +18,7 @@ const GatsbyHeader = () => {
           size="standard"
         />
         <Button
-          text="Sign up"
+          title="Sign up"
           as={BasicLink}
           to={`${REACT_APP_HOST_URL}/join`}
           type="secondary"

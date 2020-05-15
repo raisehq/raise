@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SubheaderProps, Route } from '../interfaces';
+import { SubheaderProps } from '../interfaces';
 import { Navigation, SubItem } from '../styles';
 import { SubBar } from './SubHeader.styles';
 import routeMapper from '../routeMapper';

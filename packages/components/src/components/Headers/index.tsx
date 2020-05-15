@@ -1,4 +1,4 @@
-import Header from './Header.styles';
+import Header from './Header';
 import TopHeader from './SubHeaders/TopHeader';
 import SubHeader from './SubHeaders/SubHeader';
 import SubPageHeader from './SubHeaders/SubPageHeader';
