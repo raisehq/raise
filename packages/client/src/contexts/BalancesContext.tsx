@@ -43,15 +43,16 @@ enum Action {
 }
 
 function reducer(state: BalancesState, { type, payload }: { type: Action; payload: any }) {
-  switch (type) {
-    case Action.START_LISTENING: {
-      const { chainId, address, tokenAddress } = payload;
+  try {
+    switch (type) {
+      case Action.START_LISTENING: {
+        const { chainId, address, tokenAddress } = payload;
 
-      // prettier-ignore
-      const uninitialized = !(state?.[chainId]?.[address]?.[tokenAddress]);
+        // prettier-ignore
+        const uninitialized = !(state?.[chainId]?.[address]?.[tokenAddress]);
 
-      // prettier-ignore
-      return {
+        // prettier-ignore
+        return {
         ...state,
         [chainId]: {
           ...(state?.[chainId] || null),
@@ -63,48 +64,53 @@ function reducer(state: BalancesState, { type, payload }: { type: Action; payloa
               }
               : {
                 ...state[chainId][address][tokenAddress],
-                listenerCount: state[chainId][address][tokenAddress].listenerCount + 1
+                listenerCount: state?.[chainId][address][tokenAddress].listenerCount + 1
               }
           }
         }
       };
-    }
-    case Action.STOP_LISTENING: {
-      const { chainId, address, tokenAddress } = payload;
-      return {
-        ...state,
-        [chainId]: {
-          ...state?.[chainId],
-          [address]: {
-            ...state?.[chainId]?.[address],
-            [tokenAddress]: {
-              ...state?.[chainId]?.[address]?.[tokenAddress],
-              listenerCount: state[chainId][address][tokenAddress].listenerCount - 1
+      }
+      case Action.STOP_LISTENING: {
+        const { chainId, address, tokenAddress } = payload;
+        return {
+          ...state,
+          [chainId]: {
+            ...state?.[chainId],
+            [address]: {
+              ...state?.[chainId]?.[address],
+              [tokenAddress]: {
+                ...state?.[chainId]?.[address]?.[tokenAddress],
+                listenerCount: state?.[chainId][address][tokenAddress].listenerCount - 1
+              }
             }
           }
-        }
-      };
-    }
-    case Action.UPDATE: {
-      const { chainId, address, tokenAddress, value, blockNumber } = payload;
-      return {
-        ...state,
-        [chainId]: {
-          ...state?.[chainId],
-          [address]: {
-            ...state?.[chainId]?.[address],
-            [tokenAddress]: {
-              ...state?.[chainId]?.[address]?.[tokenAddress],
-              value,
-              blockNumber
+        };
+      }
+      case Action.UPDATE: {
+        const { chainId, address, tokenAddress, value, blockNumber } = payload;
+        return {
+          ...state,
+          [chainId]: {
+            ...state?.[chainId],
+            [address]: {
+              ...state?.[chainId]?.[address],
+              [tokenAddress]: {
+                ...state?.[chainId]?.[address]?.[tokenAddress],
+                value,
+                blockNumber
+              }
             }
           }
-        }
-      };
+        };
+      }
+      default: {
+        throw Error(`Unexpected action type in BalancesContext reducer: '${type}'.`);
+      }
     }
-    default: {
-      throw Error(`Unexpected action type in BalancesContext reducer: '${type}'.`);
-    }
+  } catch (error) {
+    // Log the error and keep state unchanged
+    console.error(error);
+    return state;
   }
 }
 // prettier-ignore
