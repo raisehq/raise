@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
-import { ButtonStyled, ButtonContent } from './styles';
+import { ButtonStyled, ButtonContent, BloomImageWrapper } from './styles';
 import { BloomButtonProps } from '../types';
 
 const BloomButton: React.SFC<BloomButtonProps> = ({
@@ -24,7 +24,9 @@ const BloomButton: React.SFC<BloomButtonProps> = ({
   >
     <ButtonContent>
       <span>{text}</span>
-      <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
+      <BloomImageWrapper>
+        <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
+      </BloomImageWrapper>
     </ButtonContent>
   </ButtonStyled>
 );
