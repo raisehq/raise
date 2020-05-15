@@ -22,7 +22,6 @@ const LoanPage = () => {
   if (window.Cypress) {
     // @ts-ignore
     loanAddress = window.InvestLoanAddress;
-    console.log('loan address:: ', loanAddress);
   } else {
     loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
   }

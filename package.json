@@ -35,6 +35,8 @@
     "build:deps:fast": "lerna run --stream --scope @raisehq/components build:fast && lerna run --stream --scope @raisehq/onboarding build",
     "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
     "watch:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch:bili",
+    "watch:pages:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages}' watch:bili",
+    "watch:storybook:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch:bili",
     "watch:storybook": "yarn run build:deps:fast && lerna run --parallel --concurrency 4 --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch "
   },
   "resolutions": {
@@ -51,7 +53,7 @@
     "moment": "^2.24.0",
     "react-scripts": "3.4.0",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.85.0",
+    "semantic-ui-react": "^0.88.2",
     "styled-components": "^5.0.0",
     "typescript": "3.8.3"
   },

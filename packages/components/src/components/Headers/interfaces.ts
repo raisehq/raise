@@ -21,6 +21,7 @@ export interface Route {
 export interface HeaderProps {
   logo: Logo;
   routes: Route[];
+  disabled?: boolean;
   pageRoutes: Route[];
 }
 

@@ -1,19 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SubBar } from './styles';
-import { TopHeaderProps } from './interfaces';
+import { Bar, LogoWrapper } from './TopHeader.styles';
+import { TopHeaderProps } from '../interfaces';
 
-const Bar = styled(SubBar)`
-  height: 72px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
-`;
-
-const LogoWrapper = styled.div`
-  padding: 0px 10px;
-`;
 const TopHeaderNotStyled: React.SFC<TopHeaderProps> = ({ logo, children, ...rest }) => (
   <Bar {...rest}>
     <LogoWrapper>
@@ -25,6 +14,8 @@ const TopHeaderNotStyled: React.SFC<TopHeaderProps> = ({ logo, children, ...rest
   </Bar>
 );
 
+// This component is a Wrapped styled so margins and grid prosition
+// can be edited easily in the main component at Header, outside of this library
 const TopHeader = styled(TopHeaderNotStyled)<TopHeaderProps>``;
 
 export default TopHeader;
