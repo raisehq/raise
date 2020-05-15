@@ -203,7 +203,7 @@ const App = () => {
                 <Web3Layout
                   publicRoute
                   marketplace
-                  layout={accounttypeId && accounttypeId === 2 ? AppLayout : MainLayout}
+                  layout={AppLayout}
                   exact
                   path="/"
                   component={accounttypeId ? componentsByRole[accounttypeId].dashboard : LoanPage}

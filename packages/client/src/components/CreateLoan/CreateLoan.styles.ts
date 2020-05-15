@@ -77,6 +77,15 @@ export const LoanContainer = styled.div`
   height: auto;
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 150px;
+  @media screen and ${device.tablet} {
+    max-width: 1172px;
+    margin: auto;
+    padding: 0px 10px;
+    margin-top: 64px;
+    margin-bottom: 150px;
+    justify-content: space-between;
+  }
 `;
 
 export const LoanForm = styled.div`

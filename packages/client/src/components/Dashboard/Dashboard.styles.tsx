@@ -20,6 +20,13 @@ export const DashboardWrapper = styled.div`
       margin: 0 0 10px 0;
     }
   }
+
+  @media screen and ${device.tablet} {
+    max-width: 1172px;
+    margin: auto;
+    padding: 0px 10px;
+    margin-top: 64px;
+  }
 `;
 
 export const DashboardContainer = styled.div`

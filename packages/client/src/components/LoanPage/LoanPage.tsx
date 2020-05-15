@@ -61,11 +61,10 @@ const LoanPage = () => {
 
   const coin = useGetCoin(loan);
   useEffect(() => {
-    console.log('coin::: ', coin);
-    if (coin) {
-      setCoinInfo(coin.decimals);
+    if (coin.text !== '' && !coinInfo) {
+      setCoinInfo(coin);
     }
-  }, [coin]);
+  }, [coin, coinInfo]);
 
   useAsyncEffect(async () => {
     const page = await requestPage('page_with_sections', 'loan-of-the-month');

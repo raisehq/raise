@@ -15,6 +15,7 @@ export const LoanPageContainer = styled.div`
     width: 100%;
     padding-bottom: 0px;
     margin: auto;
+    margin-top: 54px;
   }
 `;
 
@@ -29,7 +30,7 @@ export const LoanPageInfoSection = styled.div`
     width: 100%;
     max-width: 1172px;
     margin: auto;
-    padding: 20px;
+    padding: 0px 10px;
   }
 `;
 
@@ -77,8 +78,7 @@ export const BorrowerAboutContainer = styled.div`
     max-width: 1172px;
     margin: auto;
     margin-top: 150px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 0px 10px;
   }
 `;
 
@@ -135,7 +135,7 @@ export const APRSectionContainer = styled.div`
   @media screen and ${device.laptop} {
     width: 100%;
     max-width: 1172px;
-    padding: 20px;
+    padding: 0px 10px;
     justify-content: space-between;
   }
 `;
