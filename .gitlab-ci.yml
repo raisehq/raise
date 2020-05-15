@@ -129,7 +129,7 @@ build-components:
 build-onboarding:
   stage: build
   script:
-    - yarn install --frozen-lockfile --stream  --scope '{@raisehq/onboarding,@raisehq/libs}'
+    - yarn install --pure-lockfile --stream  --scope '{@raisehq/onboarding,@raisehq/libs}'
     - cd packages/onboarding  & yarn build
     - yarn rollup
   only:

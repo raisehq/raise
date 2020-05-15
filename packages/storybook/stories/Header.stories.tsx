@@ -25,9 +25,9 @@ const FlexDiv = styled.div`
   font-size: 12px;
 `;
 
-const BasicLink = ({ to, title, key }) => (
+const BasicLink = ({ to, text, key }) => (
   <a key={key} href={to}>
-    {title}
+    {text}
   </a>
 );
 

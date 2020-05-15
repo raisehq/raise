@@ -1,21 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import SubHeader from './SubHeader';
-import SubPageHeader from './SubPageHeader';
 import { HeaderProps } from './interfaces';
-import TopHeader from './TopHeader';
+import { NavBar } from './Header.styles';
+
+import TopHeader from './SubHeaders/TopHeader';
+import SubHeader from './SubHeaders/SubHeader';
+import SubPageHeader from './SubHeaders/SubPageHeader';
 
 const HeaderRaw: React.SFC<HeaderProps> = ({ children, logo, routes, pageRoutes, ...rest }) => (
-  <div {...rest}>
+  <NavBar {...rest}>
     <TopHeader logo={logo}>{children}</TopHeader>
     <SubHeader routes={routes} />
     {!!pageRoutes.length && <SubPageHeader routes={pageRoutes} />}
-  </div>
+  </NavBar>
 );
 
-const Header = styled(HeaderRaw)`
-  width: 100%;
-  box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.25);
-`;
+const Header = styled(HeaderRaw)``;
 
 export default Header;

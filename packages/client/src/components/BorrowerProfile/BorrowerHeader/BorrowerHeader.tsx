@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import InvestButton from './InvestButton';
 import {
   LoanHeader,
@@ -17,8 +17,29 @@ import {
   LoanDaysLeftValue
 } from './styles';
 import { getCalculations } from '../../../utils/loanUtils';
+import Queryies from '../../../helpers/queryies';
+import { useRootContext } from '../../../contexts/RootContext';
+import { useAppContext } from '../../../contexts/AppContext';
 
 const BorrowerHeader = ({ auction }: any) => {
+  const {
+    actions: {
+      loan: { onGetSuggestedAuctionsSubscription }
+    }
+  }: any = useRootContext();
+  const {
+    webSocket: { webSocket }
+  }: any = useAppContext();
+
+  useEffect(() => {
+    if (webSocket) {
+      const { query, variables, subscriptionName } = Queryies.subscriptions.lenderSuggestions;
+
+      const callback = onGetSuggestedAuctionsSubscription;
+      webSocket.subscribe(query, variables, subscriptionName, callback);
+    }
+  }, [webSocket]);
+
   const values = auction ? getCalculations(auction) : null;
   return (
     <LoanHeader>
