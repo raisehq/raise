@@ -20,13 +20,14 @@ const Header = () => {
     }
   }: any = useRootContext();
   const { web3Status }: any = useAppContext();
+
+  console.log(' WEB3Status :', web3Status);
   const MenuItems = logged ? UsersMenu : VisitorsMenu;
   const { visible } = useMenuVisibility();
   if (!visible) {
     return null;
   }
   const disabled = !(web3Status.unlocked && web3Status.accountMatches);
-  console.log(' LOGGED : ', logged, ' DISABLED: ', disabled);
   return (
     <StyledHeader disabled={logged && disabled} {...routes}>
       <FlexDiv>
