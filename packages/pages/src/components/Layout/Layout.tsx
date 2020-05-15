@@ -1,7 +1,7 @@
 import React from 'react';
 import { Footer } from '@raisehq/components';
 import { HeroLayout } from './Layout.styles';
-import GatsbyHeader from '../header';
+import GatsbyHeader from '../Header';
 
 interface IDefaultProps {
   children: any;
