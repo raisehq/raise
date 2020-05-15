@@ -7,11 +7,18 @@ import TopHeader from './SubHeaders/TopHeader';
 import SubHeader from './SubHeaders/SubHeader';
 import SubPageHeader from './SubHeaders/SubPageHeader';
 
-const HeaderRaw: React.SFC<HeaderProps> = ({ children, logo, routes, pageRoutes, ...rest }) => (
+const HeaderRaw: React.SFC<HeaderProps> = ({
+  children,
+  logo,
+  routes,
+  disabled = false,
+  pageRoutes,
+  ...rest
+}) => (
   <NavBar {...rest}>
     <TopHeader logo={logo}>{children}</TopHeader>
-    <SubHeader routes={routes} />
-    {!!pageRoutes.length && <SubPageHeader routes={pageRoutes} />}
+    {!disabled && <SubHeader routes={routes} />}
+    {!disabled && !!pageRoutes.length && <SubPageHeader routes={pageRoutes} />}
   </NavBar>
 );
 

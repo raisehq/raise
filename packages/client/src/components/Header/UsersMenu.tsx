@@ -5,7 +5,7 @@ import { useRootContext } from '../../contexts/RootContext';
 import MyAccountButton from '../DesktopHeader/MyAccountButton';
 import { Balance as HeaderBalance } from '../HeaderBalance';
 
-const UsersMenu = () => {
+const UsersMenu = ({ disabled = false }: { disabled?: boolean }) => {
   const {
     store: {
       user: {
@@ -23,8 +23,12 @@ const UsersMenu = () => {
   return (
     <>
       {CreateLoanButton}
-      <HeaderBalance />
-      <MyAccountButton />
+      {!disabled && (
+        <>
+          <HeaderBalance />
+          <MyAccountButton />
+        </>
+      )}
       <Button size="standard" type="tertiary" onClick={onSignout} text="Log out" />
     </>
   );
