@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
+import useCookie from 'react-use-cookie';
 import { NeedHelp } from '@raisehq/components';
 import { LoanPageContainer, SignUpWrapper, Loading } from './styles';
 import { useAppContext } from '../../contexts/AppContext';
@@ -13,6 +14,7 @@ import LoanInfoSection from './LoanInfoSection';
 import BorrowerAboutSection from './BorrowerAboutSection';
 import useRouter from '../../hooks/useRouter';
 import useGetCoin from '../../hooks/useGetCoin';
+import WarningModal from '../WarningModal';
 
 const LoanPage = () => {
   const loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
@@ -32,6 +34,11 @@ const LoanPage = () => {
     }
   }: any = useRootContext();
   const { history } = useRouter();
+
+  const [warningCK, setWarningCK] = useCookie('warning', '');
+  const [activeWarning, setWarning]: any = useState();
+  const [open, setOpen] = useState(false);
+
   const [loan, setLoan] = useState(null);
   const [butterSection, setButterSection] = useState(null);
   const [borrowerInfo, setBorrowerInfo] = useState({
@@ -157,6 +164,10 @@ const LoanPage = () => {
     setSections(sectionsWithOrder);
   }, [coinInfo, loan, borrowerInfo, butterSection]);
 
+  const closeModal = () => {
+    setOpen(false);
+  };
+
   if (loan && borrowerInfo.companyDetails.companyName !== '' && butterSection) {
     return (
       <LoanPageContainer>
@@ -168,6 +179,14 @@ const LoanPage = () => {
             length={sections.length}
           />
         ))}
+        {activeWarning ? (
+          <WarningModal
+            warning={activeWarning}
+            open={open}
+            closeModal={closeModal}
+            setCookie={setWarningCK}
+          />
+        ) : null}
       </LoanPageContainer>
     );
   }
