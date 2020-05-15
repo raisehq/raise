@@ -3,6 +3,11 @@ import axios from './common';
 
 import { getHost, getGraphEndpoint } from '../utils';
 import Header from '../helpers/header';
+// import AxiosMock from '../__mocks__/axiosMocks';
+
+// // @ts-ignore
+// // eslint-disable-next-line
+// window.Cypress && AxiosMock(axiosRaw);
 
 const COMMON_HEADERS = {
   Accept: 'application/json',
@@ -133,7 +138,24 @@ export const getLoanByAddress = async (address, network) => {
   };
 
   try {
-    const rawResponse = await axiosRaw(config);
+    // TODO: mock axios raw someway
+    let rawResponse: any = {};
+    // @ts-ignore
+    if (window.Cypress) {
+      // @ts-ignore
+      // eslint-disable-next-line prefer-destructuring
+      console.log('mock api::: ', window.AxiosMockResponses[4][3]);
+
+      // @ts-ignore
+      // eslint-disable-next-line prefer-destructuring
+      rawResponse.data = window.AxiosMockResponses[4][3];
+
+      // @ts-ignore
+      rawResponse.data.data.loans[0].id = window.InvestLoanAddress;
+      rawResponse.status = 200;
+    } else {
+      rawResponse = await axiosRaw(config);
+    }
 
     switch (rawResponse.status) {
       case 200:

@@ -67,8 +67,10 @@ const ProcessingState: React.SFC<ProcessingStateProps> = ({
       const loanContract = await metamask.addContractByAddress('LoanContract', loan.id);
       let DAIProxy;
       try {
+        console.log('log loan contract methosd proxy address: ', loanContract.methods);
         if (loanContract.methods.proxyAddress) {
           const DaiProxyAddress = await loanContract.methods.proxyAddress().call();
+          console.log('Dai proxy address:: ', DaiProxyAddress);
           DAIProxy = await metamask.addContractByAddress('DAIProxy', DaiProxyAddress);
         } else {
           console.error('ERROR: using default proxy address');

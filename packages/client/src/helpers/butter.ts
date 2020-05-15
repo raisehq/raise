@@ -35,6 +35,7 @@ const requestPage = async (pageType: string, slug: string) => {
       .mapValues(sanitizeValue(WYSIWYGFields))
       .value();
   }
+
   return camelResponse;
 };
 

@@ -17,7 +17,16 @@ import useGetCoin from '../../hooks/useGetCoin';
 import WarningModal from '../WarningModal';
 
 const LoanPage = () => {
-  const loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
+  let loanAddress;
+  // @ts-ignore
+  if (window.Cypress) {
+    // @ts-ignore
+    loanAddress = window.InvestLoanAddress;
+    console.log('loan address:: ', loanAddress);
+  } else {
+    loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
+  }
+
   const {
     web3Status: { hasProvider, unlocked, accountMatches, networkMatches }
   }: any = useAppContext();
@@ -144,7 +153,7 @@ const LoanPage = () => {
       });
     }
 
-    if (borrowerInfo.companyDetails.companyName !== '') {
+    if (borrowerInfo?.companyDetails?.companyName !== '') {
       sectionArray.push({
         component: (
           <div id="borrowerinfo">
@@ -181,7 +190,12 @@ const LoanPage = () => {
     setOpen(false);
   };
 
-  if (loan && borrowerInfo.companyDetails.companyName !== '' && butterSection) {
+  if (
+    loan &&
+    borrowerInfo.companyDetails &&
+    borrowerInfo.companyDetails.companyName !== '' &&
+    butterSection
+  ) {
     return (
       <LoanPageContainer>
         {sections.map((section: any, index) => (
