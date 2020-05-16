@@ -1,6 +1,6 @@
 import React from 'react';
-import { isMobile } from 'react-device-detect';
 import { Button, Link } from '@raisehq/components';
+import { isMobile } from 'react-device-detect';
 import { useRootContext } from '../../contexts/RootContext';
 import {
   SignupButton,
@@ -8,7 +8,6 @@ import {
   MobileLinkWrapper,
   LinkContainer
 } from './VisitorsMenu.styles';
-
 import useRouter from '../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
