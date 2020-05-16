@@ -1,7 +1,13 @@
 import React from 'react';
 import { Button } from '@raisehq/components';
+import { isMobile } from 'react-device-detect';
 import { useRootContext } from '../../contexts/RootContext';
-import { SignupButton } from './VisitorsMenu.styles';
+import {
+  SignupButton,
+  ButtonWrapper,
+  MobileLinkWrapper,
+  LinkContainer
+} from './VisitorsMenu.styles';
 import useRouter from '../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
@@ -27,11 +33,34 @@ const VisitorsMenu = () => {
     showOnboarding('join');
   };
 
-  return (
-    <>
-      <Button text="Log in" type="tertiary" size="standard" onClick={openLogin} />
-      <SignupButton text="Sign up" type="secondary" size="standard" onClick={openSignUp} />
-    </>
+  return isMobile ? (
+    <MobileLinkWrapper>
+      <LinkContainer>
+        <button type="button" onClick={openLogin}>
+          Login
+        </button>
+      </LinkContainer>
+      <LinkContainer>
+        <button type="button" onClick={openSignUp}>
+          Sign Up
+        </button>
+      </LinkContainer>
+    </MobileLinkWrapper>
+  ) : (
+    <ButtonWrapper>
+      <Button
+        text="Log in"
+        type="tertiary"
+        size={isMobile ? 'small' : 'standard'}
+        onClick={openLogin}
+      />
+      <SignupButton
+        text="Sign up"
+        type="secondary"
+        size={isMobile ? 'small' : 'standard'}
+        onClick={openSignUp}
+      />
+    </ButtonWrapper>
   );
 };
 
