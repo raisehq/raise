@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { Button, BloomButton } from '@raisehq/components';
 import {
   ChooseMethodWrapper,
-  ChooseMethodButtonList,
-  ChooseMethodSubtitleWrapper,
-  ChooseMethodSubTitle
+  ChooseMethodButtonList
+  // ChooseMethodSubtitleWrapper,
+  // ChooseMethodSubTitle
 } from './styles';
 import { IContext } from '../types';
 import AppContext from '../App.context';
@@ -14,12 +14,6 @@ const AuthenticationMethods = ({ method }: { method: string }) => {
 
   return (
     <ChooseMethodWrapper>
-      <ChooseMethodSubtitleWrapper>
-        <ChooseMethodSubTitle>
-          Select how to
-          {method.toLowerCase()}
-        </ChooseMethodSubTitle>
-      </ChooseMethodSubtitleWrapper>
       <ChooseMethodButtonList>
         <Button
           idAttr="btn-sign-in-email"
