@@ -25,6 +25,10 @@ export const LinkContainer = styled.div`
 
   color: #8a8e97;
   padding: 15px;
+
+  background-color: #fff;
+  border:none;
+  cursor:pointer;
   }
   
 `;
