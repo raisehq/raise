@@ -36,10 +36,10 @@ const VisitorsMenu = () => {
   return isMobile ? (
     <MobileLinkWrapper>
       <LinkContainer>
-        <button onClick={openLogin}>Login</button>
+        <button type="button" onClick={openLogin}>Login</button>
       </LinkContainer>
       <LinkContainer>
-        <button onClick={openSignUp}>Sign Up</button>
+        <button type="button" onClick={openSignUp}>Sign Up</button>
       </LinkContainer>
     </MobileLinkWrapper>
   ) : (
