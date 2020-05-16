@@ -16,7 +16,7 @@ export const ButtonWrapper = styled.div`
 
 export const LinkContainer = styled.div`
 {
-  a{
+  a {
   font-family: Lato;
   font-style: normal;
   font-weight: bold;

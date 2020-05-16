@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SubBar = styled.div`
-  height: 44px;
+  height: 50px;
   display: flex;
   width: 100%;
 `;
@@ -12,7 +12,7 @@ export const Navigation = styled.div`
 `;
 
 export const SubItem = styled.div`
-  height: 44px;
+  height: 50px;
   background: #eb3f93;
   color: white;
   display: flex;

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from '@raisehq/components';
+import { isMobile } from 'react-device-detect';
+import { Button, Link } from '@raisehq/components';
 import { useRootContext } from '../../contexts/RootContext';
 import {
   SignupButton,
@@ -7,7 +8,7 @@ import {
   MobileLinkWrapper,
   LinkContainer
 } from './VisitorsMenu.styles';
-import { isMobile } from 'react-device-detect';
+
 import useRouter from '../../hooks/useRouter';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 
@@ -36,10 +37,10 @@ const VisitorsMenu = () => {
   return isMobile ? (
     <MobileLinkWrapper>
       <LinkContainer>
-        <a onClick={openLogin}>Login</a>
+        <Link onClick={openLogin} text="Login" />
       </LinkContainer>
       <LinkContainer>
-        <a onClick={openSignUp}>Sign Up</a>
+        <Link onClick={openSignUp} text="Sign Up" />
       </LinkContainer>
     </MobileLinkWrapper>
   ) : (
