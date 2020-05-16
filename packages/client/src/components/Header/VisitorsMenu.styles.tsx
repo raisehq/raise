@@ -16,7 +16,7 @@ export const ButtonWrapper = styled.div`
 
 export const LinkContainer = styled.div`
 {
-  a {
+  button {
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
@@ -26,6 +26,7 @@ export const LinkContainer = styled.div`
   color: #8a8e97;
   padding: 15px;
   }
+  
 `;
 
 export const MobileLinkWrapper = styled.div`
