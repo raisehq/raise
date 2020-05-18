@@ -7,8 +7,14 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 `;
-storiesOf('Footer', module).add('Footer', () => (
-  <Wrapper>
-    <Footer />
-  </Wrapper>
-));
+storiesOf('Footer', module)
+  .add('Footer desktop', () => (
+    <Wrapper>
+      <Footer isMobile={false} />
+    </Wrapper>
+  ))
+  .add('Footer mobile', () => (
+    <Wrapper>
+      <Footer isMobile />
+    </Wrapper>
+  ));
