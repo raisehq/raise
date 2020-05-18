@@ -217,7 +217,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
             idAttr="btn-invest-confirm"
             onClick={onConfirm}
             disabled={!isLogged}
-            text={isLogged ? 'Verify your Accoun' : 'CONFIRM'}
+            text={isLogged ? 'Verify your Account' : 'CONFIRM'}
             type="primary"
             size="large"
             fullWidth
