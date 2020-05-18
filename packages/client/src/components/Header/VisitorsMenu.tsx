@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@raisehq/components';
+import { Button, MobileButtonLink } from '@raisehq/components';
 import { isMobile } from 'react-device-detect';
 import { useRootContext } from '../../contexts/RootContext';
 import {
@@ -36,14 +36,10 @@ const VisitorsMenu = () => {
   return isMobile ? (
     <MobileLinkWrapper>
       <LinkContainer>
-        <button type="button" onClick={openLogin}>
-          Login
-        </button>
+        <MobileButtonLink onClick={openLogin} text="Login" />
       </LinkContainer>
       <LinkContainer>
-        <button type="button" onClick={openSignUp}>
-          Sign Up
-        </button>
+        <MobileButtonLink onClick={openSignUp} text="Sign Up" />
       </LinkContainer>
     </MobileLinkWrapper>
   ) : (

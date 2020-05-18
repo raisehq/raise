@@ -1,7 +1,7 @@
 import React from 'react';
 import { Footer } from '@raisehq/components';
 import { HeroLayout } from './Layout.styles';
-import GatsbyHeader from '../Header';
+import GatsbyHeader from '../GatsbyHeader';
 import Cookies from '../Cookies';
 
 interface IDefaultProps {

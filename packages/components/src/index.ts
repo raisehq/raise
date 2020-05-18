@@ -24,7 +24,7 @@ export { AccountType } from './types';
 
 export { default as useDefiPulse } from './hooks/useDefiPulse';
 
-export { default as Link } from './components/commons/Link';
+export { default as MobileButtonLink } from './components/commons/Link';
 export { default as Button } from './components/commons/ButtonControl/Button';
 export { default as BloomButton } from './components/commons/ButtonControl/BloomButton';
 export { default as ButtonLink } from './components/commons/ButtonControl/ButtonLink';
