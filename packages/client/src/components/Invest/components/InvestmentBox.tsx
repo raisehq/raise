@@ -19,7 +19,6 @@ import {
   InvestBox,
   BalanceWrapper,
   Offer,
-  Eligible,
   BigInput,
   ErrorBox,
   InvestHeader,
@@ -215,7 +214,7 @@ const InvestmentBox = ({
     <Card size="310px" width="100%" {...props}>
       <InvestHeader>How much would you like to invest?</InvestHeader>
       <Offer>
-        <span>{`PROMO: Invest 50 ${loanCoin.text} or more and get 49 ${loanCoin.text}`}</span>
+        <span>{`Invest 50 ${loanCoin.text} or more and get 49 ${loanCoin.text}`}</span>
       </Offer>
 
       <InvestBox>
@@ -231,7 +230,6 @@ const InvestmentBox = ({
         />
         <Coin src={loanCoinImage} name={loanCoin?.text} />
       </InvestBox>
-      <Eligible active={value >= 50}>Promo activated! Invest and get your tokens in 48h</Eligible>
       <BalanceWrapper>
         <div>Invest with</div>
         {isLogged ? (

@@ -103,7 +103,7 @@ const Dashboard = () => {
           </>
         )}
       </DashboardContainer>
-      {activeWarning ? (
+      {logged && activeWarning ? (
         <WarningModal
           warning={activeWarning}
           open={open}
