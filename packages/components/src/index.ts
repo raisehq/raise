@@ -37,6 +37,8 @@ export { default as useScript } from './hooks/useScript';
 export { default as Header, TopHeader, SubPageHeader, SubHeader } from './components/Headers';
 export { LinkComponent, HeaderProps } from './components/Headers/interfaces';
 export { default as LoanActivity } from './components/LoanActivity';
+export { default as AboutBorrower } from './components/AboutBorrower';
+export { default as NeedHelp } from './components/NeedHelp';
 
 export {
   getCurrentInstalment,

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Header, ConfirmButton } from '../../InvestModal/InvestModal.styles';
+import { Header, ConfirmButton } from '../ClaimRepay.styles';
 import ClaimRepayContext from '../ClaimRepay.context';
 import Stages from '../ClaimRepay.stages';
 

@@ -35,6 +35,7 @@ const requestPage = async (pageType: string, slug: string) => {
       .mapValues(sanitizeValue(WYSIWYGFields))
       .value();
   }
+
   return camelResponse;
 };
 
@@ -55,6 +56,23 @@ const findOne = async (collection: string, fields: any) => {
 
   return _(arrResponse[0]).mapKeys(toCamelCase).mapValues(sanitizeValue(WYSIWYGFields)).value();
 };
+const findOneCollection = async (collection: string, fields: any) => {
+  const params = {
+    page: 1,
+    page_size: 1,
+    ...fields
+  };
+  const {
+    data: {
+      data: { [collection]: arrResponse }
+    }
+  } = await butter.content.retrieve([collection], params);
+  if (!arrResponse.length) {
+    throw Error('[Butter][findOne] 404 Not found');
+  }
+
+  return arrResponse;
+};
 
 const getGetStarted = async () => {
   const {
@@ -71,4 +89,4 @@ const getGetStarted = async () => {
 
 export default butter;
 
-export { requestPage, getGetStarted, findOne, butter };
+export { requestPage, getGetStarted, findOne, butter, findOneCollection };

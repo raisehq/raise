@@ -17,10 +17,12 @@ const MockButterCMS = () => {
       // @ts-ignore
       // eslint-disable-next-line
       retrieve: (pageType: any, slug: any) => {
-        const data = responses.companies;
+        const fields = responses[pageType][0];
         return {
           data: {
-            data
+            data: {
+              fields
+            }
           }
         };
       }
