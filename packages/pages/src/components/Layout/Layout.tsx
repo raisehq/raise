@@ -2,6 +2,7 @@ import React from 'react';
 import { Footer } from '@raisehq/components';
 import { HeroLayout } from './Layout.styles';
 import GatsbyHeader from '../Header';
+import Cookies from '../Cookies';
 
 interface IDefaultProps {
   children: any;
@@ -14,6 +15,7 @@ const Layout: React.SFC<IDefaultProps> = ({ children }: any) => (
     <GatsbyHeader />
     {children}
     <Footer />
+    <Cookies />
   </HeroLayout>
 );
 
