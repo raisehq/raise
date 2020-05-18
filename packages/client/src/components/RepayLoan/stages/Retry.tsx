@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Header, ConfirmButton } from '../../InvestModal/InvestModal.styles';
+import { Header, ConfirmButton } from '../styles';
 import { RepayLoanContext, Stages } from '../RepayLoan.context';
 
 const Processing = () => {

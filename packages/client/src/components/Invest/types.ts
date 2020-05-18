@@ -18,6 +18,9 @@ export interface InvestStateProps {
   setInputTokenAmount: Function;
   inputTokenAmount: BN;
   closeModal?: Function;
+  userActivated: boolean;
+  fullInfo: boolean;
+  isLogged: boolean;
 }
 
 export interface ResumeItemProps {

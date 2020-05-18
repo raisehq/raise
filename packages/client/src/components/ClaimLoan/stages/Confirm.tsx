@@ -11,7 +11,7 @@ import {
 import useWallet from '../../../hooks/useWallet';
 import ClaimLoanContext from '../ClaimLoan.context';
 import Stages from '../ClaimLoan.stages';
-import { ResumeItemProps } from '../../InvestModal/types';
+import { ResumeItemProps } from '../../../interfaces/Invest';
 import { useAppContext } from '../../../contexts/AppContext';
 import { useRootContext } from '../../../contexts/RootContext';
 import useGetCoin from '../../../hooks/useGetCoin';

@@ -20,7 +20,7 @@ import {
   KycLayout,
   AppLayout
 } from './Layout';
-import { DashboardLender, DashboardBorrower } from './Dashboard';
+import { DashboardBorrower } from './Dashboard';
 import { CreateLoan } from './CreateLoan';
 import MyAccount from './MyAccount';
 import Join from './Join';
@@ -36,6 +36,7 @@ import NotFound404 from './BorrowerProfile/Borrower404';
 import Toast, { StyledToastContainer } from './Toast';
 import Sidebar from './InvestSidebar/Sidebar';
 import InvestingPage from './InvestingPage';
+import LoanPage from './LoanPage';
 
 const InvestSidebar = lazy(() => import('./InvestSidebar/InvestSidebar'));
 
@@ -61,7 +62,7 @@ const App = () => {
       dashboard: DashboardBorrower
     },
     2: {
-      dashboard: DashboardLender
+      dashboard: LoanPage
     }
   };
 
@@ -80,7 +81,6 @@ const App = () => {
         });
       });
       followTx.on('tx_finish', ({ id: tx, data: params }) => {
-        console.log('----> ', tx, params);
         if (!toast.isActive(tx)) {
           toast(<Toast data={params} tx={tx} state="success" />, {
             type: toast.TYPE.SUCCESS,
@@ -203,12 +203,10 @@ const App = () => {
                 <Web3Layout
                   publicRoute
                   marketplace
-                  layout={MainLayout}
+                  layout={AppLayout}
                   exact
                   path="/"
-                  component={
-                    accounttypeId ? componentsByRole[accounttypeId].dashboard : DashboardLender
-                  }
+                  component={accounttypeId ? componentsByRole[accounttypeId].dashboard : LoanPage}
                   roles={[1, 2]}
                 />
                 <Web3Layout
@@ -236,6 +234,15 @@ const App = () => {
                   exact
                   path="/investing"
                   component={InvestingPage}
+                  roles={[1, 2]}
+                />
+                <Web3Layout
+                  publicRoute
+                  marketplace
+                  layout={AppLayout}
+                  exact
+                  path="/investmentopportunity"
+                  component={LoanPage}
                   roles={[1, 2]}
                 />
                 {/* Onboarding */}

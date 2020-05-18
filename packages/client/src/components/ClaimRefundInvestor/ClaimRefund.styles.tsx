@@ -188,3 +188,17 @@ export const ButtonGreen = styled(Button)`
     color: white;
   }
 `;
+
+export const ConfirmButton = styled(LenderButton)`
+  &&& {
+    height: 48px;
+    width: 100%;
+    font-size: 16px;
+    color: #ffffff;
+  }
+  &&&:hover,
+  &&&:focus {
+    background-color: #ff047f;
+    color: #ffffff;
+  }
+`;

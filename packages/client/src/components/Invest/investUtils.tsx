@@ -1,19 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-import RawCoin from '../Coin';
 import localeConfig from '../../commons/localeConfig';
-
-const Coin = styled(RawCoin)``;
-
-const Box = styled.div`
-  display: flex;
-  justify-content: flex;
-  align-items: flex;
-  ${Coin} {
-    color: #5a5a5a;
-    margin-left: 8px;
-  }
-`;
+import { Coin, Box } from './styles';
 
 export const CoinValue = ({ value, name, src }: any) => (
   <Box>

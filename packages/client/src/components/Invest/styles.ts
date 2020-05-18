@@ -11,8 +11,11 @@ import {
   Grid,
   Checkbox
 } from 'semantic-ui-react';
+import { Button as RaiseButton } from '@raisehq/components';
+import RawCoin from '../Coin';
 import Balance from '../Balance';
 import { device } from '../../commons/breakpoints';
+import InvestmentBox from './components/InvestmentBox';
 
 interface ModalInputProps {
   roi?: boolean;
@@ -25,6 +28,9 @@ interface InputLabelProps {
 
 interface LabelPaddingProps {
   color?: string;
+}
+interface IInput {
+  fullInfo: boolean;
 }
 
 export const LoanTermsCheckbox: any = styled(Checkbox)`
@@ -284,20 +290,6 @@ export const Percentage = styled.div`
   margin-left: 10px;
 `;
 
-export const ConfirmButton = styled(LenderButton)`
-  &&& {
-    height: 48px;
-    width: 100%;
-    font-size: 16px;
-    color: #ffffff;
-  }
-  &&&:hover,
-  &&&:focus {
-    background-color: #ff047f;
-    color: #ffffff;
-  }
-`;
-
 // processing state
 export const RetryButton = styled(LenderButton)`
   &&& {
@@ -459,3 +451,44 @@ export const ButtonContainerProcessing = styled.div`
   width: 100%;
   padding: 0 10px;
 `;
+
+export const Coin = styled(RawCoin)``;
+
+export const Box = styled.div`
+  display: flex;
+  justify-content: flex;
+  align-items: flex;
+  ${Coin} {
+    color: #5a5a5a;
+    margin-left: 8px;
+  }
+`;
+
+export const InvestSection = styled(InvestmentBox)`
+  margin: 29px auto 0px auto;
+  padding: 27px;
+`;
+
+export const InvestBody = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const InvestInput = styled.div<IInput>`
+  overflow-y: auto;
+  ${({ fullInfo }) => (fullInfo ? 'height: height: 84%' : '')};
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const InvestButtonWrapper = styled.div<IInput>`
+  flex: 1;
+  ${({ fullInfo }) => (fullInfo ? 'border-top: 1px solid #cfd0d4' : '')};
+`;
+
+export const ConfirmButton = styled(RaiseButton)``;
+
+export const ContinueButton = styled(RaiseButton)``;

@@ -2,15 +2,6 @@ import styled from 'styled-components';
 import { Button, Modal as SemanticModal, Icon } from 'semantic-ui-react';
 import { device } from '../../commons/breakpoints';
 
-export const ExitButton = styled(Icon)`
-  &&& {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-  }
-`;
-
 export const LenderButton = styled(Button)`
   &&& {
     cursor: pointer;
@@ -169,5 +160,27 @@ export const ButtonGreen = styled(Button)`
     width: 100%;
     background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
     color: white;
+  }
+`;
+
+export const ExitButton = styled(Icon)`
+  &&& {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    @media (screen and ${device.tablet}) {
+      display: none;
+    }
+  }
+`;
+
+export const BorrowerButton = styled(LenderButton)`
+  &&& {
+    background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
+    &&&:hover {
+      color: white;
+      background: linear-gradient(134.72deg, #02bb7d 0%, #00efad 100%);
+    }
   }
 `;

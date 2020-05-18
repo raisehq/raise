@@ -13,7 +13,7 @@ import {
   Explanation,
   Action,
   IconSuccess as IconError
-} from '../../InvestModal/InvestModal.styles';
+} from '../styles';
 import useGetCoin from '../../../hooks/useGetCoin';
 
 const PassDOM = (

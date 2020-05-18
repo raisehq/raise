@@ -9,7 +9,7 @@ import {
   Balance
 } from './TokenBalance.styles';
 
-const TokenLayout = ({ imageUrl, name, value, hider, ...props }: any) => {
+const TokenLayout = ({ imageUrl, name, value, hider, isLogged, ...props }: any) => {
   const [hidde, setHidde] = useState(false);
 
   const handleTroggleHidde = (e) => {
@@ -39,7 +39,11 @@ const TokenLayout = ({ imageUrl, name, value, hider, ...props }: any) => {
           )
         ) : (
           <>
-            Balance: <Balance> {value}</Balance>
+            {isLogged && (
+              <>
+                Balance: <Balance> {value}</Balance>
+              </>
+            )}
           </>
         )}
       </Child>

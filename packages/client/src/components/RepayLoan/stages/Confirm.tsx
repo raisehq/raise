@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import { Header, BorrowerButton } from '../../InvestModal/InvestModal.styles';
+import { Header, BorrowerButton } from '../styles';
 import { RepayLoanContext, Stages } from '../RepayLoan.context';
 import { getCalculations } from '../../../utils/loanUtils';
 import {
@@ -8,7 +8,7 @@ import {
   ResumeItemBoxBig,
   ResumeItemBox
 } from '../../ClaimLoan/ClaimLoan.styles';
-import { ResumeItemProps } from '../../InvestModal/types';
+import { ResumeItemProps } from '../../../interfaces/Invest';
 import useGetCoin from '../../../hooks/useGetCoin';
 
 const ResumeItem: React.SFC<ResumeItemProps> = ({ title, value }: any) => (

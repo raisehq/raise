@@ -23,6 +23,13 @@ const Footer = () => (
       </FooterLogo>
       <FooterMenu>
         <SubMenu>
+          <MenuLink
+            href="https://app.raise.it/loan-of-the-month"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Loan of the month
+          </MenuLink>
           <MenuLink href="https://app.raise.it/investing" rel="noopener noreferrer" target="_blank">
             Invest
           </MenuLink>

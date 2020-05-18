@@ -43,6 +43,7 @@ enum Action {
 }
 
 function reducer(state: BalancesState, { type, payload }: { type: Action; payload: any }) {
+  if (!payload.address) return { ...state };
   try {
     switch (type) {
       case Action.START_LISTENING: {
