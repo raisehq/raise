@@ -1,161 +1,35 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Card as RaiseCard } from '@raisehq/components';
 import {
   tradeExactTokensForTokensWithData,
   getTokenReserves,
   tradeExactEthForTokensWithData
 } from '@uniswap/sdk';
 import { TokenReservesNormalized } from '@uniswap/sdk/dist/types';
-import { InvestHeader } from './InvestmentBox.styles';
-import LoanInput from '../../CreateLoan/LoanInput';
-import CoinSelectorRaw from '../../CoinSelector';
-import RawCoin from '../../Coin';
-import MaxInputsRaw from './MaxInputs';
 import { useAppContext } from '../../../contexts/AppContext';
+import { useRootContext } from '../../../contexts/RootContext';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
 import { CoinsType } from '../../../interfaces/Coins';
 import { fromDecimal, toDecimal } from '../../../utils/web3-utils';
+import MaxInputsRaw from './MaxInputs';
+import {
+  MaxInputs,
+  CoinSelector,
+  Coin,
+  Card,
+  InvestBox,
+  BalanceWrapper,
+  Offer,
+  BigInput,
+  ErrorBox,
+  InvestHeader,
+  NoLoggedCoinSelector,
+  InvestText
+} from './styles';
 
 const errorMessages = {
   inputGreaterThanBalance: 'Not enough balance.',
-  inputGreaterThanLoanAmount: 'Invest less than target.'
+  inputGreaterThanLoanAmount: 'You are exceeding the loan target amount'
 };
-
-const MaxInputs = styled(MaxInputsRaw)`
-  margin-top: 10px;
-`;
-
-const CoinSelector = styled(CoinSelectorRaw)`
-  max-width: 100%;
-  width: 100%;
-  height: 48px;
-  &&&&.disabled {
-    opacity: 1;
-    & .dropdown.icon {
-      display: none;
-    }
-  }
-`;
-
-const Coin = styled(RawCoin)``;
-
-const Card = styled(RaiseCard)`
-  display: flex;
-  align-items: center;
-`;
-
-const InvestBox = styled.div`
-  font-size: 16px;
-  color: #8a8e97;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin: 24px auto 0px auto;
-
-  &&&&&&&& ${Coin} {
-    font-size: 16px;
-    color: #8a8e97;
-    font-weight: normal;
-  }
-`;
-
-const BalanceWrapper = styled.div`
-  width: 100%;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  &&&& ${CoinSelector} {
-    max-width: 100%;
-  }
-  &&&& .ui.dropdown .menu {
-    width: 100%;
-  }
-  &&&& .ui.selection.dropdown > .dropdown.icon {
-    top: unset;
-    padding: unset;
-    right: unset;
-    position: unset;
-    margin: 0px 0px 0px 17px;
-  }
-  & > div:first-child {
-    margin-bottom: 6px;
-    font-weight: bold;
-    color: #8a8e97;
-  }
-`;
-
-const Offer = styled.div`
-  padding: 4px 12px;
-  border-radius: 16px;
-  background: #f5ac37;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const BigInput = styled(LoanInput)`
-  font-size: ${({ value }) => {
-    if (value?.toString()?.length > 8) {
-      return 28;
-    }
-    if (value?.toString()?.length > 6) {
-      return 36;
-    }
-    return 48;
-  }}px;
-  line-height: 56px;
-  width: ${({ value }) => (value?.toString()?.length > 1 ? value?.toString()?.length + 1 : 1)}ch;
-  text-align: ${({ value }) => (value ? 'center' : 'left')};
-  min-width: ${({ value }) => (value ? '0px' : '1ch')};
-  margin: ${({ value }) => (value ? '0px 1ch' : '0px 1ch')};
-  color: #00da9e;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: block;
-  border: none !important;
-  box-sizing: border-box;
-  background: none !important;
-  text-decoration: underline;
-
-  outline: none;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-input-placeholder {
-    /* Edge */
-    color: #c5c7cb;
-  }
-
-  &:-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: #c5c7cb;
-  }
-
-  &::placeholder {
-    text-align: center;
-  }
-`;
-
-const ErrorBox = styled.div`
-  width: 100%;
-  min-height: 30px;
-  color: red;
-  display: block;
-  content: '';
-  margin-top: 8px;
-`;
 
 const swapBlacklist = {
   USDT: true
@@ -217,6 +91,7 @@ const getSwapOutput = async (
       );
       return totalOutput + totalOutput / 100;
     }
+
     const tradeDetails = await tradeExactTokensForTokensWithData(
       inputReserves,
       outputReserves,
@@ -256,6 +131,13 @@ const InvestmentBox = ({
   const {
     web3Status: { walletNetworkId: chainId }
   }: any = useAppContext();
+  const {
+    store: {
+      auth: {
+        login: { logged: isLogged }
+      }
+    }
+  }: any = useRootContext();
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${loanCoin.icon}`;
 
   const handleChange = (e, { value: newValue }: any) => {
@@ -267,7 +149,6 @@ const InvestmentBox = ({
       selectedCurrency.text === 'ETH' ? getRemainingEth(balance, HIGH_GAS_FEES) : balance;
     const nMaxAmount = Number(fromDecimal(maxAmount, loanCurrency.decimals));
     const nPrincipal = nMaxAmount - Number(fromDecimal(principal, loanCurrency.decimals));
-
     if (loanCurrency?.text === selectedCurrency?.text) {
       const minValue = Math.min(...[availableBalance / divisor, nPrincipal]);
       return setValue(minValue);
@@ -278,6 +159,7 @@ const InvestmentBox = ({
       inputReserves,
       outputReserves
     );
+
     const minValue = Math.min(...[output, nPrincipal]);
     return setValue(minValue);
   };
@@ -295,7 +177,7 @@ const InvestmentBox = ({
   const readValue = value > 0 ? value : null;
 
   const errorMessage = () => {
-    if (inputToken && inputToken > balance) {
+    if (inputToken && inputToken > balance && isLogged) {
       return errorMessages.inputGreaterThanBalance;
     }
     if (value && value > maxAmountNum) {
@@ -336,7 +218,7 @@ const InvestmentBox = ({
       </Offer>
 
       <InvestBox>
-        <div>INVEST</div>
+        <InvestText>INVEST</InvestText>
         <BigInput
           autoComplete="off"
           id="input-invest-value"
@@ -350,17 +232,28 @@ const InvestmentBox = ({
       </InvestBox>
       <BalanceWrapper>
         <div>Invest with</div>
-        <CoinSelector
-          loanCoin={loanCoin}
-          disabled={!!swapBlacklist[selectedCoin]}
-          value={selectedCoin}
-          onChange={handleChange}
-        />
+        {isLogged ? (
+          <CoinSelector
+            loanCoin={loanCoin}
+            disabled={swapBlacklist[selectedCoin]}
+            value={selectedCoin}
+            onChange={handleChange}
+          />
+        ) : (
+          <NoLoggedCoinSelector
+            loanCoin={loanCoin}
+            disabled={swapBlacklist[selectedCoin]}
+            value={selectedCoin}
+            onChange={handleChange}
+          />
+        )}
         <ErrorBox>
           {errorMessage()}
           &nbsp;
         </ErrorBox>
-        <MaxInputs onClick={fundAll(loanCoin, coin)} />
+        <MaxInputs>
+          <MaxInputsRaw onClick={fundAll(loanCoin, coin)} />
+        </MaxInputs>
       </BalanceWrapper>
     </Card>
   );

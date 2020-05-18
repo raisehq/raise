@@ -1,6 +1,6 @@
 import React from 'react';
-import { Header, Button } from '@raisehq/components';
-import { FlexDiv } from './Header.styles';
+import { Header as RaiseHeader, Button } from '@raisehq/components';
+import { FlexDiv } from './GatsbyHeader.styles';
 import { BasicLink } from '../links';
 import routes from '../../routes';
 
@@ -8,7 +8,7 @@ const REACT_APP_HOST_URL = process.env.REACT_APP_HOST_URL; // eslint-disable-lin
 
 const GatsbyHeader = () => {
   return (
-    <Header {...routes}>
+    <RaiseHeader {...routes}>
       <FlexDiv>
         <Button
           title="Log in"
@@ -25,7 +25,7 @@ const GatsbyHeader = () => {
           size="standard"
         />
       </FlexDiv>
-    </Header>
+    </RaiseHeader>
   );
 };
 

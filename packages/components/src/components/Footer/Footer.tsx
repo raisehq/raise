@@ -1,3 +1,4 @@
+/* eslint-disable no-script-url */
 import React, { useState } from 'react';
 
 import {
@@ -134,9 +135,13 @@ const Footer = ({ isMobile }) => {
               <MenuLink href="mailto:hello@raise.it" rel="noopener noreferrer" target="_blank">
                 Email
               </MenuLink>
-              <MenuLink href="#" rel="noopener noreferrer" target="_blank">
+              {/* <MenuLink
+                href="javascript:$zopim.livechat.window.show();"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 Chat
-              </MenuLink>
+              </MenuLink> */}
             </SubMenu>
           </FooterMenu>
         </FooterInformationContainer>
@@ -235,9 +240,13 @@ const Footer = ({ isMobile }) => {
               <MenuLink href="mailto:hello@raise.it" rel="noopener noreferrer" target="_blank">
                 Email
               </MenuLink>
-              <MenuLink href="#" rel="noopener noreferrer" target="_blank">
+              {/* <MenuLink
+                href="javascript:$zopim.livechat.window.show();"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 Chat
-              </MenuLink>
+              </MenuLink> */}
             </DropdownMenu>
           </SubMenuContainer>
           <FooterSocial>

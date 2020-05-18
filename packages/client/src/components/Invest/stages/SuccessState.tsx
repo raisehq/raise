@@ -1,18 +1,24 @@
 import React from 'react';
 import { Link } from 'react-scroll';
 
-import { SuccessStateProps } from './types';
-import { HEADER_MENU_SIZE } from '../../commons/constants';
-import { CardTitle, CardSubtitle, ButtonPink, ButtonWrapper, Content } from './InvestModal.styles';
-import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import { SuccessStateProps } from '../types';
+import { HEADER_MENU_SIZE } from '../../../commons/constants';
+import { CardTitle, CardSubtitle, ButtonPink, ButtonWrapper, Content } from '../styles';
+import useGoogleTagManager, { TMEvents } from '../../../hooks/useGoogleTagManager';
+import useRouter from '../../../hooks/useRouter';
 
 const SuccessState: React.SFC<SuccessStateProps> = ({ setStage, ui, closeModal }: any) => {
+  const { history } = useRouter();
+
   const tagManager = useGoogleTagManager('Card');
   const onOK = () => {
     tagManager.sendEvent(TMEvents.Submit, 'invest_success');
 
-    closeModal();
+    if (closeModal) {
+      closeModal();
+    }
     setStage(ui.Confirm);
+    history.push('/account');
   };
 
   return (

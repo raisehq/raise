@@ -1,12 +1,12 @@
 import React, { useState, Fragment } from 'react';
 import { List, Grid } from 'semantic-ui-react';
 import { Button } from '@raisehq/components';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
-import useWallet from '../../hooks/useWallet';
-import useWeb3 from '../../hooks/useWeb3';
-import ERC20 from '../../commons/erc20';
-import { MAX_VALUE } from '../../commons/constants';
-import { ProcessingStateProps } from './types';
+import useAsyncEffect from '../../../hooks/useAsyncEffect';
+import useWallet from '../../../hooks/useWallet';
+import useWeb3 from '../../../hooks/useWeb3';
+import ERC20 from '../../../commons/erc20';
+import { MAX_VALUE } from '../../../commons/constants';
+import { ProcessingStateProps } from '../types';
 import {
   CardCenteredText,
   CardTitle,
@@ -24,13 +24,13 @@ import {
   ModalFlexWrapper,
   ExitButton,
   ButtonContainerProcessing
-} from './InvestModal.styles';
-import { useAppContext } from '../../contexts/AppContext';
-import { useRootContext } from '../../contexts/RootContext';
-import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
-import useGetCoin from '../../hooks/useGetCoin';
-import useGetCoinMetadata from '../../hooks/useGetCoinMetadata';
-import { toDecimal, fromDecimal } from '../../utils/web3-utils';
+} from '../styles';
+import { useAppContext } from '../../../contexts/AppContext';
+import { useRootContext } from '../../../contexts/RootContext';
+import useGoogleTagManager, { TMEvents } from '../../../hooks/useGoogleTagManager';
+import useGetCoin from '../../../hooks/useGetCoin';
+import useGetCoinMetadata from '../../../hooks/useGetCoinMetadata';
+import { toDecimal, fromDecimal } from '../../../utils/web3-utils';
 
 const ProcessingState: React.SFC<ProcessingStateProps> = ({
   loan,

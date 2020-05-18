@@ -7,7 +7,6 @@ import { KycStatus } from '../../commons/kycStatus';
 
 export const Main = styled.div`
   color: rgba(90, 90, 90, 1);
-  padding: 20px;
   background: white;
   border-radius: 4px;
   margin: 0px 0px;
@@ -27,7 +26,10 @@ export const Main = styled.div`
   }
 
   @media screen and ${device.tablet} {
-    margin: 0px 10vh;
+    max-width: 1172px;
+    margin: auto;
+    padding: 0px 10px;
+    margin-top: 64px;
   }
 `;
 

@@ -1,25 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MaxButton = styled.div`
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  text-align: center;
-  text-decoration-line: underline;
-  color: #00da9e;
-  cursor: pointer;
-`;
-
-const Divider = styled.div`
-  margin: 0px 6px;
-`;
+import { Container, MaxButton, Divider } from './styles';
 
 const MaxInputs = ({ onClick, ...rest }: any) => {
   const fundAll = (divisor) => () => {

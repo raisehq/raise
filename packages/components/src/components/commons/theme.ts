@@ -114,6 +114,28 @@ const globalTheme: any = {
         textColor: '#FFFFFF',
         borderColor: '#ECEDEE'
       }
+    },
+    ghost: {
+      default: {
+        backgroundColor: 'transparent',
+        textColor: '#B1B3B9',
+        borderColor: '#B1B3B9'
+      },
+      hover: {
+        backgroundColor: 'transparent',
+        textColor: '#B1B3B9',
+        borderColor: '#B1B3B9'
+      },
+      onClick: {
+        backgroundColor: 'transparent',
+        textColor: '#B1B3B9',
+        borderColor: '#B1B3B9'
+      },
+      disable: {
+        backgroundColor: 'transparent',
+        textColor: '#B1B3B9',
+        borderColor: '#B1B3B9'
+      }
     }
   },
   buttonSizes: {

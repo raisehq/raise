@@ -123,6 +123,52 @@ Cypress.Commands.add('addLoanAndCard', function (type) {
 });
 
 /*
+  Mock the graph and the card creation
+*/
+Cypress.Commands.add('createLoan', function (type) {
+  cy.on('window:before:load', async (win) => {
+    const user = Cypress.env('user');
+    const provider = new PrivateKeyProvider(
+      user['borrower'].private_key,
+      Cypress.env('eth_provider'),
+      0,
+      10
+    );
+    const web3 = new Web3(provider);
+
+    const netId = await web3.eth.net.getId();
+    const params = [
+      '10000000000000000000000',
+      '10000000000000000000000',
+      '10000000000000000000',
+      '10000000000000000000',
+      '300',
+      '2592000',
+      contracts.address[netId].DAI
+    ];
+    const LoanDispatcher = new web3.eth.Contract(
+      contracts.abi[netId].LoanDispatcher,
+      contracts.address[netId].LoanDispatcher
+    );
+    console.log(' LOAN DISPACHER : ', LoanDispatcher);
+    const tx = await LoanDispatcher.methods
+      .deploy(...params)
+      .send({ from: user['borrower'].address });
+    console.log('>>>|| TX : ', tx);
+    const newCard = createCard(
+      type,
+      tx.events.LoanContractCreated.returnValues.contractAddress,
+      contracts.address[netId].DAI
+    );
+    cardsLender.loans.push(newCard);
+    console.log('CARDS :', cardsLender);
+    // win.UseWebsocket.trigger('suggestedLender', cardsLender);
+    // eslint-disable-next-line no-param-reassign
+    win.InvestLoanAddress = tx.events.LoanContractCreated.returnValues.contractAddress;
+  });
+});
+
+/*
   Mock Login process
 */
 Cypress.Commands.add('login', function (type, isCanary = false) {
@@ -209,8 +255,17 @@ Cypress.Commands.add('login', function (type, isCanary = false) {
 */
 Cypress.Commands.add('mockAPI', function (type, isCanary = false) {
   if (!isCanary) {
-    cy.on('window:before:load', (win) => {
+    cy.on('window:before:load', async (win) => {
       const user = Cypress.env('user');
+      const provider = new PrivateKeyProvider(
+        user['borrower'].private_key,
+        Cypress.env('eth_provider'),
+        0,
+        10
+      );
+      const web3 = new Web3(provider);
+      const netId = await web3.eth.net.getId();
+
       win.AxiosMockResponses = [
         ['POST', `https://${Cypress.env('api')}/jwt/verify`, 200, { mock: true, success: true }], //'https://api.herodev.es
         [
@@ -270,6 +325,41 @@ Cypress.Commands.add('mockAPI', function (type, isCanary = false) {
               birthday: null
             }
           }
+        ],
+        [
+          'POST',
+          `https://api.thegraph.com/subgraphs/name/raisehq/raisekovan`,
+          200,
+          {
+            data: {
+              loans: [
+                {
+                  auctionEndTimestamp: '1591444268',
+                  auctionEnded: false,
+                  auctionLength: '2592000',
+                  auctionStartTimestamp: '1588852268',
+                  borrowerDebt: '0',
+                  id: '0xcefd5b054c5a1b4b988137b17dfbd6424f73ba7c',
+                  interestRate: '1026350308641975367',
+                  investorCount: 1,
+                  maxAmount: '10000000000000000000000',
+                  maxInterestRate: '1666666666666666700',
+                  minInterestRate: '833333333333333400',
+                  minimumReached: false,
+                  netBalance: null,
+                  operatorBalance: '0',
+                  operatorFee: '2000000000000000000',
+                  originator: '0x387c4df58b6bd24725774037ba8d4b3d123a2b66',
+                  principal: '0',
+                  state: 0,
+                  termEndTimestamp: '0',
+                  termLength: '2592000',
+                  tokenAddress: contracts.address[netId].DAI,
+                  test: 'this is a test'
+                }
+              ]
+            }
+          }
         ]
       ];
     });
@@ -309,6 +399,15 @@ Cypress.Commands.add('acceptedTokens', function () {
   });
 });
 
+/*
+  Mock the graph
+*/
+Cypress.Commands.add('butterCMS', function () {
+  cy.on('window:before:load', (win) => {
+    win.TheGraphMockResponses = {};
+  });
+});
+
 /* 
   Mock Butter cms responses
 */
@@ -328,6 +427,48 @@ Cypress.Commands.add('butterCMS', function () {
           }
         ]
       },
+      page_with_sections: [
+        {
+          pageSection: [
+            {
+              section_id: 'skin_in_the_game',
+              section_order: 1,
+              section_reference: {
+                id: 'skin_in_the_game',
+                image_right_position: false,
+                important_information:
+                  'Raise takes on part of the risk, keeping 10% of the loan stake with 90% left to private investors',
+                learn_more_url: '',
+                section_description:
+                  '<p><span>Our users trust us, not only because we run a strict due diligence to the loan originators, but also because we have <strong>skin in the game</strong>.&nbsp;</span></p>',
+                section_image: 'https://cdn.buttercms.com/wzEIx26nRymfg6LWfK3q',
+                section_title: 'Skin in the game'
+              }
+            }
+          ]
+        }
+      ],
+      borrower_profile: [
+        {
+          companyDetails: {
+            companyName: 'sendraCorp',
+            description: 'test description',
+            shortDescription: 'short description',
+            logo: 'logo',
+            url: 'https://sendracorp.com',
+            urlText: '',
+            updated: '',
+            address: '',
+            userId: '',
+            ethereumAddress: '',
+            foundationDate: '',
+            background: ''
+          },
+          socialNetworks: [],
+          extraResources: [],
+          kpis: []
+        }
+      ],
       get_started: {
         get_started: [
           {

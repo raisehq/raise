@@ -1,8 +1,17 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import React, { ReactNode, SFC, useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { Icon, Popup } from 'semantic-ui-react';
-import { useSpring, animated } from 'react-spring';
+import { useSpring } from 'react-spring';
 import useMeasure from '../../../hooks/useMeasure';
+import {
+  TableCollapse,
+  AnimatedDiv,
+  Chevron,
+  TableItemContainer,
+  TitleWithTooltip,
+  InvestmentTooltip,
+  InvestIcon,
+  TooltipIconWrapper
+} from './styles';
 
 interface TableItemObj {
   title: string;
@@ -18,53 +27,6 @@ interface TableItemProps extends TableItemObj {
   latest?: boolean;
 }
 
-interface TableItemContainerProps {
-  latest?: boolean;
-}
-
-const TableCollapse = styled(animated.div)`
-  overflow: hidden;
-  position: relative;
-`;
-
-const AnimatedDiv = styled(animated.div)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Chevron = styled(animated(Icon))`
-  &&& {
-    display: block;
-  }
-`;
-
-const TableItemContainer = styled.div<TableItemContainerProps>`
-  height: 49px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 49px;
-  ${({ latest }) => !latest && 'border-bottom: 1px solid #ECECEC;'}}
-  & > div:last-child {
-    font-weight: bold;
-  }
-`;
-
-const TitleWithTooltip = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const InvestmentTooltip = styled(Popup)`
-  margin-left: 5px !important;
-  width: 190px;
-  text-align: center;
-`;
-
 export const TableItem: SFC<TableItemProps> = ({ title, content, latest, tooltip }: any) => (
   <TableItemContainer latest={latest}>
     <TitleWithTooltip>
@@ -73,8 +35,12 @@ export const TableItem: SFC<TableItemProps> = ({ title, content, latest, tooltip
         <InvestmentTooltip
           content={tooltip}
           inverted
-          position="center top"
-          trigger={<Icon color="teal" name="info circle" />}
+          position="top center"
+          trigger={
+            <TooltipIconWrapper>
+              <InvestIcon color="teal" name="info circle" />
+            </TooltipIconWrapper>
+          }
         />
       )}
     </TitleWithTooltip>
