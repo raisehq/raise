@@ -17,12 +17,14 @@ export { default as Simple } from './components/Modals/Simple';
 export { default as LoanComparatorChart } from './components/LoanComparatorChart';
 export { default as Footer } from './components/Footer';
 export { default as SignUp } from './components/SignUp';
+export { default as LoanInformation } from './components/LoanInformation';
+export { default as LoanHeader } from './components/LoanHeader';
 
 export { AccountType } from './types';
 
 export { default as useDefiPulse } from './hooks/useDefiPulse';
-export { default as useCompaniesScrapper } from './hooks/useCompaniesScrapper';
 
+export { default as Link } from './components/commons/Link';
 export { default as Button } from './components/commons/ButtonControl/Button';
 export { default as BloomButton } from './components/commons/ButtonControl/BloomButton';
 export { default as ButtonLink } from './components/commons/ButtonControl/ButtonLink';
@@ -32,8 +34,8 @@ export { default as InputNumber } from './components/commons/InputControl/InputN
 export { default as InputText } from './components/commons/InputControl/InputText';
 export { default as SelectControl } from './components/commons/SelectControl';
 export { default as useScript } from './hooks/useScript';
-export { default as Header } from './components/Headers';
-export { LinkComponent } from './components/Headers/interfaces';
+export { default as Header, TopHeader, SubPageHeader, SubHeader } from './components/Headers';
+export { LinkComponent, HeaderProps } from './components/Headers/interfaces';
 export { default as LoanActivity } from './components/LoanActivity';
 
 export {

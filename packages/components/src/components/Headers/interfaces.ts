@@ -21,9 +21,13 @@ export interface Route {
 export interface HeaderProps {
   logo: Logo;
   routes: Route[];
+  disabled?: boolean;
   pageRoutes: Route[];
 }
 
+export interface TopHeaderProps {
+  logo: Logo;
+}
 export interface SubheaderProps {
   routes: Route[];
 }

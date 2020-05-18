@@ -10,6 +10,10 @@ Runs the project in development/watch mode. Your project will be rebuilt upon ch
 <img src="https://user-images.githubusercontent.com/4060187/52168303-574d3a00-26f6-11e9-9f3b-71dbec9ebfcb.gif" width="600" />
 Your library will be rebuilt if you make edits.
 
+### `yarn run dev-all:int`
+
+Compiles all components (onboarding included) and starts the watcher. 
+
 ### `npm run build` or `yarn build`
 
 Bundles the package to the `dist` folder.
