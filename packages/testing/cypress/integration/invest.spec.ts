@@ -1,7 +1,7 @@
 describe('LENDER', function() {
   beforeEach(() => {
     const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
-    cy.CookieXCanary();
+    cy.CookieXCanary(isCanary);
     cy.butterCMS();
     cy.createLoan('CREATED');
     cy.mockAPI('lender', isCanary);

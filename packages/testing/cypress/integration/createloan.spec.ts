@@ -3,7 +3,7 @@
 describe('BORROWER', function () {
   beforeEach(function () {
     const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
-    cy.CookieXCanary();
+    cy.CookieXCanary(isCanary);
     cy.login('borrower', isCanary);
     cy.mockAPI('borrower', isCanary);
     cy.web3('borrower');
