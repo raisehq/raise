@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { BrowserView } from 'react-device-detect';
 import get from 'lodash/get';
-import { GroupButton, CheckboxControl, InputNumber, SelectControl } from '@raisehq/components';
+import {
+  GroupButton,
+  CheckboxControl,
+  InputNumber,
+  SelectControl,
+  RepaymentType
+} from '@raisehq/components';
 
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { useAppContext } from '../../contexts/AppContext';
@@ -66,6 +72,7 @@ import { COINS } from '../../commons/constants';
 
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { CoinsType } from '../../interfaces/Coins';
+import RepaymentControl, { repaymentOptions } from './FormSections/RepaymentControl';
 
 const CreateLoan = ({ contracts }: any) => {
   const {
@@ -114,9 +121,11 @@ const CreateLoan = ({ contracts }: any) => {
 
   const [selectedCoinIndex, setSelectedCoinIndex] = useState<any>(0);
   const [selectedMonthIndex, setSelectedMonthIndex] = useState<any>(2);
+  const [selectedRepaymentIndex, setRepaymentIndex] = useState<any>(0);
 
   const monthOptions = useMemo(() => getMonths(network), [network]);
   const loanAuctionIntervalArray = useMemo(() => getLoanAuctionIntervalArray(), [network]);
+
   const borrowerCompany = useBorrowerInfo(userAddress);
   const getAddress = (netId, name) => get(contracts, `address.${walletNetworkId}.${name}`);
 
@@ -271,6 +280,7 @@ const CreateLoan = ({ contracts }: any) => {
   };
 
   const onRetry = async () => {
+    setRepaymentIndex(0);
     setStage(UI.Confirm);
     setAmountValidation({
       error: false,
@@ -347,7 +357,8 @@ const CreateLoan = ({ contracts }: any) => {
     termsCond,
     authTerms,
     operatorFee,
-    borrowerCompany
+    borrowerCompany,
+    repaymentType: RepaymentType[selectedRepaymentIndex]
   };
   const methods = { onSave, onRetry, onToggleTerms, onToggleAuthTerms };
 
@@ -424,7 +435,6 @@ const CreateLoan = ({ contracts }: any) => {
               </CreateLoanDescription>
             </CreateLoanRow>
           </CreateLoanHeader>
-
           <CreateLoanRow>
             <GroupButton
               options={loanAuctionIntervalArray}
@@ -433,6 +443,14 @@ const CreateLoan = ({ contracts }: any) => {
             />
           </CreateLoanRow>
         </CreateLoanSection>
+        <BrowserView>
+          <Divider />
+        </BrowserView>
+        <RepaymentControl
+          value={selectedRepaymentIndex}
+          onSelect={setRepaymentIndex}
+          options={repaymentOptions}
+        />
         <BrowserView>
           <Divider />
         </BrowserView>
@@ -457,7 +475,6 @@ const CreateLoan = ({ contracts }: any) => {
             />
           </CreateLoanRow>
         </CreateLoanSection>
-
         <BrowserView>
           <Divider />
         </BrowserView>

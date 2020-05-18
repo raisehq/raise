@@ -41,6 +41,7 @@ export const ButtonRow = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  margin-bottom: 20px;
 `;
 
 export const DashboardTab: any = styled(Tab)`
