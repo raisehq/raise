@@ -14,6 +14,7 @@ export const MobileLinkWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   margin-right: 10px;
+  width: 130px;
 `;
 
 export const ButtonWrapper = styled.div`
