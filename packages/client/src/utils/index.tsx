@@ -12,6 +12,8 @@ const HOSTS: any = {
   THEGRAPHWS: process.env.REACT_APP_HOST_THEGRAPH_WS
 };
 
+console.log('hosts url', HOSTS);
+
 const THEGRAPH_IDS: any = {
   KOVAN: process.env.REACT_APP_THEGRAPH_ID_KOVAN,
   MAINNET: process.env.REACT_APP_THEGRAPH_ID_MAIN,

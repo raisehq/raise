@@ -25,6 +25,7 @@
     "rollup": "lerna run --stream --scope '@raisehq/libs' build:production",
     "dev:rollup": "lerna run --stream --scope '@raisehq/libs' start",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
+    "client:build:integration:bili": "yarn run build:deps:bili && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client",
     "pages:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope pages",
     "pages:build:production": "yarn run build:deps && lerna run build:production --stream --scope pages",
