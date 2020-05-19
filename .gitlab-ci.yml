@@ -254,10 +254,7 @@ deploy-int:
       mv packages/client/build_int build_int
       aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
       aws s3 cp build_int s3://${BUCKET_NAME_INT}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
-      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_INT" | cut -f1); do
-        echo $dist
-        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
-      done
+      ./cache_invalidation.sh ${BUCKET_NAME_INT}
   only:
     - master
 
@@ -272,10 +269,7 @@ deploy-int-pages:
       mv packages/pages/build_int build_int
       aws s3 sync --delete build_int s3://${BUCKET_NAME_INT_WWW}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
       aws s3 cp s3://${BUCKET_NAME_INT_WWW}/ s3://${BUCKET_NAME_INT_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
-      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_INT_WWW" | cut -f1); do
-        echo $dist
-        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
-      done
+      ./cache_invalidation.sh ${BUCKET_NAME_INT_WWW}
   only:
     - master
 
@@ -290,10 +284,7 @@ deploy-canary:
       mv packages/client/build canary
       aws s3 rm s3://${BUCKET_NAME_PROD}/canary --recursive
       aws s3 cp canary s3://${BUCKET_NAME_PROD}/canary/ --recursive
-      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
-        echo $dist
-        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
-      done
+      ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/canary/*"
   only:
     - master
   resource_group: production
@@ -388,10 +379,7 @@ deploy-prod:
       mv packages/client/build latest
       aws s3 rm s3://${BUCKET_NAME_PROD}/latest --recursive
       aws s3 cp latest s3://${BUCKET_NAME_PROD}/latest/ --recursive
-      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
-        echo $dist
-        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
-      done
+      ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/latest/*"
   only:
     - master
   resource_group: production
@@ -407,10 +395,7 @@ deploy-prod-pages:
       mv packages/pages/build latest
       aws s3 sync --delete latest s3://${BUCKET_NAME_PROD_WWW}/ --metadata-directive REPLACE --cache-control max-age=86400000
       aws s3 cp s3://${BUCKET_NAME_PROD_WWW}/latest/ s3://${BUCKET_NAME_PROD_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
-      for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD_WWW" | cut -f1); do
-        echo $dist
-        aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
-      done
+      ./cache_invalidation.sh ${BUCKET_NAME_PROD_WWW}
   only:
     - master
   resource_group: production
