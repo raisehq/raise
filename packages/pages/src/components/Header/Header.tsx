@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header, Button } from '@raisehq/components';
 import { FlexDiv } from './Header.styles';
-import { BasicLink } from '../links';
+import { BasicLink } from '../Links';
 import routes from '../../routes';
 
 const REACT_APP_HOST_URL = process.env.REACT_APP_HOST_URL; // eslint-disable-line
