@@ -8,6 +8,14 @@ export const FlexDiv = styled.div`
   padding: 0px 14px;
 `;
 
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 260px;
+`;
+
 export const MobileLinkWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -15,14 +23,6 @@ export const MobileLinkWrapper = styled.div`
   align-items: center;
   margin-right: 10px;
   width: 130px;
-`;
-
-export const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-around;
-  width: 260px;
 `;
 
 export const LinkContainer = styled.div`
