@@ -235,7 +235,7 @@ deploy-components:
     - |
       #!/bin/sh
       ls -la .
-      ./cache_invalidation.sh"
+      ./cache_invalidation.sh
   # only:
   #   - master
 
