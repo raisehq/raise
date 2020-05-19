@@ -220,11 +220,19 @@ deploy-components:
     - |
       #!/bin/sh
       mv packages/components/dist components
-      ls -la components
+
+      aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.development.js
       aws s3 cp components/raisecomponents.umd.development.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+
+      aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.development.js.map
       aws s3 cp components/raisecomponents.umd.development.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+
+      aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.production.min.js
       aws s3 cp components/raisecomponents.umd.production.min.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+
+      aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.production.min.js.map
       aws s3 cp components/raisecomponents.umd.production.min.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/components/*"
   only:
     - master
 
@@ -239,7 +247,9 @@ deploy-onboarding:
     - |
       #!/bin/sh
       mv packages/libs/build onboarding
-      aws s3 sync --delete onboarding s3://${LIB_BUCKET_NAME}/onboarding/ --metadata-directive REPLACE --cache-control max-age=86400000
+      aws s3 rm s3://${LIB_BUCKET_NAME}/onboarding/ --recursive
+      aws s3 cp onboarding s3://${LIB_BUCKET_NAME}/onboarding/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000
+      ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/onboarding/*"
   only:
     - master
 
@@ -267,8 +277,8 @@ deploy-int-pages:
     - |
       #!/bin/sh
       mv packages/pages/build_int build_int
-      aws s3 sync --delete build_int s3://${BUCKET_NAME_INT_WWW}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
-      aws s3 cp s3://${BUCKET_NAME_INT_WWW}/ s3://${BUCKET_NAME_INT_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      aws s3 rm s3://${BUCKET_NAME_INT_WWW}/ --recursive
+      aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
       ./cache_invalidation.sh ${BUCKET_NAME_INT_WWW}
   only:
     - master
@@ -378,7 +388,7 @@ deploy-prod:
       #!/bin/sh
       mv packages/client/build latest
       aws s3 rm s3://${BUCKET_NAME_PROD}/latest --recursive
-      aws s3 cp latest s3://${BUCKET_NAME_PROD}/latest/ --recursive
+      aws s3 cp latest s3://${BUCKET_NAME_PROD}/latest/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
       ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/latest/*"
   only:
     - master
@@ -393,8 +403,8 @@ deploy-prod-pages:
     - |
       #!/bin/sh
       mv packages/pages/build latest
-      aws s3 sync --delete latest s3://${BUCKET_NAME_PROD_WWW}/ --metadata-directive REPLACE --cache-control max-age=86400000
-      aws s3 cp s3://${BUCKET_NAME_PROD_WWW}/latest/ s3://${BUCKET_NAME_PROD_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/latest --recursive
+      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
       ./cache_invalidation.sh ${BUCKET_NAME_PROD_WWW}
   only:
     - master
