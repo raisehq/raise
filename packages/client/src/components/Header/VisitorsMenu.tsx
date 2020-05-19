@@ -44,18 +44,8 @@ const VisitorsMenu = () => {
     </MobileLinkWrapper>
   ) : (
     <ButtonWrapper>
-      <Button
-        text="Log in"
-        type="tertiary"
-        size={isMobile ? 'small' : 'standard'}
-        onClick={openLogin}
-      />
-      <SignupButton
-        text="Sign up"
-        type="secondary"
-        size={isMobile ? 'small' : 'standard'}
-        onClick={openSignUp}
-      />
+      <Button text="Log in" type="tertiary" size="small" onClick={openLogin} />
+      <SignupButton text="Sign up" type="secondary" size="small" onClick={openSignUp} />
     </ButtonWrapper>
   );
 };

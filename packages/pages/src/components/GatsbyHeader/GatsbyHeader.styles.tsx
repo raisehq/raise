@@ -8,4 +8,37 @@ export const FlexDiv = styled.div`
   padding: 0px 14px;
 `;
 
-export default FlexDiv;
+export const MobileLinkWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 10px;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 260px;
+`;
+
+export const LinkContainer = styled.div`
+{
+  a {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+
+  color: #8a8e97;
+  padding: 15px;
+
+  background-color: #fff;
+  border:none;
+  cursor:pointer;
+  }
+  
+`;

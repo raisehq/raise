@@ -252,7 +252,7 @@ deploy-int:
     - |
       #!/bin/sh
       mv packages/client/build_int build_int
-      aws s3 sync --delete build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 rm s3://${BUCKET_NAME_INT} --recursive
       aws s3 cp s3://${BUCKET_NAME_INT}/ s3://${BUCKET_NAME_INT}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
       for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_INT" | cut -f1); do
         echo $dist
@@ -288,8 +288,8 @@ deploy-canary:
     - |
       #!/bin/sh
       mv packages/client/build canary
-      aws s3 sync --delete canary s3://${BUCKET_NAME_PROD}/canary --metadata-directive REPLACE --cache-control max-age=86400000
-      aws s3 cp s3://${BUCKET_NAME_PROD}/canary/ s3://${BUCKET_NAME_PROD}/canary/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      aws s3 rm s3://${BUCKET_NAME_PROD}/canary --recursive
+      aws s3 cp canary s3://${BUCKET_NAME_PROD}/canary/ --recursive
       for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
         echo $dist
         aws cloudfront create-invalidation --distribution-id $dist --paths "/*";
@@ -386,8 +386,8 @@ deploy-prod:
     - |
       #!/bin/sh
       mv packages/client/build latest
-      aws s3 sync --delete latest s3://${BUCKET_NAME_PROD}/latest --metadata-directive REPLACE --cache-control max-age=86400000
-      aws s3 cp s3://${BUCKET_NAME_PROD}/latest/ s3://${BUCKET_NAME_PROD}/latest/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      aws s3 rm s3://${BUCKET_NAME_PROD}/latest --recursive
+      aws s3 cp latest s3://${BUCKET_NAME_PROD}/latest/ --recursive
       for dist in $(aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | grep "$BUCKET_NAME_PROD" | cut -f1); do
         echo $dist
         aws cloudfront create-invalidation --distribution-id $dist --paths "/*";

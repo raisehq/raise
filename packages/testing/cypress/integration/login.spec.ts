@@ -1,6 +1,7 @@
 describe('Login', function () {
   beforeEach(function () {
-    cy.CookieXCanary();
+    const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
+    cy.CookieXCanary(isCanary);
   });
   it('Make Login', function () {
     cy.web3('lender');

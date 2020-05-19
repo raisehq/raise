@@ -13,8 +13,8 @@ Cypress.Cookies.defaults({
   whitelist: 'canary_release'
 });
 
-Cypress.Commands.add('CookieXCanary', function () {
-  cy.setCookie('X-Canary', Date.now().toString(), { domain: Cypress.env('cookie') });
+Cypress.Commands.add('CookieXCanary', function (isCanary) {
+  isCanary && cy.setCookie('X-Canary', Date.now().toString(), { domain: Cypress.env('cookie') });
 });
 
 /*
