@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { Footer } from '@raisehq/components';
+import { isMobile } from 'react-device-detect';
 import { HeroLayout } from './Layout.styles';
 
 interface IDefaultProps {
@@ -15,7 +16,7 @@ const Layout: React.SFC<IDefaultProps> = ({ component: Component, ...rest }: any
     render={() => (
       <HeroLayout>
         <Component {...rest} />
-        <Footer />
+        <Footer isMobile={isMobile} />
       </HeroLayout>
     )}
   />

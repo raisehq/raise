@@ -1,4 +1,4 @@
-describe('LENDER', function() {
+describe('LENDER', function () {
   beforeEach(() => {
     const isCanary = JSON.parse(Cypress.env('isCanary') || 'false');
     cy.CookieXCanary(isCanary);

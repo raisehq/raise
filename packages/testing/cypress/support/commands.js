@@ -30,7 +30,7 @@ addMatchImageSnapshotCommand({
 /*
   Mock Web3 connection with GANACHE
 */
-Cypress.Commands.add('web3', function(type) {
+Cypress.Commands.add('web3', function (type) {
   cy.on('window:before:load', (win) => {
     const user = Cypress.env('user');
     const provider = new PrivateKeyProvider(
@@ -48,7 +48,7 @@ Cypress.Commands.add('web3', function(type) {
 /*
   Mock the graph and the card creation
 */
-Cypress.Commands.add('addCards', function(type) {
+Cypress.Commands.add('addCards', function (type) {
   cy.window().then(async (win) => {
     const user = Cypress.env('user');
     const provider = new PrivateKeyProvider(
@@ -69,7 +69,7 @@ Cypress.Commands.add('addCards', function(type) {
 /*
   Mock the graph and the card creation
 */
-Cypress.Commands.add('checkFakeDai', function(type) {
+Cypress.Commands.add('checkFakeDai', function (type) {
   cy.window().then((win) => {
     const daiBalances = {
       balances: users.map((address) => ({ wad: '10000000000000000000', address }))
@@ -81,7 +81,7 @@ Cypress.Commands.add('checkFakeDai', function(type) {
 /*
   Mock the graph and the card creation
 */
-Cypress.Commands.add('addLoanAndCard', function(type) {
+Cypress.Commands.add('addLoanAndCard', function (type) {
   cy.window().then(async (win) => {
     const user = Cypress.env('user');
     const provider = new PrivateKeyProvider(
@@ -125,7 +125,7 @@ Cypress.Commands.add('addLoanAndCard', function(type) {
 /*
   Mock the graph and the card creation
 */
-Cypress.Commands.add('createLoan', function(type) {
+Cypress.Commands.add('createLoan', function (type) {
   cy.on('window:before:load', async (win) => {
     const user = Cypress.env('user');
     const provider = new PrivateKeyProvider(
@@ -171,7 +171,7 @@ Cypress.Commands.add('createLoan', function(type) {
 /*
   Mock Login process
 */
-Cypress.Commands.add('login', function(type, isCanary = false) {
+Cypress.Commands.add('login', function (type, isCanary = false) {
   if (isCanary) {
     console.log('- Mock Login disabled by Canary');
     // Request to the real API
@@ -253,7 +253,7 @@ Cypress.Commands.add('login', function(type, isCanary = false) {
 /*
   Mock API requests
 */
-Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
+Cypress.Commands.add('mockAPI', function (type, isCanary = false) {
   if (!isCanary) {
     cy.on('window:before:load', async (win) => {
       const user = Cypress.env('user');
@@ -371,7 +371,7 @@ Cypress.Commands.add('mockAPI', function(type, isCanary = false) {
 /*
   Mock The graph response
 */
-Cypress.Commands.add('acceptedTokens', function() {
+Cypress.Commands.add('acceptedTokens', function () {
   cy.window().then(async (win) => {
     const user = Cypress.env('user');
     const provider = new PrivateKeyProvider(
@@ -402,7 +402,7 @@ Cypress.Commands.add('acceptedTokens', function() {
 /*
   Mock the graph
 */
-Cypress.Commands.add('butterCMS', function() {
+Cypress.Commands.add('butterCMS', function () {
   cy.on('window:before:load', (win) => {
     win.TheGraphMockResponses = {};
   });
@@ -411,7 +411,7 @@ Cypress.Commands.add('butterCMS', function() {
 /* 
   Mock Butter cms responses
 */
-Cypress.Commands.add('butterCMS', function() {
+Cypress.Commands.add('butterCMS', function () {
   cy.on('window:before:load', (win) => {
     win.ButterCMSMockResponses = {
       warnings: {
