@@ -251,9 +251,11 @@ const InvestmentBox = ({
           {errorMessage()}
           &nbsp;
         </ErrorBox>
-        <MaxInputs>
-          <MaxInputsRaw onClick={fundAll(loanCoin, coin)} />
-        </MaxInputs>
+        {isLogged && (
+          <MaxInputs>
+            <MaxInputsRaw onClick={fundAll(loanCoin, coin)} />
+          </MaxInputs>
+        )}
       </BalanceWrapper>
     </Card>
   );
