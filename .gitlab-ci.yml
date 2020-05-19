@@ -86,7 +86,7 @@ build-pages-review:
       #!/bin/sh
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
-      yarn run client:build:integration:bili
+      yarn run pages:build:integration:bili
       mv  packages/pages/public  packages/pages/build_review
   only:
     - merge_requests
