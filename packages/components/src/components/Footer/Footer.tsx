@@ -135,6 +135,9 @@ const Footer = ({ isMobile }) => {
               <MenuLink href="mailto:hello@raise.it" rel="noopener noreferrer" target="_blank">
                 Email
               </MenuLink>
+              <MenuLink href="https://t.me/raisehq" rel="noopener noreferrer" target="_blank">
+                Telegram
+              </MenuLink>
               {/* <MenuLink
                 href="javascript:$zopim.livechat.window.show();"
                 rel="noopener noreferrer"
@@ -239,6 +242,9 @@ const Footer = ({ isMobile }) => {
             <DropdownMenu display={dropdown.reachus}>
               <MenuLink href="mailto:hello@raise.it" rel="noopener noreferrer" target="_blank">
                 Email
+              </MenuLink>
+              <MenuLink href="https://t.me/raisehq" rel="noopener noreferrer" target="_blank">
+                Telegram
               </MenuLink>
               {/* <MenuLink
                 href="javascript:$zopim.livechat.window.show();"
