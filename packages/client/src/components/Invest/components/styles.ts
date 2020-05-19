@@ -192,6 +192,7 @@ export const Eligible = styled.div<EligibleProps>`
 
 export const BigInput = styled(LoanInput)`
   font-size: ${({ value }) => {
+    console.log('value:::::: ', value);
     if (value?.toString()?.length > 8) {
       return 28;
     }
@@ -204,7 +205,7 @@ export const BigInput = styled(LoanInput)`
   line-height: 56px;
   width: ${({ value }) => (value?.toString()?.length > 1 ? value?.toString()?.length + 1 : 1)}ch;
   text-align: ${({ value }) => (value ? 'center' : 'left')};
-  min-width: ${({ value }) => (value ? '0px' : '2ch')};
+  min-width: ${({ value }) => (value ? '0px' : '1.5ch')};
   color: #00da9e;
   background-color: transparent;
   display: flex;

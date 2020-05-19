@@ -10,6 +10,7 @@ const LoanInput = ({
   ...props
 }: any) => {
   const { value } = props;
+  console.log('nubmer format value:::: ', props);
   const numeralSize = numeral(value).length;
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {

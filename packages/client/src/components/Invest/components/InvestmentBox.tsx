@@ -165,17 +165,32 @@ const InvestmentBox = ({
   };
 
   const onSetValue = (v) => {
-    if (!v?.floatValue) {
+    console.log('set value init:: ', v);
+    if (v && v.floatValue) {
+      if (v.floatValue >= 0) {
+        return setValue(v.floatValue);
+      }
+
       return setValue(0);
     }
-    if (v?.floatValue < 0) {
-      return setValue(0);
-    }
-    return setValue(v.floatValue);
+
+    return setValue(0);
+    // if (!v?.flotValue) {
+    //   console.log('set value 1:: ', v);
+    //   return setValue(0);
+    // }
+    // if (v?.floatValue <= 0) {
+    //   console.log('set value 2:: ', v);
+    //   return setValue(0);
+    // }
+    // console.log('set value 3:: ', v);
+    // return setValue(v.floatValue);
   };
 
-  const readValue = value > 0 ? value : null;
-
+  const readValue = () => {
+    console.log('read value::: ', value);
+    return value > 0 ? value : null;
+  };
   const errorMessage = () => {
     if (inputToken && inputToken > balance && isLogged) {
       return errorMessages.inputGreaterThanBalance;
@@ -188,9 +203,11 @@ const InvestmentBox = ({
 
   const preventOverflow = (e) => {
     const char = String.fromCharCode(e.which);
+    console.log('e::: ', char);
     const finalValue = `${value}${char}`;
     const max = 9;
     if (Number(char) >= 0 && finalValue.length > max) {
+      console.log('-----------max---------------:: ', finalValue);
       e.preventDefault();
     }
   };
@@ -223,7 +240,7 @@ const InvestmentBox = ({
           autoComplete="off"
           id="input-invest-value"
           placeholder="0"
-          value={readValue}
+          value={readValue()}
           onValueChange={onSetValue}
           fixedDecimalScale={false}
           onKeyDown={preventOverflow}
