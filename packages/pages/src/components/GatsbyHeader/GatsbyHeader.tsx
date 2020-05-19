@@ -2,7 +2,7 @@ import React from 'react';
 import { Header as RaiseHeader, Button } from '@raisehq/components';
 import { isMobile } from 'react-device-detect';
 import { LinkContainer, MobileLinkWrapper, ButtonWrapper } from './GatsbyHeader.styles';
-import { BasicLink } from '../links';
+import { BasicLink } from '../Links';
 
 import routes from '../../routes';
 
