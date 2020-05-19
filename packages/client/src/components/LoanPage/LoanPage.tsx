@@ -205,7 +205,7 @@ const LoanPage = () => {
             length={sections.length}
           />
         ))}
-        {activeWarning ? (
+        {isLogged && activeWarning ? (
           <WarningModal
             warning={activeWarning}
             open={open}
