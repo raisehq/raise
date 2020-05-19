@@ -215,7 +215,8 @@ deploy-components:
   variables:
     LIB_BUCKET_NAME: lib.raise.it
   before_script:
-    - 'pip install awscli'
+    - apk add --update bash
+    - pip install awscli
   script:
     # - |
     #   #!/bin/sh
