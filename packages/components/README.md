@@ -12,7 +12,7 @@ Your library will be rebuilt if you make edits.
 
 ### `yarn run dev-all:int`
 
-Compiles all components (onboarding included) and starts the watcher. 
+Compiles all components (onboarding included) and starts the watcher.
 
 ### `npm run build` or `yarn build`
 

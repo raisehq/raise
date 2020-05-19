@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 
 import { Modal as SemanticModal } from 'semantic-ui-react';
-import { InvestModalProps } from '../InvestModal/types';
+import { InvestModalProps } from '../../interfaces/Invest';
 import ClaimLoanContext from './ClaimLoan.context';
 import Stages from './ClaimLoan.stages';
 import { getCalculations } from '../../utils/loanUtils';
 import ConfirmStage from './stages/Confirm';
 import SuccessStage from './stages/Success';
 import Error from './stages/Error';
-import { Modal } from './ClaimLoan.styles';
-
-import { BorrowerButton, ExitButton } from '../InvestModal/InvestModal.styles';
+import { BorrowerButton, ExitButton, Modal } from './ClaimLoan.styles';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const ClaimLoanCTA: React.SFC<InvestModalProps> = ({ loan }: any) => {

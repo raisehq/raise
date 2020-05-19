@@ -11,7 +11,7 @@ const routeSkeleton = {
   },
   routes: [
     {
-      title: 'Investment Opportunity',
+      title: 'Investment opportunity',
       path: `${REACT_APP_HOST_URL}`,
       component: BasicLink
     },
@@ -23,11 +23,6 @@ const routeSkeleton = {
     {
       title: 'About us',
       path: `${REACT_APP_WEB_URL}/about`,
-      component: BasicLink
-    },
-    {
-      title: 'Help',
-      path: `${REACT_APP_WEB_URL}/help`,
       component: BasicLink
     },
     {

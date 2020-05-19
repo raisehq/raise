@@ -24,7 +24,7 @@ export { AccountType } from './types';
 
 export { default as useDefiPulse } from './hooks/useDefiPulse';
 
-export { default as Link } from './components/commons/Link';
+export { default as MobileButtonLink } from './components/commons/Link';
 export { default as Button } from './components/commons/ButtonControl/Button';
 export { default as BloomButton } from './components/commons/ButtonControl/BloomButton';
 export { default as ButtonLink } from './components/commons/ButtonControl/ButtonLink';
@@ -37,6 +37,8 @@ export { default as useScript } from './hooks/useScript';
 export { default as Header, TopHeader, SubPageHeader, SubHeader } from './components/Headers';
 export { LinkComponent, HeaderProps } from './components/Headers/interfaces';
 export { default as LoanActivity } from './components/LoanActivity';
+export { default as AboutBorrower } from './components/AboutBorrower';
+export { default as NeedHelp } from './components/NeedHelp';
 
 export {
   getCurrentInstalment,

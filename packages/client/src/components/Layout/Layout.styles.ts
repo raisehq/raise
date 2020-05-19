@@ -164,9 +164,6 @@ export const HeroLayout = styled('div')`
 `;
 
 export const Content = styled.div`
-  width: 1172px;
-  padding: 40px 15px 155px 15px;
-  padding-bottom: 155px;
   box-sizing: border-box;
   margin: 0 auto;
 

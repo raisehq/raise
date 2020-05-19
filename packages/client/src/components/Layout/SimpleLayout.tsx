@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Footer } from '@raisehq/components';
 import { Grid } from 'semantic-ui-react';
+import { isMobile } from 'react-device-detect';
 // import Logout from '../Logout';
 import { useRootContext } from '../../contexts/RootContext';
 import useRouter from '../../hooks/useRouter';
@@ -55,7 +56,7 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
               </Grid>
             </OnboardingContent>
           </Wrapper>
-          {logged && <Footer />}
+          {logged && <Footer isMobile={isMobile} />}
         </HeroLayout>
       )}
     />
