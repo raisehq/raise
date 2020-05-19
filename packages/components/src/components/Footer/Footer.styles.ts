@@ -26,6 +26,7 @@ export const FooterFirst = styled.div`
 export const FooterMenu = styled.div`
   width: 100%;
   display: flex;
+  margin-bottom: 24px;
 `;
 
 export const FooterIcons = styled.div`
