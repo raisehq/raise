@@ -236,330 +236,330 @@ deploy-components:
       #!/bin/sh
       ls -la .
       ./cache_invalidation.sh"
-  only:
-    - master
+  # only:
+  #   - master
 
-deploy-onboarding:
-  image: python:3.7-alpine
-  stage: deploy
-  variables:
-    LIB_BUCKET_NAME: lib.raise.it
-  before_script:
-    - 'pip install awscli'
-  script:
-    - |
-      #!/bin/sh
-      mv packages/libs/build onboarding
-      aws s3 rm s3://${LIB_BUCKET_NAME}/onboarding/ --recursive
-      aws s3 cp onboarding s3://${LIB_BUCKET_NAME}/onboarding/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000
-      ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/onboarding/*"
-  only:
-    - master
+# deploy-onboarding:
+#   image: python:3.7-alpine
+#   stage: deploy
+#   variables:
+#     LIB_BUCKET_NAME: lib.raise.it
+#   before_script:
+#     - 'pip install awscli'
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/libs/build onboarding
+#       aws s3 rm s3://${LIB_BUCKET_NAME}/onboarding/ --recursive
+#       aws s3 cp onboarding s3://${LIB_BUCKET_NAME}/onboarding/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000
+#       ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/onboarding/*"
+#   only:
+#     - master
 
-deploy-int:
-  image: python:3.7-alpine
-  stage: deploy
-  before_script:
-    - 'pip install awscli'
-  script:
-    - |
-      #!/bin/sh
-      mv packages/client/build_int build_int
-      aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
-      aws s3 cp build_int s3://${BUCKET_NAME_INT}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
-      ./cache_invalidation.sh ${BUCKET_NAME_INT}
-  only:
-    - master
+# deploy-int:
+#   image: python:3.7-alpine
+#   stage: deploy
+#   before_script:
+#     - 'pip install awscli'
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/client/build_int build_int
+#       aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
+#       aws s3 cp build_int s3://${BUCKET_NAME_INT}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+#       ./cache_invalidation.sh ${BUCKET_NAME_INT}
+#   only:
+#     - master
 
-deploy-int-pages:
-  image: python:3.7-alpine
-  stage: deploy
-  before_script:
-    - 'pip install awscli'
-  script:
-    - |
-      #!/bin/sh
-      mv packages/pages/build_int build_int
-      aws s3 rm s3://${BUCKET_NAME_INT_WWW}/ --recursive
-      aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
-      ./cache_invalidation.sh ${BUCKET_NAME_INT_WWW}
-  only:
-    - master
+# deploy-int-pages:
+#   image: python:3.7-alpine
+#   stage: deploy
+#   before_script:
+#     - 'pip install awscli'
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/pages/build_int build_int
+#       aws s3 rm s3://${BUCKET_NAME_INT_WWW}/ --recursive
+#       aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+#       ./cache_invalidation.sh ${BUCKET_NAME_INT_WWW}
+#   only:
+#     - master
 
-deploy-canary:
-  image: python:3.7-alpine
-  stage: deploy
-  before_script:
-    - 'pip install awscli'
-  script:
-    - |
-      #!/bin/sh
-      mv packages/client/build canary
-      aws s3 rm s3://${BUCKET_NAME_PROD}/canary --recursive
-      aws s3 cp canary s3://${BUCKET_NAME_PROD}/canary/ --recursive
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/canary/*"
-  only:
-    - master
-  resource_group: production
+# deploy-canary:
+#   image: python:3.7-alpine
+#   stage: deploy
+#   before_script:
+#     - 'pip install awscli'
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/client/build canary
+#       aws s3 rm s3://${BUCKET_NAME_PROD}/canary --recursive
+#       aws s3 cp canary s3://${BUCKET_NAME_PROD}/canary/ --recursive
+#       ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/canary/*"
+#   only:
+#     - master
+#   resource_group: production
 
-cypress-e2e-review:
-  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
-  stage: test
-  variables:
-    CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
-    CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
-    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: ${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
-    CYPRESS_isCanary: 'false'
-  script:
-    - yarn --pure-lockfile
-    - cd packages/testing
-    - yarn run cypress cache path
-    - yarn run cypress cache list
-    - yarn run cypress verify
-    - yarn run ci:run
-  artifacts:
-    expire_in: '1 week'
-    when: always
-    paths:
-      - packages/testing/ganache_db
-      - packages/testing/cypress/screenshots
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  only:
-    - merge_requests
-  cache:
-    key: ganache-global-cache
-    paths:
-      - packages/testing/ganache_db
+# cypress-e2e-review:
+#   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
+#   stage: test
+#   variables:
+#     CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
+#     CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
+#     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+#     CYPRESS_api: ${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+#     CYPRESS_isCanary: 'false'
+#   script:
+#     - yarn --pure-lockfile
+#     - cd packages/testing
+#     - yarn run cypress cache path
+#     - yarn run cypress cache list
+#     - yarn run cypress verify
+#     - yarn run ci:run
+#   artifacts:
+#     expire_in: '1 week'
+#     when: always
+#     paths:
+#       - packages/testing/ganache_db
+#       - packages/testing/cypress/screenshots
+#       - packages/testing/cypress/videos
+#       - packages/testing/cypress/snapshots
+#   only:
+#     - merge_requests
+#   cache:
+#     key: ganache-global-cache
+#     paths:
+#       - packages/testing/ganache_db
 
-cypress-e2e-canary:
-  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
-  stage: test
-  variables:
-    CYPRESS_url: 'https://app.raise.it'
-    CYPRESS_baseUrl: 'https://app.raise.it'
-    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: api.raise.it
-    CYPRESS_isCanary: 'false'
-  script:
-    - yarn --pure-lockfile
-    - cd packages/testing
-    - yarn run cypress cache path
-    - yarn run cypress cache list
-    - yarn run cypress verify
-    - yarn run ci:run
-  artifacts:
-    expire_in: '1 week'
-    when: always
-    paths:
-      - packages/testing/cypress/screenshots
-      - packages/testing/ganache_db
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  cache:
-    key: ganache-global-cache
-    paths:
-      - packages/testing/ganache_db
-  only:
-    - master
-  resource_group: production
+# cypress-e2e-canary:
+#   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
+#   stage: test
+#   variables:
+#     CYPRESS_url: 'https://app.raise.it'
+#     CYPRESS_baseUrl: 'https://app.raise.it'
+#     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+#     CYPRESS_api: api.raise.it
+#     CYPRESS_isCanary: 'false'
+#   script:
+#     - yarn --pure-lockfile
+#     - cd packages/testing
+#     - yarn run cypress cache path
+#     - yarn run cypress cache list
+#     - yarn run cypress verify
+#     - yarn run ci:run
+#   artifacts:
+#     expire_in: '1 week'
+#     when: always
+#     paths:
+#       - packages/testing/cypress/screenshots
+#       - packages/testing/ganache_db
+#       - packages/testing/cypress/videos
+#       - packages/testing/cypress/snapshots
+#   cache:
+#     key: ganache-global-cache
+#     paths:
+#       - packages/testing/ganache_db
+#   only:
+#     - master
+#   resource_group: production
 
-components-unit-test:
-  image: buildkite/puppeteer
-  stage: test
-  script:
-    - apt-get update
-    - apt-get install -y git python build-essential
-    - yarn --pure-lockfile
-    - yarn run components:test:ci
-  artifacts:
-    expire_in: '1 week'
-    when: always
-    paths:
-      - packages/components/test/__image_snapshots__
-  only:
-    - merge_requests
+# components-unit-test:
+#   image: buildkite/puppeteer
+#   stage: test
+#   script:
+#     - apt-get update
+#     - apt-get install -y git python build-essential
+#     - yarn --pure-lockfile
+#     - yarn run components:test:ci
+#   artifacts:
+#     expire_in: '1 week'
+#     when: always
+#     paths:
+#       - packages/components/test/__image_snapshots__
+#   only:
+#     - merge_requests
 
-deploy-prod:
-  image: python:3.7-alpine
-  stage: deploy-prod
-  before_script:
-    - 'pip install awscli'
-  script:
-    - |
-      #!/bin/sh
-      mv packages/client/build latest
-      aws s3 rm s3://${BUCKET_NAME_PROD}/latest --recursive
-      aws s3 cp latest s3://${BUCKET_NAME_PROD}/latest/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/latest/*"
-  only:
-    - master
-  resource_group: production
+# deploy-prod:
+#   image: python:3.7-alpine
+#   stage: deploy-prod
+#   before_script:
+#     - 'pip install awscli'
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/client/build latest
+#       aws s3 rm s3://${BUCKET_NAME_PROD}/latest --recursive
+#       aws s3 cp latest s3://${BUCKET_NAME_PROD}/latest/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+#       ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/latest/*"
+#   only:
+#     - master
+#   resource_group: production
 
-deploy-prod-pages:
-  image: python:3.7-alpine
-  stage: deploy-prod
-  before_script:
-    - 'pip install awscli'
-  script:
-    - |
-      #!/bin/sh
-      mv packages/pages/build latest
-      aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/latest --recursive
-      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD_WWW}
-  only:
-    - master
-  resource_group: production
+# deploy-prod-pages:
+#   image: python:3.7-alpine
+#   stage: deploy-prod
+#   before_script:
+#     - 'pip install awscli'
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/pages/build latest
+#       aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/latest --recursive
+#       aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+#       ./cache_invalidation.sh ${BUCKET_NAME_PROD_WWW}
+#   only:
+#     - master
+#   resource_group: production
 
-cypress-e2e-production:
-  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
-  stage: test-prod
-  variables:
-    CYPRESS_url: 'https://app.raise.it'
-    CYPRESS_baseUrl: 'https://app.raise.it'
-    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: api.raise.it
-  script:
-    - yarn --pure-lockfile
-    - cd packages/testing
-    - yarn run cypress cache path
-    - yarn run cypress cache list
-    - yarn run cypress verify
-    - yarn run ci:run
-  artifacts:
-    expire_in: '1 week'
-    when: always
-    paths:
-      - packages/testing/cypress/screenshots
-      - packages/testing/ganache_db
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  cache:
-    key: ganache-global-cache
-    paths:
-      - packages/testing/ganache_db
-  only:
-    - master
-  resource_group: production
+# cypress-e2e-production:
+#   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
+#   stage: test-prod
+#   variables:
+#     CYPRESS_url: 'https://app.raise.it'
+#     CYPRESS_baseUrl: 'https://app.raise.it'
+#     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+#     CYPRESS_api: api.raise.it
+#   script:
+#     - yarn --pure-lockfile
+#     - cd packages/testing
+#     - yarn run cypress cache path
+#     - yarn run cypress cache list
+#     - yarn run cypress verify
+#     - yarn run ci:run
+#   artifacts:
+#     expire_in: '1 week'
+#     when: always
+#     paths:
+#       - packages/testing/cypress/screenshots
+#       - packages/testing/ganache_db
+#       - packages/testing/cypress/videos
+#       - packages/testing/cypress/snapshots
+#   cache:
+#     key: ganache-global-cache
+#     paths:
+#       - packages/testing/ganache_db
+#   only:
+#     - master
+#   resource_group: production
 
-tag to latest:
-  image: alpine:latest
-  stage: tag
-  before_script:
-    - |
-      #!/bin/sh
-      apk add --update openssh-client bash git
-      eval $(ssh-agent -s)
-      echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-      mkdir -p ~/.ssh
-      chmod 700 ~/.ssh
-      ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
-      chmod 644 ~/.ssh/known_hosts
-  script:
-    - git remote set-url origin git@gitlab.com:raisehq/${CI_PROJECT_NAME}.git
-    - git tag latest --force
-    - git push --force origin --tags
-  only:
-    - master
-  resource_group: production
+# tag to latest:
+#   image: alpine:latest
+#   stage: tag
+#   before_script:
+#     - |
+#       #!/bin/sh
+#       apk add --update openssh-client bash git
+#       eval $(ssh-agent -s)
+#       echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+#       mkdir -p ~/.ssh
+#       chmod 700 ~/.ssh
+#       ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+#       chmod 644 ~/.ssh/known_hosts
+#   script:
+#     - git remote set-url origin git@gitlab.com:raisehq/${CI_PROJECT_NAME}.git
+#     - git tag latest --force
+#     - git push --force origin --tags
+#   only:
+#     - master
+#   resource_group: production
 
-publish-components:
-  stage: publish
-  rules:
-    - if: '$CI_COMMIT_REF_SLUG != "master"'
-      when: never
-    - changes:
-        - packages/components/package.json
-    - when: never
-  before_script:
-    - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
-    - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
-    - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
-    - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
-  script:
-    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-    - |
-      #!/bin/sh
-      if [ "${LOCAL_VERSION_COMPONENTS}" != "${PUBLISH_VERSION_COMPONENTS}" ]; then
-        yarn --lockfile
-        cd ./packages/components/
-        yarn run build
-        npm publish
-      else
-        echo "Package not updated, the latest version published is ${PUBLISH_VERSION_COMPONENTS} and the local verison is ${LOCAL_VERSION_COMPONENTS}."
-      fi
+# publish-components:
+#   stage: publish
+#   rules:
+#     - if: '$CI_COMMIT_REF_SLUG != "master"'
+#       when: never
+#     - changes:
+#         - packages/components/package.json
+#     - when: never
+#   before_script:
+#     - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
+#     - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
+#     - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
+#     - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
+#   script:
+#     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+#     - |
+#       #!/bin/sh
+#       if [ "${LOCAL_VERSION_COMPONENTS}" != "${PUBLISH_VERSION_COMPONENTS}" ]; then
+#         yarn --lockfile
+#         cd ./packages/components/
+#         yarn run build
+#         npm publish
+#       else
+#         echo "Package not updated, the latest version published is ${PUBLISH_VERSION_COMPONENTS} and the local verison is ${LOCAL_VERSION_COMPONENTS}."
+#       fi
 
-publish-onboarding:
-  stage: publish
-  rules:
-    - if: '$CI_COMMIT_REF_SLUG != "master"'
-      when: never
-    - changes:
-        - packages/onboarding/package.json
-    - when: never
-  before_script:
-    - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
-    - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
-    - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
-    - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
-  script:
-    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-    - |
-      #!/bin/sh
-      if [ "${LOCAL_VERSION_ONBOARDING}" != "${PUBLISH_VERSION_ONBOARDING}" ]; then
-        yarn --lockfile
-        yarn run build:deps
-        cd ./packages/onboarding/
-        npm publish
-      else
-        echo "Package not updated, the latest version published is ${PUBLISH_VERSION_ONBOARDING} and the local verison is ${LOCAL_VERSION_ONBOARDING}."
-      fi
+# publish-onboarding:
+#   stage: publish
+#   rules:
+#     - if: '$CI_COMMIT_REF_SLUG != "master"'
+#       when: never
+#     - changes:
+#         - packages/onboarding/package.json
+#     - when: never
+#   before_script:
+#     - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
+#     - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
+#     - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
+#     - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
+#   script:
+#     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+#     - |
+#       #!/bin/sh
+#       if [ "${LOCAL_VERSION_ONBOARDING}" != "${PUBLISH_VERSION_ONBOARDING}" ]; then
+#         yarn --lockfile
+#         yarn run build:deps
+#         cd ./packages/onboarding/
+#         npm publish
+#       else
+#         echo "Package not updated, the latest version published is ${PUBLISH_VERSION_ONBOARDING} and the local verison is ${LOCAL_VERSION_ONBOARDING}."
+#       fi
 
-review:
-  image: python:3.7-alpine
-  stage: review
-  before_script:
-    - 'pip install awscli'
-  script:
-    - 'mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'mv packages/pages/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+# review:
+#   image: python:3.7-alpine
+#   stage: review
+#   before_script:
+#     - 'pip install awscli'
+#   script:
+#     - 'mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+#     - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+#     - 'rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+#     - 'mv packages/pages/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
+#     - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
 
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
-    on_stop: stop-review
-  only:
-    - merge_requests
-    - latest
-  except:
-    - master
+#   environment:
+#     name: review/$CI_COMMIT_REF_SLUG
+#     url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+#     on_stop: stop-review
+#   only:
+#     - merge_requests
+#     - latest
+#   except:
+#     - master
 
-stop-review:
-  image: python:3.7-alpine
-  stage: cleanup
-  variables:
-    GIT_STRATEGY: none
-  before_script:
-    - apk add --no-cache openssh-client bash
-    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - chmod 600 ~/.ssh/config
-    - pip install awscli
-  script:
-    - aws s3 rm s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
-    - aws s3 rm s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
-    - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
-  when: manual
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    action: stop
-  only:
-    - merge_requests
-  except:
-    - master
+# stop-review:
+#   image: python:3.7-alpine
+#   stage: cleanup
+#   variables:
+#     GIT_STRATEGY: none
+#   before_script:
+#     - apk add --no-cache openssh-client bash
+#     - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+#     - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+#     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+#     - chmod 600 ~/.ssh/config
+#     - pip install awscli
+#   script:
+#     - aws s3 rm s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+#     - aws s3 rm s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+#     - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
+#   when: manual
+#   environment:
+#     name: review/$CI_COMMIT_REF_SLUG
+#     action: stop
+#   only:
+#     - merge_requests
+#   except:
+#     - master
