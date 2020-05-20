@@ -126,6 +126,7 @@ const LoanHeader = ({ logo, decimals, auction }) => {
     <Wrapper>
       <Row>
         <Logo>
+          
           <ImageLogo src={logo} />
         </Logo>
         <Timer>{timeLeft(auction.auctionEndTimestamp, currentTime)}</Timer>

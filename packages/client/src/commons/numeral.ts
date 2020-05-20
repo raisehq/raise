@@ -16,7 +16,7 @@ if (!numeral?.locales?.hero) {
       trillion: 't'
     },
     /* eslint-disable */
-    ordinal: function (number) {
+    ordinal: function(number) {
       var b = number % 10;
       return b === 1 || b === 3
         ? 'er'

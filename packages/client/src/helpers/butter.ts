@@ -54,7 +54,10 @@ const findOne = async (collection: string, fields: any) => {
     throw Error('[Butter][findOne] 404 Not found');
   }
 
-  return _(arrResponse[0]).mapKeys(toCamelCase).mapValues(sanitizeValue(WYSIWYGFields)).value();
+  return _(arrResponse[0])
+    .mapKeys(toCamelCase)
+    .mapValues(sanitizeValue(WYSIWYGFields))
+    .value();
 };
 const findOneCollection = async (collection: string, fields: any) => {
   const params = {
