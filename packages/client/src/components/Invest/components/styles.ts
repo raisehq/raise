@@ -192,7 +192,6 @@ export const Eligible = styled.div<EligibleProps>`
 
 export const BigInput = styled(LoanInput)`
   font-size: ${({ value }) => {
-    console.log('value:::::: ', value);
     if (value?.toString()?.length > 8) {
       return 28;
     }
