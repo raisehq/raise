@@ -165,13 +165,11 @@ const InvestmentBox = ({
   };
 
   const onSetValue = (v) => {
-    if (!v?.floatValue) {
-      return setValue(0);
+    if (v && v.floatValue && v.floatValue > 0) {
+      return setValue(v.floatValue);
     }
-    if (v?.floatValue < 0) {
-      return setValue(0);
-    }
-    return setValue(v.floatValue);
+
+    return setValue(0);
   };
 
   const readValue = value > 0 ? value : null;
@@ -251,9 +249,11 @@ const InvestmentBox = ({
           {errorMessage()}
           &nbsp;
         </ErrorBox>
-        <MaxInputs>
-          <MaxInputsRaw onClick={fundAll(loanCoin, coin)} />
-        </MaxInputs>
+        {isLogged && (
+          <MaxInputs>
+            <MaxInputsRaw onClick={fundAll(loanCoin, coin)} />
+          </MaxInputs>
+        )}
       </BalanceWrapper>
     </Card>
   );

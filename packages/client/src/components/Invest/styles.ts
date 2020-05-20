@@ -476,7 +476,7 @@ export const InvestBody = styled.div`
 `;
 
 export const InvestInput = styled.div<IInput>`
-  overflow-y: auto;
+  overflow-y: visible;
   ${({ fullInfo }) => (fullInfo ? 'height: height: 84%' : '')};
 
   ::-webkit-scrollbar {
