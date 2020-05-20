@@ -16,7 +16,7 @@ if [ -n "${1-}" ]; then
     fi
     set -o nounset
 else
-	echo "Missing params: mandatory domain; optional path to invalidate default /*"; exit;
+	echo "Missing params: mandatory domain; optional path to invalidate default /*"; exit 1;
 fi
 
 aws cloudfront list-distributions --output=text --query 'DistributionList.Items[*].[Id, DefaultCacheBehavior.TargetOriginId'] | \
