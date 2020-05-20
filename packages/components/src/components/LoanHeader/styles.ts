@@ -111,7 +111,6 @@ export const Value = styled.div`
 `;
 
 export const ImageLogo = styled.img`
-  width: 161px;
   height: 31px;
   padding-right: 5px;
 `;
