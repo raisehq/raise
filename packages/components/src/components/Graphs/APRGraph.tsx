@@ -234,9 +234,7 @@ const APRGraph = ({
     const response = await axios.get('https://api.compound.finance/api/v2/market_history/graph', {
       params: {
         asset: DAI_ADDRESS,
-        min_block_timestamp: dayjs()
-          .subtract(arrayDays.length, 'day')
-          .unix(),
+        min_block_timestamp: dayjs().subtract(arrayDays.length, 'day').unix(),
         max_block_timestamp: dayjs().unix(),
         num_buckets: arrayDays.length
       }
