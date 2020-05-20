@@ -266,7 +266,7 @@ deploy-int:
       #!/bin/sh
       mv packages/client/build_int build_int
       aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
-      aws s3 cp build_int s3://${BUCKET_NAME_INT}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      aws s3 cp build_int s3://${BUCKET_NAME_INT}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh ${BUCKET_NAME_INT}
   only:
     - master
@@ -282,7 +282,7 @@ deploy-int-pages:
       #!/bin/sh
       mv packages/pages/build_int build_int
       aws s3 rm s3://${BUCKET_NAME_INT_WWW}/ --recursive
-      aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh ${BUCKET_NAME_INT_WWW}
   only:
     - master
@@ -394,7 +394,7 @@ deploy-prod:
       #!/bin/sh
       mv packages/client/build latest
       aws s3 rm s3://${BUCKET_NAME_PROD}/latest --recursive
-      aws s3 cp latest s3://${BUCKET_NAME_PROD}/latest/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      aws s3 cp latest s3://${BUCKET_NAME_PROD}/latest/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/latest/*"
   only:
     - master
@@ -410,8 +410,8 @@ deploy-prod-pages:
     - |
       #!/bin/sh
       mv packages/pages/build latest
-      aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/latest --recursive
-      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --exclude "*" --include "*.html" --metadata-directive REPLACE --cache-control max-age=0,must-revalidate,public
+      aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/ --recursive
+      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh ${BUCKET_NAME_PROD_WWW}
   only:
     - master
