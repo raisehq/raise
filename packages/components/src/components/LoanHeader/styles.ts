@@ -130,6 +130,8 @@ export const RaisedSofarFiller = styled.div<RaisedSofarFillerProps>`
   height: 7px;
   border-radius: 4px;
   width: ${(props) => props.width}%;
+  min-width: 64px;
+  display: initial;
 `;
 
 export const RaiseFiller = styled.div`
