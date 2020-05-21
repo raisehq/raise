@@ -1,9 +1,14 @@
 import styled from 'styled-components';
+import { Button as RaiseButton } from '@raisehq/components';
 import { Dropdown, Divider as DividerRaw, Button, ButtonProps } from 'semantic-ui-react';
 import TokenBalanceNotStyled from './TokenBalance';
 import TokenLayoutNotStyled from './TokenLayout';
 import { device } from '../../commons/breakpoints';
 import { AddressStatus as AddressStatusRaw } from '../Web3Address';
+
+interface TrackingButtonProps {
+  isDisabled: boolean;
+}
 
 export const TokenBalance = styled(TokenBalanceNotStyled)``;
 export const TokenLayout = styled(TokenLayoutNotStyled)``;
@@ -122,5 +127,29 @@ export const DropdownButton = styled(Button)<ButtonProps>`
   &&&&&&&&:focus {
     box-shadow: 0px 8px 15px rgba(60, 66, 81, 0.25);
     color: #eb3f93;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+`;
+
+export const TrackingButtonWrapper = styled(RaiseButton)<TrackingButtonProps>`
+  &&&&& {
+    ${({ isDisabled }) => isDisabled && 'background-color: #ffba00'};
+    ${({ isDisabled }) => isDisabled && 'border-color:  #ffba00'};
+    cursor: pointer;
+
+    &&&&&:focus,
+    &&&&&:hover {
+      ${({ isDisabled }) => isDisabled && 'background-color: #ffba00'};
+      ${({ isDisabled }) => isDisabled && 'border-color:  #ffba00'};
+      ${({ isDisabled }) => isDisabled && 'box-shadow:  none'};
+    }
   }
 `;
