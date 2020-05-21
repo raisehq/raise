@@ -18,7 +18,7 @@ import {
   WalletLink,
   Web3CheckWalletWrapper,
   InstructionsContainer,
-  ButtonContainer
+  ButtonContainerCoinbase
 } from './Web3Check.styles';
 import useWeb3 from '../../hooks/useWeb3';
 
@@ -43,27 +43,30 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
     case CryptoWallets.Metamask:
       return (
         <CardCenteredText>
-          <CardTitle>Following Metamask Instructions</CardTitle>
-          <TextDescription>Raise needs to connect with your MetaMask wallet</TextDescription>
+          <CardTitle>Follow Metamask Instructions</CardTitle>
+          <TextDescription>
+            If MetaMask window does not open automatically, click on the extension in your browser
+            and follow the instructions.
+          </TextDescription>
         </CardCenteredText>
       );
     case CryptoWallets.Opera:
       return (
         <CardCenteredText>
-          <CardTitle>Following Opera Instructions</CardTitle>
+          <CardTitle>Follow Opera Instructions</CardTitle>
           <TextDescription>You may need to scan the wallet link QR Code</TextDescription>
         </CardCenteredText>
       );
     case CryptoWallets.Coinbase:
       return (
         <CardCenteredText>
-          <CardTitle>Following Coinbase Wallet Instructions</CardTitle>
+          <CardTitle>Follow Coinbase Wallet Instructions</CardTitle>
           {hasWallet ? (
             <TextDescription>
-              Make sure you have
+              Make sure you have{' '}
               <WalletLink href={getCoinbaseLink()} target="_blank">
                 Coinbase Wallet
-              </WalletLink>
+              </WalletLink>{' '}
               app in your mobile and have registered. You will be required to scan a QR code with
               the app
             </TextDescription>
@@ -84,7 +87,7 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
               </CoinbaseInstrucctions>
             </InstructionsContainer>
           )}
-          <ButtonContainer>
+          <ButtonContainerCoinbase>
             <Button
               onClick={connectCoinbase}
               text="Continue"
@@ -92,7 +95,7 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
               size="large"
               disabled={false}
             />
-          </ButtonContainer>
+          </ButtonContainerCoinbase>
         </CardCenteredText>
       );
     case CryptoWallets.WebWallet:
