@@ -19,7 +19,9 @@ import {
   TimerWrapper,
   TimerBox,
   TimerUnity,
-  TimerLabel
+  TimerLabel,
+  Percentage
+  // TextTotalFiller
 } from './styles';
 import { getTotal, padNumber, isRaiseInvested } from './utils';
 import { getCalculations } from '../../utils/loanUtils';
@@ -122,6 +124,10 @@ const LoanHeader = ({ logo, decimals, auction }) => {
     );
   };
 
+  console.log('principal: ', calcs.principal);
+  console.log('max amount:: ', calcs.maxAmount);
+  console.log('raise so far:::: ', parseInt(getTotal(calcs.principalNum, calcs.maxAmountNum), 10));
+
   return (
     <Wrapper>
       <Row>
@@ -146,22 +152,22 @@ const LoanHeader = ({ logo, decimals, auction }) => {
             <RaisedSofarFiller
               width={parseInt(getTotal(calcs.principalNum, calcs.maxAmountNum), 10)}
             >
-              <WrapperFiller>
-                {false && isRaiseInvested(calcs.principal, calcs.maxAmount) && (
-                  <>
-                    <RaiseFiller />
-                    <TextRaiseFiller>
-                      <span>10% Raise </span>
-                    </TextRaiseFiller>
-                  </>
-                )}
-              </WrapperFiller>
+              <TextRaisedSofarFiller
+                width={parseInt(getTotal(calcs.principalNum, calcs.maxAmountNum), 10)}
+              >
+                <Percentage>{`${getTotal(
+                  calcs.principalNum,
+                  calcs.maxAmountNum
+                )}% Total`}</Percentage>
+              </TextRaisedSofarFiller>
             </RaisedSofarFiller>
-            <TextRaisedSofarFiller
-              width={parseInt(getTotal(calcs.principalNum, calcs.maxAmountNum), 10)}
-            >
-              <span>{`${getTotal(calcs.principalNum, calcs.maxAmountNum)}% Total`}</span>
-            </TextRaisedSofarFiller>
+            {isRaiseInvested(calcs.principalNum, calcs.maxAmountNum) && (
+              <RaiseFiller percent={10}>
+                <TextRaiseFiller>
+                  <Percentage>10% Raise</Percentage>
+                </TextRaiseFiller>
+              </RaiseFiller>
+            )}
           </WrapperFiller>
         </ProgressBar>
       </Row>
