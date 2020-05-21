@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { match } from 'pampy';
 import { checkUsername } from '../../services/auth';
-import { Content, Side, Line, Main } from './MyAccount.styles';
+import { Content, Side, Line, Main, AccountInfo, MyActivityWrapper } from './MyAccount.styles';
 import ProfileInfo from './components/ProfileInfo';
 import UpdateUsername from './components/UpdateUsername';
 import UpdatePassword from './components/UpdatePassword';
@@ -115,17 +115,21 @@ const MyAccount = () => {
     <Main>
       <h1>My Account</h1>
       <Content>
-        <Side>
-          <h3>Profile</h3>
-          <p>Edit and update your information.</p>
-          <ProfileInfo {...profileProps} />
-          <UpdateUsername {...updateUsernameProps} />
-        </Side>
-        <Line />
-        <Side>
-          <UpdatePassword {...updatePasswordProps} />
-        </Side>
-        <MyActivity />
+        <AccountInfo>
+          <Side>
+            <h3>Profile</h3>
+            <p>Edit and update your information.</p>
+            <ProfileInfo {...profileProps} />
+            <UpdateUsername {...updateUsernameProps} />
+          </Side>
+          <Line />
+          <Side>
+            <UpdatePassword {...updatePasswordProps} />
+          </Side>
+        </AccountInfo>
+        <MyActivityWrapper>
+          <MyActivity />
+        </MyActivityWrapper>
       </Content>
     </Main>
   );

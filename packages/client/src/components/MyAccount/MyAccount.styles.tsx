@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { match, _ } from 'pampy';
 import { Button, Icon, Input } from 'semantic-ui-react';
 import { device } from '../../commons/breakpoints';
-
 import { KycStatus } from '../../commons/kycStatus';
 
 export const Main = styled.div`
@@ -40,13 +39,29 @@ export const FlexBox = styled.div`
 export const Content = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  @media screen and ${device.tablet} {
+  flex-direction: column;
+`;
+
+export const AccountInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  @media screen and ${device.laptop} {
     justify-content: space-between;
     align-items: flex-start;
   }
+`;
+
+export const MyActivityWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
 `;
 
 export const Side = styled.div`
