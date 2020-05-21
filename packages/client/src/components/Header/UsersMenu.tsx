@@ -24,7 +24,7 @@ const UsersMenu = ({ disabled = false }: { disabled?: boolean }) => {
     push('/create-loan');
   };
 
-  const CreateLoan = accounttype_id === 1 && (
+  const CreateLoan = !disabled && accounttype_id === 1 && (
     <HeaderButton
       size="standard"
       type="secondary"

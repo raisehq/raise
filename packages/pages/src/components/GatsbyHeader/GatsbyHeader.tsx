@@ -14,7 +14,7 @@ const mobileView = (
       <a href={`${REACT_APP_HOST_URL}/login`}>Login</a>
     </LinkContainer>
     <LinkContainer>
-      <a href={`${REACT_APP_HOST_URL}/join`}>Sign Up</a>
+      <a href={`${REACT_APP_HOST_URL}/join`}>Sign up</a>
     </LinkContainer>
   </MobileLinkWrapper>
 );
@@ -22,14 +22,14 @@ const mobileView = (
 const desktopView = (
   <ButtonWrapper>
     <Button
-      text="Log in"
+      title="Log in"
       as={BasicLink}
       to={`${REACT_APP_HOST_URL}/login`}
       type="tertiary"
       size="small"
     />
     <Button
-      text="Sign up"
+      title="Sign up"
       as={BasicLink}
       to={`${REACT_APP_HOST_URL}/join`}
       type="secondary"

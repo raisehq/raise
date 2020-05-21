@@ -26,20 +26,20 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const LinkContainer = styled.div`
-{
-  a {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  line-height: 16px;
-
-  color: #8a8e97;
-  padding: 15px;
-
-  background-color: #fff;
-  border:none;
-  cursor:pointer;
+  & > a {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    display: block;
+    width: auto;
+    color: #8a8e97;
+    padding: 15px;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
   }
-  
 `;
