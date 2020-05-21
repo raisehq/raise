@@ -1,9 +1,11 @@
 import React from 'react';
-import { Button } from '@raisehq/components';
-import { LinkReactButton } from './UsersMenu.styles';
+import { Button, MobileButtonLink } from '@raisehq/components';
+import { MobileView, BrowserView } from 'react-device-detect';
+import useRouter from '../../hooks/useRouter';
 import { useRootContext } from '../../contexts/RootContext';
 import MyAccountButton from '../DesktopHeader/MyAccountButton';
 import { Balance as HeaderBalance } from '../HeaderBalance';
+import { HeaderButton } from './UsersMenu.styles';
 
 const UsersMenu = ({ disabled = false }: { disabled?: boolean }) => {
   const {
@@ -16,20 +18,37 @@ const UsersMenu = ({ disabled = false }: { disabled?: boolean }) => {
       auth: { onSignout }
     }
   }: any = useRootContext();
+  const { push } = useRouter();
 
-  const CreateLoanButton = accounttype_id === 1 && (
-    <LinkReactButton to="/create-loan" title="Create loan" />
+  const toCreateLoan = () => {
+    push('/create-loan');
+  };
+
+  const CreateLoan = accounttype_id === 1 && (
+    <HeaderButton
+      size="standard"
+      type="secondary"
+      minWidth
+      onClick={toCreateLoan}
+      text="Create loan"
+    />
   );
+
   return (
     <>
-      {CreateLoanButton}
       {!disabled && (
         <>
           <HeaderBalance />
           <MyAccountButton />
         </>
       )}
-      <Button size="standard" type="tertiary" onClick={onSignout} text="Log out" />
+      <MobileView renderWithFragment>
+        <MobileButtonLink onClick={onSignout} text="Log out" />
+      </MobileView>
+      <BrowserView renderWithFragment>
+        {CreateLoan}
+        <Button size="standard" type="tertiary" onClick={onSignout} text="Log out" />
+      </BrowserView>
     </>
   );
 };

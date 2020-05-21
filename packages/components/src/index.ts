@@ -72,3 +72,4 @@ export {
 } from './utils/loanUtils';
 
 export { fromDecimal, toDecimal } from './utils/web3-utils';
+export { ButtonProps } from './components/commons/ButtonControl/types';
