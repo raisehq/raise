@@ -1,5 +1,5 @@
 /* eslint-disable prefer-destructuring */
-import { BasicLink } from './components/links';
+import { BasicLink, GatsbyLink } from './components/Links';
 
 const REACT_APP_WEB_URL = process.env.REACT_APP_WEB_URL;
 const REACT_APP_HOST_URL = process.env.REACT_APP_HOST_URL;
@@ -11,7 +11,7 @@ const routeSkeleton = {
   },
   routes: [
     {
-      title: 'Investment Opportunity',
+      title: 'Loan of the month',
       path: `${REACT_APP_HOST_URL}`,
       component: BasicLink
     },
@@ -21,18 +21,13 @@ const routeSkeleton = {
       component: BasicLink
     },
     {
+      title: 'Blog',
+      path: '/blog',
+      component: GatsbyLink
+    },
+    {
       title: 'About us',
       path: `${REACT_APP_WEB_URL}/about`,
-      component: BasicLink
-    },
-    {
-      title: 'Help',
-      path: `${REACT_APP_WEB_URL}/help`,
-      component: BasicLink
-    },
-    {
-      title: 'Blog',
-      path: `${REACT_APP_WEB_URL}/blog`,
       component: BasicLink
     }
   ],

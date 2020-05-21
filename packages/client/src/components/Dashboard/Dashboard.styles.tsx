@@ -29,6 +29,27 @@ export const DashboardWrapper = styled.div`
   }
 `;
 
+export const MyActivtyWrapper = styled.div`
+  width: 100%;
+  .heroCard {
+    margin: 0 15px 15px 0;
+  }
+
+  .heroCard {
+    width: 100%;
+    @media ${maxDevice.tablet} {
+      margin: 0 0 10px 0;
+    }
+  }
+
+  @media screen and ${device.tablet} {
+    max-width: 1172px;
+    padding: 0px 10px;
+    margin-top: 64px;
+    width: 100%;
+  }
+`;
+
 export const DashboardContainer = styled.div`
   display: flex;
   flex-direction: column;

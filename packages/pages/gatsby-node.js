@@ -1,52 +1,54 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
+const Builds = require('./builds'); // eslint-disable-line
+const DOMPurify = require("isomorphic-dompurify"); // eslint-disable-line
 
-// You can delete this file if you're not using it
-
-const path = require('path'); // eslint-disable-line
-
-exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
-  const queryResults = await graphql(`
-    {
-      allButterPage(filter: { slug: { eq: "investing" } }) {
-        nodes {
-          internal {
-            content
-            description
-            ignoreType
-            mediaType
-          }
-          investing_section {
-            image_right_position
-            important_information
-            learn_more_url
-            section_description
-            section_image
-            section_order
-            section_title
-          }
-          sub_investing_section {
-            section_number
-            sub_sub_icon
-            sub_sub_text
-            sub_sub_order
-          }
-          page_type
-        }
-      }
+const WYSIWYGFields = ['body', 'description', 'businessPlan', 'operations', 'competitiveAnalysis'];
+const sanitizeObject = (data) => {
+  Object.keys(data).forEach((key) => {
+    if (WYSIWYGFields.includes(key)) {
+      data[key] = DOMPurify.sanitize(data[key]);// eslint-disable-line
     }
-  `);
-  const template = path.resolve('src/templates/invest.tsx');
+  });
+  return data;
+};
 
+exports.createPages = async ({ graphql, actions: { createPage } }) => {
+
+  // Index page /
+  const queryIndex = await graphql(Builds.index.query);
   createPage({
-    path: '/',
-    component: template,
+    path: Builds.index.path,
+    component: Builds.index.component,
     context: {
-      data: queryResults.data
+      data: queryIndex.data
     }
+  });
+
+  const queryBlogs = await graphql(Builds.blogs.query);
+  // Satinize content to avoid atacks
+  const blogData = queryBlogs.data.allButterPost.edges
+    .map((edge) => edge.node)
+    .reduce((prev, next) => {
+      prev.push(sanitizeObject(next));
+      return prev;
+    }, []);
+
+  // Create gallery blogs /blog
+  createPage({
+    path: Builds.blogs.path,
+    component: Builds.blogs.component,
+    context: {
+      data: blogData
+    }
+  });
+
+  // Create all pages of the blog /blog/slug
+  blogData.forEach((data) => {
+    createPage({
+      path: `/blog/${data.slug}`,
+      component: Builds.posts.component,
+      context: {
+        data
+      }
+    });
   });
 };

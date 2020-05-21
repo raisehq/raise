@@ -11,6 +11,7 @@ const Button: React.SFC<ButtonProps> = ({
   type,
   size,
   fullWidth = false,
+  minWidth = false,
   ...rest
 }: any) => (
   <ButtonStyled
@@ -21,6 +22,7 @@ const Button: React.SFC<ButtonProps> = ({
     type={type}
     size={size}
     fullWidth={fullWidth}
+    minWidth={minWidth}
     {...rest}
   >
     {text}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '@raisehq/components';
-import { isMobile } from 'react-device-detect';
+import { Button, MobileButtonLink } from '@raisehq/components';
+import { MobileView, DefaultView } from '../MediaQueries';
 import { useRootContext } from '../../contexts/RootContext';
 import {
   SignupButton,
@@ -33,34 +33,27 @@ const VisitorsMenu = () => {
     showOnboarding('join');
   };
 
-  return isMobile ? (
-    <MobileLinkWrapper>
-      <LinkContainer>
-        <button type="button" onClick={openLogin}>
-          Login
-        </button>
-      </LinkContainer>
-      <LinkContainer>
-        <button type="button" onClick={openSignUp}>
-          Sign Up
-        </button>
-      </LinkContainer>
-    </MobileLinkWrapper>
-  ) : (
-    <ButtonWrapper>
-      <Button
-        text="Log in"
-        type="tertiary"
-        size={isMobile ? 'small' : 'standard'}
-        onClick={openLogin}
-      />
-      <SignupButton
-        text="Sign up"
-        type="secondary"
-        size={isMobile ? 'small' : 'standard'}
-        onClick={openSignUp}
-      />
-    </ButtonWrapper>
+  return (
+    <>
+      {/** Mobile view */}
+      <MobileView>
+        <MobileLinkWrapper>
+          <LinkContainer>
+            <MobileButtonLink onClick={openLogin} text="Login" />
+          </LinkContainer>
+          <LinkContainer>
+            <MobileButtonLink onClick={openSignUp} text="Sign Up" />
+          </LinkContainer>
+        </MobileLinkWrapper>
+      </MobileView>
+      {/** Desktop view */}
+      <DefaultView>
+        <ButtonWrapper>
+          <Button text="Log in" type="tertiary" size="small" onClick={openLogin} />
+          <SignupButton text="Sign up" type="secondary" size="small" onClick={openSignUp} />
+        </ButtonWrapper>
+      </DefaultView>
+    </>
   );
 };
 

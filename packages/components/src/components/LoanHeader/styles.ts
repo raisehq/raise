@@ -111,7 +111,6 @@ export const Value = styled.div`
 `;
 
 export const ImageLogo = styled.img`
-  width: 161px;
   height: 31px;
   padding-right: 5px;
 `;
@@ -130,6 +129,8 @@ export const RaisedSofarFiller = styled.div<RaisedSofarFillerProps>`
   height: 7px;
   border-radius: 4px;
   width: ${(props) => props.width}%;
+  min-width: 64px;
+  display: initial;
 `;
 
 export const RaiseFiller = styled.div`

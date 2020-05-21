@@ -27,6 +27,7 @@ const LoanInput = ({
       size={numeralSize}
       getInputRef={inputRef}
       {...props}
+      allowLeadingZeros={false}
     />
   );
 };
