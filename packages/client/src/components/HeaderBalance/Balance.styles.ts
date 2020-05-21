@@ -148,7 +148,8 @@ export const TrackingButtonWrapper = styled(RaiseButton)<TrackingButtonProps>`
     &&&&&:focus,
     &&&&&:hover {
       ${({ isDisabled }) => isDisabled && 'background-color: #ffba00'};
-      ${({ isDisabled }) => isDisabled && 'border-color:  #ffba00'}
+      ${({ isDisabled }) => isDisabled && 'border-color:  #ffba00'};
+      ${({ isDisabled }) => isDisabled && 'box-shadow:  none'};
     }
   }
 `;
