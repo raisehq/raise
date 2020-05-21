@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import BigNumber from 'bignumber.js';
-import { Button } from '@raisehq/components';
 import useGetAllBalances from '../../hooks/useGetAllBalances';
 import {
   AddressStatus,
@@ -10,7 +9,8 @@ import {
   BalanceMenu,
   Header,
   TokenLayout,
-  ButtonContainer
+  ButtonContainer,
+  TrackingButtonWrapper
 } from './Balance.styles';
 import TOKEN_URLS from '../../commons/tokens';
 
@@ -63,13 +63,13 @@ const Balance = (props) => {
           <Content>{balanceList}</Content>
           <Divider />
           <ButtonContainer>
-            <Button
-              disabled={isDisabledButton}
+            <TrackingButtonWrapper
+              isDisabled={isDisabledButton}
               onClick={(e) => {
                 e.stopPropagation();
                 setDisabledButton(true);
               }}
-              text={isDisabledButton ? 'We’re working on it - coming soon' : 'Buy crypto with CC'}
+              text={isDisabledButton ? 'Available soon!' : 'Buy crypto with CC'}
               type="primary"
               size="standard"
               fullWidth
