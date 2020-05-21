@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Element } from 'react-scroll';
 import { Header } from 'semantic-ui-react';
-import { DashboardTab, DashboardContainer, DashboardWrapper } from './Dashboard.styles';
+import { DashboardTab, DashboardContainer, MyActivtyWrapper } from './Dashboard.styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import Tab from './Dashboard.Tab';
@@ -54,7 +54,7 @@ const MyActivity = () => {
     }
   ];
   return (
-    <DashboardWrapper>
+    <MyActivtyWrapper>
       <DashboardContainer>
         <Element name="myActivity" className="element">
           <Header as="h1" id="my-activity">
@@ -67,7 +67,7 @@ const MyActivity = () => {
           panes={activityPanels}
         />
       </DashboardContainer>
-    </DashboardWrapper>
+    </MyActivtyWrapper>
   );
 };
 

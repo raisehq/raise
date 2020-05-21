@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  signUp: '860px',
+  desktop: '950px'
+};
+
 export const FlexDiv = styled.div`
   width: 344px;
   display: flex;
@@ -9,20 +17,26 @@ export const FlexDiv = styled.div`
 `;
 
 export const MobileLinkWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  margin-right: 10px;
-  width: 130px;
+  display: none;
+  @media (max-width: ${size.mobileL}) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 10px;
+    width: 130px;
+  }
 `;
 
 export const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-around;
-  width: 260px;
+  display: none;
+  @media (min-width: ${size.mobileL}) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    width: 260px;
+  }
 `;
 
 export const LinkContainer = styled.div`
