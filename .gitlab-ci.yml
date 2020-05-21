@@ -84,7 +84,12 @@ build-pages-review:
   script:
     - |
       #!/bin/sh
-      echo $REACT_APP_HOST_URL
+      if [ -n "${REVIEW_SLUG}" ]; then
+        REACT_APP_COOKIE_DOMAIN=.${REVIEW_SLUG}.www-review.$DOMAIN
+        REACT_APP_HOST_URL=https://${REVIEW_SLUG}.review.${DOMAIN}
+        PUBLIC_URL=https://${REVIEW_SLUG}.www-review.$DOMAIN
+      fi
+      echo ${REACT_APP_HOST_URL}
       yarn --pure-lockfile
       yarn run pages:build:integration
       mv  packages/pages/public  packages/pages/build_review
@@ -208,6 +213,35 @@ lint-front:
     when: always
     paths:
       - packages/client/build
+
+review:
+  image: python:3.7-alpine
+  stage: review
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  script:
+    - |
+      #!/bin/sh
+      if [ -n "${REVIEW_SLUG}" ]; then
+        CI_COMMIT_REF_SLUG=${REVIEW_SLUG}
+      fi
+      echo ${CI_COMMIT_REF_SLUG}
+      mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      mv packages/pages/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    on_stop: stop-review
+  only:
+    - merge_requests
+    - latest
+  except:
+    - master
 
 deploy-components:
   image: python:3.7-alpine
@@ -520,28 +554,6 @@ publish-onboarding:
       else
         echo "Package not updated, the latest version published is ${PUBLISH_VERSION_ONBOARDING} and the local verison is ${LOCAL_VERSION_ONBOARDING}."
       fi
-
-review:
-  image: python:3.7-alpine
-  stage: review
-  before_script:
-    - 'pip install awscli'
-  script:
-    - 'mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'mv packages/pages/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
-    on_stop: stop-review
-  only:
-    - merge_requests
-    - latest
-  except:
-    - master
 
 stop-review:
   image: python:3.7-alpine
