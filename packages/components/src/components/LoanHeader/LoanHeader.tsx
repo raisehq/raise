@@ -21,7 +21,6 @@ import {
   TimerUnity,
   TimerLabel,
   Percentage
-  // TextTotalFiller
 } from './styles';
 import { getTotal, padNumber, isRaiseInvested } from './utils';
 import { getCalculations } from '../../utils/loanUtils';
@@ -124,10 +123,6 @@ const LoanHeader = ({ logo, decimals, auction }) => {
     );
   };
 
-  console.log('principal: ', calcs.principal);
-  console.log('max amount:: ', calcs.maxAmount);
-  console.log('raise so far:::: ', parseInt(getTotal(calcs.principalNum, calcs.maxAmountNum), 10));
-
   return (
     <Wrapper>
       <Row>
@@ -162,11 +157,12 @@ const LoanHeader = ({ logo, decimals, auction }) => {
               </TextRaisedSofarFiller>
             </RaisedSofarFiller>
             {isRaiseInvested(calcs.principalNum, calcs.maxAmountNum) && (
-              <RaiseFiller percent={10}>
+              <>
+                <RaiseFiller percent={10} />
                 <TextRaiseFiller>
                   <Percentage>10% Raise</Percentage>
                 </TextRaiseFiller>
-              </RaiseFiller>
+              </>
             )}
           </WrapperFiller>
         </ProgressBar>

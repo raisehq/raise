@@ -149,12 +149,8 @@ export const TextRaiseFiller = styled.div`
   font-weight: bold;
   font-size: 12px;
   line-height: 16px;
-  text-align: right;
-  margin-top: -16px;
-`;
-
-export const TextTotalFiller = styled.div`
-  margin-top: -5px;
+  text-align: left;
+  margin-top: -30px;
 `;
 
 export const RaiseFiller: any = styled.div`
@@ -177,7 +173,7 @@ export const TextRaisedSofarFiller = styled.div<RaisedSofarFillerProps>`
   font-size: 12px;
   line-height: 16px;
   text-align: right;
-  margin-top: 5px;
+  margin-top: 7px;
 `;
 
 export const Percentage = styled.span`
