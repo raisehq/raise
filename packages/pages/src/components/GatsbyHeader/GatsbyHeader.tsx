@@ -22,14 +22,14 @@ const mobileView = (
 const desktopView = (
   <ButtonWrapper>
     <Button
-      title="Log in"
+      text="Log in"
       as={BasicLink}
       to={`${REACT_APP_HOST_URL}/login`}
       type="tertiary"
       size="small"
     />
     <Button
-      title="Sign up"
+      text="Sign up"
       as={BasicLink}
       to={`${REACT_APP_HOST_URL}/join`}
       type="secondary"
