@@ -1,9 +1,10 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
 import { ButtonStyledGroup, ButtonStyled, ButtonContent } from './styles';
+import { Option } from '../../../../commons/option';
 
 interface GroupButtonProps {
-  options: any;
+  options: Option[];
   onClick: Function;
   withIcon?: boolean;
   selectedIndex: number;
@@ -16,12 +17,13 @@ const GroupButton: React.SFC<GroupButtonProps> = ({
   selectedIndex
 }: any) => (
   <ButtonStyledGroup>
-    {options.map((item: any) => (
+    {options.map((item) => (
       <ButtonStyled
         icon
         key={item.key}
-        onClick={onClick(item.value)}
+        onClick={() => onClick(item.value)}
         className={item.key === selectedIndex.toString() && 'selected'}
+        disabled={item.disabled}
       >
         <ButtonContent>
           {withIcon && (

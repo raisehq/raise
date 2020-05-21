@@ -31,9 +31,9 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }: any) 
     authTerms,
     selectedCoinType,
     operatorFee,
-    borrowerCompany
+    borrowerCompany,
+    repaymentType
   } = values;
-
   return (
     <LoanConfirmation>
       <HeaderRow>
@@ -49,6 +49,11 @@ const ConfirmLoan = ({ values, onToggleTerms, onToggleAuthTerms, onSave }: any) 
           <AmountRow>
             <AmountDescription>Cryptocurrency</AmountDescription>
             <AmountNumber>{selectedCoinType}</AmountNumber>
+          </AmountRow>
+          {!isMobile && <DividerConfirmLoan />}
+          <AmountRow>
+            <AmountDescription>Repayment</AmountDescription>
+            <AmountNumber>{repaymentType}</AmountNumber>
           </AmountRow>
           {!isMobile && <DividerConfirmLoan />}
           <AmountRow>

@@ -63,7 +63,7 @@ build-front-review:
       fi
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
-      yarn run client:build:integration
+      yarn run client:build:integration:bili
       mv  packages/client/build  packages/client/build_review
   only:
     - merge_requests
@@ -86,7 +86,7 @@ build-pages-review:
       #!/bin/sh
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
-      yarn run pages:build:integration
+      yarn run pages:build:integration:bili
       mv  packages/pages/public  packages/pages/build_review
   only:
     - merge_requests
@@ -102,7 +102,7 @@ lint-front-review:
   stage: build
   script:
     - 'yarn --pure-lockfile'
-    - yarn run client:build:integration
+    - yarn run client:build:integration:bili
     - 'yarn run lint'
   only:
     - merge_requests
