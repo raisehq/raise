@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BigNumber from 'bignumber.js';
+import { Button } from '@raisehq/components';
 import useGetAllBalances from '../../hooks/useGetAllBalances';
 import {
   AddressStatus,
@@ -8,7 +9,8 @@ import {
   Divider,
   BalanceMenu,
   Header,
-  TokenLayout
+  TokenLayout,
+  ButtonContainer
 } from './Balance.styles';
 import TOKEN_URLS from '../../commons/tokens';
 
@@ -32,6 +34,7 @@ const DropdownButton = () => (
 
 const Balance = (props) => {
   const balances = useGetAllBalances(SUPPORTED_COINS);
+  const [isDisabledButton, setDisabledButton] = useState(false);
 
   balances.sort((a, b) => {
     const aBN = new BigNumber(a.value);
@@ -58,6 +61,20 @@ const Balance = (props) => {
           </Header>
           <Divider />
           <Content>{balanceList}</Content>
+          <Divider />
+          <ButtonContainer>
+            <Button
+              disabled={isDisabledButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                setDisabledButton(true);
+              }}
+              text={isDisabledButton ? 'We’re working on it - coming soon' : 'Buy crypto with CC'}
+              type="primary"
+              size="standard"
+              fullWidth
+            />
+          </ButtonContainer>
         </BalanceMenu>
       </BalanceDropdown>
     </>

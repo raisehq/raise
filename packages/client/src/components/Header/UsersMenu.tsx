@@ -20,6 +20,7 @@ const UsersMenu = ({ disabled = false }: { disabled?: boolean }) => {
   const CreateLoanButton = accounttype_id === 1 && (
     <LinkReactButton to="/create-loan" title="Create loan" />
   );
+
   return (
     <>
       {CreateLoanButton}
