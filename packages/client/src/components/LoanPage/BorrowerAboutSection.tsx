@@ -12,7 +12,7 @@ import {
 const BorrowerAbout = ({ borrowerInfo, isLogged, userActivated }) => {
   const onInvestClick = () => {
     if (!isLogged) {
-      return '#loanofmonth_signup';
+      return '#loanofmonth_signup_email';
     }
     if (!userActivated) {
       return '/kyc';
