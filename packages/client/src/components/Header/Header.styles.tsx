@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { SubHeader, SubPageHeader, TopHeader } from '@raisehq/components';
-import RawHeader from './RawHeader';
 import { device } from '../../commons/breakpoints';
 
 export const FlexDiv = styled.div`
@@ -15,12 +13,4 @@ export const FlexDiv = styled.div`
   }
 `;
 
-export const StyledHeader = styled(RawHeader)`
-  & ${TopHeader}, & ${SubHeader} > *:first-child,
-  & ${SubPageHeader} > *:first-child {
-    max-width: 1172px;
-    width: 100%;
-    margin: 0 auto;
-  }
-`;
-export default StyledHeader;
+export default FlexDiv;
