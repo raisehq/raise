@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@raisehq/components';
 import { CookiesBanner, Columns } from './Cookies.styles';
 import useCookie from '../../hooks/useCookie';
@@ -11,11 +11,13 @@ interface CookiesAlertProps {
 const CookiesAlert: React.FC<CookiesAlertProps> = ({ onDeny, onAccept }) => {
   const [, setCookies] = useCookie('cookies-allowed', true);
   const [cookieReminder, setReminder] = useCookie('cookies-reminder', false);
+  const [warmup, setWarmup] = useState(true);
 
   const onDefaultDeny = () => {
     setCookies(false);
     setReminder(true);
   };
+
   const onDefaultAccept = () => {
     setCookies(true);
     setReminder(true);
@@ -24,7 +26,14 @@ const CookiesAlert: React.FC<CookiesAlertProps> = ({ onDeny, onAccept }) => {
   const denyCookies: () => void = onDeny || onDefaultDeny;
   const acceptCookies: () => void = onAccept || onDefaultAccept;
 
-  if (cookieReminder) {
+  // Delay the load of the bottom banner to load cookieReminder state
+  useEffect(() => {
+    setTimeout(() => {
+      setWarmup(false);
+    }, 2000);
+  }, []);
+
+  if (warmup || cookieReminder) {
     return null;
   }
 
@@ -39,8 +48,8 @@ const CookiesAlert: React.FC<CookiesAlertProps> = ({ onDeny, onAccept }) => {
           </p>
         </div>
         <Columns>
-          <Button type="tertiary" size="standard" onClick={denyCookies} text="Decline" />
-          <Button type="primary" size="standard" onClick={acceptCookies} text="Accept" />
+          <Button type="tertiary" size="standard" onClick={() => denyCookies()} text="Decline" />
+          <Button type="primary" size="standard" onClick={() => acceptCookies()} text="Accept" />
         </Columns>
       </Columns>
     </CookiesBanner>

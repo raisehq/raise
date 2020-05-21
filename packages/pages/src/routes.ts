@@ -11,7 +11,7 @@ const routeSkeleton = {
   },
   routes: [
     {
-      title: 'Investment opportunity',
+      title: 'Loan of the month',
       path: `${REACT_APP_HOST_URL}`,
       component: BasicLink
     },
@@ -21,14 +21,14 @@ const routeSkeleton = {
       component: BasicLink
     },
     {
-      title: 'About us',
-      path: `${REACT_APP_WEB_URL}/about`,
-      component: BasicLink
-    },
-    {
       title: 'Blog',
       path: '/blog',
       component: GatsbyLink
+    },
+    {
+      title: 'About us',
+      path: `${REACT_APP_WEB_URL}/about`,
+      component: BasicLink
     }
   ],
   pageRoutes: []

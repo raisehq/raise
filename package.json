@@ -36,6 +36,7 @@
     "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
     "watch:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch:bili",
     "watch:pages:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages}' watch:bili",
+    "watch:all:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages,client}' watch:bili",
     "watch:storybook:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch:bili",
     "watch:storybook": "yarn run build:deps:fast && lerna run --parallel --concurrency 4 --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch "
   },
