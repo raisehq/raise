@@ -489,6 +489,14 @@ export const InvestButtonWrapper = styled.div<IInput>`
   ${({ fullInfo }) => (fullInfo ? 'border-top: 1px solid #cfd0d4' : '')};
 `;
 
-export const ConfirmButton = styled(RaiseButton)``;
+export const ConfirmButton = styled(RaiseButton)`
+  &&&& {
+    margin: 0;
+  }
+`;
 
-export const ContinueButton = styled(RaiseButton)``;
+export const ContinueButton = styled(RaiseButton)`
+  &&&& {
+    margin: 0;
+  }
+`;
