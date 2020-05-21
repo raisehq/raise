@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import BigNumber from 'bignumber.js';
 import useGetAllBalances from '../../hooks/useGetAllBalances';
+import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import {
   AddressStatus,
   BalanceDropdown,
@@ -36,6 +37,8 @@ const Balance = (props) => {
   const balances = useGetAllBalances(SUPPORTED_COINS);
   const [isDisabledButton, setDisabledButton] = useState(false);
 
+  const tagManager = useGoogleTagManager('BuyCrypto');
+
   balances.sort((a, b) => {
     const aBN = new BigNumber(a.value);
     const bBN = new BigNumber(b.value);
@@ -52,6 +55,12 @@ const Balance = (props) => {
     />
   ));
 
+  const buyCrypto = (e) => {
+    e.stopPropagation();
+    tagManager.sendEvent(TMEvents.Click, 'buycrypto_teaser');
+    setDisabledButton(true);
+  };
+
   return (
     <>
       <BalanceDropdown trigger={DropdownButton()} {...props}>
@@ -65,10 +74,7 @@ const Balance = (props) => {
           <ButtonContainer>
             <TrackingButtonWrapper
               isDisabled={isDisabledButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                setDisabledButton(true);
-              }}
+              onClick={buyCrypto}
               text={isDisabledButton ? 'Available soon!' : 'Buy crypto with CC'}
               type="primary"
               size="standard"
