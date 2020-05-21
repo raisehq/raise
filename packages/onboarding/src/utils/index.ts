@@ -8,8 +8,6 @@ const HOSTS: any = {
   THEGRAPH: process.env.REACT_APP_HOST_THEGRAPH
 };
 
-console.log('WIP debug hosts build', HOSTS);
-
 export function getHost(name: string) {
   if (process.env.REACT_APP_MOCK_API === 'true') {
     return 'http://localhost:3000';
