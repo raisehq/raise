@@ -399,20 +399,11 @@ Cypress.Commands.add('acceptedTokens', function () {
   });
 });
 
-/*
-  Mock the graph
-*/
-Cypress.Commands.add('butterCMS', function () {
-  cy.on('window:before:load', (win) => {
-    win.TheGraphMockResponses = {};
-  });
-});
-
 /* 
   Mock Butter cms responses
 */
 Cypress.Commands.add('butterCMS', function () {
-  cy.on('window:before:load', (win) => {
+  cy.on('window:before:load', function (win) {
     win.ButterCMSMockResponses = {
       warnings: {
         warnings: [
