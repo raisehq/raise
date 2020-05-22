@@ -14,7 +14,7 @@ const SEO = ({
   url = 'join',
   title = 'Invest, Grow and Do Good!',
   description = 'Check out the available investment opportunities in our marketplace',
-  tags = 'crowdfunding, crowdlending, invest in loans, invest in crypto, online investments, best way to invest money, invest in dai, best investment opportunities ',
+  tags = 'crowdlending, crowdlending platform, lending platform, eth lending, best crypto lending, best cypto lending platform, lending as a service platform, lending marketplace',
   author = '@raise_hq',
   previewImage = `${process.env.REACT_APP_HOST_IMAGES}/images/preview.png`
 }: {
