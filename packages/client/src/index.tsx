@@ -5,7 +5,7 @@ import LogRocket from 'logrocket';
 
 import useGoogleTagManager from './hooks/useGoogleTagManager';
 import App from './components/App';
-
+import ErrorBoundary from './components/ErrorBoundary';
 // Providers
 import RootContextProvider, { Updater as RootContextUpdater } from './contexts/RootContext';
 import BlockContextProvider, { Updater as BlockContextUpdater } from './contexts/BlockContext';
@@ -74,7 +74,9 @@ const Root = () => {
     <ContextProviders>
       <ContextUpdaters />
       <BrowserRouter>
-        <App />
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
       </BrowserRouter>
     </ContextProviders>
   );
