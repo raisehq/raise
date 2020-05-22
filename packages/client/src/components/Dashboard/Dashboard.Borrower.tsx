@@ -81,7 +81,6 @@ const Dashboard = () => {
             text="Create Loan"
             type="secondary"
             size="large"
-            disabled={false}
           />
         </ButtonRow>
       </DashboardContainer>

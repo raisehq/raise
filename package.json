@@ -25,8 +25,10 @@
     "rollup": "lerna run --stream --scope '@raisehq/libs' build:production",
     "dev:rollup": "lerna run --stream --scope '@raisehq/libs' start",
     "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
+    "client:build:integration:bili": "yarn run build:deps:bili && lerna run build:integration --stream --scope client",
     "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client",
     "pages:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope pages",
+    "pages:build:integration:bili": "yarn run build:deps:bili && lerna run build:integration --stream --scope pages",
     "pages:build:production": "yarn run build:deps && lerna run build:production --stream --scope pages",
     "components:build:umd": "lerna run build:umd --stream --scope @raisehq/components",
     "components:test": "lerna run test --stream --scope @raisehq/components",
@@ -36,6 +38,7 @@
     "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
     "watch:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch:bili",
     "watch:pages:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages}' watch:bili",
+    "watch:all:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages,client}' watch:bili",
     "watch:storybook:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch:bili",
     "watch:storybook": "yarn run build:deps:fast && lerna run --parallel --concurrency 4 --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch "
   },

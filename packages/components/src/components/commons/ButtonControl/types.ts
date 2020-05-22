@@ -8,6 +8,7 @@ export interface ButtonProps {
   as?: any;
   to?: any;
   fullWidth?: boolean;
+  minWidth?: boolean;
   type: string;
 }
 

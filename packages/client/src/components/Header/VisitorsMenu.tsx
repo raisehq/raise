@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, MobileButtonLink } from '@raisehq/components';
-import { isMobile } from 'react-device-detect';
+import { MobileView, DefaultView } from '../MediaQueries';
 import { useRootContext } from '../../contexts/RootContext';
 import {
   SignupButton,
@@ -33,20 +33,27 @@ const VisitorsMenu = () => {
     showOnboarding('join');
   };
 
-  return isMobile ? (
-    <MobileLinkWrapper>
-      <LinkContainer>
-        <MobileButtonLink onClick={openLogin} text="Login" />
-      </LinkContainer>
-      <LinkContainer>
-        <MobileButtonLink onClick={openSignUp} text="Sign Up" />
-      </LinkContainer>
-    </MobileLinkWrapper>
-  ) : (
-    <ButtonWrapper>
-      <Button text="Log in" type="tertiary" size="small" onClick={openLogin} />
-      <SignupButton text="Sign up" type="secondary" size="small" onClick={openSignUp} />
-    </ButtonWrapper>
+  return (
+    <>
+      {/** Mobile view */}
+      <MobileView>
+        <MobileLinkWrapper>
+          <LinkContainer>
+            <MobileButtonLink onClick={openLogin} text="Login" />
+          </LinkContainer>
+          <LinkContainer>
+            <MobileButtonLink onClick={openSignUp} text="Sign Up" />
+          </LinkContainer>
+        </MobileLinkWrapper>
+      </MobileView>
+      {/** Desktop view */}
+      <DefaultView>
+        <ButtonWrapper>
+          <Button text="Log in" type="tertiary" size="small" onClick={openLogin} />
+          <SignupButton text="Sign up" type="secondary" size="small" onClick={openSignUp} />
+        </ButtonWrapper>
+      </DefaultView>
+    </>
   );
 };
 

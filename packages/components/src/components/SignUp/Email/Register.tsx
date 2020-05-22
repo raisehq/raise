@@ -156,6 +156,7 @@ const Register: React.SFC<IRegister> = ({
     <>
       <SignUpInputContainer>
         <SignUpInput
+          id={`${SignUpId}_email`}
           placeholder="Email address"
           onChange={onChangeEmail}
           error={error.validation || error.exist}

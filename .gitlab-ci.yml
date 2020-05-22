@@ -63,7 +63,7 @@ build-front-review:
       fi
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
-      yarn run client:build:integration
+      yarn run client:build:integration:bili
       mv  packages/client/build  packages/client/build_review
   only:
     - merge_requests
@@ -86,7 +86,7 @@ build-pages-review:
       #!/bin/sh
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
-      yarn run pages:build:integration
+      yarn run pages:build:integration:bili
       mv  packages/pages/public  packages/pages/build_review
   only:
     - merge_requests
@@ -102,7 +102,7 @@ lint-front-review:
   stage: build
   script:
     - 'yarn --pure-lockfile'
-    - yarn run client:build:integration
+    - yarn run client:build:integration:bili
     - 'yarn run lint'
   only:
     - merge_requests
@@ -297,9 +297,9 @@ deploy-canary:
     - |
       #!/bin/sh
       mv packages/client/build canary
-      aws s3 rm s3://${BUCKET_NAME_PROD}/canary --recursive
-      aws s3 cp canary s3://${BUCKET_NAME_PROD}/canary/ --recursive
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/canary/*"
+      aws s3 rm s3://${BUCKET_NAME_CANARY}/ --recursive
+      aws s3 cp canary s3://${BUCKET_NAME_CANARY}/ --recursive
+      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
   only:
     - master
   resource_group: production
@@ -339,8 +339,8 @@ cypress-e2e-canary:
   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
   stage: test
   variables:
-    CYPRESS_url: 'https://app.raise.it'
-    CYPRESS_baseUrl: 'https://app.raise.it'
+    CYPRESS_url: 'https://canary.raise.it'
+    CYPRESS_baseUrl: 'https://canary.raise.it'
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: api.raise.it
     CYPRESS_isCanary: 'false'
@@ -393,9 +393,9 @@ deploy-prod:
     - |
       #!/bin/sh
       mv packages/client/build latest
-      aws s3 rm s3://${BUCKET_NAME_PROD}/latest --recursive
-      aws s3 cp latest s3://${BUCKET_NAME_PROD}/latest/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD} "/latest/*"
+      aws s3 rm s3://${BUCKET_NAME_PROD}/ --recursive
+      aws s3 cp latest s3://${BUCKET_NAME_PROD}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
+      ./cache_invalidation.sh ${BUCKET_NAME_PROD}
   only:
     - master
   resource_group: production
