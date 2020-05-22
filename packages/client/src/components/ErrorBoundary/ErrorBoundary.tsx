@@ -25,8 +25,10 @@ class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
       return (
         <Container>
           <Message negative style={{ marginTop: '40%' }}>
-            <Message.Header>We're sorry we can't show this page.</Message.Header>
-            <p> Network error occurred! Please, try to refresh!</p>
+            <Message.Header>
+              Something went wrong! Don’t worry, we will find who is responsible and fire them.
+            </Message.Header>
+            <p> On the meantime, refresh the page</p>
           </Message>
         </Container>
       );
