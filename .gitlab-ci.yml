@@ -265,8 +265,8 @@ deploy-int:
     - |
       #!/bin/sh
       mv packages/client/build_int build_int
-      aws s3 rm s3://${BUCKET_NAME_INT}/ --recursive
-      aws s3 cp build_int s3://${BUCKET_NAME_INT}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 sync build_int s3://${BUCKET_NAME_INT}/ --recursive --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
+      ./cache_invalidation.sh ${BUCKET_NAME_INT}
       ./cache_invalidation.sh ${BUCKET_NAME_INT}
   only:
     - master
@@ -297,8 +297,8 @@ deploy-canary:
     - |
       #!/bin/sh
       mv packages/client/build canary
-      aws s3 rm s3://${BUCKET_NAME_CANARY}/ --recursive
-      aws s3 cp canary s3://${BUCKET_NAME_CANARY}/ --recursive
+      aws s3 sync canary s3://${BUCKET_NAME_CANARY}/ --recursive
+      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
   only:
     - master
@@ -393,9 +393,9 @@ deploy-prod:
     - |
       #!/bin/sh
       mv packages/client/build latest
-      aws s3 rm s3://${BUCKET_NAME_PROD}/ --recursive
-      aws s3 cp latest s3://${BUCKET_NAME_PROD}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh ${BUCKET_NAME_PROD}
+      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
   only:
     - master
   resource_group: production
