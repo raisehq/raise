@@ -36,6 +36,23 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script type="text/javascript" src="%REACT_APP_HOST_IMAGES%/zendesk/index.js"></script>
+
+    <!-- Start of Zendesk load-->
+    <script type="text/javascript">
+      window.zESettings = {
+        webWidget: {
+          position: { horizontal: 'left', vertical: 'bottom' },
+          chat: {
+            connectOnPageLoad: false
+          }
+        }
+      };
+    </script>
+    <script
+      async
+      id="ze-snippet"
+      src="https://static.zdassets.com/ekr/snippet.js?key=d074590b-6078-4326-9857-b202702253eb"
+    ></script>
+    <!-- End of Zendesk load-->
   </body>
 </html>
