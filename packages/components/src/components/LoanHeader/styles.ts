@@ -129,15 +129,8 @@ export const RaisedSofarFiller = styled.div<RaisedSofarFillerProps>`
   height: 7px;
   border-radius: 4px;
   width: ${(props) => props.width}%;
-  min-width: 64px;
-  display: initial;
-`;
 
-export const RaiseFiller = styled.div`
-  width: 15%;
-  background: #eb3f93;
-  height: 7px;
-  border-radius: 4px;
+  display: initial;
 `;
 
 export const WrapperFiller = styled.div`
@@ -147,7 +140,6 @@ export const WrapperFiller = styled.div`
 `;
 
 export const TextRaiseFiller = styled.div`
-  width: 15%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -157,19 +149,33 @@ export const TextRaiseFiller = styled.div`
   font-weight: bold;
   font-size: 12px;
   line-height: 16px;
-  text-align: right;
+  text-align: left;
+  margin-top: -30px;
+`;
+
+export const RaiseFiller: any = styled.div`
+  width: 10%;
+  background: #eb3f93;
+  height: 7px;
+  border-radius: 4px;
+  position: relative;
+  top: -7px;
 `;
 
 export const TextRaisedSofarFiller = styled.div<RaisedSofarFillerProps>`
-  width: ${(props) => props.width}%;
+  color: #00da9e;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  color: #00da9e;
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
   font-size: 12px;
   line-height: 16px;
   text-align: right;
+  margin-top: 7px;
+`;
+
+export const Percentage = styled.span`
+  width: 100%;
 `;

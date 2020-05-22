@@ -19,7 +19,8 @@ import {
   TimerWrapper,
   TimerBox,
   TimerUnity,
-  TimerLabel
+  TimerLabel,
+  Percentage
 } from './styles';
 import { getTotal, padNumber, isRaiseInvested } from './utils';
 import { getCalculations } from '../../utils/loanUtils';
@@ -146,22 +147,23 @@ const LoanHeader = ({ logo, decimals, auction }) => {
             <RaisedSofarFiller
               width={parseInt(getTotal(calcs.principalNum, calcs.maxAmountNum), 10)}
             >
-              <WrapperFiller>
-                {false && isRaiseInvested(calcs.principal, calcs.maxAmount) && (
-                  <>
-                    <RaiseFiller />
-                    <TextRaiseFiller>
-                      <span>10% Raise </span>
-                    </TextRaiseFiller>
-                  </>
-                )}
-              </WrapperFiller>
+              <TextRaisedSofarFiller
+                width={parseInt(getTotal(calcs.principalNum, calcs.maxAmountNum), 10)}
+              >
+                <Percentage>{`${getTotal(
+                  calcs.principalNum,
+                  calcs.maxAmountNum
+                )}% Total`}</Percentage>
+              </TextRaisedSofarFiller>
             </RaisedSofarFiller>
-            <TextRaisedSofarFiller
-              width={parseInt(getTotal(calcs.principalNum, calcs.maxAmountNum), 10)}
-            >
-              <span>{`${getTotal(calcs.principalNum, calcs.maxAmountNum)}% Total`}</span>
-            </TextRaisedSofarFiller>
+            {isRaiseInvested(calcs.principalNum, calcs.maxAmountNum) && (
+              <>
+                <RaiseFiller percent={10} />
+                <TextRaiseFiller>
+                  <Percentage>10% Raise</Percentage>
+                </TextRaiseFiller>
+              </>
+            )}
           </WrapperFiller>
         </ProgressBar>
       </Row>
