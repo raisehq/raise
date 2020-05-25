@@ -1,15 +1,18 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import React, { useEffect, lazy, Suspense, useState } from 'react';
 import { Switch } from 'react-router-dom';
 import 'url-search-params-polyfill';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Onboarding from '@raisehq/onboarding';
 import { toast } from 'react-toastify';
+import { isMobile } from 'react-device-detect';
 
 // Contexts and hooks
 import { useAppContext } from '../contexts/AppContext';
 import { useRootContext } from '../contexts/RootContext';
 import useRouter from '../hooks/useRouter';
+import useMenuVisibility from '../hooks/useMenuVisibility';
+import KycTopBanner from './TopBanner/KycTopBanner';
 
 // Pages and components
 import {
@@ -44,7 +47,7 @@ const App = () => {
   const {
     store: {
       user: {
-        details: { accounttype_id: accounttypeId }
+        details: { accounttype_id: accounttypeId, kyc_status: kycStatus, kyc_provider: kycProvider }
       },
       blockchain: { contracts },
       onboarding: { show: showOnboarding, troggle: troggleOnboarding }
@@ -65,6 +68,17 @@ const App = () => {
       dashboard: LoanPage
     }
   };
+  const onKYC = () => history.push('/kyc');
+  const { visible, visibleMenu } = useMenuVisibility();
+  const enableKyc = visibleMenu && accounttypeId === 2;
+
+  const [kycBCStatus, setKycBCStatus] = useState(false);
+
+  useEffect(() => {
+    if (kycStatus === 3) {
+      setKycBCStatus(true);
+    }
+  }, [kycStatus]);
 
   useEffect(() => {
     if (followTx) {
@@ -155,6 +169,16 @@ const App = () => {
             draggable={false}
             pauseOnHover={false}
           />
+          {visible && (
+            <KycTopBanner
+              kycStatus={kycStatus}
+              enabled={enableKyc}
+              kycAction={onKYC}
+              isMobile={isMobile}
+              kycBCStatus={kycBCStatus}
+              kycProvider={kycProvider}
+            />
+          )}
           <TopHeader />
           <TransitionGroup component={null}>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
