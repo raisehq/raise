@@ -114,7 +114,6 @@ const LoanPage = ({
   }, []);
 
   useAsyncEffect(async () => {
-    console.log('loan address => ', loanAddress);
     try {
       if (loanAddress) {
         const currentLoan = await getLoanByAddress(loanAddress, network);
@@ -127,9 +126,10 @@ const LoanPage = ({
         setBorrowerInfo(borrowerPage);
       } else {
         const loanOfTheMonthInfo = await findOne('loan_of_the_month', {
-          net: 'kovan',
-          loan_of_the_month: true
+          'fields.net': network,
+          'fields.loan_of_the_month': true
         });
+
         const borrowerPage = await requestPage(
           'borrower_profile',
           loanOfTheMonthInfo.borrowerInfo.slug
