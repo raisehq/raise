@@ -265,6 +265,15 @@ const App = () => {
                   marketplace
                   layout={AppLayout}
                   exact
+                  path="/investmentopportunity/:address"
+                  component={LoanPage}
+                  roles={[1, 2]}
+                />
+                <Web3Layout
+                  publicRoute
+                  marketplace
+                  layout={AppLayout}
+                  exact
                   path="/investmentopportunity"
                   component={LoanPage}
                   roles={[1, 2]}

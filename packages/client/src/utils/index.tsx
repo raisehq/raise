@@ -1,4 +1,5 @@
 import { browserName } from 'react-device-detect';
+import utils from 'web3-utils';
 import axios from 'axios';
 import CryptoWallets from '../commons/cryptoWallets';
 import LocalData from '../helpers/localData';
@@ -129,5 +130,15 @@ export const getWalletName = (walletId) => {
       return 'Coinbase';
     default:
       return 'Unknow';
+  }
+};
+
+export const isAddress = (rawInput) => {
+  try {
+    utils.toChecksumAddress(rawInput);
+    return true;
+  } catch (e) {
+    console.error('invalid ethereum address', e.message);
+    return false;
   }
 };
