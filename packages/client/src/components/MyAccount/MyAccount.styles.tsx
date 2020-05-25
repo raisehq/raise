@@ -53,7 +53,7 @@ export const AccountInfo = styled.div`
   align-items: center;
   justify-content: center;
   @media screen and ${device.laptop} {
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
   }
 `;
@@ -76,7 +76,7 @@ export const Line = styled.div`
   display: none;
   height: 400px;
   width: 1px;
-  margin: 0px 1vh;
+  margin: 0px 7vh;
   background: rgba(209, 210, 214, 1);
 
   @media screen and ${device.laptop} {
