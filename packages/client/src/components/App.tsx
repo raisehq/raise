@@ -245,6 +245,15 @@ const App = () => {
                   component={LoanPage}
                   roles={[1, 2]}
                 />
+                <Web3Layout
+                  publicRoute
+                  marketplace
+                  layout={AppLayout}
+                  exact
+                  path="/investmentopportunity"
+                  component={LoanPage}
+                  roles={[1, 2]}
+                />
                 {/* Onboarding */}
                 <SimpleLayout checkLogged exact path="/verify-web3" component={Web3Check} />
                 <SimpleLayout exact path="/join" component={Join} />
