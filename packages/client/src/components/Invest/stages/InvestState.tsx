@@ -48,6 +48,9 @@ const InvestState: React.SFC<InvestStateProps> = ({
       user: {
         cryptoAddress: { address: account }
       }
+    },
+    actions: {
+      onboarding: { showOnboarding }
     }
   }: any = useRootContext();
 
@@ -77,6 +80,8 @@ const InvestState: React.SFC<InvestStateProps> = ({
       setInvestment(value);
       // Change to state confirmation
       setStage(ui.Processing);
+    } else if (!isLogged) {
+      showOnboarding('join');
     } else {
       history.push('/kyc');
       if (closeModal) {
@@ -216,7 +221,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
           <ContinueButton
             idAttr="btn-invest-confirm"
             onClick={onConfirm}
-            disabled={!isLogged}
+            disabled={false}
             text={isLogged ? 'Verify your Account' : 'CONFIRM'}
             type="primary"
             size="large"
