@@ -42,7 +42,7 @@ export default (dispatch: any, state: any) => {
     LocalData.remove('auth');
     Cookies.remove('auth', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
     Cookies.remove('user', { path: '/', domain: process.env.REACT_APP_COOKIE_DOMAIN });
-    window.location.href = `${getHost('APP')}/login`;
+    window.location.href = `${getHost('APP')}/`;
   };
 
   const getUserAuth = async () => {

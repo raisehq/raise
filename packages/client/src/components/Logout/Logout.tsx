@@ -17,12 +17,12 @@ const Logout = ({ onLogin, onSignup, ...props }: any) => {
 
   const goToLogin = useCallback(() => {
     if (onLogin) return onLogin();
-    window.location.href = `${getHost('APP')}/login`;
+    window.location.href = `${getHost('APP')}/`;
     return true;
   }, []);
   const goToSignup = useCallback(() => {
     if (onSignup) return onSignup();
-    window.location.href = `${getHost('APP')}/join`;
+    window.location.href = `${getHost('APP')}/`;
     return true;
   }, []);
 
