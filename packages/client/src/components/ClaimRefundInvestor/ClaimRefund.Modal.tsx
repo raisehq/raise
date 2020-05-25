@@ -22,7 +22,7 @@ const ClaimRefundModal = () => {
     <Modal open={open} size="small" onClose={closeModal}>
       <SemanticModal.Content>
         {getStage(stage)}
-        <ExitButton size="normal" name="close" color="black" onClick={closeModal} />
+        <ExitButton size="large" name="close" color="black" onClick={closeModal} />
       </SemanticModal.Content>
     </Modal>
   );

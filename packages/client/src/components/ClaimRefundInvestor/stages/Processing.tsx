@@ -1,4 +1,6 @@
 import React, { useContext, useEffect } from 'react';
+import ClaimRefundContext from '../ClaimRefund.Context';
+import { useRootContext } from '../../../contexts/RootContext';
 import Stages from '../ClaimRefund.stages';
 import {
   Header,
@@ -9,12 +11,10 @@ import {
   ProcessingButton
 } from '../ClaimRefund.styles';
 import { ResumeItemBig } from './ResumeItemBig';
-import ClaimRefundContext from '../ClaimRefund.Context';
 import useGetCoin from '../../../hooks/useGetCoin';
-import { useRootContext } from '../../../contexts/RootContext';
 
 const Processing = () => {
-  const { loan, calculatedLoan, setStage }: any = useContext(ClaimRefundContext);
+  const { loan, calculatedLoan, setStage, monthlyLoanAPR }: any = useContext(ClaimRefundContext);
   const coin = useGetCoin(loan);
   const { followTx }: any = useRootContext();
   const methodId = loan.state === 1 ? 'withdrawRefund' : 'withdrawFundsUnlocked';
@@ -52,7 +52,7 @@ const Processing = () => {
         </FlexSpacedLayout>
         <StyledLink
           to="/"
-          title="While we complete your refund, click here and check the new available loan with 16% APR"
+          title={`While we complete your refund, click here and check the new available loan with ${monthlyLoanAPR} APR`}
         />
       </ClaimFundsResume>
       <ProcessingButton fullWidth disabled>
