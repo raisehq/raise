@@ -3,7 +3,13 @@ import { Button } from '@raisehq/components';
 import { Loader } from 'semantic-ui-react';
 import { device } from '../../commons/breakpoints';
 
-export const Loading = styled(Loader)``;
+export const Loading = styled(Loader)`
+  display: block !important;
+  align-self: center !important;
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+`;
 
 export const LoanPageContainer = styled.div`
   display: flex;
@@ -210,4 +216,11 @@ export const RightTriangle = styled.div`
   border-bottom: 2px solid #eb3f93;
   margin-top: 8px;
   margin-left: 5px;
+`;
+
+export const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
 `;

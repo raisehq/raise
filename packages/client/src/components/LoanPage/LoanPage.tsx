@@ -1,8 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import useCookie from 'react-use-cookie';
 import { NeedHelp } from '@raisehq/components';
-import { LoanPageContainer, SignUpWrapper, Loading } from './styles';
+import { LoanPageContainer, SignUpWrapper, Loading, LoadingWrapper } from './styles';
 import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
@@ -15,15 +16,22 @@ import BorrowerAboutSection from './BorrowerAboutSection';
 import useRouter from '../../hooks/useRouter';
 import useGetCoin from '../../hooks/useGetCoin';
 import WarningModal from '../WarningModal';
+import { isAddress } from '../../utils';
 
-const LoanPage = () => {
+const LoanPage = ({
+  match: {
+    params: { address }
+  }
+}) => {
   let loanAddress;
   // @ts-ignore
   if (window.Cypress) {
     // @ts-ignore
     loanAddress = window.InvestLoanAddress;
+  } else if (address && isAddress(address)) {
+    loanAddress = address;
   } else {
-    loanAddress = process.env.REACT_APP_LOAN_OF_THE_MONTH;
+    loanAddress = null;
   }
 
   const {
@@ -106,15 +114,31 @@ const LoanPage = () => {
   }, []);
 
   useAsyncEffect(async () => {
+    console.log('loan address => ', loanAddress);
     try {
-      const currentLoan = await getLoanByAddress(loanAddress, network);
-      setLoan(currentLoan);
-      const borrowerAddress = currentLoan.originator;
-      const borrowerInformation: any = await findOne('companies', {
-        'fields.ethereum_address': borrowerAddress
-      });
-      const borrowerPage = await requestPage('borrower_profile', borrowerInformation.slug);
-      setBorrowerInfo(borrowerPage);
+      if (loanAddress) {
+        const currentLoan = await getLoanByAddress(loanAddress, network);
+        setLoan(currentLoan);
+        const borrowerAddress = currentLoan.originator;
+        const borrowerInformation: any = await findOne('companies', {
+          'fields.ethereum_address': borrowerAddress
+        });
+        const borrowerPage = await requestPage('borrower_profile', borrowerInformation.slug);
+        setBorrowerInfo(borrowerPage);
+      } else {
+        const loanOfTheMonthInfo = await findOne('loan_of_the_month', {
+          net: 'kovan',
+          loan_of_the_month: true
+        });
+        const borrowerPage = await requestPage(
+          'borrower_profile',
+          loanOfTheMonthInfo.borrowerInfo.slug
+        );
+        const currentLoan = await getLoanByAddress(loanOfTheMonthInfo.loanAddress, network);
+        loanAddress = currentLoan;
+        setLoan(currentLoan);
+        setBorrowerInfo(borrowerPage);
+      }
     } catch (error) {
       console.error('Error querying loan info ', error);
     }
@@ -216,7 +240,13 @@ const LoanPage = () => {
       </LoanPageContainer>
     );
   }
-  return <Loading inverted>Loading</Loading>;
+  return (
+    <LoadingWrapper>
+      {/* <Dimmering active inverted> */}
+      <Loading>Loading</Loading>
+      {/* </Dimmering> */}
+    </LoadingWrapper>
+  );
 };
 
-export default LoanPage;
+export default withRouter(LoanPage);
