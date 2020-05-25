@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react';
-import { CardCenteredText, CardTitle, RetryButton } from '../ClaimRefund.styles';
-import ClaimRefundContext from '../ClaimRefund.context';
+import { Button } from '@raisehq/components';
+import { CardCenteredText, CardTitle, RefundInfo } from '../ClaimRefund.styles';
+import ClaimRefundContext from '../ClaimRefund.Context';
 import Stages from '../ClaimRefund.stages';
 
 const Processing = () => {
@@ -13,8 +14,14 @@ const Processing = () => {
     <Fragment>
       <CardCenteredText>
         <CardTitle>Something went wrong</CardTitle>
+        <RefundInfo>
+          Try again to proceed with the refund. If you need to contact us, click in the Help button
+          at the bottom left of this page.
+        </RefundInfo>
       </CardCenteredText>
-      <RetryButton onClick={onRetry}>RETRY</RetryButton>
+      <Button onClick={onRetry} fullWidth>
+        RETRY
+      </Button>
     </Fragment>
   );
 };

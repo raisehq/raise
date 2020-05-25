@@ -20,7 +20,7 @@ import {
   KycLayout,
   AppLayout
 } from './Layout';
-import { DashboardBorrower } from './Dashboard';
+import { DashboardBorrower, DashboardLender } from './Dashboard';
 import { CreateLoan } from './CreateLoan';
 import MyAccount from './MyAccount';
 import Join from './Join';
@@ -32,7 +32,6 @@ import { Web3Check } from './Web3Check';
 import { BorrowerProfile } from './BorrowerProfile';
 import TopHeader from './Header';
 import NotFound404 from './BorrowerProfile/Borrower404';
-
 import Toast, { StyledToastContainer } from './Toast';
 import Sidebar from './InvestSidebar/Sidebar';
 import InvestingPage from './InvestingPage';
@@ -200,6 +199,17 @@ const App = () => {
                   component={MyAccount}
                   roles={[1, 2]}
                 />
+                {process?.env?.NODE_ENV === 'development' && (
+                  <Web3Layout
+                    publicRoute
+                    marketplace
+                    layout={AppLayout}
+                    exact
+                    path="/listings"
+                    component={DashboardLender}
+                    roles={[1, 2]}
+                  />
+                )}
                 <Web3Layout
                   publicRoute
                   marketplace

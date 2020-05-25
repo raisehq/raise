@@ -9,7 +9,7 @@ import { GetInTouch } from '../GetInTouch';
 import useGetCoin from '../../hooks/useGetCoin';
 
 const ClaimRepay = lazy(() => import('../ClaimRepay'));
-const ClaimRefund = lazy(() => import('../ClaimRefundInvestor'));
+const ClaimRefund = lazy(() => import('../ClaimRefundInvestor/ClaimRefund.Button'));
 
 const LenderACU = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, route } = useBorrowerInfo(auction.originator);
