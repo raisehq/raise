@@ -11,7 +11,7 @@ import { isMobile } from 'react-device-detect';
 import { useAppContext } from '../contexts/AppContext';
 import { useRootContext } from '../contexts/RootContext';
 import useRouter from '../hooks/useRouter';
-import useMenuVisibility from '../hooks/useMenuVisibility';
+import useKycTopBarVisibility from '../hooks/useKycTopBarVisibility';
 import KycTopBanner from './TopBanner/KycTopBanner';
 
 // Pages and components
@@ -69,8 +69,8 @@ const App = () => {
     }
   };
   const onKYC = () => history.push('/kyc');
-  const { visible, visibleMenu } = useMenuVisibility();
-  const enableKyc = visibleMenu && accounttypeId === 2;
+  const { visible } = useKycTopBarVisibility();
+  const enableKyc = accounttypeId === 2;
 
   const [kycBCStatus, setKycBCStatus] = useState(false);
 
