@@ -4,32 +4,52 @@ import { device } from '../../commons/breakpoints';
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  min-height: 760px;
+  margin: 20px;
 
   @media screen and ${device.laptop} {
     width: 100%;
-    padding: 30px 25px 50px 300px;
     margin: auto;
-    margin-top: 54px;
   }
 `;
 
 export const Wrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 760px;
+`;
+
+export const BuyCryptoInstruction = styled.div`
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  min-height: 400px;
+
+  min-height: 500px;
   max-width: 540px;
-  border: 1px solid black;
+  margin: 10px;
+
+  @media screen and ${device.laptop} {
+    margin: 0 50px 0 10px;
+  }
 `;
 
 export const CryptoProvider = styled.div`
-  width: 500px;
-  height: 485px;
-  background-color: gray;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background: #ffffff;
+  box-shadow: 0px 8px 15px rgba(60, 66, 81, 0.25);
+  border-radius: 4px;
+  padding: 20px;
 `;
 
 export const Title = styled.div`
