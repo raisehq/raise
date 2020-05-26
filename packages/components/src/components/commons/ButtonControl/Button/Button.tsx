@@ -8,10 +8,11 @@ const Button: React.SFC<ButtonProps> = ({
   disabled = false,
   idAttr,
   className,
-  type,
-  size,
+  type = 'primary',
+  size = 'standard',
   fullWidth = false,
   minWidth = false,
+  children,
   ...rest
 }: any) => (
   <ButtonStyled
@@ -26,6 +27,7 @@ const Button: React.SFC<ButtonProps> = ({
     {...rest}
   >
     {text}
+    {children}
   </ButtonStyled>
 );
 

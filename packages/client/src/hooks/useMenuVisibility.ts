@@ -13,6 +13,7 @@ const useMenuVisibility = () => {
       history.location.pathname.includes('/dashboard') ||
       history.location.pathname.includes('/c') ||
       history.location.pathname.includes('/account') ||
+      history.location.pathname.includes('/listings') ||
       history.location.pathname.includes('/kyc') ||
       history.location.pathname.includes('/verify-web3') ||
       history.location.pathname.includes('/investing') ||
