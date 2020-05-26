@@ -41,7 +41,10 @@ deploy-backend:
   only:
     - merge_requests
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
 
 build-front-review:
   stage: build
@@ -69,7 +72,10 @@ build-front-review:
     - merge_requests
     - latest
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -97,7 +103,10 @@ build-pages-review:
     - merge_requests
     - latest
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -113,7 +122,10 @@ lint-front-review:
     - merge_requests
     - latest
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -126,6 +138,9 @@ build-components:
     - yarn run components:build:umd
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -139,6 +154,9 @@ build-onboarding:
     - yarn rollup
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -153,6 +171,9 @@ build-front-integration:
     - 'mv  packages/client/build  packages/client/build_int'
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -166,6 +187,9 @@ build-front-production:
     - 'yarn run client:build:production'
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -180,6 +204,9 @@ build-pages-integration:
     - 'yarn run pages:build:integration'
     - 'mv  packages/pages/public  packages/pages/build_int'
   only:
+    refs:
+      - master
+  except:
     variables:
       - $BUTTERCMS
   artifacts:
@@ -195,7 +222,10 @@ build-pages-production:
     - 'yarn run pages:build:production'
     - 'mv  packages/pages/public  packages/pages/build'
   only:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -210,6 +240,9 @@ lint-front:
     - 'yarn run lint'
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -271,6 +304,9 @@ deploy-components:
       ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/components/*"
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-onboarding:
   image: python:3.7-alpine
@@ -289,6 +325,9 @@ deploy-onboarding:
       ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/onboarding/*"
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-int:
   image: python:3.7-alpine
@@ -305,6 +344,9 @@ deploy-int:
       ./cache_invalidation.sh ${BUCKET_NAME_INT}
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-int-pages:
   image: python:3.7-alpine
@@ -321,6 +363,9 @@ deploy-int-pages:
       ./cache_invalidation.sh ${BUCKET_NAME_INT_WWW}
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-canary:
   image: python:3.7-alpine
@@ -337,6 +382,9 @@ deploy-canary:
       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 cypress-e2e-review:
@@ -400,6 +448,9 @@ cypress-e2e-canary:
       - packages/testing/ganache_db
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 components-unit-test:
@@ -417,6 +468,9 @@ components-unit-test:
       - packages/components/test/__image_snapshots__
   only:
     - merge_requests
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-prod:
   image: python:3.7-alpine
@@ -433,6 +487,9 @@ deploy-prod:
       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 deploy-prod-pages:
@@ -449,7 +506,10 @@ deploy-prod-pages:
       aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh ${BUCKET_NAME_PROD_WWW}
   only:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 cypress-e2e-production:
@@ -481,6 +541,9 @@ cypress-e2e-production:
       - packages/testing/ganache_db
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 tag to latest:
@@ -502,6 +565,9 @@ tag to latest:
     - git push --force origin --tags
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 publish-components:
@@ -579,4 +645,7 @@ stop-review:
   only:
     - merge_requests
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
