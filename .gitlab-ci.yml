@@ -180,7 +180,10 @@ build-pages-integration:
     - 'yarn run pages:build:integration'
     - 'mv  packages/pages/public  packages/pages/build_int'
   only:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
