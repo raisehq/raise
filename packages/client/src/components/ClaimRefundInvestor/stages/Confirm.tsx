@@ -1,26 +1,13 @@
 import React, { useState, useContext } from 'react';
-import {
-  Header,
-  ClaimButton,
-  ClaimFundsResume,
-  FlexSpacedLayout,
-  ResumeItemBoxBig
-  // ResumeItemBox
-} from '../ClaimRefund.styles';
+import { Button } from '@raisehq/components';
+import { Header, ClaimFundsResume, FlexSpacedLayout, RefundInfo } from '../ClaimRefund.styles';
 import useWallet from '../../../hooks/useWallet';
-import ClaimRefundContext from '../ClaimRefund.context';
+import ClaimRefundContext from '../ClaimRefund.Context';
 import Stages from '../ClaimRefund.stages';
-import { ResumeItemProps } from '../../../interfaces/Invest';
 import { useAppContext } from '../../../contexts/AppContext';
 import { useRootContext } from '../../../contexts/RootContext';
 import useGetCoin from '../../../hooks/useGetCoin';
-
-const ResumeItemBig: React.SFC<ResumeItemProps> = ({ title, value }: any) => (
-  <ResumeItemBoxBig>
-    <p>{title}</p>
-    <p>{value}</p>
-  </ResumeItemBoxBig>
-);
+import { ResumeItemBig } from './ResumeItemBig';
 
 const Confirm = () => {
   const metamask = useWallet();
@@ -35,33 +22,24 @@ const Confirm = () => {
   const [loading, setLoading] = useState(false);
   const onConfirm = async () => {
     setLoading(true);
+    const methodId = loan.state === 1 ? 'withdrawRefund' : 'withdrawFundsUnlocked';
 
     try {
       const loanContract = await metamask.addContractByAddress('LoanContract', loanAddress);
-      if (loan.state === 1) {
-        await followTx.watchTx(
-          loanContract.methods.withdrawRefund().send({
+      await followTx
+        .watchTx(
+          loanContract.methods[methodId]().send({
             from: account
           }),
           {
-            id: 'withdrawRefund',
+            id: methodId,
             vars: [calculatedLoan.lenderAmount, coin.value]
           },
-          'withdrawRefund'
-        );
-      } else if (loan.state === 6) {
-        await followTx.watchTx(
-          loanContract.methods.withdrawFundsUnlocked().send({
-            from: account
-          }),
-          {
-            id: 'withdrawFundsUnlocked',
-            vars: [calculatedLoan.lenderAmount, coin.value]
-          },
-          'withdrawFundsUnlocked'
-        );
-      }
-      setStage(Stages.Success);
+          methodId
+        )
+        .on('tx_start', () => {
+          setStage(Stages.Processing);
+        });
     } catch (error) {
       console.error(error);
       setStage(Stages.Error);
@@ -70,18 +48,28 @@ const Confirm = () => {
 
   return (
     <>
-      <Header>Claim Refund</Header>
       <ClaimFundsResume>
+        <Header>Claim Refund</Header>
         <FlexSpacedLayout>
           <ResumeItemBig
             title="Invested amount"
             value={`${calculatedLoan.lenderAmount} ${coin && coin.text}`}
           />
         </FlexSpacedLayout>
+        {loading && (
+          <RefundInfo>
+            Check your wallet and confirm the transaction to refund your investment.
+          </RefundInfo>
+        )}
       </ClaimFundsResume>
-      <ClaimButton loading={loading} onClick={onConfirm}>
-        CLAIM
-      </ClaimButton>
+      <Button
+        disabled={loading}
+        onClick={onConfirm}
+        text="REFUND"
+        size="standard"
+        fullWidth
+        type="primary"
+      />
     </>
   );
 };

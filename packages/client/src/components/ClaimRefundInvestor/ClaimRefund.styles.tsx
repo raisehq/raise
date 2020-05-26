@@ -1,6 +1,20 @@
 import styled from 'styled-components';
-import { Button, Modal as SemanticModal, Icon } from 'semantic-ui-react';
+import { Button, Modal as SemanticModal, Icon, Loader as RawLoader } from 'semantic-ui-react';
 import { device } from '../../commons/breakpoints';
+import { ReactLink } from '../Links';
+
+export const StyledLink = styled(ReactLink)`
+  color: #eb3f93;
+  text-align: center;
+  font-size: 14px;
+  width: 100%;
+  margin: 34px 0px 0px;
+  display: block;
+  &:hover,
+  &:focus {
+    color: #eb3f93;
+  }
+`;
 
 export const ExitButton = styled(Icon)`
   &&& {
@@ -40,16 +54,24 @@ export const RefundButton = styled(LenderButton)`
   }
 `;
 
+export const RefundInfo = styled.p`
+  margin-top: 34px;
+`;
+
 export const Modal = styled(SemanticModal)`
   &&&& {
     text-align: center;
     width: 350px;
-    height: fit-content;
+    height: 392px;
     background-color: #fcfcfc;
     border-radius: 4px;
     box-shadow: 0 10px 26px 0 rgba(6, 52, 40, 0.1);
     &&& .content {
       padding: 40px 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
     }
     @media ${device.laptop} {
       max-width: 350px;
@@ -81,27 +103,6 @@ export const FlexSpacedLayout = styled.div`
   flex-wrap: wrap;
 `;
 
-export const ResumeItemBox = styled.div`
-  width: 100%;
-  margin-top: 20px;
-
-  & > p {
-    text-align: right;
-  }
-  & > p:first-child {
-    font-size: 10px;
-    color: #5c5d5d;
-    font-weight: normal;
-  }
-  & > p:last-child {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 24px;
-    color: #3c4251;
-    margin-top: -8px;
-  }
-`;
-
 export const ResumeItemBoxBig = styled.div`
   margin-top: 20px;
 
@@ -120,85 +121,38 @@ export const ResumeItemBoxBig = styled.div`
     color: #3c4251;
   }
 `;
-/* eslint-disable */
-export const ClaimButton = styled(LenderButton)`
-  &&& {
-    margin: 20px 0px 0px 0px;
-    height: 48px;
-    width: 100%;
-    font-size: 16px;
- 
-
-    background: ${({ loading }) => {
-      const resp = loading ? '#eff4f7' : 'linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%)';
-      return resp;
-    }}
-    color: #ffffff;
-  }
-`;
-/* eslint-enable */
-
-// processing state
-export const RetryButton = styled(LenderButton)`
-  &&& {
-    margin: 193px 0px 0px 0px;
-    height: 48px;
-    width: 100%;
-    font-size: 16px;
-    color: #ffffff;
-    background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
-  }
-  &&&:hover,
-  &&&:focus {
-    background-color: #ff047f;
-    color: #ffffff;
-  }
-`;
 
 export const CardCenteredText = styled.div`
   &&& {
-    text-align: left;
+    text-align: center;
   }
 `;
 export const CardTitle = styled.div`
-  margin: 10px 0px 20px 0px;
   color: #3c4251;
   font-size: 26px;
   font-weight: bold;
-  line-height: 36px;
-  text-align: left;
+  text-align: center;
   margin: 10px 0px 20px 0px;
 `;
+
 export const CardSubtitle = styled.div`
   &&& {
     color: #5a5a5a;
     font-size: 14px;
-    line-height: 21px;
-    text-align: left;
-    margin: 0px -15px 95px 0px;
+    text-align: center;
   }
 `;
 
-export const ButtonGreen = styled(Button)`
-  &&& {
-    margin-left: 0px;
-    height: 58px;
-    width: 100%;
-    background: linear-gradient(134.72deg, #00a76f 0%, #00da9e 100%);
-    color: white;
+export const Loader = styled(RawLoader)`
+  &&&&&&&&:before {
+    border: 0.2em solid rgba(0, 0, 0, 0.1);
+  }
+
+  &&&&&&&&:after {
+    border-color: #000 transparent transparent;
   }
 `;
 
-export const ConfirmButton = styled(LenderButton)`
-  &&& {
-    height: 48px;
-    width: 100%;
-    font-size: 16px;
-    color: #ffffff;
-  }
-  &&&:hover,
-  &&&:focus {
-    background-color: #ff047f;
-    color: #ffffff;
-  }
+export const ProcessingButton = styled(Button)`
+  height: auto;
 `;
