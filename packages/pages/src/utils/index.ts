@@ -29,7 +29,7 @@ const HOSTS: any = {
 };
 
 export function getHost(name: string) {
-  if (process.env.REACT_APP_MOCK_API === 'true') {
+  if (process.env.GATSBY_REACT_APP_MOCK_API === 'true') {
     return 'http://localhost:3000';
   }
   return HOSTS[name];
