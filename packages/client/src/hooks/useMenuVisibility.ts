@@ -16,7 +16,8 @@ const useMenuVisibility = () => {
       history.location.pathname.includes('/kyc') ||
       history.location.pathname.includes('/verify-web3') ||
       history.location.pathname.includes('/investing') ||
-      history.location.pathname.includes('investmentopportunity')
+      history.location.pathname.includes('investmentopportunity') ||
+      history.location.pathname.includes('buy-crypto')
     ) {
       setVisible(true);
     } else {
