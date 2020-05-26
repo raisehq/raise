@@ -1,9 +1,9 @@
 /* eslint-disable prefer-destructuring */
 import { BasicLink, GatsbyLink } from './components/Links';
 
-const REACT_APP_WEB_URL = process.env.REACT_APP_WEB_URL;
-const REACT_APP_HOST_URL = process.env.REACT_APP_HOST_URL;
-const REACT_APP_HOST_STATIC = process.env.REACT_APP_HOST_STATIC;
+const REACT_APP_WEB_URL = process.env.GATSBY_REACT_APP_WEB_URL;
+const REACT_APP_HOST_URL = process.env.GATSBY_REACT_APP_HOST_URL;
+const REACT_APP_HOST_STATIC = process.env.GATSBY_REACT_APP_HOST_STATIC;
 const routeSkeleton = {
   logo: {
     src: `${REACT_APP_HOST_STATIC}/images/logo.svg`,

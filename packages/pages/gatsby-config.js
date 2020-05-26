@@ -1,4 +1,9 @@
-const BUTTERCMSKEY = process.env.REACT_APP_BUTTER;
+const BUTTERCMSKEY = process.env.GATSBY_REACT_APP_BUTTER;
+
+// require('dotenv').config({
+//   path: `.env.development`
+// });
+
 module.exports = {
   siteMetadata: {
     title: 'Invest, Grow and Do Good!',
@@ -44,28 +49,28 @@ module.exports = {
       resolve: 'gatsby-plugin-env-variables',
       options: {
         whitelist: [
-          'REACT_APP_DEFAULT_NETWORK_ID',
-          'REACT_APP_HOST_THEGRAPH',
-          'REACT_APP_HOST_THEGRAPH_WS',
-          'REACT_APP_METADATA_URL',
-          'REACT_APP_HOST_IMAGES',
-          'REACT_APP_HOST_URL_AUTH',
-          'REACT_APP_HOST_URL_CORE',
-          'REACT_APP_HOST_URL_FILE',
-          'REACT_APP_GTM_ID',
-          'REACT_APP_GTM_AUTH',
-          'REACT_APP_GTM_ENV',
-          'REACT_APP_COOKIE_DOMAIN',
-          'REACT_APP_LOGROCKET',
-          'REACT_APP_BUTTER',
-          'REACT_APP_INFURA',
-          'REACT_APP_DAI_ADDRESS',
-          'REACT_APP_SWAP_ON',
-          'REACT_APP_BLOOM_ATTESTATIONS',
-          'REACT_APP_STATIC',
-          'REACT_APP_HOST_URL',
-          'REACT_APP_HOST_STATIC',
-          'REACT_APP_WEB_URL'
+          'GATSBY_REACT_APP_DEFAULT_NETWORK_ID',
+          'GATSBY_REACT_APP_HOST_THEGRAPH',
+          'GATSBY_REACT_APP_HOST_THEGRAPH_WS',
+          'GATSBY_REACT_APP_METADATA_URL',
+          'GATSBY_REACT_APP_HOST_IMAGES',
+          'GATSBY_REACT_APP_HOST_URL_AUTH',
+          'GATSBY_REACT_APP_HOST_URL_CORE',
+          'GATSBY_REACT_APP_HOST_URL_FILE',
+          'GATSBY_REACT_APP_GTM_ID',
+          'GATSBY_REACT_APP_GTM_AUTH',
+          'GATSBY_REACT_APP_GTM_ENV',
+          'GATSBY_REACT_APP_COOKIE_DOMAIN',
+          'GATSBY_REACT_APP_LOGROCKET',
+          'GATSBY_REACT_APP_BUTTER',
+          'GATSBY_REACT_APP_INFURA',
+          'GATSBY_REACT_APP_DAI_ADDRESS',
+          'GATSBY_REACT_APP_SWAP_ON',
+          'GATSBY_REACT_APP_BLOOM_ATTESTATIONS',
+          'GATSBY_REACT_APP_STATIC',
+          'GATSBY_REACT_APP_HOST_URL',
+          'GATSBY_REACT_APP_HOST_STATIC',
+          'GATSBY_REACT_APP_WEB_URL'
         ]
       }
     },

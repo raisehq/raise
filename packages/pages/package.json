@@ -60,7 +60,7 @@
   },
   "scripts": {
     "build:site": "gatsby build",
-    "build:integration": "env-cmd --no-override .env.integration yarn build:site",
+    "build:integration": "env-cmd --no-override .env.development yarn build:site",
     "build:production": "env-cmd --no-override .env.production yarn build:site",
     "develop": "env-cmd --no-override .env.local gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",

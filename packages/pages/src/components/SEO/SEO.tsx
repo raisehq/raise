@@ -8,7 +8,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const getURL = (path: string) => `${process.env.REACT_APP_HOST_URL}/${path}`;
+const getURL = (path: string) => `${process.env.GATSBY_REACT_APP_HOST_URL}/${path}`;
 
 const SEO = ({
   url = 'join',
@@ -16,7 +16,7 @@ const SEO = ({
   description = 'Check out the available investment opportunities in our marketplace',
   tags = 'crowdlending, crowdlending platform, lending platform, eth lending, best crypto lending, best cypto lending platform, lending as a service platform, lending marketplace',
   author = '@raise_hq',
-  previewImage = `${process.env.REACT_APP_HOST_IMAGES}/images/preview.png`
+  previewImage = `${process.env.GATSBY_REACT_APP_HOST_IMAGES}/images/preview.png`
 }: {
   url?: string;
   title?: string;

@@ -79,7 +79,7 @@ const InvestingSection: React.SFC<ISectionProps> = ({ section, length, sectionIn
       </TriangleDown>
     )}
     {section.section_order % 2 === 0 && sectionIndex + 1 !== length && (
-      <WaveSVG src={`${process.env.REACT_APP_HOST_IMAGES}/images/waves.svg`} alt="wave" />
+      <WaveSVG src={`${process.env.GATSBY_REACT_APP_HOST_IMAGES}/images/waves.svg`} alt="wave" />
     )}
   </InvestingSectionContainer>
 );
