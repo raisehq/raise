@@ -6,6 +6,7 @@ import { useAppContext } from '../../contexts/AppContext';
 import { useRootContext } from '../../contexts/RootContext';
 import Tab from './Dashboard.Tab';
 import Queryies from '../../helpers/queryies';
+import { ClaimRefundModal, ClaimRefundProvider } from '../ClaimRefundInvestor';
 
 const MyActivity = () => {
   const {
@@ -61,11 +62,14 @@ const MyActivity = () => {
             My Activity
           </Header>
         </Element>
-        <DashboardTab
-          renderActiveOnly
-          menu={{ secondary: true, pointing: true }}
-          panes={activityPanels}
-        />
+        <ClaimRefundProvider>
+          <ClaimRefundModal />
+          <DashboardTab
+            renderActiveOnly
+            menu={{ secondary: true, pointing: true }}
+            panes={activityPanels}
+          />
+        </ClaimRefundProvider>
       </DashboardContainer>
     </MyActivtyWrapper>
   );

@@ -1,15 +1,18 @@
+import { ReactNode } from 'react';
+
 export interface ButtonProps {
   text?: string;
   onClick?: Function;
   disabled?: boolean;
   idAttr?: string;
   className?: string;
-  size: string;
+  size?: string;
   as?: any;
   to?: any;
   fullWidth?: boolean;
   minWidth?: boolean;
-  type: string;
+  type?: string;
+  children?: ReactNode | string;
 }
 
 export interface BloomButtonProps {
