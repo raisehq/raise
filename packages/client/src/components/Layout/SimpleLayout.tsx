@@ -39,7 +39,7 @@ const SimpleLayout: React.SFC<IDefaultProps> = ({
   }: any = useRouter();
   // Check if is Logged
   if (!logged && checkLogged) {
-    return <Redirect to="/join" />;
+    return <Redirect to="/login" />;
   }
 
   return (

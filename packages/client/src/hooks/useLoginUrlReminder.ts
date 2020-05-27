@@ -3,7 +3,7 @@ import LocalData from '../helpers/localData';
 import useRouter from './useRouter';
 import useCookie from './useCookie';
 
-const blackList = ['/join', '/verify-web3'];
+const blackList = ['/join', '/verify-web3', '/login'];
 
 const passBlackList = (pathToCheck: string) =>
   !!pathToCheck && !blackList.some((blackPath) => pathToCheck.includes(blackPath));
