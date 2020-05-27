@@ -500,3 +500,9 @@ export const ContinueButton = styled(RaiseButton)`
     margin: 0;
   }
 `;
+
+export const Astersic = styled.span`
+  vertical-align: top;
+  color: red;
+  font-size: 28px;
+`;

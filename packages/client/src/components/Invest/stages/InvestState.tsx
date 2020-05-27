@@ -23,7 +23,8 @@ import {
   InvestBody,
   InvestInput,
   InvestButtonWrapper,
-  ContinueButton
+  ContinueButton,
+  Astersic
 } from '../styles';
 import CollapsedTable, { TableItem } from '../components/CollapsedTable';
 
@@ -204,7 +205,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
         {isLogged && (
           <CheckContainer>
             <LoanTermsCheckbox id="btn-check-term-condition-invest" onChange={onToggleTerms} />
-            I agree to the Terms and Conditions of the Loan Agreement
+            I agree to the Terms and Conditions of the Loan Agreement<Astersic>*</Astersic>
           </CheckContainer>
         )}
         {userActivated ? (
@@ -212,7 +213,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
             idAttr="btn-invest-confirm"
             onClick={onConfirm}
             disabled={buttonRules}
-            text="CONFIRM"
+            text="INVEST"
             type="primary"
             size="large"
             fullWidth
@@ -222,7 +223,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
             idAttr="btn-invest-confirm"
             onClick={onConfirm}
             disabled={false}
-            text={isLogged ? 'Verify your Account' : 'CONFIRM'}
+            text={isLogged ? 'Verify account' : 'START'}
             type="primary"
             size="large"
             fullWidth
