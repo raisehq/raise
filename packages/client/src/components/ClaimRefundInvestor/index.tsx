@@ -1,4 +1,6 @@
-import ClaimRefund from './ClaimRefund';
+import ClaimRefundModal from './ClaimRefund.Modal';
+import ClaimRefundButton from './ClaimRefund.Button';
+import ClaimRefundContext, { ClaimRefundProvider } from './ClaimRefund.Context';
 // eslint-disable-next-line
-export { ClaimRefund };
-export default ClaimRefund;
+export { ClaimRefundModal, ClaimRefundButton, ClaimRefundContext, ClaimRefundProvider };
+export default ClaimRefundModal;

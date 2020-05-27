@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import URLSearchParams from '@ungap/url-search-params';
+import { Dimmer, Loader } from 'semantic-ui-react';
+import useAsncEffect from '../../hooks/useAsyncEffect';
 import Wallet from './Web3Check.Wallet';
 import List from './Web3Check.List';
 import WalletConnect from './Web3Check.WalletConnect';
@@ -42,30 +44,46 @@ const Web3Check = () => {
     store: {
       user: {
         cryptoAddress: { cryptotypeId }
+      },
+      config: { network, networkId },
+      auth: {
+        login: { logged: isLogged }
       }
     }
   }: any = useRootContext();
   const {
-    web3Status: { unlocked }
+    web3Status: { unlocked, hasProvider, accountMatches }
   }: any = useAppContext();
   const { history }: any = useRouter();
+  const [loading, setLoading] = useState(true);
   const redirect = new URLSearchParams(history.location.search).get('redirect');
-  const { web3, getCurrentProviderName }: any = useWeb3();
+  const { connectWallet, web3, getCurrentProviderName }: any = useWeb3();
   const tagManager = useGoogleTagManager('Wallet');
   const [ui, setUI] = useState(isMobile ? Stages.WalletSelector : Stages.WalletConnectForm);
   const [prevStage, setPrevStage] = useState(isMobile ? 'WalletSelector' : 'WalletConnectForm');
 
   const handleSuccess = () => {
-    history.push(redirect);
+    history.push(redirect || '/');
   };
 
-  useEffect(() => {
+  useAsncEffect(async () => {
     if (web3 && unlocked) {
       const walletName = getWalletName(getCurrentProviderName()).toLowerCase();
       tagManager.sendEvent(TMEvents.Submit, 'wallet_success', walletName);
       tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
-
+      setLoading(false);
       setUI(Stages.Checks);
+    } else if (!hasProvider && isLogged && !unlocked && !web3) {
+      // Check the type of wallet and try to connect to the provider
+      try {
+        await connectWallet(cryptotypeId, network, networkId, true);
+        // If success
+        handleSuccess();
+      } catch (err) {
+        setLoading(false);
+      }
+    } else {
+      setLoading(false);
     }
   }, []);
 
@@ -83,9 +101,11 @@ const Web3Check = () => {
       tagManager.sendEvent(TMEvents.Submit, tagLabelMapping[walletName], walletName);
 
       setUI(Stages.Checks);
+    } else if (web3 && unlocked && accountMatches) {
+      console.log(' ACCOUNT MATCHES: ', web3, unlocked, accountMatches);
       handleSuccess();
     }
-  }, [unlocked, web3, ui]);
+  }, [unlocked, web3, accountMatches, ui]);
 
   const onExists = () => {
     setUI(Stages.WalletSelector);
@@ -117,7 +137,12 @@ const Web3Check = () => {
     setUI(Stages.WalletConnect(hasWallet));
     setPrevStage(step);
   };
-
+  if (loading)
+    return (
+      <Dimmer active inverted>
+        <Loader>Loading app</Loader>
+      </Dimmer>
+    );
   return getStage(
     ui,
     handleNext,

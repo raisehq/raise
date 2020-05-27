@@ -4,6 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import SEO from '../components/SEO';
 import Layout from '../components/Layout';
 import FeaturedImage from '../components/Posts/FeaturedImage';
+import TagManager from '../components/TagManager';
 import { Post as PostData } from '../components/Posts/interfaces';
 import { ContainerPost } from '../components/Posts/styles';
 
@@ -42,7 +43,9 @@ const Post = ({
           url={`${process.env.REACT_APP_WEB_URL}/blog/${slug}`}
           previewImage={featured_image}
           author={`${author.first_name} ${author.last_name}`}
+          article
         />
+        <TagManager />
         <ContainerPost>
           <div className="article-body">
             <div

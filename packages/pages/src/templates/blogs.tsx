@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import PostCard from '../components/Posts/Cards';
 import { Post } from '../components/Posts/interfaces';
 import SEO from '../components/SEO';
+import TagManager from '../components/TagManager';
 import 'semantic-ui-css/semantic.min.css';
 
 const ArticleGallery = ({
@@ -22,6 +23,7 @@ const ArticleGallery = ({
     <>
       <Layout>
         <SEO url={`${process.env.REACT_APP_WEB_URL}/blog`} />
+        <TagManager />
         <ContainerPost>
           <CardGrid>
             <Title>

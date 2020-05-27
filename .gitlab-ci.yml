@@ -41,7 +41,10 @@ deploy-backend:
   only:
     - merge_requests
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
 
 build-front-review:
   stage: build
@@ -69,7 +72,10 @@ build-front-review:
     - merge_requests
     - latest
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -84,7 +90,12 @@ build-pages-review:
   script:
     - |
       #!/bin/sh
-      echo $REACT_APP_HOST_URL
+      if [ -n "${REVIEW_SLUG}" ]; then
+        REACT_APP_COOKIE_DOMAIN=.${REVIEW_SLUG}.www-review.$DOMAIN
+        REACT_APP_HOST_URL=https://${REVIEW_SLUG}.review.${DOMAIN}
+        PUBLIC_URL=https://${REVIEW_SLUG}.www-review.$DOMAIN
+      fi
+      echo ${REACT_APP_HOST_URL}
       yarn --pure-lockfile
       yarn run pages:build:integration:bili
       mv  packages/pages/public  packages/pages/build_review
@@ -92,7 +103,10 @@ build-pages-review:
     - merge_requests
     - latest
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -108,7 +122,10 @@ lint-front-review:
     - merge_requests
     - latest
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -121,6 +138,9 @@ build-components:
     - yarn run components:build:umd
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -134,6 +154,9 @@ build-onboarding:
     - yarn rollup
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -148,6 +171,9 @@ build-front-integration:
     - 'mv  packages/client/build  packages/client/build_int'
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -161,6 +187,9 @@ build-front-production:
     - 'yarn run client:build:production'
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -175,7 +204,11 @@ build-pages-integration:
     - 'yarn run pages:build:integration'
     - 'mv  packages/pages/public  packages/pages/build_int'
   only:
-    - master
+    refs:
+      - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -189,7 +222,10 @@ build-pages-production:
     - 'yarn run pages:build:production'
     - 'mv  packages/pages/public  packages/pages/build'
   only:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
@@ -204,10 +240,42 @@ lint-front:
     - 'yarn run lint'
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   artifacts:
     when: always
     paths:
       - packages/client/build
+
+review:
+  image: python:3.7-alpine
+  stage: review
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  script:
+    - |
+      #!/bin/sh
+      if [ -n "${REVIEW_SLUG}" ]; then
+        CI_COMMIT_REF_SLUG=${REVIEW_SLUG}
+      fi
+      echo ${CI_COMMIT_REF_SLUG}
+      mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      mv packages/pages/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    on_stop: stop-review
+  only:
+    - merge_requests
+    - latest
+  except:
+    - master
 
 deploy-components:
   image: python:3.7-alpine
@@ -236,6 +304,9 @@ deploy-components:
       ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/components/*"
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-onboarding:
   image: python:3.7-alpine
@@ -254,6 +325,9 @@ deploy-onboarding:
       ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/onboarding/*"
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-int:
   image: python:3.7-alpine
@@ -270,6 +344,9 @@ deploy-int:
       ./cache_invalidation.sh ${BUCKET_NAME_INT}
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-int-pages:
   image: python:3.7-alpine
@@ -283,9 +360,12 @@ deploy-int-pages:
       mv packages/pages/build_int build_int
       aws s3 rm s3://${BUCKET_NAME_INT_WWW}/ --recursive
       aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
-      ./cache_invalidation.sh ${BUCKET_NAME_INT_WWW}
+      ./cache_invalidation.sh herodev.es
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-canary:
   image: python:3.7-alpine
@@ -302,6 +382,9 @@ deploy-canary:
       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 cypress-e2e-review:
@@ -365,6 +448,9 @@ cypress-e2e-canary:
       - packages/testing/ganache_db
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 components-unit-test:
@@ -382,6 +468,9 @@ components-unit-test:
       - packages/components/test/__image_snapshots__
   only:
     - merge_requests
+  except:
+    variables:
+      - $BUTTERCMS
 
 deploy-prod:
   image: python:3.7-alpine
@@ -398,6 +487,9 @@ deploy-prod:
       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 deploy-prod-pages:
@@ -412,9 +504,12 @@ deploy-prod-pages:
       mv packages/pages/build latest
       aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/ --recursive
       aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD_WWW}
+      ./cache_invalidation.sh raise.it
   only:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 cypress-e2e-production:
@@ -446,6 +541,9 @@ cypress-e2e-production:
       - packages/testing/ganache_db
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 tag to latest:
@@ -467,6 +565,9 @@ tag to latest:
     - git push --force origin --tags
   only:
     - master
+  except:
+    variables:
+      - $BUTTERCMS
   resource_group: production
 
 publish-components:
@@ -521,28 +622,6 @@ publish-onboarding:
         echo "Package not updated, the latest version published is ${PUBLISH_VERSION_ONBOARDING} and the local verison is ${LOCAL_VERSION_ONBOARDING}."
       fi
 
-review:
-  image: python:3.7-alpine
-  stage: review
-  before_script:
-    - 'pip install awscli'
-  script:
-    - 'mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'mv packages/pages/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-    - 'aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)'
-
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
-    on_stop: stop-review
-  only:
-    - merge_requests
-    - latest
-  except:
-    - master
-
 stop-review:
   image: python:3.7-alpine
   stage: cleanup
@@ -566,4 +645,7 @@ stop-review:
   only:
     - merge_requests
   except:
-    - master
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS

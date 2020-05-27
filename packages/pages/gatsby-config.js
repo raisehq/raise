@@ -1,19 +1,8 @@
 const BUTTERCMSKEY = process.env.REACT_APP_BUTTER;
+
 module.exports = {
-  siteMetadata: {
-    title: 'Invest, Grow and Do Good!',
-    description: 'Check out the available investment opportunities in our marketplace',
-    author: '@raiseit'
-  },
   plugins: [
     'gatsby-plugin-react-helmet',
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'images',
-        path: `${__dirname}/src/images`
-      }
-    },
     'gatsby-transformer-sharp',
     'gatsby-plugin-typescript',
     'gatsby-plugin-styled-components',
