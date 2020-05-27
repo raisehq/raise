@@ -43,6 +43,7 @@ const Post = ({
           url={`${process.env.REACT_APP_WEB_URL}/blog/${slug}`}
           previewImage={featured_image}
           author={`${author.first_name} ${author.last_name}`}
+          article
         />
         <TagManager />
         <ContainerPost>
