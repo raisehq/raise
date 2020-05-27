@@ -225,6 +225,7 @@ const InvestmentBox = ({
           onValueChange={onSetValue}
           fixedDecimalScale={false}
           onKeyDown={preventOverflow}
+          data-lpignore="true"
         />
         <Coin src={loanCoinImage} name={loanCoin?.text} />
       </InvestBox>
