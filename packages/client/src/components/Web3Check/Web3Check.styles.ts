@@ -13,6 +13,7 @@ export const Web3CheckWalletWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
 `;
 
 export const SelectYourWalletContainer = styled.div`
