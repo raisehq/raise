@@ -19,7 +19,9 @@ import {
   BorrowerPage,
   SideTitle,
   CardImageCrop,
-  BorrowerLogo
+  BorrowerLogo,
+  BorrowerTeam,
+  SideBar
 } from './BorrowerProfile.styles';
 import { KPIList } from './KPI';
 import Socials from './Socials';
@@ -28,7 +30,6 @@ import BorrowerLoading from './BorrowerLoading';
 import { BorrowerInfo } from './BorrowerInfo';
 import { getActiveAuctions } from '../../utils/loanUtils';
 import BorrowerHeader from './BorrowerHeader';
-import BorrowerTeam from './Borrower.Team';
 
 const defaultBorrower = {
   companyDetails: {
@@ -152,12 +153,14 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
             <Socials socialNetworks={socialNetworks} url={url} />
           </CompanyDetails>
         </BorrowerCard>
-        <SideInfo>
+        <SideBar>
           <BorrowerTeam members={members} />
-          <SideTitle>Overview</SideTitle>
-          <KPIList kpis={kpis} />
-          <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
-        </SideInfo>
+          <SideInfo>
+            <SideTitle>Overview</SideTitle>
+            <KPIList kpis={kpis} />
+            <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
+          </SideInfo>
+        </SideBar>
       </Container>
     </BorrowerPage>
   );

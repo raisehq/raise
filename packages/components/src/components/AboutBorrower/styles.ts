@@ -68,7 +68,6 @@ export const SideInfo: any = styled(Card)`
     width: 100%;
     @media screen and ${device.laptop} {
       min-height: 407px;
-      margin-left: 15px;
       margin-top: 0px;
       box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
       padding: 17px;

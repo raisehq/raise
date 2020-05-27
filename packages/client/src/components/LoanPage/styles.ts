@@ -2,6 +2,19 @@ import styled from 'styled-components';
 import { Button } from '@raisehq/components';
 import { Loader } from 'semantic-ui-react';
 import { device } from '../../commons/breakpoints';
+import RawBorrowerTeam from '../BorrowerProfile/Borrower.Team';
+
+export const BorrowerTeam = styled(RawBorrowerTeam)`
+  margin-bottom: 24px;
+`;
+
+export const Side = styled.div`
+  position: relative;
+  width: 100%;
+  @media screen and ${device.laptop} {
+    width: unset;
+  }
+`;
 
 export const Loading = styled(Loader)`
   display: block !important;

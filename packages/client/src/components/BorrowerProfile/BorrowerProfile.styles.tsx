@@ -2,14 +2,26 @@ import styled from 'styled-components';
 import { Card, Header, Popup } from 'semantic-ui-react';
 import { device, maxDevice, size } from '../../commons/breakpoints';
 import theme from '../../theme';
+import RawBorrowerTeam from './Borrower.Team';
 
 interface ImageCropProps {
   src?: string | null;
 }
+export const BorrowerTeam = styled(RawBorrowerTeam)`
+  margin-bottom: 16px;
+`;
 
 interface CompanyDetailsProps {
   extraPadding: boolean;
 }
+
+export const SideBar = styled.div`
+  width: 100%;
+  @media screen and ${device.laptop} {
+    width: unset;
+    margin-left: 16px;
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -85,7 +97,6 @@ export const SideInfo = styled(Card)`
     width: 100%;
     @media screen and ${device.laptop} {
       min-height: 407px;
-      margin-left: 15px;
       margin-top: 0px;
       box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
       padding: 17px;

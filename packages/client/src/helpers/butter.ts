@@ -29,13 +29,15 @@ const requestPage = async (pageType: string, slug: string) => {
   } = await butter.page.retrieve(pageType, slug);
 
   const camelResponse: any = mapKeys(response, toCamelCase);
-  if (camelResponse.companyDetails) {
+  if (camelResponse?.members) {
+    camelResponse.members = camelResponse.members.map((member) => mapKeys(member, toCamelCase));
+  }
+  if (camelResponse?.companyDetails) {
     camelResponse.companyDetails = _(camelResponse.companyDetails)
       .mapKeys(toCamelCase)
       .mapValues(sanitizeValue(WYSIWYGFields))
       .value();
   }
-
   return camelResponse;
 };
 
