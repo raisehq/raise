@@ -15722,6 +15722,11 @@ load-json-file@^5.3.0:
     strip-bom "^3.0.0"
     type-fest "^0.3.0"
 
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
+  integrity sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ=
+
 loader-fs-cache@^1.0.0, loader-fs-cache@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/loader-fs-cache/-/loader-fs-cache-1.0.3.tgz#f08657646d607078be2f0a032f8bd69dd6f277d9"
@@ -16423,7 +16428,7 @@ memdown@^1.0.0:
     ltgt "~2.2.0"
     safe-buffer "~5.1.1"
 
-memoize-one@^5.0.0:
+memoize-one@^5.0.0, memoize-one@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
   integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
@@ -20408,6 +20413,17 @@ react-optimize@^2.2.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-optimize/-/react-optimize-2.2.2.tgz#1c675bdf7e43dbbe339d2d8a77c3e3a94ec6c0c6"
   integrity sha512-/u51ZUDxrj5muQc5AebJ4x+p2caePkJ009VsjtBq1r2Q1gb5aYUYQMtATozdHk9M/Da1pibNIsZyz0S36vK8hw==
+
+react-player@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-player/-/react-player-2.1.0.tgz#7bf6f57a0e428318265e951667395cd15b6ac010"
+  integrity sha512-7phVl89BncbT7dall+CJSWBMK7MR/9Ar+glB/McBokVne7B3Gkzg6Wyap4XYGD3eWILq6u31MSWevWr2eFeW1w==
+  dependencies:
+    deepmerge "^4.0.0"
+    load-script "^1.0.0"
+    memoize-one "^5.1.1"
+    prop-types "^15.7.2"
+    react-fast-compare "^3.0.1"
 
 react-popper-tooltip@^2.8.3:
   version "2.11.1"

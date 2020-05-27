@@ -104,6 +104,12 @@ export const BorrowerInfoTitle = styled.div`
   text-align: center;
 `;
 
+export const BorrowerInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+`;
+
 export const BorrowerDescription = styled.div`
   font-weight: normal;
   font-size: 16px;
@@ -113,6 +119,25 @@ export const BorrowerDescription = styled.div`
   @media screen and ${device.laptop} {
     max-width: 648px;
   }
+`;
+
+export const PlayerWrapper = styled.div`
+  margin-bottom: 48px;
+  min-height: 300px;
+`;
+
+export const PlayButton = styled.div`
+  display: flex;
+  width: 72px;
+  height: 72px;
+  background: #eb3f93;
+  border-radius: 4px;
+`;
+
+export const PlayButtonArrow = styled.img`
+  width: 40px;
+  height: 40px;
+  margin: auto;
 `;
 
 export const SectionContainer = styled.div`
