@@ -194,7 +194,6 @@ build-front-production:
     when: always
     paths:
       - packages/client/build
-  resource_group: production
 
 build-pages-integration:
   stage: build
@@ -230,7 +229,6 @@ build-pages-production:
     when: always
     paths:
       - packages/pages/build
-  resource_group: production
 
 lint-front:
   stage: build
@@ -385,7 +383,6 @@ deploy-canary:
   except:
     variables:
       - $BUTTERCMS
-  resource_group: production
 
 cypress-e2e-review:
   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
