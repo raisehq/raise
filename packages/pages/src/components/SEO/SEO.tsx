@@ -34,31 +34,32 @@ const SEO = ({
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="google" content="notranslate" />
     <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-
     <link rel="canonical" href={getURL(url)} />
+
     <title>{`Raise - ${title}`}</title>
+    <meta name="title" content={`Raise - ${title}`} />
     <meta name="description" content={description} />
     <meta name="keywords" content={tags} />
     <meta name="author" content={author} />
-    <meta property="og:locale" content="en_US" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={getURL(url)} />
     <meta property="og:title" content={`Raise - ${title}`} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={getURL(url)} />
-    <meta property="og:site_name" content="Raise" />
     <meta property="og:image" content={previewImage} />
-    <meta property="og:image:secure_url" content={previewImage} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Raise" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1280" />
     <meta property="og:image:height" content="720" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@raise_hq" />
-    <meta name="twitter:creator" content="@raise_hq" />
-    <meta name="twitter:title" content={`Raise - ${title}`} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={previewImage} />
-    <meta name="twitter:image:src" content={previewImage} />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={getURL(url)} />
+    <meta property="twitter:title" content={`Raise - ${title}`} />
+    <meta property="twitter:site" content="@raise_hq" />
+    <meta property="twitter:creator" content="@raise_hq" />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={previewImage} />
   </Helmet>
 );
 
