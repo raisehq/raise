@@ -12,6 +12,7 @@ import { useAppContext } from '../contexts/AppContext';
 import { useRootContext } from '../contexts/RootContext';
 import useRouter from '../hooks/useRouter';
 import useKycTopBarVisibility from '../hooks/useKycTopBarVisibility';
+import useLoginUrlReminder from '../hooks/useLoginUrlReminder';
 import KycTopBanner from './TopBanner/KycTopBanner';
 
 // Pages and components
@@ -59,6 +60,7 @@ const App = () => {
   }: any = useRootContext();
   const { isLoading, modalRefs }: any = useAppContext();
   const { history } = useRouter();
+  useLoginUrlReminder();
   const componentsByRole = {
     1: {
       dashboard: DashboardBorrower
