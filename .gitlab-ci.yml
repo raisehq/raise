@@ -194,7 +194,6 @@ build-front-production:
     when: always
     paths:
       - packages/client/build
-  resource_group: production
 
 build-pages-integration:
   stage: build
@@ -230,7 +229,6 @@ build-pages-production:
     when: always
     paths:
       - packages/pages/build
-  resource_group: production
 
 lint-front:
   stage: build
@@ -360,7 +358,7 @@ deploy-int-pages:
       mv packages/pages/build_int build_int
       aws s3 rm s3://${BUCKET_NAME_INT_WWW}/ --recursive
       aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
-      ./cache_invalidation.sh ${BUCKET_NAME_INT_WWW}
+      ./cache_invalidation.sh herodev.es
   only:
     - master
   except:
@@ -385,7 +383,6 @@ deploy-canary:
   except:
     variables:
       - $BUTTERCMS
-  resource_group: production
 
 cypress-e2e-review:
   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
@@ -504,7 +501,7 @@ deploy-prod-pages:
       mv packages/pages/build latest
       aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/ --recursive
       aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD_WWW}
+      ./cache_invalidation.sh raise.it
   only:
     refs:
       - master

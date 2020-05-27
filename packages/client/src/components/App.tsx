@@ -32,6 +32,7 @@ import Kyc from './Kyc';
 import KycSuccess from './Kyc/KycSuccess';
 import KycSelectMethod from './Kyc/KycSelectMethod';
 import KycWithBloom from './Kyc/KycWithBloom/KycWithBloom';
+import BuyCrypto from './BuyCrypto';
 import { Web3Check } from './Web3Check';
 import { BorrowerProfile } from './BorrowerProfile';
 import TopHeader from './Header';
@@ -288,6 +289,14 @@ const App = () => {
                   exact
                   path="/investmentopportunity"
                   component={LoanPage}
+                  roles={[1, 2]}
+                />
+                <Web3Layout
+                  marketplace
+                  layout={AppLayout}
+                  exact
+                  path="/buy-crypto"
+                  component={BuyCrypto}
                   roles={[1, 2]}
                 />
                 {/* Onboarding */}

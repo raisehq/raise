@@ -7,7 +7,7 @@ export enum TMEvents {
   PageView = 'pageview'
 }
 
-const GTMID = process.env.GATSBY_REACT_APP_GTM_ID;
+const GTMID = process.env.REACT_APP_GTM_ID;
 
 function useGoogleTagManager(category?: string) {
   const [isLoaded, setLoaded] = useState(false);
