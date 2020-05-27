@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import { device } from '../../commons/breakpoints';
 
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  signUp: '860px',
+  desktop: '950px'
+};
+
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -50,6 +58,10 @@ export const CryptoProvider = styled.div`
   box-shadow: 0px 8px 15px rgba(60, 66, 81, 0.25);
   border-radius: 4px;
   padding: 20px;
+
+  @media (max-width: ${size.mobileL}) {
+    margin: 20px;
+  }
 `;
 
 export const Title = styled.div`
