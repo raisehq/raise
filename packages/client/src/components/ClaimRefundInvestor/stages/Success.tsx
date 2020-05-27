@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from '@raisehq/components';
 import useRouter from '../../../hooks/useRouter';
-import { ClaimFundsResume, CardTitle, CardSubtitle } from '../ClaimRefund.styles';
+import { ClaimFundsResume, CardTitle, StyledLink } from '../ClaimRefund.styles';
+import ClaimRefundContext from '../ClaimRefund.Context';
 
 const Processing = () => {
+  const { monthlyLoanAPR }: any = useContext(ClaimRefundContext);
   const { push } = useRouter();
 
   const toMainPage = () => {
@@ -13,11 +15,15 @@ const Processing = () => {
   return (
     <>
       <ClaimFundsResume>
-        <CardTitle>The funds have been transferred to your account</CardTitle>
-        <CardSubtitle>Check your active loans details in your dashboard</CardSubtitle>
+        <CardTitle>Done!</CardTitle>
+        <StyledLink
+          to="/"
+          title={`Don’t let your money sit in your wallet.
+          Checkout the new loan offer at ${monthlyLoanAPR} APR and reinvest. `}
+        />
       </ClaimFundsResume>
       <Button fullWidth onClick={() => toMainPage()} size="standard">
-        Check our next loan
+        Check new loan
       </Button>
     </>
   );

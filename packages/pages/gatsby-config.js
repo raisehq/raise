@@ -1,4 +1,5 @@
 const BUTTERCMSKEY = process.env.REACT_APP_BUTTER;
+
 module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
