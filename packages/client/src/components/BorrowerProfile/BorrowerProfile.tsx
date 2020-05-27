@@ -28,6 +28,7 @@ import BorrowerLoading from './BorrowerLoading';
 import { BorrowerInfo } from './BorrowerInfo';
 import { getActiveAuctions } from '../../utils/loanUtils';
 import BorrowerHeader from './BorrowerHeader';
+import BorrowerTeam from './Borrower.Team';
 
 const defaultBorrower = {
   companyDetails: {
@@ -45,7 +46,8 @@ const defaultBorrower = {
   },
   socialNetworks: [],
   extraResources: [],
-  kpis: []
+  kpis: [],
+  members: []
 };
 
 interface SlugParam {
@@ -76,7 +78,8 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
     },
     extraResources,
     socialNetworks,
-    kpis
+    kpis,
+    members
   } = borrower;
   const lastUpdated = new Date(updated).toLocaleDateString('en-GB');
   const [filteredAuctions, setFilteredAuctions] = useState([]);
@@ -150,6 +153,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
           </CompanyDetails>
         </BorrowerCard>
         <SideInfo>
+          <BorrowerTeam members={members} />
           <SideTitle>Overview</SideTitle>
           <KPIList kpis={kpis} />
           <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
