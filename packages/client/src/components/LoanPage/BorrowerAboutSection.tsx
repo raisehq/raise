@@ -16,7 +16,6 @@ import {
 } from './styles';
 
 const BorrowerAbout = ({ borrowerInfo, isLogged, userActivated }) => {
-  console.log('borrower info ===> ', borrowerInfo);
   const onInvestClick = () => {
     if (!isLogged) {
       return '#loanofmonth_signup_email';
@@ -56,7 +55,7 @@ const BorrowerAbout = ({ borrowerInfo, isLogged, userActivated }) => {
                 playing
                 playsinline
                 width="100%"
-                // height="100%"
+                height="100%"
                 playIcon={
                   <PlayButton>
                     <PlayButtonArrow

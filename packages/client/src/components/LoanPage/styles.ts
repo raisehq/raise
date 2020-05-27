@@ -116,6 +116,9 @@ export const BorrowerInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  @media screen and ${device.laptop} {
+    max-width: 719px;
+  }
 `;
 
 export const BorrowerDescription = styled.div`
@@ -124,14 +127,16 @@ export const BorrowerDescription = styled.div`
   line-height: 24px;
   color: #8a8e97;
   text-align: left;
-  @media screen and ${device.laptop} {
-    max-width: 648px;
-  }
 `;
 
 export const PlayerWrapper = styled.div`
   margin-bottom: 48px;
-  min-height: 300px;
+  height: 192px;
+  @media screen and ${device.laptop} {
+    height: 100%;
+    width: 100%;
+    min-height: 368px;
+  }
 `;
 
 export const PlayButton = styled.div`

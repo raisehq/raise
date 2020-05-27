@@ -179,8 +179,10 @@ export const ImportantInfoContainer = styled.div`
   max-width: 333px;
   margin-top: 36px;
   margin-bottom: 50px;
+  align-self: center;
   @media screen and ${device.laptop} {
     max-width: 396px;
+    align-self: flex-start;
   }
 `;
 
