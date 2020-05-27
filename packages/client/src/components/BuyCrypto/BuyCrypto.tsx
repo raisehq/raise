@@ -73,7 +73,7 @@ const BuyCrypto = () => {
         <CryptoProvider>
           <iframe
             title="buy-crypto"
-            src="https://dev-checkout.infra.cryptocoin.pro/order/raise?iframe=true"
+            src={process.env.REACT_APP_BUY_CRYPTO_PROVIDER}
             height="600"
             style={IframeStyles}
           />
