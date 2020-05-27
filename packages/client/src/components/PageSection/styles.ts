@@ -178,6 +178,7 @@ export const ImportantInfoContainer = styled.div`
   border-radius: 4px;
   max-width: 333px;
   margin-top: 36px;
+  margin-bottom: 50px;
   @media screen and ${device.laptop} {
     max-width: 396px;
   }
