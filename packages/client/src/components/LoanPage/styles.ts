@@ -31,6 +31,7 @@ export const LoanPageInfoSection = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  text-align: left;
   @media screen and ${device.laptop} {
     justify-content: space-between;
     width: 100%;
@@ -45,9 +46,13 @@ export const LoanInformationContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-top: 29px;
+  margin-right: 15px;
+  margin-left: 15px;
   @media screen and ${device.laptop} {
     max-width: 648px;
     justify-content: flex-start;
+    margin-right: 0px;
+    margin-left: 0px;
   }
 `;
 
@@ -79,12 +84,15 @@ export const BorrowerAboutContainer = styled.div`
   justify-content: center;
   margin-top: 50px;
   height: 100%;
-  width: 100%;
+  margin-right: 15px;
+  margin-left: 15px;
   @media screen and ${device.laptop} {
+    justify-content: space-between;
+    width: 100%;
     max-width: 1172px;
     margin: auto;
-    margin-top: 150px;
     padding: 0px 10px;
+    margin-top: 150px;
   }
 `;
 
@@ -203,14 +211,11 @@ export const BorrowerShortDescription = styled.div`
 `;
 
 export const LearnMore = styled.div`
-  margin-top: 32px;
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
-  @media screen and ${device.laptop} {
-    justify-content: flex-start;
-  }
+  justify-content: flex-start;
 `;
 
 export const LearnMoreLink = styled.a`
