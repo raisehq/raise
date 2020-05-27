@@ -40,7 +40,7 @@ const Post = ({
           title={seo_title}
           description={meta_description}
           tags={keywords}
-          url={`${process.env.GATSBY_REACT_APP_WEB_URL}/blog/${slug}`}
+          url={`${process.env.REACT_APP_WEB_URL}/blog/${slug}`}
           previewImage={featured_image}
           author={`${author.first_name} ${author.last_name}`}
         />

@@ -22,7 +22,7 @@ const ArticleGallery = ({
   return (
     <>
       <Layout>
-        <SEO url={`${process.env.GATSBY_REACT_APP_WEB_URL}/blog`} />
+        <SEO url={`${process.env.REACT_APP_WEB_URL}/blog`} />
         <TagManager />
         <ContainerPost>
           <CardGrid>
