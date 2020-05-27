@@ -5,7 +5,7 @@ import { BasicLink } from '../Links';
 
 import routes from '../../routes';
 
-const REACT_APP_HOST_URL = process.env.REACT_APP_HOST_URL; // eslint-disable-line
+const REACT_APP_HOST_URL = process.env.GATSBY_REACT_APP_HOST_URL; // eslint-disable-line
 
 const GatsbyHeader = () => {
   return (

@@ -70,12 +70,12 @@ const SignUpWrapper = ({ id }: any) => {
         status: result.userstatus_id,
         type: result.accounttype_id
       },
-      { domain: process.env.REACT_APP_COOKIE_DOMAIN }
+      { domain: process.env.GATSBY_REACT_APP_COOKIE_DOMAIN }
     );
 
-    setuserCookie(result, { domain: process.env.REACT_APP_COOKIE_DOMAIN });
+    setuserCookie(result, { domain: process.env.GATSBY_REACT_APP_COOKIE_DOMAIN });
     const redirect = window.location.pathname || '';
-    window.location.href = `${process.env.REACT_APP_HOST_URL}${redirect}`;
+    window.location.href = `${process.env.GATSBY_REACT_APP_HOST_URL}${redirect}`;
     return true;
   };
 
