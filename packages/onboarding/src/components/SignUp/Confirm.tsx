@@ -1,14 +1,14 @@
 import React from 'react';
+import { Icon } from 'semantic-ui-react';
 import { ConfirmWrapper, ConfirmHeader, ConfirmText, MainImage } from './styles';
-import { IMAGES_PATH } from '../../commons/constants';
 
 const Confirm = () => (
   <ConfirmWrapper>
-    <MainImage src={`${IMAGES_PATH}check.svg`} />
+    <Icon name="envelope" size="huge" />
     <ConfirmHeader>Check your inbox!</ConfirmHeader>
     <ConfirmText>
-      We&apos;ve sent a confirmation to your inbox to verify your email and instructions for the
-      next steps.
+      Check your inbox to verify your email address and access Raise on desktop device. We are
+      working to integrate a Web3 wallet provider that’s compatible with mobile
     </ConfirmText>
   </ConfirmWrapper>
 );
