@@ -19,7 +19,8 @@ import {
   CheckBoxText,
   SignUpWithBloomText,
   SignUpWithBloomLogo,
-  SignUpWithBloomWrapper
+  SignUpWithBloomWrapper,
+  Asterisc
 } from '../styles';
 import { countryOptions } from '../../../commons/countries';
 
@@ -222,6 +223,7 @@ const Register: React.SFC<IRegister> = ({
           >
             Privacy Policy
           </a>
+          <Asterisc>*</Asterisc>
         </CheckBoxText>
       </RaiseTerms>
       <SignUpButton
@@ -241,7 +243,7 @@ const Register: React.SFC<IRegister> = ({
         fullWidth
       />
       <SignUpWithBloomWrapper onClick={bloomAction}>
-        <SignUpWithBloomText>Sign Up with Bloom</SignUpWithBloomText>
+        <SignUpWithBloomText>Sign Up with</SignUpWithBloomText>
         <SignUpWithBloomLogo src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} />
       </SignUpWithBloomWrapper>
       <MyRecapcha

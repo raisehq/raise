@@ -501,8 +501,7 @@ export const ContinueButton = styled(RaiseButton)`
   }
 `;
 
-export const Astersic = styled.span`
+export const Asterisc = styled.span`
   vertical-align: top;
-  color: red;
-  font-size: 28px;
+  font-size: 24px;
 `;
