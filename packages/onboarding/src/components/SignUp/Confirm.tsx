@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
-import { ConfirmWrapper, ConfirmHeader, ConfirmText, MainImage } from './styles';
+import { ConfirmWrapper, ConfirmHeader, ConfirmText } from './styles';
 
 const Confirm = () => (
   <ConfirmWrapper>
