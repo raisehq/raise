@@ -56,6 +56,7 @@ const InvestingPage = () => {
     }
 
     setSections(orderedSections);
+    window.scrollTo(0, 0);
   }, []);
   return (
     <InvestingContainer>

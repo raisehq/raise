@@ -6,6 +6,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Onboarding from '@raisehq/onboarding';
 import { toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
+import Headroom from 'react-headroom';
 
 // Contexts and hooks
 import { useAppContext } from '../contexts/AppContext';
@@ -145,6 +146,10 @@ const App = () => {
     }
   }, [followTx]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Dimmer active={isLoading} inverted>
@@ -181,7 +186,9 @@ const App = () => {
               kycProvider={kycProvider}
             />
           )}
-          <TopHeader />
+          <Headroom pinStart={75} upTolerance={0}>
+            <TopHeader />
+          </Headroom>
           <TransitionGroup component={null}>
             <CSSTransition key={history.location.key} classNames="fade" timeout={300}>
               <Switch>
