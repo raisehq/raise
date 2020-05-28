@@ -30,9 +30,18 @@ export interface BorrowerDetails {
   background: string;
 }
 
+export interface Member {
+  name: string;
+  profileUrl?: string;
+  image: string;
+  role: string;
+  profileUrlIcon?: string;
+}
+
 export interface BorrowerProfile {
   companyDetails: BorrowerDetails;
   kpis: KPI[];
   socialNetworks: SocialNetwork[];
   extraResources: ExtraResource[];
+  members: Member[];
 }

@@ -26,7 +26,6 @@ const useLoginUrlReminder = () => {
       return;
     }
     if (logged && savedPath && savedPath.includes('/') && fullPath !== savedPath) {
-      console.log('pusshing', fullPath, savedPath);
       setPath('');
       push(savedPath);
     }
