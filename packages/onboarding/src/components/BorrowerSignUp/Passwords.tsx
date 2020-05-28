@@ -9,7 +9,8 @@ import {
   OnboardHeaderSubtitle,
   OnboardDisclaimerBorrower,
   OnboardCheckbox,
-  OnboardingCell
+  OnboardingCell,
+  Asterisc
 } from '../styles';
 import theme from '../../theme';
 import validations from '../validations';
@@ -164,6 +165,7 @@ const BorrowerSignUp = ({ token }: any) => {
           >
             Privacy Policy
           </a>
+          <Asterisc>*</Asterisc>
         </OnboardingCell>
       </OnboardDisclaimerBorrower>
     </Fragment>

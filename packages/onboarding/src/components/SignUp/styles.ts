@@ -46,3 +46,7 @@ export const ConfirmText = styled.p`
   line-height: 21px;
   max-width: 322px;
 `;
+
+export const Asterisc = styled.span`
+  vertical-align: top;
+`;
