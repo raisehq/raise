@@ -19,7 +19,9 @@ import {
   BorrowerPage,
   SideTitle,
   CardImageCrop,
-  BorrowerLogo
+  BorrowerLogo,
+  BorrowerTeam,
+  SideBar
 } from './BorrowerProfile.styles';
 import { KPIList } from './KPI';
 import Socials from './Socials';
@@ -45,7 +47,8 @@ const defaultBorrower = {
   },
   socialNetworks: [],
   extraResources: [],
-  kpis: []
+  kpis: [],
+  members: []
 };
 
 interface SlugParam {
@@ -76,7 +79,8 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
     },
     extraResources,
     socialNetworks,
-    kpis
+    kpis,
+    members
   } = borrower;
   const lastUpdated = new Date(updated).toLocaleDateString('en-GB');
   const [filteredAuctions, setFilteredAuctions] = useState([]);
@@ -149,11 +153,14 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
             <Socials socialNetworks={socialNetworks} url={url} />
           </CompanyDetails>
         </BorrowerCard>
-        <SideInfo>
-          <SideTitle>Overview</SideTitle>
-          <KPIList kpis={kpis} />
-          <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
-        </SideInfo>
+        <SideBar>
+          <BorrowerTeam members={members} />
+          <SideInfo>
+            <SideTitle>Overview</SideTitle>
+            <KPIList kpis={kpis} />
+            <BorrowerInfo address={address} date={foundationDate} extraResources={extraResources} />
+          </SideInfo>
+        </SideBar>
       </Container>
     </BorrowerPage>
   );

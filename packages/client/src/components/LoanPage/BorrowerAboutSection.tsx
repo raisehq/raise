@@ -6,7 +6,9 @@ import {
   BorrowerDescription,
   BorrowerInfoTitle,
   InvestButton,
-  ButtonWrapper
+  ButtonWrapper,
+  BorrowerTeam,
+  Side
 } from './styles';
 
 const BorrowerAbout = ({ borrowerInfo, isLogged, userActivated }) => {
@@ -35,7 +37,10 @@ const BorrowerAbout = ({ borrowerInfo, isLogged, userActivated }) => {
       <BorrowerInfoTitle>About {borrowerInfo.companyDetails.companyName}</BorrowerInfoTitle>
       <BorrowerInfoContainer>
         <BorrowerDescription>{borrowerInfo.companyDetails.description}</BorrowerDescription>
-        <AboutBorrower borrowerInfo={borrowerInfo} />
+        <Side>
+          <BorrowerTeam members={borrowerInfo.members} />
+          <AboutBorrower borrowerInfo={borrowerInfo} />
+        </Side>
       </BorrowerInfoContainer>
       <ButtonWrapper>
         <a href={onInvestClick()}>
