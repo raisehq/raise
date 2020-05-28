@@ -62,7 +62,7 @@ module.exports = {
       resolve: 'gatsby-source-buttercms',
       options: {
         authToken: BUTTERCMSKEY,
-        pageTypes: ['page_sections']
+        pageTypes: ['page_sections', 'help']
       }
     }
   ]
