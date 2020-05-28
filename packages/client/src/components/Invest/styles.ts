@@ -503,5 +503,4 @@ export const ContinueButton = styled(RaiseButton)`
 
 export const Asterisc = styled.span`
   vertical-align: top;
-  font-size: 24px;
 `;

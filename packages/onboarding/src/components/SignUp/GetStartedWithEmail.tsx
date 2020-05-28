@@ -13,7 +13,8 @@ import {
   OnboardMailingList,
   OnboardingCell,
   MiniBody,
-  MyRecapcha
+  MyRecapcha,
+  Asterisc
 } from '../styles';
 import AppContext from '../App.context';
 import { IContext } from '../types';
@@ -172,6 +173,7 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
             >
               Privacy Policy
             </a>
+            <Asterisc>*</Asterisc>
           </OnboardingCell>
         </OnboardDisclaimer>
         <OnboardButton
@@ -263,6 +265,7 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
           >
             Privacy Policy
           </a>
+          <Asterisc>*</Asterisc>
         </OnboardingCell>
       </OnboardDisclaimer>
       <OnboardButton

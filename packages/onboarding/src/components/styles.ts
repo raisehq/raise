@@ -597,3 +597,7 @@ export const IconWrapper = styled.div`
   right: 10px;
   align-self: flex-end;
 `;
+
+export const Asterisc = styled.span`
+  vertical-align: top;
+`;

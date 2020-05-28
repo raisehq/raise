@@ -421,5 +421,4 @@ export const SignUpWithBloomLogo = styled.img`
 
 export const Asterisc = styled.span`
   vertical-align: top;
-  font-size: 24px;
 `;
