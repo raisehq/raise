@@ -215,7 +215,7 @@ const CreateLoan = ({ contracts }: any) => {
     setLoan({ ...loan, auctionTerm: option });
   };
 
-  const onSetCoinAmount = (option) => () => {
+  const onSetCoinAmount = (option) => {
     const coin = coins.find((item) => item.text === option);
 
     if (coin) {
