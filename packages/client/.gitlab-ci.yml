@@ -269,7 +269,7 @@ review-front:
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
-    on_stop: stop-review
+    on_stop: stop-review-front
   only:
     - merge_requests
     - latest

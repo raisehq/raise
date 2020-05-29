@@ -123,7 +123,7 @@ review-landing:
   environment:
     name: review/$CI_COMMIT_REF_SLUG
     url: 'http://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN'
-    on_stop: stop-review
+    on_stop: stop-review-landing
   only:
     - merge_requests
     - latest
