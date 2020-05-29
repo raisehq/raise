@@ -481,7 +481,7 @@ deploy-prod:
       mv packages/client/build latest
       aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh ${BUCKET_NAME_PROD}
-      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
+      ./cache_invalidation.sh ${BUCKET_NAME_PROD}
   only:
     - master
   except:
