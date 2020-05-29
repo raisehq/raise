@@ -9,6 +9,11 @@ const size = {
   desktop: '950px'
 };
 
+export const CenteredAlert = styled.div`
+  font-size: 16px;
+  text-align: center;
+`;
+
 export const ChooseMethodWrapper = styled.div`
   display: flex;
   flex-direction: column;

@@ -158,6 +158,7 @@ export const OnboardingTitle: any = styled.div`
     height: auto;
     width: auto;
     text-align: center;
+    margin: 30px auto;
   }
 `;
 
