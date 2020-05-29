@@ -1,24 +1,30 @@
 import styled from 'styled-components';
+import { device } from '../../utils/breakpoints';
 
 export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-
   background: #ffffff;
   box-shadow: 0px 8px 20px rgba(60, 66, 81, 0.15);
   border-radius: 4px;
   max-width: 648px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 60px 60px;
+  gap: 30px 10%;
+  grid-template-areas: '. . .' '. . .';
+
+  @media screen and ${device.laptop} {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 60px;
+    gap: 0px 30px;
+  }
 `;
 
 export const Item = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  width: 20%;
-  padding: 20px 0;
 `;
 
 export const SubItem = styled.div`

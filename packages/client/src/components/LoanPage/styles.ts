@@ -71,6 +71,7 @@ export const LoanInformationContainer = styled.div`
 
 export const LoanInvestContainer = styled.div`
   max-width: 400px;
+  padding: 0px 14.5px;
 `;
 
 export const LoanResumeWrapper = styled.div`
