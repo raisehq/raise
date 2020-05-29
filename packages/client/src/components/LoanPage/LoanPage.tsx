@@ -98,6 +98,7 @@ const LoanPage = ({
     });
 
     setButterSection(pageSections[0]);
+    window.scrollTo(0, 0);
   }, []);
 
   useAsyncEffect(async () => {
@@ -107,6 +108,7 @@ const LoanPage = ({
         setOpen(true);
         setWarning(warning);
       }
+      window.scrollTo(0, 0);
     } catch (error) {
       // Reminder: Missing companies in Kovan testnet network shows 404 errors
       // console.error('[DASBOARD.LENDER] ', error);
@@ -142,6 +144,7 @@ const LoanPage = ({
     } catch (error) {
       console.error('Error querying loan info ', error);
     }
+    window.scrollTo(0, 0);
   }, [loanAddress]);
 
   const onClickHelp = () => {

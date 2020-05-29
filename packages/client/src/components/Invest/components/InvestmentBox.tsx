@@ -202,6 +202,7 @@ const InvestmentBox = ({
         setOutputReserves,
         chainId
       );
+      window.scrollTo(0, 0);
     } catch (err) {
       console.error(err);
       throw Error('error-getting-token-reserves');

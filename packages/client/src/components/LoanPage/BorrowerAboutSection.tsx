@@ -12,7 +12,9 @@ import {
   BorrowerInfo,
   PlayButton,
   PlayerWrapper,
-  PlayButtonArrow
+  PlayButtonArrow,
+  BorrowerTeam,
+  Side
 } from './styles';
 
 const BorrowerAbout = ({ borrowerInfo, isLogged, userActivated }) => {
@@ -69,7 +71,10 @@ const BorrowerAbout = ({ borrowerInfo, isLogged, userActivated }) => {
           )}
           <BorrowerDescription>{borrowerInfo.companyDetails.description}</BorrowerDescription>
         </BorrowerInfo>
-        <AboutBorrower borrowerInfo={borrowerInfo} />
+        <Side>
+          <BorrowerTeam members={borrowerInfo.members} />
+          <AboutBorrower borrowerInfo={borrowerInfo} />
+        </Side>
       </BorrowerInfoContainer>
       <ButtonWrapper>
         <a href={onInvestClick()}>

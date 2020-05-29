@@ -58,7 +58,7 @@ const Web3Layout = ({
   }
   // Check if is Logged and not public
   if (!publicRoute && !isLogged && !pathname.includes('/join')) {
-    return <Redirect to="/join" />;
+    return <Redirect to="/login" />;
   }
 
   if (publicRoute && !isLogged) {

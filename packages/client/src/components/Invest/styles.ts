@@ -500,3 +500,7 @@ export const ContinueButton = styled(RaiseButton)`
     margin: 0;
   }
 `;
+
+export const Asterisc = styled.span`
+  vertical-align: top;
+`;
