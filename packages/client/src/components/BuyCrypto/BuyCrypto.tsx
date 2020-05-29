@@ -75,6 +75,7 @@ const BuyCrypto = () => {
             title="buy-crypto"
             src={process.env.REACT_APP_BUY_CRYPTO_PROVIDER}
             height="600"
+            width="350"
             style={IframeStyles}
           />
         </CryptoProvider>
