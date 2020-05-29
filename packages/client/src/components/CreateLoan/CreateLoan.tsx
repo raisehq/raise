@@ -209,7 +209,7 @@ const CreateLoan = ({ contracts }: any) => {
     setLoan({ ...loan, term: data.value });
   };
 
-  const onSetTermAuction = (option) => () => {
+  const onSetTermAuction = (option) => {
     const auctionTerm = loanAuctionIntervalArray.find((item) => item.value === option);
     setSelectedMonthIndex(auctionTerm && auctionTerm.key);
     setLoan({ ...loan, auctionTerm: option });
@@ -302,7 +302,7 @@ const CreateLoan = ({ contracts }: any) => {
     setTermsCond(false);
     setAuthTerms(false);
     // Reseting control values to default in case of create a new loan without refreshing the screen
-    onSetTermAuction(TERM_AUCTION_DEFAULT)();
+    onSetTermAuction(TERM_AUCTION_DEFAULT);
     onSetTerm(null, { value: TERM_DEFAULT });
   };
 
