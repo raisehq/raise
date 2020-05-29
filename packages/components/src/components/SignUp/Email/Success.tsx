@@ -1,18 +1,14 @@
 import React from 'react';
-import {
-  SignUpResponseContainer,
-  SingUpResponseImage,
-  SignUpResponseTitle,
-  SignUpResponseSubText
-} from '../styles';
+import { Icon } from 'semantic-ui-react';
+import { SignUpResponseContainer, SignUpResponseTitle, SignUpResponseSubText } from '../styles';
 
 const Success = () => (
   <SignUpResponseContainer>
-    <SingUpResponseImage src={`${process.env.REACT_APP_HOST_IMAGES}/images/check.svg`} />
+    <Icon name="envelope" size="huge" />
     <SignUpResponseTitle>Check your email</SignUpResponseTitle>
     <SignUpResponseSubText>
-      We&apos;ve sent a confirmation to your inbox to verify your email and instructions for the
-      next steps.
+      Check your inbox to verify your email address and access Raise on desktop device. We are
+      working to integrate a Web3 wallet provider that’s compatible with mobile
     </SignUpResponseSubText>
   </SignUpResponseContainer>
 );
