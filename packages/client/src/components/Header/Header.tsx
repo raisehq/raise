@@ -29,7 +29,7 @@ const Header = () => {
   }
   const disabled = !(web3Status.unlocked && web3Status.accountMatches);
   return (
-    <RaiseHeader disabled={logged && disabled} {...routes}>
+    <RaiseHeader disabled={logged && disabled} logged={logged} {...routes}>
       <FlexDiv>
         <MenuItems disabled={logged && disabled} />
       </FlexDiv>
