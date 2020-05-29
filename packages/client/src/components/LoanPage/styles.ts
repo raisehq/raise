@@ -146,9 +146,8 @@ export const PlayerWrapper = styled.div`
   margin-bottom: 48px;
   height: 192px;
   @media screen and ${device.laptop} {
-    height: 100%;
     width: 100%;
-    min-height: 368px;
+    height: 368px;
   }
 `;
 
