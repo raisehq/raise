@@ -1,0 +1,62 @@
+build-onboarding:
+  stage: build
+  script:
+    - yarn install --pure-lockfile --stream  --scope '{@raisehq/onboarding,@raisehq/libs}'
+    - cd packages/onboarding  & yarn build
+    - yarn rollup
+  only:
+    - master
+  except:
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/libs/build
+
+deploy-onboarding:
+  image: python:3.7-alpine
+  stage: deploy
+  variables:
+    LIB_BUCKET_NAME: lib.raise.it
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  script:
+    - |
+      #!/bin/sh
+      mv packages/libs/build onboarding
+      aws s3 rm s3://${LIB_BUCKET_NAME}/onboarding/ --recursive
+      aws s3 cp onboarding s3://${LIB_BUCKET_NAME}/onboarding/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000
+      ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/onboarding/*"
+  only:
+    - master
+  except:
+    variables:
+      - $BUTTERCMS
+
+publish-onboarding:
+  stage: publish
+  rules:
+    - if: '$CI_COMMIT_REF_SLUG != "master"'
+      when: never
+    - changes:
+        - packages/onboarding/package.json
+    - when: never
+  before_script:
+    - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
+    - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
+    - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
+    - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
+  script:
+    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+    - |
+      #!/bin/sh
+      if [ "${LOCAL_VERSION_ONBOARDING}" != "${PUBLISH_VERSION_ONBOARDING}" ]; then
+        yarn --lockfile
+        yarn run build:deps
+        cd ./packages/onboarding/
+        npm publish
+      else
+        echo "Package not updated, the latest version published is ${PUBLISH_VERSION_ONBOARDING} and the local verison is ${LOCAL_VERSION_ONBOARDING}."
+      fi
