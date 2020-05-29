@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import {
   HelpContainer,
   TitleSection,
@@ -14,7 +15,11 @@ import {
 } from './styles';
 
 const Help = ({ data }: any) => {
-  console.log('data::: ', data);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const getHelpSections = () => {
     const sections = data.help_section.map((section: any) => {
@@ -48,7 +53,7 @@ const Help = ({ data }: any) => {
         <HelpSubtitlePage>{data.help_page_subtitle}</HelpSubtitlePage>
       </TitleSection>
       <ContentContainer>
-        <HelpMenu>{getMenuAnchors()}</HelpMenu>
+        {hasMounted && !isMobile && <HelpMenu>{getMenuAnchors()}</HelpMenu>}
         <HelpContent>{getHelpSections()}</HelpContent>
       </ContentContainer>
     </HelpContainer>

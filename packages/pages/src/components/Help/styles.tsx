@@ -53,6 +53,10 @@ export const HelpMenu = styled.div`
   width: 185px;
   box-shadow: 0 0 26px 0 hsla(0, 0%, 85.1%, 0.61);
   padding: 20px;
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  top: 20px;
+  height: 100%;
 `;
 
 export const HelpContent = styled.div`
@@ -99,4 +103,10 @@ export const SectionInfo = styled.div`
   }
 `;
 
-export const Anchor = styled.a``;
+export const Anchor = styled.a`
+  font-size: 16px;
+  line-height: 24px;
+  color: #8a8e97;
+  margin-bottom: 15px;
+  height: 100%;
+`;
