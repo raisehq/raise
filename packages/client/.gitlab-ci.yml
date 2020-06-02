@@ -22,15 +22,14 @@ job4:
 job2:
   stage: review
   script: echo "job2"
-  needs: ['job1']
+  dependencies:
+    - job1
 
 job6:
   stage: review
   script: echo "job6"
-  needs: ['job3']
-  only:
-    changes:
-      - 'packages/client/**/*'
+  dependencies:
+    - job3
 # stages:
 #   - deploy-backend
 #   - build
