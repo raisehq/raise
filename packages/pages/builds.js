@@ -16,6 +16,12 @@ const Querys = {
     path: '/help',
     component: path.resolve('src/templates/help.tsx')
   },
+  press: {
+    query: `
+      
+    `,
+    component: path.resolve('src/templates/invest.tsx')
+  },
   index: {
     query: `
     {

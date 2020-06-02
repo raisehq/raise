@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { requestPage } from '../../helpers/butter';
+import { PressPR } from '@raisehq/components';
+import { requestPage, getCollection } from '../../helpers/butter';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { InvestingContainer } from './styles';
+import { InvestingContainer, PressReleases } from './styles';
 import InvestingSection from './InvestingSection';
 import SignUp from '../SignUp';
 import { useRootContext } from '../../contexts/RootContext';
@@ -18,6 +19,9 @@ const InvestingPage = () => {
 
   useAsyncEffect(async () => {
     const butterSections = await requestPage('page_sections', 'investing');
+    const pressReleases = await getCollection('publisher_releases', {});
+
+    console.log('press release::: ', pressReleases);
 
     const orderedSections = butterSections.investingSection.sort(
       // eslint-disable-next-line
@@ -42,6 +46,15 @@ const InvestingPage = () => {
             a.sub_sub_order > b.sub_sub_order ? 1 : -1
         );
       }
+    });
+
+    orderedSections.splice(1, 0, {
+      component: (
+        <PressReleases>
+          <PressPR data={pressReleases} />
+        </PressReleases>
+      ),
+      section_order: 1
     });
 
     if (!isLogged) {
