@@ -127,23 +127,15 @@ export function Updater() {
 
   useEffect(() => {
     const { Cypress }: any = window;
-    if (process.env.REACT_APP_LOGROCKET === 'true' && Cypress === undefined) {
-      if (isLogged) {
-        LogRocket.identify(id, {
-          id,
-          email,
-          accounttypeId,
-          status,
-          availWidth: window.innerWidth,
-          availHeight: window.innerHeight
-        });
-      } else {
-        // @ts-ignore
-        LogRocket.identify(undefined, {
-          availWidth: window.innerWidth,
-          availHeight: window.innerHeight
-        });
-      }
+    if (process.env.REACT_APP_LOGROCKET === 'true' && Cypress === undefined && isLogged) {
+      LogRocket.identify(id, {
+        id,
+        email,
+        accounttypeId,
+        status,
+        availWidth: window.innerWidth,
+        availHeight: window.innerHeight
+      });
     }
   }, [isLogged, id, accounttypeId, email, status]);
 
