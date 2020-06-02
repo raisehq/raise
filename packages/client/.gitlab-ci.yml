@@ -23,7 +23,7 @@ deploy-backend:
     variables:
       - $BUTTERCMS
 
-build-front-review:
+buildfrontreview:
   stage: build
   variables:
     REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.${DOMAIN}
@@ -173,8 +173,7 @@ review-front:
       - latest
     changes:
       - 'packages/client/**/*'
-  needs:
-    - build-front-review
+  needs: ['buildfrontreview']
   except:
     - master
 
