@@ -45,8 +45,8 @@ build-front-review:
         REACT_APP_HOST_URL_FILE=https://${REVIEW_SLUG}.api.${DOMAIN}
       fi
       echo $REACT_APP_HOST_URL
-    - 'yarn --pure-lockfile'
-    - 'lerna run build:integration --stream --scope client'
+      yarn --pure-lockfile
+      lerna run build:integration --stream --scope client
       mv  packages/client/build  packages/client/build_review
   only:
     refs:
@@ -137,7 +137,12 @@ deploy-prod:
     - apk add --update bash
     - pip install awscli
   script:
-
+    - |
+      #!/bin/sh
+      mv packages/client/build latest
+      aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      ./cache_invalidation.sh ${BUCKET_NAME_PROD}
+      ./cache_invalidation.sh ${BUCKET_NAME_PROD}
   only:
     refs:
       - master
