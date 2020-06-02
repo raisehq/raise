@@ -2,6 +2,7 @@ image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:
 
 stages:
   - deploy-backend
+  - deps
   - build
   - deploy
   - review
@@ -21,23 +22,14 @@ cache:
   paths:
     - $CI_PROJECT_DIR/packages/testing/.cache/Cypress
 
-include:
-  - '/packages/client/.gitlab-ci.yml'
-  - '/packages/components/.gitlab-ci.yml'
-  - '/packages/onboarding/.gitlab-ci.yml'
-  - '/packages/pages/.gitlab-ci.yml'
-
 # Generic for all pipelines
 
-build-deps:
-  stage: build
+.build-deps:
+  stage: deps
   script:
     - NODE_ENV=production yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'
     - NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili
-  only:
-    changes:
-      - 'packages/client/**/*'
-      - 'packages/pages/**/*'
+
   except:
     variables:
       - $BUTTERCMS
@@ -46,6 +38,26 @@ build-deps:
     paths:
       - packages/components/dist
       - packages/onboarding/dist
+
+build:deps:client:
+  extends:
+    - .build-deps
+  only:
+    changes:
+      - 'packages/client/**/*'
+
+build:deps:pages:
+  extends:
+    - .build-deps
+  only:
+    changes:
+      - 'packages/pages/**/*'
+
+include:
+  - '/packages/client/.gitlab-ci.yml'
+  - '/packages/components/.gitlab-ci.yml'
+  - '/packages/onboarding/.gitlab-ci.yml'
+  - '/packages/pages/.gitlab-ci.yml'
 
 # lint:
 #   stage: build
