@@ -6,21 +6,15 @@ stages:
 job1:
   stage: build
   script: echo "job1"
-  only:
-    changes:
-      - 'packages/client/**/*'
+
 job3:
   stage: build
   script: echo "job3"
-  only:
-    changes:
-      - 'packages/client/**/*'
+
 job4:
   stage: build
   script: echo "job4"
-  only:
-    changes:
-      - 'packages/client/**/*'
+
 job2:
   stage: test
   script: echo "job2"
