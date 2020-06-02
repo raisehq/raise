@@ -46,13 +46,8 @@ build-front-review:
       yarn run client:build:integration:bili
       mv  packages/client/build  packages/client/build_review
   only:
-    - merge_requests
-    - latest
-  except:
-    refs:
-      - master
-    variables:
-      - $BUTTERCMS
+    changes:
+      - 'packages/client/**/*'
   artifacts:
     when: always
     paths:
@@ -66,10 +61,8 @@ build-front-integration:
     - 'yarn run client:build:integration'
     - 'mv  packages/client/build  packages/client/build_int'
   only:
-    - master
-  except:
-    variables:
-      - $BUTTERCMS
+    changes:
+      - 'packages/client/**/*'
   artifacts:
     when: always
     paths:
@@ -82,10 +75,8 @@ build-front-production:
     - 'yarn --pure-lockfile'
     - 'yarn run client:build:production'
   only:
-    - master
-  except:
-    variables:
-      - $BUTTERCMS
+    changes:
+      - 'packages/client/**/*'
   artifacts:
     when: always
     paths:
@@ -106,6 +97,8 @@ deploy-canary:
       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
   only:
     - master
+  needs:
+    - build-front-production
   except:
     variables:
       - $BUTTERCMS
@@ -125,6 +118,8 @@ deploy-int:
       ./cache_invalidation.sh ${BUCKET_NAME_INT}
   only:
     - master
+  needs:
+    - build-front-integration
   except:
     variables:
       - $BUTTERCMS
@@ -144,10 +139,69 @@ deploy-prod:
       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
   only:
     - master
+  needs:
+    - deploy-prod
   except:
     variables:
       - $BUTTERCMS
   resource_group: production
+
+review-front:
+  image: python:3.7-alpine
+  stage: review
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  script:
+    - |
+      #!/bin/sh
+      if [ -n "${REVIEW_SLUG}" ]; then
+        CI_COMMIT_REF_SLUG=${REVIEW_SLUG}
+      fi
+      echo ${CI_COMMIT_REF_SLUG}
+      mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
+    on_stop: stop-review-front
+  only:
+    - merge_requests
+    - latest
+  needs:
+    - build-front-review
+  except:
+    - master
+
+stop-review-front:
+  image: python:3.7-alpine
+  stage: cleanup
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - apk add --no-cache openssh-client bash
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - chmod 600 ~/.ssh/config
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+    - aws s3 rm s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+    - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
+  when: manual
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
+  only:
+    - merge_requests
+  except:
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
 
 cypress-e2e-review:
   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
@@ -175,6 +229,8 @@ cypress-e2e-review:
       - packages/testing/cypress/snapshots
   only:
     - merge_requests
+  needs:
+    - review-front
   cache:
     key: ganache-global-cache
     paths:
@@ -210,6 +266,8 @@ cypress-e2e-canary:
       - packages/testing/ganache_db
   only:
     - master
+  needs:
+    - deploy-canary
   except:
     variables:
       - $BUTTERCMS
@@ -244,62 +302,9 @@ cypress-e2e-production:
       - packages/testing/ganache_db
   only:
     - master
+  needs:
+    - deploy-production
   except:
     variables:
       - $BUTTERCMS
   resource_group: production
-
-review-front:
-  image: python:3.7-alpine
-  stage: review
-  before_script:
-    - apk add --update bash
-    - pip install awscli
-  script:
-    - |
-      #!/bin/sh
-      if [ -n "${REVIEW_SLUG}" ]; then
-        CI_COMMIT_REF_SLUG=${REVIEW_SLUG}
-      fi
-      echo ${CI_COMMIT_REF_SLUG}
-      mv packages/client/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
-      aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
-      rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
-
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
-    on_stop: stop-review-front
-  only:
-    - merge_requests
-    - latest
-  except:
-    - master
-
-stop-review-front:
-  image: python:3.7-alpine
-  stage: cleanup
-  variables:
-    GIT_STRATEGY: none
-  before_script:
-    - apk add --no-cache openssh-client bash
-    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - chmod 600 ~/.ssh/config
-    - pip install awscli
-  script:
-    - aws s3 rm s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
-    - aws s3 rm s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
-    - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
-  when: manual
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    action: stop
-  only:
-    - merge_requests
-  except:
-    refs:
-      - master
-    variables:
-      - $BUTTERCMS
