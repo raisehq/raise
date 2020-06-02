@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
 import { AboutBorrower } from '@raisehq/components';
+import ReactPlayer from 'react-player';
 import {
   BorrowerAboutContainer,
   BorrowerInfoContainer,
@@ -7,6 +9,10 @@ import {
   BorrowerInfoTitle,
   InvestButton,
   ButtonWrapper,
+  BorrowerInfo,
+  PlayButton,
+  PlayerWrapper,
+  PlayButtonArrow,
   BorrowerTeam,
   Side
 } from './styles';
@@ -36,7 +42,35 @@ const BorrowerAbout = ({ borrowerInfo, isLogged, userActivated }) => {
     <BorrowerAboutContainer>
       <BorrowerInfoTitle>About {borrowerInfo.companyDetails.companyName}</BorrowerInfoTitle>
       <BorrowerInfoContainer>
-        <BorrowerDescription>{borrowerInfo.companyDetails.description}</BorrowerDescription>
+        <BorrowerInfo>
+          {borrowerInfo.companyVideoInfo && borrowerInfo.companyVideoInfo.company_video !== '' && (
+            <PlayerWrapper>
+              <ReactPlayer
+                url={borrowerInfo.companyVideoInfo.company_video}
+                muted
+                controls
+                light={
+                  borrowerInfo.companyVideoInfo.company_video_thumbnail !== ''
+                    ? borrowerInfo.companyVideoInfo.company_video_thumbnail
+                    : false
+                }
+                playing
+                playsinline
+                width="100%"
+                height="100%"
+                playIcon={
+                  <PlayButton>
+                    <PlayButtonArrow
+                      src={`${process.env.REACT_APP_HOST_IMAGES}/images/triangle_down.svg`}
+                      alt="play"
+                    />
+                  </PlayButton>
+                }
+              />
+            </PlayerWrapper>
+          )}
+          <BorrowerDescription>{borrowerInfo.companyDetails.description}</BorrowerDescription>
+        </BorrowerInfo>
         <Side>
           <BorrowerTeam members={borrowerInfo.members} />
           <AboutBorrower borrowerInfo={borrowerInfo} />

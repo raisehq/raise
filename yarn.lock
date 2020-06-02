@@ -15722,6 +15722,11 @@ load-json-file@^5.3.0:
     strip-bom "^3.0.0"
     type-fest "^0.3.0"
 
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
+  integrity sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ=
+
 loader-fs-cache@^1.0.0, loader-fs-cache@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/loader-fs-cache/-/loader-fs-cache-1.0.3.tgz#f08657646d607078be2f0a032f8bd69dd6f277d9"
@@ -16423,7 +16428,7 @@ memdown@^1.0.0:
     ltgt "~2.2.0"
     safe-buffer "~5.1.1"
 
-memoize-one@^5.0.0:
+memoize-one@^5.0.0, memoize-one@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
   integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
@@ -19904,7 +19909,7 @@ quick-lru@^4.0.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
 
-raf@^3.4.0, raf@^3.4.1:
+raf@^3.3.0, raf@^3.4.0, raf@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
   integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==
@@ -20322,6 +20327,15 @@ react-gtm-module@^2.0.7, react-gtm-module@^2.0.8:
   resolved "https://registry.yarnpkg.com/react-gtm-module/-/react-gtm-module-2.0.8.tgz#0d37c4f2a4e3a8efa40c76c8b2aa1b7cacc16c6f"
   integrity sha512-OU5FwAHC3gWnnxJ+MLwBMLZO1Pmn1DiVCGHqptwDnNojE3QRrNxjqozkW5cNS4Zp+C6HZ8a4ZIt0QPNlpzua4Q==
 
+react-headroom@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-headroom/-/react-headroom-3.0.0.tgz#6d74102ccc04b060269ddee6e5b788f476e0eca6"
+  integrity sha512-iVRDowuHHvIBuOx/IoEg2uPqQl8myGgtth55IMZ6SdJkJ/NIz9VUMIC9bsfGU5GLc6AzksFRKQmuaDftjqjzMw==
+  dependencies:
+    prop-types "^15.5.8"
+    raf "^3.3.0"
+    shallowequal "^1.1.0"
+
 react-helmet-async@^1.0.2:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/react-helmet-async/-/react-helmet-async-1.0.6.tgz#11c15c74e79b3f66670c73779bef3e0e352b1d4e"
@@ -20408,6 +20422,17 @@ react-optimize@^2.2.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-optimize/-/react-optimize-2.2.2.tgz#1c675bdf7e43dbbe339d2d8a77c3e3a94ec6c0c6"
   integrity sha512-/u51ZUDxrj5muQc5AebJ4x+p2caePkJ009VsjtBq1r2Q1gb5aYUYQMtATozdHk9M/Da1pibNIsZyz0S36vK8hw==
+
+react-player@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-player/-/react-player-2.1.0.tgz#7bf6f57a0e428318265e951667395cd15b6ac010"
+  integrity sha512-7phVl89BncbT7dall+CJSWBMK7MR/9Ar+glB/McBokVne7B3Gkzg6Wyap4XYGD3eWILq6u31MSWevWr2eFeW1w==
+  dependencies:
+    deepmerge "^4.0.0"
+    load-script "^1.0.0"
+    memoize-one "^5.1.1"
+    prop-types "^15.7.2"
+    react-fast-compare "^3.0.1"
 
 react-popper-tooltip@^2.8.3:
   version "2.11.1"
