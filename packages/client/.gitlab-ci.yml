@@ -1,3 +1,15 @@
+stages:
+  - deploy-backend
+  - build
+  - deploy
+  - review
+  - test
+  - deploy-prod
+  - test-prod
+  - tag
+  - publish
+  - cleanup
+
 deploy-backend:
   stage: deploy-backend
   image: alpine:latest
