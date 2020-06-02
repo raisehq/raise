@@ -1,15 +1,36 @@
 stages:
   - build
   - test
+  - review
 
 job1:
   stage: build
   script: echo "job1"
-
+  only:
+    changes:
+      - 'packages/client/**/*'
+job3:
+  stage: build
+  script: echo "job3"
+  only:
+    changes:
+      - 'packages/client/**/*'
+job4:
+  stage: build
+  script: echo "job4"
+  only:
+    changes:
+      - 'packages/client/**/*'
 job2:
   stage: test
   script: echo "job2"
   needs: ['job1']
+  only:
+    refs:
+      - merge_requests
+      - latest
+    changes:
+      - 'packages/client/**/*'
 # stages:
 #   - deploy-backend
 #   - build
@@ -191,12 +212,7 @@ job2:
 #     name: review/$CI_COMMIT_REF_SLUG
 #     url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
 #     on_stop: stop-review-front
-#   only:
-#     refs:
-#       - merge_requests
-#       - latest
-#     changes:
-#       - 'packages/client/**/*'
+
 #   needs: ['buildfrontreview']
 #   except:
 #     - master
