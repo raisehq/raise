@@ -299,7 +299,6 @@ const App = () => {
                   roles={[1, 2]}
                 />
                 <Web3Layout
-                  publicRoute
                   marketplace
                   layout={AppLayout}
                   exact

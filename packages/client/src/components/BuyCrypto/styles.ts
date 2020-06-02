@@ -46,6 +46,9 @@ export const BuyCryptoInstruction = styled.div`
   @media screen and ${device.laptop} {
     margin: 0 50px 0 10px;
   }
+  @media (max-width: ${size.mobileL}) {
+    width: 90%;
+  }
 `;
 
 export const CryptoProvider = styled.div`
@@ -60,7 +63,7 @@ export const CryptoProvider = styled.div`
   padding: 20px;
 
   @media (max-width: ${size.mobileL}) {
-    margin: 20px;
+    margin: 20px 5px 20px 5px;
   }
 `;
 
