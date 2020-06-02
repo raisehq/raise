@@ -27,6 +27,26 @@ include:
   - '/packages/onboarding/.gitlab-ci.yml'
   - '/packages/pages/.gitlab-ci.yml'
 
+# Generic for all pipelines
+
+build-deps:
+  stage: build
+  script:
+    - NODE_ENV=production yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'
+    - NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili
+  only:
+    changes:
+      - 'packages/client/**/*'
+      - 'packages/pages/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/components/dist
+      - packages/onboarding/dist
+
 # lint:
 #   stage: build
 #   script:

@@ -4,7 +4,10 @@ build-components:
     - yarn
     - yarn run components:build:umd
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - 'packages/components/**/*'
   except:
     variables:
       - $BUTTERCMS
@@ -38,8 +41,11 @@ deploy-components:
       aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.production.min.js.map
       aws s3 cp components/raisecomponents.umd.production.min.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/components/*"
-  only:
-    - master
+ only:
+    refs:
+      - master
+    changes:
+      - 'packages/components/**/*'
   except:
     variables:
       - $BUTTERCMS
@@ -58,7 +64,10 @@ components-unit-test:
     paths:
       - packages/components/test/__image_snapshots__
   only:
-    - merge_requests
+    refs:
+      - merge_request
+    changes:
+      - 'packages/components/**/*'
   except:
     variables:
       - $BUTTERCMS

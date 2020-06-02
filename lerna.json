@@ -1,6 +1,10 @@
 {
   "packages": [
-    "packages/*"
+    "packages/client",
+    "packages/pages",
+    "packages/onboarding",
+    "packages/components",
+    "packages/libs"
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,

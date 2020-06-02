@@ -3,7 +3,11 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/client",
+      "packages/pages",
+      "packages/onboarding",
+      "packages/components",
+      "packages/libs"
     ],
     "nohoist": [
       "**/tsdx",
