@@ -6,17 +6,26 @@ stages:
 job1:
   stage: build
   script: echo "job1"
+  only:
+    changes:
+      - 'packages/client/**/*'
 
 job3:
   stage: build
   script: echo "job3"
+  only:
+    changes:
+      - 'packages/onboarding/**/*'
 
 job4:
   stage: build
   script: echo "job4"
+  only:
+    changes:
+      - 'packages/storybook/**/*'
 
 job2:
-  stage: test
+  stage: review
   script: echo "job2"
   needs: ['job1']
   only:
