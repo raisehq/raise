@@ -28,6 +28,9 @@ job6:
   stage: review
   script: echo "job6"
   needs: ['job3']
+  only:
+    changes:
+      - 'packages/client/**/*'
 # stages:
 #   - deploy-backend
 #   - build
