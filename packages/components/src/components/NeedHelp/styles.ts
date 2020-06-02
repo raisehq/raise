@@ -8,6 +8,7 @@ export const NeedHelpContainer = styled.div`
   background: #3c4251;
   align-items: center;
   width: 100%;
+  padding: 0px 21px;
 `;
 export const NeedHelpTitle = styled.div`
   font-weight: bold;

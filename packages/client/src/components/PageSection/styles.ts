@@ -140,9 +140,8 @@ export const InfoDescription = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: #8a8e97;
-  text-align: center;
-  margin-left: 10px;
-  margin-right: 10px;
+  text-align: left;
+  padding: 0px 21px;
   max-width: 330px;
   @media screen and ${device.laptop} {
     text-align: left;
@@ -177,8 +176,7 @@ export const ImportantInfoContainer = styled.div`
   box-sizing: border-box;
   border-radius: 4px;
   max-width: 333px;
-  margin-top: 36px;
-  margin-bottom: 50px;
+  margin: 26px 21px 50px;
   align-self: center;
   @media screen and ${device.laptop} {
     max-width: 396px;

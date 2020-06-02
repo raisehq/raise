@@ -10,6 +10,10 @@ const LoanInformation = ({ currency, auction, decimals, repaymentMethod = 'Bulle
   return (
     <Wrapper>
       <Item>
+        <Label>Invest. type</Label>
+        <Value>Loan</Value>
+      </Item>
+      <Item>
         <Label>Currency</Label>
         <ItemWithIcon>
           <ImageLogo src={erc20Logo} />
