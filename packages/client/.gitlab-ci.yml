@@ -45,9 +45,6 @@ build-front-review:
       yarn --pure-lockfile
       yarn run client:build:integration:bili
       mv  packages/client/build  packages/client/build_review
-  only:
-    changes:
-      - 'packages/client/**/*'
   artifacts:
     when: always
     paths:
@@ -168,8 +165,11 @@ review-front:
     url: 'http://${CI_COMMIT_REF_SLUG}.review.$DOMAIN'
     on_stop: stop-review-front
   only:
-    - merge_requests
-    - latest
+    refs:
+      - merge_requests
+      - latest
+    changes:
+      - 'packages/client/**/*'
   needs:
     - build-front-review
   except:
