@@ -45,103 +45,106 @@ build-front-review:
       yarn --pure-lockfile
       yarn run client:build:integration:bili
       mv  packages/client/build  packages/client/build_review
+  only:
+    changes:
+      - 'packages/client/**/*'
   artifacts:
     when: always
     paths:
       - packages/client/build_review
 
-build-front-integration:
-  stage: build
-  script:
-    - 'echo $REACT_APP_HOST_URL'
-    - 'yarn --pure-lockfile'
-    - 'yarn run client:build:integration'
-    - 'mv  packages/client/build  packages/client/build_int'
-  only:
-    changes:
-      - 'packages/client/**/*'
-  artifacts:
-    when: always
-    paths:
-      - packages/client/build_int
+# build-front-integration:
+#   stage: build
+#   script:
+#     - 'echo $REACT_APP_HOST_URL'
+#     - 'yarn --pure-lockfile'
+#     - 'yarn run client:build:integration'
+#     - 'mv  packages/client/build  packages/client/build_int'
+#   only:
+#     changes:
+#       - 'packages/client/**/*'
+#   artifacts:
+#     when: always
+#     paths:
+#       - packages/client/build_int
 
-build-front-production:
-  stage: build
-  script:
-    - 'echo $REACT_APP_HOST_URL'
-    - 'yarn --pure-lockfile'
-    - 'yarn run client:build:production'
-  only:
-    changes:
-      - 'packages/client/**/*'
-  artifacts:
-    when: always
-    paths:
-      - packages/client/build
+# build-front-production:
+#   stage: build
+#   script:
+#     - 'echo $REACT_APP_HOST_URL'
+#     - 'yarn --pure-lockfile'
+#     - 'yarn run client:build:production'
+#   only:
+#     changes:
+#       - 'packages/client/**/*'
+#   artifacts:
+#     when: always
+#     paths:
+#       - packages/client/build
 
-deploy-canary:
-  image: python:3.7-alpine
-  stage: deploy
-  before_script:
-    - apk add --update bash
-    - pip install awscli
-  script:
-    - |
-      #!/bin/sh
-      mv packages/client/build canary
-      aws s3 sync canary s3://${BUCKET_NAME_CANARY}/
-      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
-      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
-  only:
-    - master
-  needs:
-    - build-front-production
-  except:
-    variables:
-      - $BUTTERCMS
+# deploy-canary:
+#   image: python:3.7-alpine
+#   stage: deploy
+#   before_script:
+#     - apk add --update bash
+#     - pip install awscli
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/client/build canary
+#       aws s3 sync canary s3://${BUCKET_NAME_CANARY}/
+#       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
+#       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
+#   only:
+#     - master
+#   needs:
+#     - build-front-production
+#   except:
+#     variables:
+#       - $BUTTERCMS
 
-deploy-int:
-  image: python:3.7-alpine
-  stage: deploy
-  before_script:
-    - apk add --update bash
-    - pip install awscli
-  script:
-    - |
-      #!/bin/sh
-      mv packages/client/build_int build_int
-      aws s3 sync build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
-      ./cache_invalidation.sh ${BUCKET_NAME_INT}
-      ./cache_invalidation.sh ${BUCKET_NAME_INT}
-  only:
-    - master
-  needs:
-    - build-front-integration
-  except:
-    variables:
-      - $BUTTERCMS
+# deploy-int:
+#   image: python:3.7-alpine
+#   stage: deploy
+#   before_script:
+#     - apk add --update bash
+#     - pip install awscli
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/client/build_int build_int
+#       aws s3 sync build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+#       ./cache_invalidation.sh ${BUCKET_NAME_INT}
+#       ./cache_invalidation.sh ${BUCKET_NAME_INT}
+#   only:
+#     - master
+#   needs:
+#     - build-front-integration
+#   except:
+#     variables:
+#       - $BUTTERCMS
 
-deploy-prod:
-  image: python:3.7-alpine
-  stage: deploy-prod
-  before_script:
-    - apk add --update bash
-    - pip install awscli
-  script:
-    - |
-      #!/bin/sh
-      mv packages/client/build latest
-      aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD}
-      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
-  only:
-    - master
-  needs:
-    - build-front-production
-  except:
-    variables:
-      - $BUTTERCMS
-  resource_group: production
+# deploy-prod:
+#   image: python:3.7-alpine
+#   stage: deploy-prod
+#   before_script:
+#     - apk add --update bash
+#     - pip install awscli
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/client/build latest
+#       aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+#       ./cache_invalidation.sh ${BUCKET_NAME_PROD}
+#       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
+#   only:
+#     - master
+#   needs:
+#     - build-front-production
+#   except:
+#     variables:
+#       - $BUTTERCMS
+#   resource_group: production
 
 review-front:
   image: python:3.7-alpine
@@ -202,109 +205,108 @@ stop-review-front:
       - master
     variables:
       - $BUTTERCMS
+# cypress-e2e-review:
+#   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
+#   stage: test
+#   variables:
+#     CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
+#     CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
+#     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+#     CYPRESS_api: ${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
+#     CYPRESS_isCanary: 'false'
+#   script:
+#     - yarn --pure-lockfile
+#     - cd packages/testing
+#     - yarn run cypress cache path
+#     - yarn run cypress cache list
+#     - yarn run cypress verify
+#     - yarn run ci:run
+#   artifacts:
+#     expire_in: '1 week'
+#     when: always
+#     paths:
+#       - packages/testing/ganache_db
+#       - packages/testing/cypress/screenshots
+#       - packages/testing/cypress/videos
+#       - packages/testing/cypress/snapshots
+#   only:
+#     - merge_requests
+#   needs:
+#     - review-front
+#   cache:
+#     key: ganache-global-cache
+#     paths:
+#       - packages/testing/ganache_db
 
-cypress-e2e-review:
-  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
-  stage: test
-  variables:
-    CYPRESS_url: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
-    CYPRESS_baseUrl: 'http://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}'
-    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: ${CI_COMMIT_REF_SLUG}.api.${DOMAIN}
-    CYPRESS_isCanary: 'false'
-  script:
-    - yarn --pure-lockfile
-    - cd packages/testing
-    - yarn run cypress cache path
-    - yarn run cypress cache list
-    - yarn run cypress verify
-    - yarn run ci:run
-  artifacts:
-    expire_in: '1 week'
-    when: always
-    paths:
-      - packages/testing/ganache_db
-      - packages/testing/cypress/screenshots
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  only:
-    - merge_requests
-  needs:
-    - review-front
-  cache:
-    key: ganache-global-cache
-    paths:
-      - packages/testing/ganache_db
+# cypress-e2e-canary:
+#   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
+#   stage: test
+#   variables:
+#     CYPRESS_url: 'https://canary.raise.it'
+#     CYPRESS_baseUrl: 'https://canary.raise.it'
+#     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+#     CYPRESS_api: api.raise.it
+#     CYPRESS_isCanary: 'false'
+#   script:
+#     - yarn --pure-lockfile
+#     - cd packages/testing
+#     - yarn run cypress cache path
+#     - yarn run cypress cache list
+#     - yarn run cypress verify
+#     - yarn run ci:run
+#   artifacts:
+#     expire_in: '1 week'
+#     when: always
+#     paths:
+#       - packages/testing/cypress/screenshots
+#       - packages/testing/ganache_db
+#       - packages/testing/cypress/videos
+#       - packages/testing/cypress/snapshots
+#   cache:
+#     key: ganache-global-cache
+#     paths:
+#       - packages/testing/ganache_db
+#   only:
+#     - master
+#   needs:
+#     - deploy-canary
+#   except:
+#     variables:
+#       - $BUTTERCMS
+#   resource_group: production
 
-cypress-e2e-canary:
-  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
-  stage: test
-  variables:
-    CYPRESS_url: 'https://canary.raise.it'
-    CYPRESS_baseUrl: 'https://canary.raise.it'
-    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: api.raise.it
-    CYPRESS_isCanary: 'false'
-  script:
-    - yarn --pure-lockfile
-    - cd packages/testing
-    - yarn run cypress cache path
-    - yarn run cypress cache list
-    - yarn run cypress verify
-    - yarn run ci:run
-  artifacts:
-    expire_in: '1 week'
-    when: always
-    paths:
-      - packages/testing/cypress/screenshots
-      - packages/testing/ganache_db
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  cache:
-    key: ganache-global-cache
-    paths:
-      - packages/testing/ganache_db
-  only:
-    - master
-  needs:
-    - deploy-canary
-  except:
-    variables:
-      - $BUTTERCMS
-  resource_group: production
-
-cypress-e2e-production:
-  image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
-  stage: test-prod
-  variables:
-    CYPRESS_url: 'https://app.raise.it'
-    CYPRESS_baseUrl: 'https://app.raise.it'
-    CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
-    CYPRESS_api: api.raise.it
-  script:
-    - yarn --pure-lockfile
-    - cd packages/testing
-    - yarn run cypress cache path
-    - yarn run cypress cache list
-    - yarn run cypress verify
-    - yarn run ci:run
-  artifacts:
-    expire_in: '1 week'
-    when: always
-    paths:
-      - packages/testing/cypress/screenshots
-      - packages/testing/ganache_db
-      - packages/testing/cypress/videos
-      - packages/testing/cypress/snapshots
-  cache:
-    key: ganache-global-cache
-    paths:
-      - packages/testing/ganache_db
-  only:
-    - master
-  needs:
-    - deploy-prod
-  except:
-    variables:
-      - $BUTTERCMS
-  resource_group: production
+# cypress-e2e-production:
+#   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/cypress:latest
+#   stage: test-prod
+#   variables:
+#     CYPRESS_url: 'https://app.raise.it'
+#     CYPRESS_baseUrl: 'https://app.raise.it'
+#     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
+#     CYPRESS_api: api.raise.it
+#   script:
+#     - yarn --pure-lockfile
+#     - cd packages/testing
+#     - yarn run cypress cache path
+#     - yarn run cypress cache list
+#     - yarn run cypress verify
+#     - yarn run ci:run
+#   artifacts:
+#     expire_in: '1 week'
+#     when: always
+#     paths:
+#       - packages/testing/cypress/screenshots
+#       - packages/testing/ganache_db
+#       - packages/testing/cypress/videos
+#       - packages/testing/cypress/snapshots
+#   cache:
+#     key: ganache-global-cache
+#     paths:
+#       - packages/testing/ganache_db
+#   only:
+#     - master
+#   needs:
+#     - deploy-prod
+#   except:
+#     variables:
+#       - $BUTTERCMS
+#   resource_group: production
