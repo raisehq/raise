@@ -20,9 +20,6 @@ job2:
   script: echo "job2"
   needs: ['job1']
   only:
-    refs:
-      - merge_requests
-      - latest
     changes:
       - 'packages/client/**/*'
 # stages:
