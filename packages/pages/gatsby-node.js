@@ -1,18 +1,17 @@
 const Builds = require('./builds'); // eslint-disable-line
-const DOMPurify = require("isomorphic-dompurify"); // eslint-disable-line
+const DOMPurify = require('isomorphic-dompurify'); // eslint-disable-line
 
 const WYSIWYGFields = ['body', 'description', 'businessPlan', 'operations', 'competitiveAnalysis'];
 const sanitizeObject = (data) => {
   Object.keys(data).forEach((key) => {
     if (WYSIWYGFields.includes(key)) {
-      data[key] = DOMPurify.sanitize(data[key]);// eslint-disable-line
+      data[key] = DOMPurify.sanitize(data[key]); // eslint-disable-line
     }
   });
   return data;
 };
 
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
-
   // Index page /
   const queryIndex = await graphql(Builds.index.query);
   createPage({
@@ -20,6 +19,15 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     component: Builds.index.component,
     context: {
       data: queryIndex.data
+    }
+  });
+
+  const queryHelp = await graphql(Builds.help.query);
+  createPage({
+    path: Builds.help.path,
+    component: Builds.help.component,
+    context: {
+      data: queryHelp.data
     }
   });
 
