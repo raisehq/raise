@@ -303,7 +303,7 @@ cypress-e2e-production:
   only:
     - master
   needs:
-    - deploy-production
+    - deploy-prod
   except:
     variables:
       - $BUTTERCMS
