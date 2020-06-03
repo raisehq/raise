@@ -1,3 +1,19 @@
+build_deps_pages:
+  stage: deps
+  extends:
+    - .build-deps
+  only:
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/components/dist
+      - packages/onboarding/dist
+
 build-pages-review:
   stage: build
   variables:

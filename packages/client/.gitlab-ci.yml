@@ -5,6 +5,14 @@ build-deps-client:
   only:
     changes:
       - 'packages/client/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/components/dist
+      - packages/onboarding/dist
 
 deploy-backend:
   stage: deploy-backend

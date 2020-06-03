@@ -29,21 +29,7 @@ cache:
     - NODE_ENV=production yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'
     - NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili
 
-  except:
-    variables:
-      - $BUTTERCMS
-  artifacts:
-    when: always
-    paths:
-      - packages/components/dist
-      - packages/onboarding/dist
-
-build:deps:pages:
-  extends:
-    - .build-deps
-  only:
-    changes:
-      - 'packages/pages/**/*'
+# Includes
 
 include:
   - '/packages/client/.gitlab-ci.yml'
