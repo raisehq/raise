@@ -46,9 +46,7 @@ build-front-review:
       fi
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
-    - 'cd /packages/client'
-    - 'yarn run build:integration'
-    - 'cd ../../'
+    - 'yarn ci:build:client:integration'
     - 'mv  packages/client/build  packages/client/build_review'
   only:
     refs:
@@ -71,9 +69,7 @@ build-front-integration:
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
-    - 'cd /packages/client'
-    - 'yarn run build:integration'
-    - 'cd ../../'
+    - 'yarn ci:build:client:integration'
     - 'mv  packages/client/build  packages/client/build_int'
   only:
     refs:
@@ -93,8 +89,7 @@ build-front-production:
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
-    - 'cd /packages/client'
-    - 'yarn run build:production'
+    - 'yarn ci:build:client:production'
   only:
     - master
   except:

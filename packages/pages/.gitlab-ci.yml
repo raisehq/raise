@@ -1,22 +1,3 @@
-# build-deps-pages:
-#   stage: deps
-#   extends:
-#     - .build-deps
-#   only:
-#     refs:
-#       - merge_requests
-#       - master
-#     changes:
-#       - 'packages/pages/**/*'
-#   except:
-#     variables:
-#       - $BUTTERCMS
-#   artifacts:
-#     when: always
-#     paths:
-#       - packages/components/dist
-#       - packages/onboarding/dist
-
 build-pages-review:
   stage: build
   variables:
@@ -33,11 +14,14 @@ build-pages-review:
       fi
       echo ${REACT_APP_HOST_URL}
       yarn --pure-lockfile
-      yarn run pages:build:integration:bili
+      yarn ci:build:pages:integration
       mv  packages/pages/public  packages/pages/build_review
   only:
-    - merge_requests
-    - latest
+    refs:
+      - merge_requests
+      - latest
+    changes:
+      - 'packages/pages/**/*'
   except:
     refs:
       - master
@@ -53,11 +37,13 @@ build-pages-integration:
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
-    - 'yarn run pages:build:integration'
+    - 'yarn ci:build:pages:integration'
     - 'mv  packages/pages/public  packages/pages/build_int'
   only:
     refs:
       - master
+    changes:
+      - 'packages/pages/**/*'
   except:
     variables:
       - $BUTTERCMS
@@ -71,7 +57,28 @@ build-pages-production:
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
-    - 'yarn run pages:build:production'
+    - 'yarn ci:build:pages:production'
+    - 'mv  packages/pages/public  packages/pages/build'
+  only:
+    refs:
+      - master
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/pages/build
+
+build-pages-production-buttercms:
+  stage: build
+  script:
+    - 'echo $REACT_APP_HOST_URL'
+    - 'yarn --pure-lockfile'
+    - 'yarn ci:build:deps'
+    - 'yarn ci:build:pages:production'
     - 'mv  packages/pages/public  packages/pages/build'
   only:
     refs:
@@ -96,8 +103,12 @@ deploy-int-pages:
       aws s3 rm s3://${BUCKET_NAME_INT_WWW}/ --recursive
       aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh herodev.es
+      ./cache_invalidation.sh herodev.es
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - 'packages/pages/**/*'
   except:
     variables:
       - $BUTTERCMS
@@ -115,6 +126,31 @@ deploy-prod-pages:
       aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/ --recursive
       aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
       ./cache_invalidation.sh raise.it
+      ./cache_invalidation.sh raise.it
+  only:
+    refs:
+      - master
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+  resource_group: production
+
+deploy-prod-pages-buttercms:
+  image: python:3.7-alpine
+  stage: deploy-prod
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  script:
+    - |
+      #!/bin/sh
+      mv packages/pages/build latest
+      aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/ --recursive
+      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE --cache-control max-age=86400000,public
+      ./cache_invalidation.sh raise.it
+      ./cache_invalidation.sh raise.it
   only:
     refs:
       - master
@@ -125,6 +161,10 @@ deploy-prod-pages:
 review-landing:
   image: python:3.7-alpine
   stage: review
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: 'http://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN'
+    on_stop: stop-review-landing
   before_script:
     - apk add --update bash
     - pip install awscli
@@ -138,16 +178,15 @@ review-landing:
       rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
       mv packages/pages/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
       aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
-
-  environment:
-    name: review/$CI_COMMIT_REF_SLUG
-    url: 'http://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN'
-    on_stop: stop-review-landing
   only:
-    - merge_requests
-    - latest
+    refs:
+      - merge_requests
+      - latest
+    changes:
+      - 'packages/pages/**/*'
   except:
-    - master
+    refs:
+      - master
 
 stop-review-landing:
   image: python:3.7-alpine
@@ -170,9 +209,10 @@ stop-review-landing:
     name: review/$CI_COMMIT_REF_SLUG
     action: stop
   only:
-    - merge_requests
+    refs:
+      - merge_requests
+    changes:
+      - 'packages/pages/**/*'
   except:
     refs:
       - master
-    variables:
-      - $BUTTERCMS

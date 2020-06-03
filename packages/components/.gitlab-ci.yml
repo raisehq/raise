@@ -1,63 +1,66 @@
-build-components:
-  stage: build
-  script:
-    - yarn
-    - yarn run components:build:umd
-  only:
-    refs:
-      - master
-    changes:
-      - 'packages/components/**/*'
-  except:
-    variables:
-      - $BUTTERCMS
-  artifacts:
-    when: always
-    paths:
-      - packages/components/dist
+# DO NOT REMOVE ASK DANI
 
-deploy-components:
-  image: python:3.7-alpine
-  stage: deploy
-  variables:
-    LIB_BUCKET_NAME: lib.raise.it
-  before_script:
-    - apk add --update bash
-    - pip install awscli
-  script:
-    - |
-      #!/bin/sh
-      mv packages/components/dist components
+# build-components:
+#   stage: build
+#   script:
+#     - yarn --pure-lockfile
+#     - yarn ci:build:components:umd
+#   only:
+#     refs:
+#       - master
+#     changes:
+#       - 'packages/components/**/*'
+#   except:
+#     variables:
+#       - $BUTTERCMS
+#   artifacts:
+#     when: always
+#     paths:
+#       - packages/components/dist
 
-      aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.development.js
-      aws s3 cp components/raisecomponents.umd.development.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+# deploy-components:
+#   image: python:3.7-alpine
+#   stage: deploy
+#   variables:
+#     LIB_BUCKET_NAME: lib.raise.it
+#   before_script:
+#     - apk add --update bash
+#     - pip install awscli
+#   script:
+#     - |
+#       #!/bin/sh
+#       mv packages/components/dist components
 
-      aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.development.js.map
-      aws s3 cp components/raisecomponents.umd.development.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+#       aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.development.js
+#       aws s3 cp components/raisecomponents.umd.development.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
 
-      aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.production.min.js
-      aws s3 cp components/raisecomponents.umd.production.min.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+#       aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.development.js.map
+#       aws s3 cp components/raisecomponents.umd.development.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
 
-      aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.production.min.js.map
-      aws s3 cp components/raisecomponents.umd.production.min.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
-      ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/components/*"
-  only:
-    refs:
-      - master
-    changes:
-      - 'packages/components/**/*'
-  except:
-    variables:
-      - $BUTTERCMS
+#       aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.production.min.js
+#       aws s3 cp components/raisecomponents.umd.production.min.js s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+
+#       aws s3 rm s3://${LIB_BUCKET_NAME}/components/raisecomponents.umd.production.min.js.map
+#       aws s3 cp components/raisecomponents.umd.production.min.js.map s3://${LIB_BUCKET_NAME}/components/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+#       ./cache_invalidation.sh ${LIB_BUCKET_NAME}/ "/components/*"
+#   only:
+#     refs:
+#       - master
+#     changes:
+#       - 'packages/components/**/*'
+#   except:
+#     variables:
+#       - $BUTTERCMS
 
 components-unit-test:
   image: buildkite/puppeteer
   stage: test
-  script:
+  before_script:
     - apt-get update
     - apt-get install -y git python build-essential
+  script:
     - yarn --pure-lockfile
-    - yarn run components:test:ci
+    - yarn ci:components:test
   artifacts:
     expire_in: '1 week'
     when: always
@@ -71,29 +74,28 @@ components-unit-test:
   except:
     variables:
       - $BUTTERCMS
-
-publish-components:
-  stage: publish
-  rules:
-    - if: '$CI_COMMIT_REF_SLUG != "master"'
-      when: never
-    - changes:
-        - packages/components/package.json
-    - when: never
-  before_script:
-    - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
-    - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
-    - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
-    - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
-  script:
-    - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-    - |
-      #!/bin/sh
-      if [ "${LOCAL_VERSION_COMPONENTS}" != "${PUBLISH_VERSION_COMPONENTS}" ]; then
-        yarn --lockfile
-        cd ./packages/components/
-        yarn run build
-        npm publish
-      else
-        echo "Package not updated, the latest version published is ${PUBLISH_VERSION_COMPONENTS} and the local verison is ${LOCAL_VERSION_COMPONENTS}."
-      fi
+# publish-components:
+#   stage: publish
+#   rules:
+#     - if: '$CI_COMMIT_REF_SLUG != "master"'
+#       when: never
+#     - changes:
+#         - packages/components/package.json
+#     - when: never
+#   before_script:
+#     - LOCAL_VERSION_ONBOARDING=$(cat packages/onboarding/package.json | jq -r .version)
+#     - PUBLISH_VERSION_ONBOARDING=$(npm view @raisehq/onboarding version)
+#     - LOCAL_VERSION_COMPONENTS=$(cat packages/components/package.json | jq -r .version)
+#     - PUBLISH_VERSION_COMPONENTS=$(npm view @raisehq/components version)
+#   script:
+#     - 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+#     - |
+#       #!/bin/sh
+#       if [ "${LOCAL_VERSION_COMPONENTS}" != "${PUBLISH_VERSION_COMPONENTS}" ]; then
+#         yarn --lockfile
+#         cd ./packages/components/
+#         yarn run build
+#         npm publish
+#       else
+#         echo "Package not updated, the latest version published is ${PUBLISH_VERSION_COMPONENTS} and the local verison is ${LOCAL_VERSION_COMPONENTS}."
+#       fi
