@@ -24,6 +24,14 @@ cache:
 # Generic for all pipelines
 
 .build-deps:
+  before_script:
+    - apk update
+    - apk add --virtual build-dependencies\
+      build-base \
+      gcc \
+      wget \
+      git \
+    - pip install awscli
   script:
     - NODE_ENV=production yarn --pure-lockfile
     - NODE_ENV=production npx lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili
