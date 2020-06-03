@@ -1,3 +1,11 @@
+build-deps-client:
+  stage: deps
+  extends:
+    - .build-deps
+  only:
+    changes:
+      - 'packages/client/**/*'
+
 deploy-backend:
   stage: deploy-backend
   image: alpine:latest
