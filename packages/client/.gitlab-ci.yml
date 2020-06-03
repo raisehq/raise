@@ -44,12 +44,12 @@ build-front-review:
         REACT_APP_HOST_URL_CORE=https://${REVIEW_SLUG}.api.${DOMAIN}
         REACT_APP_HOST_URL_FILE=https://${REVIEW_SLUG}.api.${DOMAIN}
       fi
-      echo $REACT_APP_HOST_URL
-      yarn --pure-lockfile
-      cd /packages/client
-      yarn run build:integration
-      cd ../../
-      mv  packages/client/build  packages/client/build_review
+    - 'echo $REACT_APP_HOST_URL'
+    - 'yarn --pure-lockfile'
+    - 'cd /packages/client'
+    - 'yarn run build:integration'
+    - 'cd ../../'
+    - 'mv  packages/client/build  packages/client/build_review'
   only:
     refs:
       - merge_requests
