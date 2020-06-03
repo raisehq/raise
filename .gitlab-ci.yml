@@ -47,7 +47,6 @@ build-deps-generic:
     - apk add --virtual build-base
     - apk add --virtual wget
     - apk add --virtual git
-    - pip install awscli
   extends:
     - .build-deps
   only:
