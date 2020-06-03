@@ -3,6 +3,9 @@ build-deps-client:
   extends:
     - .build-deps
   only:
+    refs:
+      - merge_requests
+      - master
     changes:
       - 'packages/client/**/*'
   except:

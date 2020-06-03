@@ -1,8 +1,11 @@
-build_deps_pages:
+build-deps-pages:
   stage: deps
   extends:
     - .build-deps
   only:
+    refs:
+      - merge_requests
+      - master
     changes:
       - 'packages/pages/**/*'
   except:
