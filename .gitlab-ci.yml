@@ -26,7 +26,7 @@ cache:
 
 .build-deps:
   script:
-    - NODE_ENV=production yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'
+    - NODE_ENV=production yarn --pure-lockfile'
     - NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili
 
 # Includes
