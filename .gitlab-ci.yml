@@ -43,9 +43,8 @@ build-deps-generic:
   stage: prepare
   before_script:
     - apk update
-    - apk add --virtual build-dependencies\
+    - apk add --virtual build-dependencies \
       build-base \
-      gcc \
       wget \
       git \
     - pip install awscli
