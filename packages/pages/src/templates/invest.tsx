@@ -9,12 +9,14 @@ const IndexPage = ({ pageContext: { data, press } }: any) => {
   const investSections = data.allButterPage.nodes[0];
   const { articles } = press.allButterPage.edges[0].node;
 
+  const flattenedArticles = articles.map((article: any) => article.press_release);
+
   return (
     <Layout>
       <div>
         <SEO />
         <TagManager />
-        <InvestingPage data={investSections} articles={articles} />
+        <InvestingPage data={investSections} articles={flattenedArticles} />
       </div>
     </Layout>
   );
