@@ -1,21 +1,21 @@
-build-deps-client:
-  stage: deps
-  extends:
-    - .build-deps
-  only:
-    refs:
-      - merge_requests
-      - master
-    changes:
-      - 'packages/client/**/*'
-  except:
-    variables:
-      - $BUTTERCMS
-  artifacts:
-    when: always
-    paths:
-      - packages/components/dist
-      - packages/onboarding/dist
+# build-deps-client:
+#   stage: deps
+#   extends:
+#     - .build-deps
+#   only:
+#     refs:
+#       - merge_requests
+#       - master
+#     changes:
+#       - 'packages/client/**/*'
+#   except:
+#     variables:
+#       - $BUTTERCMS
+#   artifacts:
+#     when: always
+#     paths:
+#       - packages/components/dist
+#       - packages/onboarding/dist
 
 deploy-backend:
   stage: deploy-backend

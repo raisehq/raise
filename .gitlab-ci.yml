@@ -26,7 +26,7 @@ cache:
 
 .build-deps:
   script:
-    - NODE_ENV=production yarn --pure-lockfile'
+    - NODE_ENV=production yarn --pure-lockfile
     - NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili
 
 # Includes
@@ -36,6 +36,28 @@ include:
   - '/packages/components/.gitlab-ci.yml'
   - '/packages/onboarding/.gitlab-ci.yml'
   - '/packages/pages/.gitlab-ci.yml'
+
+# Generic jobs
+
+build-deps-generic:
+  stage: deps
+  extends:
+    - .build-deps
+  only:
+    refs:
+      - merge_requests
+      - master
+    changes:
+      - 'packages/pages/**/*'
+      - 'packages/client/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/components/dist
+      - packages/onboarding/dist
 
 # lint:
 #   stage: build
