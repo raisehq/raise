@@ -26,7 +26,8 @@ const AuthenticationMethods = ({ method }: { method: string }) => {
           <MobileView>
             <Icon name="desktop" size="huge" />
             <CenteredAlert>
-              Raise is not available on mobile yet. Please use a Web3 compatible desktop browser as we work on bringing you the best mobile experience
+              Raise is not available on mobile yet. Please use a Web3 compatible desktop browser as
+              we work on bringing you the best mobile experience
             </CenteredAlert>
           </MobileView>
         )}
