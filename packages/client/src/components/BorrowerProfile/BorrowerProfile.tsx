@@ -141,7 +141,7 @@ const BorrowerProfile: React.SFC<BorrowerParams> = ({
           </HeaderImage>
 
           {filteredAuctions.length ? <BorrowerHeader auction={filteredAuctions[0]} /> : null}
-          <CompanyDetails extraPadding={filteredAuctions.length >= 0}>
+          <CompanyDetails extraPadding={!!filteredAuctions}>
             <BorrowerLogo src={logo} />
             <CompanyName>{companyName}</CompanyName>
             <p>
