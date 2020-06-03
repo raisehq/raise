@@ -1,8 +1,7 @@
 image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:latest
 
 stages:
-  - deploy-backend
-  - deps
+  - prepare
   - build
   - deploy
   - review
@@ -27,7 +26,7 @@ cache:
 .build-deps:
   script:
     - NODE_ENV=production yarn --pure-lockfile
-    - NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili
+    - NODE_ENV=production npx lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili
 
 # Includes
 
@@ -40,7 +39,7 @@ include:
 # Generic jobs
 
 build-deps-generic:
-  stage: deps
+  stage: prepare
   extends:
     - .build-deps
   only:
