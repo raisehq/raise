@@ -39,6 +39,7 @@ include:
 # Generic jobs
 
 build-deps-generic:
+  image: node:14
   stage: prepare
   extends:
     - .build-deps
