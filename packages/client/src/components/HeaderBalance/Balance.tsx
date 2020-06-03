@@ -77,7 +77,7 @@ const Balance = (props) => {
           <ButtonContainer>
             <Button
               onClick={buyCrypto}
-              text="Buy crypto with CC"
+              text="Buy with credit card"
               type="primary"
               size="standard"
               fullWidth
