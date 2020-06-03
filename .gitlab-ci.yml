@@ -25,13 +25,8 @@ cache:
 
 .build-deps:
   script:
-    - NODE_ENV=production yarn --pure-lockfile
-    - cd /packages/components
-    - yarn build:bili
-    - cd ../../
-    - cd /packages/onboarding
-    - yarn build:bili
-    - cd ../../
+    - yarn --pure-lockfile
+    - npx lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili
 
 # Includes
 
