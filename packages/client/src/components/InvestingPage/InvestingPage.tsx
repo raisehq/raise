@@ -21,8 +21,6 @@ const InvestingPage = () => {
     const butterSections = await requestPage('page_sections', 'investing');
     const pressReleases = await getCollection('publisher_releases', {});
 
-    console.log('press release::: ', pressReleases);
-
     const orderedSections = butterSections.investingSection.sort(
       // eslint-disable-next-line
       (a: { section_order: number }, b: { section_order: number }) =>
@@ -48,14 +46,16 @@ const InvestingPage = () => {
       }
     });
 
-    orderedSections.splice(1, 0, {
-      component: (
-        <PressReleases>
-          <PressPR data={pressReleases} />
-        </PressReleases>
-      ),
-      section_order: 1
-    });
+    if (pressReleases && pressReleases.length > 0) {
+      orderedSections.splice(1, 0, {
+        component: (
+          <PressReleases>
+            <PressPR data={pressReleases} />
+          </PressReleases>
+        ),
+        section_order: 1
+      });
+    }
 
     if (!isLogged) {
       orderedSections.splice(3, 0, {

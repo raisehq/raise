@@ -18,8 +18,23 @@ const Querys = {
   },
   press: {
     query: `
-      
+    {
+      allButterPage(filter: {slug: {eq: "press-releases"}}) {
+        edges {
+          node {
+            articles {
+              press_release {
+                article_link
+                publisher
+                publisher_logo
+              }
+            }
+          }
+        }
+      }
+    }
     `,
+    path: '/',
     component: path.resolve('src/templates/invest.tsx')
   },
   index: {

@@ -5,15 +5,16 @@ import SEO from '../components/SEO';
 import TagManager from '../components/TagManager';
 import 'semantic-ui-css/semantic.min.css';
 
-const IndexPage = ({ pageContext: { data } }: any) => {
+const IndexPage = ({ pageContext: { data, press } }: any) => {
   const investSections = data.allButterPage.nodes[0];
+  const { articles } = press.allButterPage.edges[0].node;
 
   return (
     <Layout>
       <div>
         <SEO />
         <TagManager />
-        <InvestingPage data={investSections} />
+        <InvestingPage data={investSections} articles={articles} />
       </div>
     </Layout>
   );

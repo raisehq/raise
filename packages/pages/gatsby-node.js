@@ -14,11 +14,13 @@ const sanitizeObject = (data) => {
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
   // Index page /
   const queryIndex = await graphql(Builds.index.query);
+  const press = await graphql(Builds.press.query);
   createPage({
     path: Builds.index.path,
     component: Builds.index.component,
     context: {
-      data: queryIndex.data
+      data: queryIndex.data,
+      press: press.data
     }
   });
 
