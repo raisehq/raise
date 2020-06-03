@@ -21,7 +21,7 @@ describe('LENDER', function () {
     cy.checkFakeDai(); // Send totally fake GraphQL daiBalances ws message
     cy.wait(300);
     cy.get('#btn-invest-all').should('have.length', 1);
-    cy.get('#btn-invest-all').matchImageSnapshot('invest');
+    cy.get('#btn-invest-all').matchImageSnapshot('invest', { force: true });
     cy.wait(2000);
     // cy.get('#sidebar').matchImageSnapshot('modal_invest_lender_empty');
     // // cy.wait(2000);
@@ -33,6 +33,6 @@ describe('LENDER', function () {
     // cy.get('#sidebar').matchImageSnapshot('modal_invest_lender_full');
     cy.get('#btn-invest-confirm').click();
     cy.wait(300);
-    cy.get('#modal-success').matchImageSnapshot('modal_success');
+    cy.get('#modal-success').matchImageSnapshot('modal_success', { force: true });
   });
 });
