@@ -33,7 +33,7 @@ cache:
 include:
   - '/packages/client/.gitlab-ci.yml'
   - '/packages/components/.gitlab-ci.yml'
-  - '/packages/onboarding/.gitlab-ci.yml'
+  # - '/packages/onboarding/.gitlab-ci.yml'
   - '/packages/pages/.gitlab-ci.yml'
 
 # Generic jobs
