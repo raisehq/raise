@@ -43,11 +43,7 @@ build-deps-generic:
   stage: prepare
   before_script:
     - apk update
-    - apk add --virtual python3
-    - apk add --virtual build-dependencies
-    - apk add --virtual build-base
-    - apk add --virtual wget
-    - apk add --virtual git
+    - apk add --no-cache --virtual .build-deps build-dependencies python3-dev build-base wget git
   extends:
     - .build-deps
   only:
