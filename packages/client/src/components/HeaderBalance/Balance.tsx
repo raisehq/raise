@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BigNumber from 'bignumber.js';
+import { Button } from '@raisehq/components';
+
 import useGetAllBalances from '../../hooks/useGetAllBalances';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
+import useRouter from '../../hooks/useRouter';
 import {
   AddressStatus,
   BalanceDropdown,
@@ -10,8 +13,7 @@ import {
   BalanceMenu,
   Header,
   TokenLayout,
-  ButtonContainer,
-  TrackingButtonWrapper
+  ButtonContainer
 } from './Balance.styles';
 import TOKEN_URLS from '../../commons/tokens';
 
@@ -34,8 +36,9 @@ const DropdownButton = () => (
 );
 
 const Balance = (props) => {
+  const { history } = useRouter();
+
   const balances = useGetAllBalances(SUPPORTED_COINS);
-  const [isDisabledButton, setDisabledButton] = useState(false);
 
   const tagManager = useGoogleTagManager('BuyCrypto');
 
@@ -58,7 +61,7 @@ const Balance = (props) => {
   const buyCrypto = (e) => {
     e.stopPropagation();
     tagManager.sendEvent(TMEvents.Click, 'buycrypto_teaser');
-    setDisabledButton(true);
+    history.push('/buy-crypto');
   };
 
   return (
@@ -72,10 +75,9 @@ const Balance = (props) => {
           <Content>{balanceList}</Content>
           <Divider />
           <ButtonContainer>
-            <TrackingButtonWrapper
-              isDisabled={isDisabledButton}
+            <Button
               onClick={buyCrypto}
-              text={isDisabledButton ? 'Available soon!' : 'Buy crypto with CC'}
+              text="Buy crypto with CC"
               type="primary"
               size="standard"
               fullWidth

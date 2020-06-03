@@ -13,10 +13,13 @@ const HeaderRaw: React.SFC<HeaderProps> = ({
   routes,
   disabled = false,
   pageRoutes,
+  logged,
   ...rest
 }) => (
   <NavBar {...rest}>
-    <TopHeader logo={logo}>{children}</TopHeader>
+    <TopHeader logo={logo} logged={logged}>
+      {children}
+    </TopHeader>
     {!disabled && <SubHeader routes={routes} />}
     {!disabled && !!pageRoutes.length && <SubPageHeader routes={pageRoutes} />}
   </NavBar>

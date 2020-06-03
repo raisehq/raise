@@ -1,5 +1,7 @@
 import React, { Fragment, useContext, useState, useCallback, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Icon, Input } from 'semantic-ui-react';
+import { useMediaQuery } from 'react-responsive';
 import { Button } from '@raisehq/components';
 import * as _ from 'lodash';
 import {
@@ -93,6 +95,11 @@ const SignInWithEmail = () => {
     console.error('Captcha error. You should check the network and retry: ', captchaError);
   };
 
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  if (isMobile) {
+    return <Redirect to="/login" />;
+  }
   return (
     <Fragment>
       <OnboardHeader>Welcome to Raise</OnboardHeader>

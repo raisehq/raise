@@ -1,5 +1,21 @@
 const path = require('path'); // eslint-disable-line
 const Querys = {
+  help: {
+    query: `
+      {
+        butterPage(slug: {eq: "help"}) {
+          help_page_title
+          help_page_subtitle
+          help_section {
+            section_title
+            section_information
+          }
+        }
+      }
+    `,
+    path: '/help',
+    component: path.resolve('src/templates/help.tsx')
+  },
   index: {
     query: `
     {

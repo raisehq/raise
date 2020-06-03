@@ -71,6 +71,7 @@ export const LoanInformationContainer = styled.div`
 
 export const LoanInvestContainer = styled.div`
   max-width: 400px;
+  padding: 0px 14.5px;
 `;
 
 export const LoanResumeWrapper = styled.div`
@@ -125,15 +126,44 @@ export const BorrowerInfoTitle = styled.div`
   text-align: center;
 `;
 
+export const BorrowerInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  @media screen and ${device.laptop} {
+    max-width: 719px;
+  }
+`;
+
 export const BorrowerDescription = styled.div`
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
   color: #8a8e97;
   text-align: left;
+`;
+
+export const PlayerWrapper = styled.div`
+  margin-bottom: 48px;
+  height: 192px;
   @media screen and ${device.laptop} {
-    max-width: 648px;
+    width: 100%;
+    height: 368px;
   }
+`;
+
+export const PlayButton = styled.div`
+  display: flex;
+  width: 72px;
+  height: 72px;
+  background: #eb3f93;
+  border-radius: 4px;
+`;
+
+export const PlayButtonArrow = styled.img`
+  width: 40px;
+  height: 40px;
+  margin: auto;
 `;
 
 export const SectionContainer = styled.div`

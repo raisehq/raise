@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import daggy from 'daggy';
 import 'url-search-params-polyfill';
+import { useMediaQuery } from 'react-responsive';
 import { AccountType, Panel, Simple, PanelWithImage } from '@raisehq/components';
 import AppContext from './App.context';
 import GetStarted from './SignUp/GetStarted';
@@ -101,6 +102,7 @@ const App = ({
   const [, setAuthCookie] = useCookie('auth', {});
   const tagManager = useGoogleTagManager();
   const { host } = history.location;
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
@@ -444,7 +446,7 @@ const App = ({
       ),
       StartMini: () => <GetStarted />,
       SignIn: () => (
-        <PanelWithImage {...props} title="Login">
+        <PanelWithImage {...props} title={isMobile ? 'Login from desktop' : 'Login'}>
           <SignIn />
         </PanelWithImage>
       ),

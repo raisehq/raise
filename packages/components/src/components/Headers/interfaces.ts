@@ -23,10 +23,12 @@ export interface HeaderProps {
   routes: Route[];
   disabled?: boolean;
   pageRoutes: Route[];
+  logged?: boolean;
 }
 
 export interface TopHeaderProps {
   logo: Logo;
+  logged?: boolean;
 }
 export interface SubheaderProps {
   routes: Route[];
