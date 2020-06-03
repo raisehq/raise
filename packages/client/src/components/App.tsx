@@ -51,6 +51,9 @@ const App = () => {
       user: {
         details: { accounttype_id: accounttypeId, kyc_status: kycStatus, kyc_provider: kycProvider }
       },
+      auth: {
+        login: { logged: isLogged }
+      },
       blockchain: { contracts },
       onboarding: { show: showOnboarding, troggle: troggleOnboarding }
     },
@@ -176,7 +179,7 @@ const App = () => {
             draggable={false}
             pauseOnHover={false}
           />
-          {visible && (
+          {isLogged && visible && (
             <KycTopBanner
               kycStatus={kycStatus}
               enabled={enableKyc}
