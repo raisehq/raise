@@ -1,22 +1,3 @@
-# build-deps-client:
-#   stage: deps
-#   extends:
-#     - .build-deps
-#   only:
-#     refs:
-#       - merge_requests
-#       - master
-#     changes:
-#       - 'packages/client/**/*'
-#   except:
-#     variables:
-#       - $BUTTERCMS
-#   artifacts:
-#     when: always
-#     paths:
-#       - packages/components/dist
-#       - packages/onboarding/dist
-
 deploy-backend:
   stage: prepare
   image: alpine:latest
@@ -65,7 +46,9 @@ build-front-review:
       fi
       echo $REACT_APP_HOST_URL
       yarn --pure-lockfile
-      lerna run build:integration --stream --scope client
+      cd /packages/client
+      yarn run build:integration
+      cd ../../
       mv  packages/client/build  packages/client/build_review
   only:
     refs:
@@ -88,7 +71,9 @@ build-front-integration:
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
-    - 'lerna run build:integration --stream --scope client'
+    - 'cd /packages/client'
+    - 'yarn run build:integration'
+    - 'cd ../../'
     - 'mv  packages/client/build  packages/client/build_int'
   only:
     refs:
@@ -108,7 +93,8 @@ build-front-production:
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
-    - 'lerna run build:production --stream --scope client'
+    - 'cd /packages/client'
+    - 'yarn run build:production'
   only:
     - master
   except:
@@ -253,8 +239,8 @@ cypress-e2e-production:
     CYPRESS_CACHE_FOLDER: $CI_PROJECT_DIR/packages/testing/.cache/Cypress
     CYPRESS_api: api.raise.it
   script:
-    - yarn --pure-lockfile
     - cd packages/testing
+    - yarn --pure-lockfile
     - yarn run cypress cache path
     - yarn run cypress cache list
     - yarn run cypress verify
