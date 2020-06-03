@@ -2,8 +2,6 @@ import React, { useMemo, lazy, Suspense } from 'react';
 import { match, ANY } from 'pampy';
 import { Link } from 'react-router-dom';
 import { Card } from '@raisehq/components';
-import { fromWei } from 'web3-utils';
-import numeral from '../../commons/numeral';
 import Amount from '../Dashboard/Dashboard.Amount';
 import useBorrowerInfo from '../../hooks/useBorrowerInfo';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
@@ -15,9 +13,8 @@ const ClaimRefund = lazy(() => import('../ClaimRefundInvestor/ClaimRefund.Button
 
 const LenderExpired = ({ auction, calcs }: { auction: any; calcs: any }) => {
   const { companyName, route } = useBorrowerInfo(auction.originator);
-  const { maxAmount, times, currentAmount, totalAmount, principal } = calcs;
+  const { maxAmount, times, currentAmount, totalAmount, principal, lenderAmount } = calcs;
   const coin = useGetCoin(auction);
-  const lenderAmount = numeral(fromWei(auction.lenderAmount)).format();
 
   const cta = useMemo(() => {
     const conditions = [auction.state, auction.withdrawn];
