@@ -39,6 +39,9 @@ export const ReferralSection = styled.div`
   @media (max-width: ${size.mobileL}) {
     padding: 15px 30px 15px 30px;
   }
+  @media (max-width: ${size.mobileS}) {
+    padding: 15px 20px 15px 20px;
+  }
 `;
 export const ReferralSectionShare = styled.div`
   display: flex;
@@ -50,6 +53,9 @@ export const ReferralSectionShare = styled.div`
 
   @media (max-width: ${size.mobileL}) {
     padding: 15px 30px 15px 30px;
+  }
+  @media (max-width: ${size.mobileS}) {
+    padding: 15px 20px 15px 20px;
   }
 `;
 
@@ -120,6 +126,13 @@ export const SocialMediaWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   width: 115px;
+
+  @media (max-width: ${size.mobileS}) {
+    padding: 15px 20px 15px 20px;
+  }
+  @media (max-width: ${size.mobileS}) {
+    width: 108px;
+  }
 `;
 
 export const SocialMedia = styled(Button)`
@@ -152,6 +165,10 @@ export const InputTextCustom = styled(Input)`
     @media (max-width: ${size.mobileL}) {
       width: 248px;
     }
+
+    @media (max-width: ${size.mobileS}) {
+      width: 200px;
+    }
   }
 
   &&&.ui.disabled {
@@ -173,6 +190,10 @@ export const InputTextCustom = styled(Input)`
 export const TotalInput = styled(InputTextCustom)`
   &&& {
     width: 167px;
+
+    @media (max-width: ${size.mobileS}) {
+      width: 120px;
+    }
   }
 `;
 
