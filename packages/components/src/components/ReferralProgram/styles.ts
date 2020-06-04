@@ -51,9 +51,6 @@ export const ReferralSectionShare = styled.div`
   padding: 30px;
   width: 370px;
 
-  @media (max-width: ${size.mobileL}) {
-    padding: 15px 30px 15px 30px;
-  }
   @media (max-width: ${size.mobileS}) {
     padding: 15px 20px 15px 20px;
   }
@@ -91,9 +88,12 @@ export const ReferralText = styled.div`
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
+  color: #8a8e97;
   width: 254px;
 
-  color: #8a8e97;
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+  }
 `;
 
 export const LabelSection = styled.div`
@@ -127,9 +127,6 @@ export const SocialMediaWrapper = styled.div`
   align-items: flex-start;
   width: 115px;
 
-  @media (max-width: ${size.mobileS}) {
-    padding: 15px 20px 15px 20px;
-  }
   @media (max-width: ${size.mobileS}) {
     width: 108px;
   }
