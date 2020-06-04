@@ -65,7 +65,6 @@ lint:
     - 'yarn lint'
   only:
     - merge_requests
-    - latest
   except:
     refs:
       - master

@@ -19,7 +19,6 @@ build-pages-review:
   only:
     refs:
       - merge_requests
-      - latest
     changes:
       - 'packages/pages/**/*'
   except:
@@ -181,7 +180,6 @@ review-landing:
   only:
     refs:
       - merge_requests
-      - latest
     changes:
       - 'packages/pages/**/*'
   except:
