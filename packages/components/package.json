@@ -71,6 +71,7 @@
     "prop-types": "^15.7.2",
     "react-chartjs-2": "^2.9.0",
     "react-content-loader": "^4.3.2",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-device-detect": "^1.12.1",
     "react-google-recaptcha": "^2.0.1",
     "react-number-format": "^4.4.1",
