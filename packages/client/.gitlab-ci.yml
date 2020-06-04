@@ -91,7 +91,10 @@ build-front-production:
     - 'yarn --pure-lockfile'
     - 'yarn ci:build:client:production'
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - 'packages/client/**/*'
   except:
     variables:
       - $BUTTERCMS
@@ -107,6 +110,11 @@ deploy-pre-front:
     - apk add --update bash
     - pip install awscli
   script:
+    - echo '>>>> DEPLOY INTEGRATION <<<<'
+    - |
+      #!/bin/sh
+      mv packages/client/build_int build_int
+      aws s3 sync build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE
     - echo '>>>> DEPLOY CANARY <<<<'
     - |
       #!/bin/sh
@@ -114,13 +122,7 @@ deploy-pre-front:
       aws s3 sync canary s3://${BUCKET_NAME_CANARY}/
       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
       ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
-    - echo '>>>> DEPLOY INTEGRATION <<<<'
-    - |
-      #!/bin/sh
-      mv packages/client/build_int build_int
-      aws s3 sync build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
-      ./cache_invalidation.sh ${BUCKET_NAME_INT}
-      ./cache_invalidation.sh ${BUCKET_NAME_INT}
+
   only:
     refs:
       - master
@@ -140,7 +142,7 @@ deploy-prod:
     - |
       #!/bin/sh
       mv packages/client/build latest
-      aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE --cache-control max-age=86400000,public
+      aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE
       ./cache_invalidation.sh ${BUCKET_NAME_PROD}
       ./cache_invalidation.sh ${BUCKET_NAME_PROD}
   only:
@@ -309,7 +311,6 @@ stop-review-front:
     - pip install awscli
   script:
     - aws s3 rm s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
-    - aws s3 rm s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
     - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
   when: manual
   environment:
