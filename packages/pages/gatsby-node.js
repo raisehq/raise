@@ -33,6 +33,15 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     }
   });
 
+  const queryAbout = await graphql(Builds.about.query);
+  createPage({
+    path: Builds.about.path,
+    component: Builds.about.component,
+    context: {
+      data: queryAbout.data
+    }
+  });
+
   const queryBlogs = await graphql(Builds.blogs.query);
   // Satinize content to avoid atacks
   const blogData = queryBlogs.data.allButterPost.edges
