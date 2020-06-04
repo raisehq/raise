@@ -14,7 +14,8 @@ import {
   SocialMedia,
   SocialMediaWrapper,
   TotalInput,
-  TotalNumber
+  TotalNumber,
+  ReferralSectionShare
 } from './styles';
 
 const ReferralProgram = () => {
@@ -48,7 +49,7 @@ const ReferralProgram = () => {
           </Row>
         </ReferralSubSection>
       </ReferralSection>
-      <ReferralSection>
+      <ReferralSectionShare>
         <ReferralSubSection>
           <LabelSection>Share</LabelSection>
           <SocialMediaWrapper>
@@ -60,8 +61,6 @@ const ReferralProgram = () => {
             </SocialMedia>
           </SocialMediaWrapper>
         </ReferralSubSection>
-      </ReferralSection>
-      <ReferralSection>
         <ReferralSubSection>
           <LabelSection>Successful Referrals</LabelSection>
           <Row>
@@ -69,7 +68,7 @@ const ReferralProgram = () => {
             <TotalNumber>145</TotalNumber>
           </Row>
         </ReferralSubSection>
-      </ReferralSection>
+      </ReferralSectionShare>
     </ReferralContainer>
   );
 };

@@ -18,6 +18,7 @@ export const ReferralContainer = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
   width: 100%;
 
   background: #ffffff;
@@ -31,6 +32,24 @@ export const ReferralSection = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   padding: 30px;
+
+  @media (max-width: ${size.mobileL}) {
+    padding: 15px 30px 15px 30px;
+  }
+`;
+export const ReferralSectionShare = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 30px;
+  width: 370px;
+
+  @media (max-width: ${size.mobileL}) {
+    padding: 15px 30px 15px 30px;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 `;
 
 export const Row = styled.div`
