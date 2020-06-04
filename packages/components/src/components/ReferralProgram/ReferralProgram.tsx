@@ -24,13 +24,19 @@ const ReferralProgram = ({ shareLink, totalCount }) => {
     copied: false
   });
 
+  const encodedSharedLink = encodeURIComponent(shareLink);
+  const openSocialMedia = (route) => () => window.open(route, '_blank');
+  const twitterURL = `twitter://post?${encodedSharedLink}`;
+  const facebookURL = `https://m.facebook.com/sharer/sharer.php?u=${encodedSharedLink}`;
+
   return (
     <ReferralContainer>
       <ReferralSection>
         <ReferralSubSection>
-          <Title>Referral Program</Title>
+          <Title>Invite your friends</Title>
           <ReferralText>
-            Share this link and earn from each successful investor you invite.
+            Share your personal invitation link and win 49 DAI with each friend that invests with
+            us.
           </ReferralText>
         </ReferralSubSection>
       </ReferralSection>
@@ -38,7 +44,7 @@ const ReferralProgram = ({ shareLink, totalCount }) => {
         <ReferralSubSection>
           <LabelSection>Copy the link</LabelSection>
           <Row>
-            <InputTextCustom placeholder="https://raise.it/referral/65415465" disabled />
+            <InputTextCustom placeholder={shareLink} disabled />
             <CopyToClipboard
               text={shareLink}
               onCopy={() => setState({ value: shareLink, copied: true })}
@@ -52,10 +58,10 @@ const ReferralProgram = ({ shareLink, totalCount }) => {
         <ReferralSubSection>
           <LabelSection>Share</LabelSection>
           <SocialMediaWrapper>
-            <SocialMedia>
+            <SocialMedia onClick={openSocialMedia(facebookURL)}>
               <Icon name="facebook f" size="big" />
             </SocialMedia>
-            <SocialMedia>
+            <SocialMedia onClick={openSocialMedia(twitterURL)}>
               <Icon name="twitter" size="big" />
             </SocialMedia>
           </SocialMediaWrapper>

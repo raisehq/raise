@@ -1,12 +1,23 @@
 import React, { useState, useCallback } from 'react';
 import { match } from 'pampy';
+import { ReferralProgram } from '@raisehq/components';
 import { checkUsername } from '../../services/auth';
-import { Content, Side, Line, Main, AccountInfo, MyActivityWrapper } from './MyAccount.styles';
+import {
+  Content,
+  Side,
+  Line,
+  Main,
+  AccountInfo,
+  MyActivityWrapper,
+  ReferralWrapper
+} from './MyAccount.styles';
 import ProfileInfo from './components/ProfileInfo';
 import UpdateUsername from './components/UpdateUsername';
 import UpdatePassword from './components/UpdatePassword';
 import { useRootContext } from '../../contexts/RootContext';
 import { MyActivity } from '../Dashboard';
+
+import { getHost } from '../../utils/index';
 
 const MyAccount = () => {
   const [usernameExists, setUsernameExists] = useState(false);
@@ -23,7 +34,13 @@ const MyAccount = () => {
       user: {
         updateUser: { message: userMessage, loading: userLoading },
         updatePassword: { message: passMessage, loading: passLoading },
-        details: { id, email, username: storedUsername, kyc_status: kycStatus }
+        details: {
+          id,
+          email,
+          username: storedUsername,
+          kyc_status: kycStatus,
+          referral_code: RefCode
+        }
       }
     }
   }: any = useRootContext();
@@ -110,9 +127,14 @@ const MyAccount = () => {
     passMessage,
     loading: passLoading
   };
+  const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
+  const shareLink = `${REFERAFRIEND}=${RefCode || ''}`;
 
   return (
     <Main>
+      <ReferralWrapper>
+        <ReferralProgram totalCount="3" shareLink={shareLink} />
+      </ReferralWrapper>
       <h1>My Account</h1>
       <Content>
         <AccountInfo>
