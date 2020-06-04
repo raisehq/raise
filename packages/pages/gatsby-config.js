@@ -62,12 +62,7 @@ module.exports = {
       resolve: 'gatsby-source-buttercms',
       options: {
         authToken: BUTTERCMSKEY,
-        // contentFields: {
-        //   keys: ['publisher_releases'],
-        //   test: 0
-        // },
-        // collection: ['publisher_releases'],
-        pageTypes: ['page_sections', 'help', 'press_releases_page']
+        pageTypes: ['page_sections', 'help', 'press_releases_page', 'about']
       }
     }
   ]
