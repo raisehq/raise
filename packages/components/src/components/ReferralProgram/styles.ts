@@ -24,6 +24,9 @@ export const ReferralContainer = styled.div`
   background: #ffffff;
   box-shadow: 0px 8px 25px rgba(60, 66, 81, 0.25);
   border-radius: 4px;
+  @media (max-width: ${size.mobileL}) {
+    padding: 20px 0;
+  }
 `;
 
 export const ReferralSection = styled.div`
@@ -47,8 +50,6 @@ export const ReferralSectionShare = styled.div`
 
   @media (max-width: ${size.mobileL}) {
     padding: 15px 30px 15px 30px;
-    flex-direction: column;
-    justify-content: flex-start;
   }
 `;
 
