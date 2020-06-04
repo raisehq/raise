@@ -8,8 +8,13 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
+const props = {
+  shareLink: 'https://raise.it/referral/65415465',
+  totalCount: 135,
+};
+
 storiesOf('ReferralProgram', module).add('Referral Program', () => (
   <Wrapper>
-    <ReferralProgram />
+    <ReferralProgram {...props} />
   </Wrapper>
 ));

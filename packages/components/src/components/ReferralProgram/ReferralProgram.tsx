@@ -18,8 +18,7 @@ import {
   ReferralSectionShare
 } from './styles';
 
-const ReferralProgram = () => {
-  const shareLink = 'https://raise.it/referral/65415465';
+const ReferralProgram = ({ shareLink, totalCount }) => {
   const [state, setState] = useState<any>({
     value: shareLink,
     copied: false
@@ -65,7 +64,7 @@ const ReferralProgram = () => {
           <LabelSection>Successful Referrals</LabelSection>
           <Row>
             <TotalInput placeholder="Total" disabled />
-            <TotalNumber>145</TotalNumber>
+            <TotalNumber>{totalCount}</TotalNumber>
           </Row>
         </ReferralSubSection>
       </ReferralSectionShare>
