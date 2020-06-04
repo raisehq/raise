@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { Icon } from 'semantic-ui-react';
 import {
   ReferralContainer,
@@ -23,11 +24,6 @@ const ReferralProgram = ({ shareLink, totalCount }) => {
     value: shareLink,
     copied: false
   });
-
-  const encodedSharedLink = encodeURIComponent(shareLink);
-  const openSocialMedia = (route) => () => window.open(route, '_blank');
-  const twitterURL = `twitter://post?${encodedSharedLink}`;
-  const facebookURL = `https://m.facebook.com/sharer/sharer.php?u=${encodedSharedLink}`;
 
   return (
     <ReferralContainer>
@@ -58,12 +54,16 @@ const ReferralProgram = ({ shareLink, totalCount }) => {
         <ReferralSubSection>
           <LabelSection>Share</LabelSection>
           <SocialMediaWrapper>
-            <SocialMedia onClick={openSocialMedia(facebookURL)}>
-              <Icon name="facebook f" size="big" />
-            </SocialMedia>
-            <SocialMedia onClick={openSocialMedia(twitterURL)}>
-              <Icon name="twitter" size="big" />
-            </SocialMedia>
+            <FacebookShareButton url={shareLink}>
+              <SocialMedia>
+                <Icon name="facebook f" size="big" />
+              </SocialMedia>
+            </FacebookShareButton>
+            <TwitterShareButton url={shareLink}>
+              <SocialMedia>
+                <Icon name="twitter" size="big" />
+              </SocialMedia>
+            </TwitterShareButton>
           </SocialMediaWrapper>
         </ReferralSubSection>
         <ReferralSubSection>
