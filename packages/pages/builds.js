@@ -1,5 +1,28 @@
 const path = require('path'); // eslint-disable-line
 const Querys = {
+  about: {
+    query: `
+    {
+      allButterPage(filter: {slug: {eq: "about"}}) {
+        edges {
+          node {
+            page_title
+            page_information
+            employee_profile {
+              full_name
+              linkedin_profile
+              order
+              position
+              profile_image
+            }
+          }
+        }
+      }
+    }
+    `,
+    path: '/about',
+    component: path.resolve('src/templates/about.tsx')
+  },
   help: {
     query: `
       {
@@ -15,6 +38,27 @@ const Querys = {
     `,
     path: '/help',
     component: path.resolve('src/templates/help.tsx')
+  },
+  press: {
+    query: `
+    {
+      allButterPage(filter: {slug: {eq: "press-releases"}}) {
+        edges {
+          node {
+            articles {
+              press_release {
+                article_link
+                publisher
+                publisher_logo
+              }
+            }
+          }
+        }
+      }
+    }
+    `,
+    path: '/',
+    component: path.resolve('src/templates/invest.tsx')
   },
   index: {
     query: `
