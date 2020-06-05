@@ -206,3 +206,23 @@ export const TotalNumber = styled.div`
   line-height: 32px;
   color: #eb3f93;
 `;
+
+export const TermsAndCondRow = styled.a`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px 0;
+`;
+
+export const TermsAndCond = styled.a`
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #eb3f93;
+  &:hover {
+    color: #eb3f93;
+  }
+`;

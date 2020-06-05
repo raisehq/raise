@@ -16,7 +16,9 @@ import {
   SocialMediaWrapper,
   TotalInput,
   TotalNumber,
-  ReferralSectionShare
+  ReferralSectionShare,
+  TermsAndCond,
+  TermsAndCondRow
 } from './styles';
 
 const ReferralProgram = ({ shareLink, totalCount }) => {
@@ -33,6 +35,15 @@ const ReferralProgram = ({ shareLink, totalCount }) => {
           <ReferralText>
             Share your personal invitation link and win 49 DAI with each friend that invests with
             us.
+            <TermsAndCondRow>
+              <TermsAndCond
+                href={`${process.env.REACT_APP_HOST_IMAGES}/toc.pdf`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Terms and conditions
+              </TermsAndCond>
+            </TermsAndCondRow>
           </ReferralText>
         </ReferralSubSection>
       </ReferralSection>
@@ -66,13 +77,15 @@ const ReferralProgram = ({ shareLink, totalCount }) => {
             </TwitterShareButton>
           </SocialMediaWrapper>
         </ReferralSubSection>
-        <ReferralSubSection>
-          <LabelSection>Successful Referrals</LabelSection>
-          <Row>
-            <TotalInput placeholder="Total" disabled />
-            <TotalNumber>{totalCount}</TotalNumber>
-          </Row>
-        </ReferralSubSection>
+        {false && (
+          <ReferralSubSection>
+            <LabelSection>Successful Referrals</LabelSection>
+            <Row>
+              <TotalInput placeholder="Total" disabled />
+              <TotalNumber>{totalCount}</TotalNumber>
+            </Row>
+          </ReferralSubSection>
+        )}
       </ReferralSectionShare>
     </ReferralContainer>
   );
