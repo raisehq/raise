@@ -53,11 +53,10 @@ build-deps-generic:
     variables:
       - $BUTTERCMS
   artifacts:
-    when: always
+    name: DEPS-GEN
     paths:
       - packages/components/dist
       - packages/onboarding/dist
-
 lint:
   stage: build
   script:
