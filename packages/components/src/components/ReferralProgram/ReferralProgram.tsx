@@ -33,8 +33,7 @@ const ReferralProgram = ({ shareLink, totalCount }) => {
         <ReferralSubSection>
           <Title>Invite your friends</Title>
           <ReferralText>
-            Share your personal invitation link and win 49 DAI with each friend that invests with
-            us.
+            Share your personal link and win 49 DAI with each friend that invests with us.
             <TermsAndCondRow>
               <TermsAndCond
                 href={`${process.env.REACT_APP_HOST_IMAGES}/toc.pdf`}
