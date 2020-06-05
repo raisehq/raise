@@ -1,0 +1,214 @@
+build-pages-review:
+  stage: build
+  variables:
+    REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN
+    REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN
+    PUBLIC_URL: https://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN
+  script:
+    - |
+      #!/bin/sh
+      if [ -n "${REVIEW_SLUG}" ]; then
+        REACT_APP_COOKIE_DOMAIN=.${REVIEW_SLUG}.www-review.$DOMAIN
+        REACT_APP_HOST_URL=https://${REVIEW_SLUG}.review.${DOMAIN}
+        PUBLIC_URL=https://${REVIEW_SLUG}.www-review.$DOMAIN
+      fi
+      echo ${REACT_APP_HOST_URL}
+      yarn --pure-lockfile
+      yarn ci:build:pages:integration
+      mv  packages/pages/public  packages/pages/build_review
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/pages/build_review
+
+build-pages-integration:
+  stage: build
+  script:
+    - 'echo $REACT_APP_HOST_URL'
+    - 'yarn --pure-lockfile'
+    - 'yarn ci:build:pages:integration'
+    - 'mv  packages/pages/public  packages/pages/build_int'
+  only:
+    refs:
+      - master
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/pages/build_int
+
+build-pages-production:
+  stage: build
+  script:
+    - 'echo $REACT_APP_HOST_URL'
+    - 'yarn --pure-lockfile'
+    - 'yarn ci:build:pages:production'
+    - 'mv  packages/pages/public  packages/pages/build'
+  only:
+    refs:
+      - master
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/pages/build
+
+build-pages-production-buttercms:
+  stage: build
+  script:
+    - 'echo $REACT_APP_HOST_URL'
+    - 'yarn --pure-lockfile'
+    - 'yarn ci:build:deps'
+    - 'yarn ci:build:pages:production'
+    - 'mv  packages/pages/public  packages/pages/build'
+  only:
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
+  artifacts:
+    when: always
+    paths:
+      - packages/pages/build
+
+deploy-int-pages:
+  image: python:3.7-alpine
+  stage: deploy
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  script:
+    - |
+      #!/bin/sh
+      mv packages/pages/build_int build_int
+      aws s3 rm s3://${BUCKET_NAME_INT_WWW}/ --recursive
+      aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --metadata-directive REPLACE
+      ./cache_invalidation.sh herodev.es
+      ./cache_invalidation.sh herodev.es
+  only:
+    refs:
+      - master
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+
+deploy-prod-pages:
+  image: python:3.7-alpine
+  stage: deploy-prod
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  script:
+    - |
+      #!/bin/sh
+      mv packages/pages/build latest
+      aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/ --recursive
+      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE
+      ./cache_invalidation.sh raise.it
+      ./cache_invalidation.sh raise.it
+  only:
+    refs:
+      - master
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    variables:
+      - $BUTTERCMS
+  resource_group: production
+
+deploy-prod-pages-buttercms:
+  image: python:3.7-alpine
+  stage: deploy-prod
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  script:
+    - |
+      #!/bin/sh
+      mv packages/pages/build latest
+      aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/ --recursive
+      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE
+      ./cache_invalidation.sh raise.it
+      ./cache_invalidation.sh raise.it
+  only:
+    refs:
+      - master
+    variables:
+      - $BUTTERCMS
+  resource_group: production
+
+review-landing:
+  image: python:3.7-alpine
+  stage: review
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: 'http://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN'
+    on_stop: stop-review-landing
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  script:
+    - |
+      #!/bin/sh
+      if [ -n "${REVIEW_SLUG}" ]; then
+        CI_COMMIT_REF_SLUG=${REVIEW_SLUG}
+      fi
+      echo ${CI_COMMIT_REF_SLUG}
+      rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      mv packages/pages/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    refs:
+      - master
+
+stop-review-landing:
+  image: python:3.7-alpine
+  stage: cleanup
+  variables:
+    GIT_STRATEGY: none
+  before_script:
+    - apk add --no-cache openssh-client bash
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - chmod 600 ~/.ssh/config
+    - pip install awscli
+  script:
+    - aws s3 rm s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
+  when: manual
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - 'packages/pages/**/*'
+  except:
+    refs:
+      - master

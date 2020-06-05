@@ -12,3 +12,4 @@ packages/testing/snapshots
 lerna-debug*
 .vscode/
 package-lock.json
+.DS_Store

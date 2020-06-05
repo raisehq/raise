@@ -3,7 +3,11 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/client",
+      "packages/pages",
+      "packages/onboarding",
+      "packages/components",
+      "packages/libs"
     ],
     "nohoist": [
       "**/tsdx",
@@ -11,36 +15,23 @@
     ]
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap --use-workspaces",
     "dev": "yarn run build:deps && lerna run dev --stream --scope client",
     "dev:int": "yarn run build:deps && lerna run dev:int --stream --scope client",
-    "dev-all": "lerna run dev --stream --parallel",
-    "dev-all:int": "lerna run dev:int --stream --parallel",
     "clean": "lerna exec -- rm -rf ./node_modules ./dist ./build ./bundle.*.js || true && rm -rf node_modules || true && rm -rf yarn.lock || true",
-    "build": "lerna run build --stream",
+    "ci:build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili",
+    "ci:build:client:integration": "lerna run --stream --scope client build:integration",
+    "ci:build:client:production": "lerna run --stream --scope client build:production",
+    "ci:build:pages:integration": "lerna run --stream --scope pages build:integration",
+    "ci:build:pages:production": "lerna run --stream --scope pages build:production",
+    "ci:components:test": "lerna run test:ci --stream --scope @raisehq/components",
+    "ci:build:components:umd": "lerna run build:umd --stream --scope @raisehq/components",
+    "ci:build:onboarding:libs": "lerna run --stream --scope '@raisehq/libs' build:production",
     "lint": "lerna run lint --stream",
-    "bootstrap:deps": "NODE_ENV=production yarn install --frozen-lockfile --stream  --scope '{@raisehq/components,@raisehq/onboarding}'",
-    "build:deps": "NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build",
-    "build:deps:bili": "NODE_ENV=production lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili",
-    "rollup": "lerna run --stream --scope '@raisehq/libs' build:production",
-    "dev:rollup": "lerna run --stream --scope '@raisehq/libs' start",
-    "client:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope client",
-    "client:build:integration:bili": "yarn run build:deps:bili && lerna run build:integration --stream --scope client",
-    "client:build:production": "yarn run build:deps && lerna run build:production --stream --scope client",
-    "pages:build:integration": "yarn run build:deps && lerna run build:integration --stream --scope pages",
-    "pages:build:integration:bili": "yarn run build:deps:bili && lerna run build:integration --stream --scope pages",
-    "pages:build:production": "yarn run build:deps && lerna run build:production --stream --scope pages",
-    "components:build:umd": "lerna run build:umd --stream --scope @raisehq/components",
-    "components:test": "lerna run test --stream --scope @raisehq/components",
-    "components:test:ci": "lerna run test:ci --stream --scope @raisehq/components",
+    "build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili",
     "prettier": "prettier --write \"packages/**/src/**/*.{tsx,ts}\"",
-    "build:deps:fast": "lerna run --stream --scope @raisehq/components build:fast && lerna run --stream --scope @raisehq/onboarding build",
-    "watch": "yarn run build:deps:fast && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch",
-    "watch:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{client,@raisehq/onboarding,@raisehq/components}' watch:bili",
-    "watch:pages:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages}' watch:bili",
-    "watch:all:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages,client}' watch:bili",
-    "watch:storybook:bili": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch:bili",
-    "watch:storybook": "yarn run build:deps:fast && lerna run --parallel --concurrency 4 --scope '{@raisehq/components,@raisehq/onboarding,@raisehq/storybook}' watch "
+    "watch": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/onboarding,@raisehq/components,client}' watch:bili",
+    "watch:pages": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages}' watch:bili",
+    "watch:all": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages,client}' watch:bili"
   },
   "resolutions": {
     "bn.js": "4.11.8",

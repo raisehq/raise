@@ -76,6 +76,22 @@ const findOneCollection = async (collection: string, fields: any) => {
   return arrResponse;
 };
 
+const getCollection = async (collection: string, fields: any) => {
+  const params = {
+    ...fields
+  };
+  const {
+    data: {
+      data: { [collection]: arrResponse }
+    }
+  } = await butter.content.retrieve([collection], params);
+  if (!arrResponse.length) {
+    throw Error('[Butter][findOne] 404 Not found');
+  }
+
+  return arrResponse;
+};
+
 const getGetStarted = async () => {
   const {
     data: {
@@ -91,4 +107,4 @@ const getGetStarted = async () => {
 
 export default butter;
 
-export { requestPage, getGetStarted, findOne, butter, findOneCollection };
+export { requestPage, getGetStarted, findOne, butter, findOneCollection, getCollection };

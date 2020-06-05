@@ -1,9 +1,10 @@
 import React from 'react';
-import { InvestingContainer } from './styles';
+import { PressPR } from '@raisehq/components';
+import { InvestingContainer, PressReleases } from './styles';
 import InvestingSection from './InvestingSection';
 import SignUp from '../SignUp';
 
-const InvestingPage = ({ data }: any) => {
+const InvestingPage = ({ data, articles }: any) => {
   const isLogged = false;
 
   const orderedSections = data.investing_section.sort(
@@ -31,16 +32,28 @@ const InvestingPage = ({ data }: any) => {
     }
   });
 
+  if (articles && articles.length > 0) {
+    orderedSections.splice(1, 0, {
+      component: (
+        <PressReleases>
+          <PressPR data={articles} />
+        </PressReleases>
+      ),
+      section_order: 1
+    });
+  }
+
   if (!isLogged) {
-    orderedSections.splice(3, 0, {
+    orderedSections.splice(4, 0, {
       component: <SignUp id="Investing_signup" />,
-      section_order: 3
+      section_order: 4
     });
     orderedSections.push({
       component: <SignUp id="Investing_signup" />,
       section_order: orderedSections.length
     });
   }
+
   const sections: any = orderedSections;
 
   return (

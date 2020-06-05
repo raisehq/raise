@@ -55,7 +55,7 @@ export const HelpMenu = styled.div`
   padding: 20px;
   position: -webkit-sticky; /* for Safari */
   position: sticky;
-  top: 20px;
+  top: 150px;
   height: 100%;
 `;
 

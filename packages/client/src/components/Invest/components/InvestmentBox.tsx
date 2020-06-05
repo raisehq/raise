@@ -18,7 +18,7 @@ import {
   Card,
   InvestBox,
   BalanceWrapper,
-  Offer,
+  // Offer,
   BigInput,
   ErrorBox,
   InvestHeader,
@@ -212,9 +212,9 @@ const InvestmentBox = ({
   return (
     <Card size="310px" width="100%" {...props}>
       <InvestHeader>How much would you like to invest?</InvestHeader>
-      <Offer>
+      {/* <Offer>
         <span>{`Invest 50 ${loanCoin.text} or more and get 49 ${loanCoin.text}`}</span>
-      </Offer>
+      </Offer> */}
 
       <InvestBox>
         <InvestText>INVEST</InvestText>

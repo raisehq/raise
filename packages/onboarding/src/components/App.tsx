@@ -446,7 +446,7 @@ const App = ({
       ),
       StartMini: () => <GetStarted />,
       SignIn: () => (
-        <PanelWithImage {...props} title={isMobile ? 'Login from desktop' : 'Login'}>
+        <PanelWithImage {...props} title="Login">
           <SignIn />
         </PanelWithImage>
       ),

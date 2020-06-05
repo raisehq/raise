@@ -7,8 +7,8 @@ const Success = () => (
     <Icon name="envelope" size="huge" />
     <SignUpResponseTitle>Check your email</SignUpResponseTitle>
     <SignUpResponseSubText>
-      Check your inbox to verify your email address and access Raise on desktop device. We are
-      working to integrate a Web3 wallet provider that’s compatible with mobile
+      Check your inbox to verify your email address. Note that for the time being you will need a
+      desktop browser to access Raise.
     </SignUpResponseSubText>
   </SignUpResponseContainer>
 );

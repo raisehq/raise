@@ -41,12 +41,12 @@ const BuyCrypto = () => {
     <Container>
       <Wrapper>
         <BuyCryptoInstruction>
-          <Title>Buy cryptocurrency with Credit Card</Title>
+          <Title>Buy crypto with credit card</Title>
           <SubTitle>
-            Use your credit or debit card to purchase cryptocurrency within minutes.
+            Purchase ETH, DAI, USDC and USDT in minutes so you can go back to investing
           </SubTitle>
           <InstructionBox>
-            <InstructionBoxTitle>How to buy cryptocurrency</InstructionBoxTitle>
+            <InstructionBoxTitle>How it works</InstructionBoxTitle>
             <InstructionBoxSteps>
               {steps.map((item: any, index) => (
                 <InstructionRow key={item.step}>

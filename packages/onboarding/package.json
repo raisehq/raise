@@ -17,7 +17,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "watch:bili": "yarn run build:bili -w",
-    "build:bili": "env-cmd --no-override .env npx bili --format cjs src/index.tsx -d dist/",
+    "build:bili": "env-cmd --no-override .env bili --format cjs src/index.tsx -d dist/",
     "dev": "tsc --watch",
     "dev:int": "yarn run dev",
     "compile:onboarding": "tsc",

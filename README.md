@@ -28,7 +28,13 @@ This will download, build all the packages and create the symlinks across all pr
 
 ## Usage
 
-The commands below should be run at the root of the monorepo.
+### Build components
+
+```bash
+yarn build:deps 
+```
+
+Run this if you want the next steps to work
 
 ### Run @raise/client
 
