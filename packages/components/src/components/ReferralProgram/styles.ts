@@ -160,7 +160,7 @@ export const InputTextCustom = styled(Input)`
     padding-right: 15px;
 
     @media (max-width: ${size.mobileL}) {
-      width: 248px;
+      width: 230px;
     }
 
     @media (max-width: ${size.mobileS}) {

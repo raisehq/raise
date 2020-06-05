@@ -11,7 +11,8 @@ const useKycTopBarVisibility = () => {
       history.location.pathname.includes('/kyc-bloom') ||
       history.location.pathname.includes('/kyc-sumsub') ||
       history.location.pathname.includes('/verify-web3') ||
-      history.location.pathname.includes('/create-loan')
+      history.location.pathname.includes('/create-loan') ||
+      history.location.pathname === '/join'
     ) {
       setVisible(false);
     } else {
