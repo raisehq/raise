@@ -219,9 +219,9 @@ export const TermsAndCond = styled.a`
   font-family: Lato;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
-  color: #eb3f93;
+  color: #8a8e97;
   &:hover {
     color: #eb3f93;
   }
