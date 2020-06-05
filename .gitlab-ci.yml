@@ -47,8 +47,8 @@ build-deps-generic:
       - merge_requests
       - master
     changes:
-      - 'packages/pages/**/*'
-      - 'packages/client/**/*'
+      - 'packages/components/**/*'
+      - 'packages/onboarding/**/*'
   except:
     variables:
       - $BUTTERCMS
