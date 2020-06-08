@@ -125,7 +125,7 @@ deploy-pre-front:
     - |
       #!/bin/sh
       mv packages/client/build_int build_int
-      aws s3 sync build_int s3://${BUCKET_NAME_INT}/ --metadata-directive REPLACE
+      aws s3 sync build_int s3://${BUCKET_NAME_INT}/
     - echo '>>>> DEPLOY CANARY <<<<'
     - |
       #!/bin/sh
@@ -153,7 +153,7 @@ deploy-prod:
     - |
       #!/bin/sh
       mv packages/client/build latest
-      aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE
+      aws s3 sync latest s3://${BUCKET_NAME_PROD}/
       ./scripts/cache_invalidation.sh ${BUCKET_NAME_PROD}
       ./scripts/cache_invalidation.sh ${BUCKET_NAME_PROD}
   only:
