@@ -1,5 +1,8 @@
 build-pages-review:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   variables:
     REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN
     REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN
@@ -12,10 +15,11 @@ build-pages-review:
         REACT_APP_HOST_URL=https://${REVIEW_SLUG}.review.${DOMAIN}
         PUBLIC_URL=https://${REVIEW_SLUG}.www-review.$DOMAIN
       fi
-      echo ${REACT_APP_HOST_URL}
-      yarn --pure-lockfile
-      yarn ci:build:pages:integration
-      mv  packages/pages/public  packages/pages/build_review
+    - 'echo ${REACT_APP_HOST_URL}''
+    - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
+    - 'yarn ci:build:pages:integration'
+    - 'mv  packages/pages/public  packages/pages/build_review'
   only:
     refs:
       - merge_requests
@@ -33,9 +37,13 @@ build-pages-review:
 
 build-pages-integration:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:pages:integration'
     - 'mv  packages/pages/public  packages/pages/build_int'
   only:
@@ -53,9 +61,13 @@ build-pages-integration:
 
 build-pages-production:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:pages:production'
     - 'mv  packages/pages/public  packages/pages/build'
   only:
@@ -73,10 +85,13 @@ build-pages-production:
 
 build-pages-production-buttercms:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
-    - 'yarn ci:build:deps'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:pages:production'
     - 'mv  packages/pages/public  packages/pages/build'
   only:

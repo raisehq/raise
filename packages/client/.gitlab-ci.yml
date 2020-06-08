@@ -47,9 +47,9 @@ build-front-review:
         REACT_APP_HOST_URL_CORE=https://${REVIEW_SLUG}.api.${DOMAIN}
         REACT_APP_HOST_URL_FILE=https://${REVIEW_SLUG}.api.${DOMAIN}
       fi
-    - 'sh ./scripts/global-artifact.sh'
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:client:integration'
     - 'mv  packages/client/build  packages/client/build_review'
   only:
@@ -69,9 +69,13 @@ build-front-review:
 
 build-front-integration:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:client:integration'
     - 'mv  packages/client/build  packages/client/build_int'
   only:
@@ -89,9 +93,13 @@ build-front-integration:
 
 build-front-production:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:client:production'
   only:
     refs:

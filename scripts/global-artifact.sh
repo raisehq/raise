@@ -2,19 +2,12 @@
 
 DIR_ONBOARDING="./packages/onboarding/dist"
 if [ ! -d "$DIR_ONBOARDING" ]; then
-  echo ">>>>>>>>> DOWNLOAD <<<<<<<<<<"
+  echo ">>>>>>>>> DOWNLOAD ONBOARDING <<<<<<<<<<"
   aws s3 cp --recursive s3://raise-actirfact-pipeline/onboarding ./packages/onboarding/dist
-  # echo ">>>>>>>>> MOVE TO DIST <<<<<<<<<<"
-  # mv ./packages/onboarding/onboarding ./packages/onboarding/dist
 fi
 
-DIR_COMPONENTS="/packages/components/dist"
+DIR_COMPONENTS="./packages/components/dist"
 if [ ! -d "$DIR_COMPONENTS" ]; then
-  echo ">>>>>>>>> DOWNLOAD <<<<<<<<<<"
+  echo ">>>>>>>>> DOWNLOAD COMPONETS <<<<<<<<<<"
   aws s3 cp --recursive s3://raise-actirfact-pipeline/components ./packages/components/dist
-  cd ./packages/components
-  ls -la
-  cd ../../
-  # echo ">>>>>>>>> MOVE TO DIST <<<<<<<<<<"
-  # mv ./packages/components/components ./packages/components/dist
 fi
