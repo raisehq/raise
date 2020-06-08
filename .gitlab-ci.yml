@@ -64,12 +64,10 @@ build-deps-generic-master:
     - apk add --update bash
     - pip install awscli
   after_script:
-    - cp /packages/components/dist components
-    - cp /packages/onboarding/dist onboarding
     - aws s3 rm s3://raise-actirfact-pipeline/components
-    - aws s3 cp --recursive components  s3://raise-actirfact-pipeline/components
+    - aws s3 cp --recursive /packages/components/dist  s3://raise-actirfact-pipeline/components
     - aws s3 rm s3://raise-actirfact-pipeline/onboarding
-    - aws s3 cp --recursive onboarding  s3://raise-actirfact-pipeline/onboarding
+    - aws s3 cp --recursive /packages/onboarding/dist  s3://raise-actirfact-pipeline/onboarding
   extends:
     - .build-deps
   only:
