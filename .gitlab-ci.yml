@@ -38,22 +38,52 @@ include:
 
 # Generic jobs
 
-build-deps-generic:
+build-deps-generic-pr:
   stage: prepare
   extends:
     - .build-deps
   only:
     refs:
       - merge_requests
-      - master
     changes:
-      - 'packages/pages/**/*'
-      - 'packages/client/**/*'
+      - 'packages/components/**/*'
+      - 'packages/onboarding/**/*'
   except:
+    refs:
+      - master
     variables:
       - $BUTTERCMS
   artifacts:
-    when: always
+    paths:
+      - packages/components/dist
+      - packages/onboarding/dist
+
+build-deps-generic-master:
+  stage: prepare
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  after_script:
+    - cp ./packages/components/dist components
+    - cp ./packages/onboarding/dist onboarding
+    - aws s3 rm s3://raise-actirfact-pipeline/components
+    - aws s3 cp --recursive components  s3://raise-actirfact-pipeline/components
+    - aws s3 rm s3://raise-actirfact-pipeline/onboarding
+    - aws s3 cp --recursive onboarding  s3://raise-actirfact-pipeline/onboarding
+  extends:
+    - .build-deps
+  only:
+    refs:
+      - master
+    changes:
+      - 'packages/components/**/*'
+      - 'packages/onboarding/**/*'
+  except:
+    refs:
+      - merge_requests
+    variables:
+      - $BUTTERCMS
+  artifacts:
     paths:
       - packages/components/dist
       - packages/onboarding/dist

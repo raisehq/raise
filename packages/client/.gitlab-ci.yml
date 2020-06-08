@@ -28,6 +28,9 @@ deploy-backend:
 
 build-front-review:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   variables:
     REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.${DOMAIN}
     REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}
@@ -46,6 +49,7 @@ build-front-review:
       fi
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:client:integration'
     - 'mv  packages/client/build  packages/client/build_review'
   only:
@@ -65,9 +69,13 @@ build-front-review:
 
 build-front-integration:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:client:integration'
     - 'mv  packages/client/build  packages/client/build_int'
   only:
@@ -85,9 +93,13 @@ build-front-integration:
 
 build-front-production:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   script:
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:client:production'
   only:
     refs:
@@ -119,8 +131,8 @@ deploy-pre-front:
       #!/bin/sh
       mv packages/client/build canary
       aws s3 sync canary s3://${BUCKET_NAME_CANARY}/
-      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
-      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
+      ./scripts/cache_invalidation.sh ${BUCKET_NAME_CANARY}
+      ./scripts/cache_invalidation.sh ${BUCKET_NAME_CANARY}
 
   only:
     refs:
@@ -142,8 +154,8 @@ deploy-prod:
       #!/bin/sh
       mv packages/client/build latest
       aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD}
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD}
+      ./scripts/cache_invalidation.sh ${BUCKET_NAME_PROD}
+      ./scripts/cache_invalidation.sh ${BUCKET_NAME_PROD}
   only:
     refs:
       - master
