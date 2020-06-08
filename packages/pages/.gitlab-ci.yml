@@ -115,7 +115,7 @@ deploy-int-pages:
       #!/bin/sh
       mv packages/pages/build_int build_int
       aws s3 rm s3://${BUCKET_NAME_INT_WWW}/ --recursive
-      aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive --metadata-directive REPLACE
+      aws s3 cp build_int s3://${BUCKET_NAME_INT_WWW}/ --recursive
       ./scripts/cache_invalidation.sh herodev.es
       ./scripts/cache_invalidation.sh herodev.es
   only:
@@ -138,7 +138,7 @@ deploy-prod-pages:
       #!/bin/sh
       mv packages/pages/build latest
       aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/ --recursive
-      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE
+      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive
       ./scripts/cache_invalidation.sh raise.it
       ./scripts/cache_invalidation.sh raise.it
   only:
@@ -162,7 +162,7 @@ deploy-prod-pages-buttercms:
       #!/bin/sh
       mv packages/pages/build latest
       aws s3 rm s3://${BUCKET_NAME_PROD_WWW}/ --recursive
-      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive --metadata-directive REPLACE
+      aws s3 cp latest s3://${BUCKET_NAME_PROD_WWW}/ --recursive
       ./scripts/cache_invalidation.sh raise.it
       ./scripts/cache_invalidation.sh raise.it
   only:
