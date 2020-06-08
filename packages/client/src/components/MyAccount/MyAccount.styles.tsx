@@ -156,3 +156,7 @@ export const Message = styled.div`
     text-transform: uppercase;
   }
 `;
+
+export const ReferralWrapper = styled.div`
+  padding-bottom: 50px;
+`;
