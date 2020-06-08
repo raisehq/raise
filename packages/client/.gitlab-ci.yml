@@ -28,6 +28,9 @@ deploy-backend:
 
 build-front-review:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   variables:
     REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.review.${DOMAIN}
     REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.review.${DOMAIN}
@@ -44,6 +47,7 @@ build-front-review:
         REACT_APP_HOST_URL_CORE=https://${REVIEW_SLUG}.api.${DOMAIN}
         REACT_APP_HOST_URL_FILE=https://${REVIEW_SLUG}.api.${DOMAIN}
       fi
+    - 'sh ./scripts/global-artifact.sh'
     - 'echo $REACT_APP_HOST_URL'
     - 'yarn --pure-lockfile'
     - 'yarn ci:build:client:integration'
