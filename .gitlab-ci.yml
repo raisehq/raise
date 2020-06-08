@@ -40,6 +40,16 @@ include:
 
 build-deps-generic:
   stage: prepare
+  before_script:
+    - apk add --update bash
+    - pip install awscli
+  after_script:
+    - mv ./packages/components/dist components.zip
+    - mv ./packages/onboarding/dist onboarding.zip
+    - aws s3 rm s3://raise-actirfact-pipeline/components.zip
+    - aws s3 cp  components.zip  s3://raise-actirfact-pipeline/components.zip
+    - aws s3 rm s3://raise-actirfact-pipeline/onboarding.zip
+    - aws s3 cp  onboarding.zip  s3://raise-actirfact-pipeline/onboarding.zip
   extends:
     - .build-deps
   only:

@@ -119,8 +119,8 @@ deploy-pre-front:
       #!/bin/sh
       mv packages/client/build canary
       aws s3 sync canary s3://${BUCKET_NAME_CANARY}/
-      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
-      ./cache_invalidation.sh ${BUCKET_NAME_CANARY}
+      ./scripts/cache_invalidation.sh ${BUCKET_NAME_CANARY}
+      ./scripts/cache_invalidation.sh ${BUCKET_NAME_CANARY}
 
   only:
     refs:
@@ -142,8 +142,8 @@ deploy-prod:
       #!/bin/sh
       mv packages/client/build latest
       aws s3 sync latest s3://${BUCKET_NAME_PROD}/ --metadata-directive REPLACE
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD}
-      ./cache_invalidation.sh ${BUCKET_NAME_PROD}
+      ./scripts/cache_invalidation.sh ${BUCKET_NAME_PROD}
+      ./scripts/cache_invalidation.sh ${BUCKET_NAME_PROD}
   only:
     refs:
       - master
