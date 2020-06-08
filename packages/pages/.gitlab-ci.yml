@@ -15,7 +15,7 @@ build-pages-review:
         REACT_APP_HOST_URL=https://${REVIEW_SLUG}.review.${DOMAIN}
         PUBLIC_URL=https://${REVIEW_SLUG}.www-review.$DOMAIN
       fi
-    - 'echo ${REACT_APP_HOST_URL}''
+    - 'echo ${REACT_APP_HOST_URL}'
     - 'yarn --pure-lockfile'
     - 'sh ./scripts/global-artifact.sh'
     - 'yarn ci:build:pages:integration'
