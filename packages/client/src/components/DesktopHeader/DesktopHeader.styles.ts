@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import Logout from '../Logout';
 
 import { maxDevice } from '../../commons/breakpoints';
@@ -94,7 +93,7 @@ export const HeaderMenuItem = styled.button`
   cursor: pointer;
 `;
 
-export const LinkContent = styled(Link)`
+export const LinkContent = styled.div`
   margin: 0px 10px;
 `;
 

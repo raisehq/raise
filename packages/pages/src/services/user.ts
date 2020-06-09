@@ -8,7 +8,8 @@ const URL = {
   ADDRESS_TYPES: `${getHost('CORE')}/address/types`,
   USER: `${getHost('CORE')}/users`,
   CRYPTOADDRESS: `${getHost('CORE')}/cryptoaddress`,
-  REGISTER: `${getHost('CORE')}/users/register`
+  REGISTER: `${getHost('CORE')}/users/register`,
+  REFERRAL_CODE_UPDATE: `${getHost('CORE')}/users/referral/update`
 };
 
 export const signUp = async (data: any) => {
@@ -148,6 +149,16 @@ export const updatePassword = async (userId: string, data: any) => {
   };
 
   return axios.put(`${URL.USER}/password/change/${userId}`, data, config);
+};
+
+export const updateReferralCode = async (userId: string, data: any) => {
+  const config: any = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  return axios.put(`${URL.REFERRAL_CODE_UPDATE}/${userId}`, data, config);
 };
 
 export const cryptoAddressByAccount = async (userId: string) => {

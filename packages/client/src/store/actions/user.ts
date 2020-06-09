@@ -10,7 +10,8 @@ import {
   updateCryptoAddress,
   cryptoAddressByAccount,
   updateUser,
-  updatePassword
+  updatePassword,
+  updateReferralCode
 } from '../../services/user';
 
 export default (dispatch: any, state: Store) => {
@@ -98,6 +99,15 @@ export default (dispatch: any, state: Store) => {
     dispatch({ type: 'SET_PASS_LOADING', data: false });
   };
 
+  const onUpdateReferralCode = async (userId) => {
+    const {
+      data: { data: details }
+    } = await updateReferralCode(userId, {});
+    console.log('det', details);
+    dispatch({ type: 'UPDATE_REFERRAL', data: details });
+    return details;
+  };
+
   const onUpdateUser = async (userId, body) => {
     dispatch({ type: 'SET_USER_LOADING', data: true });
     try {
@@ -150,6 +160,7 @@ export default (dispatch: any, state: Store) => {
   return {
     onGetAddressTypes,
     onUpdateUser,
+    onUpdateReferralCode,
     onUpdatePassword,
     onGetUserDetails,
     onSetInitialUserData,

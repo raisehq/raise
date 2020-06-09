@@ -8,7 +8,8 @@ const URL = {
   ADDRESS_TYPES: `${getHost('CORE')}/address/types`,
   USER: `${getHost('CORE')}/users`,
   CRYPTOADDRESS: `${getHost('CORE')}/cryptoaddress`,
-  REGISTER: `${getHost('CORE')}/users/register`
+  REGISTER: `${getHost('CORE')}/users/register`,
+  REFERRAL_UPDATE: `${getHost('CORE')}/users/referral/update`
 };
 
 export const signUp = async (data) => {
@@ -131,6 +132,18 @@ export const removeAddress = async (addressId) => {
 export const updateUser = async (userId, body: any) => {
   const config: any = {
     url: `${URL.USER}/${userId}`,
+    method: 'PUT',
+    data: body,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  return axios(config);
+};
+
+export const updateReferralCode = async (userId, body: any) => {
+  const config: any = {
+    url: `${URL.REFERRAL_UPDATE}/${userId}`,
     method: 'PUT',
     data: body,
     headers: {

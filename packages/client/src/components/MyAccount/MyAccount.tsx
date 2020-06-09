@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { match } from 'pampy';
 import { ReferralProgram } from '@raisehq/components';
 import { checkUsername } from '../../services/auth';
+
 import {
   Content,
   Side,
@@ -16,6 +17,8 @@ import UpdateUsername from './components/UpdateUsername';
 import UpdatePassword from './components/UpdatePassword';
 import { useRootContext } from '../../contexts/RootContext';
 import { MyActivity } from '../Dashboard';
+import useAsyncEffect from '../../hooks/useAsyncEffect';
+import LocalData from '../../helpers/localData';
 
 import { getHost } from '../../utils/index';
 
@@ -28,22 +31,30 @@ const MyAccount = () => {
 
   const {
     actions: {
-      user: { onUpdateUser, onUpdatePassword, clearUser, clearPass }
+      user: { onUpdateUser, onUpdatePassword, clearUser, clearPass, onUpdateReferralCode }
     },
     store: {
       user: {
         updateUser: { message: userMessage, loading: userLoading },
         updatePassword: { message: passMessage, loading: passLoading },
-        details: {
-          id,
-          email,
-          username: storedUsername,
-          kyc_status: kycStatus,
-          referral_code: RefCode
-        }
+        details: { id, email, username: storedUsername, kyc_status: kycStatus, referral_code }
       }
     }
   }: any = useRootContext();
+
+  useAsyncEffect(async () => {
+    try {
+      if (referral_code === '') {
+        const userUpdated = await onUpdateReferralCode(id);
+        console.log('USERUPDATED:', userUpdated);
+        LocalData.setObj('user', {
+          ...userUpdated
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [referral_code]);
 
   const changeUsername = async (value) => {
     clearUser();
@@ -128,7 +139,7 @@ const MyAccount = () => {
     loading: passLoading
   };
   const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
-  const shareLink = `${REFERAFRIEND}=${RefCode || ''}`;
+  const shareLink = `${REFERAFRIEND}=${referral_code}`;
   const REFERRAL_FEATURE_FLAG = process.env.REACT_APP_REFERRAL_FEATURE_FLAG === 'true';
 
   return (

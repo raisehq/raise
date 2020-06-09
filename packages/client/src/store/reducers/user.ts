@@ -17,6 +17,11 @@ export default (state: any, { type, data }: any) => {
         ...state,
         details: { ...state.details, ...data }
       };
+    case 'UPDATE_REFERRAL':
+      return {
+        ...state,
+        details: { ...state.details, ...data }
+      };
     case 'UPDATE_USER':
       return {
         ...state,
