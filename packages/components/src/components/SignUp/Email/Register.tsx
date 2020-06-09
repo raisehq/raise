@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
-import { Select } from 'semantic-ui-react';
+import { Select, Form } from 'semantic-ui-react';
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
 import Stages from './Stages';
 import { AccountType } from '../../../types';
@@ -154,10 +154,11 @@ const Register: React.SFC<IRegister> = ({
   };
 
   return (
-    <>
+    <Form id={SignUpId}>
       <SignUpInputContainer>
         <SignUpInput
           id={`${SignUpId}_email`}
+          type="email"
           placeholder="Email address"
           onChange={onChangeEmail}
           error={error.validation || error.exist}
@@ -253,7 +254,7 @@ const Register: React.SFC<IRegister> = ({
         render="explicit"
         onChange={onCaptchaCallback}
       />
-    </>
+    </Form>
   );
 };
 

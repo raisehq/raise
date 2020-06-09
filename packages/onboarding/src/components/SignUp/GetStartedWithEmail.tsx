@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
-import { Icon, Input, Select } from 'semantic-ui-react';
+import { Icon, Input, Select, Form } from 'semantic-ui-react';
 import debounce from 'lodash/debounce';
 import { AccountType } from '@raisehq/components';
 import {
@@ -187,106 +187,109 @@ const GetStartedWithEmail = ({ mini }: { mini?: boolean }) => {
   }
   return (
     <Fragment>
-      <OnboardInputSignUp>
-        <Input
-          placeholder="Email address"
-          onChange={onChangeEmail}
-          error={error.validation || error.exist}
-          onKeyPress={onKeyPress}
-        />
-        <Icon size="big" name="mail outline" />
-        {error.validation && (
-          <div className="errorText">
-            That format doesn&apos;t look right. Make sure there aren&apos;t any typos.
-          </div>
-        )}
-        {!error.validation && error.exist && (
-          <div className="errorText">This email already exists.</div>
-        )}
-      </OnboardInputSignUp>
-      <OnboardInputSignUp>
-        <OnboardCountries
-          control={Select}
-          options={countryOptions}
-          search
-          placeholder="Country of residence"
-          onChange={onSetCountry}
-          onKeyPress={onKeyPress}
+      <Form id="Header_signup">
+        <OnboardInputSignUp>
+          <Input
+            type="email"
+            placeholder="Email address"
+            onChange={onChangeEmail}
+            error={error.validation || error.exist}
+            onKeyPress={onKeyPress}
+          />
+          <Icon size="big" name="mail outline" />
+          {error.validation && (
+            <div className="errorText">
+              That format doesn&apos;t look right. Make sure there aren&apos;t any typos.
+            </div>
+          )}
+          {!error.validation && error.exist && (
+            <div className="errorText">This email already exists.</div>
+          )}
+        </OnboardInputSignUp>
+        <OnboardInputSignUp>
+          <OnboardCountries
+            control={Select}
+            options={countryOptions}
+            search
+            placeholder="Country of residence"
+            onChange={onSetCountry}
+            onKeyPress={onKeyPress}
+          />
+
+          <Icon size="big" name="globe" />
+        </OnboardInputSignUp>
+        <OnboardInputSignUp>
+          <Input
+            placeholder="Create a password"
+            onChange={onSetPassword}
+            error={errors.password}
+            type="password"
+            onKeyPress={onKeyPress}
+          />
+          {errors.password && (
+            <div className="errorText">
+              Passwords must have at least 8 characters and 1 capital letter.
+            </div>
+          )}
+          <Icon size="big" name="key" />
+        </OnboardInputSignUp>
+        <MyRecapcha
+          ref={recaptchaRef}
+          size="invisible"
+          sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
+          render="explicit"
+          onChange={onCaptchaCallback}
         />
 
-        <Icon size="big" name="globe" />
-      </OnboardInputSignUp>
-      <OnboardInputSignUp>
-        <Input
-          placeholder="Create a password"
-          onChange={onSetPassword}
-          error={errors.password}
-          type="password"
-          onKeyPress={onKeyPress}
-        />
-        {errors.password && (
-          <div className="errorText">
-            Passwords must have at least 8 characters and 1 capital letter.
-          </div>
-        )}
-        <Icon size="big" name="key" />
-      </OnboardInputSignUp>
-      <MyRecapcha
-        ref={recaptchaRef}
-        size="invisible"
-        sitekey="6Lc9-rAUAAAAAH-rveEYo78h5rXiGnAVtsoE5rjc"
-        render="explicit"
-        onChange={onCaptchaCallback}
-      />
-
-      <OnboardMailingList>
-        <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
-      </OnboardMailingList>
-      <OnboardDisclaimer>
-        <OnboardingCell>
-          <OnboardCheckbox onChange={onAcceptTerms} />
-        </OnboardingCell>
-        <OnboardingCell>
-          By signing up, I agree to Raise
-          <a
-            className="disclaimerBTN"
-            href={`${theme.resources}/toc.pdf`}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Terms of Service
-          </a>
-          and
-          <a
-            className="disclaimerBTN"
-            href={`${theme.resources}/privacy-policy.pdf`}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Privacy Policy
-          </a>
-          <Asterisc>*</Asterisc>
-        </OnboardingCell>
-      </OnboardDisclaimer>
-      <OnboardButton
-        disabled={
-          credentials.email === '' ||
-          credentials.password === '' ||
-          credentials.country_id === '' ||
-          error.validation ||
-          error.exist ||
-          error.terms
-        }
-        onClick={onSubmitSignUp}
-      >
-        Get Started
-      </OnboardButton>
-      <CallToSignIn>
-        Already have an account?
-        <button className="callToSignIn" type="button" onClick={onSetStep('SignIn')}>
-          Sign In
-        </button>
-      </CallToSignIn>
+        <OnboardMailingList>
+          <OnboardCheckbox onChange={onAcceptMailingList} />I agree to receive Raise latest updates
+        </OnboardMailingList>
+        <OnboardDisclaimer>
+          <OnboardingCell>
+            <OnboardCheckbox onChange={onAcceptTerms} />
+          </OnboardingCell>
+          <OnboardingCell>
+            By signing up, I agree to Raise
+            <a
+              className="disclaimerBTN"
+              href={`${theme.resources}/toc.pdf`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Terms of Service
+            </a>
+            and
+            <a
+              className="disclaimerBTN"
+              href={`${theme.resources}/privacy-policy.pdf`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Privacy Policy
+            </a>
+            <Asterisc>*</Asterisc>
+          </OnboardingCell>
+        </OnboardDisclaimer>
+        <OnboardButton
+          disabled={
+            credentials.email === '' ||
+            credentials.password === '' ||
+            credentials.country_id === '' ||
+            error.validation ||
+            error.exist ||
+            error.terms
+          }
+          onClick={onSubmitSignUp}
+        >
+          Get Started
+        </OnboardButton>
+        <CallToSignIn>
+          Already have an account?
+          <button className="callToSignIn" type="button" onClick={onSetStep('SignIn')}>
+            Sign In
+          </button>
+        </CallToSignIn>
+      </Form>
     </Fragment>
   );
 };
