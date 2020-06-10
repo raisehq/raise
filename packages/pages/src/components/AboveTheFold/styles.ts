@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { device } from '../../commons/breakpoints';
 import { Button } from '@raisehq/components';
+import { device } from '../../commons/breakpoints';
 
 export const FoldBackground = styled.div`
   min-height: 600px;

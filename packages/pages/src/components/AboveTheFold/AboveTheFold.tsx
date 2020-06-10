@@ -9,6 +9,7 @@ import {
   JoinButton
 } from './styles';
 import Wave from './Wave';
+
 const AboveTheFold = () => (
   <FoldBackground>
     <BackgroundImage />
