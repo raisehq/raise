@@ -90,6 +90,7 @@ lint:
   stage: build
   script:
     - 'yarn --pure-lockfile'
+    - 'sh ./scripts/global-artifact.sh'
     - 'yarn lint'
   only:
     - merge_requests
