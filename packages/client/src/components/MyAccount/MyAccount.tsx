@@ -129,11 +129,10 @@ const MyAccount = () => {
   };
   const REFERAFRIEND = `${getHost('APP')}/join?referralCode`;
   const shareLink = `${REFERAFRIEND}=${RefCode || ''}`;
-  const REFERRAL_FEATURE_FLAG = process.env.REACT_APP_REFERRAL_FEATURE_FLAG === 'true';
 
   return (
     <Main>
-      {REFERRAL_FEATURE_FLAG && (
+      {RefCode && (
         <ReferralWrapper>
           <ReferralProgram totalCount="0" shareLink={shareLink} />
         </ReferralWrapper>
