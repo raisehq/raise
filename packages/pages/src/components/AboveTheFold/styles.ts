@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Button } from '@raisehq/components';
 import { device } from '../../commons/breakpoints';
 
 export const FoldBackground = styled.div`
@@ -72,8 +71,6 @@ export const FoldImage = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-export const JoinButton = styled(Button)``;
 
 export const ButtonWrapper = styled.div`
   margin-left: 15px;

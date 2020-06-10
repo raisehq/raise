@@ -1,14 +1,13 @@
 import React from 'react';
-import { BasicLink } from '../Links';
 import { Button } from '@raisehq/components';
+import { BasicLink } from '../Links';
 import {
   FoldContainer,
   FoldBackground,
   BackgroundImage,
   MessageBox,
   TextContent,
-  ButtonWrapper,
-  JoinButton
+  ButtonWrapper
 } from './styles';
 import Wave from './Wave';
 
