@@ -28,7 +28,7 @@ while read line ; do
         echo "---------------------------------------------------------------------------"
         echo "Invalidating cache for domain ${DOMAIN}..."
         echo "---------------------------------------------------------------------------"
-        invalidation_id=$(aws cloudfront create-invalidation --distribution-id ${dist} --paths ${PATH_INVALIDATE} --query 'Invalidation.Id' | tr -d '"')
+        invalidation_id=$(aws cloudfront create-invalidation --distribution-id ${dist} --paths "${PATH_INVALIDATE}" --query 'Invalidation.Id' | tr -d '"')
         echo -n "Invalidating"
         until aws cloudfront get-invalidation --id ${invalidation_id} --distribution-id ${dist} --query 'Invalidation.Status' | grep "Completed" | tr -d '"'; do 
             sleep 5;
