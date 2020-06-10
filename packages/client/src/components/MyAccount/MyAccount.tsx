@@ -137,7 +137,6 @@ const MyAccount = () => {
           <ReferralProgram totalCount="0" shareLink={shareLink} />
         </ReferralWrapper>
       )}
-
       <h1>My Account</h1>
       <Content>
         <AccountInfo>
