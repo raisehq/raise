@@ -23,6 +23,7 @@ const AboveTheFold = () => (
             text="Sign Up now"
             disabled={false}
             onClick={() => {
+              console.log('REDIRECT TO : ', `${process.env.REACT_APP_HOST_URL}/join`);
               window.location.href = `${process.env.REACT_APP_HOST_URL}/join`;
             }}
             idAttr="btn_sign_up_raise"
