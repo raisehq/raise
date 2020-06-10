@@ -4,14 +4,14 @@ import { device } from '../../commons/breakpoints';
 
 export const FoldBackground = styled.div`
   min-height: 600px;
-  height: 90vh;
+  height: calc(100vh - 61px);
   background-image: linear-gradient(#3c4251, #7e0348);
   overflow: hidden;
   position: relative;
 `;
 export const BackgroundImage = styled.div`
   background-image: url('https://static.raise.it/images/hero_bg.svg');
-  background-position: 0px 0px; /* Center the image */
+  background-position: center; /* Center the image */
   bottom: 0px;
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
@@ -20,21 +20,21 @@ export const BackgroundImage = styled.div`
   right: 0px;
   height: 50vh;
   @media screen and ${device.laptop} {
-    width: 80%;
-    height: 90vh;
+    width: 100%;
+    height: calc(100vh - 55px);
     background-position: 215px 0px; /* Center the image */
   }
 `;
 export const FoldContainer = styled.div`
   position: relative;
-  height: 100vh;
+  height: calc(100vh - 55px);
   overflow: hidden;
   @media screen and ${device.laptop} {
     width: 100%;
     max-width: 1172px;
     padding: 10px;
     margin: auto;
-    height: 90vh;
+    height: calc(100vh - 55px);
   }
 `;
 export const MessageBox = styled.div`
@@ -61,7 +61,7 @@ export const TextContent = styled.div`
   line-height: 71px;
   color: #ffffff;
   @media screen and ${device.laptop} {
-    font-size: 72px;
+    font-size: 73px;
     text-align: left;
   }
 `;
@@ -89,7 +89,7 @@ export const ButtonWrapper = styled.div`
 export const WaveContainer = styled.div`
   width: 100%;
   position: absolute;
-  bottom: -10px;
+  top: calc(100vh - 122px);
   svg {
     width: 200%;
     height: auto;
@@ -99,6 +99,6 @@ export const WaveContainer = styled.div`
       width: 100%;
       height: auto;
     }
-    bottom: -67px;
+    top: calc(100vh - 122px);
   }
 `;
