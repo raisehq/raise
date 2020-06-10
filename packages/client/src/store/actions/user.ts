@@ -100,12 +100,15 @@ export default (dispatch: any, state: Store) => {
   };
 
   const onUpdateReferralCode = async (userId) => {
-    const {
-      data: { data: details }
-    } = await updateReferralCode(userId, {});
-    console.log('det', details);
-    dispatch({ type: 'UPDATE_REFERRAL', data: details });
-    return details;
+    try {
+      const {
+        data: { data: details }
+      } = await updateReferralCode(userId, {});
+      dispatch({ type: 'UPDATE_REFERRAL', data: details });
+      return details;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onUpdateUser = async (userId, body) => {

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { match } from 'pampy';
 import { ReferralProgram } from '@raisehq/components';
 import { checkUsername } from '../../services/auth';
@@ -17,7 +17,6 @@ import UpdateUsername from './components/UpdateUsername';
 import UpdatePassword from './components/UpdatePassword';
 import { useRootContext } from '../../contexts/RootContext';
 import { MyActivity } from '../Dashboard';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
 import LocalData from '../../helpers/localData';
 
 import { getHost } from '../../utils/index';
@@ -28,6 +27,7 @@ const MyAccount = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordRepeat, setNewPasswordRepeat] = useState('');
+  const [requestReferral, setRequestReferral] = useState(true);
 
   const {
     actions: {
@@ -42,17 +42,22 @@ const MyAccount = () => {
     }
   }: any = useRootContext();
 
-  useAsyncEffect(async () => {
+  const requestReferralFunc = async () => {
     try {
-      if (referral_code === '') {
-        const userUpdated = await onUpdateReferralCode(id);
-        console.log('USERUPDATED:', userUpdated);
-        LocalData.setObj('user', {
-          ...userUpdated
-        });
-      }
+      const userUpdated = await onUpdateReferralCode(id);
+      setRequestReferral(false);
+      console.log('USERUPDATED:', userUpdated);
+      LocalData.setObj('user', {
+        ...userUpdated
+      });
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (requestReferral && referral_code === '') {
+      requestReferralFunc();
     }
   }, [referral_code]);
 

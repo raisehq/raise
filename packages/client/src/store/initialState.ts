@@ -37,7 +37,7 @@ const details =
     delete: null,
     birthday: '',
     phone: '',
-    referral_code: '',
+    referral_code: null,
     referrer_code: '',
     kyc_status: null
   });

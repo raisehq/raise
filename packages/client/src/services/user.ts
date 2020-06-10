@@ -142,15 +142,19 @@ export const updateUser = async (userId, body: any) => {
 };
 
 export const updateReferralCode = async (userId, body: any) => {
-  const config: any = {
-    url: `${URL.REFERRAL_UPDATE}/${userId}`,
-    method: 'PUT',
-    data: body,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  return axios(config);
+  try {
+    const config: any = {
+      url: `${URL.REFERRAL_UPDATE}/${userId}`,
+      method: 'PUT',
+      data: body,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    return axios(config);
+  } catch (error) {
+    throw new Error(`Error request referral code : ${error}`);
+  }
 };
 
 export const updatePassword = async (userId, data: any) => {
