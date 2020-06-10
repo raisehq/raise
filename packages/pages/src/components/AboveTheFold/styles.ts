@@ -82,6 +82,9 @@ export const ButtonWrapper = styled.div`
     margin-bottom: 50px;
     margin-left: 0px;
   }
+  a {
+    display: block;
+  }
 `;
 export const WaveContainer = styled.div`
   width: 100%;
