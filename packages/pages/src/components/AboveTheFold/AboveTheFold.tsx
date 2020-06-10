@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { BasicLink } from '../Links';
+import { Button } from '@raisehq/components';
 import {
   FoldContainer,
   FoldBackground,
@@ -20,13 +21,10 @@ const AboveTheFold = () => (
           <p>Crowdlending</p>you can believe in
         </TextContent>
         <ButtonWrapper>
-          <JoinButton
-            text="Sign Up now"
-            disabled={false}
-            onClick={() => {
-              console.log('REDIRECT TO : ', `${process.env.REACT_APP_HOST_URL}/join`);
-              window.location.href = `${process.env.REACT_APP_HOST_URL}/join`;
-            }}
+          <Button
+            title="Sign Up now"
+            as={BasicLink}
+            to={`${process.env.REACT_APP_HOST_URL}/join`}
             idAttr="btn_sign_up_raise"
             type="secondary"
             size="large"
