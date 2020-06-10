@@ -21,7 +21,7 @@ export const BackgroundImage = styled.div`
   @media screen and ${device.laptop} {
     width: 100%;
     height: calc(100vh - 55px);
-    background-position: 215px 0px; /* Center the image */
+    background-position: 215px center; /* Center the image */
   }
 `;
 export const FoldContainer = styled.div`
