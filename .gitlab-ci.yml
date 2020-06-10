@@ -88,9 +88,12 @@ build-deps-generic-master:
 
 lint:
   stage: build
+  before_script:
+    - apk add --update bash
+    - pip install awscli
   script:
     - 'yarn --pure-lockfile'
-    - 'sh ./scripts/global-artifact.sh'
+    - './scripts/global-artifact.sh'
     - 'yarn lint'
   only:
     - merge_requests
