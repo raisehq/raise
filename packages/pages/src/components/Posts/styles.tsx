@@ -89,7 +89,7 @@ export const CardBox = styled.div`
   background-color: #ffffff;
   box-shadow: 0 0 26px 0 rgba(217, 217, 217, 0.61);
   border: 1px solid #e6e6e6 !important;
-  margin-bottom: 10%;
+  margin-bottom: 35%;
   color: #3c4251;
   flex-grow: 1;
   &&&:hover {

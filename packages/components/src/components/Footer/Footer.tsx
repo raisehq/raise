@@ -90,7 +90,7 @@ const Footer = ({ isMobile }) => {
             <SubMenu>
               <SubMenuTitle>Resources</SubMenuTitle>
               <MenuLink
-                href="https://raise.it/blog/kyc-quide"
+                href="https://raise.it/blog/kyc-guide"
                 rel="noopener noreferrer"
                 target="_blank"
               >
