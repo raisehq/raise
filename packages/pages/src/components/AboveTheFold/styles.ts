@@ -42,11 +42,22 @@ export const MessageBox = styled.div`
   margin: 0;
   position: absolute;
   top: 34%;
+  left: 0px;
   -ms-transform: translateY(-34%);
   transform: translateY(-34%);
-  @media screen and ${device.laptop} {
-    width: 60%;
+  @media screen and ${device.tablet} {
+    width: 500px;
     top: 50%;
+    left: 50%;
+    margin-left: -225px;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  @media screen and ${device.laptop} {
+    width: 50%;
+    top: 50%;
+    left: 0px;
+    margin: 15px;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
   }
@@ -56,12 +67,30 @@ export const TextContent = styled.div`
   font-style: normal;
   font-weight: bold;
   text-align: center;
-  font-size: 45px;
   line-height: 71px;
+  text-align: left;
   color: #ffffff;
+  margin: 15px;
+  h1 {
+    font-size: 45px;
+    line-height: 71px;
+  }
+  h2 {
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 28px;
+  }
   @media screen and ${device.laptop} {
-    font-size: 73px;
-    text-align: left;
+    margin: 0px;
+    h1 {
+      font-size: 73px;
+      line-height: 71px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: normal;
+      line-height: 28px;
+    }
   }
 `;
 

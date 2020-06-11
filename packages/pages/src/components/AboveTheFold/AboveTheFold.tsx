@@ -17,7 +17,12 @@ const AboveTheFold = () => (
     <FoldContainer>
       <MessageBox>
         <TextContent>
-          <p>Crowdlending</p>you can believe in
+          <h1>Investments you can believe in</h1>
+          <h2>
+            Raise is the investment platform that offers you attractive, secure investment
+            opportunities at higher market returns—know where your money goes, and see exactly how
+            it grows
+          </h2>
         </TextContent>
         <ButtonWrapper>
           <Button
