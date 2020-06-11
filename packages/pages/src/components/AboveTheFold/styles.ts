@@ -118,7 +118,7 @@ export const ButtonWrapper = styled.div`
 export const WaveContainer = styled.div`
   width: 100%;
   position: absolute;
-  bottom: -5px;
+  bottom: -7px;
   svg {
     width: 200%;
     height: auto;

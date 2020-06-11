@@ -149,6 +149,7 @@ export const Credits = styled.em`
 export const HeroLayout = styled('div')`
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
 `;
 
 export const Content = styled.div`
