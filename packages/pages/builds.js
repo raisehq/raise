@@ -92,6 +92,40 @@ const Querys = {
     }
   `,
     path: '/',
+    component: path.resolve('src/templates/home.tsx')
+  },
+  investing: {
+    query: `
+    {
+      allButterPage(filter: { slug: { eq: "investing" } }) {
+        nodes {
+          internal {
+            content
+            description
+            ignoreType
+            mediaType
+          }
+          investing_section {
+            image_right_position
+            important_information
+            learn_more_url
+            section_description
+            section_image
+            section_order
+            section_title
+          }
+          sub_investing_section {
+            section_number
+            sub_sub_icon
+            sub_sub_text
+            sub_sub_order
+          }
+          page_type
+        }
+      }
+    }
+  `,
+    path: '/investing',
     component: path.resolve('src/templates/invest.tsx')
   },
   blogs: {

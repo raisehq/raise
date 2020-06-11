@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 export interface ButtonProps {
   text?: string;
+  title?: string;
   onClick?: Function;
   disabled?: boolean;
   idAttr?: string;
