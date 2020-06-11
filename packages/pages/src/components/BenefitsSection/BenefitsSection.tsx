@@ -47,8 +47,8 @@ const BenefitsSection = () => {
       <SpecialRow>
         <ImageWrapper />
         <StepWrapper>
-          {steps.map((item, index) => (
-            <Step number={item.number} text={item.text} key={index} />
+          {steps.map((item) => (
+            <Step number={item.number} text={item.text} key={item.number} />
           ))}
         </StepWrapper>
       </SpecialRow>
