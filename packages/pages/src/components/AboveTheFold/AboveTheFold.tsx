@@ -12,11 +12,11 @@ import {
 import Wave from './Wave';
 
 const AboveTheFold = () => (
-  <FoldBackground>
-    <BackgroundImage />
+  <FoldBackground id="background_color">
+    <BackgroundImage id="background_image" />
     <FoldContainer>
       <MessageBox>
-        <TextContent>
+        <TextContent id="text_container">
           <h1>Investments you can believe in</h1>
           <h2>
             Raise is the investment platform that offers you attractive, secure investment
