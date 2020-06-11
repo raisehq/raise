@@ -12,7 +12,7 @@ const sanitizeObject = (data) => {
 };
 
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
-  // Index page /
+  // HOME PAGE
   const queryIndex = await graphql(Builds.index.query);
   const press = await graphql(Builds.press.query);
   createPage({
@@ -24,6 +24,18 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     }
   });
 
+  // INVESTING PAGE
+  const queryInvesting = await graphql(Builds.investing.query);
+  createPage({
+    path: Builds.investing.path,
+    component: Builds.investing.component,
+    context: {
+      data: queryInvesting.data,
+      press: press.data
+    }
+  });
+
+  // HELP PAGE
   const queryHelp = await graphql(Builds.help.query);
   createPage({
     path: Builds.help.path,
@@ -33,6 +45,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     }
   });
 
+  // ABOUT PAGE
   const queryAbout = await graphql(Builds.about.query);
   createPage({
     path: Builds.about.path,
@@ -42,6 +55,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     }
   });
 
+  // BLOGS PAGES
   const queryBlogs = await graphql(Builds.blogs.query);
   // Satinize content to avoid atacks
   const blogData = queryBlogs.data.allButterPost.edges
