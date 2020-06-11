@@ -26,7 +26,7 @@ const AboveTheFold = () => (
         </TextContent>
         <ButtonWrapper>
           <Button
-            title="Sign Up now"
+            title="Get started"
             as={BasicLink}
             to={`${process.env.REACT_APP_HOST_URL}/join`}
             idAttr="btn_sign_up_raise"
