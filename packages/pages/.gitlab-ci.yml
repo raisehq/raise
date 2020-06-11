@@ -191,7 +191,7 @@ review-landing:
       echo ${CI_COMMIT_REF_SLUG}
       rm -r -f $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
       mv packages/pages/build_review $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
-      aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z)
+      aws s3 sync --delete $(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) s3://${BUCKET_NAME_REVIEW_WWW}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --metadata-directive REPLACE --cache-control no-store
   only:
     refs:
       - merge_requests
