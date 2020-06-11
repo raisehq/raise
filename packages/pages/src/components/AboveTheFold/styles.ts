@@ -5,7 +5,7 @@ export const FoldBackground = styled.div`
   min-height: 600px;
   height: calc(100vh - 61px);
   background-image: linear-gradient(#3c4251, #7e0348);
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
 `;
 export const BackgroundImage = styled.div`
