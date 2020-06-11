@@ -5,6 +5,7 @@ import SEO from '../components/SEO';
 import TagManager from '../components/TagManager';
 import 'semantic-ui-css/semantic.min.css';
 import AboveTheFold from '../components/AboveTheFold';
+import BenefitsSection from '../components/BenefitsSection';
 
 const IndexPage = ({ pageContext: { data, press } }: any) => {
   const investSections = data.allButterPage.nodes[0];
@@ -18,6 +19,7 @@ const IndexPage = ({ pageContext: { data, press } }: any) => {
         <SEO />
         <TagManager />
         <AboveTheFold />
+        <BenefitsSection />
         <InvestingPage data={investSections} articles={flattenedArticles} />
       </div>
     </Layout>
