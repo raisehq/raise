@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { match } from 'pampy';
 import { ReferralProgram } from '@raisehq/components';
 import { checkUsername } from '../../services/auth';
+import useGetCoinByAddress from '../../hooks/useGetCoinByAddress';
 import {
   Content,
   Side,
@@ -28,7 +29,8 @@ const MyAccount = () => {
 
   const {
     actions: {
-      user: { onUpdateUser, onUpdatePassword, clearUser, clearPass }
+      user: { onUpdateUser, onUpdatePassword, clearUser, clearPass },
+      blockchain: { fetchReferrals, fetchReferralTrackerInfo }
     },
     store: {
       user: {
@@ -41,9 +43,30 @@ const MyAccount = () => {
           kyc_status: kycStatus,
           referral_code: RefCode
         }
-      }
+      },
+      config: { network },
+      blockchain: { totalReferralsCount, totalBountyToWithdraw, referralTokenAddress }
     }
   }: any = useRootContext();
+
+  const coin = useGetCoinByAddress(referralTokenAddress);
+  // console.log('coin::::: ', coin);
+
+  // console.log('network::: ', network);
+  // console.log('myaccount:: total referrals::: ', totalReferralsCount);
+  // console.log('myaccount:: total bounty:: ', totalBountyToWithdraw);
+  // console.log('referral token address::: ', referralTokenAddress);
+  useEffect(() => {
+    fetchReferrals(network);
+    fetchReferralTrackerInfo(network);
+  }, []);
+
+  const withdrawBounty = () => {
+    if (kycStatus !== 3) {
+      // TODO: redirect to kyc
+    } else {
+    }
+  };
 
   const changeUsername = async (value) => {
     clearUser();
@@ -134,7 +157,14 @@ const MyAccount = () => {
     <Main>
       {RefCode && (
         <ReferralWrapper>
-          <ReferralProgram totalCount="0" shareLink={shareLink} />
+          <ReferralProgram
+            totalCount={totalReferralsCount || 0}
+            amountToWithdraw={totalBountyToWithdraw}
+            withdrawAction={() => withdrawBounty()}
+            shareLink={shareLink}
+            coin={coin}
+            kycStatus={kycStatus}
+          />
         </ReferralWrapper>
       )}
       <h1>My Account</h1>

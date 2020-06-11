@@ -107,6 +107,11 @@ export const LabelSection = styled.div`
   padding-bottom: 10px;
 `;
 
+export const LabelSectionWithNumber = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const CopyButton = styled(Button)<CopyButtonProps>`
   &&& {
     width: 48px;
@@ -195,15 +200,14 @@ export const TotalInput = styled(InputTextCustom)`
 `;
 
 export const TotalNumber = styled.div`
-  position: absolute;
-  right: 25px;
-  top: 8px;
-
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
-  line-height: 32px;
+  line-height: 16px;
+
+  padding-bottom: 10px;
+  margin-left: 10px;
   color: #eb3f93;
 `;
 
