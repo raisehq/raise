@@ -1,5 +1,5 @@
 const BUTTERCMSKEY = process.env.REACT_APP_BUTTER;
-
+const GOOGLEOPTIMIZE = process.env.REACT_APP_GOOGLE_OPTIMIZE;
 module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
@@ -63,6 +63,15 @@ module.exports = {
       options: {
         authToken: BUTTERCMSKEY,
         pageTypes: ['page_sections', 'help', 'press_releases_page', 'about']
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-google-marketing-platform',
+      options: {
+        optimize: {
+          id: GOOGLEOPTIMIZE,
+          timeout: 5000
+        }
       }
     }
   ]
