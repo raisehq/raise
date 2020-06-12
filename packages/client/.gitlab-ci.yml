@@ -1,3 +1,6 @@
+variables:
+  REACT_APP_DATADOG: ${DATADOG_API_KEY}
+
 deploy-backend:
   stage: prepare
   image: alpine:latest

@@ -15,6 +15,7 @@ import {
 import { useAppContext } from '../../contexts/AppContext';
 import { getGetStarted } from '../../helpers/butter';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
+import { datadogLogs } from '../../helpers/datadogLogs';
 
 const settings = {
   dots: true,
@@ -46,6 +47,8 @@ const getSlides = (slides) =>
 const GetStarted = () => {
   const { getStarted, onSetGetStarted }: any = useAppContext();
   const [slides, setSlides]: any = useState([]);
+
+  datadogLogs.logger.info('Button clicked', { name: 'getStarted', id: 1 });
 
   useAsyncEffect(async () => {
     const content = await getGetStarted();

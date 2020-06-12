@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@bloomprotocol/share-kit-react": "^4.4.0",
+    "@datadog/browser-logs": "1.12.4",
     "@raisehq/components": "*",
     "@raisehq/onboarding": "*",
     "@types/jest": "24.0.15",
