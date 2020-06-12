@@ -1,4 +1,6 @@
 const BUTTERCMSKEY = process.env.REACT_APP_BUTTER;
+const GOOGLEOPTIMIZE = process.env.REACT_APP_GOOGLE_OPTIMIZE;
+const TAGMANAGERID = process.env.REACT_APP_GTM_ID;
 
 module.exports = {
   plugins: [
@@ -63,6 +65,18 @@ module.exports = {
       options: {
         authToken: BUTTERCMSKEY,
         pageTypes: ['page_sections', 'help', 'press_releases_page', 'about']
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-google-marketing-platform',
+      options: {
+        tagmanager: {
+          id: TAGMANAGERID
+        },
+        optimize: {
+          id: GOOGLEOPTIMIZE,
+          timeout: 5000
+        }
       }
     }
   ]
