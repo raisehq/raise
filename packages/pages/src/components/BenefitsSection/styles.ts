@@ -21,14 +21,18 @@ export const Title = styled.div`
   font-size: 72px;
   line-height: 56px;
   text-align: center;
-  padding: 50px;
+  padding: 70px;
 
   color: #eb3f93;
 `;
 
 export const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
   height: 500px;
-  width: 55%;
+  width: 50%;
 `;
 
 export const StepWrapper = styled.div``;
@@ -39,7 +43,7 @@ export const ControlWrapper = styled.div`
 
 export const SpecialRow = styled(Row)`
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
 `;
 
@@ -49,6 +53,7 @@ export const Column = styled.div`
   justify-content: center;
   align-items: flex-start;
   width: 45%;
+  padding-top: 50px;
 `;
 
 export const CheckLoanText = styled.a`
