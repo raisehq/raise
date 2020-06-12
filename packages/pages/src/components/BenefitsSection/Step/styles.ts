@@ -17,8 +17,10 @@ export const Number = styled.div`
   font-size: 56px;
   line-height: 24px;
   text-align: center;
-  margin-right: 10px;
+  margin-right: 30px;
   color: #eb3f93;
+  height: 45px;
+  width: 65px;
 `;
 
 export const Text = styled.div`

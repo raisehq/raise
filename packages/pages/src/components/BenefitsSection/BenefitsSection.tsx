@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { GroupButton } from '@raisehq/components';
+import { Icon } from 'semantic-ui-react';
+
 import {
   Wrapper,
   Row,
@@ -7,7 +9,10 @@ import {
   ImageWrapper,
   StepWrapper,
   SpecialRow,
-  ControlWrapper
+  ControlWrapper,
+  Column,
+  CheckLoanText,
+  IconWrapper
 } from './styles';
 import Step from './Step';
 
@@ -46,11 +51,19 @@ const BenefitsSection = () => {
       </Row>
       <SpecialRow>
         <ImageWrapper />
-        <StepWrapper>
-          {steps.map((item) => (
-            <Step number={item.number} text={item.text} key={item.number} />
-          ))}
-        </StepWrapper>
+        <Column>
+          <StepWrapper>
+            {steps.map((item) => (
+              <Step number={item.number} text={item.text} key={item.number} />
+            ))}
+          </StepWrapper>
+          <CheckLoanText href={`${process.env.REACT_APP_HOST_URL}`}>
+            <span>Check our loan of the month</span>
+            <IconWrapper>
+              <Icon name="chevron right" />
+            </IconWrapper>
+          </CheckLoanText>
+        </Column>
       </SpecialRow>
     </Wrapper>
   );
