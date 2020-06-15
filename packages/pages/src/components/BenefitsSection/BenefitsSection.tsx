@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { GroupButton } from '@raisehq/components';
 import { Icon } from 'semantic-ui-react';
-import { useTransition, animated } from 'react-spring';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getCollection } from '../../helpers/butter';
 
@@ -15,7 +14,8 @@ import {
   ControlWrapper,
   Column,
   CheckLoanText,
-  IconWrapper
+  IconWrapper,
+  Image
 } from './styles';
 import Step from './Step';
 
@@ -29,14 +29,6 @@ const BenefitsSection = () => {
     { id: 0, url: '' },
     { id: 1, url: '' }
   ]);
-
-  const transitions = useTransition(slides[selectedOption - 1], (item) => item.id, {
-    unique: true,
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 }
-  });
-
   useAsyncEffect(async () => {
     const benefits_section = await getCollection('benefits_section', {});
 
@@ -95,17 +87,8 @@ const BenefitsSection = () => {
       </Row>
       <SpecialRow>
         <ImageWrapper>
-          {transitions.map(({ item, props, key }) => (
-            <animated.div
-              key={key}
-              style={{
-                ...props,
-                backgroundImage: item.url
-              }}
-            >
-              <img src={item.url} alt="11" />
-            </animated.div>
-          ))}
+          <Image src={slides[0].url} alt="11" visible={selectedOption === 1} />
+          <Image src={slides[1].url} alt="11" visible={selectedOption !== 1} />
         </ImageWrapper>
         <Column>
           <StepWrapper>

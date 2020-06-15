@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { Image as ImageSemantic } from 'semantic-ui-react';
 
 const size = {
@@ -8,6 +8,31 @@ const size = {
   signUp: '860px',
   desktop: '950px'
 };
+export interface ImageProps {
+  visible: true;
+}
+
+const fadeIn = keyframes`
+  from {
+    transform: scale(.25);
+    opacity: 0;
+  }
+  to{
+    transform: scale(1);
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(.25);
+    opacity: 0;
+  }
+`;
 
 export const Wrapper = styled.div`
   display: flex;
@@ -46,16 +71,8 @@ export const ImageWrapper = styled.div`
   justify-content: flex-end;
   align-items: flex-start;
   height: 500px;
-  width: 18%;
+  width: 50%;
   position: relative;
-  img {
-    position: absolute;
-
-    @media (max-width: ${size.mobileL}) {
-      width: 355px;
-      left: 5%;
-    }
-  }
 
   @media (max-width: ${size.mobileL}) {
     width: 100%;
@@ -126,8 +143,25 @@ export const IconWrapper = styled.span`
   padding-top: 3px;
 `;
 
-export const Image = styled(ImageSemantic)`
-  @media (max-width: ${size.mobileL}) {
-    max-width: 300px;
+export const Image = styled(ImageSemantic)<ImageProps>`
+  &&&&& {
+    position: absolute;
+    visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+
+    animation: ${({ visible }) =>
+      visible
+        ? css`
+            animation: ${fadeIn} 0.1s linear;
+          `
+        : css`
+            animation: ${fadeOut} 0.1s linear;
+          `};
+
+    transition: visibility 0.1s linear;
+
+    @media (max-width: ${size.mobileL}) {
+      width: 355px;
+      left: 5%;
+    }
   }
 `;
