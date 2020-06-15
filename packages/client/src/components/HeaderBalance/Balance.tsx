@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { Button } from '@raisehq/components';
-
+import NoBalance from './NoBalance';
 import useGetAllBalances from '../../hooks/useGetAllBalances';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useRouter from '../../hooks/useRouter';
@@ -37,26 +37,41 @@ const DropdownButton = () => (
 
 const Balance = (props) => {
   const { history } = useRouter();
-
+  const [balanceList, setBalanceList]: any = useState();
+  const [notification, setNotification]: any = useState(false);
   const balances = useGetAllBalances(SUPPORTED_COINS);
 
   const tagManager = useGoogleTagManager('BuyCrypto');
 
-  balances.sort((a, b) => {
-    const aBN = new BigNumber(a.value);
-    const bBN = new BigNumber(b.value);
-    return aBN.isGreaterThan(bBN) ? -1 : 1;
-  });
+  useEffect(() => {
+    if (
+      balances.filter((a) => {
+        return new BigNumber(a.value).isGreaterThan(new BigNumber(0));
+      }).length === 0
+    ) {
+      setBalanceList(<NoBalance />);
+      setNotification(true);
+    } else {
+      balances.sort((a, b) => {
+        const aBN = new BigNumber(a.value);
+        const bBN = new BigNumber(b.value);
+        return aBN.isGreaterThan(bBN) ? -1 : 1;
+      });
 
-  const balanceList = balances.map((coin) => (
-    <TokenLayout
-      hider
-      imageUrl={TOKEN_URLS[coin.text]}
-      name={coin.text}
-      key={coin.text}
-      value={coin.value}
-    />
-  ));
+      setBalanceList(
+        balances.map((coin) => (
+          <TokenLayout
+            hider
+            imageUrl={TOKEN_URLS[coin.text]}
+            name={coin.text}
+            key={coin.text}
+            value={coin.value}
+          />
+        ))
+      );
+      setNotification(false);
+    }
+  }, [balances]);
 
   const buyCrypto = (e) => {
     e.stopPropagation();
@@ -66,7 +81,7 @@ const Balance = (props) => {
 
   return (
     <>
-      <BalanceDropdown trigger={DropdownButton()} {...props}>
+      <BalanceDropdown notification={notification ? 1 : 0} trigger={DropdownButton()} {...props}>
         <BalanceMenu>
           <Header>
             <AddressStatus border={false} />
