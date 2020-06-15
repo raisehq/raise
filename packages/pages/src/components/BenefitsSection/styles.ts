@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Image as ImageSemantic } from 'semantic-ui-react';
 
 const size = {
   mobileS: '320px',
@@ -32,6 +33,11 @@ export const Title = styled.div`
   padding: 70px;
 
   color: #eb3f93;
+
+  @media (max-width: ${size.mobileL}) {
+    font-size: 48px;
+    padding-bottom: 40px;
+  }
 `;
 
 export const ImageWrapper = styled.div`
@@ -44,10 +50,18 @@ export const ImageWrapper = styled.div`
   position: relative;
   img {
     position: absolute;
+
+    @media (max-width: ${size.mobileL}) {
+      width: 355px;
+      left: 5%;
+    }
   }
 
   @media (max-width: ${size.mobileL}) {
     width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    height: 280px;
   }
 `;
 
@@ -110,4 +124,10 @@ export const CheckLoanText = styled.a`
 
 export const IconWrapper = styled.span`
   padding-top: 3px;
+`;
+
+export const Image = styled(ImageSemantic)`
+  @media (max-width: ${size.mobileL}) {
+    max-width: 300px;
+  }
 `;

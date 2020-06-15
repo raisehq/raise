@@ -54,8 +54,8 @@ const BenefitsSection = () => {
       { number: 3, text: step_three }
     ]);
     setSlides([
-      { id: 0, url: 'https://cdn.buttercms.com/C7NJSSXVQq22DqSwrBZA' },
-      { id: 1, url: 'https://cdn.buttercms.com/tXCBL3pkSBKe5pCUDeI6' }
+      { id: 0, url: 'https://cdn.buttercms.com/kKvWSNpTRar6thqQDs9Q' },
+      { id: 1, url: 'https://cdn.buttercms.com/PfSLk7C0SjyXTUpUzFpL' }
     ]);
   }, []);
 
