@@ -7,13 +7,15 @@ import ErrorStage from './stages/Error';
 import { Modal, ExitButton } from './styles';
 import ClaimFundsGenericContext from './Context';
 
-const ClaimFundsGenericModal = ({ confirmContractAction, methodId, copies }) => {
+const ClaimFundsGenericModal = ({ confirmContractAction, methodId, copies, onSuccessAction }) => {
   const { closeModal, stage, open } = useContext(ClaimFundsGenericContext);
 
   const getStage = (current) =>
     current.cata({
       Confirm: () => <ConfirmStage contractAction={confirmContractAction} copies={copies} />,
-      Processing: () => <ProcessingStage methodId={methodId} copies={copies} />,
+      Processing: () => (
+        <ProcessingStage methodId={methodId} copies={copies} onSuccessAction={onSuccessAction} />
+      ),
       Success: () => <SuccessStage />,
       Error: () => <ErrorStage />
     });

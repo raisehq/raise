@@ -22,7 +22,7 @@ import useWallet from '../../hooks/useWallet';
 import { getHost } from '../../utils/index';
 import { useAppContext } from '../../contexts/AppContext';
 import { fromDecimal } from '../../utils/web3-utils';
-import Queryies from '../../helpers/queryies';
+// import Queryies from '../../helpers/queryies';
 import {
   ClaimFundsGenericModal,
   ClaimFundsGenericProvider,
@@ -40,7 +40,7 @@ const MyAccount = () => {
   const {
     actions: {
       user: { onUpdateUser, onUpdatePassword, clearUser, clearPass },
-      blockchain: { fetchReferralTrackerInfo, onFetchReferralsSubscription }
+      blockchain: { fetchReferralTrackerInfo, fetchReferrals }
     },
     store: {
       user: {
@@ -60,29 +60,36 @@ const MyAccount = () => {
     followTx
   }: any = useRootContext();
   const {
-    web3Status: { account },
-    webSocket: { webSocket }
-  }: any = useAppContext();
+    web3Status: { account }
+  }: // webSocket: { webSocket }
+  any = useAppContext();
   const metamask = useWallet();
   const { history }: any = useRouter();
 
   const coin = useGetCoinByAddress(referralTokenAddress);
 
   useEffect(() => {
-    // fetchReferrals(network);
+    fetchReferrals(network);
     fetchReferralTrackerInfo(network);
   }, [network]);
 
-  useEffect(() => {
-    if (webSocket) {
-      const { query, subscriptionName } = Queryies.subscriptions.userReferral;
-      const variables = {
-        address: account
-      };
-      const callback = onFetchReferralsSubscription;
-      webSocket.subscribe(query, variables, subscriptionName, callback);
-    }
-  }, [webSocket, account]);
+  // @ts-ignore
+  // eslint-disable-next-line consistent-return
+  // useEffect(() => {
+  //   const { query, subscriptionName } = Queryies.subscriptions.userReferral;
+  //   const subscriptionNameUnique = `${subscriptionName}_${account}`;
+  //   if (webSocket) {
+  //     const variables = {
+  //       address: account
+  //     };
+  //     const callback = onFetchReferralsSubscription;
+  //     webSocket.subscribe(query, variables, subscriptionNameUnique, callback);
+  //   }
+
+  //   return () => {
+  //     webSocket.unsubscribe(subscriptionNameUnique);
+  //   };
+  // }, [webSocket, account]);
 
   useEffect(() => {
     const parsedBountyToWithdraw: any = Number(fromDecimal(totalBountyToWithdraw, coin.decimals));
@@ -251,6 +258,7 @@ const MyAccount = () => {
               confirmContractAction={confirmContractAction}
               methodId="referralWithdraw"
               copies={getCopies()}
+              onSuccessAction={() => fetchReferrals(network)}
             />
             <ReferralProgram
               totalCount={totalReferralsCount || 0}

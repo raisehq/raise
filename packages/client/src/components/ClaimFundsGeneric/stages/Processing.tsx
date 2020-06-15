@@ -12,12 +12,15 @@ import {
 } from '../styles';
 import { ResumeItemBig } from './ResumeItemBig';
 
-const Processing = ({ methodId, copies }) => {
+const Processing = ({ methodId, copies, onSuccessAction }) => {
   const { setStage, monthlyLoanAPR }: any = useContext(ClaimFundsGenericContext);
   const { followTx }: any = useRootContext();
 
   const onSuccess = ({ data }) => {
     if (data?.id?.includes(methodId)) {
+      if (onSuccessAction) {
+        onSuccessAction();
+      }
       setStage(Stages.Success);
     }
   };

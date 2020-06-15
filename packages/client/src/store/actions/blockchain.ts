@@ -55,7 +55,7 @@ export default (dispatch: any, state: any) => {
   const onFetchReferralsSubscription = (error, data) => {
     if (error) {
       console.log('[onFetchReferralsSubscription] error: ', error);
-    } else {
+    } else if (data) {
       dispatch({
         type: 'SET_REFERAL_DATA',
         data: {
