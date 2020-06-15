@@ -22,7 +22,8 @@ import Step from './Step';
 
 const BenefitsSection = () => {
   const [selectedOption, setSelectedOption] = useState(1);
-  const [steps, setSteps] = useState([]);
+  const [stepsBorrowers, setStepsBorrowers] = useState([]);
+  const [stepsInvestors, setStepsInvestors] = useState([]);
   const [mainTitle, setMainTitle] = useState('');
   const [linkText, setLinkText] = useState('');
   const [slides, setSlides] = useState([
@@ -46,19 +47,33 @@ const BenefitsSection = () => {
       step_two,
       step_three,
       text_link_to_app,
-      investor_image,
-      borrower_image
-    } = benefits_section.splice(0, 1)[0];
+      image: image_investor
+    } = benefits_section[0];
+    const {
+      step_one: step_one_borrower,
+      step_two: step_two_borrower,
+      step_three: step_three_borrower,
+      image: image_borrower
+    } = benefits_section[1];
+
     setMainTitle(main_title);
     setLinkText(text_link_to_app);
-    setSteps([
+
+    setStepsInvestors([
       { number: 1, text: step_one },
       { number: 2, text: step_two },
       { number: 3, text: step_three }
     ]);
+
+    setStepsBorrowers([
+      { number: 1, text: step_one_borrower },
+      { number: 2, text: step_two_borrower },
+      { number: 3, text: step_three_borrower }
+    ]);
+
     setSlides([
-      { id: 0, url: investor_image },
-      { id: 1, url: borrower_image }
+      { id: 0, url: image_investor },
+      { id: 1, url: image_borrower }
     ]);
   }, []);
 
@@ -95,9 +110,13 @@ const BenefitsSection = () => {
         </ImageWrapper>
         <Column>
           <StepWrapper>
-            {steps.map((item) => (
-              <Step number={`0${item.number}`} text={item.text} key={item.number} />
-            ))}
+            {selectedOption === 1
+              ? stepsInvestors.map((item) => (
+                  <Step number={`0${item.number}`} text={item.text} key={item.number} />
+                ))
+              : stepsBorrowers.map((item) => (
+                  <Step number={`0${item.number}`} text={item.text} key={item.number} />
+                ))}
           </StepWrapper>
           <CheckLoanText href={`${process.env.REACT_APP_HOST_URL}`}>
             <span>{linkText}</span>
