@@ -35,8 +35,9 @@ export const Number = styled.div`
   width: 65px;
 
   @media (max-width: ${size.mobileL}) {
-    padding-left: 30px;
+    padding-left: 15px;
     width: unset;
+    margin-right: 18px;
   }
 `;
 

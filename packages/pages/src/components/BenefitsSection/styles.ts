@@ -51,7 +51,12 @@ export const ImageWrapper = styled.div`
   }
 `;
 
-export const StepWrapper = styled.div``;
+export const StepWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const ControlWrapper = styled.div`
   padding: 0 0 50px 0;
@@ -77,6 +82,7 @@ export const Column = styled.div`
   padding-top: 50px;
   @media (max-width: ${size.mobileL}) {
     width: 100%;
+    align-items: center;
   }
 `;
 
