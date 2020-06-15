@@ -15,7 +15,8 @@ import {
   ControlWrapper,
   Column,
   CheckLoanText,
-  IconWrapper
+  IconWrapper,
+  Image
 } from './styles';
 import Step from './Step';
 
@@ -25,8 +26,8 @@ const BenefitsSection = () => {
   const [mainTitle, setMainTitle] = useState('');
   const [linkText, setLinkText] = useState('');
   const [slides, setSlides] = useState([
-    { id: 0, url: 'https://cdn.buttercms.com/C7NJSSXVQq22DqSwrBZA' },
-    { id: 1, url: 'https://cdn.buttercms.com/tXCBL3pkSBKe5pCUDeI6' }
+    { id: 0, url: '' },
+    { id: 1, url: '' }
   ]);
 
   const transitions = useTransition(slides[selectedOption - 1], (item) => item.id, {
@@ -44,7 +45,9 @@ const BenefitsSection = () => {
       step_one,
       step_two,
       step_three,
-      text_link_to_app
+      text_link_to_app,
+      investor_image,
+      borrower_image
     } = benefits_section.splice(0, 1)[0];
     setMainTitle(main_title);
     setLinkText(text_link_to_app);
@@ -54,8 +57,8 @@ const BenefitsSection = () => {
       { number: 3, text: step_three }
     ]);
     setSlides([
-      { id: 0, url: 'https://cdn.buttercms.com/kKvWSNpTRar6thqQDs9Q' },
-      { id: 1, url: 'https://cdn.buttercms.com/PfSLk7C0SjyXTUpUzFpL' }
+      { id: 0, url: investor_image },
+      { id: 1, url: borrower_image }
     ]);
   }, []);
 
