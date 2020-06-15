@@ -97,7 +97,9 @@ const LoanPage = ({
       delete newSection.section_reference;
       return newSection;
     });
+    console.log('Button clicked before', datadogLogs);
     datadogLogs.logger.info('Button clicked', { name: 'getStarted', id: 1 });
+    console.log('Button clicked after', datadogLogs);
     setButterSection(pageSections[0]);
     window.scrollTo(0, 0);
   }, []);
