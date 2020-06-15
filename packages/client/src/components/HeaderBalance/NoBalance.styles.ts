@@ -15,9 +15,3 @@ export const Message = styled.div`
 export const Alert = styled.div`
   color: #ed3022;
 `;
-
-export const Primary = styled.div`
-  color: #989ca4;
-  margin-top: 15px;
-  font-weight: bold;
-`;
