@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  signUp: '860px',
+  desktop: '950px'
+};
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -33,8 +41,13 @@ export const ImageWrapper = styled.div`
   align-items: flex-start;
   height: 500px;
   width: 18%;
+  position: relative;
   img {
     position: absolute;
+  }
+
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
   }
 `;
 
@@ -48,6 +61,11 @@ export const SpecialRow = styled(Row)`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
+
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 export const Column = styled.div`
@@ -57,6 +75,9 @@ export const Column = styled.div`
   align-items: flex-start;
   width: 45%;
   padding-top: 50px;
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+  }
 `;
 
 export const CheckLoanText = styled.a`
@@ -75,6 +96,9 @@ export const CheckLoanText = styled.a`
   color: #eb3f93;
   &:hover {
     color: #eb3f93;
+  }
+  @media (max-width: ${size.mobileL}) {
+    display: none;
   }
 `;
 

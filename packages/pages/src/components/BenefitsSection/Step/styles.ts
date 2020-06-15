@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  signUp: '860px',
+  desktop: '950px'
+};
+
 export const StepWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -8,6 +16,10 @@ export const StepWrapper = styled.div`
   padding: 0 10px 35px 10px;
   height: 100%;
   width: 100%;
+
+  @media (max-width: ${size.mobileL}) {
+    padding-left: 0;
+  }
 `;
 
 export const Number = styled.div`
@@ -21,6 +33,11 @@ export const Number = styled.div`
   color: #eb3f93;
   height: 45px;
   width: 65px;
+
+  @media (max-width: ${size.mobileL}) {
+    padding-left: 30px;
+    width: unset;
+  }
 `;
 
 export const Text = styled.div`
@@ -33,4 +50,8 @@ export const Text = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: #8a8e97;
+
+  @media (max-width: ${size.mobileL}) {
+    max-width: 220px;
+  }
 `;
