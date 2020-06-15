@@ -172,6 +172,21 @@ const queryies = {
       }`,
       variables: {},
       subscriptionName: 'userStatus'
+    },
+    userReferral: {
+      query: `
+        subscription userReferral($address: String)
+        {
+          users(where: {address:$address}) {
+            id
+            totalBountyWithdrawn
+            totalReferralsCount
+            totalBountyToWithdraw
+          }
+        }
+      `,
+      variables: {},
+      subscriptionName: 'userReferral'
     }
   },
   queryies: {}

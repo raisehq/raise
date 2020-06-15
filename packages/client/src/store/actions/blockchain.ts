@@ -52,24 +52,25 @@ export default (dispatch: any, state: any) => {
     }
   };
 
+  const onFetchReferralsSubscription = (error, data) => {
+    if (error) {
+      console.log('[onFetchReferralsSubscription] error: ', error);
+    } else {
+      dispatch({
+        type: 'SET_REFERAL_DATA',
+        data: {
+          // referrals: [],
+          totalReferralsCount: data.users[0].totalReferralsCount,
+          totalBountyToWithdraw: data.users[0].totalBountyToWithdraw
+        }
+      });
+    }
+  };
+
   const fetchReferrals = async (network) => {
     try {
       const data = await getReferralStatus(address, network);
       if (data) {
-        // const addressReferrals = data.referrals.map((referral) =>
-        //   referral.referred.id.toLowerCase()
-        // );
-        // const refUsers = await getUsersReferrerByCryptoAddress(addressReferrals);
-
-        // let addrNotFound = refUsers.filter(
-        //   (refUser) => addressReferrals.indexOf(refUser.address) === -1
-        // );
-        // addrNotFound = addrNotFound.map((addr) => ({
-        //   name: undefined,
-        //   address: addr
-        // }));
-        // const finalUsers = [...refUsers, ...addrNotFound];
-
         return dispatch({
           type: 'SET_REFERAL_DATA',
           data: {
@@ -116,6 +117,7 @@ export default (dispatch: any, state: any) => {
     fetchReferrals,
     fetchContracts,
     setNewInstance,
-    fetchReferralTrackerInfo
+    fetchReferralTrackerInfo,
+    onFetchReferralsSubscription
   };
 };

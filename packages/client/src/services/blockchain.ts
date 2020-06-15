@@ -72,16 +72,7 @@ export const getReferralTracker = async (network) => {
       query: `
       {
         referralTrackers {
-          address
-          bonus
           bonusTokenAddress
-          referralsCount
-          referralsPendingToWithdraw
-          referralsWithdrawn
-          paused
-          registryAddresses
-          referredAddresses
-          authAddress
         }
       }
       `

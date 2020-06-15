@@ -12,7 +12,7 @@ const ClaimFundsGenericCTA = ({ buttonText, disabled }) => {
       idAttr="withdraw-referral-bonus"
       text={buttonText}
       type="primary"
-      size="small"
+      size="medium"
       fullWidth
     />
   );

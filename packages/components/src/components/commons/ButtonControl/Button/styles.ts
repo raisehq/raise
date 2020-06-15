@@ -10,7 +10,9 @@ interface ButtonProps {
   fullWidth?: boolean;
   minWitdh?: boolean;
 }
-
+interface TextProps {
+  size: string;
+}
 /* eslint-disable */
 export const ButtonStyled = styled(Button)<ButtonProps>`
   &&& {
@@ -44,13 +46,6 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
       }
       return 'unset';
     }};
-    font-size: ${(props) => globalTheme.buttonSizes[props.size].fontSize};
-    line-height: ${(props) => globalTheme.buttonSizes[props.size].lineHeight};
-
-    font-family: Lato;
-    font-style: normal;
-    font-weight: bold;
-    text-align: center;
 
     &&&:hover {
       background: ${(props) => globalTheme.buttonPatterns[props.type].hover.backgroundColor};
@@ -65,6 +60,18 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
       border-color: ${(props) => globalTheme.buttonPatterns[props.type].onClick.borderColor};
     }
   }
+`;
+
+export const ButtonText = styled.div<TextProps>`
+  width: 100%;
+  font-size: ${(props) => globalTheme.buttonSizes[props.size].fontSize};
+  line-height: ${(props) => globalTheme.buttonSizes[props.size].lineHeight};
+
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  text-align: center;
+}
 `;
 /* eslint-enable */
 export default ButtonStyled;

@@ -3,6 +3,7 @@ import { match } from 'pampy';
 import { ReferralProgram, Button } from '@raisehq/components';
 import { checkUsername } from '../../services/auth';
 import useGetCoinByAddress from '../../hooks/useGetCoinByAddress';
+import useRouter from '../../hooks/useRouter';
 import {
   Content,
   Side,
@@ -21,6 +22,7 @@ import useWallet from '../../hooks/useWallet';
 import { getHost } from '../../utils/index';
 import { useAppContext } from '../../contexts/AppContext';
 import { fromDecimal } from '../../utils/web3-utils';
+import Queryies from '../../helpers/queryies';
 import {
   ClaimFundsGenericModal,
   ClaimFundsGenericProvider,
@@ -38,7 +40,7 @@ const MyAccount = () => {
   const {
     actions: {
       user: { onUpdateUser, onUpdatePassword, clearUser, clearPass },
-      blockchain: { fetchReferrals, fetchReferralTrackerInfo }
+      blockchain: { fetchReferralTrackerInfo, onFetchReferralsSubscription }
     },
     store: {
       user: {
@@ -58,38 +60,45 @@ const MyAccount = () => {
     followTx
   }: any = useRootContext();
   const {
-    web3Status: { account }
+    web3Status: { account },
+    webSocket: { webSocket }
   }: any = useAppContext();
   const metamask = useWallet();
+  const { history }: any = useRouter();
 
   const coin = useGetCoinByAddress(referralTokenAddress);
 
-  // console.log('network::: ', network);
-  // console.log('myaccount:: total referrals::: ', totalReferralsCount);
-  // console.log('myaccount:: total bounty:: ', totalBountyToWithdraw);
-  // console.log('referral token address::: ', referralTokenAddress);
   useEffect(() => {
-    fetchReferrals(network);
+    // fetchReferrals(network);
     fetchReferralTrackerInfo(network);
-  }, []);
+  }, [network]);
+
+  useEffect(() => {
+    if (webSocket) {
+      const { query, subscriptionName } = Queryies.subscriptions.userReferral;
+      const variables = {
+        address: account
+      };
+      const callback = onFetchReferralsSubscription;
+      webSocket.subscribe(query, variables, subscriptionName, callback);
+    }
+  }, [webSocket, account]);
 
   useEffect(() => {
     const parsedBountyToWithdraw: any = Number(fromDecimal(totalBountyToWithdraw, coin.decimals));
-    console.log('coin::::: ', parsedBountyToWithdraw);
     setBounty(parsedBountyToWithdraw);
   }, [coin, totalBountyToWithdraw]);
 
   const withdrawBounty = () => {
     if (kycStatus !== 3) {
-      // TODO: redirect to kyc
       return (
         <Button
           disabled={false}
-          onClick={() => {}} // redirect to kyc
+          onClick={() => history.push('/kyc')}
           idAttr="withdraw-referral-bonus"
           text="Verify Account"
           type="primary"
-          size="small"
+          size="medium"
           fullWidth
         />
       );
@@ -107,7 +116,6 @@ const MyAccount = () => {
   const confirmContractAction = async (changeStage) => {
     try {
       const { ReferralTracker } = contracts.address[networkId];
-      console.log('reff traker:: ', account);
       const loanContract = await metamask.addContractByAddress('ReferralTracker', ReferralTracker);
       await followTx
         .watchTx(
