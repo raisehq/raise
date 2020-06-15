@@ -5,7 +5,7 @@ const NoBalance = () => {
   return (
     <Message>
       <div>
-        <Alert>You don't have balance.</Alert>
+        <Alert>You don&apos;t have balance.</Alert>
         Buy with your credit card or transfer from another wallet.
         <Primary>Raise support DAI and USDC.</Primary>
       </div>
