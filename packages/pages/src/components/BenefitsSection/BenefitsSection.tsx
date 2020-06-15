@@ -109,13 +109,12 @@ const BenefitsSection = () => {
         </ImageWrapper>
         <Column>
           <StepWrapper>
-            {selectedOption === 1
-              ? stepsInvestors.map((item) => (
-                  <Step number={`0${item.number}`} text={item.text} key={item.number} />
-                ))
-              : stepsBorrowers.map((item) => (
-                  <Step number={`0${item.number}`} text={item.text} key={item.number} />
-                ))}
+            {stepsInvestors.map((item) => (
+              <Step number={`0${item.number}`} text={item.text} key={item.number} visible={selectedOption === 1} />
+            ))}
+            {stepsBorrowers.map((item) => (
+              <Step number={`0${item.number}`} text={item.text} key={item.number} visible={selectedOption !== 1} />
+            ))}
           </StepWrapper>
           <CheckLoanText href={`${process.env.REACT_APP_HOST_URL}`}>
             <span>{linkText}</span>
