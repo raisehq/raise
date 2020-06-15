@@ -30,9 +30,10 @@ const BenefitsSection = () => {
   ]);
 
   const transitions = useTransition(slides[selectedOption - 1], (item) => item.id, {
+    unique: true,
     from: { opacity: 0 },
     enter: { opacity: 1 },
-    leave: { opacity: 1 }
+    leave: { opacity: 0 }
   });
 
   useAsyncEffect(async () => {

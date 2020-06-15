@@ -32,7 +32,10 @@ export const ImageWrapper = styled.div`
   justify-content: flex-end;
   align-items: flex-start;
   height: 500px;
-  width: 50%;
+  width: 18%;
+  img {
+    position: absolute;
+  }
 `;
 
 export const StepWrapper = styled.div``;
