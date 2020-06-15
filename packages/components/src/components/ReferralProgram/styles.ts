@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 import { Button, Input } from 'semantic-ui-react';
-
-const size = {
-  mobileS: '320px',
-  mobileM: '375px',
-  mobileL: '425px',
-  signUp: '860px',
-  desktop: '950px'
-};
+import { device, size } from '../../utils/breakpoints';
 
 interface CopyButtonProps {
   copied: boolean;
@@ -69,6 +62,7 @@ export const ReferralSubSection = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  padding: 30px 15px;
 `;
 
 export const Title = styled.div`
@@ -80,6 +74,9 @@ export const Title = styled.div`
   padding: 10px 10px 10px 0;
 
   color: #eb3f93;
+  @media screen and ${device.laptop} {
+    padding: 10px 10px 10px 15px;
+  }
 `;
 
 export const ReferralText = styled.div`
@@ -89,10 +86,11 @@ export const ReferralText = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: #8a8e97;
-  width: 254px;
+  width: 100%;
 
-  @media (max-width: ${size.mobileL}) {
-    width: 100%;
+  @media screen and ${device.laptop} {
+    padding: 10px 10px 10px 15px;
+    width: 254px;
   }
 `;
 
