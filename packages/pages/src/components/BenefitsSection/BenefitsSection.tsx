@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { GroupButton } from '@raisehq/components';
 import { Icon } from 'semantic-ui-react';
+import { useTransition, animated } from 'react-spring';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 import { getCollection } from '../../helpers/butter';
-import { useTransition, animated } from 'react-spring';
 
 import {
   Wrapper,
@@ -15,8 +15,7 @@ import {
   ControlWrapper,
   Column,
   CheckLoanText,
-  IconWrapper,
-  Image
+  IconWrapper
 } from './styles';
 import Step from './Step';
 
