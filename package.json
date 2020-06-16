@@ -29,9 +29,9 @@
     "lint": "lerna run lint --stream",
     "build:deps": "lerna run --stream --scope '{@raisehq/components,@raisehq/onboarding}' build:bili",
     "prettier": "prettier --write \"packages/**/src/**/*.{tsx,ts}\"",
-    "watch": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/onboarding,@raisehq/components,client}' watch:bili",
-    "watch:pages": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages}' watch:bili",
-    "watch:all": "yarn run build:deps:bili && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages,client}' watch:bili"
+    "watch": "yarn run build:deps && lerna run --parallel --concurrency 4  --scope '{@raisehq/onboarding,@raisehq/components,client}' watch:bili",
+    "watch:pages": "yarn run build:deps && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages}' watch:bili",
+    "watch:all": "yarn run build:deps && lerna run --parallel --concurrency 4  --scope '{@raisehq/components,@raisehq/onboarding,pages,client}' watch:bili"
   },
   "resolutions": {
     "bn.js": "4.11.8",

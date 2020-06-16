@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonStyled } from './styles';
+import { ButtonStyled, ButtonText } from './styles';
 import { ButtonProps } from '../types';
 
 const Button: React.SFC<ButtonProps> = ({
@@ -26,8 +26,10 @@ const Button: React.SFC<ButtonProps> = ({
     minWidth={minWidth}
     {...rest}
   >
-    {text}
-    {children}
+    <ButtonText size={size}>
+      {text}
+      {children}
+    </ButtonText>
   </ButtonStyled>
 );
 

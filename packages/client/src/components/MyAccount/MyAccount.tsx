@@ -1,7 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { match } from 'pampy';
-import { ReferralProgram } from '@raisehq/components';
+import { ReferralProgram, Button } from '@raisehq/components';
 import { checkUsername } from '../../services/auth';
+import useGetCoinByAddress from '../../hooks/useGetCoinByAddress';
+import useRouter from '../../hooks/useRouter';
 import {
   Content,
   Side,
@@ -16,8 +18,16 @@ import UpdateUsername from './components/UpdateUsername';
 import UpdatePassword from './components/UpdatePassword';
 import { useRootContext } from '../../contexts/RootContext';
 import { MyActivity } from '../Dashboard';
-
+import useWallet from '../../hooks/useWallet';
 import { getHost } from '../../utils/index';
+import { useAppContext } from '../../contexts/AppContext';
+import { fromDecimal } from '../../utils/web3-utils';
+// import Queryies from '../../helpers/queryies';
+import {
+  ClaimFundsGenericModal,
+  ClaimFundsGenericProvider,
+  ClaimFundsGenericButton
+} from '../ClaimFundsGeneric';
 
 const MyAccount = () => {
   const [usernameExists, setUsernameExists] = useState(false);
@@ -25,10 +35,12 @@ const MyAccount = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordRepeat, setNewPasswordRepeat] = useState('');
+  const [bounty, setBounty]: any = useState();
 
   const {
     actions: {
-      user: { onUpdateUser, onUpdatePassword, clearUser, clearPass }
+      user: { onUpdateUser, onUpdatePassword, clearUser, clearPass },
+      blockchain: { fetchReferralTrackerInfo, fetchReferrals }
     },
     store: {
       user: {
@@ -41,9 +53,116 @@ const MyAccount = () => {
           kyc_status: kycStatus,
           referral_code: RefCode
         }
-      }
-    }
+      },
+      config: { network, networkId },
+      blockchain: { totalReferralsCount, totalBountyToWithdraw, referralTokenAddress, contracts }
+    },
+    followTx
   }: any = useRootContext();
+  const {
+    web3Status: { account }
+  }: // webSocket: { webSocket }
+  any = useAppContext();
+  const metamask = useWallet();
+  const { history }: any = useRouter();
+
+  const coin = useGetCoinByAddress(referralTokenAddress);
+
+  useEffect(() => {
+    fetchReferrals(network);
+    fetchReferralTrackerInfo(network);
+  }, [network]);
+
+  // @ts-ignore
+  // eslint-disable-next-line consistent-return
+  // useEffect(() => {
+  //   const { query, subscriptionName } = Queryies.subscriptions.userReferral;
+  //   const subscriptionNameUnique = `${subscriptionName}_${account}`;
+  //   if (webSocket) {
+  //     const variables = {
+  //       address: account
+  //     };
+  //     const callback = onFetchReferralsSubscription;
+  //     webSocket.subscribe(query, variables, subscriptionNameUnique, callback);
+  //   }
+
+  //   return () => {
+  //     webSocket.unsubscribe(subscriptionNameUnique);
+  //   };
+  // }, [webSocket, account]);
+
+  useEffect(() => {
+    const parsedBountyToWithdraw: any = Number(fromDecimal(totalBountyToWithdraw, coin.decimals));
+    setBounty(parsedBountyToWithdraw);
+  }, [coin, totalBountyToWithdraw]);
+
+  const withdrawBounty = () => {
+    if (kycStatus !== 3) {
+      return (
+        <Button
+          disabled={false}
+          onClick={() => history.push('/kyc')}
+          idAttr="withdraw-referral-bonus"
+          text="Verify Account"
+          type="primary"
+          size="medium"
+          fullWidth
+        />
+      );
+    }
+
+    if (bounty) {
+      return (
+        <ClaimFundsGenericButton buttonText={`Withdraw ${bounty} ${coin.value}`} disabled={false} />
+      );
+    }
+
+    return <ClaimFundsGenericButton buttonText="Nothing to withdraw" disabled />;
+  };
+
+  const confirmContractAction = async (changeStage) => {
+    try {
+      const { ReferralTracker } = contracts.address[networkId];
+      const loanContract = await metamask.addContractByAddress('ReferralTracker', ReferralTracker);
+      await followTx
+        .watchTx(
+          loanContract.methods.withdraw(account).send({
+            from: account
+          }),
+          {
+            id: 'referralWithdraw',
+            vars: [bounty, coin.value]
+          },
+          'referralWithdraw'
+        )
+        .on('tx_start', () => {
+          changeStage();
+        });
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const getCopies = () => {
+    return {
+      confirm: {
+        header: 'Claim Referral Bounty',
+        resume: {
+          title: 'Bounty to withdraw',
+          value: `${bounty} ${coin.text}`
+        },
+        info: 'Check your wallet and confirm the transaction to claim your bounty.',
+        buttonText: 'CLAIM'
+      },
+      processing: {
+        header: 'Claim Referral Bounty',
+        resume: {
+          title: 'Bounty to withdraw',
+          value: `${bounty} ${coin.text}`
+        }
+      }
+    };
+  };
 
   const changeUsername = async (value) => {
     clearUser();
@@ -134,7 +253,19 @@ const MyAccount = () => {
     <Main>
       {RefCode && (
         <ReferralWrapper>
-          <ReferralProgram totalCount="0" shareLink={shareLink} />
+          <ClaimFundsGenericProvider>
+            <ClaimFundsGenericModal
+              confirmContractAction={confirmContractAction}
+              methodId="referralWithdraw"
+              copies={getCopies()}
+              onSuccessAction={() => fetchReferrals(network)}
+            />
+            <ReferralProgram
+              totalCount={totalReferralsCount || 0}
+              shareLink={shareLink}
+              withdrawCTA={withdrawBounty()}
+            />
+          </ClaimFundsGenericProvider>
         </ReferralWrapper>
       )}
       <h1>My Account</h1>

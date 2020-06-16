@@ -24,11 +24,14 @@ class UseWebsocket {
 
   private subscriptions: Map<string, Function>;
 
+  private unsubscriptions: Map<string, Function>;
+
   public constructor(url: string, protocol: string, options: object = {}) {
     this.url = url;
     this.options = options;
     this.protocol = protocol;
     this.subscriptions = new Map();
+    this.unsubscriptions = new Map();
     // subscribe to events
     this.client = new WebSocket(this.url, this.protocol);
 
@@ -48,6 +51,7 @@ class UseWebsocket {
       // Notify the subscriptions.
       const callbacks = Array.from(this.subscriptions.values());
       this.subscriptions.clear();
+      this.unsubscriptions.clear();
 
       callbacks.map((callback) => callback(error, null));
     };
@@ -74,6 +78,25 @@ class UseWebsocket {
         this.subscribe(query, variables, subscriptionName, callback);
       }, 1000);
     }
+  };
+
+  public unsubscribe = (subscriptionName) => {
+    return new Promise((resolve, reject) => {
+      if (this.subscriptions.get(subscriptionName) !== undefined) {
+        this.client.send(
+          JSON.stringify({
+            type: GQL.STOP,
+            id: subscriptionName
+          })
+        );
+
+        this.unsubscriptions.set(subscriptionName, resolve);
+      } else {
+        console.log('Subscription Name already unsubscribed: ', subscriptionName);
+
+        this.unsubscriptions.set(subscriptionName, reject);
+      }
+    });
   };
 
   public shutdown = () => {
@@ -127,6 +150,10 @@ class UseWebsocket {
         const callback = this.subscriptions.get(data.id);
         if (callback) {
           this.subscriptions.delete(data.id);
+          const unsCallback = this.unsubscriptions.get(data.id);
+          if (unsCallback) {
+            unsCallback();
+          }
           // Return a null error and payload to indicate the subscription is closed.
           callback(null, null);
         }
