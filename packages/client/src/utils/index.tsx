@@ -142,3 +142,16 @@ export const isAddress = (rawInput) => {
     return false;
   }
 };
+
+export const getIP = async () => {
+  try {
+    const ipJson = await axios('https://api.ipify.org?format=jsonp?', {
+      method: 'GET',
+      headers: {}
+    });
+
+    return ipJson.data;
+  } catch (error) {
+    throw error;
+  }
+};

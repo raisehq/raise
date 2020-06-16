@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Cookies from 'js-cookie';
 import { SignUp } from '@raisehq/components';
 import { InvestingSignUpContainer } from './styles';
 import { checkEmail, verifyBloomLogin } from '../../services/auth';
@@ -8,6 +9,7 @@ import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useRouter from '../../hooks/useRouter';
 import useCookie from '../../hooks/useCookie';
 import LocalData from '../../helpers/localData';
+import { getIP } from '../../utils';
 
 const SignUpWrapper = ({ id }: any) => {
   // @ts-ignore
@@ -21,9 +23,15 @@ const SignUpWrapper = ({ id }: any) => {
   const onSignUp = async (credentials) => {
     try {
       tagManager.sendEventCategory('Signup', TMEvents.Click, `${id}_attempt`, history.location);
+      const ip = await getIP();
+      const hutk = Cookies.get('hubspotutk');
       const signup = await signUp({
         ...credentials,
-        accounttype_id: 2
+        accounttype_id: 2,
+        clientIP: ip,
+        signupId: id,
+        signupType: 'email',
+        hutk
       });
 
       if (signup) {

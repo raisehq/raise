@@ -12,6 +12,7 @@ const URL = {
 };
 
 export const signUp = async (data) => {
+  console.log('payload::: ', data);
   const config: any = {
     url: URL.REGISTER,
     method: 'POST',
