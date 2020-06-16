@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GroupButton } from '@raisehq/components';
 import { Icon } from 'semantic-ui-react';
+import { useTransition, animated } from 'react-spring';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
 
 import {
@@ -13,12 +14,11 @@ import {
   ControlWrapper,
   Column,
   CheckLoanText,
-  IconWrapper,
-  Image
+  IconWrapper
 } from './styles';
 import Step from './Step';
 
-const BenefitsSection = ({ data }): any => {
+const BenefitsSection = ({ benefitsInvestors, benefitsBorrowers }): any => {
   const [selectedOption, setSelectedOption] = useState(1);
   const [stepsBorrowers, setStepsBorrowers] = useState([]);
   const [stepsInvestors, setStepsInvestors] = useState([]);
@@ -28,44 +28,54 @@ const BenefitsSection = ({ data }): any => {
     { id: 0, url: '' },
     { id: 1, url: '' }
   ]);
+
+  const transitions = useTransition(slides[selectedOption - 1], (item) => item.id, {
+    unique: true,
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 }
+  });
+
   useAsyncEffect(async () => {
-    console.log('DATA:', data);
+    if (benefitsInvestors && benefitsBorrowers) {
+      console.log('aaaa: ', benefitsInvestors);
+      console.log('aaaa: ', benefitsBorrowers);
+      const {
+        main_title,
+        step_one,
+        step_two,
+        step_three,
+        text_link_to_app,
+        image: image_investor
+      } = benefitsInvestors;
+      const {
+        step_one: step_one_borrower,
+        step_two: step_two_borrower,
+        step_three: step_three_borrower,
+        image: image_borrower
+      } = benefitsBorrowers;
 
-    const {
-      main_title,
-      step_one,
-      step_two,
-      step_three,
-      text_link_to_app,
-      image: image_investor
-    } = data[0].node;
-    const {
-      step_one: step_one_borrower,
-      step_two: step_two_borrower,
-      step_three: step_three_borrower,
-      image: image_borrower
-    } = data[1].node;
+      setMainTitle(main_title);
+      setLinkText(text_link_to_app);
 
-    setMainTitle(main_title);
-    setLinkText(text_link_to_app);
+      setStepsInvestors([
+        { number: 1, text: step_one },
+        { number: 2, text: step_two },
+        { number: 3, text: step_three }
+      ]);
 
-    setStepsInvestors([
-      { number: 1, text: step_one },
-      { number: 2, text: step_two },
-      { number: 3, text: step_three }
-    ]);
+      setStepsBorrowers([
+        { number: 1, text: step_one_borrower },
+        { number: 2, text: step_two_borrower },
+        { number: 3, text: step_three_borrower }
+      ]);
 
-    setStepsBorrowers([
-      { number: 1, text: step_one_borrower },
-      { number: 2, text: step_two_borrower },
-      { number: 3, text: step_three_borrower }
-    ]);
-
-    setSlides([
-      { id: 0, url: image_investor },
-      { id: 1, url: image_borrower }
-    ]);
-  }, [data]);
+      setSlides([
+        { id: 0, url: image_investor },
+        { id: 1, url: image_borrower }
+      ]);
+    }
+  }, [benefitsInvestors, benefitsBorrowers]);
 
   return (
     <Wrapper>
@@ -86,27 +96,27 @@ const BenefitsSection = ({ data }): any => {
       </Row>
       <SpecialRow>
         <ImageWrapper>
-          <Image src={slides[0].url} alt="11" visible={selectedOption === 1} />
-          <Image src={slides[1].url} alt="11" visible={selectedOption !== 1} />
+          {transitions.map(({ item, props, key }) => (
+            <animated.div
+              key={key}
+              style={{
+                ...props,
+                backgroundImage: item.url
+              }}
+            >
+              <img src={item.url} alt="11" />
+            </animated.div>
+          ))}
         </ImageWrapper>
         <Column>
           <StepWrapper>
-            {stepsInvestors.map((item) => (
-              <Step
-                number={`0${item.number}`}
-                text={item.text}
-                key={item.number + 1}
-                visible={selectedOption === 1}
-              />
-            ))}
-            {stepsBorrowers.map((item) => (
-              <Step
-                number={`0${item.number}`}
-                text={item.text}
-                key={item.number}
-                visible={selectedOption !== 1}
-              />
-            ))}
+            {selectedOption === 1
+              ? stepsInvestors.map((item) => (
+                  <Step number={`0${item.number}`} text={item.text} key={item.number + 1} />
+                ))
+              : stepsBorrowers.map((item) => (
+                  <Step number={`0${item.number}`} text={item.text} key={item.number} />
+                ))}
           </StepWrapper>
           <CheckLoanText href={`${process.env.REACT_APP_HOST_URL}`}>
             <span>{linkText}</span>
