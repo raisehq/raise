@@ -13,3 +13,5 @@ lerna-debug*
 .vscode/
 package-lock.json
 .DS_Store
+
+packages/pages/.env.production
