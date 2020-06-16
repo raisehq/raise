@@ -23,7 +23,7 @@
     "gatsby-plugin-sharp": "^2.6.1",
     "gatsby-plugin-styled-components": "^3.3.1",
     "gatsby-plugin-typescript": "^2.4.2",
-    "gatsby-source-buttercms": "^2.1.1",
+    "gatsby-source-buttercms": "https://github.com/Js-Brecht/gatsby-source-buttercms.git",
     "gatsby-source-filesystem": "^2.3.1",
     "gatsby-transformer-sharp": "^2.5.1",
     "htmr": "^0.8.7",

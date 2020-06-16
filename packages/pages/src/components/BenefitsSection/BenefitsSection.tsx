@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { GroupButton } from '@raisehq/components';
 import { Icon } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { getCollection } from '../../helpers/butter';
 import { useTransition, animated } from 'react-spring';
 
 import {
@@ -20,7 +19,7 @@ import {
 } from './styles';
 import Step from './Step';
 
-const BenefitsSection = () => {
+const BenefitsSection = ({ data }): any => {
   const [selectedOption, setSelectedOption] = useState(1);
   const [stepsBorrowers, setStepsBorrowers] = useState([]);
   const [stepsInvestors, setStepsInvestors] = useState([]);
@@ -39,7 +38,7 @@ const BenefitsSection = () => {
   });
 
   useAsyncEffect(async () => {
-    const benefits_section = await getCollection('benefits_section', {});
+    console.log('DATA:', data);
 
     const {
       main_title,
@@ -48,13 +47,13 @@ const BenefitsSection = () => {
       step_three,
       text_link_to_app,
       image: image_investor
-    } = benefits_section[0];
+    } = data[0].node;
     const {
       step_one: step_one_borrower,
       step_two: step_two_borrower,
       step_three: step_three_borrower,
       image: image_borrower
-    } = benefits_section[1];
+    } = data[1].node;
 
     setMainTitle(main_title);
     setLinkText(text_link_to_app);
@@ -75,7 +74,7 @@ const BenefitsSection = () => {
       { id: 0, url: image_investor },
       { id: 1, url: image_borrower }
     ]);
-  }, []);
+  }, [data]);
 
   return (
     <Wrapper>

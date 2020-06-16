@@ -15,12 +15,15 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
   // HOME PAGE
   const queryIndex = await graphql(Builds.index.query);
   const press = await graphql(Builds.press.query);
+  const benefits = await graphql(Builds.benefits.query);
+
   createPage({
     path: Builds.index.path,
     component: Builds.index.component,
     context: {
       data: queryIndex.data,
-      press: press.data
+      press: press.data,
+      benefits: benefits.data
     }
   });
 

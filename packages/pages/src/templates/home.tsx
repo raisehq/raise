@@ -7,9 +7,10 @@ import 'semantic-ui-css/semantic.min.css';
 import AboveTheFold from '../components/AboveTheFold';
 import BenefitsSection from '../components/BenefitsSection';
 
-const IndexPage = ({ pageContext: { data, press } }: any) => {
+const IndexPage = ({ pageContext: { data, press, benefits } }: any) => {
   const investSections = data.allButterPage.nodes[0];
   const { articles } = press.allButterPage.edges[0].node;
+  console.log(benefits);
 
   const flattenedArticles = articles.map((article: any) => article.press_release);
 
@@ -19,7 +20,7 @@ const IndexPage = ({ pageContext: { data, press } }: any) => {
         <SEO />
         <TagManager />
         <AboveTheFold />
-        <BenefitsSection />
+        <BenefitsSection data={benefits} />
         <InvestingPage data={investSections} articles={flattenedArticles} />
       </div>
     </Layout>
