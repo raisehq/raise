@@ -10,7 +10,8 @@ const messages = {
     withdrawRepaymentAndDeposit: 'Withdraw earnings to my wallet and make deposit',
     withdrawRepayment: 'Transferring your earnings to your wallet',
     deposit: 'Processing the investor deposit',
-    withdrawDeposit: 'Transfering the deposit to your wallet'
+    withdrawDeposit: 'Transfering the deposit to your wallet',
+    referralWithdraw: 'Transfering {0} {1} to your wallet'
   },
   success: {
     createLoan: 'Done! Check your loan in the dashboard',
@@ -23,7 +24,8 @@ const messages = {
     withdrawRepaymentAndDeposit: 'Withdraw earnings to my wallet and make deposit',
     withdrawRepayment: 'Done! The funds have been transferred to your wallet',
     deposit: 'Your deposit has been made',
-    withdrawDeposit: 'Your deposit has been withdrawn'
+    withdrawDeposit: 'Your deposit has been withdrawn',
+    referralWithdraw: 'The funds have been transfered'
   },
   error: {
     createLoan: 'Something went wrong',
@@ -36,7 +38,8 @@ const messages = {
     withdrawRepaymentAndDeposit: 'Something went wrong',
     withdrawRepayment: 'Something went wrong',
     deposit: 'Something went wrong',
-    withdrawDeposit: 'Something went wrong'
+    withdrawDeposit: 'Something went wrong',
+    referralWithdraw: 'Something went wrong'
   }
 };
 

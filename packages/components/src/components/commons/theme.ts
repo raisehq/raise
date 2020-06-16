@@ -153,6 +153,13 @@ const globalTheme: any = {
       fontSize: '16px',
       lineHeight: '19px'
     },
+    medium: {
+      height: '48px',
+      width: '147px',
+      padding: '0 20px',
+      fontSize: '16px',
+      lineHeight: '19px'
+    },
     small: {
       height: '40px',
       width: '116px',
@@ -161,11 +168,36 @@ const globalTheme: any = {
       lineHeight: '19px'
     }
   },
+  textSizes: {
+    large: {
+      height: '72px',
+      width: '240px',
+      fontSize: '20px',
+      lineHeight: '24px'
+    },
+    standard: {
+      height: '48px',
+      width: '147px',
+      fontSize: '16px',
+      lineHeight: '19px'
+    },
+    medium: {
+      height: '48px',
+      width: '147px',
+      fontSize: '16px',
+      lineHeight: '19px'
+    },
+    small: {
+      height: '40px',
+      width: '116px',
+      fontSize: '16px',
+      lineHeight: '19px'
+    }
+  },
   buttonWithLogoSizes: {
     large: {
       height: '72px',
       width: '240px',
-      padding: '16px24px',
       fontSize: '20px',
       lineHeight: '24px'
     }

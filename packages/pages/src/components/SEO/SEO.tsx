@@ -128,6 +128,7 @@ const SEO = ({
 
   return (
     <Helmet>
+      <html lang="en" />
       <meta
         name="viewport"
         content="width=device-width, height=device-height, initial-scale=1, minimal-ui"

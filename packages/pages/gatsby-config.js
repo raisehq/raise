@@ -3,12 +3,37 @@ const GOOGLEOPTIMIZE = process.env.REACT_APP_GOOGLE_OPTIMIZE;
 const TAGMANAGERID = process.env.REACT_APP_GTM_ID;
 
 module.exports = {
+  siteMetadata: {
+    siteUrl: process.env.REACT_APP_WEB_URL
+  },
   plugins: [
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sitemap',
     'gatsby-transformer-sharp',
     'gatsby-plugin-typescript',
     'gatsby-plugin-styled-components',
     'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        resolveEnv: () => process.env.NODE_ENV,
+        env: {
+          production: {
+            policy: [{ userAgent: '*' }]
+          },
+          'branch-deploy': {
+            policy: [{ userAgent: '*', disallow: ['/'] }],
+            sitemap: null,
+            host: null
+          },
+          'deploy-preview': {
+            policy: [{ userAgent: '*', disallow: ['/'] }],
+            sitemap: null,
+            host: null
+          }
+        }
+      }
+    },
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
@@ -75,7 +100,7 @@ module.exports = {
         },
         optimize: {
           id: GOOGLEOPTIMIZE,
-          timeout: 5000
+          timeout: 2000
         }
       }
     }

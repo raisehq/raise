@@ -118,7 +118,7 @@ deploy-pre-front:
   image: python:3.7-alpine
   stage: deploy
   before_script:
-    - apk add --update bash
+    - apk add --update bash coreutils
     - pip install awscli
   script:
     - echo '>>>> DEPLOY INTEGRATION <<<<'
@@ -133,6 +133,9 @@ deploy-pre-front:
       aws s3 sync canary s3://${BUCKET_NAME_CANARY}/ --metadata-directive REPLACE --cache-control no-store
       ./scripts/cache_invalidation.sh ${BUCKET_NAME_CANARY}
       ./scripts/cache_invalidation.sh ${BUCKET_NAME_CANARY}
+  after_script:
+    - ./scripts/clean_old_chunks.sh ${BUCKET_NAME_INT}
+    - ./scripts/clean_old_chunks.sh ${BUCKET_NAME_CANARY}
 
   only:
     refs:
@@ -147,7 +150,7 @@ deploy-prod:
   image: python:3.7-alpine
   stage: deploy-prod
   before_script:
-    - apk add --update bash
+    - apk add --update bash coreutils
     - pip install awscli
   script:
     - |
@@ -155,6 +158,8 @@ deploy-prod:
       ./scripts/app_s3_sync.sh ${BUCKET_NAME_PROD} packages/client/build
       ./scripts/cache_invalidation.sh ${BUCKET_NAME_PROD}
       ./scripts/cache_invalidation.sh ${BUCKET_NAME_PROD}
+  after_script:
+    - ./scripts/clean_old_chunks.sh ${BUCKET_NAME_PROD}
   only:
     refs:
       - master

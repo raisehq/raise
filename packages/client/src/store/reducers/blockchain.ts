@@ -45,9 +45,17 @@ export default (state: any, action: any) => {
       return {
         ...state,
         ...{
-          referrals: action.data.referrals || [],
+          // referrals: action.data.referrals || [],
           totalReferralsCount: action.data.totalReferralsCount || 0,
           totalBountyToWithdraw: action.data.totalBountyToWithdraw || 0
+        }
+      };
+    }
+    case 'SET_REFERAL_TRACKER_DATA': {
+      return {
+        ...state,
+        ...{
+          referralTokenAddress: action.data.referralTokenAddress
         }
       };
     }
