@@ -17,7 +17,6 @@ import useRouter from '../../hooks/useRouter';
 import useGetCoin from '../../hooks/useGetCoin';
 import WarningModal from '../WarningModal';
 import { isAddress } from '../../utils';
-import datadogLogs from '../../helpers/datadogLogs';
 
 const LoanPage = ({
   match: {
