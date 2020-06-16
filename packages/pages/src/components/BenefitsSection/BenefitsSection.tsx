@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { GroupButton } from '@raisehq/components';
 import { Icon } from 'semantic-ui-react';
 import useAsyncEffect from '../../hooks/useAsyncEffect';
-import { useTransition, animated } from 'react-spring';
 
 import {
   Wrapper,
@@ -29,14 +28,6 @@ const BenefitsSection = ({ data }): any => {
     { id: 0, url: '' },
     { id: 1, url: '' }
   ]);
-
-  const transitions = useTransition(slides[selectedOption - 1], (item) => item.id, {
-    unique: true,
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 }
-  });
-
   useAsyncEffect(async () => {
     console.log('DATA:', data);
 
@@ -95,27 +86,27 @@ const BenefitsSection = ({ data }): any => {
       </Row>
       <SpecialRow>
         <ImageWrapper>
-          {transitions.map(({ item, props, key }) => (
-            <animated.div
-              key={key}
-              style={{
-                ...props,
-                backgroundImage: item.url
-              }}
-            >
-              <img src={item.url} alt="11" />
-            </animated.div>
-          ))}
+          <Image src={slides[0].url} alt="11" visible={selectedOption === 1} />
+          <Image src={slides[1].url} alt="11" visible={selectedOption !== 1} />
         </ImageWrapper>
         <Column>
           <StepWrapper>
-            {selectedOption === 1
-              ? stepsInvestors.map((item) => (
-                  <Step number={`0${item.number}`} text={item.text} key={item.number} />
-                ))
-              : stepsBorrowers.map((item) => (
-                  <Step number={`0${item.number}`} text={item.text} key={item.number} />
-                ))}
+            {stepsInvestors.map((item) => (
+              <Step
+                number={`0${item.number}`}
+                text={item.text}
+                key={item.number + 1}
+                visible={selectedOption === 1}
+              />
+            ))}
+            {stepsBorrowers.map((item) => (
+              <Step
+                number={`0${item.number}`}
+                text={item.text}
+                key={item.number}
+                visible={selectedOption !== 1}
+              />
+            ))}
           </StepWrapper>
           <CheckLoanText href={`${process.env.REACT_APP_HOST_URL}`}>
             <span>{linkText}</span>
