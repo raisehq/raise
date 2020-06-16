@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GroupButton } from '@raisehq/components';
 import { Icon } from 'semantic-ui-react';
 import { useTransition, animated } from 'react-spring';
-import useAsyncEffect from '../../hooks/useAsyncEffect';
-
 import {
   Wrapper,
   Row,
@@ -36,10 +34,8 @@ const BenefitsSection = ({ benefitsInvestors, benefitsBorrowers }): any => {
     leave: { opacity: 0 }
   });
 
-  useAsyncEffect(async () => {
+  useEffect(() => {
     if (benefitsInvestors && benefitsBorrowers) {
-      console.log('aaaa: ', benefitsInvestors);
-      console.log('aaaa: ', benefitsBorrowers);
       const {
         main_title,
         step_one,
@@ -104,7 +100,7 @@ const BenefitsSection = ({ benefitsInvestors, benefitsBorrowers }): any => {
                 backgroundImage: item.url
               }}
             >
-              <img src={item.url} alt="11" />
+              <img src={item.url} alt={selectedOption === 1 ? 'investors' : 'borrowers'} />
             </animated.div>
           ))}
         </ImageWrapper>
