@@ -4,7 +4,7 @@ const TAGMANAGERID = process.env.REACT_APP_GTM_ID;
 
 module.exports = {
   siteMetadata: {
-    siteUrl: process.env.REACT_APP_WEB_URL,
+    siteUrl: process.env.REACT_APP_WEB_URL
   },
   plugins: [
     'gatsby-plugin-react-helmet',
@@ -19,20 +19,20 @@ module.exports = {
         resolveEnv: () => process.env.NODE_ENV,
         env: {
           production: {
-            policy: [{ userAgent: '*' }],
+            policy: [{ userAgent: '*' }]
           },
           'branch-deploy': {
             policy: [{ userAgent: '*', disallow: ['/'] }],
             sitemap: null,
-            host: null,
+            host: null
           },
           'deploy-preview': {
             policy: [{ userAgent: '*', disallow: ['/'] }],
             sitemap: null,
-            host: null,
-          },
-        },
-      },
+            host: null
+          }
+        }
+      }
     },
     {
       resolve: 'gatsby-plugin-manifest',
@@ -89,7 +89,7 @@ module.exports = {
       resolve: 'gatsby-source-buttercms',
       options: {
         authToken: BUTTERCMSKEY,
-        pageTypes: ['page_sections', 'help', 'press_releases_page', 'about']
+        pageTypes: ['page_sections', 'help', 'press_releases_page', 'about', 'benefits']
       }
     },
     {
