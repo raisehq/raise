@@ -10,7 +10,6 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="shortcut icon" href="%REACT_APP_HOST_IMAGES%/favicons/favicon.ico" />
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet" />
-    <link href="%REACT_APP_HOST_IMAGES%/zendesk/styles.css" rel="stylesheet" />
 
     <script src="https://%REACT_APP_SUMSUB_API%/idensic/static/sumsub-kyc.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -40,23 +39,5 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-
-    <!-- Start of Zendesk load-->
-    <script type="text/javascript">
-      window.zESettings = {
-        webWidget: {
-          position: { horizontal: 'left', vertical: 'bottom' },
-          chat: {
-            connectOnPageLoad: false
-          }
-        }
-      };
-    </script>
-    <script
-      async
-      id="ze-snippet"
-      src="https://static.zdassets.com/ekr/snippet.js?key=d074590b-6078-4326-9857-b202702253eb"
-    ></script>
-    <!-- End of Zendesk load-->
   </body>
 </html>

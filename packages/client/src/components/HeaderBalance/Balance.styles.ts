@@ -17,11 +17,11 @@ export const AddressStatus = styled(AddressStatusRaw)`
   &&&&&& {
     padding: 0 !important;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     min-height: unset;
   }
 `;
-export const BalanceDropdown = styled(Dropdown)`
+export const BalanceDropdown = styled(Dropdown)<{ notification: boolean }>`
   &&& {
     padding: 12px;
     box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
@@ -33,6 +33,26 @@ export const BalanceDropdown = styled(Dropdown)`
     width: 40px;
     border: 1px solid transparent;
   }
+  ${({ notification }: any) => {
+    if (notification) {
+      return `
+      &&&:after {
+        height: 10px;
+        width: 10px;
+        background-color: red;
+        border-radius: 50%;
+        display: inherit;
+        content: '';
+        position: absolute;
+        top: 7px;
+        border: 1px solid white;
+        right: 7px;
+      }
+      `;
+    }
+    return '';
+  }}}
+ 
 
   &&&& .dropdown.icon {
     font-size: 24px;

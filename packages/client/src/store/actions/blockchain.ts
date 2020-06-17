@@ -1,5 +1,5 @@
-import { getReferralStatus } from '../../services/blockchain';
-import { addCryptoAddress, getUsersReferrerByCryptoAddress } from '../../services/user';
+import { getReferralStatus, getReferralTracker } from '../../services/blockchain';
+import { addCryptoAddress } from '../../services/user';
 import { getContractsDefinition } from '../../utils';
 
 export default (dispatch: any, state: any) => {
@@ -37,28 +37,44 @@ export default (dispatch: any, state: any) => {
     }
   };
 
+  const fetchReferralTrackerInfo = async (network) => {
+    try {
+      const data = await getReferralTracker(network);
+      return dispatch({
+        type: 'SET_REFERAL_TRACKER_DATA',
+        data: {
+          // referrals: finalUsers,
+          referralTokenAddress: data.bonusTokenAddress
+        }
+      });
+    } catch (error) {
+      return dispatch({ type: 'ERROR_REFERAL_DATA' });
+    }
+  };
+
+  const onFetchReferralsSubscription = (error, data) => {
+    if (error) {
+      console.log('[onFetchReferralsSubscription] error: ', error);
+    } else if (data) {
+      dispatch({
+        type: 'SET_REFERAL_DATA',
+        data: {
+          // referrals: [],
+          totalReferralsCount: data.users[0].totalReferralsCount,
+          totalBountyToWithdraw: data.users[0].totalBountyToWithdraw
+        }
+      });
+    }
+  };
+
   const fetchReferrals = async (network) => {
     try {
       const data = await getReferralStatus(address, network);
       if (data) {
-        const addressReferrals = data.referrals.map((referral) =>
-          referral.referred.id.toLowerCase()
-        );
-        const refUsers = await getUsersReferrerByCryptoAddress(addressReferrals);
-
-        let addrNotFound = refUsers.filter(
-          (refUser) => addressReferrals.indexOf(refUser.address) === -1
-        );
-        addrNotFound = addrNotFound.map((addr) => ({
-          name: undefined,
-          address: addr
-        }));
-        const finalUsers = [...refUsers, ...addrNotFound];
-
         return dispatch({
           type: 'SET_REFERAL_DATA',
           data: {
-            referrals: finalUsers,
+            // referrals: finalUsers,
             totalReferralsCount: data.totalReferralsCount,
             totalBountyToWithdraw: data.totalBountyToWithdraw
           }
@@ -67,7 +83,7 @@ export default (dispatch: any, state: any) => {
       return dispatch({
         type: 'SET_REFERAL_DATA',
         data: {
-          referrals: [],
+          // referrals: [],
           totalReferralsCount: 0,
           totalBountyToWithdraw: 0
         }
@@ -100,6 +116,8 @@ export default (dispatch: any, state: any) => {
     uploadSignature,
     fetchReferrals,
     fetchContracts,
-    setNewInstance
+    setNewInstance,
+    fetchReferralTrackerInfo,
+    onFetchReferralsSubscription
   };
 };

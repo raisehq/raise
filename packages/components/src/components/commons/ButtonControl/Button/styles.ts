@@ -10,10 +10,15 @@ interface ButtonProps {
   fullWidth?: boolean;
   minWitdh?: boolean;
 }
-
 /* eslint-disable */
 export const ButtonStyled = styled(Button)<ButtonProps>`
   &&& {
+    font-size: ${(props) => globalTheme.buttonSizes[props.size].fontSize};
+    line-height: ${(props) => globalTheme.buttonSizes[props.size].lineHeight};
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    text-align: center;
     background: ${({ disabled, type }) =>
       disabled
         ? globalTheme.buttonPatterns[type].disable.backgroundColor
@@ -31,7 +36,7 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
     border-radius: 3px;
 
     padding: ${(props) => globalTheme.buttonSizes[props.size].padding};
-    height: ${(props) => globalTheme.buttonSizes[props.size].height};
+    min-height: ${(props) => globalTheme.buttonSizes[props.size].height};
     width: ${(props) => {
       if (props.minWidth) {
         return 'auto';
@@ -44,13 +49,6 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
       }
       return 'unset';
     }};
-    font-size: ${(props) => globalTheme.buttonSizes[props.size].fontSize};
-    line-height: ${(props) => globalTheme.buttonSizes[props.size].lineHeight};
-
-    font-family: Lato;
-    font-style: normal;
-    font-weight: bold;
-    text-align: center;
 
     &&&:hover {
       background: ${(props) => globalTheme.buttonPatterns[props.type].hover.backgroundColor};
@@ -66,5 +64,6 @@ export const ButtonStyled = styled(Button)<ButtonProps>`
     }
   }
 `;
+
 /* eslint-enable */
 export default ButtonStyled;

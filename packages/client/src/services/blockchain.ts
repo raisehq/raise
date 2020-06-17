@@ -63,6 +63,34 @@ export const getDepositAddress = async () => {
   }
 };
 
+export const getReferralTracker = async (network) => {
+  const config: any = {
+    url: getGraphEndpoint(network),
+    method: 'POST',
+    headers: {},
+    data: {
+      query: `
+      {
+        referralTrackers {
+          bonusTokenAddress
+        }
+      }
+      `
+    }
+  };
+  try {
+    const rawResponse = await axiosRaw(config);
+    switch (rawResponse.status) {
+      case 200:
+        return rawResponse.data.data.referralTrackers.pop();
+      default:
+        throw new Error(rawResponse.data.message || 'Error fetch contracts');
+    }
+  } catch (error) {
+    throw new Error(`Error request client to server stack : ${error.message}`);
+  }
+};
+
 export const getReferralStatus = async (address, network) => {
   const config: any = {
     url: getGraphEndpoint(network),
@@ -73,12 +101,6 @@ export const getReferralStatus = async (address, network) => {
         {
           users(where: {address:"${address}"}) {
             id
-            referrals {
-              referred {
-                id
-              }
-              
-            }
             totalBountyWithdrawn
             totalReferralsCount
             totalBountyToWithdraw
@@ -86,10 +108,8 @@ export const getReferralStatus = async (address, network) => {
         }`
     }
   };
-
   try {
     const rawResponse = await axiosRaw(config);
-
     switch (rawResponse.status) {
       case 200:
         return rawResponse.data.data.users.pop();

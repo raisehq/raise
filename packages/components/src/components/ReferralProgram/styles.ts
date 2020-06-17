@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 import { Button, Input } from 'semantic-ui-react';
-
-const size = {
-  mobileS: '320px',
-  mobileM: '375px',
-  mobileL: '425px',
-  signUp: '860px',
-  desktop: '950px'
-};
+import { device, size } from '../../utils/breakpoints';
 
 interface CopyButtonProps {
   copied: boolean;
@@ -69,6 +62,7 @@ export const ReferralSubSection = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  padding: 30px 15px;
 `;
 
 export const Title = styled.div`
@@ -80,6 +74,9 @@ export const Title = styled.div`
   padding: 10px 10px 10px 0;
 
   color: #eb3f93;
+  @media screen and ${device.laptop} {
+    padding: 10px 10px 10px 15px;
+  }
 `;
 
 export const ReferralText = styled.div`
@@ -89,10 +86,11 @@ export const ReferralText = styled.div`
   font-size: 16px;
   line-height: 24px;
   color: #8a8e97;
-  width: 254px;
+  width: 100%;
 
-  @media (max-width: ${size.mobileL}) {
-    width: 100%;
+  @media screen and ${device.laptop} {
+    padding: 10px 10px 10px 15px;
+    width: 254px;
   }
 `;
 
@@ -105,6 +103,11 @@ export const LabelSection = styled.div`
   color: #8a8e97;
 
   padding-bottom: 10px;
+`;
+
+export const LabelSectionWithNumber = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const CopyButton = styled(Button)<CopyButtonProps>`
@@ -195,15 +198,14 @@ export const TotalInput = styled(InputTextCustom)`
 `;
 
 export const TotalNumber = styled.div`
-  position: absolute;
-  right: 25px;
-  top: 8px;
-
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
-  line-height: 32px;
+  line-height: 16px;
+
+  padding-bottom: 10px;
+  margin-left: 10px;
   color: #eb3f93;
 `;
 
