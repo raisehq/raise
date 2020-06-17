@@ -17,6 +17,7 @@ import useRouter from '../../hooks/useRouter';
 import useGetCoin from '../../hooks/useGetCoin';
 import WarningModal from '../WarningModal';
 import { isAddress } from '../../utils';
+import datadogLogs from '../../helpers/datadogLogs';
 
 const LoanPage = ({
   match: {
@@ -96,7 +97,7 @@ const LoanPage = ({
       delete newSection.section_reference;
       return newSection;
     });
-
+    datadogLogs.logger.info('Loan page loaded', { name: 'loanpage', id: 2 });
     setButterSection(pageSections[0]);
     window.scrollTo(0, 0);
   }, []);
