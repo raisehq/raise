@@ -187,6 +187,7 @@ const Querys = {
           step_three
           step_two
           text_link_to_app
+          link_to_app
         }
       }
     }
