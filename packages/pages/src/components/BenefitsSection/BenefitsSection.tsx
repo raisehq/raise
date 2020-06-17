@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GroupButton } from '@raisehq/components';
 import { Icon } from 'semantic-ui-react';
 import { useTransition, animated } from 'react-spring';
-import useEffectAsync from '../../hooks/useAsyncEffect';
+import useAsyncEffect from '../../hooks/useAsyncEffect';
 import {
   Wrapper,
   Row,
@@ -35,7 +35,7 @@ const BenefitsSection = ({ benefitsInvestors, benefitsBorrowers }): any => {
     leave: { opacity: 0 }
   });
 
-  useEffectAsync(async () => {
+  useAsyncEffect(async () => {
     if (benefitsInvestors && benefitsBorrowers) {
       const {
         main_title,
