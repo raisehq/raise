@@ -172,46 +172,27 @@ const Querys = {
   posts: {
     component: path.resolve('src/templates/post.tsx')
   },
-  benefitsInvestors: {
+  benefits: {
     query: `
     {
-      allButterPage(filter: {slug: {eq: "benefits-investors"}}) {
-        edges {
-          node {
-            id
-            main_title
-            step_one
-            step_two
-            step_three
-            text_link_to_app
-            image
-          }
-        } 
+      allButterCollection(filter: {key: {eq: "benefits_section"}}) {
+    edges {
+      node {
+        key
+        value {
+          id
+          image
+          main_title
+          step_one
+          step_three
+          step_two
+          text_link_to_app
+          link_to_app
+        }
       }
     }
-  
-    `,
-    path: '/',
-    component: path.resolve('src/templates/home.tsx')
-  },
-  benefitsBorrowers: {
-    query: `
-    {
-      allButterPage(filter: {slug: {eq: "benefits-borrowers"}}) {
-        edges {
-          node {
-            id
-            main_title
-            step_one
-            step_two
-            step_three
-            text_link_to_app
-            image
-          }
-        } 
-      }
+  }
     }
-  
     `,
     path: '/',
     component: path.resolve('src/templates/home.tsx')

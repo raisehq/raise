@@ -10784,7 +10784,7 @@ gatsby-recipes@^0.1.39:
     ws "^7.3.0"
     xstate "^4.10.0"
 
-gatsby-source-buttercms@^2.1.1:
+gatsby-source-buttercms@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/gatsby-source-buttercms/-/gatsby-source-buttercms-2.1.2.tgz#01e971159c88256684a83b99cfd5608ff240e3a8"
   integrity sha512-ViSlyrdfLe1SfaCiX6WC1Om6xxEF7mUQiQsSob4jwJD6gxFEjaGZtyrNssGw4Tj/Jmz0gCXxig1LVnHY++4jrQ==

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GroupButton } from '@raisehq/components';
 import { Icon } from 'semantic-ui-react';
+import find from 'lodash/find';
 import { useTransition, animated } from 'react-spring';
 import {
   Wrapper,
@@ -16,13 +17,15 @@ import {
 } from './styles';
 import Step from './Step';
 
-const BenefitsSection = ({ benefitsInvestors, benefitsBorrowers }): any => {
+const BenefitsSection = ({ benefits }): [any] => {
   const [selectedOption, setSelectedOption] = useState(1);
   const [stepsBorrowers, setStepsBorrowers] = useState([]);
   const [stepsInvestors, setStepsInvestors] = useState([]);
   const [mainTitle, setMainTitle] = useState('');
   const [linkTextInvestors, setLinkTextInvestors] = useState('');
   const [linkTextBorrowers, setLinkTextBorrowers] = useState('');
+  const [linkToAppInvestors, setLinkToAppInvestors] = useState('');
+  const [linkToAppBorrowers, setLinkToAppBorrowers] = useState('');
   const [slides, setSlides] = useState([
     { id: 0, url: '' },
     { id: 1, url: '' }
@@ -42,19 +45,23 @@ const BenefitsSection = ({ benefitsInvestors, benefitsBorrowers }): any => {
       step_two,
       step_three,
       text_link_to_app: linkInvestors,
-      image: image_investor
-    } = benefitsInvestors;
+      image: image_investor,
+      link_to_app: link_to_app_investors
+    } = find(benefits, (role) => role.id === 'investors');
     const {
       step_one: step_one_borrower,
       step_two: step_two_borrower,
       step_three: step_three_borrower,
       text_link_to_app: linkBorrowers,
-      image: image_borrower
-    } = benefitsBorrowers;
+      image: image_borrower,
+      link_to_app: link_to_app_borrowers
+    } = find(benefits, (role) => role.id === 'borrowers');
 
     setMainTitle(main_title);
     setLinkTextInvestors(linkInvestors);
     setLinkTextBorrowers(linkBorrowers);
+    setLinkToAppInvestors(link_to_app_investors);
+    setLinkToAppBorrowers(link_to_app_borrowers);
 
     setStepsInvestors([
       { number: 1, text: step_one },
@@ -72,7 +79,7 @@ const BenefitsSection = ({ benefitsInvestors, benefitsBorrowers }): any => {
       { id: 0, url: image_investor },
       { id: 1, url: image_borrower }
     ]);
-  }, [benefitsInvestors, benefitsBorrowers]);
+  }, [benefits]);
 
   return (
     <Wrapper>
@@ -115,7 +122,7 @@ const BenefitsSection = ({ benefitsInvestors, benefitsBorrowers }): any => {
                   <Step number={`0${item.number}`} text={item.text} key={item.number} />
                 ))}
           </StepWrapper>
-          <CheckLoanText href={`${process.env.REACT_APP_HOST_URL}`}>
+          <CheckLoanText href={`${selectedOption === 1 ? linkToAppInvestors : linkToAppBorrowers}`}>
             <span>{selectedOption === 1 ? linkTextInvestors : linkTextBorrowers}</span>
             <IconWrapper>
               <Icon name="chevron right" />
