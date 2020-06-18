@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 declare const process: { env: { [key: string]: string } };
 
 const HOSTS: any = {
@@ -43,3 +45,16 @@ export const Either = {
 };
 
 export const to = (promise: any) => promise.then(Right).catch(Left);
+
+export const getIP = async () => {
+  try {
+    const ipJson = await axios('https://api.ipify.org?format=jsonp?', {
+      method: 'GET',
+      headers: {}
+    });
+
+    return ipJson.data;
+  } catch (error) {
+    throw error;
+  }
+};

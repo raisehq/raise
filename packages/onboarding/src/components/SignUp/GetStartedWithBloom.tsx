@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { Button, Image } from 'semantic-ui-react';
+import { Button, Image, Loader } from 'semantic-ui-react';
+import * as Cookies from 'js-cookie';
+import { AccountType } from '@raisehq/components';
 import {
   RequestElement,
   QROptions,
@@ -23,11 +25,13 @@ import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import { bloomSignIn, verifyBloomLogin, redirectFromBloomApp } from '../../services';
 import AppContext from '../App.context';
+import { getIP } from '../../utils';
 
 const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState(token !== null && token.length > 0 ? token : null);
+  const [bloomTokenString, setBloomTokenString]: any = useState();
   const checkerTimeout = useRef(null);
   const { onLoginWithBloom }: any = useContext(AppContext);
 
@@ -54,10 +58,45 @@ const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
     );
   };
 
-  useEffect(() => {
-    if (tokenBloom === null || tokenBloom.length === 0) {
-      setTokenBloom(bloomToken());
+  const createBloomTokenInfo = async () => {
+    try {
+      const ip = await getIP();
+      const hutk = Cookies.get('hubspotutk');
+      let bloomTokenID = tokenBloom;
+      if (tokenBloom === null || tokenBloom.length === 0) {
+        bloomTokenID = bloomToken();
+        setTokenBloom(bloomTokenID);
+      }
+
+      const bloomObject = {
+        clientIP: ip,
+        crm: {
+          signupId: 'Onboarding_signup_form',
+          signupType: 'bloom',
+          hutk,
+          uri: window.location.href
+        },
+        bloomTokenID,
+        accountTypeId: AccountType.Lender
+      };
+
+      const query = new URLSearchParams(window.location.search);
+      const refCode = query.get('referralCode');
+
+      if (refCode && refCode !== '') {
+        // eslint-disable-next-line dot-notation
+        bloomObject['referrerCode'] = refCode;
+      }
+
+      const bloomObjectStringified = JSON.stringify(bloomObject);
+      setBloomTokenString(bloomObjectStringified);
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  useEffect(() => {
+    createBloomTokenInfo();
     setIsScreenIdle(true);
   }, []);
 
@@ -94,7 +133,7 @@ const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
 
   const requestData: RequestData = {
     action: Action.attestation,
-    token: tokenBloom,
+    token: bloomTokenString, // tokenBloom,
     org_name: 'Raise',
     url: bloomSignIn(),
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
@@ -107,6 +146,8 @@ const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
     size: 250
   };
 
+  console.log('request data:::: ', requestData);
+
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
@@ -116,13 +157,16 @@ const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
           <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/signup_bloom.png`} size="tiny" />
         </GetStartedBloomSubtitle>
       </GetStartedBloomHeader>
+
       <GetStartedBloomWrapper>
         <GetStartedBloomQRSection>
-          <RequestElement
-            requestData={requestData}
-            buttonOptions={{ callbackUrl: redirectFromBloomApp(tokenBloom) }}
-            qrOptions={qrOptions}
-          />
+          {bloomTokenString && (
+            <RequestElement
+              requestData={requestData}
+              buttonOptions={{ callbackUrl: redirectFromBloomApp(tokenBloom) }}
+              qrOptions={qrOptions}
+            />
+          )}
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>
           {isOpenHelp ? (
@@ -136,6 +180,7 @@ const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
           )}
         </GetStartedBloomInstructionsSection>
       </GetStartedBloomWrapper>
+
       <GetStartedBloomFooter>
         <Button basic color="black" onClick={onBack}>
           Go back
