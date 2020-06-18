@@ -21,6 +21,8 @@ import {
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
 import ErrorBloom from './ErrorBloom';
+import { AccountType } from '../../../types';
+import { getIP } from '../../../utils';
 
 const BloomSignUp = ({
   SignUpId,
@@ -29,11 +31,13 @@ const BloomSignUp = ({
   redirectFromBloomApp,
   bloomSignIn,
   onBloomSignUp,
-  onBloomError
+  onBloomError,
+  hutk
 }: any) => {
   const [isScreenIdle, setIsScreenIdle] = useState(false);
   const [isOpenHelp, setIsOpenHelp] = useState(false);
   const [tokenBloom, setTokenBloom] = useState('');
+  const [bloomTokenString, setBloomTokenString]: any = useState();
   const [errorStage, setErrorStage] = useState(false);
   const checkerTimeout = useRef(null);
 
@@ -62,10 +66,44 @@ const BloomSignUp = ({
     );
   }, [isUserSignedUp, onBloomError, onBloomSignUp, tokenBloom]);
 
-  useEffect(() => {
-    if (tokenBloom === null || tokenBloom.length === 0) {
-      setTokenBloom(bloomToken());
+  const createBloomTokenInfo = async () => {
+    try {
+      const ip = await getIP();
+      let bloomTokenID = tokenBloom;
+      if (tokenBloom === null || tokenBloom.length === 0) {
+        bloomTokenID = bloomToken();
+        setTokenBloom(bloomTokenID);
+      }
+
+      const bloomObject = {
+        clientIP: ip,
+        crm: {
+          signupId: 'Onboarding_signup_form',
+          signupType: 'bloom',
+          hutk,
+          uri: window.location.href
+        },
+        bloomTokenID,
+        accountTypeId: AccountType.Lender
+      };
+
+      const query = new URLSearchParams(window.location.search);
+      const refCode = query.get('referralCode');
+
+      if (refCode && refCode !== '') {
+        // eslint-disable-next-line dot-notation
+        bloomObject['referrerCode'] = refCode;
+      }
+
+      const bloomObjectStringified = JSON.stringify(bloomObject);
+      setBloomTokenString(bloomObjectStringified);
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  useEffect(() => {
+    createBloomTokenInfo();
     setIsScreenIdle(true);
   }, [tokenBloom]);
 
@@ -104,7 +142,7 @@ const BloomSignUp = ({
 
   const requestData: RequestData = {
     action: Action.attestation,
-    token: tokenBloom,
+    token: bloomTokenString, // tokenBloom,
     org_name: 'Raise',
     url: bloomSignIn(),
     org_logo_url: 'https://bloom.co/images/notif/bloom-logo.png',
@@ -129,11 +167,13 @@ const BloomSignUp = ({
         </GetStartedBloomHeader>
         <GetStartedBloomWrapper>
           <GetStartedBloomQRSection>
-            <RequestElement
-              requestData={requestData}
-              buttonOptions={{ callbackUrl: redirectFromBloomApp(bloomToken) }}
-              qrOptions={qrOptions}
-            />
+            {bloomTokenString && (
+              <RequestElement
+                requestData={requestData}
+                buttonOptions={{ callbackUrl: redirectFromBloomApp(bloomToken) }}
+                qrOptions={qrOptions}
+              />
+            )}
           </GetStartedBloomQRSection>
           <GetStartedBloomInstructionsSection>
             {isOpenHelp ? (
