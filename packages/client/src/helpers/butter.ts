@@ -8,7 +8,7 @@ import MockButterCMS from '../__mocks__/buttercmsMocks';
 const apiKey = process.env.REACT_APP_BUTTER || '';
 
 // @ts-ignore
-const butter = window.Cypress ? MockButterCMS() : Butter(apiKey);
+const butter = window.Cypress ? MockButterCMS() : Butter(apiKey, false, 10000);
 
 const WYSIWYGFields = ['description', 'businessPlan', 'operations', 'competitiveAnalysis'];
 
