@@ -16,7 +16,9 @@ import {
   GetStartedBloomQRSection,
   GetStartedBloomInstructionsSection,
   BackButtonWrapper,
-  BloomLogo
+  BloomLogo,
+  DimmerQR,
+  LoaderQR
 } from '../styles';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
@@ -78,7 +80,7 @@ const BloomSignUp = ({
       const bloomObject = {
         clientIP: ip,
         crm: {
-          signupId: 'Onboarding_signup_form',
+          signupId: SignUpId,
           signupType: 'bloom',
           hutk,
           uri: window.location.href
@@ -167,12 +169,16 @@ const BloomSignUp = ({
         </GetStartedBloomHeader>
         <GetStartedBloomWrapper>
           <GetStartedBloomQRSection>
-            {bloomTokenString && (
+            {bloomTokenString ? (
               <RequestElement
                 requestData={requestData}
                 buttonOptions={{ callbackUrl: redirectFromBloomApp(bloomToken) }}
                 qrOptions={qrOptions}
               />
+            ) : (
+              <DimmerQR active inverted>
+                <LoaderQR inverted>Generating QR</LoaderQR>
+              </DimmerQR>
             )}
           </GetStartedBloomQRSection>
           <GetStartedBloomInstructionsSection>

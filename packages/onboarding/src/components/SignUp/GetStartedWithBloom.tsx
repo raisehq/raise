@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { Button, Image } from 'semantic-ui-react';
+import { Button, Image, Loader } from 'semantic-ui-react';
 import * as Cookies from 'js-cookie';
 import { AccountType } from '@raisehq/components';
 import {
@@ -19,7 +19,8 @@ import {
   GetStartedBloomWrapper,
   GetStartedBloomQRSection,
   GetStartedBloomInstructionsSection,
-  GetStartedBloomFooter
+  GetStartedBloomFooter,
+  DimmerQR
 } from '../styles';
 import FollowSteps from './FollowSteps';
 import HelpWithBloom from './HelpWithBloom';
@@ -146,8 +147,6 @@ const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
     size: 250
   };
 
-  console.log('request data:::: ', requestData);
-
   return (
     <ChooseMethodWrapper>
       <GetStartedBloomHeader>
@@ -160,12 +159,16 @@ const GetStartedWithBloom = ({ onBack, method, token = null }: any) => {
 
       <GetStartedBloomWrapper>
         <GetStartedBloomQRSection>
-          {bloomTokenString && (
+          {bloomTokenString ? (
             <RequestElement
               requestData={requestData}
               buttonOptions={{ callbackUrl: redirectFromBloomApp(tokenBloom) }}
               qrOptions={qrOptions}
             />
+          ) : (
+            <DimmerQR active inverted>
+              <Loader inverted>Generating QR</Loader>
+            </DimmerQR>
           )}
         </GetStartedBloomQRSection>
         <GetStartedBloomInstructionsSection>

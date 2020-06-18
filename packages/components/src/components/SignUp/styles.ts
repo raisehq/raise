@@ -2,7 +2,7 @@
 /* eslint-disable no-confusing-arrow */
 import ReCAPTCHA from 'react-google-recaptcha';
 import styled from 'styled-components';
-import { Checkbox, Form, Icon, Input } from 'semantic-ui-react';
+import { Checkbox, Form, Icon, Input, Dimmer, Loader } from 'semantic-ui-react';
 import Button from '../commons/ButtonControl/Button';
 import BloomButton from '../commons/ButtonControl/BloomButton';
 import { device, size } from '../../utils/breakpoints';
@@ -421,4 +421,12 @@ export const SignUpWithBloomLogo = styled.img`
 
 export const Asterisc = styled.span`
   vertical-align: top;
+`;
+
+export const LoaderQR = styled(Loader)``;
+
+export const DimmerQR: any = styled(Dimmer)`
+  position: relative !important;
+  width: 250px !important;
+  height: 250px !important;
 `;
