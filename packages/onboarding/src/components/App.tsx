@@ -3,6 +3,7 @@ import daggy from 'daggy';
 import 'url-search-params-polyfill';
 import { useMediaQuery } from 'react-responsive';
 import { AccountType, Panel, Simple, PanelWithImage } from '@raisehq/components';
+import * as Cookies from 'js-cookie';
 import AppContext from './App.context';
 import GetStarted from './SignUp/GetStarted';
 import GetStartedWithEmail from './SignUp/GetStartedWithEmail';
@@ -214,10 +215,17 @@ const App = ({
   const onSendCredentials = async () => {
     tagManager.sendEventCategory('Signup', TMEvents.Click, 'signup_attempt', host);
 
+    const hutk = Cookies.get('hubspotutk');
     const signup = await services.signUp({
       ...credentials,
       ...(referralCode ? { referrer_code: referralCode } : {}),
-      accounttype_id: AccountType.Lender
+      accounttype_id: AccountType.Lender,
+      crm: {
+        signupId: 'Onboarding_signup_form',
+        signupType: 'email',
+        hutk,
+        uri: window.location.href
+      }
     });
     signup.fold(
       () => {
