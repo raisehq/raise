@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { Button, Image, Loader } from 'semantic-ui-react';
+import { Button, Image } from 'semantic-ui-react';
 import * as Cookies from 'js-cookie';
 import { AccountType } from '@raisehq/components';
 import {
