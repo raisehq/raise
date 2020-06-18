@@ -7,6 +7,7 @@ build-pages-review:
     REACT_APP_COOKIE_DOMAIN: .${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN
     REACT_APP_HOST_URL: https://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN
     PUBLIC_URL: https://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN
+    REACT_APP_WEB_URL: https://${CI_COMMIT_REF_SLUG}.www-review.$DOMAIN
   script:
     - |
       #!/bin/sh
@@ -14,6 +15,7 @@ build-pages-review:
         REACT_APP_COOKIE_DOMAIN=.${REVIEW_SLUG}.www-review.$DOMAIN
         REACT_APP_HOST_URL=https://${REVIEW_SLUG}.review.${DOMAIN}
         PUBLIC_URL=https://${REVIEW_SLUG}.www-review.$DOMAIN
+        REACT_APP_WEB_URL=https://${REVIEW_SLUG}.www-review.$DOMAIN
       fi
     - 'echo ${REACT_APP_HOST_URL}'
     - 'yarn --pure-lockfile'
