@@ -118,7 +118,7 @@ deploy-pre-front:
   image: python:3.7-alpine
   stage: deploy
   before_script:
-    - apk add --update bash
+    - apk add --update bash coreutils
     - pip install awscli
   script:
     - echo '>>>> DEPLOY INTEGRATION <<<<'
@@ -150,7 +150,7 @@ deploy-prod:
   image: python:3.7-alpine
   stage: deploy-prod
   before_script:
-    - apk add --update bash
+    - apk add --update bash coreutils
     - pip install awscli
   script:
     - |

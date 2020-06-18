@@ -171,6 +171,31 @@ const Querys = {
   },
   posts: {
     component: path.resolve('src/templates/post.tsx')
+  },
+  benefits: {
+    query: `
+    {
+      allButterCollection(filter: {key: {eq: "benefits_section"}}) {
+    edges {
+      node {
+        key
+        value {
+          id
+          image
+          main_title
+          step_one
+          step_three
+          step_two
+          text_link_to_app
+          link_to_app
+        }
+      }
+    }
+  }
+    }
+    `,
+    path: '/',
+    component: path.resolve('src/templates/home.tsx')
   }
 };
 

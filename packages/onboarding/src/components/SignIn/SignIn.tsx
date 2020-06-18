@@ -13,7 +13,7 @@ const Signin = () => {
       <AuthenticationMethods method="Login" />
       <ChooseSignUpSignInWrapper>
         <CallToSignIn>
-          Don&apos;t you have an account?
+          Don&apos;t have an account yet?
           <button className="callToSignIn" type="button" onClick={() => onSetStep('Start')()}>
             Sign Up
           </button>

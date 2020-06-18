@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@bloomprotocol/share-kit-react": "^4.4.0",
+    "@datadog/browser-logs": "1.12.4",
     "@raisehq/components": "*",
     "@raisehq/onboarding": "*",
     "@types/jest": "24.0.15",
@@ -62,7 +63,7 @@
     "url-search-params-polyfill": "^7.0.0",
     "use-api-polling": "^0.1.4",
     "walletlink": "^2.0.2",
-    "web3": "1.2.4",
+    "web3": "1.2.9",
     "web3-utils": "1.2.4"
   },
   "devDependencies": {
