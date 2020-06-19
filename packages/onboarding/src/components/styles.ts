@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Form, Modal, Button, Checkbox, Icon } from 'semantic-ui-react';
+import { Form, Modal, Button, Checkbox, Icon, Dimmer } from 'semantic-ui-react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import theme from '../theme';
 
@@ -600,4 +600,8 @@ export const IconWrapper = styled.div`
 
 export const Asterisc = styled.span`
   vertical-align: top;
+`;
+
+export const DimmerQR: any = styled(Dimmer)`
+  position: relative !important;
 `;
