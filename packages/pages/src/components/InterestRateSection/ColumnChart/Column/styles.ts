@@ -27,7 +27,8 @@ export const Wrapper = styled.div`
   min-width: 264px;
 
   @media (max-width: 1270px) {
-    min-width: unset;
+    min-width: 79px;
+    padding: 0 5px;
   }
 `;
 
@@ -55,6 +56,20 @@ export const Label = styled.div`
   color: inherit;
 `;
 
+export const LabelText = styled(Label)`
+  @media (max-width: ${size.mobileM}) {
+    font-size: 12px;
+    line-height: 16px;
+  }
+`;
+
+export const LabelNumber = styled(Label)`
+  @media (max-width: ${size.mobileM}) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+`;
+
 export const TextContainer = styled.div<LabelProps>`
   display: flex;
   justify-content: space-between;
@@ -62,4 +77,10 @@ export const TextContainer = styled.div<LabelProps>`
   width: 100%;
   padding: 20px 0;
   color: ${({ color }) => color};
+  @media (max-width: 1270px) {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+s
+  }
 `;

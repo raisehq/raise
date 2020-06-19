@@ -18,7 +18,8 @@ const SignUp = ({
   bloomSignIn,
   onBloomSignUp,
   isUserSignedUp,
-  onBloomError
+  onBloomError,
+  hutk
 }: any) => {
   const [registerType, setRegisterType] = useState('email');
   useEffect(() => {
@@ -53,6 +54,7 @@ const SignUp = ({
         redirectFromBloomApp={redirectFromBloomApp}
         isUserSignedUp={isUserSignedUp}
         onBloomError={onBloomError}
+        hutk={hutk}
       />
     </BloomContainer>
   );

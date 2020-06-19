@@ -1,12 +1,12 @@
 import React from 'react';
-import { Wrapper, Row, ColumnItem, Label, TextContainer } from './styles';
+import { Wrapper, Row, ColumnItem, Label, TextContainer, LabelText, LabelNumber } from './styles';
 
 const Column = ({ height, background, player }): any => (
   <Wrapper>
     <Row>
       <TextContainer color={background}>
-        <Label>{player.name}</Label>
-        <Label>{`${player.number}%`}</Label>
+        <LabelText>{player.name}</LabelText>
+        <LabelNumber>{`${player.number}%`}</LabelNumber>
       </TextContainer>
     </Row>
     <Row>
