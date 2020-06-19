@@ -28,7 +28,7 @@ export const Wrapper = styled.div`
 
   @media (max-width: 1270px) {
     min-width: 79px;
-    padding: 0 5px;
+    padding: 0 10px;
   }
 `;
 
@@ -49,6 +49,9 @@ export const ColumnItem = styled.div<ColumnItemProps>`
   @media (max-width: ${size.mobileM}) {
     height: ${({ height }) => `${height / 2}px`};
   }
+  @media (max-width: 750px) {
+    height: ${({ height }) => `${height / 2}px`};
+  }
 `;
 
 export const Label = styled.div`
@@ -62,6 +65,10 @@ export const Label = styled.div`
 
 export const LabelText = styled(Label)`
   @media (max-width: ${size.mobileM}) {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  @media (max-width: 750px) {
     font-size: 12px;
     line-height: 16px;
   }

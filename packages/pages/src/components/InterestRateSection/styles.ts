@@ -74,7 +74,13 @@ export const GraphWrapper = styled.div`
     position: unset;
     top: 0;
   }
-  @media (max-width: 960px) {
+  @media (max-width: 1270px) {
+    right: 10%;
+  }
+  @media (max-width: 930px) {
+    top: 30%;
+  }
+  @media (max-width: 750px) {
     position: unset;
     top: 0;
   }
