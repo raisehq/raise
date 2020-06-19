@@ -17,6 +17,12 @@ const ColumnChart = ({
   }
 }) => {
   const [players, setPlayers] = useState([]);
+  const [maxCompetitorAPRPercentage, setMaxCompetitorAPRPercentaje] = useState(0);
+
+  const getHeight = (competitorAPRPercentage, maxCompetitorAPRPercentageArg) => {
+    const baseHeightInPX = 438;
+    return (competitorAPRPercentage * baseHeightInPX) / maxCompetitorAPRPercentageArg;
+  };
 
   useEffect(() => {
     const playerArray = sortBy(
@@ -30,15 +36,28 @@ const ColumnChart = ({
     ).reverse();
     console.log(playerArray);
     setPlayers(playerArray);
+    setMaxCompetitorAPRPercentaje(playerArray[0].number);
   }, []);
 
   return (
     <Wrapper>
       <ColumnWrapper>
-        <Column height="438px" background="#00da9e" player={{ ...players[0] }} />
-        <Column height="207px" background="#8A8E97" player={{ ...players[1] }} />
-        <Column height="144px" background="#B1B3B9" player={{ ...players[2] }} />
-        <Column height="107px" background="#D8D9DC" player={{ ...players[3] }} />
+        <Column height="438" background="#00da9e" player={{ ...players[0] }} />
+        <Column
+          height={getHeight(players[1]?.number, maxCompetitorAPRPercentage)}
+          background="#8A8E97"
+          player={{ ...players[1] }}
+        />
+        <Column
+          height={getHeight(players[2]?.number, maxCompetitorAPRPercentage)}
+          background="#B1B3B9"
+          player={{ ...players[2] }}
+        />
+        <Column
+          height={getHeight(players[3]?.number, maxCompetitorAPRPercentage)}
+          background="#D8D9DC"
+          player={{ ...players[3] }}
+        />
       </ColumnWrapper>
       <Container>
         <Text>{source_information}</Text>

@@ -41,10 +41,14 @@ export const Row = styled.div`
 `;
 
 export const ColumnItem = styled.div<ColumnItemProps>`
-  height: ${({ height }) => height};
+  height: ${({ height }) => `${height}px`};
   background: ${({ background }) => background};
   border-radius: 4px;
   width: 100%;
+
+  @media (max-width: ${size.mobileM}) {
+    height: ${({ height }) => `${height / 2}px`};
+  }
 `;
 
 export const Label = styled.div`
