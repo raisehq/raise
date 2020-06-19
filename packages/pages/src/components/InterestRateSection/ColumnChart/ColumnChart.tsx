@@ -34,7 +34,6 @@ const ColumnChart = ({
       ],
       'number'
     ).reverse();
-    console.log(playerArray);
     setPlayers(playerArray);
     setMaxCompetitorAPRPercentaje(playerArray[0].number);
   }, []);
