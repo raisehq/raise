@@ -13,6 +13,8 @@ export const Wrapper = styled.div`
   flex-direction: column;
   width: 100%;
   padding-top: 150px;
+  position: relative;
+  min-height: 800px;
 `;
 
 export const Row = styled.div`
@@ -63,4 +65,17 @@ export const SubTitle = styled.div`
   }
 `;
 
-export const GraphWrapper = styled.div``;
+export const GraphWrapper = styled.div`
+  display: flex;
+  position: absolute;
+  top: 22%;
+
+  @media (max-width: ${size.mobileM}) {
+    position: unset;
+    top: 0;
+  }
+  @media (max-width: 960px) {
+    position: unset;
+    top: 0;
+  }
+`;

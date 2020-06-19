@@ -208,9 +208,13 @@ const Querys = {
           title
           subtitle
           player_one_number
+          player_one_name
           player_two_number
+          player_two_name
           player_three_number
+          player_three_name
           player_four_number
+          player_four_name
           source_information
         }
       }

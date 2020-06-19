@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { Wrapper, Title, SubTitle, Row } from './styles';
+import ColumnChart from './ColumnChart';
+import { Wrapper, Title, SubTitle, Row, GraphWrapper } from './styles';
 
 const InterestRateSection = ({ data }): any => {
   return (
@@ -10,6 +10,11 @@ const InterestRateSection = ({ data }): any => {
       </Row>
       <Row>
         <SubTitle>{data.subtitle}</SubTitle>
+      </Row>
+      <Row>
+        <GraphWrapper>
+          <ColumnChart data={data} />
+        </GraphWrapper>
       </Row>
     </Wrapper>
   );
