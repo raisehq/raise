@@ -277,6 +277,7 @@ const Footer = ({ isMobile }) => {
       <FooterCopyRightWrapper>
         <FooterCopyRightContainer>
           <PdfContainer>
+            <FooterCopyRight>Copyright ©2020 · All rights reserved</FooterCopyRight>
             <PdfMenuLink
               href={`${process.env.REACT_APP_HOST_IMAGES}/privacy-policy.pdf`}
               rel="noopener noreferrer"
@@ -292,7 +293,7 @@ const Footer = ({ isMobile }) => {
               Terms of Service
             </PdfMenuLink>
           </PdfContainer>
-          <FooterCopyRight>Copyright ©2020 · All rights reserved</FooterCopyRight>
+          <FooterCopyRight> Carrer Rosello, 186 - Barcelona - 08025</FooterCopyRight>
         </FooterCopyRightContainer>
       </FooterCopyRightWrapper>
     </FooterWrapper>

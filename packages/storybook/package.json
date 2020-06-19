@@ -21,7 +21,7 @@
     "url": "https://gitlab.com/raisehq/raise/issues"
   },
   "scripts": {
-    "watch": "env-cmd --no-override .env start-storybook -p 6006",
+    "watch": "yarn link '@raisehq/onboarding' && yarn link '@raisehq/components' && env-cmd --no-override .env start-storybook -p 6006",
     "watch:bili": "yarn run watch"
   },
   "peerDependencies": {
