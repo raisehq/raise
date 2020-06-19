@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
+import InnerHTML from 'dangerously-set-html-content';
 import 'semantic-ui-css/semantic.min.css';
 import SEO from '../components/SEO';
 import Layout from '../components/Layout';
@@ -69,7 +70,7 @@ const Post = ({
             </div>
 
             <div className="post">
-              <div dangerouslySetInnerHTML={{ __html: body }} />
+              <InnerHTML html={body} />
             </div>
           </div>
         </ContainerPost>
