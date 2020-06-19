@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const Right = (x: any) => ({
   map: (f: any) => Right(f(x)),
   // @ts-ignore
@@ -16,3 +18,16 @@ export const Either = {
 };
 
 export const to = (promise: any) => promise.then(Right).catch(Left);
+
+export const getIP = async () => {
+  try {
+    const ipJson = await axios('https://api.ipify.org?format=jsonp?', {
+      method: 'GET',
+      headers: {}
+    });
+
+    return ipJson.data;
+  } catch (error) {
+    throw error;
+  }
+};

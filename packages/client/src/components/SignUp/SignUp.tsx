@@ -19,16 +19,15 @@ const SignUpWrapper = ({ id }: any) => {
 
   const tagManager = useGoogleTagManager(id);
   const { history } = useRouter();
+  const hutk = Cookies.get('hubspotutk');
 
   const onSignUp = async (credentials) => {
     try {
       tagManager.sendEventCategory('Signup', TMEvents.Click, `${id}_attempt`, history.location);
-      // const ip = await getIP();
-      const hutk = Cookies.get('hubspotutk');
+
       const signup = await signUp({
         ...credentials,
         accounttype_id: 2,
-        // clientIP: ip,
         crm: {
           signupId: id,
           signupType: 'email',
@@ -107,6 +106,7 @@ const SignUpWrapper = ({ id }: any) => {
         redirectFromBloomApp={redirectFromBloomApp}
         isUserSignedUp={verifyBloomLogin}
         onBloomError={onBloomError}
+        hutk={hutk}
       />
     </InvestingSignUpContainer>
   );
