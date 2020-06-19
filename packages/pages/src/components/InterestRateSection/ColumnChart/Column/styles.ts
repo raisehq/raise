@@ -86,12 +86,13 @@ export const TextContainer = styled.div<LabelProps>`
   justify-content: space-between;
   flex-direction: row;
   width: 100%;
-  padding: 20px 0;
+  padding-top: 20px;
+  padding-bottom: 5px;
+
   color: ${({ color }) => color};
   @media (max-width: 1270px) {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-s
   }
 `;

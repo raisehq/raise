@@ -2,7 +2,9 @@ const Builds = require('./builds'); // eslint-disable-line
 const DOMPurify = require('isomorphic-dompurify'); // eslint-disable-line
 
 const WYSIWYGFields = ['body', 'description', 'businessPlan', 'operations', 'competitiveAnalysis'];
+const IGNORE_SANITIZE = ['smart-contracts-infographic'];
 const sanitizeObject = (data) => {
+  if (IGNORE_SANITIZE.indexOf(data.slug) > -1) return data;
   Object.keys(data).forEach((key) => {
     if (WYSIWYGFields.includes(key)) {
       data[key] = DOMPurify.sanitize(data[key]); // eslint-disable-line
