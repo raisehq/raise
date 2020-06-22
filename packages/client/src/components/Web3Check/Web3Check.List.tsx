@@ -1,6 +1,7 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
-import { List, Icon, Dimmer, Loader, Button } from 'semantic-ui-react';
+import { List, Icon, Dimmer, Loader, Button, Message } from 'semantic-ui-react';
+
 import { match, ANY, TAIL } from 'pampy';
 
 import Messages from './Web3Check.Messages';
@@ -38,41 +39,39 @@ const Check = ({ value, message }: any) => {
   );
 };
 
-const capitalize = (s) => {
-  if (typeof s !== 'string') return '';
-  return s.charAt(0).toUpperCase() + s.slice(1);
-};
+// const capitalize = (s) => {
+//   if (typeof s !== 'string') return '';
+//   return s.charAt(0).toUpperCase() + s.slice(1);
+// };
 
 const CheckList = ({ onBack, onSuccess }: any) => {
   const {
-    web3Status: { hasProvider, unlocked, networkMatches, accountMatches, targetNetwork }
+    web3Status: { hasProvider, unlocked, networkMatches, accountMatches }
   }: any = useAppContext();
 
-  const matchConditions = [hasProvider && unlocked, networkMatches, accountMatches];
+  const matchConditions = [hasProvider && unlocked, accountMatches];
 
   // prettier-ignore
   const steps = match(matchConditions,
     [false, TAIL],
-    () => ['user-action', 'pending', 'pending'],
-    [true, false, TAIL],
-    () => ['pass', 'user-action', 'pending'],
-    [true, true, false],
-    () => ['pass', 'pass', 'user-action'],
-    [true, true, true],
+    () => ['user-action', 'pending'],
+    [true, false],
+    () => ['pass', 'user-action'],
+    [true, true],
     () => ['pass', 'pass', 'pass'],
     ANY,
-    () => ['pending', 'pending', 'pending']);
+    () => ['pending', 'pending']);
 
   const stepsMessage = [
-    'Connect your wallet with Raise',
-    `Select ${capitalize(targetNetwork || 'NONE')} network in your wallet`,
-    'Sign message and bind your wallet to your account'
+    'Connect your wallet to Raise',
+    'This will be the wallet account you will be using in all Raise operations '
   ];
 
   const StepsDOM = steps.map((value, i) => (
     <Check key={value} value={value} message={stepsMessage[i]} />
   ));
-  if (matchConditions.every((el: any) => el)) {
+
+  if ([...matchConditions, ...[networkMatches]].every((el: any) => el)) {
     onSuccess();
   }
 
@@ -83,17 +82,25 @@ const CheckList = ({ onBack, onSuccess }: any) => {
       </Dimmer>
     );
   }
+
   return (
     <Web3CheckWalletWrapper>
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletContainer>
         <SelectYourWalletTitle>
-          <CardTitle>Connect your wallet </CardTitle>
+          <CardTitle>Connect your Ethereum wallet </CardTitle>
         </SelectYourWalletTitle>
         <SelectYourWalletList>
           <SelectWalletOptionListItem>
             <List>{StepsDOM}</List>
           </SelectWalletOptionListItem>
+          {!networkMatches && (
+            <Message negative>
+              <Message.Header>
+                Make sure you are using the Main Net network in your wallet
+              </Message.Header>
+            </Message>
+          )}
           <SelectWalletOptionListItem>
             <Messages />
           </SelectWalletOptionListItem>

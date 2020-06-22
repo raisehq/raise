@@ -7,8 +7,9 @@ import {
   Web3CheckWalletWrapper,
   GoBack,
   SetUpSubtitle,
-  OtherWalletsText,
-  ButtonContainer
+  HelpMessage,
+  ButtonContainer,
+  HelpLink
 } from './Web3Check.styles';
 
 import OnboardingProgressBar from '../OnboardingProgressBar';
@@ -58,13 +59,13 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
     <Web3CheckWalletWrapper>
       <OnboardingProgressBar step={1} isMobile={isMobile} />
       <SelectYourWalletTitle>
-        <CardTitle>Let&apos;s create your wallet</CardTitle>
+        <CardTitle>Let&apos;s setup your new wallet</CardTitle>
         <SetUpSubtitle>
-          We recommend you to install Metamask wallet, it&apos;s fast, easy and secure. Just click
-          on &quot;Install Metamask&quot; to download the web extension and follow the steps.
+          Start by installing and setting up the Metamask browser extension, an easy, fast, and
+          secure Ethereum wallet.
         </SetUpSubtitle>
         <SetUpSubtitle>
-          Once you are all set up to connect your new wallet, refresh your browser.
+          Once your wallet is ready, refresh your browser and connect it to Raise.
         </SetUpSubtitle>
       </SelectYourWalletTitle>
 
@@ -78,16 +79,16 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
           type="secondary"
           logo="metamask.png"
         />
-        <OtherWalletsText>You can also use:</OtherWalletsText>
-        <ButtonLink
-          onClick={handlerWallet(CryptoWallets.Coinbase)}
-          size="large"
-          text="Coinbase Wallet"
-          fullWidth
-          icon="external_link.svg"
-          type="tertiary"
-          logo="coinbase.png"
-        />
+        <HelpMessage style={{ bottom: '65px' }}>
+          Need help? Read our guide on{' '}
+          <HelpLink
+            href="https://raise.it/blog/how-to-install-and-use-metamask-with-raise"
+            target="_black"
+            rel="nofollow"
+          >
+            <em>How to install and connect Metamask</em>
+          </HelpLink>
+        </HelpMessage>
       </ButtonContainer>
 
       <GoBack>
