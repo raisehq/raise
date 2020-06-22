@@ -13,7 +13,7 @@
   "scripts": {
     "prepare": "env-cmd --no-override .env tsdx build",
     "watch": "env-cmd --no-override .env tsdx watch --noClean --transpileOnly",
-    "watch:bili": "yarn run build:bili -w",
+    "watch:bili": "yarn link && yarn run build:bili -w",
     "build:bili": "env-cmd --no-override .env bili --format cjs src/index.ts -d dist/",
     "dev": "env-cmd --no-override .env tsdx watch",
     "dev:int": "yarn run dev",

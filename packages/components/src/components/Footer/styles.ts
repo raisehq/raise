@@ -125,6 +125,10 @@ export const FooterCopyRight = styled.div`
   text-align: center;
   justify-content: center;
   display: flex;
+  padding-bottom: 30px;
+  @media screen and ${device.laptop} {
+    padding-bottom: 0px;
+  }
 `;
 
 export const SocialIcon = styled(Icon)`
