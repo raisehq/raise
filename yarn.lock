@@ -17963,6 +17963,11 @@ react-hot-loader@^4.12.21:
     shallowequal "^1.1.0"
     source-map "^0.7.3"
 
+react-hotjar@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-hotjar/-/react-hotjar-2.2.0.tgz#c520b3ab8dc7f0c9ba468a8232ac326924a07331"
+  integrity sha512-HNJ9G5DT3o0jxNQrR4wyL/oVeWd6Rt+oATvxlfk6I1pFVYumNeXu3FoOud9uiblJJyiqXL5bKyKn6SjLvPczQw==
+
 react-iframe@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/react-iframe/-/react-iframe-1.8.0.tgz#8c78f2c59b894ca5605fa7e45e61e27e57e96091"
