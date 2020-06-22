@@ -115,7 +115,7 @@ const Wallet = ({ onNext, onBack }: any) => {
           <SelectWalletOptionItem key="coinbase">
             <ButtonLink
               onClick={handlerWallet(CryptoWallets.Coinbase)}
-              text="Coinbase Wallet"
+              text="Wallet Link"
               type="tertiary"
               size="large"
               disabled={false}
