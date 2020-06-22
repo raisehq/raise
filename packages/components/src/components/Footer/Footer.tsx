@@ -123,6 +123,13 @@ const Footer = ({ isMobile }) => {
                 About
               </MenuLink>
               <MenuLink
+                href="https://raise.it/blog/the-raise-token-present-and-future"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Token
+              </MenuLink>
+              <MenuLink
                 href="https://www.linkedin.com/search/results/people/?facetCurrentCompany=%5B%2218946872%22%5D"
                 rel="noopener noreferrer"
                 target="_blank"
