@@ -87,6 +87,7 @@ export const LabelNumber = styled(Label)`
 export const TextContainer = styled.div<LabelProps>`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   flex-direction: row;
   width: 100%;
   padding-top: 20px;
