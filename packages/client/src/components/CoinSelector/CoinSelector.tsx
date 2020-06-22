@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 
 import BigNumber from 'bignumber.js';
 import { useRootContext } from '../../contexts/RootContext';
-
 import useGetAllBalances from '../../hooks/useGetAllBalances';
 import { BalanceDropdown, TokenLayout } from './CoinSelector.styles';
 

@@ -18,6 +18,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
   const queryIndex = await graphql(Builds.index.query);
   const press = await graphql(Builds.press.query);
   const benefits = await graphql(Builds.benefits.query);
+  const interestRateSection = await graphql(Builds.interestRate.query);
 
   createPage({
     path: Builds.index.path,
@@ -25,7 +26,8 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     context: {
       data: queryIndex.data,
       press: press.data,
-      benefits: benefits.data
+      benefits: benefits.data,
+      interestRateSection: interestRateSection.data
     }
   });
 

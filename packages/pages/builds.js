@@ -196,6 +196,34 @@ const Querys = {
     `,
     path: '/',
     component: path.resolve('src/templates/home.tsx')
+  },
+  interestRate: {
+    query: `
+    {
+      allButterCollection(filter: {key: {eq: "interest_rate_section"}}) {
+    edges {
+      node {
+        key
+        value {
+          title
+          subtitle
+          player_one_number
+          player_one_name
+          player_two_number
+          player_two_name
+          player_three_number
+          player_three_name
+          player_four_number
+          player_four_name
+          source_information
+        }
+      }
+    }
+  }
+    }
+    `,
+    path: '/',
+    component: path.resolve('src/templates/home.tsx')
   }
 };
 
