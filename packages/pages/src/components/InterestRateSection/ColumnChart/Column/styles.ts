@@ -61,6 +61,7 @@ export const Label = styled.div`
   font-size: 32px;
   line-height: 40px;
   color: inherit;
+  text-align: center;
 `;
 
 export const LabelText = styled(Label)`

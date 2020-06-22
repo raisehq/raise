@@ -38,6 +38,7 @@ export const Row = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
+  max-width: 1300px;
 
   @media (max-width: ${size.mobileL}) {
     padding-left: 5%;
