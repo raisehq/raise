@@ -16,6 +16,7 @@ const sanitizeObject = (data) => {
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
   // HOME PAGE
   const queryIndex = await graphql(Builds.index.query);
+  const press = await graphql(Builds.press.query);
 
   createPage({
     path: Builds.index.path,
