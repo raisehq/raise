@@ -58,7 +58,7 @@ export const Label = styled.div`
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
-  font-size: 32px;
+  font-size: 24px;
   line-height: 40px;
   color: inherit;
   text-align: center;
