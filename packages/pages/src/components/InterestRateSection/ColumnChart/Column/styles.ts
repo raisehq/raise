@@ -61,17 +61,19 @@ export const Label = styled.div`
   font-size: 24px;
   line-height: 40px;
   color: inherit;
-  text-align: center;
+  text-align: left;
 `;
 
 export const LabelText = styled(Label)`
   @media (max-width: ${size.mobileM}) {
     font-size: 12px;
     line-height: 16px;
+    text-align: center;
   }
   @media (max-width: 750px) {
     font-size: 12px;
     line-height: 16px;
+    text-align: center;
   }
 `;
 
