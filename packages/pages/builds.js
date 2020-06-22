@@ -109,7 +109,7 @@ const Querys = {
   investing: {
     query: `
     {
-      allButterPage(filter: { slug: { eq: "home-page" } }) {
+      allButterPage(filter: { slug: { eq: "investing" } }) {
         nodes {
           internal {
             content
