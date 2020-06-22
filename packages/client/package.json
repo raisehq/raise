@@ -41,6 +41,7 @@
     "react-dom": "^16.9.0",
     "react-gtm-module": "^2.0.7",
     "react-headroom": "^3.0.0",
+    "react-hotjar": "^2.2.0",
     "react-number-format": "^4.2.0",
     "react-optimize": "^2.2.0",
     "react-player": "^2.1.0",
