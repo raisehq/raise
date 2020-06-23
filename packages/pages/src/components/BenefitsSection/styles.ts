@@ -58,6 +58,7 @@ export const Title = styled.div`
   @media (max-width: ${size.mobileL}) {
     font-size: 48px;
     padding-bottom: 40px;
+    padding-left: 0;
   }
 `;
 
