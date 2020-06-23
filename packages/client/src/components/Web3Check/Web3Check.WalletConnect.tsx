@@ -43,10 +43,10 @@ const getMessage = (walletId, enableWeb3, hasWallet) => {
     case CryptoWallets.Metamask:
       return (
         <CardCenteredText>
-          <CardTitle>Follow Metamask Instructions</CardTitle>
+          <CardTitle>Follow Metamask instructions</CardTitle>
           <TextDescription>
-            If MetaMask window does not open automatically, click on the extension in your browser
-            and follow the instructions.
+            If Metamask extension pop up doesn&apos;t open automatically, click on it to follow the
+            steps.
           </TextDescription>
         </CardCenteredText>
       );

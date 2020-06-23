@@ -47,8 +47,8 @@ const NetworkNotMatch = (
 const AccountNotVerified = ({ currentAddress, uploadSignature }: any) => (
   <ActionDescription>
     <DescriptionText>
-      Check your Wallet and sign a message to bind this address to your Raise account. You will be
-      able to operate only with this address.
+      If you are connecting a Metamask wallet and your browser extension doesn&apos;t pop up
+      automatically, click on it to follow the steps.
     </DescriptionText>
     <AddressContainer>
       <StyledAddress account={currentAddress} />

@@ -46,7 +46,9 @@ export const SelectWalletOptionListItem = styled.div`
 export const SelectWalletOptionButton = styled(Button)`
   width: 250px;
 `;
-
+export const ButtonBox = styled.div`
+  width: 355px;
+`;
 export const HelpMessage = styled.div`
   position: absolute;
   bottom: 10px;
@@ -320,7 +322,7 @@ export const TextWrapper = styled.div`
 `;
 
 export const ConnectFormSubtitle = styled.div`
-  width: 280px;
+  width: 512px;
   color: #3c4251;
   font-size: 16px;
   line-height: 24px;
@@ -426,4 +428,8 @@ export const ButtonContainerCoinbase = styled.div`
   align-items: center;
   min-height: 135px;
   margin-top: 50px;
+`;
+
+export const HelpLink = styled.a`
+  color: #00da9e;
 `;
