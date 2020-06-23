@@ -86,10 +86,7 @@ const Reset = ({ token }: any) => {
 
   return (
     <Fragment>
-      <OnboardHeader>
-        Recover your password
-        <OnboardLogo />
-      </OnboardHeader>
+      <OnboardHeader>Reset your password</OnboardHeader>
       <OnboardInput>
         <Input
           data-testid="loginPassword"
