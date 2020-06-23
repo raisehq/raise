@@ -30,6 +30,9 @@ export const Container = styled.div`
   @media (max-width: ${size.mobileM}) {
     width: 100%;
   }
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+  }
 `;
 
 export const Row = styled.div`
