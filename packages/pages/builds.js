@@ -63,7 +63,7 @@ const Querys = {
   index: {
     query: `
     {
-      allButterPage(filter: { slug: { eq: "home-page" } }) {
+      allButterPage(filter: {slug: {eq: "home-page"}}) {
         nodes {
           internal {
             content
@@ -72,32 +72,38 @@ const Querys = {
             mediaType
           }
           above_the_fold_section {
-          title
-          subtitle
+            subtitle
+            title
           }
           benefits_section {
-            id
-          image
-          main_title
-          step_one
-          step_three
-          step_two
-          text_link_to_app
-          link_to_app
+              id
+              image
+              main_title
+              step_one
+              step_three
+              step_two
+              text_link_to_app
+              link_to_app
           }
           interest_rate_section {
-        title
-        subtitle
-        player_one_number
-        player_one_name
-        player_two_number
-        player_two_name
-        player_three_number
-        player_three_name
-        player_four_number
-        player_four_name
-        source_information
+            player_four_name
+            player_four_number
+            player_one_name
+            player_one_number
+            player_three_name
+            player_three_number
+            player_two_name
+            player_two_number
+            source_information
+            subtitle
+            title
           }
+          press_releases_section {
+            article_link
+            publisher
+            publisher_logo
+          }
+          press_releases_title
           page_type
         }
       }
