@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 export default styled.div`
-  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  max-width: 1300px;
   margin: auto;
 `;

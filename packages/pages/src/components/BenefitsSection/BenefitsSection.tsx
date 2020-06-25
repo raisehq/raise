@@ -9,12 +9,11 @@ import {
   Title,
   ImageWrapper,
   StepWrapper,
-  SpecialRow,
   ControlWrapper,
   Column,
+  CheckLoanWrapper,
   CheckLoanText,
-  IconWrapper,
-  Container
+  IconWrapper
 } from './styles';
 import Step from './Step';
 
@@ -84,49 +83,48 @@ const BenefitsSection = ({ benefits }): [any] => {
 
   return (
     <Wrapper>
-      <Container>
-        <Row>
-          <Title>{mainTitle}</Title>
-        </Row>
-        <Row>
-          <ControlWrapper>
-            <GroupButton
-              options={[
-                { key: '1', value: 1, text: 'Investors' },
-                { key: '2', value: 2, text: 'Borrowers' }
-              ]}
-              onClick={setSelectedOption}
-              selectedIndex={selectedOption}
-            />
-          </ControlWrapper>
-        </Row>
-        <SpecialRow>
-          <Column>
-            <ImageWrapper>
-              {transitions.map(({ item, props, key }) => (
-                <animated.div
-                  key={key}
-                  style={{
-                    ...props,
-                    backgroundImage: item.url
-                  }}
-                >
-                  <img src={item.url} alt={selectedOption === 1 ? 'investors' : 'borrowers'} />
-                </animated.div>
-              ))}
-            </ImageWrapper>
-          </Column>
-
-          <Column>
-            <StepWrapper>
-              {selectedOption === 1
-                ? stepsInvestors.map((item) => (
-                    <Step number={`0${item.number}`} text={item.text} key={item.number + 1} />
-                  ))
-                : stepsBorrowers.map((item) => (
-                    <Step number={`0${item.number}`} text={item.text} key={item.number} />
-                  ))}
-            </StepWrapper>
+      <Row>
+        <Title>{mainTitle}</Title>
+      </Row>
+      <Row>
+        <ControlWrapper>
+          <GroupButton
+            options={[
+              { key: '1', value: 1, text: 'Investors' },
+              { key: '2', value: 2, text: 'Borrowers' }
+            ]}
+            onClick={setSelectedOption}
+            selectedIndex={selectedOption}
+          />
+        </ControlWrapper>
+      </Row>
+      <Row>
+        <Column>
+          <ImageWrapper>
+            {transitions.map(({ item, props, key }) => (
+              <animated.div
+                key={key}
+                style={{
+                  ...props,
+                  backgroundImage: item.url
+                }}
+              >
+                <img src={item.url} alt={selectedOption === 1 ? 'investors' : 'borrowers'} />
+              </animated.div>
+            ))}
+          </ImageWrapper>
+        </Column>
+        <Column>
+          <StepWrapper>
+            {selectedOption === 1
+              ? stepsInvestors.map((item) => (
+                  <Step number={`0${item.number}`} text={item.text} key={item.number + 1} />
+                ))
+              : stepsBorrowers.map((item) => (
+                  <Step number={`0${item.number}`} text={item.text} key={item.number} />
+                ))}
+          </StepWrapper>
+          <CheckLoanWrapper>
             <CheckLoanText
               href={`${selectedOption === 1 ? linkToAppInvestors : linkToAppBorrowers}`}
             >
@@ -135,9 +133,9 @@ const BenefitsSection = ({ benefits }): [any] => {
                 <Icon name="chevron right" />
               </IconWrapper>
             </CheckLoanText>
-          </Column>
-        </SpecialRow>
-      </Container>
+          </CheckLoanWrapper>
+        </Column>
+      </Row>
     </Wrapper>
   );
 };
