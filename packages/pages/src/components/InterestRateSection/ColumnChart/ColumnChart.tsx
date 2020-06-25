@@ -41,22 +41,23 @@ const ColumnChart = ({
   return (
     <Wrapper>
       <ColumnWrapper>
-        <Column height="438" background="#00da9e" player={{ ...players[0] }} />
         <Column
-          height={getHeight(players[1]?.number, maxCompetitorAPRPercentage)}
-          background="#8A8E97"
-          player={{ ...players[1] }}
+          height={getHeight(players[3]?.number, maxCompetitorAPRPercentage)}
+          background="#D8D9DC"
+          player={{ ...players[3] }}
         />
+
         <Column
           height={getHeight(players[2]?.number, maxCompetitorAPRPercentage)}
           background="#B1B3B9"
           player={{ ...players[2] }}
         />
         <Column
-          height={getHeight(players[3]?.number, maxCompetitorAPRPercentage)}
-          background="#D8D9DC"
-          player={{ ...players[3] }}
+          height={getHeight(players[1]?.number, maxCompetitorAPRPercentage)}
+          background="#8A8E97"
+          player={{ ...players[1] }}
         />
+        <Column height="438" background="#00da9e" player={{ ...players[0] }} />
       </ColumnWrapper>
       <Container>
         <Text>{source_information}</Text>

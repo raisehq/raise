@@ -17,9 +17,11 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 100px;
 
   @media (max-width: ${size.mobileM}) {
     padding-bottom: 20%;
+    margin: 30px;
   }
 `;
 
@@ -28,6 +30,7 @@ export const Row = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
+  flex-wrap: wrap;
   width: 100%;
 
   @media (max-width: ${size.mobileL}) {

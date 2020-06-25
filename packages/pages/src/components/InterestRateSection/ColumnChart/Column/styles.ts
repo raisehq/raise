@@ -20,22 +20,22 @@ const size = {
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-items: flex-end;
-  align-items: flex-end;
+  justify-items: center;
+  align-items: center;
   width: 100%;
-  padding: 0 10px;
-  min-width: 264px;
+  max-width: 264px;
+  margin: 12px;
 
-  @media (max-width: 1270px) {
-    min-width: 79px;
-    padding: 0 10px;
+  @media (max-width: ${size.mobileL}) {
+    max-width: 79px;
+    margin: 0 4px;
   }
 `;
 
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 100%;
 `;
@@ -45,11 +45,9 @@ export const ColumnItem = styled.div<ColumnItemProps>`
   background: ${({ background }) => background};
   border-radius: 4px;
   width: 100%;
+  max-width: 264px;
 
   @media (max-width: ${size.mobileM}) {
-    height: ${({ height }) => `${height / 2}px`};
-  }
-  @media (max-width: 750px) {
     height: ${({ height }) => `${height / 2}px`};
   }
 `;
@@ -90,6 +88,7 @@ export const TextContainer = styled.div<LabelProps>`
   align-items: flex-end;
   flex-direction: row;
   width: 100%;
+  max-width: 264px;
   padding-top: 20px;
   padding-bottom: 5px;
 

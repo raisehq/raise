@@ -9,19 +9,24 @@ const size = {
 };
 
 export const Wrapper = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding-bottom: 20%;
   width: 100%;
+  min-height: 600px;
 
-  @media (max-width: 1370px) {
-    width: 100%;
-    align-items: center;
+  margin: 100px;
+
+  @media (max-width: ${size.mobileL}) {
     justify-content: center;
+    align-items: center;
+    margin: 30px;
   }
 `;
+
 export const Container = styled.div`
   position: relative;
   min-height: 600px;
@@ -44,14 +49,18 @@ export const Row = styled.div`
   width: 100%;
   max-width: 1300px;
 
-  @media (max-width: ${size.mobileL}) {
-    padding-left: 5%;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
+  padding: 0 25px;
+`;
+
+export const RowGraph = styled(Row)`
+  position: absolute;
+  top: 10%;
+  min-width: 700px;
+
   @media (max-width: 750px) {
-    justify-content: center;
-    align-items: center;
+    position: unset;
+    top: 0;
+    min-width: 0;
   }
 `;
 
@@ -66,17 +75,11 @@ export const Title = styled.div`
   max-width: 600px;
   text-align: left;
 
-  @media (max-width: 750px) {
+  @media (max-width: ${size.mobileL}) {
     font-size: 48px;
     line-height: 56px;
-    width: 70%;
-    padding-left: 0;
-  }
-  @media (max-width: ${size.mobileM}) {
-    font-size: 48px;
-    line-height: 56px;
-    padding: 10px;
     width: 100%;
+    padding-left: 0;
   }
 `;
 
@@ -90,21 +93,19 @@ export const SubTitle = styled.div`
   max-width: 400px;
   padding: 24px;
 
-  @media (max-width: ${size.mobileM}) {
+  @media (max-width: ${size.mobileL}) {
     font-size: 16px;
     line-height: 24px;
-    padding: 10px;
+    padding: 0;
     max-width: 330px;
-  }
-  @media (max-width: 750px) {
-    padding: 10px 0 0 0;
   }
 `;
 
-export const GraphWrapper = styled.div`
+export const OldGraphWrapper = styled.div`
   display: flex;
   position: absolute;
   top: 32%;
+
   min-width: 700px;
 
   @media (max-width: ${size.mobileM}) {
@@ -115,6 +116,20 @@ export const GraphWrapper = styled.div`
   @media (max-width: 750px) {
     position: unset;
     top: 0;
+    min-width: 0;
+  }
+`;
+
+export const GraphWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-width: 700px;
+
+  @media (max-width: 750px) {
     min-width: 0;
   }
 `;
