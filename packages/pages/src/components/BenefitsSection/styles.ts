@@ -17,6 +17,9 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  @media (max-width: ${size.mobileM}) {
+    padding-bottom: 20%;
+  }
 `;
 
 export const Container = styled.div`
@@ -122,9 +125,11 @@ export const Column = styled.div`
   width: 43%;
 
   padding-top: 50px;
+
   @media (max-width: ${size.mobileL}) {
     width: 100%;
     align-items: center;
+    padding: 0;
   }
   @media (max-width: 1370px) {
     width: 100%;
