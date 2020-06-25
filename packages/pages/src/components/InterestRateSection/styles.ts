@@ -46,6 +46,8 @@ export const Row = styled.div`
 
   @media (max-width: ${size.mobileL}) {
     padding-left: 5%;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
   @media (max-width: 750px) {
     justify-content: center;
@@ -64,16 +66,17 @@ export const Title = styled.div`
   max-width: 600px;
   text-align: left;
 
+  @media (max-width: 750px) {
+    font-size: 48px;
+    line-height: 56px;
+    width: 70%;
+    padding-left: 0;
+  }
   @media (max-width: ${size.mobileM}) {
     font-size: 48px;
     line-height: 56px;
     padding: 10px;
-  }
-
-  @media (max-width: 750px) {
-    font-size: 48px;
-    line-height: 56px;
-    padding: 10px;
+    width: 100%;
   }
 `;
 
