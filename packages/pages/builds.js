@@ -63,7 +63,7 @@ const Querys = {
   index: {
     query: `
     {
-      allButterPage(filter: { slug: { eq: "investing" } }) {
+      allButterPage(filter: {slug: {eq: "home-page"}}) {
         nodes {
           internal {
             content
@@ -71,21 +71,39 @@ const Querys = {
             ignoreType
             mediaType
           }
-          investing_section {
-            image_right_position
-            important_information
-            learn_more_url
-            section_description
-            section_image
-            section_order
-            section_title
+          above_the_fold_section {
+            subtitle
+            title
           }
-          sub_investing_section {
-            section_number
-            sub_sub_icon
-            sub_sub_text
-            sub_sub_order
+          benefits_section {
+              id
+              image
+              main_title
+              step_one
+              step_three
+              step_two
+              text_link_to_app
+              link_to_app
           }
+          interest_rate_section {
+            player_four_name
+            player_four_number
+            player_one_name
+            player_one_number
+            player_three_name
+            player_three_number
+            player_two_name
+            player_two_number
+            source_information
+            subtitle
+            title
+          }
+          press_releases_section {
+            article_link
+            publisher
+            publisher_logo
+          }
+          press_releases_title
           page_type
         }
       }

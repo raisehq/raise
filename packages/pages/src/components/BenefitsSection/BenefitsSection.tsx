@@ -101,19 +101,22 @@ const BenefitsSection = ({ benefits }): [any] => {
           </ControlWrapper>
         </Row>
         <SpecialRow>
-          <ImageWrapper>
-            {transitions.map(({ item, props, key }) => (
-              <animated.div
-                key={key}
-                style={{
-                  ...props,
-                  backgroundImage: item.url
-                }}
-              >
-                <img src={item.url} alt={selectedOption === 1 ? 'investors' : 'borrowers'} />
-              </animated.div>
-            ))}
-          </ImageWrapper>
+          <Column>
+            <ImageWrapper>
+              {transitions.map(({ item, props, key }) => (
+                <animated.div
+                  key={key}
+                  style={{
+                    ...props,
+                    backgroundImage: item.url
+                  }}
+                >
+                  <img src={item.url} alt={selectedOption === 1 ? 'investors' : 'borrowers'} />
+                </animated.div>
+              ))}
+            </ImageWrapper>
+          </Column>
+
           <Column>
             <StepWrapper>
               {selectedOption === 1

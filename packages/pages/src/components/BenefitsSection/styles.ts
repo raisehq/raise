@@ -14,9 +14,12 @@ export interface ImageProps {
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  @media (max-width: ${size.mobileM}) {
+    padding-bottom: 20%;
+  }
 `;
 
 export const Container = styled.div`
@@ -24,10 +27,12 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 70%;
+  width: 100%;
 
-  margin: auto;
   @media (max-width: ${size.mobileM}) {
+    width: 100%;
+  }
+  @media (max-width: ${size.mobileL}) {
     width: 100%;
   }
 `;
@@ -38,7 +43,6 @@ export const Row = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 1300px;
 `;
 
 export const Title = styled.div`
@@ -65,15 +69,7 @@ export const ImageWrapper = styled.div`
   justify-content: flex-end;
   align-items: flex-start;
   height: 500px;
-  width: 18%;
-
-  @media (max-width: 1675px) {
-    width: 10%;
-  }
-
-  @media (max-width: 1270px) {
-    width: 5%;
-  }
+  width: 550px;
 
   img {
     position: absolute;
@@ -82,6 +78,8 @@ export const ImageWrapper = styled.div`
     @media (max-width: ${size.mobileL}) {
       width: 355px;
       left: 5%;
+    }
+    @media (max-width: 1370px) {
     }
   }
   @media (max-width: ${size.mobileL}) {
@@ -112,6 +110,11 @@ export const SpecialRow = styled(Row)`
     width: 100%;
     flex-direction: column;
   }
+
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 export const Column = styled.div`
@@ -119,11 +122,14 @@ export const Column = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  width: 43%;
 
   padding-top: 50px;
+
   @media (max-width: ${size.mobileL}) {
     width: 100%;
     align-items: center;
+    padding: 0;
   }
   @media (max-width: 1370px) {
     width: 100%;

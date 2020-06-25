@@ -13,20 +13,24 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding-bottom: 10%;
+  padding-bottom: 20%;
   width: 100%;
+
+  @media (max-width: 1370px) {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 export const Container = styled.div`
   position: relative;
-  min-height: 800px;
+  min-height: 600px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 70%;
 
-  margin: auto;
   @media (max-width: ${size.mobileM}) {
     width: 100%;
   }
@@ -42,6 +46,8 @@ export const Row = styled.div`
 
   @media (max-width: ${size.mobileL}) {
     padding-left: 5%;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
   @media (max-width: 750px) {
     justify-content: center;
@@ -60,10 +66,17 @@ export const Title = styled.div`
   max-width: 600px;
   text-align: left;
 
+  @media (max-width: 750px) {
+    font-size: 48px;
+    line-height: 56px;
+    width: 70%;
+    padding-left: 0;
+  }
   @media (max-width: ${size.mobileM}) {
     font-size: 48px;
     line-height: 56px;
     padding: 10px;
+    width: 100%;
   }
 `;
 
@@ -92,13 +105,16 @@ export const GraphWrapper = styled.div`
   display: flex;
   position: absolute;
   top: 32%;
+  min-width: 700px;
 
   @media (max-width: ${size.mobileM}) {
     position: unset;
     top: 0;
+    min-width: 0;
   }
   @media (max-width: 750px) {
     position: unset;
     top: 0;
+    min-width: 0;
   }
 `;
