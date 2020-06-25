@@ -18,9 +18,11 @@ export const Wrapper = styled.div`
 
 export const ColumnWrapper = styled.div`
   display: flex;
+  flex-direction: row;
   justify-items: flex-end;
   align-items: flex-end;
-  flex-direction: row-reverse;
+
+  width: 100%;
 `;
 
 export const Text = styled.div`
@@ -29,6 +31,7 @@ export const Text = styled.div`
   font-weight: normal;
   font-size: 14px;
   line-height: 24px;
+  text-align: right;
 
   color: #8a8e97;
 `;
@@ -38,6 +41,7 @@ export const Container = styled.div`
   justify-items: flex-end;
   align-items: flex-end;
   flex-direction: row;
+  width: 100%;
 
   padding: 10px;
 `;

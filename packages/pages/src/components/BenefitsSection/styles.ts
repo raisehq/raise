@@ -17,23 +17,11 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 100px;
+
   @media (max-width: ${size.mobileM}) {
     padding-bottom: 20%;
-  }
-`;
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-
-  @media (max-width: ${size.mobileM}) {
-    width: 100%;
-  }
-  @media (max-width: ${size.mobileL}) {
-    width: 100%;
+    margin: 30px;
   }
 `;
 
@@ -41,8 +29,14 @@ export const Row = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
   width: 100%;
+
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 export const Title = styled.div`
@@ -64,27 +58,29 @@ export const Title = styled.div`
 
 export const ImageWrapper = styled.div`
   position: relative;
+
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-start;
-  height: 500px;
-  width: 550px;
+  width: 100%;
+  height: 405px;
 
   img {
     position: absolute;
-    left: 0%;
+    right: -5%;
+    width: 100%;
+    height: 405px;
 
     @media (max-width: ${size.mobileL}) {
       width: 355px;
       left: 5%;
-    }
-    @media (max-width: 1370px) {
+      height: unset;
     }
   }
+
   @media (max-width: ${size.mobileL}) {
     width: 100%;
-    justify-content: center;
     align-items: flex-start;
     height: 280px;
   }
@@ -93,36 +89,28 @@ export const ImageWrapper = styled.div`
 export const StepWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+
+  min-height: 380px;
 `;
 
 export const ControlWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
   padding: 0 0 50px 0;
-`;
-
-export const SpecialRow = styled(Row)`
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-
-  @media (max-width: ${size.mobileL}) {
-    width: 100%;
-    flex-direction: column;
-  }
-
-  @media (max-width: ${size.mobileL}) {
-    width: 100%;
-    flex-direction: column;
-  }
 `;
 
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  width: 43%;
+  align-items: center;
+  flex: 1 0 50%;
 
   padding-top: 50px;
 
@@ -131,18 +119,24 @@ export const Column = styled.div`
     align-items: center;
     padding: 0;
   }
-  @media (max-width: 1370px) {
-    width: 100%;
-    align-items: center;
+`;
+export const CheckLoanWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 410px;
+
+  @media (max-width: ${size.mobileL}) {
+    display: none;
   }
 `;
 
 export const CheckLoanText = styled.a`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding-left: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
 
   font-family: Lato;
   font-style: normal;
@@ -153,9 +147,6 @@ export const CheckLoanText = styled.a`
   color: #eb3f93;
   &:hover {
     color: #eb3f93;
-  }
-  @media (max-width: ${size.mobileL}) {
-    display: none;
   }
 `;
 
