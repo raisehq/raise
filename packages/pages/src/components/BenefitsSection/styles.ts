@@ -66,15 +66,7 @@ export const ImageWrapper = styled.div`
   justify-content: flex-end;
   align-items: flex-start;
   height: 500px;
-  width: 45%;
-
-  @media (max-width: 1675px) {
-    width: 10%;
-  }
-
-  @media (max-width: 1270px) {
-    width: 5%;
-  }
+  width: 550px;
 
   img {
     position: absolute;
@@ -83,6 +75,8 @@ export const ImageWrapper = styled.div`
     @media (max-width: ${size.mobileL}) {
       width: 355px;
       left: 5%;
+    }
+    @media (max-width: 1370px) {
     }
   }
   @media (max-width: ${size.mobileL}) {
@@ -108,6 +102,11 @@ export const SpecialRow = styled(Row)`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
+
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+    flex-direction: column;
+  }
 
   @media (max-width: ${size.mobileL}) {
     width: 100%;
