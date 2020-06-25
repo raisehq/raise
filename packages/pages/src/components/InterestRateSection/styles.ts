@@ -18,15 +18,13 @@ export const Wrapper = styled.div`
 `;
 export const Container = styled.div`
   position: relative;
-  min-height: 800px;
+  min-height: 600px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 70%;
 
-  margin: auto;
   @media (max-width: ${size.mobileM}) {
     width: 100%;
   }

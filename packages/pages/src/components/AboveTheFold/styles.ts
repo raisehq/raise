@@ -128,6 +128,5 @@ export const WaveContainer = styled.div`
       width: 100%;
       height: auto;
     }
-    top: calc(100vh - 122px);
   }
 `;

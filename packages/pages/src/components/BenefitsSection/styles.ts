@@ -14,8 +14,8 @@ export interface ImageProps {
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 `;
 
@@ -24,9 +24,8 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 70%;
+  width: 100%;
 
-  margin: auto;
   @media (max-width: ${size.mobileM}) {
     width: 100%;
   }
@@ -41,7 +40,6 @@ export const Row = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 1300px;
 `;
 
 export const Title = styled.div`
@@ -58,7 +56,6 @@ export const Title = styled.div`
   @media (max-width: ${size.mobileL}) {
     font-size: 48px;
     padding-bottom: 40px;
-    padding-left: 0;
   }
 `;
 
@@ -69,7 +66,7 @@ export const ImageWrapper = styled.div`
   justify-content: flex-end;
   align-items: flex-start;
   height: 500px;
-  width: 18%;
+  width: 45%;
 
   @media (max-width: 1675px) {
     width: 10%;
@@ -123,6 +120,7 @@ export const Column = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  width: 43%;
 
   padding-top: 50px;
   @media (max-width: ${size.mobileL}) {
