@@ -11,16 +11,14 @@ const size = {
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  padding: 0 50px;
+
   min-height: 450px;
-  padding: 100px 50px 50px 50px;
 
   margin: 100px;
 
   @media (max-width: ${size.mobileM}) {
-    padding: 0 0 80px 0;
     margin: 30px;
   }
 `;
