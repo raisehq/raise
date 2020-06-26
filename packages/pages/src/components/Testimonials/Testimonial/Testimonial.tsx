@@ -12,7 +12,7 @@ import {
   CardTopIcon
 } from './styles';
 
-const Testimonial = (): any => {
+const Testimonial = ({ data: { name, description, image } }): any => {
   return (
     <Wrapper>
       <Row>
@@ -22,14 +22,12 @@ const Testimonial = (): any => {
       </Row>
 
       <Row>
-        <CardDescription>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        </CardDescription>
+        <CardDescription>{description}</CardDescription>
       </Row>
       <Row>
         <CardImage>
-          <CardPhoto />
-          <CardName>John Doe</CardName>
+          <CardPhoto src={image} />
+          <CardName>{name}</CardName>
         </CardImage>
       </Row>
       <Row>

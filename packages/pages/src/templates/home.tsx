@@ -16,7 +16,8 @@ const IndexPage = ({ pageContext: { data } }: any) => {
     benefits_section,
     interest_rate_section,
     press_releases_section,
-    press_releases_title
+    press_releases_title,
+    testimonials_section
   } = data.allButterPage.nodes[0];
 
   return (
@@ -28,7 +29,7 @@ const IndexPage = ({ pageContext: { data } }: any) => {
         <HomeLayout>
           <BenefitsSection benefits={benefits_section} />
           <InterestRateSection data={interest_rate_section} />
-          <Testimonials />
+          <Testimonials data={testimonials_section} />
           <PressReleases data={press_releases_section} title={press_releases_title} />
         </HomeLayout>
       </div>

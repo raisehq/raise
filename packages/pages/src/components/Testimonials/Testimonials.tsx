@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Testimonial from './Testimonial';
 import { Wrapper, Row, Title, TestimonialsContainer } from './styles';
 
-const Testimonials = (): any => {
-  const testimonials = [1, 2, 3];
+const Testimonials = ({ data }): any => {
+  const [testimonials, setTestimonials] = useState([]);
+  useEffect(() => {
+    data.forEach((item) =>
+      setTestimonials([
+        {
+          name: item.testimonial_name,
+          description: item.testimonial_description,
+          image: item.testimonial_image
+        }
+      ])
+    );
+  }, [data]);
+
   return (
     <Wrapper>
       <Row>
@@ -12,7 +24,7 @@ const Testimonials = (): any => {
       <Row>
         <TestimonialsContainer>
           {testimonials.map((item) => (
-            <Testimonial data={item} key={item} />
+            <Testimonial data={item} key={item.name} />
           ))}
         </TestimonialsContainer>
       </Row>

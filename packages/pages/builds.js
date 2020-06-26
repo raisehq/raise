@@ -63,7 +63,7 @@ const Querys = {
   index: {
     query: `
     {
-      allButterPage(filter: {slug: {eq: "home-page"}}) {
+      allButterPage(filter: {slug: {eq: "home-page-testimonials"}}) {
         nodes {
           internal {
             content
@@ -102,6 +102,11 @@ const Querys = {
             article_link
             publisher
             publisher_logo
+          }
+          testimonials_section {
+            testimonial_name
+            testimonial_description
+            testimonial_image
           }
           press_releases_title
           page_type

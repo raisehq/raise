@@ -9,6 +9,10 @@ const size = {
   desktop: '950px'
 };
 
+interface ImageProps {
+  src?: string | null;
+}
+
 export const Wrapper = styled.div`
   position: relative;
   display: flex;
@@ -39,7 +43,7 @@ export const Row = styled.div`
 
 export const CardTop = styled.div`
   width: 360px;
-  height: 116px;
+  height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -52,13 +56,12 @@ export const CardTopIcon = styled(Icon)`
 
 export const CardDescription = styled.div`
   width: 268px;
-  height: 216px;
+  height: 232px;
   font-family: Lato;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
   line-height: 32px;
-
   text-align: center;
   color: #eb3f93;
 `;
@@ -73,16 +76,16 @@ export const CardImage = styled.div`
   align-items: center;
 
   width: 201px;
-  height: 134px;
-  border: 1px solid black;
+  height: 154px;
 `;
 
-export const CardPhoto = styled.div`
+export const CardPhoto = styled.div<ImageProps>`
   border-radius: 40px;
   width: 80px;
   height: 80px;
+  overflow: hidden;
 
-  background-color: red;
+  background-image: ${({ src }) => `url(${src})`};
 `;
 
 export const CardName = styled.div`
@@ -91,6 +94,7 @@ export const CardName = styled.div`
   font-weight: bold;
   font-size: 20px;
   line-height: 24px;
+  padding: 15px 0;
 
   text-align: center;
 
