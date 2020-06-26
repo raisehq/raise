@@ -72,7 +72,6 @@ module.exports = {
           'REACT_APP_GTM_AUTH',
           'REACT_APP_GTM_ENV',
           'REACT_APP_COOKIE_DOMAIN',
-          'REACT_APP_LOGROCKET',
           'REACT_APP_BUTTER',
           'REACT_APP_INFURA',
           'REACT_APP_DAI_ADDRESS',
