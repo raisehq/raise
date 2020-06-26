@@ -50,7 +50,7 @@ const useGetAllBalances = (suportedCoins: string[]): CoinsType[] => {
             : '0';
 
         const updatedCoin = getCoin(coins)(get(contractAddresses, [chainId, name], name));
-        updatedCoin.value = fromDecimalFixed(value, updatedCoin.decimals);
+        updatedCoin.value = fromDecimalFixed(value, updatedCoin.decimals, 3);
         return updatedCoin;
       });
 

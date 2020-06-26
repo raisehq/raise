@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { tradeTokensForExactTokens, tradeEthForExactTokens } from '@uniswap/sdk';
 import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { InvestStateProps } from '../types';
 import { getCalculations } from '../../../utils/loanUtils';
 import { useRootContext } from '../../../contexts/RootContext';
@@ -10,9 +11,9 @@ import useGoogleTagManager, { TMEvents } from '../../../hooks/useGoogleTagManage
 import useAsyncEffect from '../../../hooks/useAsyncEffect';
 import { useAddressBalance } from '../../../contexts/BalancesContext';
 import useGetCoinMetadata from '../../../hooks/useGetCoinMetadata';
-import localeConfig from '../../../commons/localeConfig';
 import { generateInfo, CoinValue } from '../investUtils';
 import { toDecimal, fromDecimal, fromDecimalFixed } from '../../../utils/web3-utils';
+import numeral, { formatBigNumber } from '../../../commons/numeral';
 
 import {
   InvestHeader,
@@ -72,7 +73,7 @@ const InvestState: React.SFC<InvestStateProps> = ({
   const tagManager = useGoogleTagManager('Card');
   const balanceBN: BN = useAddressBalance(account, inputCoin?.address || '');
   const balance = Number(fromDecimalFixed(balanceBN.toString(10), inputCoin?.decimals));
-  const expectedInputRoi = Number(expectedROI * value || 0).toLocaleString(...localeConfig);
+  const expectedInputRoi = numeral(expectedROI * value || 0).format();
 
   const onConfirm = async () => {
     if (userActivated) {
@@ -141,10 +142,9 @@ const InvestState: React.SFC<InvestStateProps> = ({
   ]);
   const [termsCond, setTermsCond] = useState(false);
 
-  const inputTokenAmountString =
-    Number(fromDecimal(inputTokenAmount.toString(10), inputCoin?.decimals)).toLocaleString(
-      ...localeConfig
-    ) || '0';
+  const inputTokenAmountString = new BigNumber(
+    fromDecimal(inputTokenAmount.toString(10), inputCoin?.decimals)
+  ).toFormat(3, formatBigNumber);
   const buttonRules =
     value === 0 ||
     value === undefined ||
@@ -170,7 +170,6 @@ const InvestState: React.SFC<InvestStateProps> = ({
     const toggleTerms = !termsCond;
     setTermsCond(toggleTerms);
   };
-
   const getCoinValue = () => (
     <CoinValue value={inputTokenAmountString} name={inputCoin?.text} src={inputCoinImage} />
   );

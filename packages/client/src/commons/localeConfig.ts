@@ -1,5 +1,5 @@
 const localeConfig: [string, { maximumFractionDigits: number; minimumFractionDigits: number }] = [
-  'en-US',
+  'es-ES',
   {
     maximumFractionDigits: 3,
     minimumFractionDigits: 0

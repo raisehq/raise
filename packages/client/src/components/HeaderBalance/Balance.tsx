@@ -5,6 +5,7 @@ import NoBalance from './NoBalance';
 import useGetAllBalances from '../../hooks/useGetAllBalances';
 import useGoogleTagManager, { TMEvents } from '../../hooks/useGoogleTagManager';
 import useRouter from '../../hooks/useRouter';
+import { formatBigNumber } from '../../commons/numeral';
 import {
   AddressStatus,
   BalanceDropdown,
@@ -59,15 +60,22 @@ const Balance = (props) => {
       });
 
       setBalanceList(
-        balances.map((coin) => (
-          <TokenLayout
-            hider
-            imageUrl={TOKEN_URLS[coin.text]}
-            name={coin.text}
-            key={coin.text}
-            value={coin.value}
-          />
-        ))
+        balances
+          .map((coin) => {
+            const formatValue = new BigNumber(coin.value).toFormat(3, formatBigNumber);
+            return { ...coin, ...{ value: formatValue } };
+          })
+          .map((coin) => {
+            return (
+              <TokenLayout
+                hider
+                imageUrl={TOKEN_URLS[coin.text]}
+                name={coin.text}
+                key={coin.text}
+                value={coin.value}
+              />
+            );
+          })
       );
       setNotification(false);
     }
