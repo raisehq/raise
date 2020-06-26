@@ -6,6 +6,7 @@ import 'semantic-ui-css/semantic.min.css';
 import AboveTheFold from '../components/AboveTheFold';
 import BenefitsSection from '../components/BenefitsSection';
 import InterestRateSection from '../components/InterestRateSection';
+import Testimonials from '../components/Testimonials';
 import PressReleases from '../components/PressReleases';
 import HomeLayout from '../layouts/Home';
 
@@ -27,6 +28,7 @@ const IndexPage = ({ pageContext: { data } }: any) => {
         <HomeLayout>
           <BenefitsSection benefits={benefits_section} />
           <InterestRateSection data={interest_rate_section} />
+          <Testimonials />
           <PressReleases data={press_releases_section} title={press_releases_title} />
         </HomeLayout>
       </div>
