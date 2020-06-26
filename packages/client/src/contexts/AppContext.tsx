@@ -35,7 +35,6 @@ export function Updater() {
       config: { network },
       kyc: { token },
       user: {
-        details: { id, accounttype_id: accounttypeId, email, status },
         cryptoAddress: { address, cryptotypeId }
       }
     },
