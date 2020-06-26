@@ -115,11 +115,8 @@ build-front-production:
       - packages/client/build
 
 deploy-pre-front:
-  image: python:3.7-alpine
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   stage: deploy
-  before_script:
-    - apk add --update bash coreutils
-    - pip install awscli
   script:
     - echo '>>>> DEPLOY INTEGRATION <<<<'
     - |
@@ -147,11 +144,8 @@ deploy-pre-front:
       - $BUTTERCMS
 
 deploy-prod:
-  image: python:3.7-alpine
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   stage: deploy-prod
-  before_script:
-    - apk add --update bash coreutils
-    - pip install awscli
   script:
     - |
       #!/bin/sh
@@ -280,11 +274,8 @@ cypress-e2e-production:
   resource_group: production
 
 review-front:
-  image: python:3.7-alpine
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   stage: review
-  before_script:
-    - apk add --update bash
-    - pip install awscli
   script:
     - |
       #!/bin/sh
@@ -312,17 +303,16 @@ review-front:
       - $BUTTERCMS
 
 stop-review-front:
-  image: python:3.7-alpine
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   stage: cleanup
   variables:
     GIT_STRATEGY: none
   before_script:
-    - apk add --no-cache openssh-client bash
-    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-    - echo "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - chmod 600 ~/.ssh/config
-    - pip install awscli
+    - apt-get update && apt-get install -y openssh-client
+    - mkdir -p ~/.ssh
+    - echo -e "$GITLAB_PRIV_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - aws s3 rm s3://${BUCKET_NAME_REVIEW_APP}/$(echo ${CI_COMMIT_REF_SLUG} | tr A-Z a-z) --recursive
     - ssh ubuntu@${BASTION}.${DOMAIN} delete_review ${CI_COMMIT_REF_SLUG}
