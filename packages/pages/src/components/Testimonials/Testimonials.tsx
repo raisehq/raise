@@ -5,15 +5,17 @@ import { Wrapper, Row, Title, TestimonialsContainer } from './styles';
 const Testimonials = ({ data }): any => {
   const [testimonials, setTestimonials] = useState([]);
   useEffect(() => {
+    const testimonialsArray = [];
+
     data.forEach((item) =>
-      setTestimonials([
-        {
-          name: item.testimonial_name,
-          description: item.testimonial_description,
-          image: item.testimonial_image
-        }
-      ])
+      testimonialsArray.push({
+        name: item.testimonial_name,
+        description: item.testimonial_description,
+        image: item.testimonial_image
+      })
     );
+
+    setTestimonials([...testimonialsArray]);
   }, [data]);
 
   return (
