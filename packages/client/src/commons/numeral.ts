@@ -1,7 +1,7 @@
 import numeral from 'numeral';
 
 /** Start of number formatting */
-export const numeralFormat = '0,0.00';
+export const numeralFormat = '0[.]0,0'; // This format is 0,000
 
 if (!numeral?.locales?.hero) {
   numeral.register('locale', 'hero', {
@@ -42,6 +42,14 @@ numeral.defaultFormat(numeralFormat);
 
 numeral.nullFormat('<0.01');
 
-/** End of numer formatting */
-
+export const formatBigNumber = {
+  prefix: '',
+  decimalSeparator: ',',
+  groupSeparator: '.',
+  groupSize: 3,
+  secondaryGroupSize: 0,
+  fractionGroupSeparator: ' ',
+  fractionGroupSize: 0,
+  suffix: ''
+};
 export default numeral;
