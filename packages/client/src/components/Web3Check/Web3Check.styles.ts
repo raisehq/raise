@@ -50,7 +50,6 @@ export const ButtonBox = styled.div`
   width: 355px;
 `;
 export const HelpMessage = styled.div`
-  position: absolute;
   bottom: 10px;
   left: 0;
   right: 0;
