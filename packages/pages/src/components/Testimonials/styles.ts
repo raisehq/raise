@@ -64,7 +64,7 @@ export const TestimonialsContainer = styled.div`
 
   width: 100%;
 
-  max-width: 1150px;
+  max-width: 1200px;
   min-width: 1000px;
 
   .slider {
@@ -77,4 +77,5 @@ export const Slide = styled.div`
   justify-content: center;
   outline: none;
   width: 100%;
+  padding: 20px;
 `;
