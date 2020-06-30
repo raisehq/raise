@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import Slider from 'react-slick';
 import Testimonial from './Testimonial';
 import { Wrapper, Row, Title, TestimonialsContainer, Slide } from './styles';
-import Slider from 'react-slick';
 
 const Testimonials = ({ data }): any => {
   const settings = {
@@ -29,7 +29,11 @@ const Testimonials = ({ data }): any => {
   const [slides, setSlides] = useState([]);
 
   const getSlides = (testimonials) =>
-    testimonials.map((item) => <Slide><Testimonial data={item} key={item.name} className="slide" /></Slide>);
+    testimonials.map((item) => (
+      <Slide key={item.name}>
+        <Testimonial data={item} className="slide" />
+      </Slide>
+    ));
 
   useEffect(() => {
     const testimonialsArray = [];
