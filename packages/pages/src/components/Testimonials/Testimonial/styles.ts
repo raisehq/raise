@@ -23,7 +23,6 @@ export const Wrapper = styled.div`
   width: 360px;
   height: 448px;
   margin: 10px;
-
   background: #ffffff;
   box-shadow: 0px 8px 25px rgba(60, 66, 81, 0.25);
 
