@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import Testimonial from './Testimonial';
 import { Wrapper, Row, Title, TestimonialsContainer, Slide } from './styles';
 
-const Testimonials = ({ data }): any => {
+const Testimonials = ({ data, title }): any => {
   const settings = {
     dots: true,
     infinite: false,
@@ -52,7 +52,7 @@ const Testimonials = ({ data }): any => {
   return (
     <Wrapper>
       <Row>
-        <Title>What the investors says about us</Title>
+        <Title>{title}</Title>
       </Row>
       <Row>
         <TestimonialsContainer>

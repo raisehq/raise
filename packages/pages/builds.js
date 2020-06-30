@@ -109,6 +109,7 @@ const Querys = {
             testimonial_image
           }
           press_releases_title
+          testimonials_title
           page_type
         }
       }
