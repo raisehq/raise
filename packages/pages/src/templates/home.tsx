@@ -22,7 +22,7 @@ const IndexPage = ({ pageContext: { data } }: any) => {
     testimonials_section,
     testimonials_title
   } = data.allButterPage.nodes[0];
-  console.log(testimonials_section);
+
   return (
     <Layout>
       <div>
