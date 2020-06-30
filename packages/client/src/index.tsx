@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import LogRocket from 'logrocket';
 import { hotjar } from 'react-hotjar';
 
 import useGoogleTagManager from './hooks/useGoogleTagManager';
@@ -66,9 +65,6 @@ const Root = () => {
 
   useEffect(() => {
     const { Cypress }: any = window;
-    if (process.env.REACT_APP_LOGROCKET === 'true' && Cypress === undefined) {
-      LogRocket.init('rjsyho/raisehq');
-    }
     if (process.env.REACT_APP_HOTJAR === 'true' && Cypress === undefined) {
       hotjar.initialize(
         Number(process.env.REACT_APP_HOTJAR_ID),

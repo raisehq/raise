@@ -58,10 +58,6 @@ const InvestingPage = () => {
     }
 
     if (!isLogged) {
-      orderedSections.splice(4, 0, {
-        component: <SignUp id="Investing_signup" />,
-        section_order: 4
-      });
       orderedSections.push({
         component: <SignUp id="Investing_signup" />,
         section_order: orderedSections.length

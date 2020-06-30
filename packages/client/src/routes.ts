@@ -11,17 +11,26 @@ const routeSkeleton = {
     {
       title: 'Loan of the month',
       path: '/',
-      component: ReactLink
+      component: ReactLink,
+      logged: false
     },
     {
       title: 'Investing with Raise',
       path: '/investing',
-      component: ReactLink
+      component: ReactLink,
+      logged: false
+    },
+    {
+      title: 'Buy Crypto',
+      path: '/buy-crypto',
+      component: ReactLink,
+      logged: true
     },
     {
       title: 'Blog',
       path: `${REACT_APP_WEB_URL}/blog`,
-      component: BasicLink
+      component: BasicLink,
+      logged: false
     },
     {
       title: 'About us',

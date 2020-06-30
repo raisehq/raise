@@ -79,18 +79,17 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
           type="secondary"
           logo="metamask.png"
         />
-        <HelpMessage style={{ bottom: '65px' }}>
-          Need help? Read our guide on{' '}
-          <HelpLink
-            href="https://raise.it/blog/how-to-install-and-use-metamask-with-raise"
-            target="_black"
-            rel="nofollow"
-          >
-            <em>How to install and connect Metamask</em>
-          </HelpLink>
-        </HelpMessage>
       </ButtonContainer>
-
+      <HelpMessage style={{ bottom: '65px' }}>
+        Need help? Read our guide on{' '}
+        <HelpLink
+          href="https://raise.it/blog/how-to-install-and-use-metamask-with-raise"
+          target="_black"
+          rel="nofollow"
+        >
+          <em>How to install and connect Metamask</em>
+        </HelpLink>
+      </HelpMessage>
       <GoBack>
         <GoBackButton onClickAction={onBack} />
       </GoBack>

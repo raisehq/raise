@@ -2,7 +2,10 @@ import web3Utils from 'web3-utils';
 import BigNumber from 'bignumber.js';
 import ABI_ERC20 from '../commons/erc20';
 
-BigNumber.config({ EXPONENTIAL_AT: 1e9 });
+BigNumber.config({
+  EXPONENTIAL_AT: 1e9
+});
+
 const CONTRACTCACHE = {};
 
 export function isAddress(value) {
@@ -47,7 +50,11 @@ export const toDecimal = (etherAmount: string | number | BigNumber, factor = 18)
 export const fromDecimal = (decimal: string | number | BigNumber, factor = 18): string =>
   new BigNumber(decimal).div(new BigNumber('10').pow(new BigNumber(factor.toString()))).toString();
 
-export const fromDecimalFixed = (decimal: string | number | BigNumber, factor = 18): string =>
+export const fromDecimalFixed = (
+  decimal: string | number | BigNumber,
+  factor = 18,
+  fixed = 2
+): string =>
   new BigNumber(decimal)
     .div(new BigNumber('10').pow(new BigNumber(factor.toString())))
-    .toFixed(2, BigNumber.ROUND_DOWN);
+    .toFixed(fixed, BigNumber.ROUND_DOWN);
