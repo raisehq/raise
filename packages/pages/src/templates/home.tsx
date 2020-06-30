@@ -22,7 +22,7 @@ const IndexPage = ({ pageContext: { data } }: any) => {
     testimonials_section,
     testimonials_title
   } = data.allButterPage.nodes[0];
-
+  console.log(testimonials_section);
   return (
     <Layout>
       <div>
@@ -32,7 +32,7 @@ const IndexPage = ({ pageContext: { data } }: any) => {
         <HomeLayout>
           <BenefitsSection benefits={benefits_section} />
           <InterestRateSection data={interest_rate_section} />
-          {testimonials_section && (
+          {testimonials_section && testimonials_section.length > 0 && (
             <Testimonials data={testimonials_section} title={testimonials_title} />
           )}
           <PressReleases data={press_releases_section} title={press_releases_title} />
