@@ -6,8 +6,11 @@ import 'semantic-ui-css/semantic.min.css';
 import AboveTheFold from '../components/AboveTheFold';
 import BenefitsSection from '../components/BenefitsSection';
 import InterestRateSection from '../components/InterestRateSection';
+import Testimonials from '../components/Testimonials';
 import PressReleases from '../components/PressReleases';
 import HomeLayout from '../layouts/Home';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const IndexPage = ({ pageContext: { data } }: any) => {
   const {
@@ -15,7 +18,9 @@ const IndexPage = ({ pageContext: { data } }: any) => {
     benefits_section,
     interest_rate_section,
     press_releases_section,
-    press_releases_title
+    press_releases_title,
+    testimonials_section,
+    testimonials_title
   } = data.allButterPage.nodes[0];
 
   return (
@@ -27,6 +32,9 @@ const IndexPage = ({ pageContext: { data } }: any) => {
         <HomeLayout>
           <BenefitsSection benefits={benefits_section} />
           <InterestRateSection data={interest_rate_section} />
+          {testimonials_section && testimonials_section.length > 0 && (
+            <Testimonials data={testimonials_section} title={testimonials_title} />
+          )}
           <PressReleases data={press_releases_section} title={press_releases_title} />
         </HomeLayout>
       </div>

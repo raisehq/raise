@@ -93,7 +93,8 @@ module.exports = {
             'benefits_section',
             'interest_rate_section',
             'above_the_fold',
-            'publisher_releases'
+            'publisher_releases',
+            'testimonials'
           ],
           test: 0
         },
