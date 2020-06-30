@@ -32,7 +32,9 @@ const IndexPage = ({ pageContext: { data } }: any) => {
         <HomeLayout>
           <BenefitsSection benefits={benefits_section} />
           <InterestRateSection data={interest_rate_section} />
-          <Testimonials data={testimonials_section} title={testimonials_title}/>
+          {testimonials_section && (
+            <Testimonials data={testimonials_section} title={testimonials_title} />
+          )}
           <PressReleases data={press_releases_section} title={press_releases_title} />
         </HomeLayout>
       </div>
