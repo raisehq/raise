@@ -26,7 +26,7 @@ const Testimonial = ({ data: { name, description, image } }): any => {
       </Row>
       <Row>
         <CardImage>
-          <CardPhoto src={image} />
+          {image && <CardPhoto src={image} />}
           <CardName>{name}</CardName>
         </CardImage>
       </Row>

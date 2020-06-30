@@ -29,10 +29,10 @@ export const Row = styled.div`
   align-items: flex-start;
   flex-wrap: wrap;
   width: 100%;
+  padding: 0 20px;
 
   @media (max-width: ${size.mobileL}) {
-    width: 100%;
-    flex-direction: column;
+    min-width: 400px;
   }
 `;
 
@@ -56,21 +56,25 @@ export const Title = styled.div`
 export const TestimonialsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: nowrap;
 
   margin: 100px 20px;
 
   width: 100%;
+
   max-width: 1150px;
+  min-width: 1000px;
 
-  @media (max-width: ${size.mobileL}) {
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-
-    min-height: 1400px;
-    margin: 0;
+  .slider {
+    width: 100%;
   }
+`;
+
+export const Slide = styled.div`
+  display: flex !important;
+  justify-content: center;
+
+  width: 100%;
 `;

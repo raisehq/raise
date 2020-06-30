@@ -9,6 +9,8 @@ import InterestRateSection from '../components/InterestRateSection';
 import Testimonials from '../components/Testimonials';
 import PressReleases from '../components/PressReleases';
 import HomeLayout from '../layouts/Home';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const IndexPage = ({ pageContext: { data } }: any) => {
   const {

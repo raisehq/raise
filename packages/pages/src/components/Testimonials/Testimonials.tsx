@@ -1,9 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import Testimonial from './Testimonial';
-import { Wrapper, Row, Title, TestimonialsContainer } from './styles';
+import { Wrapper, Row, Title, TestimonialsContainer, Slide } from './styles';
+import Slider from 'react-slick';
 
 const Testimonials = ({ data }): any => {
-  const [testimonials, setTestimonials] = useState([]);
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 300,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: false,
+          dots: true,
+          arrows: false,
+          centerMode: true
+        }
+      }
+    ]
+  };
+
+  const [slides, setSlides] = useState([]);
+
+  const getSlides = (testimonials) =>
+    testimonials.map((item) => <Slide><Testimonial data={item} key={item.name} className="slide" /></Slide>);
+
   useEffect(() => {
     const testimonialsArray = [];
 
@@ -15,7 +42,7 @@ const Testimonials = ({ data }): any => {
       })
     );
 
-    setTestimonials([...testimonialsArray]);
+    setSlides(getSlides([...testimonialsArray]));
   }, [data]);
 
   return (
@@ -25,9 +52,9 @@ const Testimonials = ({ data }): any => {
       </Row>
       <Row>
         <TestimonialsContainer>
-          {testimonials.map((item) => (
-            <Testimonial data={item} key={item.name} />
-          ))}
+          <Slider className="slider" {...settings}>
+            {slides}
+          </Slider>
         </TestimonialsContainer>
       </Row>
     </Wrapper>
