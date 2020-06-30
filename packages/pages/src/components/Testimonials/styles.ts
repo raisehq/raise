@@ -75,6 +75,6 @@ export const TestimonialsContainer = styled.div`
 export const Slide = styled.div`
   display: flex !important;
   justify-content: center;
-
+  outline: none;
   width: 100%;
 `;
