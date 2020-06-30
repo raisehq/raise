@@ -14,8 +14,9 @@ const ButtonLink: React.SFC<ButtonLinkProps> = ({
   fullWidth = false,
   icon,
   logo,
+  center = false,
   ...rest
-}: any) => (
+}: ButtonLinkProps) => (
   <ButtonStyled
     onClick={onClick}
     disabled={disabled}
@@ -27,11 +28,11 @@ const ButtonLink: React.SFC<ButtonLinkProps> = ({
     {...rest}
   >
     <ButtonContent>
-      <LeftSide>
+      <LeftSide center={center}>
         <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/${logo}`} size="tiny" />
         <span>{text}</span>
       </LeftSide>
-      <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/${icon}`} size="tiny" />
+      {icon && <Image src={`${process.env.REACT_APP_HOST_IMAGES}/images/${icon}`} size="tiny" />}
     </ButtonContent>
   </ButtonStyled>
 );

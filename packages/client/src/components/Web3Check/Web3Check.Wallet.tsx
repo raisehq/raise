@@ -95,7 +95,6 @@ const Wallet = ({ onNext, onBack }: any) => {
               type="tertiary"
               size="large"
               disabled={false}
-              icon="external_link.svg"
               logo="metamask.png"
               fullWidth
             />
@@ -107,7 +106,6 @@ const Wallet = ({ onNext, onBack }: any) => {
               type="tertiary"
               size="large"
               disabled={false}
-              icon="external_link.svg"
               logo="opera.png"
               fullWidth
             />
@@ -119,7 +117,6 @@ const Wallet = ({ onNext, onBack }: any) => {
               type="tertiary"
               size="large"
               disabled={false}
-              icon="external_link.svg"
               logo="coinbase.png"
               fullWidth
             />

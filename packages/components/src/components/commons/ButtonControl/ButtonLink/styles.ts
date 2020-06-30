@@ -63,11 +63,13 @@ export const ButtonContent = styled.div`
     max-width: 20px;
   }
 `;
-
-export const LeftSide = styled.div`
+interface LeftSideContent {
+  center?: boolean;
+}
+export const LeftSide = styled.div<LeftSideContent>`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: ${(props) => (props.center ? 'center;' : 'flex-start;')}
   align-items: center;
   min-width: 205px;
   &&& span {

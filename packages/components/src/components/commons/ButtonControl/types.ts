@@ -27,6 +27,7 @@ export interface BloomButtonProps {
 }
 
 export interface ButtonLinkProps extends ButtonProps {
-  icon: string;
+  icon?: string | null | undefined;
   logo: string;
+  center?: boolean;
 }

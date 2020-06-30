@@ -28,12 +28,19 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
       config: { network, networkId }
     }
   }: any = useRootContext();
+  const [hasMetamask, setHasMetamask] = useState({});
   const tagManager = useGoogleTagManager('Wallet');
   const { web3, getDefaultWeb3, connectWallet }: any = useWeb3();
   const [defaultWallet, setDefaultWallet] = useState<IWallet>(getDefaultWeb3());
 
   useEffect(() => {
     setDefaultWallet(getDefaultWeb3());
+
+    if (defaultWallet?.name === -1 || defaultWallet?.name !== CryptoWallets.Metamask) {
+      setHasMetamask({ icon: 'external_link.svg' });
+    } else {
+      setHasMetamask({ center: true });
+    }
   }, [web3]);
 
   const handlerWallet = (walletSelected) => async () => {
@@ -75,9 +82,9 @@ const WalletSetUp = ({ onNext, onBack }: any) => {
           size="large"
           text="Install Metamask"
           fullWidth
-          icon="external_link.svg"
           type="secondary"
           logo="metamask.png"
+          {...hasMetamask}
         />
       </ButtonContainer>
       <HelpMessage style={{ bottom: '65px' }}>
