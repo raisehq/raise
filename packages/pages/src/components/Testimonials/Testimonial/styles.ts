@@ -84,7 +84,7 @@ export const CardPhoto = styled.div<ImageProps>`
   height: 80px;
   overflow: hidden;
 
-  background-image: ${({ src }) => `url(${src})`};
+  background-image: ${({ src }) => (src ? `url(${src})` : 'none')};
 `;
 
 export const CardName = styled.div`
