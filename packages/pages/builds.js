@@ -63,7 +63,7 @@ const Querys = {
   index: {
     query: `
     {
-      allButterPage(filter: {slug: {eq: "home-page-testimonials"}}) {
+      allButterPage(filter: {slug: {eq: "home-page"}}) {
         nodes {
           internal {
             content
