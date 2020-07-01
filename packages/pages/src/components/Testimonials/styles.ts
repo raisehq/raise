@@ -50,6 +50,7 @@ export const Title = styled.div`
   @media (max-width: ${size.mobileL}) {
     font-size: 48px;
     padding-bottom: 40px;
+    line-height: 56px;
   }
 `;
 
@@ -69,6 +70,10 @@ export const TestimonialsContainer = styled.div`
 
   .slider {
     width: 100%;
+  }
+
+  @media (max-width: ${size.mobileL}) {
+    margin: 0 20px;
   }
 `;
 
