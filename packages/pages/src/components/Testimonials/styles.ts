@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
 
   @media (max-width: ${size.mobileM}) {
     padding-bottom: 20%;
-    margin: 30px;
+    margin: 50px 30px;
   }
 `;
 
