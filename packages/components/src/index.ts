@@ -41,6 +41,7 @@ export { default as LoanActivity } from './components/LoanActivity';
 export { default as AboutBorrower } from './components/AboutBorrower';
 export { default as NeedHelp } from './components/NeedHelp';
 export { default as PressPR } from './components/PressPR';
+export { default as Testimonials } from './components/Testimonials';
 
 export {
   getCurrentInstalment,
