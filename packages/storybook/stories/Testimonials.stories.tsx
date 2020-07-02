@@ -20,8 +20,8 @@ const dataOneInvestor = [
     testimonial_name: 'Pol Sendra',
     testimonial_description:
       'What I especially liked about Raise is the kind of projects they select – serving a good cause, and of course the tempting APRs offered.',
-    testimonial_image: '',
     title: 'Join our smart investors',
+    testimonial_image: 'https://cdn.buttercms.com/VSKZcBZKSHqd2Av1HfmM',
   },
 ];
 

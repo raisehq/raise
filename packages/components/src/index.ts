@@ -42,6 +42,8 @@ export { default as AboutBorrower } from './components/AboutBorrower';
 export { default as NeedHelp } from './components/NeedHelp';
 export { default as PressPR } from './components/PressPR';
 export { default as Testimonials } from './components/Testimonials';
+export { default as BenefitsSection } from './components/BenefitsSection';
+export { default as InterestRateSection } from './components/InterestRateSection';
 
 export {
   getCurrentInstalment,

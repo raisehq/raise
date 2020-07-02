@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export interface ColumnItemProps {
-  height: string;
+  height: number;
   color: string;
 }
 
@@ -42,7 +42,7 @@ export const Row = styled.div`
 
 export const ColumnItem = styled.div<ColumnItemProps>`
   height: ${({ height }) => `${height}px`};
-  background: ${({ background }) => background};
+  background: ${({ color }) => color};
   border-radius: 4px;
   width: 100%;
   max-width: 264px;

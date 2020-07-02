@@ -1,12 +1,12 @@
 import React from 'react';
 import { Testimonials } from '@raisehq/components';
+import { BenefitsSection } from '@raisehq/components';
+import { InterestRateSection } from '@raisehq/components';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import TagManager from '../components/TagManager';
 import 'semantic-ui-css/semantic.min.css';
 import AboveTheFold from '../components/AboveTheFold';
-import BenefitsSection from '../components/BenefitsSection';
-import InterestRateSection from '../components/InterestRateSection';
 import PressReleases from '../components/PressReleases';
 import HomeLayout from '../layouts/Home';
 import 'slick-carousel/slick/slick.css';

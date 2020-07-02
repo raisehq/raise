@@ -17,10 +17,10 @@ import {
 } from './styles';
 import Step from './Step';
 
-const BenefitsSection = ({ benefits }): [any] => {
+const BenefitsSection = ({ benefits }) => {
   const [selectedOption, setSelectedOption] = useState(1);
-  const [stepsBorrowers, setStepsBorrowers] = useState([]);
-  const [stepsInvestors, setStepsInvestors] = useState([]);
+  const [stepsBorrowers, setStepsBorrowers] = useState<any>([]);
+  const [stepsInvestors, setStepsInvestors] = useState<any>([]);
   const [mainTitle, setMainTitle] = useState('');
   const [linkTextInvestors, setLinkTextInvestors] = useState('');
   const [linkTextBorrowers, setLinkTextBorrowers] = useState('');
