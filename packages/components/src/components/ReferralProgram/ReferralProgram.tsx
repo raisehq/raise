@@ -35,7 +35,7 @@ const ReferralProgram: any = ({ shareLink, totalCount, withdrawCTA }: any) => {
           Share your personal link and earn 50 DAI with each friend that invests with us.
           <TermsAndCondRow>
             <TermsAndCond
-              href={`${process.env.REACT_APP_HOST_IMAGES}/toc-ref.pdf`}
+              href={`${process.env.REACT_APP_HOST_IMAGES}/toc-raf.pdf`}
               rel="noopener noreferrer"
               target="_blank"
             >
