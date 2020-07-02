@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import GroupButton from '../commons/ButtonControl/GroupButton';
 import { Icon } from 'semantic-ui-react';
 import find from 'lodash/find';
 import { useTransition, animated } from 'react-spring';
+import GroupButton from '../commons/ButtonControl/GroupButton';
 import {
   Wrapper,
   Row,
