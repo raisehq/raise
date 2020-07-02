@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper, Row, ColumnItem, Label, TextContainer, LabelText, LabelNumber } from './styles';
+import { Wrapper, Row, ColumnItem, TextContainer, LabelText, LabelNumber } from './styles';
 
 const Column = ({ height, background, player }): any => (
   <Wrapper>
@@ -10,7 +10,7 @@ const Column = ({ height, background, player }): any => (
       </TextContainer>
     </Row>
     <Row>
-      <ColumnItem height={height} background={background} />
+      <ColumnItem height={height} color={background} />
     </Row>
   </Wrapper>
 );

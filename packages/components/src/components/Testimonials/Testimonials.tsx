@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import Testimonial from './Testimonial';
 import { Wrapper, Row, Title, TestimonialsContainer, Slide } from './styles';
 
-const Testimonials = ({ data, title }): any => {
+const Testimonials = ({ data, title }) => {
   const settings = {
     dots: true,
     infinite: false,
@@ -31,12 +31,12 @@ const Testimonials = ({ data, title }): any => {
   const getSlides = (testimonials) =>
     testimonials.map((item) => (
       <Slide key={item.name}>
-        <Testimonial data={item} className="slide" />
+        <Testimonial data={item} />
       </Slide>
     ));
 
   useEffect(() => {
-    const testimonialsArray = [];
+    const testimonialsArray: any = [];
 
     data.forEach((item) =>
       testimonialsArray.push({

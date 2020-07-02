@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { sortBy, reverse } from 'lodash';
+import { sortBy } from 'lodash';
 import Column from './Column';
 import { Wrapper, ColumnWrapper, Text, Container } from './styles';
 
@@ -16,7 +16,7 @@ const ColumnChart = ({
     source_information
   }
 }) => {
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState<any>([]);
   const [maxCompetitorAPRPercentage, setMaxCompetitorAPRPercentaje] = useState(0);
 
   const getHeight = (competitorAPRPercentage, maxCompetitorAPRPercentageArg) => {
