@@ -7,7 +7,6 @@ import routeMapper from '../routeMapper';
 
 const SubHeaderRaw: React.FC<SubheaderProps> = ({ routes, ...props }: SubheaderProps) => {
   const generatedLinks = routes.map(routeMapper(SubItem));
-  console.log(generatedLinks);
 
   return (
     <SubBar {...props}>
