@@ -1,7 +1,5 @@
 import React from 'react';
-import { Testimonials } from '@raisehq/components';
-import { BenefitsSection } from '@raisehq/components';
-import { InterestRateSection } from '@raisehq/components';
+import { Testimonials, BenefitsSection, InterestRateSection } from '@raisehq/components';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 import TagManager from '../components/TagManager';
