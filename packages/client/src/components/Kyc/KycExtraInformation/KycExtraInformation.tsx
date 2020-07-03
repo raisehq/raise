@@ -22,7 +22,9 @@ const KycExtraInformation = () => (
       </Box>
       <Box>
         <IconBox name="shield alternate" size="big" />
-        <TextBox>Verifying your identity prevents criminal activity such as money laundry.</TextBox>
+        <TextBox>
+          Verifyingg your identity prevents criminal activity such as money laundry.
+        </TextBox>
       </Box>
     </BoxContainer>
     <VerifyAccount />
