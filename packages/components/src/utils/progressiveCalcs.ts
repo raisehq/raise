@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import numeral, { numeralFormat } from '../commons/numeral';
 import { fromDecimal } from './web3-utils';
 import { calculatefromDecimal } from './loanUtils';
-import { RepaymentState, LoanLenderView, GraphLoan } from '../commons/graphTypes';
+import { RepaymentState, GraphFunding, GraphLoan } from '../commons/graphTypes';
 
 // internal
 /*
@@ -185,7 +185,8 @@ export const getNextInstalment = (loan, currentDate): number => {
 };
 
 const calculateInstalments = (
-  loan: Partial<LoanLenderView>,
+  loan: Partial<GraphLoan>,
+  funding: Partial<GraphFunding>,
   decimals = 18,
   currentDate: number // unix
 ): RepayInfo => {
@@ -196,13 +197,15 @@ const calculateInstalments = (
     loan.instalments === loan.instalmentsPaid
       ? 'Paid'
       : dayjs.unix(nextRawInstalmentUnix).format('DD MMM YYYY');
-  const lenderBalance = calculatefromDecimal(loan.lenderBalance, decimals);
-  const instalmentAmount = calculatefromDecimal(loan.instalmentAmount, decimals);
-  const schedules = instalmentDates.map(scheduleMapper(loan, loan.lenderInstalment || 0));
+  const lenderBalance = '0'; // This value need to be calculated on the fly, todo: port getWithdrawAmount to client
+  const instalmentAmount = calculatefromDecimal('0', decimals); // This value need to be calculated on the fly, todo: port getInstalmentAmount to client
+  const schedules = instalmentDates.map(
+    scheduleMapper(loan, Number(funding.instalmentsWithdrawed) || 0)
+  );
   const currentDebt = getCurrentDebt(loan, decimals, currentDate);
   const paidInTime =
     Math.floor(currentDebt) <=
-    Math.floor(Number(fromDecimal(loan?.instalmentAmount || '0', decimals)));
+    Math.floor(Number(fromDecimal(funding?.instalmentsWithdrawed || '0', decimals)));
   const currentDebtView = numeral(currentDebt).format(numeralFormat);
 
   return {

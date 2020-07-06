@@ -4,7 +4,7 @@ import Card from '../Card';
 import { Separator as RawSeparator } from '../Card/Card.styles';
 import { Amount } from '../Amount';
 import { loanStatus, loanStatusColors } from '../../commons/loanStatus';
-import { LoanLenderView, RepaymentType } from '../../commons/graphTypes';
+import { GraphLoan, RepaymentType } from '../../commons/graphTypes';
 import { RepayInfo } from '../../utils/progressiveCalcs';
 import { getCalculations } from '../../utils/loanUtils';
 import { CoinsType } from '../../commons/coins';
@@ -24,7 +24,7 @@ const FlexDiv = styled.div`
 export interface LoanActivityProps {
   onOpen: () => void;
   borrower: any;
-  auction: Partial<LoanLenderView>;
+  auction: GraphLoan;
   coin: CoinsType;
   children?: any;
   style?: React.CSSProperties;

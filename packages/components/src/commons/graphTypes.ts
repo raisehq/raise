@@ -26,6 +26,8 @@ export interface GraphFunding {
   createdTimestamp: string;
   updatedBlockNumber: string;
   updatedTimestamp: string;
+  instalmentsWithdrawed?: string;
+  penaltiesWithdrawed?: string;
 }
 
 export interface GraphUser {
@@ -93,14 +95,6 @@ export interface GraphLoan {
   repayment: RepaymentType;
   instalments: number;
   instalmentsPaid: number;
-}
-
-export interface LoanLenderView extends GraphLoan {
-  withdrawn?: boolean;
-  lenderAmount?: string;
-  lenderBalance?: string;
-  instalmentAmount?: string;
-  lenderInstalment?: number;
 }
 
 export interface LoanDispatcher {
