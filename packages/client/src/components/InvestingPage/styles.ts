@@ -247,6 +247,7 @@ export const WaveSVG = styled.img`
 `;
 
 export const PressReleases = styled.div`
+width: 1172px;
   margin-top: 20px;
   margin-bottom: 50px;
 `;
