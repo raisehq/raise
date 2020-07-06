@@ -103,7 +103,13 @@ const Querys = {
             publisher
             publisher_logo
           }
+          testimonials_section {
+            testimonial_name
+            testimonial_description
+            testimonial_image
+          }
           press_releases_title
+          testimonials_title
           page_type
         }
       }

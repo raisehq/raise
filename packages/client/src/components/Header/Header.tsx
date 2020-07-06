@@ -28,6 +28,7 @@ const Header = () => {
     return null;
   }
   const disabled = !(web3Status.unlocked && web3Status.accountMatches);
+  if (!logged) routes.routes = routes.routes.filter((route) => !route.logged);
   return (
     <RaiseHeader disabled={logged && disabled} logged={logged} {...routes}>
       <FlexDiv>

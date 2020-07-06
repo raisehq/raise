@@ -40,11 +40,13 @@
     "semantic-ui-react": "0.85.0"
   },
   "dependencies": {
+    "@raisehq/components": "^0.1.61",
     "@types/node": "^13.11.1",
     "axios": "^0.19.0",
     "env-cmd": "^8.0.2",
     "lerna": "^3.16.4",
     "moment": "^2.24.0",
+    "react-headroom": "^3.0.0",
     "react-scripts": "3.4.0",
     "react-spring": "^8.0.27",
     "semantic-ui-css": "^2.4.1",

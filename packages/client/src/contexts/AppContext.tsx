@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
-import LogRocket from 'logrocket';
 import UseWebSockets from '../hooks/useWebSockets';
 import { getGraphWSEndpoint, getDaiWSEndpoint } from '../utils';
 
@@ -36,7 +35,6 @@ export function Updater() {
       config: { network },
       kyc: { token },
       user: {
-        details: { id, accounttype_id: accounttypeId, email, status },
         cryptoAddress: { address, cryptotypeId }
       }
     },
@@ -124,20 +122,6 @@ export function Updater() {
       onInitKyc();
     }
   }, [isLogged, token]);
-
-  useEffect(() => {
-    const { Cypress }: any = window;
-    if (process.env.REACT_APP_LOGROCKET === 'true' && Cypress === undefined && isLogged) {
-      LogRocket.identify(id, {
-        id,
-        email,
-        accounttypeId,
-        status,
-        availWidth: window.innerWidth,
-        availHeight: window.innerHeight
-      });
-    }
-  }, [isLogged, id, accounttypeId, email, status]);
 
   useEffect(() => {
     if (isChecked && hasProvider !== undefined && contracts) {

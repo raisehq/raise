@@ -1,5 +1,6 @@
 import React from 'react';
-import localeConfig from '../../commons/localeConfig';
+import numeral from '../../commons/numeral';
+
 import { Coin, Box } from './styles';
 
 export const CoinValue = ({ value, name, src }: any) => (
@@ -18,8 +19,8 @@ export const generateInfo = ({
   loan: { investorCount }
 }) => {
   const loanCoinImage = `${process.env.REACT_APP_HOST_IMAGES}/images/coins/${coin.icon}`;
-  const totalAmountString = totalAmount.toLocaleString(...localeConfig);
-  const currentAmountString = currentAmount.toLocaleString(...localeConfig);
+  const totalAmountString = numeral(totalAmount).format();
+  const currentAmountString = numeral(currentAmount).format();
   return [
     {
       title: 'Target amount',

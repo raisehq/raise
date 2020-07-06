@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { GroupButton } from '@raisehq/components';
 import { Icon } from 'semantic-ui-react';
 import find from 'lodash/find';
 import { useTransition, animated } from 'react-spring';
+import GroupButton from '../commons/ButtonControl/GroupButton';
 import {
   Wrapper,
   Row,
@@ -17,10 +17,10 @@ import {
 } from './styles';
 import Step from './Step';
 
-const BenefitsSection = ({ benefits }): [any] => {
+const BenefitsSection = ({ benefits }) => {
   const [selectedOption, setSelectedOption] = useState(1);
-  const [stepsBorrowers, setStepsBorrowers] = useState([]);
-  const [stepsInvestors, setStepsInvestors] = useState([]);
+  const [stepsBorrowers, setStepsBorrowers] = useState<any>([]);
+  const [stepsInvestors, setStepsInvestors] = useState<any>([]);
   const [mainTitle, setMainTitle] = useState('');
   const [linkTextInvestors, setLinkTextInvestors] = useState('');
   const [linkTextBorrowers, setLinkTextBorrowers] = useState('');
