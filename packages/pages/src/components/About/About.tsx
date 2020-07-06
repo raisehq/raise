@@ -14,7 +14,7 @@ const About = ({ data }: any) => {
     <AboutContainer>
       <AboutTitle>{data.page_title}</AboutTitle>
       <AboutInformation dangerouslySetInnerHTML={{ __html: data.page_information }} />
-      <TeamTitle>Meet the theam</TeamTitle>
+      <TeamTitle>Meet the team</TeamTitle>
       <Team teamMembers={data.employee_profile} />
       <ButtonWrapper>
         <JoinButton
