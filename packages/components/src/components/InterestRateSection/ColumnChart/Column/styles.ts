@@ -23,7 +23,6 @@ export const Wrapper = styled.div`
   justify-items: center;
   align-items: center;
   width: 100%;
-  max-width: 264px;
   margin: 12px;
 
   @media (max-width: ${size.mobileL}) {

@@ -49,7 +49,9 @@ export const Row = styled.div`
   width: 100%;
   max-width: 1300px;
 
-  padding: 0 25px;
+  @media (max-width: ${size.mobileM}) {
+    padding: 0 25px;
+  }
 `;
 
 export const RowGraph = styled(Row)`

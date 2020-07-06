@@ -68,7 +68,6 @@ export const ImageWrapper = styled.div`
 
   img {
     position: absolute;
-    right: -5%;
     width: 100%;
     height: 405px;
 
@@ -109,12 +108,12 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   flex: 1 0 50%;
 
   padding-top: 50px;
 
-  @media (max-width: ${size.mobileL}) {
+  @media (max-width: 840px) {
     width: 100%;
     align-items: center;
     padding: 0;
