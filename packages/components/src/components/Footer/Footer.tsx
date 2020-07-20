@@ -300,9 +300,7 @@ const Footer = ({ isMobile }) => {
               Terms of Service
             </PdfMenuLink>
           </PdfContainer>
-          <FooterCopyRight>
-            Raise Labs OÜ 14802358 - Carrer Roselló 186 08025 Barcelona
-          </FooterCopyRight>
+          <FooterCopyRight>Raise Labs OÜ 14802358</FooterCopyRight>
         </FooterCopyRightContainer>
       </FooterCopyRightWrapper>
     </FooterWrapper>
