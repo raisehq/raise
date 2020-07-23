@@ -3,14 +3,10 @@ image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:
 stages:
   - prepare
   - build
-  - deploy
-  - review
-  - test
   - deploy-prod
   - test-prod
   - tag
   - publish
-  - cleanup
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1
