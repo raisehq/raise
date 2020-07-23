@@ -3,6 +3,7 @@ image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:
 stages:
   - prepare
   - build
+  - test
   - deploy-prod
   - test-prod
   - tag
