@@ -34,26 +34,6 @@ include:
 
 # Generic jobs
 
-build-deps-generic-pr:
-  stage: prepare
-  extends:
-    - .build-deps
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - 'packages/components/**/*'
-      - 'packages/onboarding/**/*'
-  except:
-    refs:
-      - master
-    variables:
-      - $BUTTERCMS
-  artifacts:
-    paths:
-      - packages/components/dist
-      - packages/onboarding/dist
-
 build-deps-generic-master:
   stage: prepare
   before_script:
