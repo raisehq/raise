@@ -3,14 +3,11 @@ image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/raise-base:
 stages:
   - prepare
   - build
-  - deploy
-  - review
   - test
   - deploy-prod
   - test-prod
   - tag
   - publish
-  - cleanup
 
 variables:
   AWS_DEFAULT_REGION: eu-west-1
@@ -37,26 +34,6 @@ include:
   - '/packages/pages/.gitlab-ci.yml'
 
 # Generic jobs
-
-build-deps-generic-pr:
-  stage: prepare
-  extends:
-    - .build-deps
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - 'packages/components/**/*'
-      - 'packages/onboarding/**/*'
-  except:
-    refs:
-      - master
-    variables:
-      - $BUTTERCMS
-  artifacts:
-    paths:
-      - packages/components/dist
-      - packages/onboarding/dist
 
 build-deps-generic-master:
   stage: prepare
