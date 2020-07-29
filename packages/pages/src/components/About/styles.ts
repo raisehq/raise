@@ -36,6 +36,7 @@ export const AboutInformation = styled.div`
   margin-left: 20px;
   margin-right: 20px;
   margin-bottom: 25px;
+  
   &&& h2 {
     font-weight: bold;
     font-size: 24px;
