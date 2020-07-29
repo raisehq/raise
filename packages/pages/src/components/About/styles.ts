@@ -7,6 +7,7 @@ export const AboutContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   @media screen and ${device.laptop} {
     width: 100%;
     max-width: 1172px;
@@ -34,6 +35,7 @@ export const AboutInformation = styled.div`
   color: #8a8e97;
   margin-left: 20px;
   margin-right: 20px;
+  margin-bottom: 25px;
   &&& h2 {
     font-weight: bold;
     font-size: 24px;
