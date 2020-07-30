@@ -28,7 +28,7 @@
     "followtx": "^0.4.1",
     "htmr": "^0.8.7",
     "js-cookie": "^2.2.0",
-    "lodash": "4.17.14",
+    "lodash": "4.17.19",
     "numeral": "^2.0.6",
     "pampy": "0.0.6",
     "prop-types": "^15.7.2",
