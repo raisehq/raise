@@ -33,7 +33,7 @@
     "htmr": "^0.8.7",
     "isomorphic-dompurify": "^0.2.0",
     "js-cookie": "^2.2.0",
-    "lodash": "4.17.14",
+    "lodash": "4.17.19",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-device-detect": "^1.12.1",
