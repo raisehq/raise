@@ -129,13 +129,6 @@ const Footer = ({ isMobile }) => {
               >
                 Token
               </MenuLink>
-              <MenuLink
-                href="https://www.linkedin.com/search/results/people/?facetCurrentCompany=%5B%2218946872%22%5D"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                The team
-              </MenuLink>
             </SubMenu>
             <SubMenu>
               <SubMenuTitle>Reach us</SubMenuTitle>
