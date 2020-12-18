@@ -67,7 +67,7 @@
     "bn.js": "^5.0.0",
     "buttercms": "^1.2.1",
     "chart.js": "^2.8.0",
-    "dompurify": "^2.0.7",
+    "dompurify": "^2.0.17",
     "dotenv": "^8.2.0",
     "enzyme": "3.8.0",
     "enzyme-adapter-react-16": "1.15.1",
